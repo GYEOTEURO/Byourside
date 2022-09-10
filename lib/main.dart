@@ -15,7 +15,37 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'temperature post page'),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Image.asset("imgs/hug 1.png", width: 50,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Image.asset("imgs/곁.png", width: 120,),
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: "아이디"),
+                ),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: "비밀번호"),
+                ),
+                Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(top: 24),
+                    child: ElevatedButton(onPressed: () {}, child: Text("로그인")))
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
