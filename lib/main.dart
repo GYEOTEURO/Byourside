@@ -30,17 +30,34 @@ class MyApp extends StatelessWidget {
                   padding: const EdgeInsets.all(32),
                   child: Image.asset("imgs/곁.png", width: 120,),
                 ),
-                TextField(
-                  decoration: InputDecoration(labelText: "아이디"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "아이디"),
+                  ),
                 ),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: "비밀번호"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "비밀번호"),
+                  ),
                 ),
-                Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(top: 24),
-                    child: ElevatedButton(onPressed: () {}, child: Text("로그인")))
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 24),
+                      child: ElevatedButton(onPressed: () {}, child: Text("로그인"))),
+                ),
+                Padding(padding: const EdgeInsets.all(8.0),
+                child: TextButton(onPressed: () {  }, child: null,
+                  
+                ))
               ],
             ),
           ),
