@@ -37,6 +37,12 @@ class _PostPageState extends State<PostPage> {
           )
         ],
       ),
+      // 글 작성 완료 버튼
+      floatingActionButton: FloatingActionButton(
+        onPressed: null,
+        backgroundColor: widget.primaryColor,
+        child: const Icon(Icons.navigate_next),
+      ),
     );
   }
 }
