@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context) => PostPage(
                       // PostPage 위젯에 primartColor와 title명을 인자로 넘김
                       primaryColor: primaryColor,
-                      title: widget.title)));
+                      title: "마음온도 글쓰기")));
         },
         backgroundColor: primaryColor,
         child: const Icon(Icons.add),
