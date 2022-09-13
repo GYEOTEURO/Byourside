@@ -19,6 +19,7 @@ class _PostPageState extends State<PostPage> {
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
         title: Text(widget.title),
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -29,8 +30,10 @@ class _PostPageState extends State<PostPage> {
         actions: const [
           IconButton(
             onPressed: null,
-            icon: Icon(Icons.menu),
-            color: Colors.white,
+            icon: Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
           )
         ],
       ),
