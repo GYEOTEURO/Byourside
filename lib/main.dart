@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const primaryColor = Color(0xFF045558);
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Post page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(),
       home: const MyHomePage(title: 'Temperature Post Page'),
     );
   }
@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primaryColor,
         title: Text(widget.title),
       ),
       body: Center(
