@@ -37,6 +37,58 @@ class _PostPageState extends State<PostPage> {
           )
         ],
       ),
+      // TextFiled Column과 같이 썼을 때 문제 해결
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Flexible(
+                child: TextFormField(
+              decoration: InputDecoration(labelText: "제목을 입력하세요"),
+            )),
+            Flexible(
+                child: Row(
+              // 위젯을 양쪽으로 딱 붙임
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  '카테고리 선택',
+                  style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                ),
+                IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
+              ],
+            )),
+            Flexible(
+                child: Row(
+              // 위젯을 양쪽으로 딱 붙임
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  '사진 & 영상 첨부하기',
+                  style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                ),
+                IconButton(onPressed: null, icon: Icon(Icons.attach_file))
+              ],
+            )),
+            Flexible(
+                child: Row(
+              // 위젯을 양쪽으로 딱 붙임
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  '지도 첨부하기',
+                  style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                ),
+                IconButton(onPressed: null, icon: Icon(Icons.map))
+              ],
+            )),
+            Flexible(
+                child: TextFormField(
+              decoration:
+                  const InputDecoration(labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요"),
+            ))
+          ],
+        ),
+      ),
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: null,
