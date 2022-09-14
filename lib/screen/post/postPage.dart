@@ -41,11 +41,11 @@ class _PostPageState extends State<PostPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Flexible(
+            Container(
                 child: TextFormField(
               decoration: InputDecoration(labelText: "제목을 입력하세요"),
             )),
-            Flexible(
+            Container(
                 child: Row(
               // 위젯을 양쪽으로 딱 붙임
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +57,7 @@ class _PostPageState extends State<PostPage> {
                 IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
               ],
             )),
-            Flexible(
+            Container(
                 child: Row(
               // 위젯을 양쪽으로 딱 붙임
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +69,7 @@ class _PostPageState extends State<PostPage> {
                 IconButton(onPressed: null, icon: Icon(Icons.attach_file))
               ],
             )),
-            Flexible(
+            Container(
                 child: Row(
               // 위젯을 양쪽으로 딱 붙임
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +81,7 @@ class _PostPageState extends State<PostPage> {
                 IconButton(onPressed: null, icon: Icon(Icons.map))
               ],
             )),
-            Flexible(
+            Container(
                 child: TextFormField(
               decoration:
                   const InputDecoration(labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요"),
