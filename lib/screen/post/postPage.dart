@@ -37,7 +37,7 @@ class _PostPageState extends State<PostPage> {
           )
         ],
       ),
-      // TextFiled Column과 같이 썼을 때 문제 해결
+      // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -52,7 +52,7 @@ class _PostPageState extends State<PostPage> {
               children: const [
                 Text(
                   '카테고리 선택',
-                  style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                  style: TextStyle(color: Colors.black, letterSpacing: 2.0),
                 ),
                 IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
               ],
@@ -64,7 +64,7 @@ class _PostPageState extends State<PostPage> {
               children: const [
                 Text(
                   '사진 & 영상 첨부하기',
-                  style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                  style: TextStyle(color: Colors.black, letterSpacing: 2.0),
                 ),
                 IconButton(onPressed: null, icon: Icon(Icons.attach_file))
               ],
@@ -76,15 +76,22 @@ class _PostPageState extends State<PostPage> {
               children: const [
                 Text(
                   '지도 첨부하기',
-                  style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                  style: TextStyle(color: Colors.black, letterSpacing: 2.0),
                 ),
                 IconButton(onPressed: null, icon: Icon(Icons.map))
               ],
             )),
             Container(
                 child: TextFormField(
-              decoration:
-                  const InputDecoration(labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요"),
+              minLines: 1,
+              maxLines: 8,
+              decoration: const InputDecoration(
+                labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  borderSide: BorderSide(width: 1),
+                ),
+              ),
             ))
           ],
         ),
