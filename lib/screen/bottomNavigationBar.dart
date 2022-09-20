@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
 
@@ -23,26 +22,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Ondo',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Nanum',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Chat',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: MyPage',
-      style: optionStyle,
-    ),
-  ];
 
-  void _onItemTapped(int index) { // 탭을 클릭했을떄 지정한 페이지로 이동
+  void _onItemTapped(int index) {
+    // 탭을 클릭했을떄 지정한 페이지로 이동
     setState(() {
       _selectedIndex = index;
     });
@@ -51,9 +33,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromARGB(255, 158, 233, 197),
