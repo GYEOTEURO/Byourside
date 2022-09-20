@@ -1,3 +1,4 @@
+import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/screen/post/postPage.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: primaryColor,
         title: Text(widget.title),
       ),
+      // bottomNavigationBar: BottomNavBar(),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () {
