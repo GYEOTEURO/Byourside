@@ -3,8 +3,43 @@ import '../main.dart';
 import '../size.dart';
 import 'custom_text_form_field.dart';
 
-class CustomForm extends StatelessWidget {
+class CustomForm extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _CustomFormState();
+  }
+}
+
+class _CustomFormState extends State<CustomForm> {
+
   final _formKey = GlobalKey<FormState>(); // 1. 글로벌 key
+
+  late CustomTextFormField _customTextFormField;
+  late bool _authenticated;
+
+  _CustomFormState() {
+    _customTextFormField = new CustomTextFormField(onSubmit, '');
+    _authenticated = false;
+  }
+  onSubmit() {
+    if(_customTextFormField.email == 'email' && _customTextFormField.password == 'password') {
+      _setAuthenticated(true);
+    }
+  }
+
+  void _setAuthenticated(bool auth) {
+    setState(() {
+      if (auth == true) {
+
+      }
+      else {
+
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -12,9 +47,9 @@ class CustomForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
-          CustomTextFormField("Email"),
+          CustomTextFormField(onSubmit, "Email"),
           SizedBox(height: medium_gap),
-          CustomTextFormField("Password"),
+          CustomTextFormField(onSubmit, "Password"),
           SizedBox(height: large_gap),
           Container(
             width: double.infinity,

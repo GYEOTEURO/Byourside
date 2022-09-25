@@ -1,10 +1,18 @@
+import 'package:byourside/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import '../size.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String text;
 
-  const CustomTextFormField(this.text);
+  const CustomTextFormField(this.onSubmit, this.text);
+  final VoidCallback onSubmit;
+
+  static final TextEditingController _email = new TextEditingController();
+  static final TextEditingController _pass = new TextEditingController();
+
+  String get email => _email.text;
+  String get password => _pass.text;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
             ),
           ),
+          controller: text == "Password" ? _email : _pass,
         ),
       ],
     );
