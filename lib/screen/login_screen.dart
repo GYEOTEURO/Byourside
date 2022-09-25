@@ -4,9 +4,26 @@ import '../size.dart';
 import '../widget/custom_form.dart';
 import '../widget/logo.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key?key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
+
+  @override
+  State<LoginScreen> createState() {
+    return _LoginScreenState();
+  }
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  late CustomForm _customForm;
+  late bool _authenticated;
+
+  _LoginScreenState() {
+    _customForm = CustomForm();
+    _authenticated = false;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,4 +42,5 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
 }

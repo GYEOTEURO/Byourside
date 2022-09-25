@@ -11,7 +11,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late TabController controller;
-  bool login = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
       title: '곁',
       initialRoute: "/login",
       routes: {
-        "/login": (context) => LoginScreen(primaryColor: primaryColor),
+        "/login": (context) => LoginScreen(primaryColor:primaryColor),
         //"/home": (context) => HomePage(),
       },
     );
