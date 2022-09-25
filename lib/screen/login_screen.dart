@@ -21,28 +21,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late CustomForm _customForm;
   late bool _authenticated;
-  // late StreamController<int> _userEvents;
-  // int _counter = 0;
 
   @override
   initState() {
     super.initState();
-    // _userEvents = new StreamController<int>();
-    // _userEvents.add(0);
     _customForm = CustomForm();
     _authenticated = false;
   }
-
-  // void _incrementCounter() {
-  //   _counter++;
-  //   _userEvents.add(_counter);
-  // }
-
-  // _LoginScreenState() {
-  //   _customForm = CustomForm();
-  //   _authenticated = false;
-  // }
-
 
   @override
   Widget build(BuildContext context) {

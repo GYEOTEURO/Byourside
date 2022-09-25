@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
 import 'dart:convert' show json;
-
-import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -148,7 +145,6 @@ class googleLoginState extends State<googleLogin> {
             radius: 100,
             onTap: () {
               _handleSignIn();
-              // _buildBody();
             },
             child: Ink.image(
               fit: BoxFit.cover,
