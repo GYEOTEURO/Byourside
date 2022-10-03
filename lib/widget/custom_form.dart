@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../size.dart';
 import 'custom_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class CustomForm extends StatefulWidget {
 
