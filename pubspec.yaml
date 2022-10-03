@@ -30,12 +30,20 @@ dependencies:
   flutter:
     sdk: flutter
 
+  kakao_flutter_sdk: ^1.3.0-beta.3 # 전체 추가
+  kakao_flutter_sdk_user: ^1.3.0-beta.3 # 카카오 로그인
+#  kakao_flutter_sdk_talk: ^1.3.0-beta.3 # 카카오톡(소셜, 메시지)
+#  kakao_flutter_sdk_story: ^1.3.0-beta.3 # 카카오스토리
+#  kakao_flutter_sdk_share: ^1.3.0-beta.3 # 카카오톡 공유
+#  kakao_flutter_sdk_navi: ^1.3.0-beta.3 # 카카오내비
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^1.22.0
   firebase_auth: ^3.10.0
+  cloud_firestore: ^3.1.10
+  provider: ^6.0.2
   google_sign_in: ^5.4.2
 
 dev_dependencies:
