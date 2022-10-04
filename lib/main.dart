@@ -49,10 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => PostPage(
+                  builder: (context) => BottomNavBar(
                       // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                      primaryColor: primaryColor,
-                      title: "마음온도 글쓰기")));
+                      primaryColor: primaryColor)));
         },
         backgroundColor: primaryColor,
         child: const Icon(Icons.add),
