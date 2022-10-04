@@ -1,28 +1,36 @@
+import 'package:byourside/screen/post/postPage.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
+  final Color primaryColor;
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyStatefulWidget(),
-    );
-  }
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
+  static const List<Widget> _widgetOptions = <Widget>[
+    PostPage(
+        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
+        primaryColor: Color(0xFF045558),
+        title: "마음온도 글쓰기"),
+    Text(
+      'Index 1: Nanum',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Chat',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: MyPage',
+      style: optionStyle,
+    ),
+  ];
   void _onItemTapped(int index) {
     // 탭을 클릭했을떄 지정한 페이지로 이동
     setState(() {
