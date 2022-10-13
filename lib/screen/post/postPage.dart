@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class PostPage extends StatefulWidget {
   const PostPage({Key? key, required this.primaryColor, required this.title})
@@ -13,6 +15,23 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+  File? _image; // 사진 하나 가져오기
+  List<File> _images = []; // 사진 여러 개 가져오기
+  final picker = ImagePicker();
+
+  // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
+  // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
+  Future getImage(ImageSource imageSource) async {
+    final image = await picker.pickImage(source: imageSource);
+    // final images = await picker.pickMultiImage();
+
+    if (image != null) {
+      setState(() {
+        _image = File(image.path); // 가져온 이미지를 _image에 저장
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,15 +60,17 @@ class _PostPageState extends State<PostPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // 제목
             Container(
                 child: TextFormField(
               decoration: InputDecoration(labelText: "제목을 입력하세요"),
             )),
+            // 카테고리 선택
             Container(
                 child: Row(
               // 위젯을 양쪽으로 딱 붙임
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   '카테고리 선택',
                   style: TextStyle(color: Colors.black, letterSpacing: 2.0),
@@ -57,18 +78,24 @@ class _PostPageState extends State<PostPage> {
                 IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
               ],
             )),
+            // 사진 및 영상 첨부
             Container(
                 child: Row(
               // 위젯을 양쪽으로 딱 붙임
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   '사진 & 영상 첨부하기',
                   style: TextStyle(color: Colors.black, letterSpacing: 2.0),
                 ),
-                IconButton(onPressed: null, icon: Icon(Icons.attach_file))
+                IconButton(
+                    onPressed: () {
+                      getImage(ImageSource.gallery);
+                    },
+                    icon: Icon(Icons.attach_file))
               ],
             )),
+            // 지도 첨부
             Container(
                 child: Row(
               // 위젯을 양쪽으로 딱 붙임
@@ -81,6 +108,7 @@ class _PostPageState extends State<PostPage> {
                 IconButton(onPressed: null, icon: Icon(Icons.map))
               ],
             )),
+            // 게시글 내용
             Container(
                 child: TextFormField(
               minLines: 1,
