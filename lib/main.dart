@@ -1,6 +1,8 @@
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/screen/post/postPage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 // 앱의 메인 색상인 primaryColor 지정
 const primaryColor = Color(0xFF045558);
