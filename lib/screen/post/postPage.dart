@@ -16,18 +16,18 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   File? _image; // 사진 하나 가져오기
-  List<File> _images = []; // 사진 여러 개 가져오기
+  List<XFile> _images = []; // 사진 여러 개 가져오기
   final picker = ImagePicker();
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
   Future getImage(ImageSource imageSource) async {
-    final image = await picker.pickImage(source: imageSource);
-    // final images = await picker.pickMultiImage();
+    // final image = await picker.pickImage(source: imageSource);
+    final List<XFile>? images = await picker.pickMultiImage();
 
-    if (image != null) {
+    if (images != null) {
       setState(() {
-        _image = File(image.path); // 가져온 이미지를 _image에 저장
+        _images = images; // 가져온 이미지를 _image에 저장
       });
     }
   }
@@ -80,21 +80,23 @@ class _PostPageState extends State<PostPage> {
             )),
             // 사진 및 영상 첨부
             Container(
-                child: Row(
-              // 위젯을 양쪽으로 딱 붙임
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '사진 & 영상 첨부하기',
-                  style: TextStyle(color: Colors.black, letterSpacing: 2.0),
-                ),
-                IconButton(
-                    onPressed: () {
-                      getImage(ImageSource.gallery);
-                    },
-                    icon: Icon(Icons.attach_file))
-              ],
-            )),
+                child: Column(children: [
+              Row(
+                // 위젯을 양쪽으로 딱 붙임
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '사진 & 영상 첨부하기',
+                    style: TextStyle(color: Colors.black, letterSpacing: 2.0),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        getImage(ImageSource.gallery);
+                      },
+                      icon: Icon(Icons.attach_file))
+                ],
+              ),
+            ])),
             // 지도 첨부
             Container(
                 child: Row(
