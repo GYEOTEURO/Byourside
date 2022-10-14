@@ -1,5 +1,5 @@
+import 'package:byourside/screen/postList.dart';
 import 'package:flutter/material.dart';
-
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -19,15 +19,13 @@ class MyStatefulWidget extends StatefulWidget {
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
+
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Ondo',
-      style: optionStyle,
-    ),
+    PostList(),
     Text(
       'Index 1: Nanum',
       style: optionStyle,
@@ -47,6 +45,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
