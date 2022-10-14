@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Post page',
       theme: ThemeData(),
-      home: const MyHomePage(title: 'Temperature Post Page'),
+      home: const MyHomePage(title: 'Temperature Main Page'),
     );
   }
 }
@@ -39,25 +39,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // AppBar 색상 primaryColor로 지정
-        backgroundColor: primaryColor,
-        title: Text(widget.title),
-      ),
+      body: BottomNavBar(
+          // PostPage 위젯에 primartColor와 title명을 인자로 넘김
+          primaryColor: primaryColor),
       // bottomNavigationBar: BottomNavBar(),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BottomNavBar(
-                      // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                      primaryColor: primaryColor)));
-        },
-        backgroundColor: primaryColor,
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
