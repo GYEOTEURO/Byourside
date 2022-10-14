@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -35,6 +36,7 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 상단 앱 바
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
         title: Text(widget.title),
@@ -96,6 +98,25 @@ class _PostPageState extends State<PostPage> {
                       icon: Icon(Icons.attach_file))
                 ],
               ),
+              Container(
+                  height: 100,
+                  child: GridView.count(
+                      shrinkWrap:
+                          true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
+                      padding: EdgeInsets.all(2),
+                      // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
+                      crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
+                      // 가로(cross), 세로(main) 아이템 간의 간격 지정
+                      mainAxisSpacing: 5,
+                      crossAxisSpacing: 5,
+                      children: List.generate(
+                          5,
+                          (index) => DottedBorder(
+                              child: Container(),
+                              color: Colors.grey,
+                              dashPattern: [5, 3],
+                              borderType: BorderType.RRect,
+                              radius: Radius.circular(5))).toList()))
             ])),
             // 지도 첨부
             Container(
