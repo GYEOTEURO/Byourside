@@ -1,3 +1,4 @@
+import 'package:byourside/screen/post/postList.dart';
 import 'package:byourside/screen/post/postPage.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    PostPage(
-        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-        primaryColor: Color(0xFF045558),
-        title: "마음온도 글쓰기"),
+    PostList(
+        // PostList 위젯에 primartColor를 인자로 넘김
+        primaryColor: Color(0xFF045558)),
     Text(
       'Index 1: Nanum',
       style: optionStyle,
