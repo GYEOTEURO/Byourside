@@ -39,6 +39,8 @@ dependencies:
   flutter_sfsymbols: ^1.0.0
   material_design_icons_flutter: 5.0.6996
 
+  dotted_border:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
