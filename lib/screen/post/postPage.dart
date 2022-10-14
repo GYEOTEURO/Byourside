@@ -18,6 +18,7 @@ class PostPage extends StatefulWidget {
 class _PostPageState extends State<PostPage> {
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
+  bool _visibility = false; // 가져온 사진 보이기
   final picker = ImagePicker();
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
@@ -33,8 +34,44 @@ class _PostPageState extends State<PostPage> {
     }
   }
 
+  // 가져온 사진 visible 상태 변경
+  void _hide() {
+    setState(() {
+      _visibility = false;
+    });
+  }
+
+  void _show() {
+    setState(() {
+      _visibility = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> _boxContents = [
+      Container(),
+      Container(),
+      Container(),
+      Container(),
+      _images.length <= 5
+          ? Container()
+          : FittedBox(
+              child: Container(
+                padding: EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.6),
+                    shape: BoxShape.circle),
+                child: Text(
+                  '+${(_images.length - 5).toString()}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                ),
+              ),
+            )
+    ];
     return Scaffold(
       // 상단 앱 바
       appBar: AppBar(
@@ -75,7 +112,10 @@ class _PostPageState extends State<PostPage> {
               children: [
                 Text(
                   '카테고리 선택',
-                  style: TextStyle(color: Colors.black, letterSpacing: 2.0),
+                  style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.bold),
                 ),
                 IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
               ],
@@ -89,34 +129,52 @@ class _PostPageState extends State<PostPage> {
                 children: [
                   Text(
                     '사진 & 영상 첨부하기',
-                    style: TextStyle(color: Colors.black, letterSpacing: 2.0),
+                    style: TextStyle(
+                        color: Colors.black,
+                        letterSpacing: 2.0,
+                        fontWeight: FontWeight.bold),
                   ),
                   IconButton(
                       onPressed: () {
                         getImage(ImageSource.gallery);
+                        _show();
                       },
                       icon: Icon(Icons.attach_file))
                 ],
               ),
-              Container(
-                  height: 100,
-                  child: GridView.count(
-                      shrinkWrap:
-                          true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
-                      padding: EdgeInsets.all(2),
-                      // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
-                      crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
-                      // 가로(cross), 세로(main) 아이템 간의 간격 지정
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5,
-                      children: List.generate(
-                          5,
-                          (index) => DottedBorder(
-                              child: Container(),
-                              color: Colors.grey,
-                              dashPattern: [5, 3],
-                              borderType: BorderType.RRect,
-                              radius: Radius.circular(5))).toList()))
+              Visibility(
+                  visible: _visibility,
+                  child: SizedBox(
+                      height: 100,
+                      child: GridView.count(
+                          shrinkWrap:
+                              true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
+                          padding: EdgeInsets.all(2),
+                          // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
+                          crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
+                          // 가로(cross), 세로(main) 아이템 간의 간격 지정
+                          mainAxisSpacing: 5,
+                          crossAxisSpacing: 5,
+                          children: List.generate(
+                              5,
+                              (index) => DottedBorder(
+                                    color: Colors.grey,
+                                    dashPattern: [5, 3],
+                                    borderType: BorderType.RRect,
+                                    radius: Radius.circular(5),
+                                    child: Container(
+                                      child: Center(child: _boxContents[index]),
+                                      decoration: index <= _images.length - 1
+                                          ? BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: FileImage(File(
+                                                      _images[index].path))))
+                                          : null,
+                                    ),
+                                  )).toList())))
             ])),
             // 지도 첨부
             Container(
@@ -126,7 +184,10 @@ class _PostPageState extends State<PostPage> {
               children: const [
                 Text(
                   '지도 첨부하기',
-                  style: TextStyle(color: Colors.black, letterSpacing: 2.0),
+                  style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.bold),
                 ),
                 IconButton(onPressed: null, icon: Icon(Icons.map))
               ],
