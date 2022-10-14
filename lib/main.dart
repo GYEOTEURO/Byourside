@@ -39,11 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BottomNavBar(
-          // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-          primaryColor: primaryColor),
-      // bottomNavigationBar: BottomNavBar(),
-      // 누르면 글 작성하는 PostPage로 navigate하는 버튼
-    );
+        // BottomNavBar 위젯에 primartColor와 title명을 인자로 넘김
+        body: BottomNavBar(primaryColor: primaryColor));
   }
 }
