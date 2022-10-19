@@ -75,7 +75,7 @@ class _Login extends State<Login> {
         },
         child: const Text('New? Register here'));
 
-    final loginAnonymousButon = Material(
+    final loginAnonymousButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Theme.of(context).primaryColor,
@@ -103,7 +103,7 @@ class _Login extends State<Login> {
       ),
     );
 
-    final loginEmailPasswordButon = Material(
+    final loginEmailPasswordButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Theme.of(context).primaryColor,
@@ -150,14 +150,14 @@ class _Login extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  loginAnonymousButon,
+                  loginAnonymousButton,
                   const SizedBox(height: 45.0),
                   emailField,
                   const SizedBox(height: 25.0),
                   passwordField,
                   txtbutton,
                   const SizedBox(height: 35.0),
-                  loginEmailPasswordButon,
+                  loginEmailPasswordButton,
                   const SizedBox(height: 15.0),
                 ],
               ),
