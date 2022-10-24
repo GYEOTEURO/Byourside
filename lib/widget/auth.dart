@@ -50,12 +50,24 @@ class AuthService {
       User? user = userCredential.user;
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
-      return FirebaseUser(code: e.code, uid: null);
+      if (e.code == 'weak-password') {
+        return FirebaseUser(uid: null, code: 'The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        return FirebaseUser(uid: null, code: 'The account already exists for that email.');
+      }
+      // return FirebaseUser(code: e.code, uid: null);
     } catch (e) {
       return FirebaseUser(code: e.toString(), uid: null);
     }
   }
 
+  // Future resetPassword(LoginUser _login) async {
+  //   try {
+  //     await _auth.sendPasswordResetEmail(email: _login.email.toString());
+  //   } on FirebaseAuthException catch (e) {
+  //     return FirebaseUser(uid: null, code: e.code);
+  //   }
+  // }
 
   Future signOut() async {
     try {
