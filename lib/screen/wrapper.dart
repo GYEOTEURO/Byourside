@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
-import '../screen/home/home.dart';
 import 'package:flutter/material.dart';
 
 import '../model/firebase_user.dart';
 import 'authenticate/handler.dart';
+import 'authenticate/verify_email.dart';
 
 class Wrapper extends StatelessWidget{
 
@@ -17,7 +17,7 @@ class Wrapper extends StatelessWidget{
       return Handler();
     }else
     {
-      return Home();
+      return VerifyEmail();
     }
 
   }
