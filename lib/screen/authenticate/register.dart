@@ -2,10 +2,9 @@ import 'package:byourside/model/login_user.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:flutter/material.dart';
 
-
-class Register extends StatefulWidget{
-
+class Register extends StatefulWidget {
   final Function? toggleView;
+
   Register({this.toggleView});
 
   @override
@@ -14,16 +13,16 @@ class Register extends StatefulWidget{
   }
 }
 
-class _Register extends State<Register>{
+class _Register extends State<Register> {
   final AuthService _auth = AuthService();
 
   bool _obscureText = true;
   final _email = TextEditingController();
   final _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-
     final emailField = TextFormField(
         controller: _email,
         autofocus: false,
@@ -39,7 +38,7 @@ class _Register extends State<Register>{
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "Email",
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
     final passwordField = TextFormField(
         obscureText: _obscureText,
@@ -54,18 +53,21 @@ class _Register extends State<Register>{
           }
           // Return null if the entered password is valid
           return null;
-        } ,
+        },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "Password",
-            suffixIcon: IconButton(icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-              onPressed: (){
+            suffixIcon: IconButton(
+              icon:
+                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
                 setState(() {
                   _obscureText = !_obscureText;
                 });
-              },),
+              },
+            ),
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
     final txtbutton = TextButton(
         onPressed: () {
@@ -82,8 +84,10 @@ class _Register extends State<Register>{
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
-            dynamic result = await _auth.registerEmailPassword(LoginUser(email: _email.text,password: _password.text));
-            if (result.uid == null) { //null means unsuccessfull authentication
+            dynamic result = await _auth.registerEmailPassword(
+                LoginUser(email: _email.text, password: _password.text));
+            if (result.uid == null) {
+              //null means unsuccessfull authentication
               showDialog(
                   context: context,
                   builder: (context) {
@@ -101,8 +105,6 @@ class _Register extends State<Register>{
         ),
       ),
     );
-
-
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -128,7 +130,7 @@ class _Register extends State<Register>{
                   passwordField,
                   const SizedBox(height: 25.0),
                   txtbutton,
-                  const SizedBox( height: 35.0),
+                  const SizedBox(height: 35.0),
                   registerButton,
                   const SizedBox(height: 15.0),
                 ],
