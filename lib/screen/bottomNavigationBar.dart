@@ -1,3 +1,4 @@
+import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/post/postList.dart';
 import 'package:byourside/screen/post/postPage.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     PostList(
         // PostList 위젯에 primartColor를 인자로 넘김
         primaryColor: Color(0xFF045558)),
-    Text(
-      'Index 1: Nanum',
-      style: optionStyle,
-    ),
+    NanumPostList(primaryColor: Color(0xFF045558)),
     Text(
       'Index 2: Chat',
       style: optionStyle,
