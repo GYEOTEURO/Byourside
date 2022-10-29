@@ -1,4 +1,5 @@
 import 'package:byourside/widget/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget{
@@ -10,11 +11,16 @@ class Home extends StatefulWidget{
 
 class _Home extends State<Home>{
   final AuthService _auth = new AuthService();
+  String? uid;
+
+  @override
+  void initState() {
+    super.initState();
+    uid = FirebaseAuth.instance.currentUser!.uid;
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
     final SignOut = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),

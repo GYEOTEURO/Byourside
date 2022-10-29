@@ -1,4 +1,5 @@
 import 'package:byourside/model/login_user.dart';
+import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -103,6 +104,28 @@ class _Login extends State<Login> {
       ),
     );
 
+    final loginPhoneButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Theme.of(context).primaryColor,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+           // const VerifyPhone();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => VerifyPhone()),
+          ); //Navigator.pushNamed(context, "/phone");
+        },
+        child: Text(
+          "Log in with phone number",
+          style: TextStyle(color: Theme.of(context).primaryColorLight),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -151,6 +174,8 @@ class _Login extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   loginAnonymousButton,
+                  const SizedBox(height: 45.0),
+                  loginPhoneButton,
                   const SizedBox(height: 45.0),
                   emailField,
                   const SizedBox(height: 25.0),

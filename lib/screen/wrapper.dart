@@ -17,6 +17,7 @@ class Wrapper extends StatelessWidget{
       return Handler();
     }else
     {
+      // Navigator.pushNamed(context, "/email");
       return VerifyEmail();
     }
 
