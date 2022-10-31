@@ -76,33 +76,33 @@ class _Login extends State<Login> {
         },
         child: const Text('New? Register here'));
 
-    final loginAnonymousButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Theme.of(context).primaryColor,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () async {
-          dynamic result = await _auth.signInAnonymous();
-
-          if (result.uid == null) { //null means unsuccessfull authentication
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: Text(result.code),
-                  );
-                });
-          }
-        },
-        child: Text(
-          "Log in Anonymously",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
+    // final loginAnonymousButton = Material(
+    //   elevation: 5.0,
+    //   borderRadius: BorderRadius.circular(30.0),
+    //   color: Theme.of(context).primaryColor,
+    //   child: MaterialButton(
+    //     minWidth: MediaQuery.of(context).size.width,
+    //     padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    //     onPressed: () async {
+    //       dynamic result = await _auth.signInAnonymous();
+    //
+    //       if (result.uid == null) { //null means unsuccessfull authentication
+    //         showDialog(
+    //             context: context,
+    //             builder: (context) {
+    //               return AlertDialog(
+    //                 content: Text(result.code),
+    //               );
+    //             });
+    //       }
+    //     },
+    //     child: Text(
+    //       "Log in Anonymously",
+    //       style: TextStyle(color: Theme.of(context).primaryColorLight),
+    //       textAlign: TextAlign.center,
+    //     ),
+    //   ),
+    // );
 
     final loginPhoneButton = Material(
       elevation: 5.0,
@@ -173,8 +173,8 @@ class _Login extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  loginAnonymousButton,
-                  const SizedBox(height: 45.0),
+                  // loginAnonymousButton,
+                  // const SizedBox(height: 45.0),
                   loginPhoneButton,
                   const SizedBox(height: 45.0),
                   emailField,
