@@ -14,16 +14,16 @@ class AuthService {
     return _auth.authStateChanges().map(_firebaseUser);
   }
 
-
-  Future signInAnonymous() async {
-    try {
-      UserCredential userCredential = await _auth.signInAnonymously();
-      User? user = userCredential.user;
-      return _firebaseUser(user);
-    } catch (e) {
-      return FirebaseUser(code: e.toString(), uid: null);
-    }
-  }
+  //
+  // Future signInAnonymous() async {
+  //   try {
+  //     UserCredential userCredential = await _auth.signInAnonymously();
+  //     User? user = userCredential.user;
+  //     return _firebaseUser(user);
+  //   } catch (e) {
+  //     return FirebaseUser(code: e.toString(), uid: null);
+  //   }
+  // }
 
 
   Future signInEmailPassword(LoginUser _login) async {
