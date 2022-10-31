@@ -37,7 +37,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   hintText: 'Phone Number',
                   prefix: Padding(
                     padding: EdgeInsets.all(4),
-                    child: Text('+1'),
+                    child: Text('+82'),
                   ),
                 ),
                 maxLength: 10,
