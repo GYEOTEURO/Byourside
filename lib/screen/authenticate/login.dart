@@ -1,4 +1,5 @@
 import 'package:byourside/model/login_user.dart';
+import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _Login extends State<Login> {
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "Email",
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
     final passwordField = TextFormField(
         obscureText: _obscureText,
@@ -59,7 +60,7 @@ class _Login extends State<Login> {
             hintText: "Password",
             suffixIcon: IconButton(
               icon:
-              Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
               onPressed: () {
                 setState(() {
                   _obscureText = !_obscureText;
@@ -70,11 +71,17 @@ class _Login extends State<Login> {
               borderRadius: BorderRadius.circular(32.0),
             )));
 
-    final txtbutton = TextButton(
+    final registerButton = TextButton(
         onPressed: () {
           widget.toggleView!();
         },
         child: const Text('New? Register here'));
+
+    final forgotPassword = TextButton(
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ForgotPassword(),
+            )),
+        child: const Text('forgot password?'));
 
     // final loginAnonymousButton = Material(
     //   elevation: 5.0,
@@ -112,7 +119,7 @@ class _Login extends State<Login> {
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-           // const VerifyPhone();
+          // const VerifyPhone();
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => VerifyPhone()),
@@ -135,9 +142,10 @@ class _Login extends State<Login> {
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
-
-            dynamic result = await _auth.signInEmailPassword(LoginUser(email: _email.text,password: _password.text));
-            if (result.uid == null) { //null means unsuccessfull authentication
+            dynamic result = await _auth.signInEmailPassword(
+                LoginUser(email: _email.text, password: _password.text));
+            if (result.uid == null) {
+              //null means unsuccessfull authentication
               showDialog(
                   context: context,
                   builder: (context) {
@@ -180,7 +188,8 @@ class _Login extends State<Login> {
                   emailField,
                   const SizedBox(height: 25.0),
                   passwordField,
-                  txtbutton,
+                  registerButton,
+                  forgotPassword,
                   const SizedBox(height: 35.0),
                   loginEmailPasswordButton,
                   const SizedBox(height: 15.0),
