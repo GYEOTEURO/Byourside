@@ -1,6 +1,16 @@
 import 'package:byourside/main.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/authenticate/otp_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// change to 개인정보처리방침
+final Uri _url = Uri.parse('https://flutter.dev');
+
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
+}
 
 class VerifyPhone extends StatefulWidget {
   const VerifyPhone({super.key});
@@ -13,6 +23,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
+    final linkButton = ElevatedButton(onPressed: _launchUrl, child: Text('개인정보처리방침'));
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Phone Auth'),
@@ -46,6 +59,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               ),
             )
           ]),
+          linkButton,
           Container(
             margin: EdgeInsets.all(10),
             width: double.infinity,
@@ -58,7 +72,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     builder: (context) => OTPScreen(_controller.text)));
               },
               child: const Text(
-                'Next',
+                'Agree and Next',
                 style: TextStyle(color: primaryColor),
               ),
             ),

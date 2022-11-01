@@ -1,6 +1,16 @@
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// change to 개인정보처리방침
+final Uri _url = Uri.parse('https://flutter.dev');
+
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
+}
 
 class Register extends StatefulWidget {
   final Function? toggleView;
@@ -69,11 +79,13 @@ class _Register extends State<Register> {
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
-    final txtbutton = TextButton(
+    final txtButton = TextButton(
         onPressed: () {
           widget.toggleView!();
         },
         child: const Text('Go to login'));
+
+    final linkButton = ElevatedButton(onPressed: _launchUrl, child: Text('개인정보처리방침'));
 
     final registerButton = Material(
       elevation: 5.0,
@@ -99,7 +111,7 @@ class _Register extends State<Register> {
           }
         },
         child: Text(
-          "Register",
+          "Agree and Register",
           style: TextStyle(color: Theme.of(context).primaryColorLight),
           textAlign: TextAlign.center,
         ),
@@ -129,7 +141,8 @@ class _Register extends State<Register> {
                   const SizedBox(height: 25.0),
                   passwordField,
                   const SizedBox(height: 25.0),
-                  txtbutton,
+                  txtButton,
+                  linkButton,
                   const SizedBox(height: 35.0),
                   registerButton,
                   const SizedBox(height: 15.0),
