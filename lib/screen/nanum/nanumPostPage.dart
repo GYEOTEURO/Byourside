@@ -32,6 +32,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
     if (images != null) {
       setState(() {
         _images = images; // 가져온 이미지를 _image에 저장
+        print(_images);
       });
     }
   }
