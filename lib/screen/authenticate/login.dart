@@ -2,6 +2,7 @@ import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -27,14 +28,16 @@ class _Login extends State<Login> {
     final emailField = TextFormField(
         controller: _email,
         autofocus: false,
-        validator: (value) {
-          if (value != null) {
-            if (value.contains('@') && value.endsWith('.com')) {
-              return null;
-            }
-            return 'Enter a Valid Email Address';
-          }
-        },
+        validator: (value) =>
+          // if (value != null) {
+          //   if (value.contains('@') && value.endsWith('.com')) {
+          //     return null;
+          //   }
+          //   return 'Enter a Valid Email Address';
+          // }
+          value != null && !EmailValidator.validate(value)
+              ? 'Enter a valid email'
+              : null,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "Email",
