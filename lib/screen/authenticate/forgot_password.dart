@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +41,14 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
             SizedBox(height: 20),
             TextFormField(
               controller: emailController,
-              cursorColor: Colors.white,
+              cursorColor: primaryColor,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(labelText: 'Email'),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              // validator: (email) =>
-              // email != null && !EmailValidator.validate(email)
-              //   ? 'Enter a valid email'
-              //   : null,
+              validator: (email) =>
+              email != null && !EmailValidator.validate(email)
+                ? 'Enter a valid email'
+                : null,
             ),
             SizedBox(height: 20),
             ElevatedButton.icon(
