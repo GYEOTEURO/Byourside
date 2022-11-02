@@ -1,65 +1,44 @@
+import 'package:byourside/screen/authenticate/verify_phone.dart';
+import 'package:byourside/screen/home/home.dart';
+import 'package:byourside/screen/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:byourside/screen/bottomNavigationBar.dart';
+import 'package:byourside/screen/ondo/postPage.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+    home: MyApp(),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+const primaryColor = Color(0xFF045558);
+
+class MyApp extends StatefulWidget {
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late TabController controller;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Post page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Temperature Post Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    return FirebasePhoneAuthProvider(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: '곁',
+        initialRoute: "/login",
+        routes: {
+          "/login": (context) => LoginScreen(primaryColor: primaryColor),
+          "/home": (context) => BottomNavBar(primaryColor: primaryColor),
+          "/phone": (context) => VerifyPhone(),
+        },
       ),
     );
   }
