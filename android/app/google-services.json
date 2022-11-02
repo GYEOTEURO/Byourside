@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "334257891538",
+    "project_id": "byourside-2ea11",
+    "storage_bucket": "byourside-2ea11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334257891538:android:eb935bdef1b2dadef4250b",
+        "android_client_info": {
+          "package_name": "com.example.byourside"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334257891538-87fos7j04h6kbl8boevhsngidiv36a6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.byourside",
+            "certificate_hash": "ae18efbd181154f3c927bee979e2d0f8621cb6a4"
+          }
+        },
+        {
+          "client_id": "334257891538-old2gvc9lblc6gm28r5ooh6jebamplnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWFz5BCw8LBVqVuyuEaGne5cxbwIxFiMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334257891538-old2gvc9lblc6gm28r5ooh6jebamplnj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334257891538-llj35u2n9u73iq1ffcka8oop81sktc2o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.byourside"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
