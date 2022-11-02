@@ -1,35 +1,24 @@
-import 'package:byourside/screen/postList.dart';
+import 'package:byourside/screen/nanum/nanumPostList.dart';
+import 'package:byourside/screen/ondo/postList.dart';
+import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
+  final Color primaryColor;
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyStatefulWidget(),
-    );
-  }
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
-  static TextStyle optionStyle = const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static TextStyle optionStyle =
+    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    PostList(),
-    Text(
-      'Index 1: Nanum',
-      style: optionStyle,
-    ),
+    PostList(
+        // PostList 위젯에 primartColor를 인자로 넘김
+        primaryColor: Color(0xFF045558)),
+    NanumPostList(primaryColor: Color(0xFF045558)),
     Text(
       'Index 2: Chat',
       style: optionStyle,
@@ -39,8 +28,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       style: optionStyle,
     ),
   ];
-
-  void _onItemTapped(int index) { // 탭을 클릭했을떄 지정한 페이지로 이동
+  void _onItemTapped(int index) {
+    // 탭을 클릭했을떄 지정한 페이지로 이동
     setState(() {
       _selectedIndex = index;
     });
@@ -55,8 +44,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color.fromARGB(255, 158, 233, 197),
-        unselectedItemColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Color(0xFF045558),
+        unselectedItemColor: Color.fromARGB(255, 0, 0, 0),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.groups_rounded),
@@ -76,7 +65,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
         onTap: _onItemTapped,
       ),
     );
