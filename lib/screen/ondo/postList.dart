@@ -2,6 +2,7 @@ import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:byourside/main.dart';
 
 class PostList extends StatefulWidget {
   const PostList({Key? key, required this.primaryColor}) : super(key: key);
@@ -99,7 +100,7 @@ class _PostListState extends State<PostList> {
               MaterialPageRoute(
                   builder: (context) => const PostPage(
                         // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: widget.primaryColor,
+                        primaryColor: primaryColor,
                         title: '마음온도 글쓰기',
                       )));
         },
