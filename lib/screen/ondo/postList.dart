@@ -3,8 +3,16 @@ import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class PostList extends StatelessWidget {
-  PostList({super.key});
+class PostList extends StatefulWidget {
+  const PostList({Key? key, required this.primaryColor}) : super(key: key);
+  final Color primaryColor;
+  final String title = "마음온도";
+
+  @override
+  State<PostList> createState() => _PostListState();
+}
+
+class _PostListState extends State<PostList> {
 
   final String fnTitle = "title";
   final String fnContent = "content";
@@ -61,7 +69,9 @@ class PostList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("마음온도 게시판"),
+        // AppBar 색상 primaryColor로 지정
+        backgroundColor: widget.primaryColor,
+        title: Text(widget.title),
       ),
       body: ListView(
         children: <Widget>[
@@ -80,6 +90,8 @@ class PostList extends StatelessWidget {
           )
         ]
       ),
+      // bottomNavigationBar: BottomNavBar(),
+      // 누르면 글 작성하는 PostPage로 navigate하는 버튼
        floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -87,11 +99,11 @@ class PostList extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => const PostPage(
                         // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: Colors.blueGrey,
+                        primaryColor: widget.primaryColor,
                         title: '마음온도 글쓰기',
                       )));
         },
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: widget.primaryColor,
         child: const Icon(Icons.add),
       ),
     );
