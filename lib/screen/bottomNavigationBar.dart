@@ -1,6 +1,6 @@
 import 'package:byourside/screen/nanum/nanumPostList.dart';
-import 'package:byourside/screen/post/postList.dart';
-import 'package:byourside/screen/post/postPage.dart';
+import 'package:byourside/screen/ondo/postList.dart';
+import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {

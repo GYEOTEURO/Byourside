@@ -1,5 +1,5 @@
 import 'package:byourside/screen/bottomNavigationBar.dart';
-import 'package:byourside/screen/post/postPage.dart';
+import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
