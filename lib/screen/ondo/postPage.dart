@@ -43,6 +43,9 @@ class _PostPageState extends State<PostPage> {
     if (images != null) {
       setState(() {
         _images = images; // 가져온 이미지를 _image에 저장
+        for (XFile element in _images) {
+          print(element.path);
+        }
       });
     }
   }
