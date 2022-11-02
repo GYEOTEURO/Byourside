@@ -1,4 +1,4 @@
-import 'package:byourside/screen/postList.dart';
+import 'package:byourside/screen/ondo/postList.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
