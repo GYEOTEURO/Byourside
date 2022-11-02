@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:byourside/screen/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:byourside/screen/bottomNavigationBar.dart';
+import 'package:byourside/main.dart';
 
 class VerifyEmail extends StatefulWidget {
   @override
@@ -69,7 +70,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? Home()
+      ? BottomNavBar(primaryColor: primaryColor)
       : Scaffold(
           appBar: AppBar(
             title: Text('Verify Email'),

@@ -53,13 +53,10 @@ dependencies:
   url_launcher: ^6.1.6
   flutter_sfsymbols: ^1.0.0
   material_design_icons_flutter: 5.0.6996
-  location:
+#  location:
   dotted_border: ^2.0.0+3
   firebase_storage:
 
-  http: ^0.13.5
-  firebase_core: ^1.24.0
-  cloud_firestore: ^3.5.0
 
 dev_dependencies:
   flutter_test:
