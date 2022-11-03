@@ -3,6 +3,8 @@ import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 
+import 'mypage/my_page.dart';
+
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
@@ -23,10 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       'Index 2: Chat',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: MyPage',
-      style: optionStyle,
-    ),
+    Mypage(),
   ];
   void _onItemTapped(int index) {
     // 탭을 클릭했을떄 지정한 페이지로 이동
