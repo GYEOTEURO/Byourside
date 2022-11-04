@@ -1,30 +1,29 @@
+import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
 class Post extends StatelessWidget {
-  Post({super.key, required this.documentID});
+  Post({super.key, required this.documentID, required this.primaryColor});
   
   final String documentID;
+  final Color primaryColor;
   final User? user = FirebaseAuth.instance.currentUser;
   
   Widget _buildListItem(BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
     DocumentSnapshot<Object?>? document = snapshot.data;
-    String? userName = document!["userID"];
+
     final TextEditingController _comment = TextEditingController();
 
     Timestamp t = document!["datetime"];
     DateTime d = t.toDate();
     String doc_date = d.toString();
     doc_date = doc_date.split(' ')[0];
-  
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("마음온도 게시글"),
-      ),
+      appBar: OndoAppBar(primaryColor: primaryColor),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -44,7 +43,7 @@ class Post extends StatelessWidget {
                           style: const TextStyle(color: Colors.black54),
                          )
                 ),
-                if("mg" == document["userID"])(
+                if(user?.uid == document["userID"])(
                   RichText(
                     text: TextSpan(children: [
                       TextSpan(
@@ -57,7 +56,7 @@ class Post extends StatelessWidget {
                     ],
                   )
                 )),
-                if("mg" == document["userID"])(
+                if(user?.uid == document["userID"])(
                   FloatingActionButton.extended(
                     heroTag: 'deletePost',
                     onPressed: () { deleteDoc(); },
@@ -66,8 +65,14 @@ class Post extends StatelessWidget {
                 )
               ]
             ),
-            const Image(
-                image: AssetImage("images/cat.jpeg"),
+            if(document["image_url"].length > 0)(
+              Container(
+              child: Column(
+                children: <Widget>[
+                  for (String url in document["image_url"])
+                     Image.network(url)
+                ], 
+              ))  
             ),
             Container(
               alignment: Alignment.centerLeft,
@@ -223,7 +228,7 @@ class Post extends StatelessWidget {
   void createComment(String content) {
     FirebaseFirestore.instance.collection('ondoPost').doc(documentID).collection('comment').add
     ({
-      "userID": "haeun",
+      "userID": user?.uid,
       "content": content,
       "datetime": Timestamp.now(),
     });
