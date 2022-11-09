@@ -1,10 +1,12 @@
 import 'package:byourside/main.dart';
+import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/screen/authenticate/login.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {
   final String phone;
@@ -14,13 +16,11 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _formKey = GlobalKey<ScaffoldState>();
   final TextEditingController otpCode = TextEditingController();
 
-  // final AuthService _auth = AuthService();
-
-  bool isLoading = false;
-  String? verificationId;
+  final AuthService _auth = AuthService();
+  late AuthProvider _authProvider;
 
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -33,8 +33,10 @@ class _OTPScreenState extends State<OTPScreen> {
   );
   @override
   Widget build(BuildContext context) {
+    _authProvider = Provider.of<AuthProvider>(context, listen: true);
+
     return Scaffold(
-      key: _scaffoldkey,
+      key: _formKey,
       appBar: AppBar(
         title: Text('OTP Verification'),
       ),
@@ -62,13 +64,17 @@ class _OTPScreenState extends State<OTPScreen> {
                 try {
                   await FirebaseAuth.instance
                       .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: verificationId!, smsCode: pin))
+                      verificationId: _authProvider.verificationId!, smsCode: pin))
                       .then((value) async {
                     if (value.user != null) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Login()),
-                              (route) => false);
+                      _authProvider.changeAuthOk(true);
+                      if (kDebugMode) {
+                        print(_authProvider.authOk);
+                      }
+                      await FirebaseAuth.instance.currentUser!.delete();
+                      if (_authProvider.authOk) {
+                        Navigator.of(context).pop();
+                      }
                     }
                   });
                 } catch (e) {
@@ -89,27 +95,32 @@ class _OTPScreenState extends State<OTPScreen> {
         verificationCompleted: _onVerificationCompleted,
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
-        },
-        codeSent: (String? verficationID, int? resendToken) {
           setState(() {
-            this.verificationId = verficationID;
+            _authProvider.changeIsLoading(false);
+          });
+        },
+        codeSent: (String? verificationID, int? resendToken) {
+          setState(() {
+            _authProvider.setVerificationId(verificationID!);
+            _authProvider.changeIsLoading(false);
+            print(_authProvider.verificationId);
+
           });
         },
         codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            this.verificationId = verificationID;
-          });
+          // Auto-resolution timed out...
         },
-        timeout: Duration(seconds: 60));
+        timeout: Duration(seconds: 60),
+    );
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
     print("verification completed ${authCredential.smsCode}");
     User? user = FirebaseAuth.instance.currentUser;
     setState(() {
-      this.otpCode.text = authCredential.smsCode!;
+      otpCode.text = authCredential.smsCode!;
     });
-    if (authCredential.smsCode != null) {
+     if (authCredential.smsCode != null) {
       try {
         UserCredential credential =
         await user!.linkWithCredential(authCredential);
@@ -118,22 +129,14 @@ class _OTPScreenState extends State<OTPScreen> {
           await FirebaseAuth.instance.signInWithCredential(authCredential);
         }
       }
-      setState(() {
-        isLoading = false;
-      });
+      // setState(() {
+      //   _auth.isLoading = false;
+      //   // _auth.signOut();
+      // });
     }
+    _authProvider.changeAuthOk(true);
+    //await FirebaseAuth.instance.currentUser!.delete();
   }
-
-  // await FirebaseAuth.instance
-  //     .signInWithCredential(credential)
-  //     .then((value) async {
-  //         if (value.user != null) {
-  //             Navigator.pushAndRemoveUntil(
-  //                 context,
-  //                 MaterialPageRoute(builder: (context) => Home()),
-  //                 (route) => false);
-  //         }
-  // });
 
   @override
   void initState() {

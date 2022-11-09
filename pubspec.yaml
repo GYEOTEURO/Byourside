@@ -45,7 +45,7 @@ dependencies:
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.0
   cloud_firestore: ^4.0.3
-  provider: ^6.0.2
+  provider: ^6.0.4
   google_sign_in: ^5.4.2
   pinput: ^2.2.16
   iamport_flutter: ^0.10.0

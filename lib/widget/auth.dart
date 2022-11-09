@@ -9,21 +9,9 @@ class AuthService {
     return user != null ? FirebaseUser(uid: user.uid) : null;
   }
 
-
   Stream<FirebaseUser?> get user {
     return _auth.authStateChanges().map(_firebaseUser);
   }
-
-  //
-  // Future signInAnonymous() async {
-  //   try {
-  //     UserCredential userCredential = await _auth.signInAnonymously();
-  //     User? user = userCredential.user;
-  //     return _firebaseUser(user);
-  //   } catch (e) {
-  //     return FirebaseUser(code: e.toString(), uid: null);
-  //   }
-  // }
 
 
   Future signInEmailPassword(LoginUser _login) async {
@@ -65,6 +53,32 @@ class AuthService {
   //     await _auth.sendPasswordResetEmail(email: _login.email.toString());
   //   } on FirebaseAuthException catch (e) {
   //     return FirebaseUser(uid: null, code: e.code);
+  //   }
+  // }
+
+  // Future signInCredential(LoginUser _login) async {
+  //   try {
+  //     await FirebaseAuth.instance
+  //         .signInWithCredential(PhoneAuthProvider.credential(
+  //         verificationId: _login.email!, smsCode: _login.password!))
+  //         .then((value) async {
+  //             return value;
+  //     });
+  //   } on FirebaseAuthException catch (e) {
+  //       return FirebaseUser(uid: null, code: e.code);
+  //   }
+  // }
+
+  // Future isVerified() async {
+  //   try {
+  //     if (verificationId != null) {
+  //       authOk = true;
+  //     }
+  //     else {
+  //       authOk = false;
+  //     }
+  //   } catch (e) {
+  //     authOk = false;
   //   }
   // }
 

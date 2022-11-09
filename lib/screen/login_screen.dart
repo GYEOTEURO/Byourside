@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/screen/wrapper.dart';
 import 'package:byourside/widget/social_button_from.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:byourside/widget/auth.dart';
 import '../model/firebase_user.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key?key, required this.primaryColor}) : super(key: key);
+  const LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
 
   @override
@@ -23,19 +24,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late CustomForm _customForm;
+  // late CustomForm _customForm;
 
   @override
   initState() {
     super.initState();
-    _customForm = CustomForm();
+    // _customForm = CustomForm();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<FirebaseUser?>.value(
-      value: AuthService().user,
-      initialData: null,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (BuildContext context) => AuthProvider()),
+        StreamProvider<FirebaseUser?>.value(
+          value: AuthService().user,
+          initialData: null,
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           brightness: Brightness.light,
@@ -44,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             buttonColor: primaryColor,
             textTheme: ButtonTextTheme.primary,
             colorScheme:
-            Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
+                Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
           ),
           fontFamily: 'Georgia',
           textTheme: const TextTheme(
@@ -54,26 +60,26 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         home: Wrapper(),
-      ),);
-
+      ),
+    );
   }
 
-  //     Scaffold(
-  //     body: Padding(
-  //       padding: const EdgeInsets.all(16.0),
-  //       child: ListView(
-  //         children: [
-  //           // SizedBox(height: xlarge_gap),
-  //           Logo("Login"),
-  //           SizedBox(height: large_gap), // 1. 추가
-  //           CustomForm(), // 2. 추가
-  //           //SocialButtonForm("kakao"),
-  //           googleLogin(),
-  //           // kakaoLogin(),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+//     Scaffold(
+//     body: Padding(
+//       padding: const EdgeInsets.all(16.0),
+//       child: ListView(
+//         children: [
+//           // SizedBox(height: xlarge_gap),
+//           Logo("Login"),
+//           SizedBox(height: large_gap), // 1. 추가
+//           CustomForm(), // 2. 추가
+//           //SocialButtonForm("kakao"),
+//           googleLogin(),
+//           // kakaoLogin(),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 }
