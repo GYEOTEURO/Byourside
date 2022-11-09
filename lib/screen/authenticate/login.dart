@@ -1,9 +1,11 @@
+import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   final Function? toggleView;
@@ -22,19 +24,17 @@ class _Login extends State<Login> {
   final _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
+  late AuthProvider _authProvider;
 
   @override
   Widget build(BuildContext context) {
+    _authProvider = Provider.of<AuthProvider>(context);
+
     final emailField = TextFormField(
+        enabled: _authProvider.authOk?true:false,
         controller: _email,
         autofocus: false,
         validator: (value) =>
-          // if (value != null) {
-          //   if (value.contains('@') && value.endsWith('.com')) {
-          //     return null;
-          //   }
-          //   return 'Enter a Valid Email Address';
-          // }
           value != null && !EmailValidator.validate(value)
               ? 'Enter a valid email'
               : null,
@@ -45,6 +45,7 @@ class _Login extends State<Login> {
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
     final passwordField = TextFormField(
+        enabled: _authProvider.authOk?true:false,
         obscureText: _obscureText,
         controller: _password,
         autofocus: false,
@@ -85,34 +86,6 @@ class _Login extends State<Login> {
               builder: (context) => ForgotPassword(),
             )),
         child: const Text('forgot password?'));
-
-    // final loginAnonymousButton = Material(
-    //   elevation: 5.0,
-    //   borderRadius: BorderRadius.circular(30.0),
-    //   color: Theme.of(context).primaryColor,
-    //   child: MaterialButton(
-    //     minWidth: MediaQuery.of(context).size.width,
-    //     padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-    //     onPressed: () async {
-    //       dynamic result = await _auth.signInAnonymous();
-    //
-    //       if (result.uid == null) { //null means unsuccessfull authentication
-    //         showDialog(
-    //             context: context,
-    //             builder: (context) {
-    //               return AlertDialog(
-    //                 content: Text(result.code),
-    //               );
-    //             });
-    //       }
-    //     },
-    //     child: Text(
-    //       "Log in Anonymously",
-    //       style: TextStyle(color: Theme.of(context).primaryColorLight),
-    //       textAlign: TextAlign.center,
-    //     ),
-    //   ),
-    // );
 
     final loginPhoneButton = Material(
       elevation: 5.0,
@@ -186,15 +159,15 @@ class _Login extends State<Login> {
                 children: <Widget>[
                   // loginAnonymousButton,
                   // const SizedBox(height: 45.0),
-                  loginPhoneButton,
+                  _authProvider.authOk?SizedBox():loginPhoneButton,
                   const SizedBox(height: 45.0),
                   emailField,
                   const SizedBox(height: 25.0),
                   passwordField,
-                  registerButton,
-                  forgotPassword,
+                  _authProvider.authOk?registerButton:SizedBox(),
+                  _authProvider.authOk?forgotPassword:SizedBox(),
                   const SizedBox(height: 35.0),
-                  loginEmailPasswordButton,
+                  _authProvider.authOk?loginEmailPasswordButton:SizedBox(),
                   const SizedBox(height: 15.0),
                 ],
               ),

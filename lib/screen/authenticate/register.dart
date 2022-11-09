@@ -1,6 +1,8 @@
+import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // change to 개인정보처리방침
@@ -30,9 +32,11 @@ class _Register extends State<Register> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  late AuthProvider _authProvider;
   @override
   Widget build(BuildContext context) {
+    _authProvider = Provider.of<AuthProvider>(context);
+
     final emailField = TextFormField(
         controller: _email,
         autofocus: false,
@@ -107,6 +111,9 @@ class _Register extends State<Register> {
                       content: Text(result.code),
                     );
                   });
+            }
+            else {
+              _authProvider.changeHaveEmail(true);
             }
           }
         },
