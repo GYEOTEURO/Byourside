@@ -1,11 +1,8 @@
-import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
-import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   final Function? toggleView;
@@ -24,14 +21,11 @@ class _Login extends State<Login> {
   final _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
-  // late AuthProvider _authProvider;
 
   @override
   Widget build(BuildContext context) {
-    // _authProvider = Provider.of<AuthProvider>(context);
 
     final emailField = TextFormField(
-        // enabled: _authProvider.authOk?true:false,
         controller: _email,
         autofocus: false,
         validator: (value) =>
@@ -45,7 +39,6 @@ class _Login extends State<Login> {
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
     final passwordField = TextFormField(
-        // enabled: _authProvider.authOk?true:false,
         obscureText: _obscureText,
         controller: _password,
         autofocus: false,
@@ -135,9 +128,6 @@ class _Login extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // loginAnonymousButton,
-                  // const SizedBox(height: 45.0),
-                  // _authProvider.authOk?SizedBox():loginPhoneButton,
                   const SizedBox(height: 45.0),
                   emailField,
                   const SizedBox(height: 25.0),

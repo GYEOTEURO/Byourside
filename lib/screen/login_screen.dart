@@ -1,14 +1,7 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/screen/wrapper.dart';
-import 'package:byourside/widget/social_button_from.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../size.dart';
-import '../widget/custom_form.dart';
-import '../widget/google_login.dart';
-import '../widget/logo.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'package:byourside/widget/auth.dart';
@@ -41,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => AuthProvider()),
         StreamProvider<FirebaseUser?>.value(
           value: AuthService().user,
           initialData: null,
