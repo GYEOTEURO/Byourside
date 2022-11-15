@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'package:byourside/model/auth_provider.dart';
-import 'package:byourside/screen/authenticate/handler.dart';
-import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/main.dart';
-import 'package:provider/provider.dart';
 
 class VerifyEmail extends StatefulWidget {
   @override
@@ -17,7 +13,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
-  final AuthService _auth = AuthService();
 
   @override
   void initState() {

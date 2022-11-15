@@ -1,11 +1,7 @@
-import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/model/login_user.dart';
-import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // change to 개인정보처리방침
@@ -32,13 +28,12 @@ class _Register extends State<Register> {
   final AuthService _auth = AuthService();
 
   bool _obscureText = true;
+  bool _isRegister = false;
   final _email = TextEditingController();
   final _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late AuthProvider _authProvider;
   @override
   Widget build(BuildContext context) {
-    _authProvider = Provider.of<AuthProvider>(context);
 
     final loginPhoneButton = Material(
       elevation: 5.0,
@@ -138,8 +133,7 @@ class _Register extends State<Register> {
                   });
             }
             else {
-              _authProvider.changeHaveEmail(true);
-              _authProvider.changeIsRegister(true);
+              _isRegister = true;
             }
           }
         },
@@ -179,7 +173,7 @@ class _Register extends State<Register> {
                   const SizedBox(height: 35.0),
                   registerButton, //(_authProvider.phoneNum==null)?SizedBox():
                   const SizedBox(height: 15.0),
-                  (_authProvider.isRegister==false)?SizedBox():loginPhoneButton,
+                  (_isRegister==false)?SizedBox():loginPhoneButton,
                 ],
               ),
             ),

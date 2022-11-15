@@ -1,13 +1,9 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/authenticate/login.dart';
-import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {
   final String phone;
@@ -28,8 +24,8 @@ class _OTPScreenState extends State<OTPScreen> {
     return _auth.authStateChanges().map(_firebaseUser);
   }
 
-  late AuthProvider _authProvider;
   int count = 0;
+  String? _verificationId;
 
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -43,7 +39,6 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _authProvider = Provider.of<AuthProvider>(context, listen: true);
 
     return Scaffold(
       key: _formKey,
@@ -70,21 +65,16 @@ class _OTPScreenState extends State<OTPScreen> {
               pinAnimationType: PinAnimationType.fade,
               onSubmitted: (pin) async {
                 try {
-                  final PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: _authProvider.verificationId!, smsCode: pin);
+                  final PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: _verificationId!, smsCode: pin);
                   await _auth.currentUser?.updatePhoneNumber(credential);
                   await _auth.currentUser?.linkWithCredential(credential);
 
                   await _auth.signInWithCredential(credential).then((value) async {
                     if (value.user != null) {
                       FirebaseUser(uid: value.user?.uid, phoneNum: widget.phone);
-                      // _authProvider.changeAuthOk(true);
-                      await _authProvider.setPhoneNum(widget.phone);
                       if (kDebugMode) {
                         print("otp");
                       }
-                      // if (_authProvider.authOk) {
-                      //   Navigator.of(context).popUntil((_) => count++ >= 2);
-                      // }
                     }
                   });
                 } catch (e) {
@@ -108,15 +98,10 @@ class _OTPScreenState extends State<OTPScreen> {
         verificationCompleted: _onVerificationCompleted,
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
-          setState(() {
-            // _authProvider.changeIsLoading(false);
-          });
         },
         codeSent: (String? verificationID, int? resendToken) async {
           setState(() {
-            _authProvider.setVerificationId(verificationID!);
-            // _authProvider.changeIsLoading(false);
-            print(_authProvider.verificationId);
+            _verificationId = verificationID;
           });
         },
         codeAutoRetrievalTimeout: (String verificationID) {
@@ -128,21 +113,12 @@ class _OTPScreenState extends State<OTPScreen> {
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
     print("verification completed ${authCredential.smsCode}");
-    // User? user = _auth.currentUser;
     await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
     setState(() {
       otpCode.text = authCredential.smsCode!;
     });
      if (authCredential.smsCode != null) {
        print("complete");
-      try {
-        // _authProvider.setPhoneCredential(authCredential);
-        // UserCredential credential = await user!.linkWithCredential(authCredential);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'provider-already-linked') {
-          await _auth.signInWithCredential(authCredential);
-        }
-      }
     }
   }
 

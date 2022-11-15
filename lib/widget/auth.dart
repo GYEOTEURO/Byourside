@@ -1,4 +1,3 @@
-import 'package:byourside/model/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../model/login_user.dart';
 import '../model/firebase_user.dart';
