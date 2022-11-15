@@ -1,3 +1,4 @@
+import 'package:byourside/model/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../model/login_user.dart';
 import '../model/firebase_user.dart';
@@ -6,7 +7,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   FirebaseUser? _firebaseUser(User? user) {
-    return user != null ? FirebaseUser(uid: user.uid) : null;
+    return user != null ? FirebaseUser(uid: user.uid, phoneNum: user.phoneNumber) : null;
   }
 
   Stream<FirebaseUser?> get user {
@@ -33,8 +34,13 @@ class AuthService {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
           email: _login.email.toString(),
-          password: _login.password.toString());
+          password: _login.password.toString(),
+      );
       User? user = userCredential.user;
+
+      // PhoneAuthCredential? credential = AuthProvider().phoneAuthCredential;
+      // await user!.updatePhoneNumber(credential!);
+
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

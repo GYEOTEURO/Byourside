@@ -18,7 +18,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
   bool canResendEmail = false;
   Timer? timer;
   final AuthService _auth = AuthService();
-  late AuthProvider _authProvider;
 
   @override
   void initState() {
@@ -59,10 +58,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
     try {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
-
-      setState(() => canResendEmail = false);
-      await Future.delayed(Duration(seconds: 60));
-      setState(() => canResendEmail = true);
+      if(user != null) {
+        setState(() => canResendEmail = false);
+        await Future.delayed(Duration(seconds: 60));
+        setState(() => canResendEmail = true);
+      }
     } catch (e) {
       showDialog(
           context: context,
@@ -76,8 +76,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   @override
   Widget build(BuildContext context) {
-    _authProvider = Provider.of<AuthProvider>(context);
-
+    print(isEmailVerified);
     if (isEmailVerified) {
       return BottomNavBar(primaryColor: primaryColor);
     } else {
