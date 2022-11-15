@@ -2,6 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/auth_provider.dart';
 import 'package:byourside/screen/wrapper.dart';
 import 'package:byourside/widget/social_button_from.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../size.dart';
 import '../widget/custom_form.dart';
@@ -14,7 +15,7 @@ import 'package:byourside/widget/auth.dart';
 import '../model/firebase_user.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
+  LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
 
   @override
@@ -25,11 +26,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // late CustomForm _customForm;
+  FirebaseAuth user = FirebaseAuth.instance;
 
   @override
   initState() {
     super.initState();
     // _customForm = CustomForm();
+    if (user.currentUser != null) {
+      FirebaseUser(uid: user.currentUser!.uid);
+    }
   }
 
   @override

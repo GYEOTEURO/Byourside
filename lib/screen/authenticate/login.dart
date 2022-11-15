@@ -24,14 +24,14 @@ class _Login extends State<Login> {
   final _password = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
-  late AuthProvider _authProvider;
+  // late AuthProvider _authProvider;
 
   @override
   Widget build(BuildContext context) {
-    _authProvider = Provider.of<AuthProvider>(context);
+    // _authProvider = Provider.of<AuthProvider>(context);
 
     final emailField = TextFormField(
-        enabled: _authProvider.authOk?true:false,
+        // enabled: _authProvider.authOk?true:false,
         controller: _email,
         autofocus: false,
         validator: (value) =>
@@ -45,7 +45,7 @@ class _Login extends State<Login> {
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
     final passwordField = TextFormField(
-        enabled: _authProvider.authOk?true:false,
+        // enabled: _authProvider.authOk?true:false,
         obscureText: _obscureText,
         controller: _password,
         autofocus: false,
@@ -86,28 +86,6 @@ class _Login extends State<Login> {
               builder: (context) => ForgotPassword(),
             )),
         child: const Text('forgot password?'));
-
-    final loginPhoneButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Theme.of(context).primaryColor,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          // const VerifyPhone();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => VerifyPhone()),
-          ); //Navigator.pushNamed(context, "/phone");
-        },
-        child: Text(
-          "Log in with phone number",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
 
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
@@ -159,15 +137,15 @@ class _Login extends State<Login> {
                 children: <Widget>[
                   // loginAnonymousButton,
                   // const SizedBox(height: 45.0),
-                  _authProvider.authOk?SizedBox():loginPhoneButton,
+                  // _authProvider.authOk?SizedBox():loginPhoneButton,
                   const SizedBox(height: 45.0),
                   emailField,
                   const SizedBox(height: 25.0),
                   passwordField,
-                  _authProvider.authOk?registerButton:SizedBox(),
-                  _authProvider.authOk?forgotPassword:SizedBox(),
+                  registerButton,
+                  forgotPassword,
                   const SizedBox(height: 35.0),
-                  _authProvider.authOk?loginEmailPasswordButton:SizedBox(),
+                  loginEmailPasswordButton,
                   const SizedBox(height: 15.0),
                 ],
               ),
