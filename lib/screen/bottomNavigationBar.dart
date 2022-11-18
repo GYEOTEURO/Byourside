@@ -1,3 +1,4 @@
+import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
@@ -15,18 +16,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    PostList(
-        // PostList 위젯에 primartColor를 인자로 넘김
-        primaryColor: Color(0xFF045558)),
+    PostList(primaryColor: Color(0xFF045558)),
     NanumPostList(primaryColor: Color(0xFF045558)),
     Text(
       'Index 2: Chat',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: MyPage',
-      style: optionStyle,
-    ),
+    Mypage(),
   ];
   void _onItemTapped(int index) {
     // 탭을 클릭했을떄 지정한 페이지로 이동

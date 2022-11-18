@@ -1,3 +1,6 @@
+import 'package:byourside/main.dart';
+import 'package:byourside/screen/nanum/appbar.dart';
+import 'package:byourside/screen/nanum/nanumPostPage.dart';
 import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/gestures.dart';
@@ -6,25 +9,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../main.dart';
-
-
-class Post extends StatefulWidget {
-  Post({super.key, required this.documentID, required this.primaryColor});
-
+class NanumPost extends StatefulWidget {
+  NanumPost({super.key, required this.documentID, required this.primaryColor});
+  
   final String documentID;
   final Color primaryColor;
 
   @override
-  State<Post> createState() => _PostState();
+  State<NanumPost> createState() => _NanumPostState();
 }
 
-class _PostState extends State<Post> {
-
+class _NanumPostState extends State<NanumPost> {
+  
   final User? user = FirebaseAuth.instance.currentUser;
   String? nickname = "";
 
-  Widget _buildListItem(String documentID, BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
+  Widget _buildListItem(String documentID, BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
     DocumentSnapshot<Object?>? document = snapshot.data;
 
     FirebaseFirestore.instance.collection('user').doc(document!["userID"]).get()
@@ -39,7 +39,7 @@ class _PostState extends State<Post> {
     doc_date = doc_date.split(' ')[0];
 
     return Scaffold(
-      appBar: OndoAppBar(primaryColor: primaryColor),
+      appBar: NanumAppBar(primaryColor: primaryColor),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(10),
@@ -75,34 +75,41 @@ class _PostState extends State<Post> {
                   )
                 )),
                 if(user?.uid == document["userID"])(
-                RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: "삭제",
-                        style: const TextStyle(color: Colors.black),
-                        recognizer: TapGestureRecognizer()
-                        ..onTapDown = (details) {
-                          deleteDoc(documentID);
-                        })
-                    ],
-                  )
-                )),
+                  RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: "삭제",
+                          style: const TextStyle(color: Colors.black),
+                          recognizer: TapGestureRecognizer()
+                          ..onTapDown = (details) {
+                            deleteDoc(documentID);
+                          })
+                      ],
+                    )
+                  )),
               ]
             ),
             Divider(thickness: 1, height: 1, color: Colors.blueGrey[200]),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "가격: " + document["price"] + "원",
+                style: const TextStyle(fontSize: 20),
+              )
+            ),
             if(document["image_url"].length > 0)(
               Container(
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Column(
-                children: [
-                  for (String url in document["image_url"])(
-                    Container(
-                      child: Image.network(url),
-                      padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
-                  ))
-                ], 
-              ))  
-            ),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Column(
+                  children: [
+                    for (String url in document["image_url"])(
+                      Container(
+                        child: Image.network(url),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    ))
+                  ], 
+            ))),  
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -148,20 +155,23 @@ class _PostState extends State<Post> {
                         borderSide: BorderSide(width: 1),
                       ),
                     )
+                    
                 ),
                 ),
                 FloatingActionButton.extended(
                   heroTag: 'saveComment',
                   onPressed: () { createComment(documentID, _comment.text); },
                   label: const Icon(Icons.send),
-                  backgroundColor: primaryColor, 
+                  backgroundColor: primaryColor,  
+                    
                 ),
               ]
             ),
             _showComment(documentID, context),
           ])
+        )
       )
-    ));
+    );
   }
 
    Widget _commentList(String documentID, BuildContext context, DocumentSnapshot comment){
@@ -176,27 +186,25 @@ class _PostState extends State<Post> {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   child: Column(
-                    children: [ 
+                    children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Container(                                   
-                                    child: Text(comment["content"],
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    ))
+                                  child: Container(
+                                    child: Text(
+                                    comment["content"],
+                                    style: const TextStyle(fontSize: 17),
+                                  )
                                 )),
                                 Row(                                    
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Text(
-                                          comment["userID"] +" / " + com_date,
-                                        style: const TextStyle(color: Colors.black54),
-                                      )
-                                  ),
-                                  if(user?.uid == comment["userID"])RichText(
+                                      comment["userID"] +" / " + com_date,
+                                      style: const TextStyle(color: Colors.black54),
+                                    )),
+                                    if(user?.uid == comment["userID"])(
+                                      RichText(
                                         text: TextSpan(children: [
                                         TextSpan(
                                           text: "삭제",
@@ -207,17 +215,18 @@ class _PostState extends State<Post> {
                                           })
                                       ],
                                     )
-                                  )
-                                  ]),
-                      ],
-                  ))
+                                  ))
+                                ])   
+                              ],
+                            ),
+                          ),
               )
            ); 
   }
 
   Widget _showComment(String documentID, BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('ondoPost').doc(documentID).collection('comment').snapshots(),
+            stream: FirebaseFirestore.instance.collection('nanumPost').doc(documentID).collection('comment').snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if(!snapshot.hasData){
                 return const Text("댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!");
@@ -234,9 +243,9 @@ class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     String documentID = widget.documentID;
-    
+
     return StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance.collection('ondoPost').doc(documentID).snapshots(),
+            stream: FirebaseFirestore.instance.collection('nanumPost').doc(documentID).snapshots(),
             builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
               if(!snapshot.hasData){
                 return const Text("");
@@ -252,10 +261,10 @@ class _PostState extends State<Post> {
     Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const PostPage(
+                  builder: (context) => const NanumPostPage(
                         // PostPage 위젯에 primartColor와 title명을 인자로 넘김
                         primaryColor: Colors.blueGrey,
-                        title: '마음온도 글쓰기',
+                        title: '마음나눔 글쓰기',
                   )
               )
     );
@@ -263,12 +272,12 @@ class _PostState extends State<Post> {
 
   // 문서 삭제 (Delete)
   void deleteDoc(String documentID) {
-    FirebaseFirestore.instance.collection('ondoPost').doc(documentID).delete();
+    FirebaseFirestore.instance.collection('nanumPost').doc(documentID).delete();
   }
 
   // 댓글 생성 (Create)
   void createComment(String documentID, String content) {
-    FirebaseFirestore.instance.collection('ondoPost').doc(documentID).collection('comment').add
+    FirebaseFirestore.instance.collection('nanumPost').doc(documentID).collection('comment').add
     ({
       "userID": user?.uid,
       "content": content,
@@ -278,7 +287,7 @@ class _PostState extends State<Post> {
 
   // 댓글 삭제 (Delete)
   void deleteComment(String documentID, String commentID) {
-    FirebaseFirestore.instance.collection('ondoPost').doc(documentID).collection('comment').doc(commentID).delete();
+    FirebaseFirestore.instance.collection('nanumPost').doc(documentID).collection('comment').doc(commentID).delete();
   }
 
   void clickLikeButton(BuildContext context){
@@ -288,5 +297,5 @@ class _PostState extends State<Post> {
   void clickScrapButton(BuildContext context){
     
   }
-
+  
 }
