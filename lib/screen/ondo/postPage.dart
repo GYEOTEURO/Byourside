@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,9 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
+final storageRef = FirebaseStorage.instance.ref();
 class PostPage extends StatefulWidget {
   const PostPage({Key? key, required this.primaryColor, required this.title})
       : super(key: key);
@@ -43,9 +47,8 @@ class _PostPageState extends State<PostPage> {
     if (images != null) {
       setState(() {
         _images = images; // 가져온 이미지를 _image에 저장
-        for (XFile element in _images) {
-          print(element.path);
-        }
+
+        //_images = images.map<File>((xfile) => File(xfile.path)).toList();
       });
     }
   }
@@ -238,15 +241,35 @@ class _PostPageState extends State<PostPage> {
     );
   }
 
-   // 문서 생성 (Create)
-  void createDoc(String title, String content) {
-    FirebaseFirestore.instance.collection('ondoPost').add({
-      "userID": "jiwon",
+  List<String> urls = [];
+
+  // 문서 생성 (Create)
+  void createDoc(String? title, String? content) async {
+    urls.clear();
+
+    // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
+    if(_images != null){
+      for(XFile element in _images){
+        final imageRef = storageRef.child('images/${element.name}');
+        File file = File(element.path);
+
+        try {
+        await imageRef.putFile(file);
+        final String url = await imageRef.getDownloadURL();
+        urls.add(url);
+        } on FirebaseException catch(e) {} 
+      } 
+    };
+
+    // image url 포함해 firestore에 document 저장
+    FirebaseFirestore.instance.collection('ondoPost').add
+    ({
+      "userID": user?.uid,
       "title": title,
       "content": content,
       "datetime": Timestamp.now(),
+      "image_url": urls,
     });
-    
   }
-}
 
+}
