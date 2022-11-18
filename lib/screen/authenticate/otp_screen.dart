@@ -1,6 +1,5 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/authenticate/login.dart';
-import 'package:byourside/widget/auth.dart';
+import 'package:byourside/model/firebase_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +13,19 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _formKey = GlobalKey<ScaffoldState>();
   final TextEditingController otpCode = TextEditingController();
 
-  // final AuthService _auth = AuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseUser? _firebaseUser(User? user) {
+    return user != null ? FirebaseUser(uid: user.uid, phoneNum: user.phoneNumber) : null;
+  }
+  Stream<FirebaseUser?> get user {
+    return _auth.authStateChanges().map(_firebaseUser);
+  }
 
-  bool isLoading = false;
-  String? verificationId;
+  int count = 0;
+  String? _verificationId;
 
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -31,10 +36,12 @@ class _OTPScreenState extends State<OTPScreen> {
       borderRadius: BorderRadius.circular(20),
     ),
   );
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      key: _scaffoldkey,
+      key: _formKey,
       appBar: AppBar(
         title: Text('OTP Verification'),
       ),
@@ -54,27 +61,29 @@ class _OTPScreenState extends State<OTPScreen> {
             child: Pinput(
               length: 6,
               defaultPinTheme: defaultPinTheme,
-
               controller: otpCode,
-
               pinAnimationType: PinAnimationType.fade,
               onSubmitted: (pin) async {
                 try {
-                  await FirebaseAuth.instance
-                      .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: verificationId!, smsCode: pin))
-                      .then((value) async {
+                  final PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: _verificationId!, smsCode: pin);
+                  await _auth.currentUser?.updatePhoneNumber(credential);
+                  await _auth.currentUser?.linkWithCredential(credential);
+
+                  await _auth.signInWithCredential(credential).then((value) async {
                     if (value.user != null) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Login()),
-                              (route) => false);
+                      FirebaseUser(uid: value.user?.uid, phoneNum: widget.phone);
+                      if (kDebugMode) {
+                        print("otp");
+                      }
                     }
                   });
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-
+                  FirebaseUser(code: e.toString(), uid: null);
                 }
+                await FirebaseAuth.instance.currentUser!.reload();
+                Navigator.of(context).popUntil((_) => count++ >= 2);
+
               },
             ),
           )
@@ -84,56 +93,34 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   verifyPhone() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    await _auth.verifyPhoneNumber(
         phoneNumber: '+82${widget.phone}',
         verificationCompleted: _onVerificationCompleted,
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
         },
-        codeSent: (String? verficationID, int? resendToken) {
+        codeSent: (String? verificationID, int? resendToken) async {
           setState(() {
-            this.verificationId = verficationID;
+            _verificationId = verificationID;
           });
         },
         codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            this.verificationId = verificationID;
-          });
+          // Auto-resolution timed out...
         },
-        timeout: Duration(seconds: 60));
+        timeout: Duration(seconds: 60),
+    );
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
     print("verification completed ${authCredential.smsCode}");
-    User? user = FirebaseAuth.instance.currentUser;
+    await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
     setState(() {
-      this.otpCode.text = authCredential.smsCode!;
+      otpCode.text = authCredential.smsCode!;
     });
-    if (authCredential.smsCode != null) {
-      try {
-        UserCredential credential =
-        await user!.linkWithCredential(authCredential);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'provider-already-linked') {
-          await FirebaseAuth.instance.signInWithCredential(authCredential);
-        }
-      }
-      setState(() {
-        isLoading = false;
-      });
+     if (authCredential.smsCode != null) {
+       print("complete");
     }
   }
-
-  // await FirebaseAuth.instance
-  //     .signInWithCredential(credential)
-  //     .then((value) async {
-  //         if (value.user != null) {
-  //             Navigator.pushAndRemoveUntil(
-  //                 context,
-  //                 MaterialPageRoute(builder: (context) => Home()),
-  //                 (route) => false);
-  //         }
-  // });
 
   @override
   void initState() {
