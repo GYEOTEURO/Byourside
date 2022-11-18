@@ -1,3 +1,4 @@
+import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -5,119 +6,156 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Post extends StatelessWidget {
-  Post({super.key, required this.documentID});
+import '../../main.dart';
+
+class Post extends StatefulWidget {
+  Post({super.key, required this.documentID, required this.primaryColor});
 
   final String documentID;
-  final User? user = FirebaseAuth.instance.currentUser;
+  final Color primaryColor;
 
-  Widget _buildListItem(
-      BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+  @override
+  State<Post> createState() => _PostState();
+}
+
+class _PostState extends State<Post> {
+  final User? user = FirebaseAuth.instance.currentUser;
+  String? nickname = "";
+
+  Widget _buildListItem(String documentID, BuildContext context,
+      AsyncSnapshot<DocumentSnapshot> snapshot) {
     DocumentSnapshot<Object?>? document = snapshot.data;
-    String? userName = document!["userID"];
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(document!["userID"])
+        .get()
+        .then((value) async => await (nickname = value["nickname"]));
+
     final TextEditingController _comment = TextEditingController();
 
-    Timestamp t = document["datetime"];
+    Timestamp t = document!["datetime"];
     DateTime d = t.toDate();
     String doc_date = d.toString();
     doc_date = doc_date.split(' ')[0];
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("마음온도 게시글"),
-        ),
+        appBar: OndoAppBar(primaryColor: primaryColor),
         body: SingleChildScrollView(
-            child: Column(children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                  child: Text(
-                document["title"],
-                style: const TextStyle(fontSize: 25),
-              ))),
-          Row(children: [
-            Expanded(
-                child: Text(
-              document["userID"] + " / " + doc_date,
-              style: const TextStyle(color: Colors.black54),
-            )),
-            if ("mg" == document["userID"])
-              (RichText(
-                  text: TextSpan(
-                children: [
-                  TextSpan(
-                      text: "수정",
-                      style: const TextStyle(color: Colors.black),
-                      recognizer: TapGestureRecognizer()
-                        ..onTapDown = (details) {
-                          updateDoc(context);
-                        })
-                ],
-              ))),
-            if ("mg" == document["userID"])
-              (FloatingActionButton.extended(
-                heroTag: 'deletePost',
-                onPressed: () {
-                  deleteDoc();
-                },
-                label: const Text("삭제"),
-              ))
-          ]),
-          const Image(
-            image: AssetImage("images/cat.jpeg"),
-          ),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                document["content"],
-                style: const TextStyle(fontSize: 15),
-              )),
-          Row(children: [
-            Expanded(
-              child: IconButton(
-                alignment: Alignment.centerLeft,
-                onPressed: () {
-                  clickLikeButton(context);
-                },
-                icon: const Icon(Icons.favorite_outline),
-                color: const Color.fromARGB(255, 207, 77, 68),
-              ),
-            ),
-            IconButton(
-              alignment: Alignment.centerLeft,
-              onPressed: () {
-                clickScrapButton(context);
-              },
-              icon: const Icon(Icons.star_outline),
-              color: const Color.fromARGB(255, 244, 231, 98),
-            ),
-          ]),
-          Row(children: [
-            Expanded(
-                child: TextFormField(
-                    controller: _comment,
-                    minLines: 1,
-                    maxLines: 8,
-                    decoration: const InputDecoration(
-                      labelText: "댓글을 작성해주세요.",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1),
+            child: Container(
+                margin: EdgeInsets.all(10),
+                child: Column(children: [
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                          child: Text(
+                        document["title"],
+                        style: const TextStyle(fontSize: 25),
+                      ))),
+                  Row(children: [
+                    Expanded(
+                        child: Text(
+                      nickname! + " / " + doc_date,
+                      style: const TextStyle(color: Colors.black54),
+                    )),
+                    if (user?.uid == document["userID"])
+                      (RichText(
+                          text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "수정  ",
+                              style: const TextStyle(color: Colors.black),
+                              recognizer: TapGestureRecognizer()
+                                ..onTapDown = (details) {
+                                  updateDoc(context);
+                                })
+                        ],
+                      ))),
+                    if (user?.uid == document["userID"])
+                      (RichText(
+                          text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "삭제",
+                              style: const TextStyle(color: Colors.black),
+                              recognizer: TapGestureRecognizer()
+                                ..onTapDown = (details) {
+                                  deleteDoc(documentID);
+                                })
+                        ],
+                      ))),
+                  ]),
+                  Divider(thickness: 1, height: 1, color: Colors.blueGrey[200]),
+                  if (document["image_url"].length > 0)
+                    (Container(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: Column(
+                          children: [
+                            for (String url in document["image_url"])
+                              (Container(
+                                child: Image.network(url),
+                                padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                              ))
+                          ],
+                        ))),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        document["content"],
+                        style: const TextStyle(fontSize: 15),
+                      )),
+                  Row(children: [
+                    Expanded(
+                      child: IconButton(
+                        alignment: Alignment.centerLeft,
+                        onPressed: () {
+                          clickLikeButton(context);
+                        },
+                        icon: const Icon(Icons.favorite_outline),
+                        color: const Color.fromARGB(255, 207, 77, 68),
                       ),
-                    ))),
-            FloatingActionButton.extended(
-              heroTag: 'saveComment',
-              onPressed: () {
-                createComment(_comment.text);
-              },
-              label: const Text("저장"),
-            ),
-          ]),
-          _showComment(context),
-        ])));
+                    ),
+                    IconButton(
+                      alignment: Alignment.centerLeft,
+                      onPressed: () {
+                        clickScrapButton(context);
+                      },
+                      icon: const Icon(Icons.star_outline),
+                      color: const Color.fromARGB(255, 244, 231, 98),
+                    ),
+                  ]),
+                  Row(children: [
+                    //댓글 위치 고정
+                    //Spacer(),
+                    Expanded(
+                      child: TextField(
+                          controller: _comment,
+                          minLines: 1,
+                          maxLines: 8,
+                          decoration: const InputDecoration(
+                            labelText: "댓글을 작성해주세요.",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(width: 1),
+                            ),
+                          )),
+                    ),
+                    FloatingActionButton.extended(
+                      heroTag: 'saveComment',
+                      onPressed: () {
+                        createComment(documentID, _comment.text);
+                      },
+                      label: const Icon(Icons.send),
+                      backgroundColor: primaryColor,
+                    ),
+                  ]),
+                  _showComment(documentID, context),
+                ]))));
   }
 
-  Widget _commentList(BuildContext context, DocumentSnapshot comment) {
+  Widget _commentList(
+      String documentID, BuildContext context, DocumentSnapshot comment) {
     Timestamp t = comment["datetime"];
     DateTime d = t.toDate();
     String com_date = d.toString();
@@ -126,45 +164,46 @@ class Post extends StatelessWidget {
     return Card(
         elevation: 2,
         child: InkWell(
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      comment["content"],
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
+            child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            child: Text(comment["content"],
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                )))),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: Text(
+                            comment["userID"] + " / " + com_date,
+                            style: const TextStyle(color: Colors.black54),
+                          )),
+                          if (user?.uid == comment["userID"])
+                            RichText(
+                                text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "삭제",
+                                    style: const TextStyle(color: Colors.black),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTapDown = (details) {
+                                        deleteComment(documentID, comment.id);
+                                      })
+                              ],
+                            ))
+                        ]),
                   ],
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    comment["userID"] + " / " + com_date,
-                    style: const TextStyle(color: Colors.black54),
-                  ),
-                ),
-                if (user?.uid == comment["userID"])
-                  (FloatingActionButton.extended(
-                    heroTag: 'deleteComment',
-                    onPressed: () {
-                      deleteComment(comment.id);
-                    },
-                    label: const Text("삭제"),
-                  )),
-              ],
-            ),
-          ),
-        ));
+                ))));
   }
 
-  Widget _showComment(BuildContext context) {
+  Widget _showComment(String documentID, BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('ondoPost')
@@ -178,13 +217,15 @@ class Post extends StatelessWidget {
           return ListView.builder(
               shrinkWrap: true,
               itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) =>
-                  _commentList(context, snapshot.data!.docs[index]));
+              itemBuilder: (context, index) => _commentList(
+                  documentID, context, snapshot.data!.docs[index]));
         });
   }
 
   @override
   Widget build(BuildContext context) {
+    String documentID = widget.documentID;
+
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('ondoPost')
@@ -194,7 +235,7 @@ class Post extends StatelessWidget {
           if (!snapshot.hasData) {
             return const Text("");
           }
-          return _buildListItem(context, snapshot);
+          return _buildListItem(documentID, context, snapshot);
         });
   }
 
@@ -211,25 +252,25 @@ class Post extends StatelessWidget {
   }
 
   // 문서 삭제 (Delete)
-  void deleteDoc() {
+  void deleteDoc(String documentID) {
     FirebaseFirestore.instance.collection('ondoPost').doc(documentID).delete();
   }
 
   // 댓글 생성 (Create)
-  void createComment(String content) {
+  void createComment(String documentID, String content) {
     FirebaseFirestore.instance
         .collection('ondoPost')
         .doc(documentID)
         .collection('comment')
         .add({
-      "userID": "haeun",
+      "userID": user?.uid,
       "content": content,
       "datetime": Timestamp.now(),
     });
   }
 
   // 댓글 삭제 (Delete)
-  void deleteComment(String commentID) {
+  void deleteComment(String documentID, String commentID) {
     FirebaseFirestore.instance
         .collection('ondoPost')
         .doc(documentID)

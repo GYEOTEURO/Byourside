@@ -1,6 +1,5 @@
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
-import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +24,11 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
     final emailField = TextFormField(
         controller: _email,
         autofocus: false,
         validator: (value) =>
-          // if (value != null) {
-          //   if (value.contains('@') && value.endsWith('.com')) {
-          //     return null;
-          //   }
-          //   return 'Enter a Valid Email Address';
-          // }
           value != null && !EmailValidator.validate(value)
               ? 'Enter a valid email'
               : null,
@@ -86,56 +80,6 @@ class _Login extends State<Login> {
             )),
         child: const Text('forgot password?'));
 
-    // final loginAnonymousButton = Material(
-    //   elevation: 5.0,
-    //   borderRadius: BorderRadius.circular(30.0),
-    //   color: Theme.of(context).primaryColor,
-    //   child: MaterialButton(
-    //     minWidth: MediaQuery.of(context).size.width,
-    //     padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-    //     onPressed: () async {
-    //       dynamic result = await _auth.signInAnonymous();
-    //
-    //       if (result.uid == null) { //null means unsuccessfull authentication
-    //         showDialog(
-    //             context: context,
-    //             builder: (context) {
-    //               return AlertDialog(
-    //                 content: Text(result.code),
-    //               );
-    //             });
-    //       }
-    //     },
-    //     child: Text(
-    //       "Log in Anonymously",
-    //       style: TextStyle(color: Theme.of(context).primaryColorLight),
-    //       textAlign: TextAlign.center,
-    //     ),
-    //   ),
-    // );
-
-    final loginPhoneButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Theme.of(context).primaryColor,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          // const VerifyPhone();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => VerifyPhone()),
-          ); //Navigator.pushNamed(context, "/phone");
-        },
-        child: Text(
-          "Log in with phone number",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -184,9 +128,6 @@ class _Login extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // loginAnonymousButton,
-                  // const SizedBox(height: 45.0),
-                  loginPhoneButton,
                   const SizedBox(height: 45.0),
                   emailField,
                   const SizedBox(height: 25.0),

@@ -1,19 +1,14 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/screen/wrapper.dart';
-import 'package:byourside/widget/social_button_from.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../size.dart';
-import '../widget/custom_form.dart';
-import '../widget/google_login.dart';
-import '../widget/logo.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'package:byourside/widget/auth.dart';
 import '../model/firebase_user.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key?key, required this.primaryColor}) : super(key: key);
+  LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
 
   @override
@@ -23,19 +18,27 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late CustomForm _customForm;
+  // late CustomForm _customForm;
+  FirebaseAuth user = FirebaseAuth.instance;
 
   @override
   initState() {
     super.initState();
-    _customForm = CustomForm();
+    // _customForm = CustomForm();
+    if (user.currentUser != null) {
+      FirebaseUser(uid: user.currentUser!.uid);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<FirebaseUser?>.value(
-      value: AuthService().user,
-      initialData: null,
+    return MultiProvider(
+      providers: [
+        StreamProvider<FirebaseUser?>.value(
+          value: AuthService().user,
+          initialData: null,
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           brightness: Brightness.light,
@@ -44,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
             buttonColor: primaryColor,
             textTheme: ButtonTextTheme.primary,
             colorScheme:
-            Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
+                Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
           ),
           fontFamily: 'Georgia',
           textTheme: const TextTheme(
@@ -54,26 +57,26 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         home: Wrapper(),
-      ),);
-
+      ),
+    );
   }
 
-  //     Scaffold(
-  //     body: Padding(
-  //       padding: const EdgeInsets.all(16.0),
-  //       child: ListView(
-  //         children: [
-  //           // SizedBox(height: xlarge_gap),
-  //           Logo("Login"),
-  //           SizedBox(height: large_gap), // 1. 추가
-  //           CustomForm(), // 2. 추가
-  //           //SocialButtonForm("kakao"),
-  //           googleLogin(),
-  //           // kakaoLogin(),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+//     Scaffold(
+//     body: Padding(
+//       padding: const EdgeInsets.all(16.0),
+//       child: ListView(
+//         children: [
+//           // SizedBox(height: xlarge_gap),
+//           Logo("Login"),
+//           SizedBox(height: large_gap), // 1. 추가
+//           CustomForm(), // 2. 추가
+//           //SocialButtonForm("kakao"),
+//           googleLogin(),
+//           // kakaoLogin(),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 }

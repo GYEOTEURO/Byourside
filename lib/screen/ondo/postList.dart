@@ -1,3 +1,4 @@
+import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
@@ -14,66 +15,66 @@ class PostList extends StatefulWidget {
 }
 
 class _PostListState extends State<PostList> {
-
-  final String fnTitle = "title";
-  final String fnContent = "content";
-  final String fnDatetime = "datetime";
-  
   Widget _buildListItem(BuildContext context, DocumentSnapshot document){
-    Timestamp t = document[fnDatetime];
+    Timestamp t = document["datetime"];
     DateTime d = t.toDate();
     String date = d.toString();
     date = date.split(' ')[0];
 
-    return Card(
-              elevation: 2,
-              child: InkWell(
-                //Read Document
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Post(
-                              // Post 위젯에 documentID를 인자로 넘김
-                              documentID: document.id,
-                            )));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    children: <Widget>[
-                                Row(                                    
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[Text(document[fnTitle],
-                                  style: const TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
+    return Container(
+        height: 90,
+        child: Card(
+                //semanticContainer: true,
+                elevation: 2,
+                child: InkWell(
+                  //Read Document
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Post(
+                                // Post 위젯에 documentID를 인자로 넘김
+                                documentID: document.id,
+                                primaryColor: primaryColor,
+                              )));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+                      children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,                     
+                                    children: [
+                                      Text(document["title"],
+                                        style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                      Text(
+                                        date,
+                                        style: const TextStyle(color: Colors.black54),
+                                      ),
+                                    ],
                                   ),
-                                  )],
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    date,
-                                    style: const TextStyle(color: Colors.black54),
+                                  if(document["image_url"].length > 0)(
+                                    Image.network(
+                                      document["image_url"][0],
+                                      width: 100,
+                                      height: 70,
+                                    )
                                   ),
-                                )
-                              ],
+                                ],
                             ),
-                          ),
-              )
-           );
+                      )
+           )));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // AppBar 색상 primaryColor로 지정
-        backgroundColor: widget.primaryColor,
-        title: Text(widget.title),
-      ),
+      appBar: const OndoAppBar(primaryColor: primaryColor),
       body: ListView(
         children: <Widget>[
           SizedBox(
@@ -91,7 +92,6 @@ class _PostListState extends State<PostList> {
           )
         ]
       ),
-      // bottomNavigationBar: BottomNavBar(),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
        floatingActionButton: FloatingActionButton(
         onPressed: () {
