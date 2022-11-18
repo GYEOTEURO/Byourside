@@ -6,6 +6,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+final storageRef = FirebaseStorage.instance.ref();
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
       {Key? key, required this.primaryColor, required this.title})
@@ -18,6 +23,13 @@ class NanumPostPage extends StatefulWidget {
 }
 
 class _NanumPostPageState extends State<NanumPostPage> {
+
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _price = TextEditingController();
+  final TextEditingController _content = TextEditingController();
+
+  final User? user = FirebaseAuth.instance.currentUser;
+
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
@@ -106,6 +118,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
             Container(
                 child: TextFormField(
               decoration: InputDecoration(labelText: "제목을 입력하세요"),
+              controller: _title,
             )),
             // 카테고리 선택
             Container(
@@ -187,29 +200,67 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 FilteringTextInputFormatter.allow(RegExp('[0-9]'))
               ],
               decoration: InputDecoration(labelText: "가격을 입력하세요"),
+              controller: _price,
             )),
             // 게시글 내용
             Container(
                 child: TextFormField(
-              minLines: 1,
-              maxLines: 8,
-              decoration: const InputDecoration(
-                labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  borderSide: BorderSide(width: 1),
-                ),
-              ),
-            ))
+                  controller: _content,
+                  minLines: 1,
+                  maxLines: 8,
+                  decoration: const InputDecoration(
+                    labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderSide: BorderSide(width: 1),
+                    ),
+                  ),
+                )
+            )
           ],
         ),
       ),
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          createDoc(_title.text, _price.text, _content.text);
+          Navigator.pop(context);
+        },
         backgroundColor: widget.primaryColor,
         child: const Icon(Icons.navigate_next),
       ),
     );
+  }
+
+  List<String> urls = [];
+
+  // 문서 생성 (Create)
+  void createDoc(String? title, String? price, String? content) async {
+    urls.clear();
+
+    // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
+    if(_images != null){
+      for(XFile element in _images){
+        final imageRef = storageRef.child('images/${element.name}');
+        File file = File(element.path);
+
+        try {
+        await imageRef.putFile(file);
+        final String url = await imageRef.getDownloadURL();
+        urls.add(url);
+        } on FirebaseException catch(e) {} 
+      } 
+    };
+
+    // image url 포함해 firestore에 document 저장
+    FirebaseFirestore.instance.collection('nanumPost').add
+    ({
+      "userID": user?.uid,
+      "title": title,
+      "price": price,
+      "content": content,
+      "datetime": Timestamp.now(),
+      "image_url": urls,
+    });
   }
 }
