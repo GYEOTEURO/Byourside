@@ -1,5 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/screen/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class _OTPScreenState extends State<OTPScreen> {
     return _auth.authStateChanges().map(_firebaseUser);
   }
 
-  int count = 0;
   String? _verificationId;
 
   final defaultPinTheme = PinTheme(
@@ -82,8 +82,11 @@ class _OTPScreenState extends State<OTPScreen> {
                   FirebaseUser(code: e.toString(), uid: null);
                 }
                 await FirebaseAuth.instance.currentUser!.reload();
-                Navigator.of(context).popUntil((_) => count++ >= 2);
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const SetupUser()));
               },
             ),
           )
