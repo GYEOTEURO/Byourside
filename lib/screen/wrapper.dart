@@ -1,3 +1,4 @@
+import 'package:byourside/screen/user.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../model/firebase_user.dart';
@@ -12,12 +13,15 @@ class Wrapper extends StatelessWidget{
 
     print(user?.uid);
     print(user?.phoneNum);
-
+    print(user?.displayName);
     if(user == null || user.phoneNum == null)
     {
       return Handler();
-    }else
-    {
+    }
+    else if(user.displayName == null) {
+      return SetupUser();
+    }
+    else {
       return VerifyEmail();
     }
   }
