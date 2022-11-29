@@ -72,9 +72,6 @@ class _OTPScreenState extends State<OTPScreen> {
                   await _auth.signInWithCredential(credential).then((value) async {
                     if (value.user != null) {
                       FirebaseUser(uid: value.user?.uid, phoneNum: widget.phone);
-                      if (kDebugMode) {
-                        print("otp");
-                      }
                     }
                   });
                 } catch (e) {
