@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {
   final String phone;
@@ -39,7 +40,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    final user =  Provider.of<FirebaseUser?>(context);
     return Scaffold(
       key: _formKey,
       appBar: AppBar(
@@ -79,11 +80,13 @@ class _OTPScreenState extends State<OTPScreen> {
                   FirebaseUser(code: e.toString(), uid: null);
                 }
                 await FirebaseAuth.instance.currentUser!.reload();
+                (user!.phoneNum != null)?
                 Navigator.push(
                     context,
+
                     MaterialPageRoute(
                         builder: (context) =>
-                        const SetupUser()));
+                        const SetupUser()) ): null;
               },
             ),
           )
