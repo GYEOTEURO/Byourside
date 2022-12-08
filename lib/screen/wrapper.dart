@@ -14,11 +14,14 @@ class Wrapper extends StatelessWidget{
     print(user?.uid);
     print(user?.phoneNum);
     print(user?.displayName);
-    if(user == null || user.phoneNum == null)
+    if(user == null)
     {
       return Handler();
     }
-    else if(user.displayName == null) {
+    else if (user.phoneNum == null) {
+      return Handler();
+    }
+    else if(user.displayName == null && user.phoneNum != null) {
       return SetupUser();
     }
     else {
