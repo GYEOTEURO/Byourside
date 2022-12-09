@@ -1,6 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/user.dart';
+import 'package:byourside/screen/authenticate/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
