@@ -1,9 +1,9 @@
-import 'package:byourside/screen/user.dart';
+import 'package:byourside/screen/authenticate/user.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../model/firebase_user.dart';
-import 'authenticate/handler.dart';
-import 'authenticate/verify_email.dart';
+import '../../model/firebase_user.dart';
+import 'handler.dart';
+import 'verify_email.dart';
 
 class Wrapper extends StatelessWidget{
 
