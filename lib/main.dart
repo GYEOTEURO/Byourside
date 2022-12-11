@@ -9,9 +9,13 @@ import 'dart:io';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
     home: MyApp(),
     debugShowCheckedModeBanner: false,
