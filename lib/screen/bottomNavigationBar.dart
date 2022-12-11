@@ -1,3 +1,4 @@
+import 'package:byourside/screen/chat/message_list_screen.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/ondo/postList.dart';
@@ -20,10 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     PostList(primaryColor: Color(0xFF045558)),
     NanumPostList(primaryColor: Color(0xFF045558)),
-    Text(
-      'Index 2: Chat',
-      style: optionStyle,
-    ),
+    MessageListScreen(),
     Mypage(),
   ];
   void _onItemTapped(int index) {
