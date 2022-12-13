@@ -3,10 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MessageModel {
   final String id; //해당 도큐먼트의 ID를 담기위함.
   final String content;
+  final String user;
   final Timestamp sendDate;
 
   MessageModel({
     this.id = '',
+    this.user = '',
     this.content = '',
     Timestamp? sendDate,
   }):sendDate = sendDate??Timestamp(0, 0);
@@ -16,6 +18,7 @@ class MessageModel {
     return MessageModel(
         id: id,
         content: map['content']??'',
+        user: map['user']??'',
         sendDate: map['sendDate']??Timestamp(0, 0)
     );
   }
@@ -23,6 +26,7 @@ class MessageModel {
   Map<String,dynamic> toMap(){
     Map<String,dynamic> data = {};
     data['content']=content;
+    data['user'] = user;
     data['sendDate']=sendDate;
     return data;
   }
