@@ -2,10 +2,7 @@ import 'package:byourside/screen/chat/message_list_screen.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/ondo/postList.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
-
-import 'mypage/my_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
@@ -15,9 +12,10 @@ class BottomNavBar extends StatefulWidget {
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 class _BottomNavBarState extends State<BottomNavBar> {
+
   int _selectedIndex = 0;
-  static TextStyle optionStyle =
-    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // static TextStyle optionStyle =
+  //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     PostList(primaryColor: Color(0xFF045558)),
     NanumPostList(primaryColor: Color(0xFF045558)),
