@@ -1,11 +1,11 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/wrapper.dart';
+import 'package:byourside/screen/authenticate/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:byourside/widget/auth.dart';
-import '../model/firebase_user.dart';
+import '../../model/firebase_user.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
