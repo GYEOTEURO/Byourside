@@ -84,6 +84,8 @@ class _SetupUserState extends State<SetupUser> {
       "childType": selectedChildType,
       "childDegree": selectedChildDegree,
       "belong": belong,
+      "groups": [],
+      "profilePic": "",
     });
     await user?.updateDisplayName(nickname);
     print(user);
@@ -98,7 +100,9 @@ class _SetupUserState extends State<SetupUser> {
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
       "nickname": nickname,
       "protectorAge": protectorAge,
-      "dropdownValue": dropdownValue
+      "dropdownValue": dropdownValue,
+      "groups": [],
+      "profilePic": "",
     });
     await user?.updateDisplayName(nickname);
     print(user);
@@ -112,7 +116,7 @@ class _SetupUserState extends State<SetupUser> {
     FirebaseFirestore.instance
         .collection('user')
         .doc(user!.uid)
-        .set({"nickname": nickname, "purpose": purpose});
+        .set({"nickname": nickname, "purpose": purpose, "groups": [], "profilePic": "",});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
