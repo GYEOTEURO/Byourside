@@ -1,5 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
+import 'package:byourside/screen/chat/search_page.dart';
 import 'package:byourside/widget/group_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,9 +52,33 @@ class _ChatListScreenState extends State<ChatListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('메세지 목록'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SearchPage()));
+              },
+              icon: const Icon(
+                Icons.search,
+              ))
+        ],
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          '메세지 목록',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
+        ),
         backgroundColor: primaryColor,
       ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: const EdgeInsets.symmetric(vertical: 50),
+      //     children: <Widget>[
+      //       Icon(Icons.account_circle, size: 150, color: Colors.black,)
+      //     ],
+      //   ),
+      // ),
       body: groupList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -158,6 +183,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               return ListView.builder(
                 itemCount: snapshot.data['groups'].length,
                 itemBuilder: (context, index) {
+                  int reverseIndex = snapshot.data['groups'].length - index - 1;
                   return GroupTile(
                       userName: snapshot.data['nickname'],
                       groupId: getId(snapshot.data['groups'][index]),
