@@ -1,26 +1,26 @@
+import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:byourside/main.dart';
+import '../../model/db_get.dart';
 
-class PostList extends StatefulWidget {
-  const PostList({Key? key, required this.primaryColor}) : super(key: key);
+class OndoPostList extends StatefulWidget {
+  const OndoPostList({Key? key, required this.primaryColor, required this.collectionName}) : super(key: key);
   final Color primaryColor;
+  final String collectionName;
   final String title = "마음온도";
 
   @override
-  State<PostList> createState() => _PostListState();
+  State<OndoPostList> createState() => _OndoPostListState();
 }
 
-class _PostListState extends State<PostList> {
-  Widget _buildListItem(BuildContext context, DocumentSnapshot document){
-    Timestamp t = document["datetime"];
-    DateTime d = t.toDate();
-    String date = d.toString();
-    date = date.split(' ')[0];
-
+class _OndoPostListState extends State<OndoPostList> {
+  Widget _buildListItem(PostListModel? post){
+    
+    String date = post!.datetime!.toDate().toString().split(' ')[0];
+              
     return Container(
         height: 90,
         child: Card(
@@ -32,9 +32,10 @@ class _PostListState extends State<PostList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Post(
+                          builder: (context) => OndoPost(
                                 // Post 위젯에 documentID를 인자로 넘김
-                                documentID: document.id,
+                                collectionName: widget.collectionName,
+                                documentID: post.id!,
                                 primaryColor: primaryColor,
                               )));
                   },
@@ -46,21 +47,22 @@ class _PostListState extends State<PostList> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,                     
                                     children: [
-                                      Text(document["title"],
+                                      Text(
+                                        post.title!,
                                         style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       )),
                                       Text(
-                                        date,
+                                        '${post.nickname!} / $date',
                                         style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],
                                   ),
-                                  if(document["image_url"].length > 0)(
+                                  if(post.images!.isNotEmpty)(
                                     Image.network(
-                                      document["image_url"][0],
+                                      post.images![0],
                                       width: 100,
                                       height: 70,
                                     )
@@ -75,30 +77,28 @@ class _PostListState extends State<PostList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const OndoAppBar(primaryColor: primaryColor),
-      body: ListView(
-        children: <Widget>[
-          SizedBox(
-            height: 500,
-            child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('ondoPost').snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if(!snapshot.hasData) return const Text('Loading...');
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) =>
-                  _buildListItem(context, snapshot.data!.docs[index]),
-              );
-            }),
-          )
-        ]
-      ),
+      body: StreamBuilder<List<PostListModel>>(
+      stream: DBGet.readCollection(collection: widget.collectionName),
+      builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
+              if(snapshot.hasData) {
+                return ListView.builder(
+                itemCount: snapshot.data!.length,
+                shrinkWrap: true,
+                itemBuilder: (_, index) {
+                  PostListModel post = snapshot.data![index];
+                  return _buildListItem(post);
+                });
+              }
+              else return const Text('Loading...');
+      }),
+            
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
        floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const PostPage(
+                  builder: (context) => const OndoPostPage(
                         // PostPage 위젯에 primartColor와 title명을 인자로 넘김
                         primaryColor: primaryColor,
                         title: '마음온도 글쓰기',
