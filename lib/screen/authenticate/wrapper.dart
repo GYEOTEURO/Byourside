@@ -18,10 +18,10 @@ class Wrapper extends StatelessWidget{
     {
       return Handler();
     }
-    else if (user.phoneNum == null) {
+    else if (user.phoneNum == null || user.phoneNum == "") {
       return Handler();
     }
-    else if(user.displayName == null && user.phoneNum != null) {
+    else if(user.displayName == null && user.phoneNum != null && user.phoneNum != "" || user.displayName == "") {
       return SetupUser();
     }
     else {
