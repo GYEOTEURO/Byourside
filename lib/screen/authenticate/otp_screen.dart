@@ -81,7 +81,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 }
                 await FirebaseAuth.instance.currentUser!.reload();
                 (user!.phoneNum != null)?
-                Navigator.push(
+                await Navigator.push(
                     context,
 
                     MaterialPageRoute(
@@ -89,6 +89,60 @@ class _OTPScreenState extends State<OTPScreen> {
                         const SetupUser()) ): null;
               },
             ),
+          ),
+          ElevatedButton(
+            onPressed: ()  {
+              String pin = otpCode.text.toString();
+              try {
+                if (user?.phoneNum == null || user?.phoneNum == "") {
+                  if (kDebugMode) {
+                    print(user?.phoneNum);
+                  }
+                  final PhoneAuthCredential credential =
+                  PhoneAuthProvider.credential(
+                      verificationId: _verificationId!, smsCode: pin);
+                  _auth.currentUser?.updatePhoneNumber(credential);
+                  _auth.currentUser?.linkWithCredential(credential);
+
+                  _auth
+                      .signInWithCredential(credential)
+                      .then((value) async {
+                    if (kDebugMode) {
+                      print(value.user);
+                    }
+                    if (value.user != null) {
+                      setState(() {
+                        FirebaseUser(
+                            uid: value.user?.uid, phoneNum: widget.phone);
+                      });
+                    }
+                  });
+                  FirebaseAuth.instance.currentUser!.reload();
+                  (user?.phoneNum != null && user?.phoneNum != "" && mounted)?
+                  Navigator.push(
+                      context,
+
+                      MaterialPageRoute(
+                          builder: (context) =>
+                          const SetupUser()) ) : null;
+                }
+                else {
+                //   Navigator.of(context).popUntil((route) => route.isFirst);
+                // }
+                  Navigator.push(
+                      context,
+
+                      MaterialPageRoute(
+                          builder: (context) =>
+                          const SetupUser()) );
+                }
+              } catch (e) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(e.toString())));
+                FirebaseUser(code: e.toString(), uid: null);
+              }
+            },
+            child: Text("next"),
           )
         ],
       ),
@@ -97,32 +151,29 @@ class _OTPScreenState extends State<OTPScreen> {
 
   verifyPhone() async {
     await _auth.verifyPhoneNumber(
-        phoneNumber: '+82${widget.phone}',
-        verificationCompleted: _onVerificationCompleted,
-        verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
-        },
-        codeSent: (String? verificationID, int? resendToken) async {
-          setState(() {
-            _verificationId = verificationID;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          // Auto-resolution timed out...
-        },
-        timeout: Duration(seconds: 60),
+      phoneNumber: '+82${widget.phone}',
+      verificationCompleted: _onVerificationCompleted,
+      verificationFailed: (FirebaseAuthException e) {
+        // print(e.message);
+      },
+      codeSent: (String? verificationID, int? resendToken) async {
+        setState(() {
+          _verificationId = verificationID;
+        });
+      },
+      codeAutoRetrievalTimeout: (String verificationID) {
+        // Auto-resolution timed out...
+      },
+      timeout: const Duration(seconds: 120),
     );
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
-    print("verification completed ${authCredential.smsCode}");
+    // print("verification completed ${authCredential.smsCode}");
     await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
     setState(() {
       otpCode.text = authCredential.smsCode!;
     });
-     if (authCredential.smsCode != null) {
-       print("complete");
-    }
   }
 
   @override

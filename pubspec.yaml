@@ -56,6 +56,10 @@ dependencies:
 #  location:
   dotted_border: ^2.0.0+3
   firebase_storage:
+  logger: ^1.1.0
+  firebase_app_check: ^0.1.1+7
+  flutter_recaptcha_v3: ^0.1.3
+  safetynet_attestation: ^0.0.5
 
 
 dev_dependencies:

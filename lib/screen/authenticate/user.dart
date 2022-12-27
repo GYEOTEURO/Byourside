@@ -1,5 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -506,7 +507,12 @@ class _SetupUserState extends State<SetupUser> {
           (someoneElse)
               ? storeSomeoneElseInfo(_nickname.text, _purpose.text)
               : null;
-          Navigator.of(context).popUntil((_) => count++ >= 3);
+          Navigator.push(
+              context,
+
+              MaterialPageRoute(
+                  builder: (context) => VerifyEmail()) );
+          //Navigator.of(context).popUntil((_) => count++ >= 3);
         },
         backgroundColor: primaryColor,
         child: const Text("완료"),
