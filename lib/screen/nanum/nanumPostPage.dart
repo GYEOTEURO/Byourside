@@ -1,3 +1,4 @@
+import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
+
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
       {Key? key, required this.primaryColor, required this.title})
@@ -23,7 +25,6 @@ class NanumPostPage extends StatefulWidget {
 }
 
 class _NanumPostPageState extends State<NanumPostPage> {
-
   final TextEditingController _title = TextEditingController();
   final TextEditingController _price = TextEditingController();
   final TextEditingController _content = TextEditingController();
@@ -133,7 +134,16 @@ class _NanumPostPageState extends State<NanumPostPage> {
                       letterSpacing: 2.0,
                       fontWeight: FontWeight.bold),
                 ),
-                IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NanumPostCategory(
+                                  primaryColor: widget.primaryColor,
+                                  title: widget.title)));
+                    },
+                    icon: Icon(Icons.navigate_next))
               ],
             )),
             // 사진 및 영상 첨부
@@ -205,18 +215,17 @@ class _NanumPostPageState extends State<NanumPostPage> {
             // 게시글 내용
             Container(
                 child: TextFormField(
-                  controller: _content,
-                  minLines: 1,
-                  maxLines: 8,
-                  decoration: const InputDecoration(
-                    labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                )
-            )
+              controller: _content,
+              minLines: 1,
+              maxLines: 8,
+              decoration: const InputDecoration(
+                labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  borderSide: BorderSide(width: 1),
+                ),
+              ),
+            ))
           ],
         ),
       ),
@@ -239,22 +248,22 @@ class _NanumPostPageState extends State<NanumPostPage> {
     urls.clear();
 
     // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
-    if(_images != null){
-      for(XFile element in _images){
+    if (_images != null) {
+      for (XFile element in _images) {
         final imageRef = storageRef.child('images/${element.name}');
         File file = File(element.path);
 
         try {
-        await imageRef.putFile(file);
-        final String url = await imageRef.getDownloadURL();
-        urls.add(url);
-        } on FirebaseException catch(e) {} 
-      } 
-    };
+          await imageRef.putFile(file);
+          final String url = await imageRef.getDownloadURL();
+          urls.add(url);
+        } on FirebaseException catch (e) {}
+      }
+    }
+    ;
 
     // image url 포함해 firestore에 document 저장
-    FirebaseFirestore.instance.collection('nanumPost').add
-    ({
+    FirebaseFirestore.instance.collection('nanumPost').add({
       "userID": user?.uid,
       "title": title,
       "price": price,

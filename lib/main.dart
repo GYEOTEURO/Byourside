@@ -1,6 +1,8 @@
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/home/home.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/screen/ondo/postCategory.dart';
+import 'package:byourside/screen/ondo/postList.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
@@ -17,7 +19,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MaterialApp(
-    home: MyApp(),
+    home: PostPage(primaryColor: Color(0xFF045558), title: '마음온도 글쓰기'),
     debugShowCheckedModeBanner: false,
   ));
 }
