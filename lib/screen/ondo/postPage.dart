@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +17,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
+
 class PostPage extends StatefulWidget {
-  const PostPage({Key? key, required this.primaryColor, required this.title})
+  PostPage(
+      {Key? key,
+      required this.primaryColor,
+      required this.title,
+      this.category: null,
+      this.type: null})
       : super(key: key);
   final Color primaryColor;
   final String title;
-  
+  String? category;
+  String? type;
+
   @override
   State<PostPage> createState() => _PostPageState();
 }
 
 class _PostPageState extends State<PostPage> {
-
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
 
@@ -121,8 +129,8 @@ class _PostPageState extends State<PostPage> {
             // 제목
             Container(
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: "제목을 입력하세요"),
-                  controller: _title,
+              decoration: InputDecoration(labelText: "제목을 입력하세요"),
+              controller: _title,
             )),
             // 카테고리 선택
             Container(
@@ -137,7 +145,16 @@ class _PostPageState extends State<PostPage> {
                       letterSpacing: 2.0,
                       fontWeight: FontWeight.bold),
                 ),
-                IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PostCategory(
+                                  primaryColor: widget.primaryColor,
+                                  title: widget.title)));
+                    },
+                    icon: Icon(Icons.navigate_next))
               ],
             )),
             // 사진 및 영상 첨부
@@ -241,6 +258,17 @@ class _PostPageState extends State<PostPage> {
     );
   }
 
+  // // SelectionScreen을 띄우고 navigator.pop으로부터 결과를 기다리는 메서드
+  // _navigatePostCategory(BuildContext context) async {
+  //   // Navigator.push는 Future를 반환합니다. Future는 선택 창에서
+  //   // Navigator.pop이 호출된 이후 완료될 것입니다.
+  //   final result = await Navigator.push(
+  //     context,
+  //     // 다음 단계에서 SelectionScreen를 만들 것입니다.
+  //     MaterialPageRoute(builder: (context) => PostCategory()),
+  //   );
+  // }
+
   List<String> urls = [];
 
   // 문서 생성 (Create)
@@ -248,22 +276,22 @@ class _PostPageState extends State<PostPage> {
     urls.clear();
 
     // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
-    if(_images != null){
-      for(XFile element in _images){
+    if (_images != null) {
+      for (XFile element in _images) {
         final imageRef = storageRef.child('images/${element.name}');
         File file = File(element.path);
 
         try {
-        await imageRef.putFile(file);
-        final String url = await imageRef.getDownloadURL();
-        urls.add(url);
-        } on FirebaseException catch(e) {} 
-      } 
-    };
+          await imageRef.putFile(file);
+          final String url = await imageRef.getDownloadURL();
+          urls.add(url);
+        } on FirebaseException catch (e) {}
+      }
+    }
+    ;
 
     // image url 포함해 firestore에 document 저장
-    FirebaseFirestore.instance.collection('ondoPost').add
-    ({
+    FirebaseFirestore.instance.collection('ondoPost').add({
       "userID": user?.uid,
       "title": title,
       "content": content,
@@ -271,5 +299,4 @@ class _PostPageState extends State<PostPage> {
       "image_url": urls,
     });
   }
-
 }

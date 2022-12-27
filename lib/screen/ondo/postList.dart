@@ -15,7 +15,7 @@ class PostList extends StatefulWidget {
 }
 
 class _PostListState extends State<PostList> {
-  Widget _buildListItem(BuildContext context, DocumentSnapshot document){
+  Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     Timestamp t = document["datetime"];
     DateTime d = t.toDate();
     String date = d.toString();
@@ -24,12 +24,12 @@ class _PostListState extends State<PostList> {
     return Container(
         height: 90,
         child: Card(
-                //semanticContainer: true,
-                elevation: 2,
-                child: InkWell(
-                  //Read Document
-                  onTap: () {
-                    Navigator.push(
+            //semanticContainer: true,
+            elevation: 2,
+            child: InkWell(
+                //Read Document
+                onTap: () {
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Post(
@@ -37,68 +37,65 @@ class _PostListState extends State<PostList> {
                                 documentID: document.id,
                                 primaryColor: primaryColor,
                               )));
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-                      children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,                     
-                                    children: [
-                                      Text(document["title"],
-                                        style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                      Text(
-                                        date,
-                                        style: const TextStyle(color: Colors.black54),
-                                      ),
-                                    ],
-                                  ),
-                                  if(document["image_url"].length > 0)(
-                                    Image.network(
-                                      document["image_url"][0],
-                                      width: 100,
-                                      height: 70,
-                                    )
-                                  ),
-                                ],
-                            ),
-                      )
-           )));
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(document["title"],
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Text(
+                            date,
+                            style: const TextStyle(color: Colors.black54),
+                          ),
+                        ],
+                      ),
+                      if (document["image_url"].length > 0)
+                        (Image.network(
+                          document["image_url"][0],
+                          width: 100,
+                          height: 70,
+                        )),
+                    ],
+                  ),
+                ))));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const OndoAppBar(primaryColor: primaryColor),
-      body: ListView(
-        children: <Widget>[
-          SizedBox(
-            height: 500,
-            child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('ondoPost').snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if(!snapshot.hasData) return const Text('Loading...');
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) =>
-                  _buildListItem(context, snapshot.data!.docs[index]),
-              );
-            }),
-          )
-        ]
-      ),
+      body: ListView(children: <Widget>[
+        SizedBox(
+          height: 500,
+          child: StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection('ondoPost').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return const Text('Loading...');
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) =>
+                      _buildListItem(context, snapshot.data!.docs[index]),
+                );
+              }),
+        )
+      ]),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const PostPage(
+                  builder: (context) => PostPage(
                         // PostPage 위젯에 primartColor와 title명을 인자로 넘김
                         primaryColor: primaryColor,
                         title: '마음온도 글쓰기',

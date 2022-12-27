@@ -244,7 +244,7 @@ class _PostState extends State<Post> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const PostPage(
+            builder: (context) => PostPage(
                   // PostPage 위젯에 primartColor와 title명을 인자로 넘김
                   primaryColor: Colors.blueGrey,
                   title: '마음온도 글쓰기',
