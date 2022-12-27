@@ -1,4 +1,4 @@
-import 'package:byourside/screen/login_screen.dart';
+import 'package:byourside/screen/authenticate/login_screen.dart';
 import 'package:flutter/material.dart';
 import '../size.dart';
 

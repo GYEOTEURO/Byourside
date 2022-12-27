@@ -23,8 +23,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
-    final linkButton = ElevatedButton(onPressed: _launchUrl, child: Text('개인정보처리방침'));
+    final linkButton =
+        ElevatedButton(onPressed: _launchUrl, child: Text('개인정보처리방침'));
 
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +65,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             width: double.infinity,
             child: TextButton(
               style: TextButton.styleFrom(
-                foregroundColor: primaryColor,
+                backgroundColor: primaryColor,
               ),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(

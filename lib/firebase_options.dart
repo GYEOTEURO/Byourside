@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,17 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBNy2VUKHiqvPKA9YmbyoqxTmjuJ6Oht1A',
+    appId: '1:334257891538:web:3f21b8a0ff1db890f4250b',
+    messagingSenderId: '334257891538',
+    projectId: 'byourside-2ea11',
+    authDomain: 'byourside-2ea11.firebaseapp.com',
+    databaseURL: 'https://byourside-2ea11-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'byourside-2ea11.appspot.com',
+    measurementId: 'G-814L9LZQT5',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBWFz5BCw8LBVqVuyuEaGne5cxbwIxFiMM',
     appId: '1:334257891538:android:eb935bdef1b2dadef4250b',
@@ -59,6 +64,18 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDsKf4gZBp2jr45uVGOn3Wy8e1GCz13QDU',
+    appId: '1:334257891538:ios:1048563fff6954daf4250b',
+    messagingSenderId: '334257891538',
+    projectId: 'byourside-2ea11',
+    databaseURL: 'https://byourside-2ea11-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'byourside-2ea11.appspot.com',
+    androidClientId: '334257891538-87fos7j04h6kbl8boevhsngidiv36a6j.apps.googleusercontent.com',
+    iosClientId: '334257891538-llj35u2n9u73iq1ffcka8oop81sktc2o.apps.googleusercontent.com',
+    iosBundleId: 'com.example.byourside',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDsKf4gZBp2jr45uVGOn3Wy8e1GCz13QDU',
     appId: '1:334257891538:ios:1048563fff6954daf4250b',
     messagingSenderId: '334257891538',
