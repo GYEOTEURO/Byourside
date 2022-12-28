@@ -41,32 +41,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late TabController controller;
-  // RecaptchaV2Controller recaptchaV2Controller = RecaptchaV2Controller();
 
   @override
   Widget build(BuildContext context) {
-    // return StreamProvider<FirebaseUser?>.value(
-    //   value: AuthService().user,
-    //   initialData: null,
-    //   child: MaterialApp(
-    //     theme: ThemeData(
-    //       brightness: Brightness.light,
-    //       primaryColor: primaryColor,
-    //       buttonTheme: ButtonThemeData(
-    //         buttonColor: primaryColor,
-    //         textTheme: ButtonTextTheme.primary,
-    //         colorScheme:
-    //         Theme.of(context).colorScheme.copyWith(secondary: Colors.white),
-    //       ),
-    //       fontFamily: 'Georgia',
-    //       textTheme: const TextTheme(
-    //         headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-    //         headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-    //         bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-    //       ),
-    //     ),
-    //     home: Wrapper(),
-    //   ),);
     return Stack(
       children: <Widget>[
         FirebasePhoneAuthProvider(
@@ -83,25 +60,6 @@ class _MyAppState extends State<MyApp> {
             },
           ),
         ),
-        // RecaptchaV2(
-        //   apiKey: "6LdtvqkjAAAAALWlvmPxUEoi3Sj2bsjbJmJt1Uw8",
-        //   // for enabling the reCaptcha
-        //   apiSecret: "6LdtvqkjAAAAAMFyC4Lk9cbRfSHPM8fytu6AebSW",
-        //   // for verifying the responded token
-        //   controller: recaptchaV2Controller,
-        //   onVerifiedError: (err) {
-        //     print(err);
-        //   },
-        //   onVerifiedSuccessfully: (success) {
-        //     setState(() {
-        //       if (success) {
-        //         // You've been verified successfully.
-        //       } else {
-        //         // "Failed to verify.
-        //       }
-        //     });
-        //   },
-        // ),
       ],
     );
   }
