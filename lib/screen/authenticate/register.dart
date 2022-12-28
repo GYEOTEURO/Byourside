@@ -122,19 +122,32 @@ class _Register extends State<Register> {
           if (_formKey.currentState!.validate()) {
             dynamic result = await _auth.registerEmailPassword(
                 LoginUser(email: _email.text, password: _password.text,));
-            if (result.uid == null) {
-              //null means unsuccessfull authentication
+            if(result != null) {
+              if (result.uid == null) {
+                //null means unsuccessfull authentication
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Text(result.code),
+                      );
+                    });
+              }
+              else {
+                _isRegister = true;
+              }
+            }
+            else{
               showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(
-                      content: Text(result.code),
+                    return const AlertDialog(
+                      content: Text("firebase error try again"),
                     );
                   });
             }
-            else {
-              _isRegister = true;
-            }
+
+
           }
         },
         child: Text(
