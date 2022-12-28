@@ -19,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     const OndoPostList(primaryColor: Color(0xFF045558), collectionName: "ondoPost"),
     const NanumPostList(primaryColor: Color(0xFF045558), collectionName: "nanumPost"),
-    MessageListScreen(),
+    ChatListScreen(),
     Mypage(),
   ];
   void _onItemTapped(int index) {
