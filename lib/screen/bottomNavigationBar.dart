@@ -1,8 +1,9 @@
-import 'package:byourside/screen/chat/message_list_screen.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:flutter/material.dart';
+
+import 'chat/chat_list_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
