@@ -80,13 +80,13 @@ class _OTPScreenState extends State<OTPScreen> {
                   FirebaseUser(code: e.toString(), uid: null);
                 }
                 await FirebaseAuth.instance.currentUser!.reload();
-                (user!.phoneNum != null)?
+                // (user!.phoneNum != null)?
                 Navigator.push(
                     context,
 
                     MaterialPageRoute(
                         builder: (context) =>
-                        const SetupUser()) ): null;
+                        const SetupUser()) );//: null;
               },
             ),
           )
@@ -120,9 +120,9 @@ class _OTPScreenState extends State<OTPScreen> {
     setState(() {
       otpCode.text = authCredential.smsCode!;
     });
-     if (authCredential.smsCode != null) {
-       print("complete");
-    }
+    //  if (authCredential.smsCode != null) {
+    //    print("complete");
+    // }
   }
 
   @override
