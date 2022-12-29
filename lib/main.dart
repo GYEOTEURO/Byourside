@@ -19,7 +19,7 @@ void main() async {
   // firebaseAppCheck.installAppCheckProviderFactory(
   //     PlayIntegrityAppCheckProviderFactory.getInstance());
   await firebaseAppCheck.activate(
-    webRecaptchaSiteKey: 'recaptcha-v2-site-key',
+    webRecaptchaSiteKey: '6LdtvqkjAAAAALWlvmPxUEoi3Sj2bsjbJmJt1Uw8',
     // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
     // your preferred provider. Choose from:
     // 1. debug provider

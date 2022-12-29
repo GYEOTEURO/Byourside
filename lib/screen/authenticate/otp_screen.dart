@@ -80,7 +80,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   FirebaseUser(code: e.toString(), uid: null);
                 }
                 await FirebaseAuth.instance.currentUser!.reload();
-                (user!.phoneNum != null)?
+                (user!.phoneNum != null || FirebaseAuth.instance.currentUser!.phoneNumber != null)?
                 await Navigator.push(
                     context,
 
@@ -94,10 +94,8 @@ class _OTPScreenState extends State<OTPScreen> {
             onPressed: ()  {
               String pin = otpCode.text.toString();
               try {
-                if (user?.phoneNum == null || user?.phoneNum == "") {
-                  if (kDebugMode) {
-                    print(user?.phoneNum);
-                  }
+                if (user?.phoneNum == null || user?.phoneNum == ""|| FirebaseAuth.instance.currentUser!.phoneNumber != null) {
+                  print(user?.phoneNum);
                   final PhoneAuthCredential credential =
                   PhoneAuthProvider.credential(
                       verificationId: _verificationId!, smsCode: pin);
@@ -107,14 +105,20 @@ class _OTPScreenState extends State<OTPScreen> {
                   _auth
                       .signInWithCredential(credential)
                       .then((value) async {
-                    if (kDebugMode) {
-                      print(value.user);
-                    }
                     if (value.user != null) {
                       setState(() {
                         FirebaseUser(
                             uid: value.user?.uid, phoneNum: widget.phone);
+                        print(user);
+                        print("this");
                       });
+                      (user?.phoneNum != null && user?.phoneNum != "" && mounted)?
+                      Navigator.push(
+                          context,
+
+                          MaterialPageRoute(
+                              builder: (context) =>
+                              const SetupUser()) ) : print(user?.phoneNum);
                     }
                   });
                   FirebaseAuth.instance.currentUser!.reload();
@@ -124,7 +128,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
                       MaterialPageRoute(
                           builder: (context) =>
-                          const SetupUser()) ) : null;
+                          const SetupUser()) ) : print(user?.phoneNum);
                 }
                 else {
                 //   Navigator.of(context).popUntil((route) => route.isFirst);
