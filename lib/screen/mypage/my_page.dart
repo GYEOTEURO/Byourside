@@ -1,3 +1,4 @@
+import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class _Mypage extends State<Mypage>{
 
   @override
   Widget build(BuildContext context) {
+    // final user =  Provider.of<FirebaseUser?>(context);
+
     final SignOut = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -29,6 +32,7 @@ class _Mypage extends State<Mypage>{
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
+          FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
           await _auth.signOut();
         },
         child: Text(

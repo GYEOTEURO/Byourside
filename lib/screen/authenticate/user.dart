@@ -1,11 +1,9 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
-import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:byourside/main.dart';
 
 enum Select { protector, participator, someoneElse }
 
@@ -131,124 +129,6 @@ class _SetupUserState extends State<SetupUser> {
     controller: _nickname,
   ));
 
-  // final protectorField = Column(children: <Widget>[
-  //   TextFormField(
-  //     decoration: InputDecoration(labelText: "put protector age"),
-  //     controller: _protectorAge,
-  //   ),
-  //   // Text('Protector gender'),
-  //   const SizedBox(height: 5),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select protector gender"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedProtectorGender[index] = true;
-  //           _selectedProtectorGender[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedProtectorGender,
-  //         children: gender,
-  //       )
-  //     ],
-  //   ),
-  //   TextFormField(
-  //     decoration: InputDecoration(labelText: "put child age"),
-  //     controller: _childAge,
-  //   ),
-  //   // Text('Child gender'),
-  //   const SizedBox(height: 5),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select child gender"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedChildGender[index] = true;
-  //           _selectedChildGender[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedChildGender,
-  //         children: gender,
-  //       ),
-  //     ],
-  //   ),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select child type"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedChildType[index] = true;
-  //           _selectedChildType[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedChildType,
-  //         children: type,
-  //       ),
-  //     ],
-  //   ),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select child degree"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedChildDegree[index] = true;
-  //           _selectedChildDegree[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedChildDegree,
-  //         children: degree,
-  //       ),
-  //     ],
-  //   ),
-  //   TextFormField(
-  //     decoration: InputDecoration(labelText: "belong"),
-  //     controller: _belong,
-  //   ),
-  // ]);
 
   final someoneElseField = Container(
       child: TextFormField(

@@ -2,7 +2,6 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +79,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   FirebaseUser(code: e.toString(), uid: null);
                 }
                 await FirebaseAuth.instance.currentUser!.reload();
-                (user!.phoneNum != null || FirebaseAuth.instance.currentUser!.phoneNumber != null)?
+                (user!.phoneNum != null && FirebaseAuth.instance.currentUser!.phoneNumber != null)?
                 await Navigator.push(
                     context,
 
@@ -91,18 +90,18 @@ class _OTPScreenState extends State<OTPScreen> {
             ),
           ),
           ElevatedButton(
-            onPressed: ()  {
+            onPressed: ()   {
               String pin = otpCode.text.toString();
               try {
-                if (user?.phoneNum == null || user?.phoneNum == ""|| FirebaseAuth.instance.currentUser!.phoneNumber != null) {
+                if (user?.phoneNum == null || user?.phoneNum == ""|| FirebaseAuth.instance.currentUser!.phoneNumber == null) {
                   print(user?.phoneNum);
                   final PhoneAuthCredential credential =
                   PhoneAuthProvider.credential(
                       verificationId: _verificationId!, smsCode: pin);
-                  _auth.currentUser?.updatePhoneNumber(credential);
-                  _auth.currentUser?.linkWithCredential(credential);
+                   _auth.currentUser?.updatePhoneNumber(credential);
+                   _auth.currentUser?.linkWithCredential(credential);
 
-                  _auth
+                   _auth
                       .signInWithCredential(credential)
                       .then((value) async {
                     if (value.user != null) {
@@ -112,27 +111,26 @@ class _OTPScreenState extends State<OTPScreen> {
                         print(user);
                         print("this");
                       });
-                      (user?.phoneNum != null && user?.phoneNum != "" && mounted)?
-                      Navigator.push(
-                          context,
-
-                          MaterialPageRoute(
-                              builder: (context) =>
-                              const SetupUser()) ) : print(user?.phoneNum);
+                      await FirebaseAuth.instance.currentUser!.reload();
+                    //   (user?.phoneNum != null && user?.phoneNum != "" && mounted && FirebaseAuth.instance.currentUser!.phoneNumber != null)?
+                    //   Navigator.push(
+                    //       context,
+                    //
+                    //       MaterialPageRoute(
+                    //           builder: (context) =>
+                    //           const SetupUser()) ) : print(user?.phoneNum);
                     }
                   });
-                  FirebaseAuth.instance.currentUser!.reload();
-                  (user?.phoneNum != null && user?.phoneNum != "" && mounted)?
+                   FirebaseAuth.instance.currentUser!.reload();
+                  (user?.phoneNum != null && user?.phoneNum != "" && mounted && FirebaseAuth.instance.currentUser!.phoneNumber != null)?
                   Navigator.push(
                       context,
 
                       MaterialPageRoute(
                           builder: (context) =>
-                          const SetupUser()) ) : print(user?.phoneNum);
+                          const SetupUser()) ) : print("this is phonenum${user?.phoneNum}");
                 }
                 else {
-                //   Navigator.of(context).popUntil((route) => route.isFirst);
-                // }
                   Navigator.push(
                       context,
 
