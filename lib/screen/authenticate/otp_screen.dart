@@ -173,11 +173,14 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
-    // print("verification completed ${authCredential.smsCode}");
+    print("verification completed ${authCredential.smsCode}");
     await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
     setState(() {
       otpCode.text = authCredential.smsCode!;
     });
+     if (authCredential.smsCode != null) {
+       print("complete");
+    }
   }
 
   @override

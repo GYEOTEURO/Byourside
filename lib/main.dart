@@ -6,8 +6,11 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 // import 'package:flutter_recaptcha_v3/flutter_recaptcha_v2.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
