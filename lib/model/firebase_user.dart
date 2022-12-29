@@ -1,5 +1,5 @@
 class FirebaseUser {
-  final String? uid ;
+  final String? uid;
   final String? code; //code firebaseauth excemption
   String? phoneNum;
   String? displayName;
