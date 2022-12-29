@@ -59,13 +59,16 @@ class _VerifyEmailState extends State<VerifyEmail> {
         setState(() => canResendEmail = true);
       }
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(e.toString()),
-            );
-          });
+      if (mounted) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(e.toString()),
+              );
+            });
+      }
+      print("email part error");
     }
   }
 

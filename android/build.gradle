@@ -11,8 +11,14 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.14'
     }
 }
+ext {
+    googlePlayServicesVersion   = "15.0.1"
+}
 
 allprojects {
+//    tasks.withType(JavaCompile){
+//        options.compilerArgs <<"-Xlint:deprecation"
+//    }
     repositories {
         google()
         mavenCentral()

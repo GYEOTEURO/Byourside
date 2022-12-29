@@ -52,7 +52,7 @@ class _SetupUserState extends State<SetupUser> {
   void initState() {
     super.initState();
 
-    Future<bool> isUserDataStored = checkStored();
+    // Future<bool> isUserDataStored = checkStored();
   }
 
   Future<bool> checkStored() async {
