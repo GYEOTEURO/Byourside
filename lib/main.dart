@@ -10,11 +10,27 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'firebase_options.dart';
 
+Future<bool> getPermission() async {
+  Map<Permission, PermissionStatus> permissions = await [
+    Permission.storage,
+    Permission.location,
+    Permission.locationWhenInUse
+  ].request();
+  print('per1 : $permissions');
+  if (permissions.values.every((element) => element.isGranted)) {
+    return Future.value(true);
+  } else {
+    return Future.value(false);
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  getPermission();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
