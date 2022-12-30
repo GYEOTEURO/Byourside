@@ -2,16 +2,13 @@ import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
-final storageRef = FirebaseStorage.instance.ref();
+import '../../model/db_set.dart';
+import '../../model/nanum_post.dart';
+import '../ondo/postPage.dart';
 
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
@@ -30,6 +27,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
   final TextEditingController _content = TextEditingController();
 
   final User? user = FirebaseAuth.instance.currentUser;
+
+  String? _type;
 
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
@@ -135,8 +134,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                       fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      _type = await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NanumPostCategory(
@@ -231,45 +230,25 @@ class _NanumPostPageState extends State<NanumPostPage> {
       ),
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          createDoc(_title.text, _price.text, _content.text);
+        onPressed: () async {
           Navigator.pop(context);
+          List<String> urls =
+              _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+          NanumPostModel postData = NanumPostModel(
+              uid: user!.uid,
+              nickname: "mg",
+              title: _title.text,
+              content: _content.text,
+              price: _price.text,
+              // type: _type,
+              isCompleted: false,
+              datetime: Timestamp.now(),
+              images: urls);
+          DBSet.addNanumPost('nanumPost', postData);
         },
         backgroundColor: widget.primaryColor,
         child: const Icon(Icons.navigate_next),
       ),
     );
-  }
-
-  List<String> urls = [];
-
-  // 문서 생성 (Create)
-  void createDoc(String? title, String? price, String? content) async {
-    urls.clear();
-
-    // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
-    if (_images != null) {
-      for (XFile element in _images) {
-        final imageRef = storageRef.child('images/${element.name}');
-        File file = File(element.path);
-
-        try {
-          await imageRef.putFile(file);
-          final String url = await imageRef.getDownloadURL();
-          urls.add(url);
-        } on FirebaseException catch (e) {}
-      }
-    }
-    ;
-
-    // image url 포함해 firestore에 document 저장
-    FirebaseFirestore.instance.collection('nanumPost').add({
-      "userID": user?.uid,
-      "title": title,
-      "price": price,
-      "content": content,
-      "datetime": Timestamp.now(),
-      "image_url": urls,
-    });
   }
 }

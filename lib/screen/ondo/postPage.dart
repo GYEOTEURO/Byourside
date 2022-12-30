@@ -5,37 +5,27 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import '../../model/db_set.dart';
+import '../../model/ondo_post.dart';
 
-final storageRef = FirebaseStorage.instance.ref();
-
-class PostPage extends StatefulWidget {
-  PostPage(
-      {Key? key,
-      required this.primaryColor,
-      required this.title,
-      this.category: null,
-      this.type: null})
+class OndoPostPage extends StatefulWidget {
+  const OndoPostPage(
+      {Key? key, required this.primaryColor, required this.title})
       : super(key: key);
   final Color primaryColor;
   final String title;
-  String? category;
-  String? type;
+  // String? category;
+  // String? type;
 
   @override
-  State<PostPage> createState() => _PostPageState();
+  State<OndoPostPage> createState() => _OndoPostPageState();
 }
 
-class _PostPageState extends State<PostPage> {
+class _OndoPostPageState extends State<OndoPostPage> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
 
@@ -252,60 +242,25 @@ class _PostPageState extends State<PostPage> {
       ),
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          createDoc(_title.text, _content.text, _categories.category,
-              _categories.type);
+        onPressed: () async {
           Navigator.pop(context);
+          List<String> urls =
+              _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+          OndoPostModel postData = OndoPostModel(
+              uid: user!.uid,
+              nickname: "mg",
+              title: _title.text,
+              content: _content.text,
+              // category: _categories.category,
+              // type:_categories.type,
+              datetime: Timestamp.now(),
+              images: urls);
+          DBSet.addOndoPost('ondoPost', postData);
         },
         backgroundColor: widget.primaryColor,
         child: const Icon(Icons.navigate_next),
       ),
     );
-  }
-
-  // // SelectionScreen을 띄우고 navigator.pop으로부터 결과를 기다리는 메서드
-  // _navigatePostCategory(BuildContext context) async {
-  //   // Navigator.push는 Future를 반환합니다. Future는 선택 창에서
-  //   // Navigator.pop이 호출된 이후 완료될 것입니다.
-  //   final result = await Navigator.push(
-  //     context,
-  //     // 다음 단계에서 SelectionScreen를 만들 것입니다.
-  //     MaterialPageRoute(builder: (context) => PostCategory()),
-  //   );
-  // }
-
-  List<String> urls = [];
-
-  // 문서 생성 (Create)
-  void createDoc(
-      String? title, String? content, String? category, String? type) async {
-    urls.clear();
-
-    // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
-    if (_images != null) {
-      for (XFile element in _images) {
-        final imageRef = storageRef.child('images/${element.name}');
-        File file = File(element.path);
-
-        try {
-          await imageRef.putFile(file);
-          final String url = await imageRef.getDownloadURL();
-          urls.add(url);
-        } on FirebaseException catch (e) {}
-      }
-    }
-    ;
-
-    // image url 포함해 firestore에 document 저장
-    FirebaseFirestore.instance.collection('ondoPost').add({
-      "userID": user?.uid,
-      "title": title,
-      "content": content,
-      "category": category,
-      "type": type,
-      "datetime": Timestamp.now(),
-      "image_url": urls,
-    });
   }
 }
 

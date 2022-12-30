@@ -35,7 +35,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MaterialApp(
-    home: PostPage(primaryColor: Color(0xFF045558), title: '마음온도 글쓰기'),
+    home: OndoPostPage(primaryColor: Color(0xFF045558), title: '마음온도 글쓰기'),
     debugShowCheckedModeBanner: false,
   ));
 }

@@ -1,3 +1,4 @@
+import 'package:byourside/screen/nanum/nanumPostPage.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -28,7 +29,7 @@ class ButtonProperties {
 }
 
 class _NanumPostCategoryState extends State<NanumPostCategory> {
-  String? _category = null;
+  // String? _category = null;
   String? _type = null;
 
   List<ButtonProperties> typeList = [
@@ -61,14 +62,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         leading: IconButton(
           onPressed: () {
             // pop 할 때, 파라미터를 두 개를 어떻게 넘기는 지 리스트로 넣는 수 밖에 없는 건지 몰라서 일단 넘기는 거 아직...
-            Navigator.pop(
-                context,
-                PostPage(
-                  primaryColor: widget.primaryColor,
-                  title: widget.title,
-                  category: _category,
-                  type: _type,
-                ));
+            Navigator.pop(context, _type);
           },
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,

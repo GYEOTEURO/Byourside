@@ -17,8 +17,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   // static TextStyle optionStyle =
   //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    PostList(primaryColor: Color(0xFF045558)),
-    NanumPostList(primaryColor: Color(0xFF045558)),
+    const OndoPostList(primaryColor: Color(0xFF045558), collectionName: "ondoPost"),
+    const NanumPostList(primaryColor: Color(0xFF045558), collectionName: "nanumPost"),
     MessageListScreen(),
     Mypage(),
   ];
