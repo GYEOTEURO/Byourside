@@ -34,6 +34,7 @@ class _Mypage extends State<Mypage>{
         onPressed: () async {
           FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
           await _auth.signOut();
+          Navigator.of(context).popUntil((route) => route.isFirst);
         },
         child: Text(
           "Log out",
