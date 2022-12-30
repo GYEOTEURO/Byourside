@@ -91,6 +91,7 @@ class _OTPScreenState extends State<OTPScreen> {
         key: _formKey,
         appBar: AppBar(
           title: Text('OTP Verification'),
+          backgroundColor: primaryColor,
         ),
         body: Column(
           children: [
@@ -136,6 +137,8 @@ class _OTPScreenState extends State<OTPScreen> {
               ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(primaryColor)),
               onPressed: () async {
                 String pin = otpCode.text.toString();
                 try {

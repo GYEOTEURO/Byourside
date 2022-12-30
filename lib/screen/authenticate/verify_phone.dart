@@ -21,14 +21,19 @@ class VerifyPhone extends StatefulWidget {
 
 class _VerifyPhoneState extends State<VerifyPhone> {
   final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final linkButton =
-        ElevatedButton(onPressed: _launchUrl, child: Text('개인정보처리방침'));
+    final linkButton = ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(primaryColor)),
+        onPressed: _launchUrl,
+        child: Text('개인정보처리방침'));
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Phone Auth'),
+        backgroundColor: primaryColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,21 +67,17 @@ class _VerifyPhoneState extends State<VerifyPhone> {
           linkButton,
           Container(
             margin: EdgeInsets.all(10),
-            width: double.infinity,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => OTPScreen(_controller.text)));
-              },
-              child: const Text(
-                'Agree and Next',
-                style: TextStyle(color: primaryColor),
-              ),
-            ),
-          )
+            // width: double.infinity,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(primaryColor)),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => OTPScreen(_controller.text)));
+                },
+                child: Text('Agree and Next',
+                    style: TextStyle(color: Colors.white))),
+          ),
         ],
       ),
     );

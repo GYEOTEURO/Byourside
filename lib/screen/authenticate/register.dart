@@ -1,3 +1,4 @@
+import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
@@ -107,9 +108,14 @@ class _Register extends State<Register> {
         onPressed: () {
           widget.toggleView!();
         },
-        child: const Text('Go to login'));
+        child: const Text('Go to login',
+            style: TextStyle(color: primaryColor)));
 
-    final linkButton = ElevatedButton(onPressed: _launchUrl, child: Text('개인정보처리방침'));
+    final linkButton = ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(primaryColor)),
+        onPressed: _launchUrl,
+        child: Text('개인정보처리방침'));
 
     final registerButton = Material(
       elevation: 5.0,
