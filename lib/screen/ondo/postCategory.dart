@@ -5,11 +5,14 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class PostCategory extends StatefulWidget {
   const PostCategory(
-      {Key? key, required this.primaryColor, required this.title})
+      {Key? key,
+      required this.primaryColor,
+      required this.title,
+      required this.categories})
       : super(key: key);
   final Color primaryColor;
   final String title;
-
+  final Category categories;
   @override
   State<PostCategory> createState() => _PostCategoryState();
 }
@@ -48,6 +51,7 @@ class _PostCategoryState extends State<PostCategory> {
         categoryList[index].fontColor = Colors.black;
       } else {
         _category = categoryList[index].label;
+        widget.categories.category = _category;
         categoryList[index].selected = true;
         categoryList[index].backgroundColor = Color(0xFF045558);
         categoryList[index].fontColor = Colors.white;
@@ -68,6 +72,7 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].fontColor = Colors.black;
       } else {
         _type = typeList[index].label;
+        widget.categories.type = _type;
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
@@ -85,14 +90,7 @@ class _PostCategoryState extends State<PostCategory> {
         leading: IconButton(
           onPressed: () {
             // pop 할 때, 파라미터를 두 개를 어떻게 넘기는 지 리스트로 넣는 수 밖에 없는 건지 몰라서 일단 넘기는 거 아직...
-            Navigator.pop(
-                context,
-                PostPage(
-                  primaryColor: widget.primaryColor,
-                  title: widget.title,
-                  category: _category,
-                  type: _type,
-                ));
+            Navigator.pop(context, widget.categories);
           },
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,

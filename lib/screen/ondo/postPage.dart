@@ -41,6 +41,8 @@ class _PostPageState extends State<PostPage> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
+  Category _categories = Category("", "");
+
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
@@ -146,13 +148,15 @@ class _PostPageState extends State<PostPage> {
                       fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      _categories = await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostCategory(
-                                  primaryColor: widget.primaryColor,
-                                  title: widget.title)));
+                                    primaryColor: widget.primaryColor,
+                                    title: widget.title,
+                                    categories: _categories,
+                                  )));
                     },
                     icon: Icon(Icons.navigate_next))
               ],
@@ -249,7 +253,8 @@ class _PostPageState extends State<PostPage> {
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          createDoc(_title.text, _content.text);
+          createDoc(_title.text, _content.text, _categories.category,
+              _categories.type);
           Navigator.pop(context);
         },
         backgroundColor: widget.primaryColor,
@@ -272,7 +277,8 @@ class _PostPageState extends State<PostPage> {
   List<String> urls = [];
 
   // 문서 생성 (Create)
-  void createDoc(String? title, String? content) async {
+  void createDoc(
+      String? title, String? content, String? category, String? type) async {
     urls.clear();
 
     // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드
@@ -295,8 +301,17 @@ class _PostPageState extends State<PostPage> {
       "userID": user?.uid,
       "title": title,
       "content": content,
+      "category": category,
+      "type": type,
       "datetime": Timestamp.now(),
       "image_url": urls,
     });
   }
+}
+
+class Category {
+  String? category;
+  String? type;
+
+  Category(this.category, this.type);
 }

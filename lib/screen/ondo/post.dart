@@ -34,7 +34,7 @@ class _PostState extends State<Post> {
 
     final TextEditingController _comment = TextEditingController();
 
-    Timestamp t = document!["datetime"];
+    Timestamp t = document["datetime"];
     DateTime d = t.toDate();
     String doc_date = d.toString();
     doc_date = doc_date.split(' ')[0];
