@@ -1,3 +1,4 @@
+import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/widget/auth.dart';
@@ -72,13 +73,15 @@ class _Login extends State<Login> {
         onPressed: () {
           widget.toggleView!();
         },
-        child: const Text('New? Register here'));
+        child: const Text('New? Register here',
+            style: TextStyle(color: primaryColor)));
 
     final forgotPassword = TextButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ForgotPassword(),
             )),
-        child: const Text('forgot password?'));
+        child: const Text('forgot password?',
+            style: TextStyle(color: primaryColor)));
 
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
