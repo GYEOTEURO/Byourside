@@ -21,54 +21,57 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      backgroundColor: primaryColor,
-      elevation: 0,
-      title: Text('Reset Password'),
-    ),
-    body: Padding(
-      padding: EdgeInsets.all(16),
-      child: Form(
-        key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'receive an email to\nreset your password',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(height: 20),
-            TextFormField(
-              controller: emailController,
-              cursorColor: primaryColor,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(labelText: 'Email'),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (email) =>
-              email != null && !EmailValidator.validate(email)
-                ? 'Enter a valid email'
-                : null,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
-                ),
-                icon: Icon(Icons.email_outlined),
-                label: Text(
-                  'Reset Password',
-                  style: TextStyle(fontSize: 24),
-                ),
-                onPressed: () {
-                  verifyEmail();
-                },
-            )
-          ],
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          elevation: 0,
+          title: Text('비밀번호 변경'),
         ),
-      ),
-    ),
-  );
+        body: Padding(
+          padding: EdgeInsets.all(16),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '비밀번호를 재설정할 이메일을 입력하세요.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24, color: primaryColor),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: emailController,
+                  cursorColor: primaryColor,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    labelText: '이메일',
+                    focusColor: primaryColor,
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (email) =>
+                      email != null && !EmailValidator.validate(email)
+                          ? '유효한 이메일을 입력하세요.'
+                          : null,
+                ),
+                SizedBox(height: 20),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(50),
+                      backgroundColor: primaryColor),
+                  icon: Icon(Icons.email_outlined),
+                  label: Text(
+                    '비밀번호 재설정',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  onPressed: () {
+                    verifyEmail();
+                  },
+                )
+              ],
+            ),
+          ),
+        ),
+      );
 
   Future verifyEmail() async {
     // showDialog(
@@ -83,12 +86,10 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
       // Utils.showSnackBar('Password Reset Email Sent');
       // Navigator.of(context).popUntil((route) => route.isFirst);
       Navigator.of(context).pop();
-
     } on FirebaseAuthException catch (e) {
       print(e);
       // Utils.showSnackBar(e.message);
       Navigator.of(context).pop();
     }
-
   }
 }

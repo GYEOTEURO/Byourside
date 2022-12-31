@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
@@ -50,7 +52,7 @@ class _SetupUserState extends State<SetupUser> {
   void initState() {
     super.initState();
 
-    // Future<bool> isUserDataStored = checkStored();
+    Future<bool> isUserDataStored = checkStored();
   }
 
   Future<bool> checkStored() async {
@@ -87,7 +89,7 @@ class _SetupUserState extends State<SetupUser> {
       "profilePic": "",
     });
     await user?.updateDisplayName(nickname);
-    print(user);
+    // print(user);
     if (user != null) {
       FirebaseUser(uid: user?.uid, displayName: nickname);
     }
@@ -95,6 +97,25 @@ class _SetupUserState extends State<SetupUser> {
 
   void storeParticipatorInfo(
       String? nickname, String? protectorAge, String? dropdownValue) async {
+    // if(){
+    //   // image url 포함해 firestore에 document 저장
+    //   FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
+    //     "nickname": nickname,
+    //     "protectorAge": protectorAge,
+    //     "dropdownValue": dropdownValue,
+    //     "groups": [],
+    //     "profilePic": "",
+    //   });
+    //   await user?.updateDisplayName(nickname);
+    //   print(user);
+    //   if (user != null) {
+    //     FirebaseUser(uid: user?.uid, displayName: nickname);
+    //   }
+    // }
+    // else {
+
+    // }
+
     // image url 포함해 firestore에 document 저장
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
       "nickname": nickname,
@@ -112,10 +133,12 @@ class _SetupUserState extends State<SetupUser> {
 
   void storeSomeoneElseInfo(String? nickname, String? purpose) async {
     // image url 포함해 firestore에 document 저장
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(user!.uid)
-        .set({"nickname": nickname, "purpose": purpose, "groups": [], "profilePic": "",});
+    FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
+      "nickname": nickname,
+      "purpose": purpose,
+      "groups": [],
+      "profilePic": "",
+    });
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -127,14 +150,36 @@ class _SetupUserState extends State<SetupUser> {
       child: TextFormField(
     decoration: InputDecoration(labelText: "닉네임을 입력하세요"),
     controller: _nickname,
+    validator: (value) {
+      if (value != null) {
+        if (value.split(' ').first != '' && value.isNotEmpty) {
+          return null;
+        }
+        return '유효한 닉네임을 입력하세요';
+      }
+    },
   ));
-
 
   final someoneElseField = Container(
       child: TextFormField(
-    decoration: InputDecoration(labelText: "visit purpose"),
+    decoration: InputDecoration(labelText: "방문 목적"),
     controller: _purpose,
+    validator: (value) {
+      if (value != null) {
+        if (value.split(' ').first != '' && value.isNotEmpty) {
+          return null;
+        }
+        return '유효한 방문 목적을 입력하세요';
+      }
+    },
   ));
+
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +196,7 @@ class _SetupUserState extends State<SetupUser> {
               children: <Widget>[
                 nicknameField,
                 ListTile(
-                  title: Text('child protector'),
+                  title: Text('장애 아동 보호자'),
                   leading: Radio<Select>(
                     value: Select.protector,
                     groupValue: _select,
@@ -167,7 +212,7 @@ class _SetupUserState extends State<SetupUser> {
                   ),
                 ),
                 ListTile(
-                  title: Text('participator'),
+                  title: Text('관계자'),
                   leading: Radio<Select>(
                     value: Select.participator,
                     groupValue: _select,
@@ -182,7 +227,7 @@ class _SetupUserState extends State<SetupUser> {
                   ),
                 ),
                 ListTile(
-                  title: Text('someoneElse'),
+                  title: Text('기타'),
                   leading: Radio<Select>(
                     value: Select.someoneElse,
                     groupValue: _select,
@@ -199,16 +244,25 @@ class _SetupUserState extends State<SetupUser> {
                 (protector)
                     ? Column(children: <Widget>[
                         TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "put protector age"),
+                          decoration: InputDecoration(labelText: "보호자 나이"),
                           controller: _protectorAge,
+                          validator: (value) {
+                            if (value != null) {
+                              if (value.split(' ').first != '' &&
+                                  value.isNotEmpty &&
+                                  isNumeric(value)) {
+                                return null;
+                              }
+                              return '유효한 나이를 입력하세요';
+                            }
+                          },
                         ),
                         // Text('Protector gender'),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select protector gender"),
+                            Text("보호자 성별"),
                             SizedBox(
                               width: 30,
                             ),
@@ -218,7 +272,7 @@ class _SetupUserState extends State<SetupUser> {
                                 setState(() {
                                   _selectedProtectorGender[index] = true;
                                   _selectedProtectorGender[(1 - index).abs()] =
-                                  false;
+                                      false;
                                 });
                               },
                               borderRadius:
@@ -237,16 +291,25 @@ class _SetupUserState extends State<SetupUser> {
                           ],
                         ),
                         TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "put child age"),
+                          decoration: InputDecoration(labelText: "자녀 나이"),
                           controller: _childAge,
+                          validator: (value) {
+                            if (value != null) {
+                              if (value.split(' ').first != '' &&
+                                  value.isNotEmpty &&
+                                  isNumeric(value)) {
+                                return null;
+                              }
+                              return '유효한 나이를 입력하세요';
+                            }
+                          },
                         ),
                         // Text('Child gender'),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select child gender"),
+                            Text("자녀 성별"),
                             SizedBox(
                               width: 30,
                             ),
@@ -277,7 +340,7 @@ class _SetupUserState extends State<SetupUser> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select child type"),
+                            Text("장애 유형"),
                             SizedBox(
                               width: 30,
                             ),
@@ -307,7 +370,7 @@ class _SetupUserState extends State<SetupUser> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select child degree"),
+                            Text("장애 정도"),
                             SizedBox(
                               width: 30,
                             ),
@@ -316,7 +379,8 @@ class _SetupUserState extends State<SetupUser> {
                               onPressed: (int index) {
                                 setState(() {
                                   _selectedChildDegree[index] = true;
-                                  _selectedChildDegree[(1 - index).abs()] = false;
+                                  _selectedChildDegree[(1 - index).abs()] =
+                                      false;
                                 });
                               },
                               borderRadius:
@@ -335,17 +399,34 @@ class _SetupUserState extends State<SetupUser> {
                           ],
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: "belong"),
+                          decoration: InputDecoration(labelText: "소속 복지관/학교"),
                           controller: _belong,
+                          validator: (value) {
+                            if (value != null) {
+                              if (value.split(' ').first != '' &&
+                                  value.isNotEmpty) {
+                                return null;
+                              }
+                              return '유효한 소속을 입력하세요';
+                            }
+                          },
                         ),
                       ])
                     : SizedBox(),
                 (participator)
                     ? Column(children: <Widget>[
                         TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "organization name"),
+                          decoration: InputDecoration(labelText: "개인/단체 이름"),
                           controller: _organizationName,
+                          validator: (value) {
+                            if (value != null) {
+                              if (value.split(' ').first != '' &&
+                                  value.isNotEmpty) {
+                                return null;
+                              }
+                              return '유효한 개인/단체 이름을 입력하세요';
+                            }
+                          },
                         ),
                         DropdownButton(
                           value: _dropdownValue,
@@ -392,11 +473,7 @@ class _SetupUserState extends State<SetupUser> {
               ? storeSomeoneElseInfo(_nickname.text, _purpose.text)
               : null;
           Navigator.push(
-              context,
-
-              MaterialPageRoute(
-                  builder: (context) => VerifyEmail()) );
-          //Navigator.of(context).popUntil((_) => count++ >= 3);
+              context, MaterialPageRoute(builder: (context) => VerifyEmail()));
         },
         backgroundColor: primaryColor,
         child: const Text("완료"),

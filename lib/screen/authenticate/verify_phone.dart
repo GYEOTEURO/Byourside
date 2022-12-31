@@ -32,7 +32,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Phone Auth'),
+        title: Text('휴대폰 인증'),
         backgroundColor: primaryColor,
       ),
       body: Column(
@@ -43,7 +43,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               margin: EdgeInsets.only(top: 60),
               child: const Center(
                 child: Text(
-                  'Phone Authentication',
+                  '휴대폰 번호 입력',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
                 ),
               ),
@@ -52,7 +52,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               margin: EdgeInsets.only(top: 40, right: 10, left: 10),
               child: TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Phone Number',
+                  hintText: '휴대폰 번호',
                   prefix: Padding(
                     padding: EdgeInsets.all(4),
                     child: Text('+82'),
@@ -75,8 +75,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => OTPScreen(_controller.text)));
                 },
-                child: Text('Agree and Next',
-                    style: TextStyle(color: Colors.white))),
+                child: Text('동의하고 인증', style: TextStyle(color: Colors.white))),
           ),
         ],
       ),

@@ -53,7 +53,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
     try {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
-      if(user != null) {
+      if (user != null) {
         setState(() => canResendEmail = false);
         await Future.delayed(Duration(seconds: 60));
         setState(() => canResendEmail = true);
@@ -80,7 +80,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Verify Email'),
+          title: Text('이메일 확인'),
+          backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: EdgeInsets.all(16),
@@ -88,8 +89,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'A verification email has been sent to your email.',
-                style: TextStyle(fontSize: 20),
+                '확인 이메일이 전송되었습니다. 메일함을 확인하세요',
+                style: TextStyle(fontSize: 20, color: primaryColor),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 24),
@@ -99,7 +100,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 ),
                 icon: Icon(Icons.email, size: 32),
                 label: Text(
-                  'Resent Email',
+                  '이메일 재전송',
                   style: TextStyle(fontSize: 24),
                 ),
                 onPressed: canResendEmail ? sendVerificationEmail : null,
@@ -110,8 +111,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   minimumSize: Size.fromHeight(50),
                 ),
                 child: Text(
-                  'Cancel',
-                  style: TextStyle(fontSize: 24),
+                  '취소',
+                  style: TextStyle(fontSize: 24, color: primaryColor),
                 ),
                 onPressed: () => FirebaseAuth.instance.signOut(),
               )

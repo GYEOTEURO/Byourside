@@ -25,17 +25,15 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
     final emailField = TextFormField(
         controller: _email,
         autofocus: false,
-        validator: (value) =>
-          value != null && !EmailValidator.validate(value)
-              ? 'Enter a valid email'
-              : null,
+        validator: (value) => value != null && !EmailValidator.validate(value)
+            ? '유효한 이메일을 입력하세요.'
+            : null,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "Email",
+            hintText: "이메일",
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
@@ -45,17 +43,17 @@ class _Login extends State<Login> {
         autofocus: false,
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
-            return 'This field is required';
+            return '필수 입력란';
           }
           if (value.trim().length < 8) {
-            return 'Password must be at least 8 characters in length';
+            return '비밀번호는 8자 이상으로 구성해야합니다.';
           }
           // Return null if the entered password is valid
           return null;
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "Password",
+            hintText: "비밀번호",
             suffixIcon: IconButton(
               icon:
                   Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
@@ -73,15 +71,13 @@ class _Login extends State<Login> {
         onPressed: () {
           widget.toggleView!();
         },
-        child: const Text('New? Register here',
-            style: TextStyle(color: primaryColor)));
+        child: const Text('회원가입', style: TextStyle(color: primaryColor)));
 
     final forgotPassword = TextButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ForgotPassword(),
             )),
-        child: const Text('forgot password?',
-            style: TextStyle(color: primaryColor)));
+        child: const Text('비밀번호 찾기', style: TextStyle(color: primaryColor)));
 
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
@@ -107,7 +103,7 @@ class _Login extends State<Login> {
           }
         },
         child: Text(
-          "Log in",
+          "로그인",
           style: TextStyle(color: Theme.of(context).primaryColorLight),
           textAlign: TextAlign.center,
         ),
@@ -117,7 +113,7 @@ class _Login extends State<Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Login Demo Page'),
+        title: const Text('로그인'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
