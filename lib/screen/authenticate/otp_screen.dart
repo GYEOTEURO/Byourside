@@ -35,7 +35,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
         timer = Timer.periodic(
           Duration(seconds: 3),
-              (_) => checkPhoneVerified(),
+          (_) => checkPhoneVerified(),
         );
       }
     }
@@ -51,11 +51,11 @@ class _OTPScreenState extends State<OTPScreen> {
     if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
       setState(() {
-        isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber != null;
+        isPhoneVerified =
+            FirebaseAuth.instance.currentUser!.phoneNumber != null;
       });
     }
     if (isPhoneVerified) timer?.cancel();
-
   }
 
   FirebaseUser? _firebaseUser(User? user) {
@@ -90,7 +90,7 @@ class _OTPScreenState extends State<OTPScreen> {
       return Scaffold(
         key: _formKey,
         appBar: AppBar(
-          title: Text('OTP Verification'),
+          title: Text('OTP 인증'),
           backgroundColor: primaryColor,
         ),
         body: Column(
@@ -99,8 +99,11 @@ class _OTPScreenState extends State<OTPScreen> {
               margin: EdgeInsets.only(top: 40),
               child: Center(
                 child: Text(
-                  'Verify +82-${widget.phone}',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                  '+82-${widget.phone}로 전송된\n인증번호를 입력하세요.',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  ),
                 ),
               ),
             ),
@@ -156,8 +159,6 @@ class _OTPScreenState extends State<OTPScreen> {
                         setState(() {
                           FirebaseUser(
                               uid: value.user?.uid, phoneNum: widget.phone);
-                          print(user);
-                          print("this");
                         });
                         await FirebaseAuth.instance.currentUser!.reload();
                       }
@@ -179,7 +180,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   FirebaseUser(code: e.toString(), uid: null);
                 }
               },
-              child: Text("next"),
+              child: Text("다음"),
             )
           ],
         ),
@@ -207,13 +208,13 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
-    print("verification completed ${authCredential.smsCode}");
+    print("인증 완료 ${authCredential.smsCode}");
     await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
     setState(() {
       otpCode.text = authCredential.smsCode!;
     });
-    if (authCredential.smsCode != null) {
-      print("complete");
-    }
+    // if (authCredential.smsCode != null) {
+    //   print("complete");
+    // }
   }
 }

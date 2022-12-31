@@ -10,7 +10,7 @@ final Uri _url = Uri.parse('https://flutter.dev');
 
 Future<void> _launchUrl() async {
   if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
+    throw '$_url을 열 수 없습니다.';
   }
 }
 
@@ -35,7 +35,6 @@ class _Register extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-
     final loginPhoneButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -51,7 +50,7 @@ class _Register extends State<Register> {
           ); //Navigator.pushNamed(context, "/phone");
         },
         child: Text(
-          "Log in with phone number",
+          "휴대폰 인증",
           style: TextStyle(color: Theme.of(context).primaryColorLight),
           textAlign: TextAlign.center,
         ),
@@ -66,12 +65,12 @@ class _Register extends State<Register> {
             if (value.contains('@') && value.endsWith('.com')) {
               return null;
             }
-            return 'Enter a Valid Email Address';
+            return '유효한 이메일 주소를 입력하세요.';
           }
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "Email",
+            hintText: "이메일",
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
@@ -81,17 +80,17 @@ class _Register extends State<Register> {
         autofocus: false,
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
-            return 'This field is required';
+            return '필수 입력란';
           }
           if (value.trim().length < 8) {
-            return 'Password must be at least 8 characters in length';
+            return '비밀번호는 8자 이상으로 구성해야합니다.';
           }
           // Return null if the entered password is valid
           return null;
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "Password",
+            hintText: "비밀번호",
             suffixIcon: IconButton(
               icon:
                   Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
@@ -108,8 +107,8 @@ class _Register extends State<Register> {
         onPressed: () {
           widget.toggleView!();
         },
-        child: const Text('Go to login',
-            style: TextStyle(color: primaryColor)));
+        child:
+            const Text('로그인 페이지로 돌아가기', style: TextStyle(color: primaryColor)));
 
     final linkButton = ElevatedButton(
         style: ButtonStyle(
@@ -126,9 +125,11 @@ class _Register extends State<Register> {
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
-            dynamic result = await _auth.registerEmailPassword(
-                LoginUser(email: _email.text, password: _password.text,));
-            if(result != null) {
+            dynamic result = await _auth.registerEmailPassword(LoginUser(
+              email: _email.text,
+              password: _password.text,
+            ));
+            if (result != null) {
               if (result.uid == null) {
                 //null means unsuccessfull authentication
                 showDialog(
@@ -138,26 +139,22 @@ class _Register extends State<Register> {
                         content: Text(result.code),
                       );
                     });
-              }
-              else {
+              } else {
                 _isRegister = true;
               }
-            }
-            else{
+            } else {
               showDialog(
                   context: context,
                   builder: (context) {
                     return const AlertDialog(
-                      content: Text("firebase error try again"),
+                      content: Text("재시도 하세요."),
                     );
                   });
             }
-
-
           }
         },
         child: Text(
-          "Agree and Register",
+          "동의하고 회원가입",
           style: TextStyle(color: Theme.of(context).primaryColorLight),
           textAlign: TextAlign.center,
         ),
@@ -167,7 +164,7 @@ class _Register extends State<Register> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Registration Demo Page'),
+        title: const Text('회원가입'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
@@ -192,7 +189,7 @@ class _Register extends State<Register> {
                   const SizedBox(height: 35.0),
                   registerButton, //(_authProvider.phoneNum==null)?SizedBox():
                   const SizedBox(height: 15.0),
-                  (_isRegister==false)?SizedBox():loginPhoneButton,
+                  (_isRegister == false) ? SizedBox() : loginPhoneButton,
                 ],
               ),
             ),
