@@ -57,8 +57,11 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(
               onPressed: () async {
                 ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
-                    .toggleGroupJoin(widget.groupId, ChatList().getGroupAdmin(widget.groupId).toString(),
-                        widget.groupName).whenComplete(() {
+                    .toggleGroupJoin(
+                        widget.groupId,
+                        ChatList().getGroupAdmin(widget.groupId).toString(),
+                        widget.groupName)
+                    .whenComplete(() {
                   Navigator.pop(context);
                 });
               },
@@ -83,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                       hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                      hintText: "Send a message",
+                      hintText: "메시지 보내기",
                       border: InputBorder.none,
                     ),
                   )),

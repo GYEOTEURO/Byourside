@@ -1,5 +1,4 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/chat/message_list_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../screen/chat/chat_page.dart';
@@ -52,7 +51,7 @@ class _GroupTileState extends State<GroupTile> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              "join the conversation as ${widget.userName}",
+              "채팅에 ${widget.userName}(으)로 참여하세요.",
               style: const TextStyle(fontSize: 13),
             ),
           ),
