@@ -187,7 +187,7 @@ class _Register extends State<Register> {
                   txtButton,
                   linkButton,
                   const SizedBox(height: 35.0),
-                  registerButton, //(_authProvider.phoneNum==null)?SizedBox():
+                  registerButton,
                   const SizedBox(height: 15.0),
                   (_isRegister == false) ? SizedBox() : loginPhoneButton,
                 ],
