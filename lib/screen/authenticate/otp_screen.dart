@@ -120,7 +120,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         PhoneAuthProvider.credential(
                             verificationId: _verificationId!, smsCode: pin);
                     await _auth.currentUser?.updatePhoneNumber(credential);
-                    await _auth.currentUser?.linkWithCredential(credential);
+                    // await _auth.currentUser?.linkWithCredential(credential);
 
                     await _auth
                         .signInWithCredential(credential)
@@ -150,7 +150,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         PhoneAuthProvider.credential(
                             verificationId: _verificationId!, smsCode: pin);
                     await _auth.currentUser?.updatePhoneNumber(credential);
-                    await _auth.currentUser?.linkWithCredential(credential);
+                    // await _auth.currentUser?.linkWithCredential(credential);
 
                     await _auth
                         .signInWithCredential(credential)
