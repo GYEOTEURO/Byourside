@@ -79,7 +79,8 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.black)))),
-        Row(children: [
+        Expanded(
+            child: Row(children: [
           Expanded(
               child: ListView.builder(
                   padding: const EdgeInsets.all(15),
@@ -94,7 +95,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                           style: TextStyle(color: typeList[index].fontColor),
                         ));
                   }))
-        ]),
+        ])),
       ])),
     );
   }
