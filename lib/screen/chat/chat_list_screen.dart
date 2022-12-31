@@ -55,8 +55,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchPage()));
               },
               icon: const Icon(
                 Icons.search,
@@ -103,7 +105,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
           return StatefulBuilder(builder: ((context, setState) {
             return AlertDialog(
               title: const Text(
-                "Create a group",
+                "그룹 만들기",
                 textAlign: TextAlign.left,
               ),
               content: Column(
@@ -142,7 +144,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text("CANCEL"),
+                  child: const Text("취소"),
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
                 ),
@@ -162,7 +164,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text("CREATE"),
+                  child: const Text("만들기"),
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
                 )
@@ -209,7 +211,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   noGroupWidget() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.all(100.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -228,7 +230,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             height: 20,
           ),
           const Text(
-            "tap add icon to start chat",
+            "추가 버튼을 눌러 채팅을 시작하세요.",
             textAlign: TextAlign.center,
           )
         ],
