@@ -107,22 +107,25 @@ class _PostCategoryState extends State<PostCategory> {
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.black)))),
-        Row(children: [
-          Expanded(
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(15),
-                  itemCount: categoryList.length,
-                  itemBuilder: (context, index) {
-                    return ElevatedButton(
-                        onPressed: () => _onClickCategory(index),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: categoryList[index].backgroundColor,
-                        ),
-                        child: Text(categoryList[index].label,
-                            style: TextStyle(
-                                color: categoryList[index].fontColor)));
-                  }))
-        ]),
+        Expanded(
+            flex: 2,
+            child: Row(children: [
+              Expanded(
+                  child: ListView.builder(
+                      padding: const EdgeInsets.all(15),
+                      itemCount: categoryList.length,
+                      itemBuilder: (context, index) {
+                        return ElevatedButton(
+                            onPressed: () => _onClickCategory(index),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  categoryList[index].backgroundColor,
+                            ),
+                            child: Text(categoryList[index].label,
+                                style: TextStyle(
+                                    color: categoryList[index].fontColor)));
+                      }))
+            ])),
         const Center(
             child: Padding(
                 padding: EdgeInsets.all(15),
@@ -131,7 +134,8 @@ class _PostCategoryState extends State<PostCategory> {
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                         color: Colors.black)))),
-        Row(children: [
+        Expanded(
+            child: Row(children: [
           Expanded(
               child: ListView.builder(
                   padding: const EdgeInsets.all(15),
@@ -146,7 +150,7 @@ class _PostCategoryState extends State<PostCategory> {
                           style: TextStyle(color: typeList[index].fontColor),
                         ));
                   }))
-        ]),
+        ])),
       ])),
     );
   }
