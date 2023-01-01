@@ -40,10 +40,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   Future checkEmailVerified() async {
     // call after email verification
-    await FirebaseAuth.instance.currentUser!.reload();
-
+    if (FirebaseAuth.instance.currentUser != null) {
+      await FirebaseAuth.instance.currentUser!.reload();
+    }
     setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      if (FirebaseAuth.instance.currentUser != null) {
+        isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      }
     });
 
     if (isEmailVerified) timer?.cancel();
@@ -68,7 +71,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
               );
             });
       }
-      print("email part error");
     }
   }
 
@@ -107,15 +109,24 @@ class _VerifyEmailState extends State<VerifyEmail> {
               ),
               SizedBox(height: 8),
               TextButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50),
-                ),
-                child: Text(
-                  '취소',
-                  style: TextStyle(fontSize: 24, color: primaryColor),
-                ),
-                onPressed: () => FirebaseAuth.instance.signOut(),
-              )
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(50),
+                  ),
+                  child: Text(
+                    '취소',
+                    style: TextStyle(fontSize: 24, color: primaryColor),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    try {
+                      FirebaseAuth.instance.currentUser?.delete();
+                    } catch (e) {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      const AlertDialog(
+                          content: Text("로그인/회원가입 이후 1시간이 지났다면 개발자에게 문의하세요."));
+                    }
+                  })
             ],
           ),
         ),
