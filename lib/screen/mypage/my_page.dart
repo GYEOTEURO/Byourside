@@ -11,8 +11,8 @@ class Mypage extends StatefulWidget {
 
 class _Mypage extends State<Mypage> {
   final AuthService _auth = new AuthService();
-  String? uid;
-  String? displayName;
+  late String uid;
+  late String displayName;
   User? user;
 
   @override
@@ -21,7 +21,7 @@ class _Mypage extends State<Mypage> {
     user = FirebaseAuth.instance.currentUser;
     uid = user!.uid;
     // displayName = user!.displayName;
-    displayName = "안지원";
+    displayName = user!.displayName!;
   }
 
   final List<String> myEntires = <String>["내가 쓴 마음온도 글", "내가 쓴 마음 나눔 글", "스크랩"];
@@ -106,23 +106,61 @@ class _Mypage extends State<Mypage> {
             Text(
               "나의 활동",
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.black,
                   fontWeight: FontWeight.w700),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
-            ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: myEntires.length,
-                itemBuilder: (BuildContext context, index) {
-                  return TextButton.icon(
-                    icon: myIcons[index],
-                    label: Text(myEntires[index]),
-                    onPressed: () {},
-                  );
-                }),
+            Expanded(
+                child: ListView.builder(
+                    // padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    itemCount: myEntires.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return TextButton.icon(
+                        style: TextButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            alignment: Alignment.centerLeft),
+                        icon: myIcons[index],
+                        label: Text(
+                          myEntires[index],
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        onPressed: () {},
+                      );
+                    })),
+            Divider(thickness: 1, height: 1, color: Colors.black26),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              "기타",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+                child: ListView.builder(
+                    // padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    itemCount: myEntires.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return TextButton.icon(
+                        style: TextButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            alignment: Alignment.centerLeft),
+                        icon: etcIcons[index],
+                        label: Text(
+                          etcEntires[index],
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        onPressed: () {},
+                      );
+                    })),
           ],
         )),
       ),
