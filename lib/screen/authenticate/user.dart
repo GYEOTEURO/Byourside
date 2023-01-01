@@ -11,6 +11,10 @@ enum Select { protector, participator, someoneElse }
 
 List<String> purposeType = ['promote', 'recruit'];
 String _dropdownValue = 'promote';
+final _formKey_user = GlobalKey<FormState>();
+final _formKey_protector = GlobalKey<FormState>();
+final _formKey_participator = GlobalKey<FormState>();
+final _formKey_someoneElse = GlobalKey<FormState>();
 
 const List<Widget> gender = <Widget>[Text('man'), Text('woman')];
 const List<Widget> type = <Widget>[
@@ -40,7 +44,7 @@ class SetupUser extends StatefulWidget {
 
 class _SetupUserState extends State<SetupUser> {
   bool isUserDataStored = false;
-  bool protector = false;
+  bool protector = true;
   bool participator = false;
   bool someoneElse = false;
   Select _select = Select.protector;
@@ -88,6 +92,10 @@ class _SetupUserState extends State<SetupUser> {
       "groups": [],
       "profilePic": "",
     });
+    FirebaseFirestore.instance
+        .collection('displayNameList')
+        .doc('exist')
+        .set({'already': nickname});
     await user?.updateDisplayName(nickname);
     // print(user);
     if (user != null) {
@@ -97,25 +105,6 @@ class _SetupUserState extends State<SetupUser> {
 
   void storeParticipatorInfo(
       String? nickname, String? protectorAge, String? dropdownValue) async {
-    // if(){
-    //   // image url 포함해 firestore에 document 저장
-    //   FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
-    //     "nickname": nickname,
-    //     "protectorAge": protectorAge,
-    //     "dropdownValue": dropdownValue,
-    //     "groups": [],
-    //     "profilePic": "",
-    //   });
-    //   await user?.updateDisplayName(nickname);
-    //   print(user);
-    //   if (user != null) {
-    //     FirebaseUser(uid: user?.uid, displayName: nickname);
-    //   }
-    // }
-    // else {
-
-    // }
-
     // image url 포함해 firestore에 document 저장
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
       "nickname": nickname,
@@ -124,6 +113,10 @@ class _SetupUserState extends State<SetupUser> {
       "groups": [],
       "profilePic": "",
     });
+    FirebaseFirestore.instance
+        .collection('displayNameList')
+        .doc('exist')
+        .set({'already': nickname});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -139,6 +132,10 @@ class _SetupUserState extends State<SetupUser> {
       "groups": [],
       "profilePic": "",
     });
+    FirebaseFirestore.instance
+        .collection('displayNameList')
+        .doc('exist')
+        .set({'already': nickname});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -186,82 +183,127 @@ class _SetupUserState extends State<SetupUser> {
     return Scaffold(
       appBar: AppBar(backgroundColor: primaryColor),
       body: SingleChildScrollView(
-        child: Column(children: [
-          Form(
-              child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                nicknameField,
-                ListTile(
-                  title: Text('장애 아동 보호자'),
-                  leading: Radio<Select>(
-                    value: Select.protector,
-                    groupValue: _select,
-                    onChanged: (Select? value) {
-                      setState(() {
-                        _select = value!;
-                        print(_select);
-                        protector = true;
-                        participator = false;
-                        someoneElse = false;
-                      });
-                    },
+        child: Column(
+          children: [
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Form(
+                      key: _formKey_user,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Column(children: [nicknameField])
+                          ])),
+                  ListTile(
+                    title: Text('장애 아동 보호자'),
+                    leading: Radio<Select>(
+                      value: Select.protector,
+                      groupValue: _select,
+                      onChanged: (Select? value) {
+                        setState(() {
+                          _select = value!;
+                          print(_select);
+                          protector = true;
+                          participator = false;
+                          someoneElse = false;
+                        });
+                      },
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('관계자'),
-                  leading: Radio<Select>(
-                    value: Select.participator,
-                    groupValue: _select,
-                    onChanged: (Select? value) {
-                      setState(() {
-                        _select = value!;
-                        protector = false;
-                        participator = true;
-                        someoneElse = false;
-                      });
-                    },
+                  ListTile(
+                    title: Text('관계자'),
+                    leading: Radio<Select>(
+                      value: Select.participator,
+                      groupValue: _select,
+                      onChanged: (Select? value) {
+                        setState(() {
+                          _select = value!;
+                          protector = false;
+                          participator = true;
+                          someoneElse = false;
+                        });
+                      },
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('기타'),
-                  leading: Radio<Select>(
-                    value: Select.someoneElse,
-                    groupValue: _select,
-                    onChanged: (Select? value) {
-                      setState(() {
-                        _select = value!;
-                        protector = false;
-                        participator = false;
-                        someoneElse = true;
-                      });
-                    },
-                  ),
-                ),
-                (protector)
-                    ? Column(children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "보호자 나이"),
-                          controller: _protectorAge,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty &&
-                                  isNumeric(value)) {
-                                return null;
-                              }
-                              return '유효한 나이를 입력하세요';
-                            }
-                          },
-                        ),
-                        // Text('Protector gender'),
+                  ListTile(
+                    title: Text('기타'),
+                    leading: Radio<Select>(
+                      value: Select.someoneElse,
+                      groupValue: _select,
+                      onChanged: (Select? value) {
+                        setState(() {
+                          _select = value!;
+                          protector = false;
+                          participator = false;
+                          someoneElse = true;
+                        });
+                      },
+                    ),
+                  )
+                ]),
+            (protector)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                        Form(
+                            key: _formKey_protector,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [
+                                    TextFormField(
+                                      decoration:
+                                          InputDecoration(labelText: "보호자 나이"),
+                                      controller: _protectorAge,
+                                      validator: (value) {
+                                        if (value != null) {
+                                          if (value.split(' ').first != '' &&
+                                              value.isNotEmpty &&
+                                              isNumeric(value)) {
+                                            return null;
+                                          }
+                                          return '유효한 나이를 입력하세요';
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(height: 5),
+                                    TextFormField(
+                                      decoration:
+                                          InputDecoration(labelText: "자녀 나이"),
+                                      controller: _childAge,
+                                      validator: (value) {
+                                        if (value != null) {
+                                          if (value.split(' ').first != '' &&
+                                              value.isNotEmpty &&
+                                              isNumeric(value)) {
+                                            return null;
+                                          }
+                                          return '유효한 나이를 입력하세요';
+                                        }
+                                      },
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: "소속 복지관/학교"),
+                                      controller: _belong,
+                                      validator: (value) {
+                                        if (value != null) {
+                                          if (value.split(' ').first != '' &&
+                                              value.isNotEmpty) {
+                                            return null;
+                                          }
+                                          return '유효한 소속을 입력하세요';
+                                        }
+                                      },
+                                    ),
+                                  ])
+                                ])),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
                             Text("보호자 성별"),
                             SizedBox(
                               width: 30,
@@ -290,21 +332,6 @@ class _SetupUserState extends State<SetupUser> {
                             )
                           ],
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "자녀 나이"),
-                          controller: _childAge,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty &&
-                                  isNumeric(value)) {
-                                return null;
-                              }
-                              return '유효한 나이를 입력하세요';
-                            }
-                          },
-                        ),
-                        // Text('Child gender'),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -397,83 +424,118 @@ class _SetupUserState extends State<SetupUser> {
                               children: degree,
                             ),
                           ],
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "소속 복지관/학교"),
-                          controller: _belong,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty) {
-                                return null;
-                              }
-                              return '유효한 소속을 입력하세요';
-                            }
-                          },
-                        ),
-                      ])
-                    : SizedBox(),
-                (participator)
-                    ? Column(children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "개인/단체 이름"),
-                          controller: _organizationName,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty) {
-                                return null;
-                              }
-                              return '유효한 개인/단체 이름을 입력하세요';
-                            }
-                          },
-                        ),
-                        DropdownButton(
-                          value: _dropdownValue,
-                          items: purposeType
-                              .map((String item) => DropdownMenuItem<String>(
-                                    child: Text('$item'),
-                                    value: item,
-                                  ))
-                              .toList(),
-                          onChanged: (dynamic newValue) {
-                            setState(() {
-                              _dropdownValue = newValue;
-                            });
-                          },
-                          elevation: 8,
                         )
                       ])
-                    : SizedBox(),
-                (someoneElse) ? someoneElseField : SizedBox(),
-              ],
-            ),
-          ))
-          // 닉네임
-        ]),
+                : SizedBox(),
+            (participator)
+                ? Form(
+                    key: _formKey_participator,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(children: [
+                            //<Widget>
+                            TextFormField(
+                              decoration:
+                                  InputDecoration(labelText: "개인/단체 이름"),
+                              controller: _organizationName,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.split(' ').first != '' &&
+                                      value.isNotEmpty) {
+                                    return null;
+                                  }
+                                  return '유효한 개인/단체 이름을 입력하세요';
+                                }
+                              },
+                            ),
+                            DropdownButton(
+                              value: _dropdownValue,
+                              items: purposeType
+                                  .map(
+                                      (String item) => DropdownMenuItem<String>(
+                                            child: Text('$item'),
+                                            value: item,
+                                          ))
+                                  .toList(),
+                              onChanged: (dynamic newValue) {
+                                setState(() {
+                                  _dropdownValue = newValue;
+                                });
+                              },
+                              elevation: 8,
+                            )
+                          ])
+                        ]))
+                : SizedBox(),
+            (someoneElse)
+                ? Form(
+                    key: _formKey_someoneElse,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(children: [someoneElseField])
+                        ]))
+                : SizedBox(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           (protector)
-              ? storeProtectorInfo(
-                  _nickname.text,
-                  _protectorAge.text,
-                  _selectedProtectorGender,
-                  _childAge.text,
-                  _selectedChildGender,
-                  _selectedChildType,
-                  _selectedChildDegree,
-                  _belong.text)
+              ? {
+                  if (_formKey_protector.currentState!.validate() &&
+                      _formKey_user.currentState!.validate() &&
+                      _nickname.text.split(' ').first != '' &&
+                      _protectorAge.text.split(' ').first != '' &&
+                      _childAge.text.split(' ').first != '' &&
+                      _belong.text.split(' ').first != '' &&
+                      (_selectedChildDegree[0] || _selectedChildDegree[1]) &&
+                      (_selectedChildGender[0] || _selectedChildGender[1]) &&
+                      (_selectedChildType[0] || _selectedChildType[1]) &&
+                      (_selectedProtectorGender[0] ||
+                          _selectedProtectorGender[1]))
+                    {
+                      storeProtectorInfo(
+                          _nickname.text,
+                          _protectorAge.text,
+                          _selectedProtectorGender,
+                          _childAge.text,
+                          _selectedChildGender,
+                          _selectedChildType,
+                          _selectedChildDegree,
+                          _belong.text),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerifyEmail()))
+                    },
+                }
               : null;
           (participator)
-              ? storeParticipatorInfo(
-                  _nickname.text, _organizationName.text, _dropdownValue)
+              ? {
+                  if (_formKey_participator.currentState!.validate() &&
+                      _formKey_user.currentState!.validate())
+                    {
+                      print(_formKey_participator.currentState),
+                      storeParticipatorInfo(_nickname.text,
+                          _organizationName.text, _dropdownValue),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerifyEmail()))
+                    }
+                }
               : null;
           (someoneElse)
-              ? storeSomeoneElseInfo(_nickname.text, _purpose.text)
+              ? {
+                  if (_formKey_someoneElse.currentState!.validate() &&
+                      _formKey_user.currentState!.validate())
+                    {storeSomeoneElseInfo(_nickname.text, _purpose.text)},
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VerifyEmail()))
+                }
               : null;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => VerifyEmail()));
         },
         backgroundColor: primaryColor,
         child: const Text("완료"),
