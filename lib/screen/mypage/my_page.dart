@@ -86,7 +86,7 @@ class _Mypage extends State<Mypage> {
                   width: 20,
                 ),
                 // 나만의 명함 만들기
-                Text(displayName!,
+                Text(displayName,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 25,
