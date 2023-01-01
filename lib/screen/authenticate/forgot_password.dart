@@ -1,10 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:byourside/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
@@ -24,26 +26,26 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         appBar: AppBar(
           backgroundColor: primaryColor,
           elevation: 0,
-          title: Text('비밀번호 변경'),
+          title: const Text('비밀번호 변경'),
         ),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   '비밀번호를 재설정할 이메일을 입력하세요.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24, color: primaryColor),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: emailController,
                   cursorColor: primaryColor,
                   textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '이메일',
                     focusColor: primaryColor,
                   ),
@@ -53,13 +55,13 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                           ? '유효한 이메일을 입력하세요.'
                           : null,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(50),
+                      minimumSize: const Size.fromHeight(50),
                       backgroundColor: primaryColor),
-                  icon: Icon(Icons.email_outlined),
-                  label: Text(
+                  icon: const Icon(Icons.email_outlined),
+                  label: const Text(
                     '비밀번호 재설정',
                     style: TextStyle(fontSize: 24),
                   ),

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
   final Function? toggleView;
-  Login({this.toggleView});
+  const Login({super.key, this.toggleView});
 
   @override
   State<StatefulWidget> createState() {
