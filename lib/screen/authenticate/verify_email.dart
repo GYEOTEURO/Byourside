@@ -118,14 +118,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   ),
                   onPressed: () {
                     Navigator.of(context).popUntil((route) => route.isFirst);
-                    try {
-                      FirebaseAuth.instance.currentUser?.delete();
-                    } catch (e) {
-                      FirebaseAuth.instance.signOut();
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                      const AlertDialog(
-                          content: Text("로그인/회원가입 이후 1시간이 지났다면 개발자에게 문의하세요."));
-                    }
+
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   })
             ],
           ),
