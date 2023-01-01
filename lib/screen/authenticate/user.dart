@@ -26,7 +26,9 @@ final _formKey_protector_age = GlobalKey<FormState>();
 final _formKey_protector_kid_age = GlobalKey<FormState>();
 final _formKey_participator = GlobalKey<FormState>();
 final _formKey_someoneElse = GlobalKey<FormState>();
-final _formKey_user = GlobalKey<FormState>();
+final _formKey_user_protector = GlobalKey<FormState>();
+final _formKey_user_participator = GlobalKey<FormState>();
+final _formKey_user_someone = GlobalKey<FormState>();
 
 const List<Widget> gender = <Widget>[Text('man'), Text('woman')];
 const List<Widget> type = <Widget>[
@@ -210,26 +212,6 @@ class _SetupUserState extends State<SetupUser> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Form(
-                      key: _formKey_user,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Column(children: [nicknameField])
-                          ])),
-                  TextButton(
-                      onPressed: () async {
-                        doesDocExist = await checkDocExist(_nickname.text);
-                        if (doesDocExist == true) {
-                          const AlertDialog(
-                            content: Text('이미 존재하는 닉네임입니다.'),
-                          );
-                        }
-                      },
-                      child: const Text(
-                        '닉네임 중복 확인',
-                        style: TextStyle(color: primaryColor),
-                      )),
                   ListTile(
                     title: Text('장애 아동 보호자'),
                     leading: Radio<Select>(
@@ -281,6 +263,27 @@ class _SetupUserState extends State<SetupUser> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                        Form(
+                            key: _formKey_user_protector,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [nicknameField])
+                                ])),
+                        TextButton(
+                            onPressed: () async {
+                              doesDocExist =
+                                  await checkDocExist(_nickname.text);
+                              if (doesDocExist == true) {
+                                const AlertDialog(
+                                  content: Text('이미 존재하는 닉네임입니다.'),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              '닉네임 중복 확인',
+                              style: TextStyle(color: primaryColor),
+                            )),
                         Form(
                             key: _formKey_protector_age,
                             child: Column(
@@ -478,54 +481,99 @@ class _SetupUserState extends State<SetupUser> {
                       ])
                 : SizedBox(),
             (participator)
-                ? Form(
-                    key: _formKey_participator,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(children: [
-                            //<Widget>
-                            TextFormField(
-                              decoration:
-                                  InputDecoration(labelText: "개인/단체 이름"),
-                              controller: _organizationName,
-                              validator: (value) {
-                                if (value != null) {
-                                  if (value.split(' ').first != '' &&
-                                      value.isNotEmpty) {
-                                    return null;
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        Form(
+                            key: _formKey_user_participator,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [nicknameField])
+                                ])),
+                        TextButton(
+                            onPressed: () async {
+                              doesDocExist =
+                                  await checkDocExist(_nickname.text);
+                              if (doesDocExist == true) {
+                                const AlertDialog(
+                                  content: Text('이미 존재하는 닉네임입니다.'),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              '닉네임 중복 확인',
+                              style: TextStyle(color: primaryColor),
+                            )),
+                        Form(
+                            key: _formKey_participator,
+                            child: Column(children: [
+                              //<Widget>
+                              TextFormField(
+                                decoration:
+                                    InputDecoration(labelText: "개인/단체 이름"),
+                                controller: _organizationName,
+                                validator: (value) {
+                                  if (value != null) {
+                                    if (value.split(' ').first != '' &&
+                                        value.isNotEmpty) {
+                                      return null;
+                                    }
+                                    return '유효한 개인/단체 이름을 입력하세요';
                                   }
-                                  return '유효한 개인/단체 이름을 입력하세요';
-                                }
-                              },
-                            ),
-                            DropdownButton(
-                              value: _dropdownValue,
-                              items: purposeType
-                                  .map(
-                                      (String item) => DropdownMenuItem<String>(
-                                            child: Text('$item'),
-                                            value: item,
-                                          ))
-                                  .toList(),
-                              onChanged: (dynamic newValue) {
-                                setState(() {
-                                  _dropdownValue = newValue;
-                                });
-                              },
-                              elevation: 8,
-                            )
-                          ])
-                        ]))
+                                },
+                              )
+                            ])),
+                        DropdownButton(
+                          value: _dropdownValue,
+                          items: purposeType
+                              .map((String item) => DropdownMenuItem<String>(
+                                    child: Text('$item'),
+                                    value: item,
+                                  ))
+                              .toList(),
+                          onChanged: (dynamic newValue) {
+                            setState(() {
+                              _dropdownValue = newValue;
+                            });
+                          },
+                          elevation: 8,
+                        )
+                      ])
                 : SizedBox(),
             (someoneElse)
-                ? Form(
-                    key: _formKey_someoneElse,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(children: [someoneElseField])
-                        ]))
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        Form(
+                            key: _formKey_user_someone,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [nicknameField])
+                                ])),
+                        TextButton(
+                            onPressed: () async {
+                              doesDocExist =
+                                  await checkDocExist(_nickname.text);
+                              if (doesDocExist == true) {
+                                const AlertDialog(
+                                  content: Text('이미 존재하는 닉네임입니다.'),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              '닉네임 중복 확인',
+                              style: TextStyle(color: primaryColor),
+                            )),
+                        Form(
+                            key: _formKey_someoneElse,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(children: [someoneElseField])
+                                ]))
+                      ])
                 : SizedBox(),
           ],
         ),
@@ -537,7 +585,7 @@ class _SetupUserState extends State<SetupUser> {
                   if (_formKey_protector_age.currentState!.validate() &&
                       _formKey_protector_kid_age.currentState!.validate() &&
                       _formKey_protector_belong.currentState!.validate() &&
-                      _formKey_user.currentState!.validate() &&
+                      _formKey_user_protector.currentState!.validate() &&
                       _nickname.text.split(' ').first != '' &&
                       _protectorAge.text.split(' ').first != '' &&
                       _childAge.text.split(' ').first != '' &&
@@ -568,10 +616,10 @@ class _SetupUserState extends State<SetupUser> {
           (participator)
               ? {
                   if (_formKey_participator.currentState!.validate() &&
-                      _formKey_user.currentState!.validate() &&
+                      _formKey_user_participator.currentState!.validate() &&
                       doesDocExist == false)
                     {
-                      print(_formKey_participator.currentState),
+                      // print(_formKey_participator.currentState),
                       storeParticipatorInfo(_nickname.text,
                           _organizationName.text, _dropdownValue),
                       Navigator.push(
@@ -584,11 +632,17 @@ class _SetupUserState extends State<SetupUser> {
           (someoneElse)
               ? {
                   if (_formKey_someoneElse.currentState!.validate() &&
-                      _formKey_user.currentState!.validate() &&
+                      _formKey_user_someone.currentState!.validate() &&
+                      _purpose.text != null &&
+                      _purpose.text != '' &&
                       doesDocExist == false)
-                    {storeSomeoneElseInfo(_nickname.text, _purpose.text)},
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => VerifyEmail()))
+                    {
+                      storeSomeoneElseInfo(_nickname.text, _purpose.text),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerifyEmail()))
+                    }
                 }
               : null;
         },

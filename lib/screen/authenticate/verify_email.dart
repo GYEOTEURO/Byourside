@@ -40,7 +40,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   Future checkEmailVerified() async {
     // call after email verification
-    if (FirebaseAuth.instance.currentUser != null) {
+    if (await FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
     setState(() {
