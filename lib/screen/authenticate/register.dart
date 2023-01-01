@@ -2,6 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -105,6 +106,7 @@ class _Register extends State<Register> {
 
     final txtButton = TextButton(
         onPressed: () {
+          FirebaseAuth.instance.currentUser?.delete();
           widget.toggleView!();
         },
         child:
