@@ -11,10 +11,22 @@ enum Select { protector, participator, someoneElse }
 
 List<String> purposeType = ['promote', 'recruit'];
 String _dropdownValue = 'promote';
-final _formKey_user = GlobalKey<FormState>();
-final _formKey_protector = GlobalKey<FormState>();
+
+// class Keys {
+//   static final _formKey_protector_belong = const Key('belong');
+//   static final _formKey_protector_age = const Key('protector_age');
+//   static final _formKey_protector_kid_age = const Key('kid_age');
+//   static final _formKey_participator = const Key('participator');
+//   static final _formKey_someoneElse = const Key('someoneElse');
+//   static final _formKey_user = const Key('user');
+// }
+
+final _formKey_protector_belong = GlobalKey<FormState>();
+final _formKey_protector_age = GlobalKey<FormState>();
+final _formKey_protector_kid_age = GlobalKey<FormState>();
 final _formKey_participator = GlobalKey<FormState>();
 final _formKey_someoneElse = GlobalKey<FormState>();
+final _formKey_user = GlobalKey<FormState>();
 
 const List<Widget> gender = <Widget>[Text('man'), Text('woman')];
 const List<Widget> type = <Widget>[
@@ -48,7 +60,10 @@ class _SetupUserState extends State<SetupUser> {
   bool participator = false;
   bool someoneElse = false;
   Select _select = Select.protector;
+  bool doesDocExist = true;
 
+  final GlobalKey<FormFieldState> _formKey =
+      GlobalKey<FormFieldState>(debugLabel: 'GlobalFormKey #userInfo');
   final User? user = FirebaseAuth.instance.currentUser;
   int count = 0;
 
@@ -56,19 +71,25 @@ class _SetupUserState extends State<SetupUser> {
   void initState() {
     super.initState();
 
-    Future<bool> isUserDataStored = checkStored();
+    // Future<bool> isUserDataStored = checkStored();
   }
 
-  Future<bool> checkStored() async {
-    return await checkIfDocExists(user!.uid);
-  }
-
-  Future<bool> checkIfDocExists(String docId) async {
-    var collectionRef = FirebaseFirestore.instance.collection('user');
-
-    var doc = await collectionRef.doc(docId).get();
+  Future<bool> checkDocExist(String name) async {
+    var collection = FirebaseFirestore.instance.collection('displayNameList');
+    var doc = await collection.doc(name).get();
     return doc.exists;
   }
+
+  // Future<bool> checkStored() async {
+  //   return await checkIfDocExists(user!.uid);
+  // }
+
+  // Future<bool> checkIfDocExists(String docId) async {
+  //   var collectionRef = FirebaseFirestore.instance.collection('user');
+
+  //   var doc = await collectionRef.doc(docId).get();
+  //   return doc.exists;
+  // }
 
   void storeProtectorInfo(
       String? nickname,
@@ -94,8 +115,8 @@ class _SetupUserState extends State<SetupUser> {
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
-        .doc('exist')
-        .set({'already': nickname});
+        .doc('$nickname')
+        .set({'current': true});
     await user?.updateDisplayName(nickname);
     // print(user);
     if (user != null) {
@@ -115,8 +136,8 @@ class _SetupUserState extends State<SetupUser> {
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
-        .doc('exist')
-        .set({'already': nickname});
+        .doc('$nickname')
+        .set({'current': true});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -134,8 +155,8 @@ class _SetupUserState extends State<SetupUser> {
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
-        .doc('exist')
-        .set({'already': nickname});
+        .doc('$nickname')
+        .set({'current': true});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -196,6 +217,19 @@ class _SetupUserState extends State<SetupUser> {
                           children: <Widget>[
                             Column(children: [nicknameField])
                           ])),
+                  TextButton(
+                      onPressed: () async {
+                        doesDocExist = await checkDocExist(_nickname.text);
+                        if (doesDocExist == true) {
+                          const AlertDialog(
+                            content: Text('이미 존재하는 닉네임입니다.'),
+                          );
+                        }
+                      },
+                      child: const Text(
+                        '닉네임 중복 확인',
+                        style: TextStyle(color: primaryColor),
+                      )),
                   ListTile(
                     title: Text('장애 아동 보호자'),
                     leading: Radio<Select>(
@@ -248,7 +282,7 @@ class _SetupUserState extends State<SetupUser> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                         Form(
-                            key: _formKey_protector,
+                            key: _formKey_protector_age,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -267,8 +301,16 @@ class _SetupUserState extends State<SetupUser> {
                                           return '유효한 나이를 입력하세요';
                                         }
                                       },
-                                    ),
-                                    const SizedBox(height: 5),
+                                    )
+                                  ])
+                                ])),
+                        const SizedBox(height: 5),
+                        Form(
+                            key: _formKey_protector_kid_age,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [
                                     TextFormField(
                                       decoration:
                                           InputDecoration(labelText: "자녀 나이"),
@@ -283,7 +325,15 @@ class _SetupUserState extends State<SetupUser> {
                                           return '유효한 나이를 입력하세요';
                                         }
                                       },
-                                    ),
+                                    )
+                                  ])
+                                ])),
+                        Form(
+                            key: _formKey_protector_belong,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [
                                     TextFormField(
                                       decoration: InputDecoration(
                                           labelText: "소속 복지관/학교"),
@@ -297,7 +347,7 @@ class _SetupUserState extends State<SetupUser> {
                                           return '유효한 소속을 입력하세요';
                                         }
                                       },
-                                    ),
+                                    )
                                   ])
                                 ])),
                         const SizedBox(height: 5),
@@ -484,7 +534,9 @@ class _SetupUserState extends State<SetupUser> {
         onPressed: () {
           (protector)
               ? {
-                  if (_formKey_protector.currentState!.validate() &&
+                  if (_formKey_protector_age.currentState!.validate() &&
+                      _formKey_protector_kid_age.currentState!.validate() &&
+                      _formKey_protector_belong.currentState!.validate() &&
                       _formKey_user.currentState!.validate() &&
                       _nickname.text.split(' ').first != '' &&
                       _protectorAge.text.split(' ').first != '' &&
@@ -494,7 +546,8 @@ class _SetupUserState extends State<SetupUser> {
                       (_selectedChildGender[0] || _selectedChildGender[1]) &&
                       (_selectedChildType[0] || _selectedChildType[1]) &&
                       (_selectedProtectorGender[0] ||
-                          _selectedProtectorGender[1]))
+                          _selectedProtectorGender[1]) &&
+                      doesDocExist == false)
                     {
                       storeProtectorInfo(
                           _nickname.text,
@@ -515,7 +568,8 @@ class _SetupUserState extends State<SetupUser> {
           (participator)
               ? {
                   if (_formKey_participator.currentState!.validate() &&
-                      _formKey_user.currentState!.validate())
+                      _formKey_user.currentState!.validate() &&
+                      doesDocExist == false)
                     {
                       print(_formKey_participator.currentState),
                       storeParticipatorInfo(_nickname.text,
@@ -530,7 +584,8 @@ class _SetupUserState extends State<SetupUser> {
           (someoneElse)
               ? {
                   if (_formKey_someoneElse.currentState!.validate() &&
-                      _formKey_user.currentState!.validate())
+                      _formKey_user.currentState!.validate() &&
+                      doesDocExist == false)
                     {storeSomeoneElseInfo(_nickname.text, _purpose.text)},
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => VerifyEmail()))
