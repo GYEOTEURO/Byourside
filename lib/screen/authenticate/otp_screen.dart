@@ -203,7 +203,7 @@ class _OTPScreenState extends State<OTPScreen> {
       codeAutoRetrievalTimeout: (String verificationID) {
         // Auto-resolution timed out...
       },
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 60),
     );
   }
 
