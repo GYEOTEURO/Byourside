@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -45,6 +46,12 @@ class _OTPScreenState extends State<OTPScreen> {
   void dispose() {
     timer?.cancel();
     super.dispose();
+  }
+
+  void storePhoneNum(String? num) async {
+    FirebaseFirestore.instance.collection('phoneNumList').doc('$num').set({
+      "current": true,
+    });
   }
 
   Future checkPhoneVerified() async {
@@ -120,8 +127,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         PhoneAuthProvider.credential(
                             verificationId: _verificationId!, smsCode: pin);
                     await _auth.currentUser?.updatePhoneNumber(credential);
-                    // await _auth.currentUser?.linkWithCredential(credential);
-
+                    storePhoneNum(widget.phone);
                     await _auth
                         .signInWithCredential(credential)
                         .then((value) async {
@@ -150,8 +156,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         PhoneAuthProvider.credential(
                             verificationId: _verificationId!, smsCode: pin);
                     await _auth.currentUser?.updatePhoneNumber(credential);
-                    // await _auth.currentUser?.linkWithCredential(credential);
-
+                    storePhoneNum(widget.phone);
                     await _auth
                         .signInWithCredential(credential)
                         .then((value) async {
