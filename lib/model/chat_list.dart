@@ -30,29 +30,38 @@ class ChatList {
     return userCollection.doc(uid).snapshots();
   }
 
+  Future<bool> checkDocExist(String name) async {
+    var collection = FirebaseFirestore.instance.collection('groups');
+    var doc = await collection.doc(name).get();
+    return doc.exists;
+  }
+
   // creating a group
   Future createGroup(String userName, String id, String groupName) async {
-    DocumentReference groupDocumentReference = await groupCollection.add({
-      "groupName": groupName,
-      "groupIcon": "",
-      "admin": "${id}_$userName",
-      "members": [],
-      "groupId": "",
-      "recentMessage": "",
-      "recentMessageSender": "",
-    });
+    if (await checkDocExist(groupName)) {
+    } else {
+      DocumentReference groupDocumentReference = await groupCollection.add({
+        "groupName": groupName,
+        "groupIcon": "",
+        "admin": "${id}_$userName",
+        "members": [],
+        "groupId": "",
+        "recentMessage": "",
+        "recentMessageSender": "",
+      });
 
-    // update the members
-    await groupDocumentReference.update({
-      "members": FieldValue.arrayUnion(["${uid}_$userName"]),
-      "groupId": groupDocumentReference.id,
-    });
+      // update the members
+      await groupDocumentReference.update({
+        "members": FieldValue.arrayUnion(["${uid}_$userName"]),
+        "groupId": groupDocumentReference.id,
+      });
 
-    DocumentReference userDocumentReference = userCollection.doc(uid);
-    return await userDocumentReference.update({
-      "groups":
-          FieldValue.arrayUnion(["${groupDocumentReference.id}_$groupName"])
-    });
+      DocumentReference userDocumentReference = userCollection.doc(uid);
+      return await userDocumentReference.update({
+        "groups":
+            FieldValue.arrayUnion(["${groupDocumentReference.id}_$groupName"])
+      });
+    }
   }
 
   //getting the chats
@@ -100,13 +109,7 @@ class ChatList {
 
     DocumentSnapshot documentSnapshot = await userDocumentReference.get();
     List<dynamic> groups = await documentSnapshot['groups'];
-    // print("${uid}_$userName");
-    // print(groups);
-    // print(groupId);
-    // print(groups.contains("${groupId}_$groupName"));
-    // if user has our groups => then remove them or also in other part re join
     if (groups.contains("${groupId}_$groupName")) {
-      // print("i'm here");
       await userDocumentReference.update({
         "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
       });
@@ -114,7 +117,6 @@ class ChatList {
         "members": FieldValue.arrayRemove(["${uid}_$userName"])
       });
     } else {
-      // print("there");
       await userDocumentReference.update({
         "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
       });
