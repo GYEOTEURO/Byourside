@@ -1,3 +1,6 @@
+import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/screen/mypage/freq_question.dart';
+import 'package:byourside/screen/mypage/to_developer.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +40,12 @@ class _Mypage extends State<Mypage> {
     Icon(Icons.question_answer),
     Icon(Icons.logout)
   ];
+
+  void _logout(context) async {
+    FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
+    await _auth.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +167,23 @@ class _Mypage extends State<Mypage> {
                           etcEntires[index],
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (index == 0) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const FreqQuestion()),
+                            );
+                          } else if (index == 1) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ToDeveloper()),
+                            );
+                          } else {
+                            _logout(context);
+                          }
+                        },
                       );
                     })),
           ],
