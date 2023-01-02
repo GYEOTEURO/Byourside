@@ -72,14 +72,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
         ),
         backgroundColor: primaryColor,
       ),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: const EdgeInsets.symmetric(vertical: 50),
-      //     children: <Widget>[
-      //       Icon(Icons.account_circle, size: 150, color: Colors.black,)
-      //     ],
-      //   ),
-      // ),
       body: groupList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
