@@ -3,7 +3,6 @@ import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/chat/search_page.dart';
 import 'package:byourside/widget/group_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -144,9 +143,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text("취소"),
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  child: const Text("취소"),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -164,9 +163,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text("만들기"),
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  child: const Text("만들기"),
                 )
               ],
             );
@@ -185,7 +184,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               return ListView.builder(
                 itemCount: snapshot.data['groups'].length,
                 itemBuilder: (context, index) {
-                  int reverseIndex = snapshot.data['groups'].length - index - 1;
+                  // int reverseIndex = snapshot.data['groups'].length - index - 1;
                   return GroupTile(
                       userName: snapshot.data['nickname'],
                       groupId: getId(snapshot.data['groups'][index]),
@@ -199,7 +198,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             return noGroupWidget();
           }
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               color: primaryColor,
             ),
