@@ -112,7 +112,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
       ),
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(25),
         child: Column(
           children: [
             // 제목
@@ -224,8 +224,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 padding: EdgeInsets.only(top: 20, bottom: 5),
                 child: TextFormField(
                   controller: _content,
-                  minLines: 1,
-                  maxLines: 8,
+                  minLines: 8,
+                  maxLines: 10,
                   decoration: const InputDecoration(
                     labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
                     border: OutlineInputBorder(
