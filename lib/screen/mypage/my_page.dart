@@ -1,5 +1,9 @@
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
+import 'package:byourside/screen/mypage/myNanumPost.dart';
+import 'package:byourside/screen/mypage/myOndoPost.dart';
+import 'package:byourside/screen/mypage/myScrapNanumPost.dart';
+import 'package:byourside/screen/mypage/myScrapOndoPost.dart';
 import 'package:byourside/screen/mypage/to_developer.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,11 +31,23 @@ class _Mypage extends State<Mypage> {
     displayName = user!.displayName!;
   }
 
-  final List<String> myEntires = <String>["내가 쓴 마음온도 글", "내가 쓴 마음 나눔 글", "스크랩"];
+  final List<String> myEntires = <String>[
+    "내가 쓴 마음온도 글",
+    "내가 쓴 마음나눔 글",
+    "마음온도 스크랩",
+    "마음나눔 스크랩"
+  ];
   final List<Icon> myIcons = <Icon>[
     Icon(Icons.groups),
     Icon(Icons.volunteer_activism),
+    Icon(Icons.star_border_outlined),
     Icon(Icons.star_border_outlined)
+  ];
+  final List<Widget> myConnectPage = <Widget>[
+    MyOndoPost(),
+    MyNanumPost(),
+    MyScrapOndoPost(),
+    MyScrapNanumPost()
   ];
 
   final List<String> etcEntires = <String>["자주 묻는 질문", "개발자에게 문의하기", "로그아웃"];
@@ -141,7 +157,12 @@ class _Mypage extends State<Mypage> {
                           myEntires[index],
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => myConnectPage[index]));
+                        },
                       );
                     })),
             Divider(thickness: 1, height: 1, color: Colors.black26),

@@ -1,18 +1,23 @@
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
+import 'package:get/get.dart';
 import '../../model/db_get.dart';
 
 class OndoPostList extends StatefulWidget {
   const OndoPostList(
-      {Key? key, required this.primaryColor, required this.collectionName})
+      {Key? key,
+      required this.primaryColor,
+      required this.collectionName,
+      required this.category})
       : super(key: key);
+
   final Color primaryColor;
   final String collectionName;
-  final String title = "마음온도";
+  final String category;
 
   @override
   State<OndoPostList> createState() => _OndoPostListState();
@@ -73,10 +78,20 @@ class _OndoPostListState extends State<OndoPostList> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OndoTypeController());
+
     return Scaffold(
-      appBar: const OndoAppBar(primaryColor: primaryColor),
       body: StreamBuilder<List<PostListModel>>(
-          stream: DBGet.readCollection(collection: widget.collectionName),
+          stream: (widget.category.contains('전체'))
+              ? ((widget.category == '전체')
+                  ? DBGet.readAllCollection(
+                      collection: widget.collectionName, type: controller.type)
+                  : DBGet.readAllInfoCollection(
+                      collection: widget.collectionName, type: controller.type))
+              : DBGet.readCategoryCollection(
+                  collection: widget.collectionName,
+                  category: widget.category,
+                  type: controller.type),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(

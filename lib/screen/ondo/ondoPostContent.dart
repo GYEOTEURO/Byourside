@@ -83,18 +83,26 @@ class _OndoPostContentState extends State<OndoPostContent> {
             Row(
               children: [
                 IconButton(
-                    alignment: Alignment.centerLeft,
-                    onPressed: () {
-                    },
-                    icon: const Icon(Icons.favorite_outline),
-                    color: const Color.fromARGB(255, 207, 77, 68),
-                  ),
-                //Text(post.likes!),
+                  alignment: Alignment.centerLeft,
+                  onPressed: () {
+                    post.likesPeople!.contains(user?.uid) ?
+                      DBSet.cancelLike(collectionName!, post.id!, user!.uid) 
+                      : DBSet.addLike(collectionName!, post.id!, user!.uid);
+                  },
+                  icon: post.likesPeople!.contains(user?.uid) ?
+                          const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
+                  color:Color.fromARGB(255, 207, 77, 68)
+                ),
+                Text('${post.likes!} '),
                 IconButton(
                   alignment: Alignment.centerLeft,
                   onPressed: () {
+                    post.scrapPeople!.contains(user?.uid) ?
+                      DBSet.cancelScrap(collectionName!, post.id!, user!.uid) 
+                      : DBSet.addScrap(collectionName!, post.id!, user!.uid);
                   },
-                  icon: const Icon(Icons.star_outline),
+                  icon: post.scrapPeople!.contains(user?.uid) ?
+                          const Icon(Icons.star) : const Icon(Icons.star_outline),
                   color: const Color.fromARGB(255, 244, 231, 98),
                 ),
               ]
