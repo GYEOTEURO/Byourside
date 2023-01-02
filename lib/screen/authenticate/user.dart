@@ -1,22 +1,38 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/bottomNavigationBar.dart';
+import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:byourside/main.dart';
 
 enum Select { protector, participator, someoneElse }
 
-List<String> purposeType = ['promote', 'recruit'];
-String _dropdownValue = 'promote';
+List<String> purposeType = ['홍보', '모집'];
+String _dropdownValue = '홍보';
 
-const List<Widget> gender = <Widget>[Text('man'), Text('woman')];
-const List<Widget> type = <Widget>[
-  Text('BrainLesion'),
-  Text('developmentalDisability')
-];
-const List<Widget> degree = <Widget>[Text('stark'), Text('gentle')];
+// class Keys {
+//   static final _formKey_protector_belong = const Key('belong');
+//   static final _formKey_protector_age = const Key('protector_age');
+//   static final _formKey_protector_kid_age = const Key('kid_age');
+//   static final _formKey_participator = const Key('participator');
+//   static final _formKey_someoneElse = const Key('someoneElse');
+//   static final _formKey_user = const Key('user');
+// }
+
+final _formKey_protector_belong = GlobalKey<FormState>();
+final _formKey_protector_age = GlobalKey<FormState>();
+final _formKey_protector_kid_age = GlobalKey<FormState>();
+final _formKey_participator = GlobalKey<FormState>();
+final _formKey_someoneElse = GlobalKey<FormState>();
+final _formKey_user_protector = GlobalKey<FormState>();
+final _formKey_user_participator = GlobalKey<FormState>();
+final _formKey_user_someone = GlobalKey<FormState>();
+
+const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
+const List<Widget> type = <Widget>[Text('뇌병변 장애'), Text('발달 장애')];
+const List<Widget> degree = <Widget>[Text('심한 장애'), Text('심하지 않은 장애')];
 
 final List<bool> _selectedProtectorGender = <bool>[false, false];
 final List<bool> _selectedChildGender = <bool>[false, false];
@@ -39,29 +55,22 @@ class SetupUser extends StatefulWidget {
 
 class _SetupUserState extends State<SetupUser> {
   bool isUserDataStored = false;
-  bool protector = false;
+  bool protector = true;
   bool participator = false;
   bool someoneElse = false;
   Select _select = Select.protector;
-
+  bool doesDocExist = true;
   final User? user = FirebaseAuth.instance.currentUser;
   int count = 0;
 
   @override
   void initState() {
     super.initState();
-
-    Future<bool> isUserDataStored = checkStored();
   }
 
-  Future<bool> checkStored() async {
-    return await checkIfDocExists(user!.uid);
-  }
-
-  Future<bool> checkIfDocExists(String docId) async {
-    var collectionRef = FirebaseFirestore.instance.collection('user');
-
-    var doc = await collectionRef.doc(docId).get();
+  Future<bool> checkDocExist(String name) async {
+    var collection = FirebaseFirestore.instance.collection('displayNameList');
+    var doc = await collection.doc(name).get();
     return doc.exists;
   }
 
@@ -84,9 +93,15 @@ class _SetupUserState extends State<SetupUser> {
       "childType": selectedChildType,
       "childDegree": selectedChildDegree,
       "belong": belong,
+      "groups": [],
+      "profilePic": "",
     });
+    FirebaseFirestore.instance
+        .collection('displayNameList')
+        .doc('$nickname')
+        .set({'current': true});
     await user?.updateDisplayName(nickname);
-    print(user);
+    // print(user);
     if (user != null) {
       FirebaseUser(uid: user?.uid, displayName: nickname);
     }
@@ -98,8 +113,14 @@ class _SetupUserState extends State<SetupUser> {
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
       "nickname": nickname,
       "protectorAge": protectorAge,
-      "dropdownValue": dropdownValue
+      "dropdownValue": dropdownValue,
+      "groups": [],
+      "profilePic": "",
     });
+    FirebaseFirestore.instance
+        .collection('displayNameList')
+        .doc('$nickname')
+        .set({'current': true});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -109,10 +130,16 @@ class _SetupUserState extends State<SetupUser> {
 
   void storeSomeoneElseInfo(String? nickname, String? purpose) async {
     // image url 포함해 firestore에 document 저장
+    FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
+      "nickname": nickname,
+      "purpose": purpose,
+      "groups": [],
+      "profilePic": "",
+    });
     FirebaseFirestore.instance
-        .collection('user')
-        .doc(user!.uid)
-        .set({"nickname": nickname, "purpose": purpose});
+        .collection('displayNameList')
+        .doc('$nickname')
+        .set({'current': true});
     await user?.updateDisplayName(nickname);
     print(user);
     if (user != null) {
@@ -124,206 +151,200 @@ class _SetupUserState extends State<SetupUser> {
       child: TextFormField(
     decoration: InputDecoration(labelText: "닉네임을 입력하세요"),
     controller: _nickname,
+    validator: (value) {
+      if (value != null) {
+        if (value.split(' ').first != '' && value.isNotEmpty) {
+          return null;
+        }
+        return '유효한 닉네임을 입력하세요';
+      }
+    },
   ));
-
-  // final protectorField = Column(children: <Widget>[
-  //   TextFormField(
-  //     decoration: InputDecoration(labelText: "put protector age"),
-  //     controller: _protectorAge,
-  //   ),
-  //   // Text('Protector gender'),
-  //   const SizedBox(height: 5),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select protector gender"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedProtectorGender[index] = true;
-  //           _selectedProtectorGender[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedProtectorGender,
-  //         children: gender,
-  //       )
-  //     ],
-  //   ),
-  //   TextFormField(
-  //     decoration: InputDecoration(labelText: "put child age"),
-  //     controller: _childAge,
-  //   ),
-  //   // Text('Child gender'),
-  //   const SizedBox(height: 5),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select child gender"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedChildGender[index] = true;
-  //           _selectedChildGender[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedChildGender,
-  //         children: gender,
-  //       ),
-  //     ],
-  //   ),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select child type"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedChildType[index] = true;
-  //           _selectedChildType[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedChildType,
-  //         children: type,
-  //       ),
-  //     ],
-  //   ),
-  //   Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Text("select child degree"),
-  //       SizedBox(width: 30,),
-  //       ToggleButtons(
-  //         direction: Axis.horizontal,
-  //         onPressed: (int index) {
-  //           _selectedChildDegree[index] = true;
-  //           _selectedChildDegree[(1 - index).abs()] = false;
-  //         },
-  //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-  //         selectedBorderColor: primaryColor,
-  //         selectedColor: Colors.white,
-  //         fillColor: primaryColor,
-  //         color: primaryColor,
-  //         constraints: const BoxConstraints(
-  //           minHeight: 40.0,
-  //           minWidth: 80.0,
-  //         ),
-  //         isSelected: _selectedChildDegree,
-  //         children: degree,
-  //       ),
-  //     ],
-  //   ),
-  //   TextFormField(
-  //     decoration: InputDecoration(labelText: "belong"),
-  //     controller: _belong,
-  //   ),
-  // ]);
 
   final someoneElseField = Container(
       child: TextFormField(
-    decoration: InputDecoration(labelText: "visit purpose"),
+    decoration: InputDecoration(labelText: "방문 목적"),
     controller: _purpose,
+    validator: (value) {
+      if (value != null) {
+        if (value.split(' ').first != '' && value.isNotEmpty) {
+          return null;
+        }
+        return '유효한 방문 목적을 입력하세요';
+      }
+    },
   ));
+
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: primaryColor),
       body: SingleChildScrollView(
-        child: Column(children: [
-          Form(
-              child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                nicknameField,
-                ListTile(
-                  title: Text('child protector'),
-                  leading: Radio<Select>(
-                    value: Select.protector,
-                    groupValue: _select,
-                    onChanged: (Select? value) {
-                      setState(() {
-                        _select = value!;
-                        print(_select);
-                        protector = true;
-                        participator = false;
-                        someoneElse = false;
-                      });
-                    },
+        child: Column(
+          children: [
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ListTile(
+                    title: Text('장애 아동 보호자'),
+                    leading: Radio<Select>(
+                      value: Select.protector,
+                      groupValue: _select,
+                      onChanged: (Select? value) {
+                        setState(() {
+                          _select = value!;
+                          print(_select);
+                          protector = true;
+                          participator = false;
+                          someoneElse = false;
+                        });
+                      },
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('participator'),
-                  leading: Radio<Select>(
-                    value: Select.participator,
-                    groupValue: _select,
-                    onChanged: (Select? value) {
-                      setState(() {
-                        _select = value!;
-                        protector = false;
-                        participator = true;
-                        someoneElse = false;
-                      });
-                    },
+                  ListTile(
+                    title: Text('관계자'),
+                    leading: Radio<Select>(
+                      value: Select.participator,
+                      groupValue: _select,
+                      onChanged: (Select? value) {
+                        setState(() {
+                          _select = value!;
+                          protector = false;
+                          participator = true;
+                          someoneElse = false;
+                        });
+                      },
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: Text('someoneElse'),
-                  leading: Radio<Select>(
-                    value: Select.someoneElse,
-                    groupValue: _select,
-                    onChanged: (Select? value) {
-                      setState(() {
-                        _select = value!;
-                        protector = false;
-                        participator = false;
-                        someoneElse = true;
-                      });
-                    },
-                  ),
-                ),
-                (protector)
-                    ? Column(children: <Widget>[
-                        TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "put protector age"),
-                          controller: _protectorAge,
-                        ),
-                        // Text('Protector gender'),
+                  ListTile(
+                    title: Text('기타'),
+                    leading: Radio<Select>(
+                      value: Select.someoneElse,
+                      groupValue: _select,
+                      onChanged: (Select? value) {
+                        setState(() {
+                          _select = value!;
+                          protector = false;
+                          participator = false;
+                          someoneElse = true;
+                        });
+                      },
+                    ),
+                  )
+                ]),
+            (protector)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                        Form(
+                            key: _formKey_user_protector,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [nicknameField])
+                                ])),
+                        TextButton(
+                            onPressed: () async {
+                              doesDocExist =
+                                  await checkDocExist(_nickname.text);
+                              if (doesDocExist == true) {
+                                if (mounted) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text('이미 존재하는 닉네임입니다.'),
+                                        );
+                                      });
+                                }
+                              }
+                            },
+                            child: const Text(
+                              '닉네임 중복 확인',
+                              style: TextStyle(color: primaryColor),
+                            )),
+                        Form(
+                            key: _formKey_protector_age,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [
+                                    TextFormField(
+                                      decoration:
+                                          InputDecoration(labelText: "보호자 나이"),
+                                      controller: _protectorAge,
+                                      validator: (value) {
+                                        if (value != null) {
+                                          if (value.split(' ').first != '' &&
+                                              value.isNotEmpty &&
+                                              isNumeric(value)) {
+                                            return null;
+                                          }
+                                          return '유효한 나이를 입력하세요';
+                                        }
+                                      },
+                                    )
+                                  ])
+                                ])),
+                        const SizedBox(height: 5),
+                        Form(
+                            key: _formKey_protector_kid_age,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [
+                                    TextFormField(
+                                      decoration:
+                                          InputDecoration(labelText: "자녀 나이"),
+                                      controller: _childAge,
+                                      validator: (value) {
+                                        if (value != null) {
+                                          if (value.split(' ').first != '' &&
+                                              value.isNotEmpty &&
+                                              isNumeric(value)) {
+                                            return null;
+                                          }
+                                          return '유효한 나이를 입력하세요';
+                                        }
+                                      },
+                                    )
+                                  ])
+                                ])),
+                        Form(
+                            key: _formKey_protector_belong,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: "소속 복지관/학교"),
+                                      controller: _belong,
+                                      validator: (value) {
+                                        if (value != null) {
+                                          if (value.split(' ').first != '' &&
+                                              value.isNotEmpty) {
+                                            return null;
+                                          }
+                                          return '유효한 소속을 입력하세요';
+                                        }
+                                      },
+                                    )
+                                  ])
+                                ])),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("select protector gender"),
+                          children: <Widget>[
+                            Text("보호자 성별"),
                             SizedBox(
                               width: 30,
                             ),
@@ -333,7 +354,7 @@ class _SetupUserState extends State<SetupUser> {
                                 setState(() {
                                   _selectedProtectorGender[index] = true;
                                   _selectedProtectorGender[(1 - index).abs()] =
-                                  false;
+                                      false;
                                 });
                               },
                               borderRadius:
@@ -351,17 +372,11 @@ class _SetupUserState extends State<SetupUser> {
                             )
                           ],
                         ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "put child age"),
-                          controller: _childAge,
-                        ),
-                        // Text('Child gender'),
                         const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select child gender"),
+                            Text("자녀 성별"),
                             SizedBox(
                               width: 30,
                             ),
@@ -392,7 +407,7 @@ class _SetupUserState extends State<SetupUser> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select child type"),
+                            Text("장애 유형"),
                             SizedBox(
                               width: 30,
                             ),
@@ -422,7 +437,7 @@ class _SetupUserState extends State<SetupUser> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("select child degree"),
+                            Text("장애 정도"),
                             SizedBox(
                               width: 30,
                             ),
@@ -431,7 +446,8 @@ class _SetupUserState extends State<SetupUser> {
                               onPressed: (int index) {
                                 setState(() {
                                   _selectedChildDegree[index] = true;
-                                  _selectedChildDegree[(1 - index).abs()] = false;
+                                  _selectedChildDegree[(1 - index).abs()] =
+                                      false;
                                 });
                               },
                               borderRadius:
@@ -448,20 +464,59 @@ class _SetupUserState extends State<SetupUser> {
                               children: degree,
                             ),
                           ],
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: "belong"),
-                          controller: _belong,
-                        ),
+                        )
                       ])
-                    : SizedBox(),
-                (participator)
-                    ? Column(children: <Widget>[
-                        TextFormField(
-                          decoration:
-                              InputDecoration(labelText: "organization name"),
-                          controller: _organizationName,
-                        ),
+                : SizedBox(),
+            (participator)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        Form(
+                            key: _formKey_user_participator,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [nicknameField])
+                                ])),
+                        TextButton(
+                            onPressed: () async {
+                              doesDocExist =
+                                  await checkDocExist(_nickname.text);
+                              if (doesDocExist == true) {
+                                if (mounted) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text('이미 존재하는 닉네임입니다.'),
+                                        );
+                                      });
+                                }
+                              }
+                            },
+                            child: const Text(
+                              '닉네임 중복 확인',
+                              style: TextStyle(color: primaryColor),
+                            )),
+                        Form(
+                            key: _formKey_participator,
+                            child: Column(children: [
+                              //<Widget>
+                              TextFormField(
+                                decoration:
+                                    InputDecoration(labelText: "개인/단체 이름"),
+                                controller: _organizationName,
+                                validator: (value) {
+                                  if (value != null) {
+                                    if (value.split(' ').first != '' &&
+                                        value.isNotEmpty) {
+                                      return null;
+                                    }
+                                    return '유효한 개인/단체 이름을 입력하세요';
+                                  }
+                                },
+                              )
+                            ])),
                         DropdownButton(
                           value: _dropdownValue,
                           items: purposeType
@@ -478,35 +533,117 @@ class _SetupUserState extends State<SetupUser> {
                           elevation: 8,
                         )
                       ])
-                    : SizedBox(),
-                (someoneElse) ? someoneElseField : SizedBox(),
-              ],
-            ),
-          ))
-          // 닉네임
-        ]),
+                : SizedBox(),
+            (someoneElse)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        Form(
+                            key: _formKey_user_someone,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(children: [nicknameField])
+                                ])),
+                        TextButton(
+                            onPressed: () async {
+                              doesDocExist =
+                                  await checkDocExist(_nickname.text);
+                              if (doesDocExist == true) {
+                                if (mounted) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text('이미 존재하는 닉네임입니다.'),
+                                        );
+                                      });
+                                }
+                              }
+                            },
+                            child: const Text(
+                              '닉네임 중복 확인',
+                              style: TextStyle(color: primaryColor),
+                            )),
+                        Form(
+                            key: _formKey_someoneElse,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(children: [someoneElseField])
+                                ]))
+                      ])
+                : SizedBox(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           (protector)
-              ? storeProtectorInfo(
-                  _nickname.text,
-                  _protectorAge.text,
-                  _selectedProtectorGender,
-                  _childAge.text,
-                  _selectedChildGender,
-                  _selectedChildType,
-                  _selectedChildDegree,
-                  _belong.text)
+              ? {
+                  if (_formKey_protector_age.currentState!.validate() &&
+                      _formKey_protector_kid_age.currentState!.validate() &&
+                      _formKey_protector_belong.currentState!.validate() &&
+                      _formKey_user_protector.currentState!.validate() &&
+                      _nickname.text.split(' ').first != '' &&
+                      _protectorAge.text.split(' ').first != '' &&
+                      _childAge.text.split(' ').first != '' &&
+                      _belong.text.split(' ').first != '' &&
+                      (_selectedChildDegree[0] || _selectedChildDegree[1]) &&
+                      (_selectedChildGender[0] || _selectedChildGender[1]) &&
+                      (_selectedChildType[0] || _selectedChildType[1]) &&
+                      (_selectedProtectorGender[0] ||
+                          _selectedProtectorGender[1]) &&
+                      doesDocExist == false)
+                    {
+                      storeProtectorInfo(
+                          _nickname.text,
+                          _protectorAge.text,
+                          _selectedProtectorGender,
+                          _childAge.text,
+                          _selectedChildGender,
+                          _selectedChildType,
+                          _selectedChildDegree,
+                          _belong.text),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerifyEmail()))
+                    },
+                }
               : null;
           (participator)
-              ? storeParticipatorInfo(
-                  _nickname.text, _organizationName.text, _dropdownValue)
+              ? {
+                  if (_formKey_participator.currentState!.validate() &&
+                      _formKey_user_participator.currentState!.validate() &&
+                      doesDocExist == false)
+                    {
+                      // print(_formKey_participator.currentState),
+                      storeParticipatorInfo(_nickname.text,
+                          _organizationName.text, _dropdownValue),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerifyEmail()))
+                    }
+                }
               : null;
           (someoneElse)
-              ? storeSomeoneElseInfo(_nickname.text, _purpose.text)
+              ? {
+                  if (_formKey_someoneElse.currentState!.validate() &&
+                      _formKey_user_someone.currentState!.validate() &&
+                      _purpose.text != null &&
+                      _purpose.text != '' &&
+                      doesDocExist == false)
+                    {
+                      storeSomeoneElseInfo(_nickname.text, _purpose.text),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VerifyEmail()))
+                    }
+                }
               : null;
-          Navigator.of(context).popUntil((_) => count++ >= 3);
         },
         backgroundColor: primaryColor,
         child: const Text("완료"),
