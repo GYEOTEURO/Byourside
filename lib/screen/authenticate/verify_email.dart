@@ -40,10 +40,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   Future checkEmailVerified() async {
     // call after email verification
-    await FirebaseAuth.instance.currentUser!.reload();
-
+    if (await FirebaseAuth.instance.currentUser != null) {
+      await FirebaseAuth.instance.currentUser!.reload();
+    }
     setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      if (FirebaseAuth.instance.currentUser != null) {
+        isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      }
     });
 
     if (isEmailVerified) timer?.cancel();
@@ -53,19 +56,21 @@ class _VerifyEmailState extends State<VerifyEmail> {
     try {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
-      if(user != null) {
+      if (user != null) {
         setState(() => canResendEmail = false);
         await Future.delayed(Duration(seconds: 60));
         setState(() => canResendEmail = true);
       }
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(e.toString()),
-            );
-          });
+      if (mounted) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(e.toString()),
+              );
+            });
+      }
     }
   }
 
@@ -77,7 +82,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Verify Email'),
+          title: Text('이메일 확인'),
+          backgroundColor: primaryColor,
         ),
         body: Padding(
           padding: EdgeInsets.all(16),
@@ -85,8 +91,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'A verification email has been sent to your email.',
-                style: TextStyle(fontSize: 20),
+                '확인 이메일이 전송되었습니다. 메일함을 확인하세요',
+                style: TextStyle(fontSize: 20, color: primaryColor),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 24),
@@ -96,22 +102,26 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 ),
                 icon: Icon(Icons.email, size: 32),
                 label: Text(
-                  'Resent Email',
+                  '이메일 재전송',
                   style: TextStyle(fontSize: 24),
                 ),
                 onPressed: canResendEmail ? sendVerificationEmail : null,
               ),
               SizedBox(height: 8),
               TextButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50),
-                ),
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(fontSize: 24),
-                ),
-                onPressed: () => FirebaseAuth.instance.signOut(),
-              )
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(50),
+                  ),
+                  child: Text(
+                    '취소',
+                    style: TextStyle(fontSize: 24, color: primaryColor),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  })
             ],
           ),
         ),
