@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/authenticate/otp_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +22,13 @@ class VerifyPhone extends StatefulWidget {
 
 class _VerifyPhoneState extends State<VerifyPhone> {
   final TextEditingController _controller = TextEditingController();
+  bool doesDocExist = true;
+
+  Future<bool> checkDocExist(String name) async {
+    var collection = FirebaseFirestore.instance.collection('phoneNumList');
+    var doc = await collection.doc(name).get();
+    return doc.exists;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +79,22 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(primaryColor)),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => OTPScreen(_controller.text)));
+                onPressed: () async {
+                  doesDocExist = await checkDocExist(_controller.text);
+                  if (doesDocExist == true) {
+                    if (mounted) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text('이미 가입된 번호입니다.'),
+                            );
+                          });
+                    }
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OTPScreen(_controller.text)));
+                  }
                 },
                 child: Text('동의하고 인증', style: TextStyle(color: Colors.white))),
           ),
