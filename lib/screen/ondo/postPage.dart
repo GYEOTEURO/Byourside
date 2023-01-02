@@ -8,17 +8,17 @@ import '../../model/db_set.dart';
 import '../../model/ondo_post.dart';
 
 class OndoPostPage extends StatefulWidget {
-  const OndoPostPage({Key? key, required this.primaryColor, required this.title})
+  const OndoPostPage(
+      {Key? key, required this.primaryColor, required this.title})
       : super(key: key);
   final Color primaryColor;
   final String title;
-  
+
   @override
   State<OndoPostPage> createState() => _OndoPostPageState();
 }
 
 class _OndoPostPageState extends State<OndoPostPage> {
-
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
 
@@ -112,8 +112,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
             // 제목
             Container(
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: "제목을 입력하세요"),
-                  controller: _title,
+              decoration: InputDecoration(labelText: "제목을 입력하세요"),
+              controller: _title,
             )),
             // 카테고리 선택
             Container(
@@ -221,17 +221,19 @@ class _OndoPostPageState extends State<OndoPostPage> {
         ),
       ),
       // 글 작성 완료 버튼
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Navigator.pop(context);
-          List<String> urls = _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+          List<String> urls =
+              _images.isEmpty ? [] : await DBSet.uploadFile(_images);
           OndoPostModel postData = OndoPostModel(
-                                      uid: user!.uid, 
-                                      nickname: "mg", 
-                                      title: _title.text, 
-                                      content: _content.text, 
-                                      datetime: Timestamp.now(), 
-                                      images: urls);
+              uid: user!.uid,
+              nickname: "mg",
+              title: _title.text,
+              content: _content.text,
+              datetime: Timestamp.now(),
+              images: urls);
           DBSet.addOndoPost('ondoPost', postData);
         },
         backgroundColor: widget.primaryColor,
@@ -239,5 +241,4 @@ class _OndoPostPageState extends State<OndoPostPage> {
       ),
     );
   }
-
 }
