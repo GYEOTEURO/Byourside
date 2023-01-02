@@ -52,37 +52,41 @@ class _ToDeveloperState extends State<ToDeveloper> {
           color: Colors.white,
         ),
       ),
-      body: SingleChildScrollView(
-          padding: EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20),
-              Text("'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
-              SizedBox(height: 30),
-              TextField(
-                  controller: _message,
-                  minLines: 3,
-                  maxLines: 8,
-                  decoration: InputDecoration(
-                    labelText: '문의할 사항을 남겨주세요',
-                    hintText: 'Enter messages',
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(
-                          width: 1, color: Theme.of(context).primaryColor),
-                    ),
-                    labelStyle:
-                        TextStyle(color: Theme.of(context).primaryColor),
-                  )),
-            ],
-          )),
+      body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+              padding: EdgeInsets.all(30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  Text("'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+                  SizedBox(height: 30),
+                  TextField(
+                      autofocus: true,
+                      controller: _message,
+                      minLines: 3,
+                      maxLines: 8,
+                      decoration: InputDecoration(
+                        labelText: '문의할 사항을 남겨주세요',
+                        hintText: 'Enter messages',
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: BorderSide(
+                              width: 1, color: Theme.of(context).primaryColor),
+                        ),
+                        labelStyle:
+                            TextStyle(color: Theme.of(context).primaryColor),
+                      )),
+                ],
+              ))),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.navigate_next),
