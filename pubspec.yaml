@@ -57,6 +57,7 @@ dependencies:
   dotted_border: ^2.0.0+3
   firebase_storage:
   logger: ^1.1.0
+  get: ^4.6.5
 
 
 dev_dependencies:

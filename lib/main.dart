@@ -1,9 +1,11 @@
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/home/home.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/screen/ondo/category.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:byourside/screen/bottomNavigationBar.dart';
@@ -16,9 +18,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
+  runApp(GetMaterialApp(
     home: MyApp(),
-    debugShowCheckedModeBanner: false,
+    // debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -29,8 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late TabController controller;
-
   @override
   Widget build(BuildContext context) {
     return FirebasePhoneAuthProvider(
