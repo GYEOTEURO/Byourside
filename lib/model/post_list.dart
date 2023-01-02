@@ -9,9 +9,8 @@ class PostListModel {
   List<String>? images;
   String? category;
   bool? isCompleted;
-  String? content;
 
-  PostListModel({this.id, this.nickname, this.title, this.datetime, this.images, this.category, this.isCompleted, this.content});
+  PostListModel({this.id, this.nickname, this.title, this.datetime, this.images, this.category, this.isCompleted});
 
   PostListModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc, String collection)
       : id = doc.id,
@@ -22,6 +21,5 @@ class PostListModel {
         images = doc["images"] == null
             ? null : doc["images"].cast<String>(),
         category = (collection == 'ondoPost') ? doc["category"] : null,
-        isCompleted = (collection == 'nanumPost') ? doc["isCompleted"] : null,
-        content = doc["content"];
+        isCompleted = (collection == 'nanumPost') ? doc["isCompleted"] : null;
 }
