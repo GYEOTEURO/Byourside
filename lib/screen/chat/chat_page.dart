@@ -69,8 +69,14 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
       body: Stack(
-        children: <Widget>[
-          chatMessages(),
+        children: [
+          Positioned(
+              child: Container(
+                  height: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).viewPadding.top -
+                      MediaQuery.of(context).viewPadding.bottom -
+                      140,
+                  child: chatMessages())),
           Container(
             alignment: Alignment.bottomCenter,
             width: MediaQuery.of(context).size.width,
@@ -127,6 +133,8 @@ class _ChatPageState extends State<ChatPage> {
       builder: (context, AsyncSnapshot snapshot) {
         return snapshot.hasData
             ? ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   return MessageTile(
