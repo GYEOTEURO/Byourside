@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/db_set.dart';
 import '../../model/nanum_post.dart';
 import '../ondo/postPage.dart';
-import 'package:flutter/src/widgets/basic.dart' as C;
+// import 'package:flutter/src/widgets/basic.dart' as C;
 
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
@@ -201,7 +201,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                             borderType: BorderType.RRect,
                                             radius: Radius.circular(5),
                                             child: Container(
-                                              child: C.Center(
+                                              child: Center(
                                                   child: _boxContents[index]),
                                               decoration: index <=
                                                       _images.length - 1
