@@ -1,5 +1,5 @@
 import 'dart:ffi';
-import 'package:flutter/src/widgets/basic.dart' as C;
+// import 'package:flutter/src/widgets/basic.dart' as C;
 import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -207,7 +207,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                             borderType: BorderType.RRect,
                                             radius: Radius.circular(5),
                                             child: Container(
-                                              child: C.Center(
+                                              child: Center(
                                                   child: _boxContents[index]),
                                               decoration: index <=
                                                       _images.length - 1

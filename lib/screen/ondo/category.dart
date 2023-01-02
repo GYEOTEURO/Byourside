@@ -5,7 +5,7 @@ import 'package:byourside/screen/ondo/search_page.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/src/widgets/basic.dart' as C;
+// import 'package:flutter/src/widgets/basic.dart' as C;
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -67,7 +67,7 @@ class _CategoryPageState extends State<CategoryPage>
             setState(() {});
           },
         ),
-        title: C.Center(
+        title: Center(
           child: Text("마음온도"),
         ),
         actions: <Widget>[
