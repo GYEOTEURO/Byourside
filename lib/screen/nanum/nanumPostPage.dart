@@ -34,6 +34,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
   final picker = ImagePicker();
+  final myFocus = FocusNode(); // 초점 이동
+  final myFocus1 = FocusNode(); // 초점 이동
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
@@ -122,7 +124,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     child: TextField(
                   autofocus: true,
                   textInputAction: TextInputAction.next,
-                  onSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  onSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(myFocus),
                   decoration: InputDecoration(labelText: "제목을 입력하세요"),
                   controller: _title,
                 )),
@@ -217,7 +220,12 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 // 가격 설정
                 Container(
                     padding: EdgeInsets.only(top: 5, bottom: 5),
-                    child: TextFormField(
+                    child: TextField(
+                      focusNode: myFocus,
+                      textInputAction: TextInputAction.next,
+                      onSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(myFocus1);
+                      },
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]'))
@@ -229,8 +237,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 Container(
                     padding: EdgeInsets.only(top: 20, bottom: 5),
                     child: TextField(
+                      focusNode: myFocus1,
                       textInputAction: TextInputAction.done,
-                      onSubmitted: (_) => FocusScope.of(context).unfocus(),
                       controller: _content,
                       minLines: 8,
                       maxLines: 10,
