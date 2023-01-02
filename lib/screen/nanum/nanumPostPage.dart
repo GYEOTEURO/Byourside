@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/db_set.dart';
 import '../../model/nanum_post.dart';
 import '../ondo/postPage.dart';
+import 'package:flutter/src/widgets/basic.dart' as C;
 
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
@@ -200,7 +201,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                             borderType: BorderType.RRect,
                                             radius: Radius.circular(5),
                                             child: Container(
-                                              child: Center(
+                                              child: C.Center(
                                                   child: _boxContents[index]),
                                               decoration: index <=
                                                       _images.length - 1
@@ -261,14 +262,17 @@ class _NanumPostPageState extends State<NanumPostPage> {
               _images.isEmpty ? [] : await DBSet.uploadFile(_images);
           NanumPostModel postData = NanumPostModel(
               uid: user!.uid,
-              nickname: "mg",
+              nickname: user!.displayName,
               title: _title.text,
               content: _content.text,
               price: _price.text,
-              // type: _type,
+              type: _type,
               isCompleted: false,
               datetime: Timestamp.now(),
-              images: urls);
+              images: urls,
+              likes: 0,
+              likesPeople: [],
+              scrapPeople: []);
           DBSet.addNanumPost('nanumPost', postData);
         },
         backgroundColor: widget.primaryColor,

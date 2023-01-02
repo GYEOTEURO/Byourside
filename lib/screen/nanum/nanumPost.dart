@@ -24,7 +24,11 @@ class _NanumPostState extends State<NanumPost> {
     String documentID = widget.documentID;
     
     return Scaffold(
-      appBar: const NanumAppBar(primaryColor: primaryColor),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("마음나눔"),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: SingleChildScrollView(
               child: Column(
                 children: [

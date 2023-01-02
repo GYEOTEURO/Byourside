@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:flutter/src/widgets/basic.dart' as C;
 import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -207,7 +207,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                             borderType: BorderType.RRect,
                                             radius: Radius.circular(5),
                                             child: Container(
-                                              child: Center(
+                                              child: C.Center(
                                                   child: _boxContents[index]),
                                               decoration: index <=
                                                       _images.length - 1
@@ -269,13 +269,16 @@ class _OndoPostPageState extends State<OndoPostPage> {
               _images.isEmpty ? [] : await DBSet.uploadFile(_images);
           OndoPostModel postData = OndoPostModel(
               uid: user!.uid,
-              nickname: "mg",
+              nickname: user!.displayName,
               title: _title.text,
               content: _content.text,
-              // category: _categories.category,
-              // type:_categories.type,
+              category: _categories.category,
+              type: _categories.type,
               datetime: Timestamp.now(),
-              images: urls);
+              images: urls,
+              likes: 0,
+              likesPeople: [],
+              scrapPeople: []);
           DBSet.addOndoPost('ondoPost', postData);
         },
         backgroundColor: widget.primaryColor,

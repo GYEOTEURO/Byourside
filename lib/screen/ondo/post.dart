@@ -27,7 +27,11 @@ class _OndoPostState extends State<OndoPost> {
     String documentID = widget.documentID;
 
     return Scaffold(
-        appBar: OndoAppBar(primaryColor: primaryColor),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("마음온도"),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
         body: SingleChildScrollView(
           child: Column(children: [
             OndoPostContent(

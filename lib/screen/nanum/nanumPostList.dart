@@ -1,10 +1,11 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/nanum/appbar.dart';
 import 'package:byourside/screen/nanum/nanumPost.dart';
+import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import '../../model/db_get.dart';
+import 'type_controller.dart';
 import 'nanumPostPage.dart';
 
 class NanumPostList extends StatefulWidget {
@@ -17,11 +18,12 @@ class NanumPostList extends StatefulWidget {
   State<NanumPostList> createState() => _NanumPostListState();
 }
 
-class _NanumPostListState extends State<NanumPostList> {
+class _NanumPostListState extends State<NanumPostList> { 
   Widget _buildListItem(PostListModel? post){
     
     String date = post!.datetime!.toDate().toString().split(' ')[0];
-
+    String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
+              
     return Container(
         height: 90,
         child: Card(
@@ -55,7 +57,7 @@ class _NanumPostListState extends State<NanumPostList> {
                                         fontWeight: FontWeight.bold,
                                       )),
                                       Text(
-                                        '${post.nickname!} / $date',
+                                        '${post.nickname!} / $date / $isCompleted',
                                         style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],
@@ -75,10 +77,32 @@ class _NanumPostListState extends State<NanumPostList> {
 
   @override
   Widget build(BuildContext context) {
+    String? _type;
+    final controller = Get.put(NanumTypeController());
+
     return Scaffold(
-      appBar: const NanumAppBar(primaryColor: primaryColor),
+      appBar: AppBar(
+        backgroundColor: widget.primaryColor,
+        centerTitle: true,
+        title: Text("마음나눔"),
+        leading: IconButton(icon: Icon(Icons.filter_alt, color: Colors.white), 
+            onPressed: () async {
+                        _type = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NanumPostCategory(
+                                    primaryColor: Color(0xFF045558),
+                                    title: "필터링")));
+                        print("타입: ${_type}");
+                        controller.filtering(_type);
+                        setState(() {});
+                      },),
+        actions: [
+          IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:() {}),
+        ],
+      ),
       body: StreamBuilder<List<PostListModel>>(
-      stream: DBGet.readCollection(collection: widget.collectionName),
+      stream: DBGet.readAllCollection(collection: widget.collectionName, type: controller.type),
       builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
               if(snapshot.hasData) {
                 return ListView.builder(
