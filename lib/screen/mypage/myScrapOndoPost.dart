@@ -1,25 +1,25 @@
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
-import 'package:get/get.dart';
 import '../../model/db_get.dart';
 
-class OndoPostList extends StatefulWidget {
-  const OndoPostList({Key? key, required this.primaryColor, required this.collectionName, required this.category}) : super(key: key);
-  
-  final Color primaryColor;
-  final String collectionName;
-  final String category;
+class MyScrapOndoPost extends StatefulWidget {
+  MyScrapOndoPost({Key? key}) : super(key: key);
+  final Color primaryColor = Color(0xFF045558);
+  final String collectionName = 'ondoPost';
+  final String title = "스크랩한 마음온도글";
 
   @override
-  State<OndoPostList> createState() => _OndoPostListState();
+  State<MyScrapOndoPost> createState() => _MyScrapOndoPostState();
 }
 
-class _OndoPostListState extends State<OndoPostList> {
-  Widget _buildListItem(PostListModel? post){
+class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
+  
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  Widget _buildListItem(String collectionName, PostListModel? post){
     
     String date = post!.datetime!.toDate().toString().split(' ')[0];
               
@@ -57,7 +57,7 @@ class _OndoPostListState extends State<OndoPostList> {
                                         fontWeight: FontWeight.bold,
                                       )),
                                       Text(
-                                        '${post.nickname!} / $date',
+                                        '${post.nickname} / $date / ${post.category!}',
                                         style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],
@@ -77,15 +77,13 @@ class _OndoPostListState extends State<OndoPostList> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OndoTypeController());
-    
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: StreamBuilder<List<PostListModel>>(
-      stream: (widget.category.contains('전체')) ? 
-        ((widget.category == '전체') ?
-          DBGet.readAllCollection(collection: widget.collectionName, type: controller.type) :
-          DBGet.readAllInfoCollection(collection: widget.collectionName, type: controller.type)) : 
-        DBGet.readCategoryCollection(collection: widget.collectionName, category: widget.category, type: controller.type),
+      stream: DBGet.readScrapPost(collection: widget.collectionName, uid: user!.uid),
       builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
               if(snapshot.hasData) {
                 return ListView.builder(
@@ -93,27 +91,11 @@ class _OndoPostListState extends State<OndoPostList> {
                 shrinkWrap: true,
                 itemBuilder: (_, index) {
                   PostListModel post = snapshot.data![index];
-                  return _buildListItem(post);
+                  return _buildListItem(widget.collectionName, post);
                 });
               }
               else return const Text('Loading...');
       }),
-            
-      // 누르면 글 작성하는 PostPage로 navigate하는 버튼
-       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const OndoPostPage(
-                        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: primaryColor,
-                        title: '마음온도 글쓰기',
-                      )));
-        },
-        backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

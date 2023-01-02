@@ -24,7 +24,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
 
     String date = post!.datetime!.toDate().toString().split(' ')[0];
     String changeState = post.isCompleted! ? "거래중으로 변경  " : "거래완료로 변경  ";
-    String dealState = post.isCompleted! ? "거래완료" : "";
+    String dealState = post.isCompleted! ? "거래완료" : "거래중";
 
     return Column(
           children: [
@@ -106,18 +106,26 @@ class _NanumPostContentState extends State<NanumPostContent> {
             Row(
               children: [
                 IconButton(
-                    alignment: Alignment.centerLeft,
-                    onPressed: () {
-                    },
-                    icon: const Icon(Icons.favorite_outline),
-                    color: const Color.fromARGB(255, 207, 77, 68),
+                  alignment: Alignment.centerLeft,
+                  onPressed: () {
+                    post.likesPeople!.contains(user?.uid) ?
+                      DBSet.cancelLike(collectionName!, post.id!, user!.uid) 
+                      : DBSet.addLike(collectionName!, post.id!, user!.uid);
+                  },
+                  icon: post.likesPeople!.contains(user?.uid) ?
+                          const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
+                  color:Color.fromARGB(255, 207, 77, 68)
                 ),
-                //Text(post.likes!),
+                Text('${post.likes!} '),
                 IconButton(
                   alignment: Alignment.centerLeft,
                   onPressed: () {
+                    post.scrapPeople!.contains(user?.uid) ?
+                      DBSet.cancelScrap(collectionName!, post.id!, user!.uid) 
+                      : DBSet.addScrap(collectionName!, post.id!, user!.uid);
                   },
-                  icon: const Icon(Icons.star_outline),
+                  icon: post.scrapPeople!.contains(user?.uid) ?
+                          const Icon(Icons.star) : const Icon(Icons.star_outline),
                   color: const Color.fromARGB(255, 244, 231, 98),
                 ),
               ]

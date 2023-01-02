@@ -1,3 +1,4 @@
+import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/db_set.dart';
 import '../../model/nanum_post.dart';
+import '../ondo/postPage.dart';
 
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
@@ -20,12 +22,13 @@ class NanumPostPage extends StatefulWidget {
 }
 
 class _NanumPostPageState extends State<NanumPostPage> {
-
   final TextEditingController _title = TextEditingController();
   final TextEditingController _price = TextEditingController();
   final TextEditingController _content = TextEditingController();
 
   final User? user = FirebaseAuth.instance.currentUser;
+
+  String? _type;
 
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
@@ -109,6 +112,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
       ),
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
         child: Column(
           children: [
             // 제목
@@ -119,88 +123,105 @@ class _NanumPostPageState extends State<NanumPostPage> {
             )),
             // 카테고리 선택
             Container(
+                padding: EdgeInsets.only(top: 10, bottom: 5),
                 child: Row(
-              // 위젯을 양쪽으로 딱 붙임
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '카테고리 선택',
-                  style: TextStyle(
-                      color: Colors.black,
-                      letterSpacing: 2.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                IconButton(onPressed: null, icon: Icon(Icons.navigate_next))
-              ],
-            )),
+                  // 위젯을 양쪽으로 딱 붙임
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '카테고리 선택',
+                      style: TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 2.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          _type = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NanumPostCategory(
+                                      primaryColor: widget.primaryColor,
+                                      title: widget.title)));
+                          print("타입: ${_type}");
+                        },
+                        icon: Icon(Icons.navigate_next))
+                  ],
+                )),
             // 사진 및 영상 첨부
             Container(
+                padding: EdgeInsets.only(top: 5, bottom: 5),
                 child: Column(children: [
-              Row(
-                // 위젯을 양쪽으로 딱 붙임
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '사진 & 영상 첨부하기',
-                    style: TextStyle(
-                        color: Colors.black,
-                        letterSpacing: 2.0,
-                        fontWeight: FontWeight.bold),
+                  Row(
+                    // 위젯을 양쪽으로 딱 붙임
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '사진 & 영상 첨부하기',
+                        style: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            getImage(ImageSource.gallery);
+                            _show();
+                          },
+                          icon: Icon(Icons.attach_file))
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {
-                        getImage(ImageSource.gallery);
-                        _show();
-                      },
-                      icon: Icon(Icons.attach_file))
-                ],
-              ),
-              Visibility(
-                  visible: _visibility,
-                  child: SizedBox(
-                      height: 100,
-                      child: GridView.count(
-                          shrinkWrap:
-                              true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
-                          padding: EdgeInsets.all(2),
-                          // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
-                          crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
-                          // 가로(cross), 세로(main) 아이템 간의 간격 지정
-                          mainAxisSpacing: 5,
-                          crossAxisSpacing: 5,
-                          children: List.generate(
-                              5,
-                              (index) => DottedBorder(
-                                    color: Colors.grey,
-                                    dashPattern: [5, 3],
-                                    borderType: BorderType.RRect,
-                                    radius: Radius.circular(5),
-                                    child: Container(
-                                      child: Center(child: _boxContents[index]),
-                                      decoration: index <= _images.length - 1
-                                          ? BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: FileImage(File(
-                                                      _images[index].path))))
-                                          : null,
-                                    ),
-                                  )).toList())))
-            ])),
+                  Visibility(
+                      visible: _visibility,
+                      child: SizedBox(
+                          height: 100,
+                          child: GridView.count(
+                              shrinkWrap:
+                                  true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
+                              padding: EdgeInsets.all(2),
+                              // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
+                              crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
+                              // 가로(cross), 세로(main) 아이템 간의 간격 지정
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5,
+                              children: List.generate(
+                                  5,
+                                  (index) => DottedBorder(
+                                        color: Colors.grey,
+                                        dashPattern: [5, 3],
+                                        borderType: BorderType.RRect,
+                                        radius: Radius.circular(5),
+                                        child: Container(
+                                          child: Center(
+                                              child: _boxContents[index]),
+                                          decoration: index <=
+                                                  _images.length - 1
+                                              ? BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: FileImage(File(
+                                                          _images[index]
+                                                              .path))))
+                                              : null,
+                                        ),
+                                      )).toList())))
+                ])),
             // 가격 설정
             Container(
+                padding: EdgeInsets.only(top: 5, bottom: 5),
                 child: TextFormField(
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[0-9]'))
-              ],
-              decoration: InputDecoration(labelText: "가격을 입력하세요"),
-              controller: _price,
-            )),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                  ],
+                  decoration: InputDecoration(labelText: "가격을 입력하세요"),
+                  controller: _price,
+                )),
             // 게시글 내용
             Container(
+                padding: EdgeInsets.only(top: 20, bottom: 5),
                 child: TextFormField(
                   controller: _content,
                   minLines: 1,
@@ -212,8 +233,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                       borderSide: BorderSide(width: 1),
                     ),
                   ),
-                )
-            )
+                ))
           ],
         ),
       ),
@@ -221,16 +241,21 @@ class _NanumPostPageState extends State<NanumPostPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Navigator.pop(context);
-          List<String> urls = _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+          List<String> urls =
+              _images.isEmpty ? [] : await DBSet.uploadFile(_images);
           NanumPostModel postData = NanumPostModel(
-                                      uid: user!.uid, 
-                                      nickname: "mg", 
-                                      title: _title.text, 
-                                      content: _content.text, 
-                                      price: _price.text, 
-                                      isCompleted: false, 
-                                      datetime: Timestamp.now(), 
-                                      images: urls);
+              uid: user!.uid,
+              nickname: user!.displayName, 
+              title: _title.text,
+              content: _content.text,
+              price: _price.text,
+              type: _type,
+              isCompleted: false,
+              datetime: Timestamp.now(),
+              images: urls,
+              likes: 0,
+              likesPeople: [],
+              scrapPeople: []);
           DBSet.addNanumPost('nanumPost', postData);
         },
         backgroundColor: widget.primaryColor,
@@ -238,5 +263,4 @@ class _NanumPostPageState extends State<NanumPostPage> {
       ),
     );
   }
-
 }

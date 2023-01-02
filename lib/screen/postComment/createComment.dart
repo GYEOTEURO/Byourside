@@ -46,7 +46,7 @@ class _CreateCommentState extends State<CreateComment> {
                 FloatingActionButton.extended(
                   heroTag: 'saveComment',
                   onPressed: () {
-                    CommentModel commentData = CommentModel(uid: user!.uid, nickname: "mg", content: comment.text, datetime: Timestamp.now());
+                    CommentModel commentData = CommentModel(uid: user!.uid, nickname: user!.displayName, content: comment.text, datetime: Timestamp.now());
                     DBSet.addComment(collectionName, documentID, commentData); 
                   },
                   label: const Icon(Icons.send),
