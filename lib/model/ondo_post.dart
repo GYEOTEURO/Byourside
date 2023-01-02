@@ -13,8 +13,9 @@ class OndoPostModel {
   int? likes;
   List<String>? likesPeople;
   List<String>? scrapPeople;
+  List<String>? keyword;
 
-  OndoPostModel({this.id, this.uid, this.title, this.nickname, this.content, this.datetime, this.images, this.category, this.type, this.likes, this.likesPeople, this.scrapPeople});
+  OndoPostModel({this.id, this.uid, this.title, this.nickname, this.content, this.datetime, this.images, this.category, this.type, this.likes, this.likesPeople, this.scrapPeople, this.keyword});
 
   // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
   // 이외는 uid = doc.data()!["uid"],
@@ -36,7 +37,9 @@ class OndoPostModel {
             ? null : doc.data()!["likesPeople"].cast<String>(),
         // ignore: prefer_null_aware_operators
         scrapPeople = doc.data()!["scrapPeople"] == null
-            ? null : doc.data()!["scrapPeople"].cast<String>();
+            ? null : doc.data()!["scrapPeople"].cast<String>(),
+        keyword = doc.data()!["keyword"] == null
+            ? null : doc.data()!["keyword"].cast<String>();
 
   Map<String, dynamic> toMap() {
     return {
@@ -51,6 +54,7 @@ class OndoPostModel {
       'likes': likes,
       'likesPeople': likesPeople,
       'scrapPeople': scrapPeople,
+      'keyword': keyword,
     };
   }
 }

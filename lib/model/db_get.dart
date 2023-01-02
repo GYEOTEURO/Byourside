@@ -19,9 +19,8 @@ class DBGet {
   static Stream<List<PostListModel>> readSearchDocs(query, {required String collection}) =>
         FirebaseFirestore.instance
         .collection(collection)
-        .where("title", isGreaterThanOrEqualTo: query)
-        .where("title", isLessThanOrEqualTo: query+"\uf7ff")
-        //.orderBy('datetime', descending: true)
+        .where("keyword", arrayContains: query)
+        .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
@@ -31,7 +30,7 @@ class DBGet {
         FirebaseFirestore.instance
         .collection(collection)
         .where("category", isEqualTo: category)
-        //.where("type", whereIn: type)
+        .where("type", whereIn: type)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
@@ -42,7 +41,7 @@ class DBGet {
         FirebaseFirestore.instance
         .collection(collection)
         .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
-        .where("type", whereIn: type)
+        //.where("type", whereIn: type)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
