@@ -9,8 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum Select { protector, participator, someoneElse }
 
-List<String> purposeType = ['promote', 'recruit'];
-String _dropdownValue = 'promote';
+List<String> purposeType = ['홍보', '모집'];
+String _dropdownValue = '홍보';
 
 // class Keys {
 //   static final _formKey_protector_belong = const Key('belong');
@@ -30,12 +30,9 @@ final _formKey_user_protector = GlobalKey<FormState>();
 final _formKey_user_participator = GlobalKey<FormState>();
 final _formKey_user_someone = GlobalKey<FormState>();
 
-const List<Widget> gender = <Widget>[Text('man'), Text('woman')];
-const List<Widget> type = <Widget>[
-  Text('BrainLesion'),
-  Text('developmentalDisability')
-];
-const List<Widget> degree = <Widget>[Text('stark'), Text('gentle')];
+const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
+const List<Widget> type = <Widget>[Text('뇌병변 장애'), Text('발달 장애')];
+const List<Widget> degree = <Widget>[Text('심한 장애'), Text('심하지 않은 장애')];
 
 final List<bool> _selectedProtectorGender = <bool>[false, false];
 final List<bool> _selectedChildGender = <bool>[false, false];
@@ -63,17 +60,12 @@ class _SetupUserState extends State<SetupUser> {
   bool someoneElse = false;
   Select _select = Select.protector;
   bool doesDocExist = true;
-
-  final GlobalKey<FormFieldState> _formKey =
-      GlobalKey<FormFieldState>(debugLabel: 'GlobalFormKey #userInfo');
   final User? user = FirebaseAuth.instance.currentUser;
   int count = 0;
 
   @override
   void initState() {
     super.initState();
-
-    // Future<bool> isUserDataStored = checkStored();
   }
 
   Future<bool> checkDocExist(String name) async {
@@ -81,17 +73,6 @@ class _SetupUserState extends State<SetupUser> {
     var doc = await collection.doc(name).get();
     return doc.exists;
   }
-
-  // Future<bool> checkStored() async {
-  //   return await checkIfDocExists(user!.uid);
-  // }
-
-  // Future<bool> checkIfDocExists(String docId) async {
-  //   var collectionRef = FirebaseFirestore.instance.collection('user');
-
-  //   var doc = await collectionRef.doc(docId).get();
-  //   return doc.exists;
-  // }
 
   void storeProtectorInfo(
       String? nickname,
@@ -275,9 +256,15 @@ class _SetupUserState extends State<SetupUser> {
                               doesDocExist =
                                   await checkDocExist(_nickname.text);
                               if (doesDocExist == true) {
-                                const AlertDialog(
-                                  content: Text('이미 존재하는 닉네임입니다.'),
-                                );
+                                if (mounted) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text('이미 존재하는 닉네임입니다.'),
+                                        );
+                                      });
+                                }
                               }
                             },
                             child: const Text(
@@ -496,9 +483,15 @@ class _SetupUserState extends State<SetupUser> {
                               doesDocExist =
                                   await checkDocExist(_nickname.text);
                               if (doesDocExist == true) {
-                                const AlertDialog(
-                                  content: Text('이미 존재하는 닉네임입니다.'),
-                                );
+                                if (mounted) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text('이미 존재하는 닉네임입니다.'),
+                                        );
+                                      });
+                                }
                               }
                             },
                             child: const Text(
@@ -557,9 +550,15 @@ class _SetupUserState extends State<SetupUser> {
                               doesDocExist =
                                   await checkDocExist(_nickname.text);
                               if (doesDocExist == true) {
-                                const AlertDialog(
-                                  content: Text('이미 존재하는 닉네임입니다.'),
-                                );
+                                if (mounted) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: Text('이미 존재하는 닉네임입니다.'),
+                                        );
+                                      });
+                                }
                               }
                             },
                             child: const Text(
