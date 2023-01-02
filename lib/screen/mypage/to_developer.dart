@@ -25,6 +25,10 @@ class _ToDeveloperState extends State<ToDeveloper> {
             color: Colors.white,
           ),
         ),
-        body: Container());
+        body: Center(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [],
+        )));
   }
 }
