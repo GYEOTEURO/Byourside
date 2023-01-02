@@ -100,9 +100,13 @@ class ChatList {
 
     DocumentSnapshot documentSnapshot = await userDocumentReference.get();
     List<dynamic> groups = await documentSnapshot['groups'];
-
+    // print("${uid}_$userName");
+    // print(groups);
+    // print(groupId);
+    // print(groups.contains("${groupId}_$groupName"));
     // if user has our groups => then remove them or also in other part re join
-    if (groups.contains("${uid}_$userName")) {
+    if (groups.contains("${groupId}_$groupName")) {
+      // print("i'm here");
       await userDocumentReference.update({
         "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
       });
@@ -110,6 +114,7 @@ class ChatList {
         "members": FieldValue.arrayRemove(["${uid}_$userName"])
       });
     } else {
+      // print("there");
       await userDocumentReference.update({
         "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
       });

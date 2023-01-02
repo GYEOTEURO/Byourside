@@ -119,20 +119,21 @@ class _SearchPageState extends State<SearchPage> {
         : Container();
   }
 
-  joinedOrNot(
-      String userName, String groupId, String groupName, String admin) async {
+  joinedOrNot(String userName, String groupId, String groupName, String admin) {
     try {
-      if (mounted) {
+      Future.delayed(const Duration(seconds: 2), () async {
         await ChatList(uid: uid)
             .isUserJoined(groupName, groupId, userName)
             .then((value) {
-          if (this.mounted) {
+          if (mounted) {
             setState(() {
               isJoined = value;
+              print(value);
+              print("this");
             });
           }
         });
-      }
+      });
     } catch (e) {
       print(e);
     }
@@ -158,29 +159,25 @@ class _SearchPageState extends State<SearchPage> {
       subtitle: Text("${groupId}"),
       trailing: InkWell(
         onTap: () async {
-          await ChatList(uid: uid)
-              .toggleGroupJoin(groupId, userName, groupName);
-          if (isJoined) {
-            if (this.mounted) {
-              setState(() {
-                isJoined = !isJoined;
-              });
-            }
+          if (mounted) {
+            await ChatList(uid: uid)
+                .toggleGroupJoin(groupId, userName, groupName);
+            setState(() {
+              isJoined = !isJoined;
+              print(isJoined);
+              print("hm..");
+            });
             Future.delayed(const Duration(seconds: 2), () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ChatPage(
-                          groupId: groupId,
-                          groupName: groupName,
-                          userName: userName)));
+              //   // Navigator.push(
+              //   //     context,
+              //   //     MaterialPageRoute(
+              //   //         builder: (context) => ChatPage(
+              //   //             groupId: groupId,
+              //   //             groupName: groupName,
+              //   //             userName: userName)));
             });
           } else {
-            if (this.mounted) {
-              setState(() {
-                isJoined = !isJoined;
-              });
-            }
+            print("mount1");
           }
         },
         child: isJoined
