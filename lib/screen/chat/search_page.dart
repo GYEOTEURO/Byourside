@@ -23,25 +23,6 @@ class _SearchPageState extends State<SearchPage> {
   bool isJoined = false;
   String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  /////////////////3:00..?
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getCurrentUserIdandName();
-  // }
-  //
-  // getCurrentUserIdandName() async {
-  //   await HelperFunctions.userEmailKey
-  // }
-  //
-  // String getName(String r) {
-  //   return r.substring(r.indexOf("_") + 1);
-  // }
-  //
-  // String getId(String res) {
-  //   return res.substring(0, res.indexOf("_"));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,13 +117,19 @@ class _SearchPageState extends State<SearchPage> {
 
   joinedOrNot(
       String userName, String groupId, String groupName, String admin) async {
-    await ChatList(uid: uid)
-        .isUserJoined(groupName, groupId, userName)
-        .then((value) {
-      setState(() {
-        isJoined = value;
-      });
-    });
+    try {
+      if (mounted) {
+        await ChatList(uid: uid)
+            .isUserJoined(groupName, groupId, userName)
+            .then((value) {
+          setState(() {
+            isJoined = value;
+          });
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   Widget groupTile(
