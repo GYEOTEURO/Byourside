@@ -48,6 +48,16 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
+        // 나머지 버튼들은 비활성화
+        for (int i = 0; i < 2; i++) {
+          if (i == index) {
+            continue;
+          } else {
+            typeList[i].selected = false;
+            typeList[i].backgroundColor = Colors.white;
+            typeList[i].fontColor = Colors.black;
+          }
+        }
       }
     });
   }
@@ -68,35 +78,41 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
           color: Colors.white,
         ),
       ),
-      body: Center(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const Center(
-            child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Text('장애 유형',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black)))),
-        Expanded(
-            child: Row(children: [
-          Expanded(
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(15),
-                  itemCount: typeList.length,
-                  itemBuilder: (context, index) {
-                    return ElevatedButton(
-                        onPressed: () => _onClickType(index),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: typeList[index].backgroundColor),
-                        child: Text(
-                          typeList[index].label,
-                          style: TextStyle(color: typeList[index].fontColor),
-                        ));
-                  }))
-        ])),
-      ])),
+      body: Container(
+          padding: EdgeInsets.all(20),
+          child: Center(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                const Center(
+                    child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text('장애 유형',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black)))),
+                Expanded(
+                    child: Row(children: [
+                  Expanded(
+                      child: ListView.builder(
+                          padding: const EdgeInsets.all(15),
+                          itemCount: typeList.length,
+                          itemBuilder: (context, index) {
+                            return ElevatedButton(
+                                onPressed: () => _onClickType(index),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        typeList[index].backgroundColor),
+                                child: Text(
+                                  typeList[index].label,
+                                  style: TextStyle(
+                                      color: typeList[index].fontColor),
+                                ));
+                          }))
+                ])),
+              ]))),
     );
   }
 }

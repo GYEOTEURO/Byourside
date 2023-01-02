@@ -55,6 +55,16 @@ class _PostCategoryState extends State<PostCategory> {
         categoryList[index].selected = true;
         categoryList[index].backgroundColor = Color(0xFF045558);
         categoryList[index].fontColor = Colors.white;
+        // 나머지 버튼들은 비활성화
+        for (int i = 0; i < 6; i++) {
+          if (i == index) {
+            continue;
+          } else {
+            categoryList[i].selected = false;
+            categoryList[i].backgroundColor = Colors.white;
+            categoryList[i].fontColor = Colors.black;
+          }
+        }
       }
     });
   }
@@ -76,6 +86,17 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
+        // 나머지 버튼들은 비활성화
+        for (int i = 0; i < 2; i++) {
+          if (i == index) {
+            print(i);
+            continue;
+          } else {
+            typeList[i].selected = false;
+            typeList[i].backgroundColor = Colors.white;
+            typeList[i].fontColor = Colors.black;
+          }
+        }
       }
     });
   }
@@ -96,62 +117,69 @@ class _PostCategoryState extends State<PostCategory> {
           color: Colors.white,
         ),
       ),
-      body: Center(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const Center(
-            child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Text('게시판 종류',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black)))),
-        Expanded(
-            flex: 2,
-            child: Row(children: [
-              Expanded(
-                  child: ListView.builder(
-                      padding: const EdgeInsets.all(15),
-                      itemCount: categoryList.length,
-                      itemBuilder: (context, index) {
-                        return ElevatedButton(
-                            onPressed: () => _onClickCategory(index),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  categoryList[index].backgroundColor,
-                            ),
-                            child: Text(categoryList[index].label,
-                                style: TextStyle(
-                                    color: categoryList[index].fontColor)));
-                      }))
-            ])),
-        const Center(
-            child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Text('장애 유형',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black)))),
-        Expanded(
-            child: Row(children: [
-          Expanded(
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(15),
-                  itemCount: typeList.length,
-                  itemBuilder: (context, index) {
-                    return ElevatedButton(
-                        onPressed: () => _onClickType(index),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: typeList[index].backgroundColor),
-                        child: Text(
-                          typeList[index].label,
-                          style: TextStyle(color: typeList[index].fontColor),
-                        ));
-                  }))
-        ])),
-      ])),
+      body: Container(
+          padding: EdgeInsets.all(20),
+          child: Center(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                const Center(
+                    child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text('게시판 종류',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black)))),
+                Expanded(
+                    flex: 2,
+                    child: Row(children: [
+                      Expanded(
+                          child: ListView.builder(
+                              padding: const EdgeInsets.all(15),
+                              itemCount: categoryList.length,
+                              itemBuilder: (context, index) {
+                                return ElevatedButton(
+                                    onPressed: () => _onClickCategory(index),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          categoryList[index].backgroundColor,
+                                    ),
+                                    child: Text(categoryList[index].label,
+                                        style: TextStyle(
+                                            color: categoryList[index]
+                                                .fontColor)));
+                              }))
+                    ])),
+                const Center(
+                    child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text('장애 유형',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black)))),
+                Expanded(
+                    child: Row(children: [
+                  Expanded(
+                      child: ListView.builder(
+                          padding: const EdgeInsets.all(15),
+                          itemCount: typeList.length,
+                          itemBuilder: (context, index) {
+                            return ElevatedButton(
+                                onPressed: () => _onClickType(index),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        typeList[index].backgroundColor),
+                                child: Text(
+                                  typeList[index].label,
+                                  style: TextStyle(
+                                      color: typeList[index].fontColor),
+                                ));
+                          }))
+                ])),
+              ]))),
     );
   }
 }
