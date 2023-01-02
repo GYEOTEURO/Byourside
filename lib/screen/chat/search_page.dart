@@ -85,15 +85,19 @@ class _SearchPageState extends State<SearchPage> {
 
   initiateSearchMethod() async {
     if (searchController.text.isNotEmpty) {
-      setState(() {
-        isLoading = true;
-      });
-      await ChatList().searchByName(searchController.text).then((snapshot) {
+      if (this.mounted) {
         setState(() {
-          searchSnapshot = snapshot;
-          isLoading = false;
-          hasUserSearched = true;
+          isLoading = true;
         });
+      }
+      await ChatList().searchByName(searchController.text).then((snapshot) {
+        if (this.mounted) {
+          setState(() {
+            searchSnapshot = snapshot;
+            isLoading = false;
+            hasUserSearched = true;
+          });
+        }
       });
     }
   }
@@ -122,9 +126,11 @@ class _SearchPageState extends State<SearchPage> {
         await ChatList(uid: uid)
             .isUserJoined(groupName, groupId, userName)
             .then((value) {
-          setState(() {
-            isJoined = value;
-          });
+          if (this.mounted) {
+            setState(() {
+              isJoined = value;
+            });
+          }
         });
       }
     } catch (e) {
@@ -155,9 +161,11 @@ class _SearchPageState extends State<SearchPage> {
           await ChatList(uid: uid)
               .toggleGroupJoin(groupId, userName, groupName);
           if (isJoined) {
-            setState(() {
-              isJoined = !isJoined;
-            });
+            if (this.mounted) {
+              setState(() {
+                isJoined = !isJoined;
+              });
+            }
             Future.delayed(const Duration(seconds: 2), () {
               Navigator.push(
                   context,
@@ -168,9 +176,11 @@ class _SearchPageState extends State<SearchPage> {
                           userName: userName)));
             });
           } else {
-            setState(() {
-              isJoined = !isJoined;
-            });
+            if (this.mounted) {
+              setState(() {
+                isJoined = !isJoined;
+              });
+            }
           }
         },
         child: isJoined
