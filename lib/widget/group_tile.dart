@@ -7,12 +7,14 @@ class GroupTile extends StatefulWidget {
   final String userName;
   final String groupId;
   final String groupName;
+  final String recentMsg;
 
   const GroupTile(
       {Key? key,
       required this.userName,
       required this.groupId,
-      required this.groupName})
+      required this.groupName,
+      required this.recentMsg})
       : super(key: key);
 
   @override
@@ -52,8 +54,7 @@ class _GroupTileState extends State<GroupTile> {
             ),
             subtitle: Text(
               // widget.recentMsg,
-              ""
-              style: const TextStyle(fontSize: 13),
+              widget.groupId, style: const TextStyle(fontSize: 13),
             ),
           ),
         ));
