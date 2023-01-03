@@ -31,14 +31,19 @@ class _Mypage extends State<Mypage> {
     displayName = user!.displayName!;
   }
 
-  final List<String> myEntires = <String>["내가 쓴 마음온도 글", "내가 쓴 마음나눔 글", "마음온도 스크랩", "마음나눔 스크랩"];
+  final List<String> myEntires = <String>[
+    "내가 쓴 마음온도 글",
+    "내가 쓴 마음나눔 글",
+    "마음온도 스크랩",
+    "마음나눔 스크랩"
+  ];
   final List<Icon> myIcons = <Icon>[
     Icon(Icons.groups),
     Icon(Icons.volunteer_activism),
     Icon(Icons.star_border_outlined),
     Icon(Icons.star_border_outlined)
   ];
-   final List<Widget> myConnectPage = <Widget>[
+  final List<Widget> myConnectPage = <Widget>[
     MyOndoPost(),
     MyNanumPost(),
     MyScrapOndoPost(),
@@ -60,6 +65,8 @@ class _Mypage extends State<Mypage> {
 
   @override
   Widget build(BuildContext context) {
+    // final user =  Provider.of<FirebaseUser?>(context);
+
     final SignOut = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -68,7 +75,10 @@ class _Mypage extends State<Mypage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
+          FirebaseUser(
+              uid: null, phoneNum: null, displayName: null, code: null);
           await _auth.signOut();
+          Navigator.of(context).popUntil((route) => route.isFirst);
         },
         child: Text(
           "Log out",
@@ -149,10 +159,9 @@ class _Mypage extends State<Mypage> {
                         ),
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => myConnectPage[index])
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => myConnectPage[index]));
                         },
                       );
                     })),

@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 
 class OndoPost extends StatefulWidget {
-  const OndoPost({super.key, required this.collectionName, required this.documentID, required this.primaryColor});
+  const OndoPost(
+      {super.key,
+      required this.collectionName,
+      required this.documentID,
+      required this.primaryColor});
 
   final String collectionName;
   final String documentID;
@@ -17,25 +21,32 @@ class OndoPost extends StatefulWidget {
 }
 
 class _OndoPostState extends State<OndoPost> {
-
   @override
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
-    
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("마음온도"),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  OndoPostContent(collectionName: collectionName, documentID: documentID, primaryColor: primaryColor),
-                  CreateComment(collectionName: collectionName, documentID: documentID, primaryColor: primaryColor),
-                  CommentList(collectionName: collectionName, documentID: documentID, primaryColor: primaryColor),
-              ]),  
-      ));
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("마음온도"),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            OndoPostContent(
+                collectionName: collectionName,
+                documentID: documentID,
+                primaryColor: primaryColor),
+            CreateComment(
+                collectionName: collectionName,
+                documentID: documentID,
+                primaryColor: primaryColor),
+            CommentList(
+                collectionName: collectionName,
+                documentID: documentID,
+                primaryColor: primaryColor),
+          ]),
+        ));
   }
 }
