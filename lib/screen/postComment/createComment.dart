@@ -50,7 +50,7 @@ class _CreateCommentState extends State<CreateComment> {
             onPressed: () {
               CommentModel commentData = CommentModel(
                   uid: user!.uid,
-                  nickname: "mg",
+                  nickname: user!.displayName,
                   content: comment.text,
                   datetime: Timestamp.now());
               DBSet.addComment(collectionName, documentID, commentData);
