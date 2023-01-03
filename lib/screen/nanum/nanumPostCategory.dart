@@ -6,10 +6,14 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class NanumPostCategory extends StatefulWidget {
   const NanumPostCategory(
-      {Key? key, required this.primaryColor, required this.title})
+      {Key? key,
+      required this.primaryColor,
+      required this.title,
+      required this.preType})
       : super(key: key);
   final Color primaryColor;
   final String title;
+  final String? preType;
 
   @override
   State<NanumPostCategory> createState() => _NanumPostCategoryState();
