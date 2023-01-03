@@ -146,7 +146,7 @@ class _Mypage extends State<Mypage> {
             Expanded(
                 flex: 5,
                 child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
+                    // physics: const NeverScrollableScrollPhysics(),
                     // padding: const EdgeInsets.only(top: 10, bottom: 10),
                     itemCount: myEntires.length,
                     itemBuilder: (BuildContext context, index) {
@@ -184,7 +184,7 @@ class _Mypage extends State<Mypage> {
             Expanded(
                 flex: 3,
                 child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
+                    // physics: const NeverScrollableScrollPhysics(),
                     // padding: const EdgeInsets.only(top: 10, bottom: 10),
                     itemCount: etcEntires.length,
                     itemBuilder: (BuildContext context, index) {
