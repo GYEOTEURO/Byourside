@@ -51,7 +51,8 @@ class _GroupTileState extends State<GroupTile> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              "채팅에 ${widget.userName}(으)로 참여하세요.",
+              // widget.recentMsg,
+              ""
               style: const TextStyle(fontSize: 13),
             ),
           ),
