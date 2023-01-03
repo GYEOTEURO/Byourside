@@ -39,9 +39,14 @@ class _CommentListState extends State<CommentList> {
   }
 
   Future<String> getGroupId(String groupName) async {
-    var collection = FirebaseFirestore.instance.collection('groupList');
-    var doc = await collection.doc(groupName).get();
-    return doc.data()?.values.last;
+    try {
+      var collection = FirebaseFirestore.instance.collection('groupList');
+      var doc = await collection.doc(groupName).get();
+      return doc.data()?.values.last;
+    } catch (e) {
+      print(e);
+      return "hing..";
+    }
   }
 
   Widget _buildListItem(
@@ -71,8 +76,11 @@ class _CommentListState extends State<CommentList> {
                           onPressed: () async {
                             var groupName =
                                 "${user?.displayName}_${comment.nickname}";
-
-                            if (await checkGroupExist(groupName) != true) {
+                            var groupNameReverse =
+                                "${comment.nickname}_${user?.displayName}";
+                            if (await checkGroupExist(groupName) != true &&
+                                await checkGroupExist(groupNameReverse) !=
+                                    true) {
                               await ChatList(
                                       uid: FirebaseAuth
                                           .instance.currentUser!.uid)
@@ -97,6 +105,19 @@ class _CommentListState extends State<CommentList> {
                                         builder: (context) => ChatPage(
                                             groupId: groupId,
                                             groupName: groupName,
+                                            userName: user!.displayName!)));
+                              });
+                            } else if (await checkGroupExist(groupName) !=
+                                true) {
+                              String groupId =
+                                  await getGroupId(groupNameReverse);
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                            groupId: groupId,
+                                            groupName: groupNameReverse,
                                             userName: user!.displayName!)));
                               });
                             } else {
