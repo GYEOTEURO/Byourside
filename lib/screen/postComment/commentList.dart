@@ -41,7 +41,6 @@ class _CommentListState extends State<CommentList> {
   Future<String> getGroupId(String groupName) async {
     var collection = FirebaseFirestore.instance.collection('groupList');
     var doc = await collection.doc(groupName).get();
-    print(doc);
     return doc.data()?.values.last;
   }
 
