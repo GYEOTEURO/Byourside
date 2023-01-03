@@ -32,6 +32,19 @@ class _CommentListState extends State<CommentList> {
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection("groups");
 
+  Future<bool> checkGroupExist(String name) async {
+    var collection = FirebaseFirestore.instance.collection('groupList');
+    var doc = await collection.doc(name).get();
+    return doc.exists;
+  }
+
+  Future<String> getGroupId(String groupName) async {
+    var collection = FirebaseFirestore.instance.collection('groupList');
+    var doc = await collection.doc(groupName).get();
+    print(doc);
+    return doc.data()?.values.last;
+  }
+
   Widget _buildListItem(
       String? collectionName, String? documentID, CommentModel? comment) {
     String date = comment!.datetime!.toDate().toString().split(' ')[0];
@@ -60,38 +73,45 @@ class _CommentListState extends State<CommentList> {
                             var groupName =
                                 "${user?.displayName}_${comment.nickname}";
 
-                            await ChatList(
-                                    uid: FirebaseAuth.instance.currentUser!.uid)
-                                .createGroup(
-                                    FirebaseAuth
-                                        .instance.currentUser!.displayName
-                                        .toString(),
-                                    FirebaseAuth.instance.currentUser!.uid
-                                        .toString(),
-                                    groupName);
+                            if (await checkGroupExist(groupName) != true) {
+                              await ChatList(
+                                      uid: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .createGroup(
+                                      FirebaseAuth
+                                          .instance.currentUser!.displayName
+                                          .toString(),
+                                      FirebaseAuth.instance.currentUser!.uid
+                                          .toString(),
+                                      groupName);
 
-                            var snapshot =
-                                await userCollection.doc("${user!.uid}").get();
-                            List<dynamic> groups = await snapshot['groups'];
-                            String groupId = await groups[groups.length - 1]
-                                .substring(
-                                    0, groups[groups.length - 1].indexOf("_"));
+                              String groupId = await getGroupId(groupName);
+                              await groupCollection.doc(groupId).update({
+                                "members": FieldValue.arrayUnion(
+                                    ["${comment.uid}_${comment.nickname}"])
+                              });
 
-                            await groupCollection.doc(groupId).update({
-                              "members": FieldValue.arrayUnion(
-                                  ["${comment.uid}_${comment.nickname}"])
-                            });
-
-                            // TODO: must check if exist
-                            Future.delayed(const Duration(seconds: 2), () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ChatPage(
-                                          groupId: groupId,
-                                          groupName: groupName,
-                                          userName: user!.displayName!)));
-                            });
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                            groupId: groupId,
+                                            groupName: groupName,
+                                            userName: user!.displayName!)));
+                              });
+                            } else {
+                              String groupId = await getGroupId(groupName);
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                            groupId: groupId,
+                                            groupName: groupName,
+                                            userName: user!.displayName!)));
+                              });
+                            }
                           },
                           child: Text(
                             "${comment.nickname} / $date",
