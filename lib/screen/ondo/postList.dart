@@ -8,8 +8,13 @@ import 'package:get/get.dart';
 import '../../model/db_get.dart';
 
 class OndoPostList extends StatefulWidget {
-  const OndoPostList({Key? key, required this.primaryColor, required this.collectionName, required this.category}) : super(key: key);
-  
+  const OndoPostList(
+      {Key? key,
+      required this.primaryColor,
+      required this.collectionName,
+      required this.category})
+      : super(key: key);
+
   final Color primaryColor;
   final String collectionName;
   final String category;
@@ -19,19 +24,18 @@ class OndoPostList extends StatefulWidget {
 }
 
 class _OndoPostListState extends State<OndoPostList> {
-  Widget _buildListItem(PostListModel? post){
-    
+  Widget _buildListItem(PostListModel? post) {
     String date = post!.datetime!.toDate().toString().split(' ')[0];
-              
+
     return Container(
         height: 90,
         child: Card(
-                //semanticContainer: true,
-                elevation: 2,
-                child: InkWell(
-                  //Read Document
-                  onTap: () {
-                    Navigator.push(
+            //semanticContainer: true,
+            elevation: 2,
+            child: InkWell(
+                //Read Document
+                onTap: () {
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => OndoPost(
@@ -40,67 +44,69 @@ class _OndoPostListState extends State<OndoPostList> {
                                 documentID: post.id!,
                                 primaryColor: primaryColor,
                               )));
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-                      children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,                     
-                                    children: [
-                                      Text(
-                                        post.title!,
-                                        style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                      Text(
-                                        '${post.nickname!} / $date',
-                                        style: const TextStyle(color: Colors.black54),
-                                      ),
-                                    ],
-                                  ),
-                                  if(post.images!.isNotEmpty)(
-                                    Image.network(
-                                      post.images![0],
-                                      width: 100,
-                                      height: 70,
-                                    )
-                                  ),
-                                ],
-                            ),
-                      )
-           )));
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(post.title!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Text(
+                            '${post.nickname!} / $date',
+                            style: const TextStyle(color: Colors.black54),
+                          ),
+                        ],
+                      ),
+                      if (post.images!.isNotEmpty)
+                        (Image.network(
+                          post.images![0],
+                          width: 100,
+                          height: 70,
+                        )),
+                    ],
+                  ),
+                ))));
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OndoTypeController());
-    
+
     return Scaffold(
       body: StreamBuilder<List<PostListModel>>(
-      stream: (widget.category.contains('전체')) ? 
-        ((widget.category == '전체') ?
-          DBGet.readAllCollection(collection: widget.collectionName, type: controller.type) :
-          DBGet.readAllInfoCollection(collection: widget.collectionName, type: controller.type)) : 
-        DBGet.readCategoryCollection(collection: widget.collectionName, category: widget.category, type: controller.type),
-      builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
-              if(snapshot.hasData) {
-                return ListView.builder(
-                itemCount: snapshot.data!.length,
-                shrinkWrap: true,
-                itemBuilder: (_, index) {
-                  PostListModel post = snapshot.data![index];
-                  return _buildListItem(post);
-                });
-              }
-              else return const Text('Loading...');
-      }),
-            
+          stream: (widget.category.contains('전체'))
+              ? ((widget.category == '전체')
+                  ? DBGet.readAllCollection(
+                      collection: widget.collectionName, type: controller.type)
+                  : DBGet.readAllInfoCollection(
+                      collection: widget.collectionName, type: controller.type))
+              : DBGet.readCategoryCollection(
+                  collection: widget.collectionName,
+                  category: widget.category,
+                  type: controller.type),
+          builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) {
+                    PostListModel post = snapshot.data![index];
+                    return _buildListItem(post);
+                  });
+            } else
+              return const Text('Loading...');
+          }),
+
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context,

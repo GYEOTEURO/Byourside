@@ -2,6 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanumPost.dart';
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
+import 'package:byourside/screen/nanum/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../model/db_get.dart';
@@ -98,7 +99,7 @@ class _NanumPostListState extends State<NanumPostList> {
                         setState(() {});
                       },),
         actions: [
-          IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:() {}),
+          IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:() { showSearch(context: context, delegate: Search('nanumPost')); }),
         ],
       ),
       body: StreamBuilder<List<PostListModel>>(

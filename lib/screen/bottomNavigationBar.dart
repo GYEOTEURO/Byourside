@@ -1,4 +1,3 @@
-import 'package:byourside/screen/chat/message_list_screen.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/nanum/type_controller.dart';
@@ -6,6 +5,8 @@ import 'package:byourside/screen/ondo/category.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'chat/chat_list_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
@@ -24,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     CategoryPage(),
     const NanumPostList(primaryColor: Color(0xFF045558), collectionName: "nanumPost"),
-    MessageListScreen(),
+    ChatListScreen(),
     Mypage(),
   ];
   void _onItemTapped(int index) {

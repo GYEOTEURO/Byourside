@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+// import 'package:flutter/src/widgets/basic.dart' as C;
 import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -38,6 +38,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
   final picker = ImagePicker();
+  final myFocus = FocusNode(); // 초점 이동
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
@@ -116,141 +117,150 @@ class _OndoPostPageState extends State<OndoPostPage> {
         ],
       ),
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            // 제목
-            Container(
-                child: TextFormField(
-              decoration: InputDecoration(labelText: "제목을 입력하세요"),
-              controller: _title,
-            )),
-            // 카테고리 선택
-            Container(
-                padding: EdgeInsets.only(top: 10, bottom: 5),
-                child: Row(
-                  // 위젯을 양쪽으로 딱 붙임
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '카테고리 선택',
-                      style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
-                        onPressed: () async {
-                          _categories = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PostCategory(
-                                        primaryColor: widget.primaryColor,
-                                        title: widget.title,
-                                        categories: _categories,
-                                      )));
-                          print(
-                              "카테고리: ${_categories.category}, 타입: ${_categories.type}");
-                        },
-                        icon: Icon(Icons.navigate_next))
-                  ],
+      body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(25),
+            child: Column(
+              children: [
+                // 제목
+                Container(
+                    child: TextField(
+                  autofocus: true,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(myFocus),
+                  decoration: InputDecoration(labelText: "제목을 입력하세요"),
+                  controller: _title,
                 )),
-            // 사진 및 영상 첨부
-            Container(
-                padding: EdgeInsets.only(top: 5, bottom: 5),
-                child: Column(children: [
-                  Row(
-                    // 위젯을 양쪽으로 딱 붙임
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '사진 & 영상 첨부하기',
-                        style: TextStyle(
-                            color: Colors.black,
-                            letterSpacing: 2.0,
-                            fontWeight: FontWeight.bold),
+                // 카테고리 선택
+                Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 5),
+                    child: Row(
+                      // 위젯을 양쪽으로 딱 붙임
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '카테고리 선택',
+                          style: TextStyle(
+                              color: Colors.black,
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              _categories = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PostCategory(
+                                            primaryColor: widget.primaryColor,
+                                            title: widget.title,
+                                            categories: _categories,
+                                          )));
+                              print(
+                                  "카테고리: ${_categories.category}, 타입: ${_categories.type}");
+                            },
+                            icon: Icon(Icons.navigate_next))
+                      ],
+                    )),
+                // 사진 및 영상 첨부
+                Container(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    child: Column(children: [
+                      Row(
+                        // 위젯을 양쪽으로 딱 붙임
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '사진 & 영상 첨부하기',
+                            style: TextStyle(
+                                color: Colors.black,
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                getImage(ImageSource.gallery);
+                                _show();
+                              },
+                              icon: Icon(Icons.attach_file))
+                        ],
                       ),
-                      IconButton(
-                          onPressed: () {
-                            getImage(ImageSource.gallery);
-                            _show();
-                          },
-                          icon: Icon(Icons.attach_file))
-                    ],
-                  ),
-                  Visibility(
-                      visible: _visibility,
-                      child: SizedBox(
-                          height: 100,
-                          child: GridView.count(
-                              shrinkWrap:
-                                  true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
-                              padding: EdgeInsets.all(2),
-                              // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
-                              crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
-                              // 가로(cross), 세로(main) 아이템 간의 간격 지정
-                              mainAxisSpacing: 5,
-                              crossAxisSpacing: 5,
-                              children: List.generate(
-                                  5,
-                                  (index) => DottedBorder(
-                                        color: Colors.grey,
-                                        dashPattern: [5, 3],
-                                        borderType: BorderType.RRect,
-                                        radius: Radius.circular(5),
-                                        child: Container(
-                                          child: Center(
-                                              child: _boxContents[index]),
-                                          decoration: index <=
-                                                  _images.length - 1
-                                              ? BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: FileImage(File(
-                                                          _images[index]
-                                                              .path))))
-                                              : null,
-                                        ),
-                                      )).toList())))
-                ])),
-            // 지도 첨부
-            Container(
-                padding: EdgeInsets.only(top: 5, bottom: 5),
-                child: Row(
-                  // 위젯을 양쪽으로 딱 붙임
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      '지도 첨부하기',
-                      style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(onPressed: null, icon: Icon(Icons.map))
-                  ],
-                )),
-            // 게시글 내용
-            Container(
-                padding: EdgeInsets.only(top: 20, bottom: 5),
-                child: TextFormField(
-                  controller: _content,
-                  minLines: 1,
-                  maxLines: 8,
-                  decoration: const InputDecoration(
-                    labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                ))
-          ],
-        ),
-      ),
+                      Visibility(
+                          visible: _visibility,
+                          child: SizedBox(
+                              height: 100,
+                              child: GridView.count(
+                                  shrinkWrap:
+                                      true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
+                                  padding: EdgeInsets.all(2),
+                                  // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
+                                  crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
+                                  // 가로(cross), 세로(main) 아이템 간의 간격 지정
+                                  mainAxisSpacing: 5,
+                                  crossAxisSpacing: 5,
+                                  children: List.generate(
+                                      5,
+                                      (index) => DottedBorder(
+                                            color: Colors.grey,
+                                            dashPattern: [5, 3],
+                                            borderType: BorderType.RRect,
+                                            radius: Radius.circular(5),
+                                            child: Container(
+                                              child: Center(
+                                                  child: _boxContents[index]),
+                                              decoration: index <=
+                                                      _images.length - 1
+                                                  ? BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: FileImage(File(
+                                                              _images[index]
+                                                                  .path))))
+                                                  : null,
+                                            ),
+                                          )).toList())))
+                    ])),
+                // 지도 첨부
+                Container(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    child: Row(
+                      // 위젯을 양쪽으로 딱 붙임
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          '지도 첨부하기',
+                          style: TextStyle(
+                              color: Colors.black,
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(onPressed: null, icon: Icon(Icons.map))
+                      ],
+                    )),
+                // 게시글 내용
+                Container(
+                    padding: EdgeInsets.only(top: 20, bottom: 5),
+                    child: TextField(
+                      focusNode: myFocus,
+                      textInputAction: TextInputAction.done,
+                      controller: _content,
+                      minLines: 8,
+                      maxLines: 10,
+                      decoration: const InputDecoration(
+                        labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1),
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          )),
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -259,16 +269,17 @@ class _OndoPostPageState extends State<OndoPostPage> {
               _images.isEmpty ? [] : await DBSet.uploadFile(_images);
           OndoPostModel postData = OndoPostModel(
               uid: user!.uid,
-              nickname: user!.displayName, 
+              nickname: user!.displayName,
               title: _title.text,
               content: _content.text,
               category: _categories.category,
-              type:_categories.type,
+              type: _categories.type,
               datetime: Timestamp.now(),
               images: urls,
               likes: 0,
               likesPeople: [],
-              scrapPeople: []);
+              scrapPeople: [],
+              keyword: _title.text.split(' '));
           DBSet.addOndoPost('ondoPost', postData);
         },
         backgroundColor: widget.primaryColor,
