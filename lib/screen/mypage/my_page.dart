@@ -126,7 +126,7 @@ class _Mypage extends State<Mypage> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             Divider(thickness: 1, height: 1, color: Colors.black26),
             SizedBox(
@@ -144,7 +144,9 @@ class _Mypage extends State<Mypage> {
               height: 10,
             ),
             Expanded(
+                flex: 5,
                 child: ListView.builder(
+                    // physics: const NeverScrollableScrollPhysics(),
                     // padding: const EdgeInsets.only(top: 10, bottom: 10),
                     itemCount: myEntires.length,
                     itemBuilder: (BuildContext context, index) {
@@ -167,7 +169,7 @@ class _Mypage extends State<Mypage> {
                     })),
             Divider(thickness: 1, height: 1, color: Colors.black26),
             SizedBox(
-              height: 30,
+              height: 15,
             ),
             Text(
               "기타",
@@ -180,9 +182,11 @@ class _Mypage extends State<Mypage> {
               height: 10,
             ),
             Expanded(
+                flex: 3,
                 child: ListView.builder(
+                    // physics: const NeverScrollableScrollPhysics(),
                     // padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    itemCount: myEntires.length,
+                    itemCount: etcEntires.length,
                     itemBuilder: (BuildContext context, index) {
                       return TextButton.icon(
                         style: TextButton.styleFrom(
