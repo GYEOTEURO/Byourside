@@ -63,8 +63,9 @@ class _NanumPostContentState extends State<NanumPostContent> {
           ),
           onPressed: () async {
             var groupName = "${user?.displayName}_${post.nickname}";
-
-            if (await checkGroupExist(groupName) != true) {
+            var groupNameReverse = "${post.nickname}_${user?.displayName}";
+            if (await checkGroupExist(groupName) != true &&
+                await checkGroupExist(groupNameReverse) != true) {
               await ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
                   .createGroup(
                       FirebaseAuth.instance.currentUser!.displayName.toString(),
@@ -84,6 +85,17 @@ class _NanumPostContentState extends State<NanumPostContent> {
                         builder: (context) => ChatPage(
                             groupId: groupId,
                             groupName: groupName,
+                            userName: user!.displayName!)));
+              });
+            } else if (await checkGroupExist(groupName) != true) {
+              String groupId = await getGroupId(groupNameReverse);
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChatPage(
+                            groupId: groupId,
+                            groupName: groupNameReverse,
                             userName: user!.displayName!)));
               });
             } else {
