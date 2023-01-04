@@ -19,9 +19,8 @@ class DBGet {
   static Stream<List<PostListModel>> readSearchDocs(query, {required String collection}) =>
         FirebaseFirestore.instance
         .collection(collection)
-        .where("title", isGreaterThanOrEqualTo: query)
-        .where("title", isLessThanOrEqualTo: query+"\uf7ff")
-        //.orderBy('datetime', descending: true)
+        .where("keyword", arrayContains: query)
+        .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
@@ -31,22 +30,34 @@ class DBGet {
         FirebaseFirestore.instance
         .collection(collection)
         .where("category", isEqualTo: category)
-        //.where("type", whereIn: type)
+        .where("type", whereIn: type)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
   
   // Firestore의 ondo collection에 있는 정보에 속하는 카테고리 데이터 모두 불러오기("전체 정보" 카테고리 가져오기)
-  static Stream<List<PostListModel>> readAllInfoCollection({required String collection, List<String>? type}) =>
-        FirebaseFirestore.instance
+  static Stream<List<PostListModel>> readAllInfoCollection({required String collection, List<String>? type}) {
+    if(type == null || type.length > 1) {
+      return FirebaseFirestore.instance
         .collection(collection)
         .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
-        .where("type", whereIn: type)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
+    }
+    else{
+      return FirebaseFirestore.instance
+        .collection(collection)
+        .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
+        .where("type", isEqualTo: type![0])
+        .orderBy('datetime', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+        .toList());
+    }
+  }
     
   // Firestore의 마음온도 collection 내 특정 문서 불러오기
   static Stream<OndoPostModel> readOndoDocument({required String collection, required String documentID}) =>

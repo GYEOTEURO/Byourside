@@ -1,6 +1,6 @@
 import 'package:byourside/model/db_get.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/nanum/nanumPost.dart';
 import 'package:flutter/material.dart';
 
 class Search extends SearchDelegate {
@@ -30,7 +30,7 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return OndoPost(collectionName: collectionName, documentID: selectedResult!, primaryColor: Color(0xFF045558));
+    return NanumPost(collectionName: collectionName, documentID: selectedResult!, primaryColor: Color(0xFF045558));
   }
 
   final String collectionName;
@@ -42,6 +42,7 @@ class Search extends SearchDelegate {
     Widget _buildListItem(PostListModel? post){
     
     String date = post!.datetime!.toDate().toString().split(' ')[0];
+    String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
               
     return Container(
         height: 90,
@@ -69,7 +70,7 @@ class Search extends SearchDelegate {
                                         fontWeight: FontWeight.bold,
                                       )),
                                       Text(
-                                        '${post.nickname} / $date / ${post.category}',
+                                        '${post.nickname} / $date / $isCompleted',
                                         style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],

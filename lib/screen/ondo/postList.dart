@@ -60,7 +60,7 @@ class _OndoPostListState extends State<OndoPostList> {
                                 fontWeight: FontWeight.bold,
                               )),
                           Text(
-                            '${post.nickname!} / $date',
+                            '${post.nickname!} / $date / ${post.type}',
                             style: const TextStyle(color: Colors.black54),
                           ),
                         ],

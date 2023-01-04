@@ -29,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
-        title: Text(
+        title: const Text(
           "검색",
           style: TextStyle(fontSize: 27, color: Colors.white),
         ),
@@ -72,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: primaryColor,
                   ),
@@ -113,6 +113,7 @@ class _SearchPageState extends State<SearchPage> {
                 searchSnapshot!.docs[index]['groupId'],
                 searchSnapshot!.docs[index]['groupName'],
                 searchSnapshot!.docs[index]['admin'],
+                searchSnapshot!.docs[index]['recentMessage'],
               );
             },
           )
@@ -128,8 +129,6 @@ class _SearchPageState extends State<SearchPage> {
           if (mounted) {
             setState(() {
               isJoined = value;
-              print(value);
-              print("this");
             });
           }
         });
@@ -139,8 +138,8 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  Widget groupTile(
-      String userName, String groupId, String groupName, String admin) {
+  Widget groupTile(String userName, String groupId, String groupName,
+      String admin, String recentMsg) {
     joinedOrNot(userName, groupId, groupName, admin);
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -164,20 +163,9 @@ class _SearchPageState extends State<SearchPage> {
                 .toggleGroupJoin(groupId, userName, groupName);
             setState(() {
               isJoined = !isJoined;
-              print(isJoined);
-              print("hm..");
-            });
-            Future.delayed(const Duration(seconds: 2), () {
-              //   // Navigator.push(
-              //   //     context,
-              //   //     MaterialPageRoute(
-              //   //         builder: (context) => ChatPage(
-              //   //             groupId: groupId,
-              //   //             groupName: groupName,
-              //   //             userName: userName)));
             });
           } else {
-            print("mount1");
+            // print("mount1");
           }
         },
         child: isJoined

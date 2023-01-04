@@ -159,6 +159,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                           )));
                               print(
                                   "카테고리: ${_categories.category}, 타입: ${_categories.type}");
+                              if(_categories.category == '자유게시판') _categories.category = '자유'; 
                             },
                             icon: Icon(Icons.navigate_next))
                       ],
@@ -278,7 +279,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
               images: urls,
               likes: 0,
               likesPeople: [],
-              scrapPeople: []);
+              scrapPeople: [],
+              keyword: _title.text.split(' '));
           DBSet.addOndoPost('ondoPost', postData);
         },
         backgroundColor: widget.primaryColor,
