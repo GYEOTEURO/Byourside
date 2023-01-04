@@ -12,23 +12,7 @@ enum Select { protector, participator, someoneElse }
 List<String> purposeType = ['홍보', '모집'];
 String _dropdownValue = '홍보';
 
-// class Keys {
-//   static final _formKey_protector_belong = const Key('belong');
-//   static final _formKey_protector_age = const Key('protector_age');
-//   static final _formKey_protector_kid_age = const Key('kid_age');
-//   static final _formKey_participator = const Key('participator');
-//   static final _formKey_someoneElse = const Key('someoneElse');
-//   static final _formKey_user = const Key('user');
-// }
-
 GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_protector_age = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_protector_kid_age = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_someoneElse = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_user_protector = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_user_participator = GlobalKey<FormState>();
-// GlobalKey<FormState> _formKey_user_someone = GlobalKey<FormState>();
 
 const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
 const List<Widget> type = <Widget>[Text('뇌병변 장애'), Text('발달 장애')];
