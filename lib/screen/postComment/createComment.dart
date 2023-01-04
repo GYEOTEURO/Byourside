@@ -48,6 +48,7 @@ class _CreateCommentState extends State<CreateComment> {
           FloatingActionButton.extended(
             heroTag: 'saveComment',
             onPressed: () {
+              FocusScope.of(context).unfocus();
               CommentModel commentData = CommentModel(
                   uid: user!.uid,
                   nickname: user!.displayName,

@@ -272,7 +272,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
               images: urls,
               likes: 0,
               likesPeople: [],
-              scrapPeople: []);
+              scrapPeople: [],
+              keyword: _title.text.split(' '));
           DBSet.addNanumPost('nanumPost', postData);
         },
         backgroundColor: widget.primaryColor,
