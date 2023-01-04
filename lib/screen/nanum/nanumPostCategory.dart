@@ -6,10 +6,11 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class NanumPostCategory extends StatefulWidget {
   const NanumPostCategory(
-      {Key? key, required this.primaryColor, required this.title})
+      {Key? key, required this.primaryColor, required this.title, this.preType})
       : super(key: key);
   final Color primaryColor;
   final String title;
+  final String? preType;
 
   @override
   State<NanumPostCategory> createState() => _NanumPostCategoryState();
@@ -36,6 +37,19 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
     ButtonProperties(label: '발달장애'),
     ButtonProperties(label: '뇌병변장애'),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    for (int i = 0; i < 2; i++) {
+      if (typeList[i].label == widget.preType) {
+        typeList[i].selected = true;
+        typeList[i].backgroundColor = Color(0xFF045558);
+        typeList[i].fontColor = Colors.white;
+      }
+    }
+    super.initState();
+  }
 
   void _onClickType(int index) {
     setState(() {
@@ -71,7 +85,6 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            // pop 할 때, 파라미터를 두 개를 어떻게 넘기는 지 리스트로 넣는 수 밖에 없는 건지 몰라서 일단 넘기는 거 아직...
             Navigator.pop(context, _type);
           },
           icon: const Icon(Icons.arrow_back),
