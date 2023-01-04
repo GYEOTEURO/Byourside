@@ -21,14 +21,14 @@ String _dropdownValue = '홍보';
 //   static final _formKey_user = const Key('user');
 // }
 
-final _formKey_protector_belong = GlobalKey<FormState>();
-final _formKey_protector_age = GlobalKey<FormState>();
-final _formKey_protector_kid_age = GlobalKey<FormState>();
-final _formKey_participator = GlobalKey<FormState>();
-final _formKey_someoneElse = GlobalKey<FormState>();
-final _formKey_user_protector = GlobalKey<FormState>();
-final _formKey_user_participator = GlobalKey<FormState>();
-final _formKey_user_someone = GlobalKey<FormState>();
+GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_protector_age = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_protector_kid_age = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_someoneElse = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_user_protector = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_user_participator = GlobalKey<FormState>();
+// GlobalKey<FormState> _formKey_user_someone = GlobalKey<FormState>();
 
 const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
 const List<Widget> type = <Widget>[Text('뇌병변 장애'), Text('발달 장애')];
@@ -187,9 +187,12 @@ class _SetupUserState extends State<SetupUser> {
     return Scaffold(
       appBar: AppBar(backgroundColor: primaryColor),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
+          child: Column(children: [
+        Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -238,353 +241,334 @@ class _SetupUserState extends State<SetupUser> {
                         });
                       },
                     ),
-                  )
-                ]),
-            (protector)
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                        Form(
-                            key: _formKey_user_protector,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(children: [nicknameField])
-                                ])),
-                        TextButton(
-                            onPressed: () async {
-                              doesDocExist =
-                                  await checkDocExist(_nickname.text);
-                              if (doesDocExist == true) {
-                                if (mounted) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text('이미 존재하는 닉네임입니다.'),
-                                        );
-                                      });
-                                }
-                              }
-                            },
-                            child: const Text(
-                              '닉네임 중복 확인',
-                              style: TextStyle(color: primaryColor),
-                            )),
-                        Form(
-                            key: _formKey_protector_age,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(children: [
-                                    TextFormField(
-                                      decoration:
-                                          InputDecoration(labelText: "보호자 나이"),
-                                      controller: _protectorAge,
-                                      validator: (value) {
-                                        if (value != null) {
-                                          if (value.split(' ').first != '' &&
-                                              value.isNotEmpty &&
-                                              isNumeric(value)) {
-                                            return null;
-                                          }
-                                          return '유효한 나이를 입력하세요';
-                                        }
-                                      },
-                                    )
-                                  ])
-                                ])),
-                        const SizedBox(height: 5),
-                        Form(
-                            key: _formKey_protector_kid_age,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(children: [
-                                    TextFormField(
-                                      decoration:
-                                          InputDecoration(labelText: "자녀 나이"),
-                                      controller: _childAge,
-                                      validator: (value) {
-                                        if (value != null) {
-                                          if (value.split(' ').first != '' &&
-                                              value.isNotEmpty &&
-                                              isNumeric(value)) {
-                                            return null;
-                                          }
-                                          return '유효한 나이를 입력하세요';
-                                        }
-                                      },
-                                    )
-                                  ])
-                                ])),
-                        Form(
-                            key: _formKey_protector_belong,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(children: [
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                          labelText: "소속 복지관/학교"),
-                                      controller: _belong,
-                                      validator: (value) {
-                                        if (value != null) {
-                                          if (value.split(' ').first != '' &&
-                                              value.isNotEmpty) {
-                                            return null;
-                                          }
-                                          return '유효한 소속을 입력하세요';
-                                        }
-                                      },
-                                    )
-                                  ])
-                                ])),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  (protector)
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text("보호자 성별"),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                setState(() {
-                                  _selectedProtectorGender[index] = true;
-                                  _selectedProtectorGender[(1 - index).abs()] =
-                                      false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
-                              ),
-                              isSelected: _selectedProtectorGender,
-                              children: gender,
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("자녀 성별"),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                setState(() {
-                                  _selectedChildGender[index] = true;
-                                  _selectedChildGender[(1 - index).abs()] =
-                                      false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
-                              ),
-                              isSelected: _selectedChildGender,
-                              children: gender,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("장애 유형"),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                setState(() {
-                                  _selectedChildType[index] = true;
-                                  _selectedChildType[(1 - index).abs()] = false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
-                              ),
-                              isSelected: _selectedChildType,
-                              children: type,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("장애 정도"),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                setState(() {
-                                  _selectedChildDegree[index] = true;
-                                  _selectedChildDegree[(1 - index).abs()] =
-                                      false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
-                              ),
-                              isSelected: _selectedChildDegree,
-                              children: degree,
-                            ),
-                          ],
-                        )
-                      ])
-                : SizedBox(),
-            (participator)
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                        Form(
-                            key: _formKey_user_participator,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Column(children: [nicknameField])
-                                ])),
-                        TextButton(
-                            onPressed: () async {
-                              doesDocExist =
-                                  await checkDocExist(_nickname.text);
-                              if (doesDocExist == true) {
-                                if (mounted) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text('이미 존재하는 닉네임입니다.'),
-                                        );
-                                      });
-                                }
-                              }
-                            },
-                            child: const Text(
-                              '닉네임 중복 확인',
-                              style: TextStyle(color: primaryColor),
-                            )),
-                        Form(
-                            key: _formKey_participator,
-                            child: Column(children: [
-                              //<Widget>
-                              TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: "개인/단체 이름"),
-                                controller: _organizationName,
-                                validator: (value) {
-                                  if (value != null) {
-                                    if (value.split(' ').first != '' &&
-                                        value.isNotEmpty) {
-                                      return null;
+                              nicknameField,
+                              TextButton(
+                                  onPressed: () async {
+                                    doesDocExist =
+                                        await checkDocExist(_nickname.text);
+                                    if (doesDocExist == true) {
+                                      if (mounted) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                content:
+                                                    Text('이미 존재하는 닉네임입니다.'),
+                                              );
+                                            });
+                                      }
                                     }
-                                    return '유효한 개인/단체 이름을 입력하세요';
-                                  }
-                                },
-                              )
-                            ])),
-                        DropdownButton(
-                          value: _dropdownValue,
-                          items: purposeType
-                              .map((String item) => DropdownMenuItem<String>(
-                                    child: Text('$item'),
-                                    value: item,
-                                  ))
-                              .toList(),
-                          onChanged: (dynamic newValue) {
-                            setState(() {
-                              _dropdownValue = newValue;
-                            });
-                          },
-                          elevation: 8,
-                        )
-                      ])
-                : SizedBox(),
-            (someoneElse)
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                        Form(
-                            key: _formKey_user_someone,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                  },
+                                  child: const Text(
+                                    '닉네임 중복 확인',
+                                    style: TextStyle(color: primaryColor),
+                                  )),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Column(children: [
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: "보호자 나이"),
+                                        controller: _protectorAge,
+                                        validator: (value) {
+                                          if (value != null) {
+                                            if (value.split(' ').first != '' &&
+                                                value.isNotEmpty &&
+                                                isNumeric(value)) {
+                                              return null;
+                                            }
+                                            return '유효한 나이를 입력하세요';
+                                          }
+                                        },
+                                      )
+                                    ])
+                                  ]),
+                              const SizedBox(height: 5),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Column(children: [
+                                      TextFormField(
+                                        decoration:
+                                            InputDecoration(labelText: "자녀 나이"),
+                                        controller: _childAge,
+                                        validator: (value) {
+                                          if (value != null) {
+                                            if (value.split(' ').first != '' &&
+                                                value.isNotEmpty &&
+                                                isNumeric(value)) {
+                                              return null;
+                                            }
+                                            return '유효한 나이를 입력하세요';
+                                          }
+                                        },
+                                      )
+                                    ])
+                                  ]),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Column(children: [
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: "소속 복지관/학교"),
+                                        controller: _belong,
+                                        validator: (value) {
+                                          if (value != null) {
+                                            if (value.split(' ').first != '' &&
+                                                value.isNotEmpty) {
+                                              return null;
+                                            }
+                                            return '유효한 소속을 입력하세요';
+                                          }
+                                        },
+                                      )
+                                    ])
+                                  ]),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Column(children: [nicknameField])
-                                ])),
-                        TextButton(
-                            onPressed: () async {
-                              doesDocExist =
-                                  await checkDocExist(_nickname.text);
-                              if (doesDocExist == true) {
-                                if (mounted) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text('이미 존재하는 닉네임입니다.'),
-                                        );
+                                  Text("보호자 성별"),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      setState(() {
+                                        _selectedProtectorGender[index] = true;
+                                        _selectedProtectorGender[
+                                            (1 - index).abs()] = false;
                                       });
-                                }
-                              }
-                            },
-                            child: const Text(
-                              '닉네임 중복 확인',
-                              style: TextStyle(color: primaryColor),
-                            )),
-                        Form(
-                            key: _formKey_someoneElse,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
+                                    color: primaryColor,
+                                    constraints: const BoxConstraints(
+                                      minHeight: 40.0,
+                                      minWidth: 80.0,
+                                    ),
+                                    isSelected: _selectedProtectorGender,
+                                    children: gender,
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Column(children: [someoneElseField])
-                                ]))
-                      ])
-                : SizedBox(),
-          ],
-        ),
-      ),
+                                  Text("자녀 성별"),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      setState(() {
+                                        _selectedChildGender[index] = true;
+                                        _selectedChildGender[
+                                            (1 - index).abs()] = false;
+                                      });
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
+                                    color: primaryColor,
+                                    constraints: const BoxConstraints(
+                                      minHeight: 40.0,
+                                      minWidth: 80.0,
+                                    ),
+                                    isSelected: _selectedChildGender,
+                                    children: gender,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("장애 유형"),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      setState(() {
+                                        _selectedChildType[index] = true;
+                                        _selectedChildType[(1 - index).abs()] =
+                                            false;
+                                      });
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
+                                    color: primaryColor,
+                                    constraints: const BoxConstraints(
+                                      minHeight: 40.0,
+                                      minWidth: 80.0,
+                                    ),
+                                    isSelected: _selectedChildType,
+                                    children: type,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("장애 정도"),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      setState(() {
+                                        _selectedChildDegree[index] = true;
+                                        _selectedChildDegree[
+                                            (1 - index).abs()] = false;
+                                      });
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
+                                    color: primaryColor,
+                                    constraints: const BoxConstraints(
+                                      minHeight: 40.0,
+                                      minWidth: 80.0,
+                                    ),
+                                    isSelected: _selectedChildDegree,
+                                    children: degree,
+                                  ),
+                                ],
+                              )
+                            ])
+                      : SizedBox(),
+                  (participator)
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                              Column(children: [nicknameField]),
+                              TextButton(
+                                  onPressed: () async {
+                                    doesDocExist =
+                                        await checkDocExist(_nickname.text);
+                                    if (doesDocExist == true) {
+                                      if (mounted) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                content:
+                                                    Text('이미 존재하는 닉네임입니다.'),
+                                              );
+                                            });
+                                      }
+                                    }
+                                  },
+                                  child: const Text(
+                                    '닉네임 중복 확인',
+                                    style: TextStyle(color: primaryColor),
+                                  )),
+                              Column(children: [
+                                //<Widget>
+                                TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: "개인/단체 이름"),
+                                  controller: _organizationName,
+                                  validator: (value) {
+                                    if (value != null) {
+                                      if (value.split(' ').first != '' &&
+                                          value.isNotEmpty) {
+                                        return null;
+                                      }
+                                      return '유효한 개인/단체 이름을 입력하세요';
+                                    }
+                                  },
+                                )
+                              ]),
+                              DropdownButton(
+                                value: _dropdownValue,
+                                items: purposeType
+                                    .map((String item) =>
+                                        DropdownMenuItem<String>(
+                                          child: Text('$item'),
+                                          value: item,
+                                        ))
+                                    .toList(),
+                                onChanged: (dynamic newValue) {
+                                  setState(() {
+                                    _dropdownValue = newValue;
+                                  });
+                                },
+                                elevation: 8,
+                              )
+                            ])
+                      : SizedBox(),
+                  (someoneElse)
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Column(children: [nicknameField])
+                                  ]),
+                              TextButton(
+                                  onPressed: () async {
+                                    doesDocExist =
+                                        await checkDocExist(_nickname.text);
+                                    if (doesDocExist == true) {
+                                      if (mounted) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                content:
+                                                    Text('이미 존재하는 닉네임입니다.'),
+                                              );
+                                            });
+                                      }
+                                    }
+                                  },
+                                  child: const Text(
+                                    '닉네임 중복 확인',
+                                    style: TextStyle(color: primaryColor),
+                                  )),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(children: [someoneElseField])
+                                  ])
+                            ])
+                      : SizedBox(),
+                ],
+              ),
+            )),
+      ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           (protector)
               ? {
-                  if (_formKey_protector_age.currentState!.validate() &&
-                      _formKey_protector_kid_age.currentState!.validate() &&
-                      _formKey_protector_belong.currentState!.validate() &&
-                      _formKey_user_protector.currentState!.validate() &&
+                  if (_formKey.currentState!.validate() &&
+                      // _formKey_protector_kid_age.currentState!.validate() &&
+                      // _formKey_protector_belong.currentState!.validate() &&
+                      // _formKey_user_protector.currentState!.validate() &&
                       _nickname.text.split(' ').first != '' &&
                       _protectorAge.text.split(' ').first != '' &&
                       _childAge.text.split(' ').first != '' &&
@@ -614,8 +598,8 @@ class _SetupUserState extends State<SetupUser> {
               : null;
           (participator)
               ? {
-                  if (_formKey_participator.currentState!.validate() &&
-                      _formKey_user_participator.currentState!.validate() &&
+                  if (_formKey.currentState!.validate() &&
+                      // _formKey_user_participator.currentState!.validate() &&
                       doesDocExist == false)
                     {
                       // print(_formKey_participator.currentState),
@@ -630,8 +614,8 @@ class _SetupUserState extends State<SetupUser> {
               : null;
           (someoneElse)
               ? {
-                  if (_formKey_someoneElse.currentState!.validate() &&
-                      _formKey_user_someone.currentState!.validate() &&
+                  if (_formKey.currentState!.validate() &&
+                      // _formKey_user_someone.currentState!.validate() &&
                       _purpose.text != null &&
                       _purpose.text != '' &&
                       doesDocExist == false)
