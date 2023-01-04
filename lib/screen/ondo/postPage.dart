@@ -159,6 +159,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                           )));
                               print(
                                   "카테고리: ${_categories.category}, 타입: ${_categories.type}");
+                              if(_categories.category == '자유게시판') _categories.category = '자유'; 
                             },
                             icon: Icon(Icons.navigate_next))
                       ],

@@ -39,7 +39,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
               children: [
                 Expanded(
                   child: Text(
-                          "${post.nickname!} / $date",
+                          "${post.nickname!} / $date / ${post.type}",
                           style: const TextStyle(color: Colors.black54),
                          )
                 ),

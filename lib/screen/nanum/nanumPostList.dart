@@ -58,7 +58,7 @@ class _NanumPostListState extends State<NanumPostList> {
                                         fontWeight: FontWeight.bold,
                                       )),
                                       Text(
-                                        '${post.nickname!} / $date / $isCompleted',
+                                        '${post.nickname!} / $date / ${post.type} / $isCompleted',
                                         style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],
