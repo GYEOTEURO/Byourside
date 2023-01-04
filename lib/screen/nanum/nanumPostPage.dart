@@ -150,10 +150,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => NanumPostCategory(
-                                            primaryColor: widget.primaryColor,
-                                            title: widget.title,
-                                            preType: null,
-                                          )));
+                                          primaryColor: widget.primaryColor,
+                                          title: widget.title)));
                               print("타입: ${_type}");
                             },
                             icon: Icon(Icons.navigate_next))
@@ -274,7 +272,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
               images: urls,
               likes: 0,
               likesPeople: [],
-              scrapPeople: []);
+              scrapPeople: [],
+              keyword: _title.text.split(' '));
           DBSet.addNanumPost('nanumPost', postData);
         },
         backgroundColor: widget.primaryColor,

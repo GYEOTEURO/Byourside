@@ -61,10 +61,7 @@ class _CategoryPageState extends State<CategoryPage>
                 context,
                 MaterialPageRoute(
                     builder: (context) => NanumPostCategory(
-                          primaryColor: Color(0xFF045558),
-                          title: "필터링",
-                          preType: _type,
-                        )));
+                        primaryColor: Color(0xFF045558), title: "필터링")));
             print("타입: ${_type}");
             controller.filtering(_type);
             setState(() {});
