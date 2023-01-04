@@ -2,6 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/chat/search_page.dart';
 import 'package:byourside/widget/group_tile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,9 @@ class ChatListScreen extends StatefulWidget {
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
 }
+
+Future<String> callAsyncFetch() =>
+    Future.delayed(Duration(seconds: 2), () => "hi");
 
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -24,6 +28,23 @@ class _ChatListScreenState extends State<ChatListScreen> {
     gettingUserData();
   }
 
+  Future<bool> checkGroupExist(String name) async {
+    var collection = FirebaseFirestore.instance.collection('groupList');
+    var doc = await collection.doc(name).get();
+    // print(doc);
+    return doc.exists;
+  }
+
+  Future<String> getRecentMsg(String docId) async {
+    String recent = " ";
+
+    return await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(docId)
+        .get()
+        .then((value) => value.data().toString());
+  }
+
   // String manipulation
   String getId(String res) {
     return res.substring(0, res.indexOf("_"));
@@ -31,6 +52,20 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   String getName(String res) {
     return res.substring(res.indexOf("_") + 1);
+  }
+
+  Stream<QuerySnapshot<Object?>> getGroups() {
+    return FirebaseFirestore.instance
+        .collection("user")
+        .where(_auth.currentUser!.uid)
+        .snapshots();
+
+    // Future<QuerySnapshot<Map<String, dynamic>>> li = FirebaseFirestore.instance
+    //       .collection('groups')
+    //       .where("members",
+    //           isEqualTo:
+    //               "${_auth.currentUser!.uid}_${_auth.currentUser!.displayName}")
+    //       .get();
   }
 
   gettingUserData() async {
@@ -41,9 +76,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
     await ChatList(uid: _auth.currentUser!.uid)
         .getUserGroups()
         .then((snapshot) {
-      setState(() {
-        groups = snapshot;
-      });
+      if (mounted) {
+        setState(() {
+          groups = snapshot;
+        });
+      }
     });
   }
 
@@ -109,9 +146,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
                         )
                       : TextField(
                           onChanged: (val) {
-                            setState(() {
-                              groupName = val;
-                            });
+                            if (mounted) {
+                              setState(() {
+                                groupName = val;
+                              });
+                            }
                           },
                           style: const TextStyle(color: Colors.black),
                           decoration: InputDecoration(
@@ -142,17 +181,30 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     if (groupName != "") {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
-                          .createGroup(
-                              FirebaseAuth.instance.currentUser!.displayName
-                                  .toString(),
-                              FirebaseAuth.instance.currentUser!.uid.toString(),
-                              groupName)
-                          .whenComplete(() => _isLoading = false);
-                      Navigator.of(context).pop();
+                      // setState(() {
+                      //   _isLoading = true;
+                      // });
+                      if (await checkGroupExist(groupName) != true) {
+                        ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
+                            .createGroup(
+                                FirebaseAuth.instance.currentUser!.displayName
+                                    .toString(),
+                                FirebaseAuth.instance.currentUser!.uid
+                                    .toString(),
+                                groupName)
+                            .whenComplete(() => _isLoading = false);
+                        Navigator.of(context).pop();
+                      } else {
+                        if (mounted) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('이미 존재하는 채팅방 이름입니다.'),
+                                );
+                              });
+                        }
+                      }
                     }
                   },
                   style:
@@ -167,38 +219,64 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   groupList() {
     return StreamBuilder(
-      stream: groups,
-      builder: (context, AsyncSnapshot snapshot) {
-        // make some checks
-        if (snapshot.hasData) {
-          if (snapshot.data['groups'] != null) {
-            if (snapshot.data['groups'].length != 0) {
-              return ListView.builder(
-                itemCount: snapshot.data['groups'].length,
-                itemBuilder: (context, index) {
-                  // int reverseIndex = snapshot.data['groups'].length - index - 1;
-                  return GroupTile(
-                      userName: snapshot.data['nickname'],
-                      groupId: getId(snapshot.data['groups'][index]),
-                      groupName: getName(snapshot.data['groups'][index]));
-                },
-              );
+        stream: groups,
+        builder: (context, AsyncSnapshot snapshot) {
+          // make some checks
+          if (snapshot.hasData) {
+            if (snapshot.data['groups'] != null) {
+              if (snapshot.data['groups'].length != 0) {
+                return ListView.builder(
+                  itemCount: snapshot.data['groups'].length,
+                  itemBuilder: (context, index) {
+                    return GroupTile(
+                        userName: snapshot.data['nickname'],
+                        groupId: getId(snapshot.data['groups'][index]),
+                        groupName: getName(snapshot.data['groups'][index]),
+                        recentMsg: ""
+                        // getRecentMsg(snapshot.data['groups'][index])
+                        );
+                  },
+                );
+              } else {
+                return noGroupWidget();
+              }
             } else {
               return noGroupWidget();
             }
           } else {
-            return noGroupWidget();
+            return const Center(
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
+            );
           }
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: primaryColor,
-            ),
-          );
-        }
-      },
-    );
+        });
   }
+  // return StreamBuilder<QuerySnapshot>(
+  //   stream: getGroups(),
+  //   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //     return snapshot.hasData
+  //         ? ListView.builder(
+  //             scrollDirection: Axis.vertical,
+  //             shrinkWrap: true,
+  //             itemCount: snapshot.data?.docs.length,
+  //             itemBuilder: (context, index) {
+
+  // String recent;
+  // FirebaseFirestore.instance
+  //         .collection('groups')
+  //         .doc(snapshot.data['groups'][index])
+  //         .get().then((value) => value.data().toString());
+  // int reverseIndex = snapshot.data['groups'].length - index - 1;
+  //   return GroupTile(
+  //       userName: FirebaseAuth.instance.currentUser!.displayName
+  //           .toString(),
+  //       groupId: snapshot.data?.docs[index]['groupId'],
+  //       groupName: snapshot.data?.docs[index]['groupName'],
+  //       recentMsg: snapshot.data?.docs[index]['recentMessage']);
+  // },
+  //   )
+  // : Container();
 
   noGroupWidget() {
     return Container(
