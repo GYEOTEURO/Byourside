@@ -40,6 +40,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
 
   @override
   void initState() {
+    print(widget.preType);
     // TODO: implement initState
     for (int i = 0; i < 2; i++) {
       if (typeList[i].label == widget.preType) {
@@ -76,8 +77,21 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
     });
   }
 
+  void _initPreType() {
+    setState(() {
+      for (int i = 0; i < 2; i++) {
+        if (typeList[i].label == widget.preType) {
+          typeList[i].selected = true;
+          typeList[i].backgroundColor = Color(0xFF045558);
+          typeList[i].fontColor = Colors.white;
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // _initPreType();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
