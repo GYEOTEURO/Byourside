@@ -20,8 +20,9 @@ import 'firebase_options.dart';
 Future<bool> getPermission() async {
   Map<Permission, PermissionStatus> permissions = await [
     Permission.storage,
-    Permission.location,
-    Permission.locationWhenInUse
+    Permission.sensors,
+    Permission.bluetooth,
+    Permission.notification
   ].request();
   print('per1 : $permissions');
   if (permissions.values.every((element) => element.isGranted)) {
