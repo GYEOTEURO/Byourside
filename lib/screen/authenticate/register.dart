@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // change to 개인정보처리방침
-final Uri _url = Uri.parse('https://flutter.dev');
+final Uri _url = Uri.parse('https://sites.google.com/view/gyeoteuro');
 
 Future<void> _launchUrl() async {
   if (!await launchUrl(_url)) {
