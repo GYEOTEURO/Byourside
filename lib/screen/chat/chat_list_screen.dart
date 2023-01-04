@@ -35,6 +35,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return doc.exists;
   }
 
+  Future<String> getRecentMsg(String docId) async {
+    String recent = " ";
+
+    return await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(docId)
+        .get()
+        .then((value) => value.data().toString());
+  }
+
   // String manipulation
   String getId(String res) {
     return res.substring(0, res.indexOf("_"));
@@ -44,21 +54,18 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return res.substring(res.indexOf("_") + 1);
   }
 
-  String getRecentMsg(String docId) {
-    String recent = " ";
+  Stream<QuerySnapshot<Object?>> getGroups() {
+    return FirebaseFirestore.instance
+        .collection("user")
+        .where(_auth.currentUser!.uid)
+        .snapshots();
 
-    FirebaseFirestore.instance
-        .collection('groups')
-        .doc(docId)
-        .get()
-        .then((value) {
-      if (mounted) {
-        setState(() {
-          if (value is String) recent = value.data().toString();
-        });
-      }
-    });
-    return recent;
+    // Future<QuerySnapshot<Map<String, dynamic>>> li = FirebaseFirestore.instance
+    //       .collection('groups')
+    //       .where("members",
+    //           isEqualTo:
+    //               "${_auth.currentUser!.uid}_${_auth.currentUser!.displayName}")
+    //       .get();
   }
 
   gettingUserData() async {
@@ -212,44 +219,64 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   groupList() {
     return StreamBuilder(
-      stream: groups,
-      builder: (context, AsyncSnapshot snapshot) {
-        // make some checks
-        if (snapshot.hasData) {
-          if (snapshot.data['groups'] != null) {
-            if (snapshot.data['groups'].length != 0) {
-              return ListView.builder(
-                itemCount: snapshot.data['groups'].length,
-                itemBuilder: (context, index) {
-                  // String recent;
-                  // FirebaseFirestore.instance
-                  //         .collection('groups')
-                  //         .doc(snapshot.data['groups'][index])
-                  //         .get().then((value) => value.data().toString());
-                  // int reverseIndex = snapshot.data['groups'].length - index - 1;
-                  return GroupTile(
-                      userName: snapshot.data['nickname'],
-                      groupId: getId(snapshot.data['groups'][index]),
-                      groupName: getName(snapshot.data['groups'][index]),
-                      recentMsg: getRecentMsg(snapshot.data['groups'][index]));
-                },
-              );
+        stream: groups,
+        builder: (context, AsyncSnapshot snapshot) {
+          // make some checks
+          if (snapshot.hasData) {
+            if (snapshot.data['groups'] != null) {
+              if (snapshot.data['groups'].length != 0) {
+                return ListView.builder(
+                  itemCount: snapshot.data['groups'].length,
+                  itemBuilder: (context, index) {
+                    return GroupTile(
+                        userName: snapshot.data['nickname'],
+                        groupId: getId(snapshot.data['groups'][index]),
+                        groupName: getName(snapshot.data['groups'][index]),
+                        recentMsg: ""
+                        // getRecentMsg(snapshot.data['groups'][index])
+                        );
+                  },
+                );
+              } else {
+                return noGroupWidget();
+              }
             } else {
               return noGroupWidget();
             }
           } else {
-            return noGroupWidget();
+            return const Center(
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
+            );
           }
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: primaryColor,
-            ),
-          );
-        }
-      },
-    );
+        });
   }
+  // return StreamBuilder<QuerySnapshot>(
+  //   stream: getGroups(),
+  //   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //     return snapshot.hasData
+  //         ? ListView.builder(
+  //             scrollDirection: Axis.vertical,
+  //             shrinkWrap: true,
+  //             itemCount: snapshot.data?.docs.length,
+  //             itemBuilder: (context, index) {
+
+  // String recent;
+  // FirebaseFirestore.instance
+  //         .collection('groups')
+  //         .doc(snapshot.data['groups'][index])
+  //         .get().then((value) => value.data().toString());
+  // int reverseIndex = snapshot.data['groups'].length - index - 1;
+  //   return GroupTile(
+  //       userName: FirebaseAuth.instance.currentUser!.displayName
+  //           .toString(),
+  //       groupId: snapshot.data?.docs[index]['groupId'],
+  //       groupName: snapshot.data?.docs[index]['groupName'],
+  //       recentMsg: snapshot.data?.docs[index]['recentMessage']);
+  // },
+  //   )
+  // : Container();
 
   noGroupWidget() {
     return Container(

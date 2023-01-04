@@ -29,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
-        title: Text(
+        title: const Text(
           "검색",
           style: TextStyle(fontSize: 27, color: Colors.white),
         ),
@@ -72,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: primaryColor,
                   ),
