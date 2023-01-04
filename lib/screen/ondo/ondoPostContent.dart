@@ -70,6 +70,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
                             FirebaseAuth.instance.currentUser!.displayName
                                 .toString(),
                             FirebaseAuth.instance.currentUser!.uid.toString(),
+                            post.nickname!,
+                            post.uid!,
                             groupName);
 
                     String groupId = await getGroupId(groupName);
