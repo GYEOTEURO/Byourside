@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -159,7 +160,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                           )));
                               print(
                                   "카테고리: ${_categories.category}, 타입: ${_categories.type}");
-                              if(_categories.category == '자유게시판') _categories.category = '자유'; 
+                              if (_categories.category == '자유게시판')
+                                _categories.category = '자유';
                             },
                             icon: Icon(Icons.navigate_next))
                       ],
