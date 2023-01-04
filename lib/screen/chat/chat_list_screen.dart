@@ -191,6 +191,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     .toString(),
                                 FirebaseAuth.instance.currentUser!.uid
                                     .toString(),
+                                "none",
+                                "none",
                                 groupName)
                             .whenComplete(() => _isLoading = false);
                         Navigator.of(context).pop();

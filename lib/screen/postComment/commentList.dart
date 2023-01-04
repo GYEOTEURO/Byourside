@@ -44,8 +44,7 @@ class _CommentListState extends State<CommentList> {
       var doc = await collection.doc(groupName).get();
       return doc.data()?.values.last;
     } catch (e) {
-      print(e);
-      return "hing..";
+      return "error..";
     }
   }
 
@@ -90,6 +89,8 @@ class _CommentListState extends State<CommentList> {
                                           .toString(),
                                       FirebaseAuth.instance.currentUser!.uid
                                           .toString(),
+                                      comment.nickname!,
+                                      comment.uid!,
                                       groupName);
 
                               String groupId = await getGroupId(groupName);
