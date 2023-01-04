@@ -39,13 +39,10 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
 
   void _onClickType(int index) {
     setState(() {
-      print('클릭 상태: ${typeList[index].selected}, ');
       if (typeList[index].selected) {
-        print('클릭 상태: ${typeList[index].selected}, ');
         typeList[index].selected = false;
         typeList[index].backgroundColor = Colors.white;
         typeList[index].fontColor = Colors.black;
-        print('바꿨어?');
       } else {
         _type = typeList[index].label;
         typeList[index].selected = true;
@@ -67,16 +64,6 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
 
   @override
   Widget build(BuildContext context) {
-    // 이전에 클릭한 정보 가져오기
-    for (int i = 0; i < 2; i++) {
-      if (typeList[i].label == widget.preType) {
-        _type = typeList[i].label;
-        typeList[i].selected = true;
-        typeList[i].backgroundColor = Color(0xFF045558);
-        typeList[i].fontColor = Colors.white;
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
