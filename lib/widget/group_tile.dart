@@ -7,12 +7,14 @@ class GroupTile extends StatefulWidget {
   final String userName;
   final String groupId;
   final String groupName;
+  final String recentMsg;
 
   const GroupTile(
       {Key? key,
       required this.userName,
       required this.groupId,
-      required this.groupName})
+      required this.groupName,
+      required this.recentMsg})
       : super(key: key);
 
   @override
@@ -51,8 +53,8 @@ class _GroupTileState extends State<GroupTile> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              "채팅에 ${widget.userName}(으)로 참여하세요.",
-              style: const TextStyle(fontSize: 13),
+              // widget.recentMsg,
+              widget.groupId, style: const TextStyle(fontSize: 13),
             ),
           ),
         ));

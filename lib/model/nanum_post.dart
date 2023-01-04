@@ -14,8 +14,9 @@ class NanumPostModel {
   int? likes;
   List<String>? likesPeople;
   List<String>? scrapPeople;
+  List<String>? keyword;
 
-  NanumPostModel({this.id, this.uid, this.title, this.nickname, this.content, this.price, this.isCompleted, this.datetime, this.images, this.type, this.likes, this.likesPeople, this.scrapPeople});
+  NanumPostModel({this.id, this.uid, this.title, this.nickname, this.content, this.price, this.isCompleted, this.datetime, this.images, this.type, this.likes, this.likesPeople, this.scrapPeople, this.keyword});
 
   NanumPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
@@ -36,7 +37,9 @@ class NanumPostModel {
             ? null : doc.data()!["likesPeople"].cast<String>(),
         // ignore: prefer_null_aware_operators
         scrapPeople = doc.data()!["scrapPeople"] == null
-            ? null : doc.data()!["scrapPeople"].cast<String>();
+            ? null : doc.data()!["scrapPeople"].cast<String>(),
+        keyword = doc.data()!["keyword"] == null
+            ? null : doc.data()!["keyword"].cast<String>();
             
   Map<String, dynamic> toMap() {
     return {
@@ -52,6 +55,7 @@ class NanumPostModel {
       'likes': likes,
       'likesPeople': likesPeople,
       'scrapPeople': scrapPeople,
+      'keyword': keyword,
     };
   }
 }
