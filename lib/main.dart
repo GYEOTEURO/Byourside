@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         FirebasePhoneAuthProvider(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
+            theme: ThemeData(fontFamily: 'NanumGothic'),
             title: '곁',
             initialRoute: "/login",
             routes: {

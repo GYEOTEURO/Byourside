@@ -98,7 +98,11 @@ class _OndoPostPageState extends State<OndoPostPage> {
       // 상단 앱 바
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
