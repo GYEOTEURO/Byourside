@@ -52,19 +52,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
         unselectedItemColor: Color.fromARGB(255, 0, 0, 0),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups_rounded),
+            icon: Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
             label: '마음온도',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.volunteer_activism),
+            icon: Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
             label: '마음나눔',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
+            icon: Icon(Icons.chat, semanticLabel: "채팅"),
             label: '채팅',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.account_circle, semanticLabel: "마이페이지"),
             label: '마이페이지',
           ),
         ],

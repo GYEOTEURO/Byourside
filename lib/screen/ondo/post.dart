@@ -1,4 +1,3 @@
-import 'package:byourside/screen/ondo/appbar.dart';
 import 'package:byourside/screen/postComment/commentList.dart';
 import 'package:byourside/screen/ondo/ondoPostContent.dart';
 import 'package:byourside/screen/postComment/createComment.dart';
@@ -34,19 +33,28 @@ class _OndoPostState extends State<OndoPost> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            OndoPostContent(
-                collectionName: collectionName,
-                documentID: documentID,
-                primaryColor: primaryColor),
-            CreateComment(
-                collectionName: collectionName,
-                documentID: documentID,
-                primaryColor: primaryColor),
-            CommentList(
-                collectionName: collectionName,
-                documentID: documentID,
-                primaryColor: primaryColor),
-          ]),
+                  Container(
+                    margin: EdgeInsets.all(7), 
+                    padding: EdgeInsets.fromLTRB(8, 5, 8, 0),
+                    child: OndoPostContent(
+                              collectionName: collectionName,
+                              documentID: documentID,
+                              primaryColor: primaryColor)),
+                  Container(
+                    margin: EdgeInsets.all(7), 
+                    padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: CreateComment(
+                              collectionName: collectionName,
+                              documentID: documentID,
+                              primaryColor: primaryColor)),
+                  Container(
+                    margin: EdgeInsets.all(7), 
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                    child: CommentList(
+                              collectionName: collectionName,
+                              documentID: documentID,
+                              primaryColor: primaryColor),
+        )]),
         ));
   }
 }

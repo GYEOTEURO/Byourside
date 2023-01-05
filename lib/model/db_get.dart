@@ -14,6 +14,17 @@ class DBGet {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
+  
+  // Firestore의 마음나눔 collection에 있는 거래중인 데이터 불러오기 (거래 완료 제외)
+  static Stream<List<PostListModel>> readIsCompletedCollection({required String collection, List<String>? type}) =>
+        FirebaseFirestore.instance
+        .collection(collection)
+        .where("type", whereIn: type)
+        .where("isCompleted", isEqualTo: false)
+        .orderBy('datetime', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+        .toList());
 
    // 검색을 위한 쿼리 비교
   static Stream<List<PostListModel>> readSearchDocs(query, {required String collection}) =>
