@@ -3,6 +3,7 @@ import 'package:byourside/screen/ondo/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
+import 'package:flutter/services.dart';
 import '../../model/db_get.dart';
 
 class MyOndoPost extends StatefulWidget {
@@ -31,6 +32,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                 child: InkWell(
                   //Read Document
                   onTap: () {
+                    HapticFeedback.lightImpact();// 약한 진동
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -42,32 +44,44 @@ class _MyOndoPostState extends State<MyOndoPost> {
                               )));
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(2),
+                    margin: EdgeInsets.fromLTRB(12, 10, 8, 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                       children: [
-                                  Column(
+                        Expanded(
+                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,                     
                                     children: [
-                                      Text(
-                                        post.title!,
-                                        style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                      SelectionArea(
+                                        child: Text(
+                                          post.title!,
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                      ))),
+                                      SelectionArea(
+                                        child: Text(
+                                          '$date / ${post.category!} / ${post.type}',
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(color: Colors.black),
                                       )),
-                                      Text(
-                                        '$date / ${post.category!}',
-                                        style: const TextStyle(color: Colors.black54),
-                                      ),
                                     ],
-                                  ),
+                                  )),
                                   if(post.images!.isNotEmpty)(
-                                    Image.network(
-                                      post.images![0],
-                                      width: 100,
-                                      height: 70,
-                                    )
+                                    Semantics(
+                                      label: '사용자가 올린 사진',
+                                      child: Image.network(
+                                        post.images![0],
+                                        width: 100,
+                                        height: 70,
+                                    ))
                                   ),
                                 ],
                             ),
@@ -94,7 +108,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                   return _buildListItem(widget.collectionName, post);
                 });
               }
-              else return const Text('Loading...');
+              else return const Text('게시글 목록을 가져오는 중...');
       }),
     );
   }

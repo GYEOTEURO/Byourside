@@ -1,9 +1,11 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/infoDetailCategory.dart';
+import 'package:byourside/screen/ondo/info_test.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/search_page.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 // import 'package:flutter/src/widgets/basic.dart' as C;
 
@@ -54,9 +56,10 @@ class _CategoryPageState extends State<CategoryPage>
         leading: IconButton(
           icon: Icon(
             Icons.filter_alt,
-            semanticLabel: "필터링",
+            semanticLabel: "장애 유형 필터링",
           ),
           onPressed: () async {
+            HapticFeedback.lightImpact();// 약한 진동
             _type = await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -77,6 +80,7 @@ class _CategoryPageState extends State<CategoryPage>
               semanticLabel: "검색",
             ),
             onPressed: () {
+              HapticFeedback.lightImpact();// 약한 진동
               showSearch(context: context, delegate: Search('ondoPost'));
             },
           ),
@@ -94,9 +98,12 @@ class _CategoryPageState extends State<CategoryPage>
         children: categoryTabs.map((Tab tab) {
           String label = tab.text!;
           if (label == '정보') {
-            return infoDetailCategoryPage(
-                primaryColor: Color(0xFF045558), collectionName: "ondoPost");
-          }
+            return Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              child: 
+              infoDetailCategoryPage(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
+              //infoTest(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
+          );}
           return OndoPostList(
               primaryColor: Color(0xFF045558),
               collectionName: "ondoPost",

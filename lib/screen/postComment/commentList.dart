@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import '../../model/comment.dart';
 import '../../model/db_get.dart';
 import '../../model/db_set.dart';
@@ -57,23 +58,27 @@ class _CommentListState extends State<CommentList> {
         elevation: 2,
         child: InkWell(
             child: Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(2),
+                margin: EdgeInsets.fromLTRB(4, 10, 10, 0),
                 child: Column(children: [
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                          child: Text(comment.content!,
+                          child: SelectionArea(
+                            child: Text(
+                              "  ${comment.content!}",
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
-                              )))),
+                              ))))),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                             child: TextButton(
                           onPressed: () async {
+                            HapticFeedback.lightImpact();// 약한 진동
                             var groupName =
                                 "${user?.displayName}_${comment.nickname}";
                             var groupNameReverse =
@@ -133,25 +138,29 @@ class _CommentListState extends State<CommentList> {
                               });
                             }
                           },
-                          child: Text(
-                            "${comment.nickname} / $date",
-                            style: const TextStyle(color: primaryColor),
-                          ),
+                          child: SelectionArea(
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${comment.nickname} / $date",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                          ))),
                         )),
                         if (user?.uid == comment.uid)
                           RichText(
                               text: TextSpan(
-                            children: [
-                              TextSpan(
                                   text: "삭제",
                                   style: const TextStyle(color: Colors.black),
                                   recognizer: TapGestureRecognizer()
                                     ..onTapDown = (details) {
+                                      HapticFeedback.lightImpact();// 약한 진동
                                       DBSet.deleteComment(collectionName!,
                                           documentID!, comment.id!);
                                     })
-                            ],
-                          ))
+                          )
                       ]),
                 ]))));
   }

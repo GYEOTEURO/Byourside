@@ -1,3 +1,7 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/chat/search_page.dart';
@@ -38,11 +42,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
   Future<String> getRecentMsg(String docId) async {
     String recent = " ";
 
-    return await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('groups')
         .doc(docId)
         .get()
-        .then((value) => value.data().toString());
+        .then((value) => recent = value.data()!['recentMessage']);
+    return recent;
   }
 
   // String manipulation
@@ -225,15 +230,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
           if (snapshot.hasData) {
             if (snapshot.data['groups'] != null) {
               if (snapshot.data['groups'].length != 0) {
-                return ListView.builder(
+                return ListView.builder (
                   itemCount: snapshot.data['groups'].length,
                   itemBuilder: (context, index) {
-                    return GroupTile(
+                     return GroupTile(
                         userName: snapshot.data['nickname'],
                         groupId: getId(snapshot.data['groups'][index]),
                         groupName: getName(snapshot.data['groups'][index]),
                         recentMsg: ""
-                        // getRecentMsg(snapshot.data['groups'][index])
+                        //recentMsg: getRecentMsg(snapshot.data['groups'][index])
+                        
                         );
                   },
                 );

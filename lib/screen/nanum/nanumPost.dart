@@ -30,12 +30,30 @@ class _NanumPostState extends State<NanumPost> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  NanumPostContent(collectionName: collectionName, documentID: documentID, primaryColor: primaryColor),
-                  CreateComment(collectionName: collectionName, documentID: documentID, primaryColor: primaryColor),
-                  CommentList(collectionName: collectionName, documentID: documentID, primaryColor: primaryColor),
-              ]),  
-      ));
+            child: Column(
+                  children: [
+                    Container(
+                    margin: EdgeInsets.all(7), 
+                    padding: EdgeInsets.fromLTRB(8, 5, 8, 0),
+                    child: NanumPostContent(
+                              collectionName: collectionName,
+                              documentID: documentID,
+                              primaryColor: primaryColor)),
+                  Container(
+                    margin: EdgeInsets.all(7), 
+                    padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: CreateComment(
+                              collectionName: collectionName,
+                              documentID: documentID,
+                              primaryColor: primaryColor)),
+                  Container(
+                    margin: EdgeInsets.all(7), 
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                    child: CommentList(
+                              collectionName: collectionName,
+                              documentID: documentID,
+                              primaryColor: primaryColor),
+        )]),
+        ));
   }
 }

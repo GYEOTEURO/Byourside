@@ -4,6 +4,7 @@ import 'package:byourside/screen/nanum/nanumPost.dart';
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/nanum/search_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../model/db_get.dart';
 import 'type_controller.dart';
@@ -20,6 +21,14 @@ class NanumPostList extends StatefulWidget {
 }
 
 class _NanumPostListState extends State<NanumPostList> { 
+  bool completedValue = false; //true: 거래완료 제외, false: 거래완료 포함
+
+  void changeCompletedValue(bool value){
+    setState(() {              
+      completedValue = !value;
+    });
+  }
+
   Widget _buildListItem(PostListModel? post){
     
     String date = post!.datetime!.toDate().toString().split(' ')[0];
@@ -33,6 +42,7 @@ class _NanumPostListState extends State<NanumPostList> {
                 child: InkWell(
                   //Read Document
                   onTap: () {
+                    HapticFeedback.lightImpact();// 약한 진동
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -43,32 +53,46 @@ class _NanumPostListState extends State<NanumPostList> {
                               )));
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(2),
+                    margin: EdgeInsets.fromLTRB(12, 10, 8, 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                       children: [
-                                  Column(
+                          Expanded(
+                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,                     
                                     children: [
-                                      Text(
-                                        post.title!,
-                                        style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                      SelectionArea(
+                                        child: Text(
+                                          post.title!,
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                      ))),
+                                      SelectionArea(
+                                        child: Text(
+                                          '${post.nickname!} / $date / ${post.type} / $isCompleted',
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14),
                                       )),
-                                      Text(
-                                        '${post.nickname!} / $date / ${post.type} / $isCompleted',
-                                        style: const TextStyle(color: Colors.black54),
-                                      ),
                                     ],
-                                  ),
+                                  )),
                                   if(post.images!.isNotEmpty)(
-                                    Image.network(
-                                      post.images![0],
-                                      width: 100,
-                                      height: 70,
-                                    )
+                                    Semantics(
+                                      label: '사용자가 올린 사진',
+                                      child: Image.network(
+                                        post.images![0],
+                                        width: 100,
+                                        height: 100,
+                                    ))
                                   ),
                                 ],
                             ),
@@ -86,8 +110,12 @@ class _NanumPostListState extends State<NanumPostList> {
         backgroundColor: widget.primaryColor,
         centerTitle: true,
         title: Text("마음나눔"),
-        leading: IconButton(icon: Icon(Icons.filter_alt, color: Colors.white), 
+        leading: IconButton(
+          icon: Icon(Icons.filter_alt,
+          semanticLabel: "장애 유형 필터링", 
+          color: Colors.white), 
             onPressed: () async {
+                        HapticFeedback.lightImpact();// 약한 진동
                         _type = await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -97,13 +125,57 @@ class _NanumPostListState extends State<NanumPostList> {
                         print("타입: ${_type}");
                         controller.filtering(_type);
                         setState(() {});
-                      },),
+                      }),
         actions: [
-          IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:() { showSearch(context: context, delegate: Search('nanumPost')); }),
+            IconButton(
+            icon: Icon(
+              Icons.search,
+              semanticLabel: "검색",
+            ),
+            onPressed: () {
+              HapticFeedback.lightImpact();// 약한 진동
+              showSearch(context: context, delegate: Search('nanumPost'));
+            },
+          ),
         ],
-      ),
+        bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(48),
+        child: Container(
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: Row(
+            children: [
+              (completedValue == true) ?
+                (IconButton(
+                  icon: Icon(Icons.check_box_outlined, 
+                  semanticLabel: "거래 완료 포함",
+                  color: Colors.white), 
+                  onPressed:() { 
+                    HapticFeedback.lightImpact();// 약한 진동
+                    changeCompletedValue(completedValue);
+                })
+                ) : 
+                (IconButton(
+                  icon: Icon(Icons.square_rounded, 
+                  semanticLabel: "거래 완료 제외",
+                  color: Colors.white), 
+                  onPressed:() { 
+                    HapticFeedback.lightImpact();// 약한 진동
+                    changeCompletedValue(completedValue);
+                  })
+                ),
+              Center(
+                child: Text(
+                  "거래완료 제외",
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+              )),
+            ],
+      )))),
       body: StreamBuilder<List<PostListModel>>(
-      stream: DBGet.readAllCollection(collection: widget.collectionName, type: controller.type),
+      stream: (completedValue == true) ? 
+              DBGet.readIsCompletedCollection(collection: widget.collectionName, type: controller.type) 
+              : DBGet.readAllCollection(collection: widget.collectionName, type: controller.type),
       builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
               if(snapshot.hasData) {
                 return ListView.builder(
@@ -114,11 +186,12 @@ class _NanumPostListState extends State<NanumPostList> {
                   return _buildListItem(post);
                 });
               }
-              else return const Text('Loading...');
+              else return const Text('게시물 목록을 가져오는 중...');
       }),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          HapticFeedback.lightImpact();// 약한 진동
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -129,7 +202,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       )));
         },
         backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, semanticLabel: "글쓰기"),
       ),
     );
   }

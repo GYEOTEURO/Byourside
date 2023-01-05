@@ -4,18 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class infoDetailCategoryPage extends StatefulWidget {
-  const infoDetailCategoryPage({Key? key, required this.primaryColor, required this.collectionName}) : super(key: key);
+class infoTest extends StatefulWidget {
+  const infoTest({Key? key, required this.primaryColor, required this.collectionName}) : super(key: key);
 
   final Color primaryColor;
   final String collectionName;
   //final String? type;
 
   @override
-  State<infoDetailCategoryPage> createState() => _infoDetailCategoryPageState();
+  State<infoTest> createState() => _infoTest();
 }
 
-class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
+class _infoTest extends State<infoTest>{
   
   // 드롭다운 리스트.
   static const List<String> _dropdownList = ["전체 정보", "복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"];
@@ -26,7 +26,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
   // 드롭박스.
   OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
-  static const double _dropdownWidth = 400;
+  static const double _dropdownWidth = 340;
   static const double _dropdownHeight = 45;
 
   // 드롭다운 생성.
@@ -63,7 +63,8 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
       child: Scaffold(
         body: Column(
                 children: [
-                  Align(
+                  Row(children: [
+                    Align(
                     alignment: Alignment.topCenter,
                     child: InkWell(
                       onTap: () {
@@ -107,6 +108,9 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
                       ),
                     ),
                   ),
+                  ElevatedButton(onPressed: null, child: Text('이동'))
+                  ],),
+                  
                   if(_dropdownValue == '교육/세미나' || _dropdownValue == '복지/혜택')(
                     Expanded(
                       child: EduViewPage(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _dropdownValue)
