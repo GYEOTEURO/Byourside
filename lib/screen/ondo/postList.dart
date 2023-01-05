@@ -36,7 +36,7 @@ class _OndoPostListState extends State<OndoPostList> {
             child: InkWell(
                 //Read Document
                 onTap: () {
-                  HapticFeedback.lightImpact();// 약한 진동
+                  HapticFeedback.lightImpact(); // 약한 진동
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -54,42 +54,40 @@ class _OndoPostListState extends State<OndoPostList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SelectionArea(
-                                child: Text(
-                                    post.title!,
-                                    overflow: TextOverflow.fade,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold,
-                              )
-                              )),
-                              SelectionArea(
-                                child: Text(
-                                  '${post.nickname!} / $date / ${post.type}',
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SelectionArea(
+                              child: Text(post.title!,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
                                   softWrap: false,
                                   style: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 15,
-                                  ),
-                              )),
-                            ],
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold,
+                                  ))),
+                          SelectionArea(
+                              child: Text(
+                            '${post.nickname!} / $date / ${post.type}',
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
                           )),
+                        ],
+                      )),
                       if (post.images!.isNotEmpty)
                         Semantics(
-                          label: '사용자가 올린 사진',
-                          child: Image.network(
-                          post.images![0],
-                          width: 100,
-                          height: 100,
-                        )),
+                            label: '사용자가 올린 사진',
+                            child: Image.network(
+                              post.images![0],
+                              width: 100,
+                              height: 100,
+                            )),
                     ],
                   ),
                 ))));
@@ -127,7 +125,7 @@ class _OndoPostListState extends State<OndoPostList> {
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          HapticFeedback.lightImpact();// 약한 진동
+          HapticFeedback.lightImpact(); // 약한 진동
           Navigator.push(
               context,
               MaterialPageRoute(

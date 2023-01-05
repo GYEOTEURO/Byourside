@@ -72,7 +72,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
                       maxLines: 8,
                       decoration: InputDecoration(
                         labelText: '문의할 사항을 남겨주세요',
-                        hintText: 'Enter messages',
+                        hintText: '문의할 사항을 남겨주세요',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1),
