@@ -93,6 +93,8 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     if (isPhoneVerified) {
       return SetupUser();
     } else {
@@ -100,6 +102,8 @@ class _OTPScreenState extends State<OTPScreen> {
       return Scaffold(
         key: _formKey,
         appBar: AppBar(
+          centerTitle: true,
+          titleTextStyle: TextStyle(fontSize: height * 0.04),
           title: Text('OTP 인증'),
           backgroundColor: primaryColor,
         ),
@@ -196,34 +200,39 @@ class _OTPScreenState extends State<OTPScreen> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            content: Text("$e"), //"인증번호가 일치하지 않습니다.\n재시도하세요."),
+                            content: Text("재시도하세요. 오류: $e",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        17)), //"인증번호가 일치하지 않습니다.\n재시도하세요."),
                           );
                         });
                   }
                 }
               },
-              child: Text("다음"),
+              child: Text("다음", style: TextStyle(fontSize: 17)),
             ),
             canResnedPhone
                 ? ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: Size.fromHeight(50),
+                        minimumSize: Size.fromHeight(height * 0.06),
                         backgroundColor: primaryColor),
                     icon: Icon(
                       Icons.phone,
-                      size: 32,
+                      size: height * 0.02,
                       color: Colors.white,
+                      semanticLabel: "전화",
                     ),
                     label: Text(
                       '인증번호 재전송',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       verifyPhone();
                     },
                   )
                 : SizedBox(
-                    height: 16,
+                    height: height * 0.01,
                   ),
           ],
         ),
@@ -263,7 +272,8 @@ class _OTPScreenState extends State<OTPScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    content: Text('인증 가능한 기간이 지났습니다. 재시도하세요.'),
+                    content: Text('인증 가능한 기간이 지났습니다. 재시도하세요.',
+                        style: TextStyle(color: Colors.black, fontSize: 17)),
                   );
                 });
           }

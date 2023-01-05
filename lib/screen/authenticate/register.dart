@@ -4,6 +4,7 @@ import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // change to 개인정보처리방침
@@ -36,6 +37,8 @@ class _Register extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     final loginPhoneButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -44,6 +47,7 @@ class _Register extends State<Register> {
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
+          HapticFeedback.lightImpact(); // 약한 진동
           // const VerifyPhone();
           Navigator.push(
             context,
@@ -52,7 +56,8 @@ class _Register extends State<Register> {
         },
         child: Text(
           "휴대폰 인증",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
+          style: TextStyle(
+              color: Theme.of(context).primaryColorLight, fontSize: 17),
           textAlign: TextAlign.center,
         ),
       ),
@@ -72,9 +77,9 @@ class _Register extends State<Register> {
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "(예: abcd@google.com)",
-            labelText: "이메일을 입력하세요. (형식: \".com\"으로 끝나는 메일만 가능합니다)",
-            hintStyle: TextStyle(color: Colors.grey),
-            labelStyle: TextStyle(color: primaryColor),
+            labelText: "이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)",
+            hintStyle: TextStyle(color: Colors.grey, fontSize: 20),
+            labelStyle: TextStyle(color: primaryColor, fontSize: 20),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
@@ -95,13 +100,16 @@ class _Register extends State<Register> {
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "(예: 12345678)",
-            labelText: "비밀번호를 입력하세요. (형식: 8자리 이상이어야 합니다)",
-            hintStyle: TextStyle(color: Colors.grey),
-            labelStyle: TextStyle(color: primaryColor),
+            labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
+            hintStyle: TextStyle(color: Colors.grey, fontSize: 20),
+            labelStyle: TextStyle(color: primaryColor, fontSize: 20),
             suffixIcon: IconButton(
-              icon:
-                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              icon: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                semanticLabel: "비밀번호 보기",
+              ),
               onPressed: () {
+                HapticFeedback.lightImpact(); // 약한 진동
                 setState(() {
                   _obscureText = !_obscureText;
                 });
@@ -112,17 +120,22 @@ class _Register extends State<Register> {
 
     final txtButton = TextButton(
         onPressed: () {
+          HapticFeedback.lightImpact(); // 약한 진동
           FirebaseAuth.instance.currentUser?.delete();
           widget.toggleView!();
         },
-        child:
-            const Text('로그인 페이지로 돌아가기', style: TextStyle(color: primaryColor)));
+        child: const Text('로그인 페이지로 돌아가기',
+            style: TextStyle(color: primaryColor, fontSize: 17)));
 
     final linkButton = ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
-        onPressed: _launchUrl,
-        child: Text('개인정보처리방침'));
+        onPressed: () {
+          HapticFeedback.lightImpact(); // 약한 진동
+          _launchUrl;
+        },
+        child: Text('개인정보처리방침',
+            style: TextStyle(color: Colors.white, fontSize: 17)));
 
     final registerButton = Material(
       elevation: 5.0,
@@ -132,6 +145,7 @@ class _Register extends State<Register> {
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
+          HapticFeedback.lightImpact(); // 약한 진동
           if (_formKey.currentState!.validate()) {
             dynamic result = await _auth.registerEmailPassword(LoginUser(
               email: _email.text,
@@ -144,7 +158,9 @@ class _Register extends State<Register> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: Text(result.code),
+                        content: Text(result.code,
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 17)),
                       );
                     });
               } else {
@@ -155,7 +171,8 @@ class _Register extends State<Register> {
                   context: context,
                   builder: (context) {
                     return const AlertDialog(
-                      content: Text("재시도 하세요."),
+                      content: Text("재시도 하세요.",
+                          style: TextStyle(color: Colors.black, fontSize: 17)),
                     );
                   });
             }
@@ -163,7 +180,8 @@ class _Register extends State<Register> {
         },
         child: Text(
           "동의하고 회원가입",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
+          style: TextStyle(
+              color: Theme.of(context).primaryColorLight, fontSize: 17),
           textAlign: TextAlign.center,
         ),
       ),
@@ -172,7 +190,9 @@ class _Register extends State<Register> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('회원가입'),
+        titleTextStyle: TextStyle(fontSize: height * 0.04),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
@@ -182,21 +202,22 @@ class _Register extends State<Register> {
             autovalidateMode: AutovalidateMode.always,
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 45.0),
+                  SizedBox(height: height * 0.03),
                   emailField,
-                  const SizedBox(height: 25.0),
+                  SizedBox(height: height * 0.04),
                   passwordField,
-                  const SizedBox(height: 25.0),
+                  SizedBox(height: height * 0.01),
                   txtButton,
+                  SizedBox(height: height * 0.003),
                   linkButton,
-                  const SizedBox(height: 35.0),
+                  SizedBox(height: height * 0.03),
                   registerButton,
-                  const SizedBox(height: 15.0),
+                  SizedBox(height: height * 0.02),
                   (_isRegister == false) ? SizedBox() : loginPhoneButton,
                 ],
               ),

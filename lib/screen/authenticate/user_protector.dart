@@ -70,7 +70,7 @@ class _protectorState extends State<protector> {
       child: TextFormField(
     decoration: const InputDecoration(
       labelText: "닉네임을 입력하세요",
-      hintText: "닉네임을 입력하세요 (예: 홍길동) ",
+      hintText: "(예: 홍길동) ",
       hintStyle: TextStyle(color: Colors.grey),
       labelStyle: TextStyle(color: primaryColor),
     ),
@@ -137,7 +137,7 @@ class _protectorState extends State<protector> {
             Form(
               key: _formKey_protector,
               child: Padding(
-                  padding: const EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -146,9 +146,11 @@ class _protectorState extends State<protector> {
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: "보호자 나이",
-                            hintText: "숫자를 입력하세요. (예: 33)",
-                            hintStyle: TextStyle(color: Colors.grey),
-                            labelStyle: TextStyle(color: primaryColor),
+                            hintText: "(예: 33)",
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 17),
+                            labelStyle:
+                                TextStyle(color: primaryColor, fontSize: 17),
                           ),
                           controller: _protectorAge,
                           validator: (value) {
@@ -158,7 +160,7 @@ class _protectorState extends State<protector> {
                                   isNumeric(value)) {
                                 return null;
                               }
-                              return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다. (예: 33)';
+                              return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다.';
                             }
                           },
                         ),
@@ -166,9 +168,11 @@ class _protectorState extends State<protector> {
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: "자녀 나이",
-                            hintText: "숫자를 입력하세요. (예: 7)",
-                            hintStyle: TextStyle(color: Colors.grey),
-                            labelStyle: TextStyle(color: primaryColor),
+                            hintText: "(예: 7)",
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 17),
+                            labelStyle:
+                                TextStyle(color: primaryColor, fontSize: 17),
                           ),
                           controller: _childAge,
                           validator: (value) {
@@ -178,7 +182,7 @@ class _protectorState extends State<protector> {
                                   isNumeric(value)) {
                                 return null;
                               }
-                              return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다. (예: 7)';
+                              return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다.';
                             }
                           },
                         ),
@@ -186,9 +190,11 @@ class _protectorState extends State<protector> {
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: "소속 복지관/학교",
-                            hintText: "소속을 입력하세요. (예: 서울뇌성마비복지관)",
-                            hintStyle: TextStyle(color: Colors.grey),
-                            labelStyle: TextStyle(color: primaryColor),
+                            hintText: "(예: 서울뇌성마비복지관)",
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 17),
+                            labelStyle:
+                                TextStyle(color: primaryColor, fontSize: 17),
                           ),
                           controller: _belong,
                           validator: (value) {

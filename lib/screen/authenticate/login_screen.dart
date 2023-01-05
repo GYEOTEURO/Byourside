@@ -53,30 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
           textTheme: const TextTheme(
             headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
             headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+            bodyText2: TextStyle(fontSize: 17.0, fontFamily: 'Hind'),
           ),
         ),
         home: Wrapper(),
       ),
     );
   }
-
-//     Scaffold(
-//     body: Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: ListView(
-//         children: [
-//           // SizedBox(height: xlarge_gap),
-//           Logo("Login"),
-//           SizedBox(height: large_gap), // 1. 추가
-//           CustomForm(), // 2. 추가
-//           //SocialButtonForm("kakao"),
-//           googleLogin(),
-//           // kakaoLogin(),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
 }

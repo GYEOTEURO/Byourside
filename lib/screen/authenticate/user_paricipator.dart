@@ -4,6 +4,7 @@ import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
 
@@ -35,7 +36,8 @@ class _participatorState extends State<participator> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'),
+                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    style: TextStyle(color: Colors.black, fontSize: 17)),
               );
             });
       }
@@ -44,7 +46,8 @@ class _participatorState extends State<participator> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text('사용가능한 닉네임입니다.'),
+              content: Text('사용가능한 닉네임입니다.',
+                  style: TextStyle(color: Colors.black, fontSize: 17)),
             );
           });
     }
@@ -55,9 +58,9 @@ class _participatorState extends State<participator> {
       child: TextFormField(
     decoration: const InputDecoration(
       labelText: "닉네임을 입력하세요",
-      hintText: "닉네임을 입력하세요 (예: 홍길동) ",
-      hintStyle: TextStyle(color: Colors.grey),
-      labelStyle: TextStyle(color: primaryColor),
+      hintText: "(예: 홍길동) ",
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
     ),
     controller: _nickname,
     validator: (value) {
@@ -97,30 +100,35 @@ class _participatorState extends State<participator> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("관계자 정보 입력 페이지"),
+          title: Text("세부 정보 입력"),
+          titleTextStyle: TextStyle(fontSize: height * 0.04),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Column(children: [
           Form(
             key: _formKey_participator,
             child: Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: height * 0.02),
                       nicknameField,
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: height * 0.02),
                       TextFormField(
                         decoration: const InputDecoration(
                           labelText: "개인/단체 이름",
-                          hintText: "개인/단체 이름을 입력하세요. (예: 00복지관)",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          labelStyle: TextStyle(color: primaryColor),
+                          hintText: "(예: 00복지관)",
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 17),
+                          labelStyle:
+                              TextStyle(color: primaryColor, fontSize: 17),
                         ),
                         controller: _organizationName,
                         validator: (value) {
@@ -133,12 +141,13 @@ class _participatorState extends State<participator> {
                           }
                         },
                       ),
-                      const SizedBox(height: 25.0),
+                      SizedBox(height: height * 0.02),
                       DropdownButton(
                         value: _dropdownValue,
                         items: purposeType
                             .map((String item) => DropdownMenuItem<String>(
-                                  child: Text('$item'),
+                                  child: Text('$item',
+                                      style: TextStyle(fontSize: 20)),
                                   value: item,
                                 ))
                             .toList(),
@@ -148,12 +157,13 @@ class _participatorState extends State<participator> {
                           });
                         },
                         elevation: 8,
-                      )
+                      ),
                     ])),
           )
         ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            HapticFeedback.lightImpact(); // 약한 진동
             if (_formKey_participator.currentState!.validate()) {
               doesDocExist = await checkDocExist(_nickname.text);
               if (doesDocExist == false) {
@@ -165,7 +175,7 @@ class _participatorState extends State<participator> {
             }
           },
           backgroundColor: primaryColor,
-          child: const Text("완료"),
+          child: const Text("완료", style: TextStyle(fontSize: 17)),
         ));
   }
 }

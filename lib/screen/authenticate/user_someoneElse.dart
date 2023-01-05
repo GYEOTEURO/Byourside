@@ -4,6 +4,7 @@ import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 GlobalKey<FormState> _formKey_someoneELse = GlobalKey<FormState>();
 
@@ -32,7 +33,8 @@ class _someoneElseState extends State<someoneElse> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'),
+                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    style: TextStyle(color: Colors.black, fontSize: 17)),
               );
             });
       }
@@ -41,7 +43,8 @@ class _someoneElseState extends State<someoneElse> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text('사용가능한 닉네임입니다.'),
+              content: Text('사용가능한 닉네임입니다.',
+                  style: TextStyle(color: Colors.black, fontSize: 17)),
             );
           });
     }
@@ -52,9 +55,9 @@ class _someoneElseState extends State<someoneElse> {
       child: TextFormField(
     decoration: const InputDecoration(
       labelText: "방문 목적",
-      hintText: "방문 목적을 입력하세요. (예: 자녀 장애 초기증상 판별)",
-      hintStyle: TextStyle(color: Colors.grey),
-      labelStyle: TextStyle(color: primaryColor),
+      hintText: "(예: 자녀 장애 초기증상 판별)",
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
     ),
     controller: _purpose,
     validator: (value) {
@@ -71,9 +74,9 @@ class _someoneElseState extends State<someoneElse> {
       child: TextFormField(
     decoration: const InputDecoration(
       labelText: "닉네임을 입력하세요",
-      hintText: "닉네임을 입력하세요 (예: 홍길동) ",
-      hintStyle: TextStyle(color: Colors.grey),
-      labelStyle: TextStyle(color: primaryColor),
+      hintText: "(예: 홍길동) ",
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
     ),
     controller: _nickname,
     validator: (value) {
@@ -99,7 +102,6 @@ class _someoneElseState extends State<someoneElse> {
         .doc('$nickname')
         .set({'current': true});
     await user?.updateDisplayName(nickname);
-    print(user);
     if (user != null) {
       FirebaseUser(uid: user?.uid, displayName: nickname);
     }
@@ -112,30 +114,34 @@ class _someoneElseState extends State<someoneElse> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("그외 정보 입력 페이지"),
+          title: Text("세부 정보 입력"),
+          titleTextStyle: TextStyle(fontSize: height * 0.04),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Column(children: [
           Form(
             key: _formKey_someoneELse,
             child: Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: height * 0.03),
                       nicknameField,
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: height * 0.03),
                       someoneElseField
                     ])),
           )
         ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            HapticFeedback.lightImpact(); // 약한 진동
             if (_formKey_someoneELse.currentState!.validate() &&
                 _purpose.text != null &&
                 _purpose.text != '') {
@@ -148,7 +154,10 @@ class _someoneElseState extends State<someoneElse> {
             }
           },
           backgroundColor: primaryColor,
-          child: const Text("완료"),
+          child: const Text(
+            "완료",
+            style: TextStyle(fontSize: 17),
+          ),
         ));
   }
 }

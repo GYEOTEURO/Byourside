@@ -9,6 +9,7 @@ import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);
@@ -25,19 +26,26 @@ class _SetupUserState extends State<SetupUser> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-        appBar: AppBar(backgroundColor: primaryColor),
+        appBar: AppBar(
+            centerTitle: true,
+            elevation: 0,
+            title: Text("유형 선택"),
+            titleTextStyle: TextStyle(fontSize: height * 0.04),
+            backgroundColor: primaryColor),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const SizedBox(height: 25.0),
+                      SizedBox(height: height * 0.04),
                       Material(
                           elevation: 5.0,
                           borderRadius: BorderRadius.circular(30.0),
@@ -47,6 +55,7 @@ class _SetupUserState extends State<SetupUser> {
                             padding: const EdgeInsets.fromLTRB(
                                 20.0, 15.0, 20.0, 15.0),
                             onPressed: () {
+                              HapticFeedback.lightImpact(); // 약한 진동
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) => protector()),
@@ -55,11 +64,12 @@ class _SetupUserState extends State<SetupUser> {
                             child: Text(
                               '장애 아동 보호자',
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight),
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontSize: 17),
                               textAlign: TextAlign.center,
                             ),
                           )),
-                      const SizedBox(height: 25.0),
+                      SizedBox(height: height * 0.04),
                       Material(
                           elevation: 5.0,
                           borderRadius: BorderRadius.circular(30.0),
@@ -69,6 +79,7 @@ class _SetupUserState extends State<SetupUser> {
                             padding: const EdgeInsets.fromLTRB(
                                 20.0, 15.0, 20.0, 15.0),
                             onPressed: () {
+                              HapticFeedback.lightImpact(); // 약한 진동
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) => participator()),
@@ -77,11 +88,12 @@ class _SetupUserState extends State<SetupUser> {
                             child: Text(
                               '관계자',
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight),
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontSize: 17),
                               textAlign: TextAlign.center,
                             ),
                           )),
-                      const SizedBox(height: 25.0),
+                      SizedBox(height: height * 0.04),
                       Material(
                           elevation: 5.0,
                           borderRadius: BorderRadius.circular(30.0),
@@ -91,6 +103,7 @@ class _SetupUserState extends State<SetupUser> {
                             padding: const EdgeInsets.fromLTRB(
                                 20.0, 15.0, 20.0, 15.0),
                             onPressed: () {
+                              HapticFeedback.lightImpact(); // 약한 진동
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) => someoneElse()),
@@ -99,7 +112,8 @@ class _SetupUserState extends State<SetupUser> {
                             child: Text(
                               '그외',
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight),
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontSize: 17),
                               textAlign: TextAlign.center,
                             ),
                           )),
