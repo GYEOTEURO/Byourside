@@ -252,7 +252,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                       minLines: 8,
                       maxLines: 10,
                       decoration: const InputDecoration(
-                        labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요",
+                        labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요.\n\n복지/혜택 게시판과 교육/세미나 게시판은\n사진을 첨부하지 않을 시,\n게시글 목록에서 흰색 배경이 보입니다.",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1),
