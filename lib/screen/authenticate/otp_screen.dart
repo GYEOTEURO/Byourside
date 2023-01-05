@@ -63,7 +63,9 @@ class _OTPScreenState extends State<OTPScreen> {
             FirebaseAuth.instance.currentUser!.phoneNumber != null;
       });
     }
-    if (isPhoneVerified) timer?.cancel();
+    if (isPhoneVerified) {
+      timer?.cancel();
+    }
   }
 
   FirebaseUser? _firebaseUser(User? user) {
@@ -143,6 +145,10 @@ class _OTPScreenState extends State<OTPScreen> {
                     // FirebaseUser(code: e.toString(), uid: null);
                   }
                   await FirebaseAuth.instance.currentUser!.reload();
+
+                  if (FirebaseAuth.instance.currentUser?.phoneNumber != null) {
+                    timer?.cancel();
+                  }
                 },
               ),
             ),
@@ -180,13 +186,17 @@ class _OTPScreenState extends State<OTPScreen> {
                         MaterialPageRoute(
                             builder: (context) => const SetupUser()));
                   }
+
+                  if (FirebaseAuth.instance.currentUser?.phoneNumber != null) {
+                    timer?.cancel();
+                  }
                 } catch (e) {
                   if (mounted) {
                     showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            content: Text("인증번호가 일치하지 않습니다.\n재시도하세요."),
+                            content: Text("$e"), //"인증번호가 일치하지 않습니다.\n재시도하세요."),
                           );
                         });
                   }
@@ -202,7 +212,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     icon: Icon(
                       Icons.phone,
                       size: 32,
-                      color: primaryColor,
+                      color: Colors.white,
                     ),
                     label: Text(
                       '인증번호 재전송',
@@ -225,6 +235,9 @@ class _OTPScreenState extends State<OTPScreen> {
     if (await FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
+    if (FirebaseAuth.instance.currentUser?.phoneNumber != null) {
+      timer?.cancel();
+    }
     await _auth.verifyPhoneNumber(
       phoneNumber: '+82${widget.phone}',
       verificationCompleted: _onVerificationCompleted,
@@ -236,23 +249,29 @@ class _OTPScreenState extends State<OTPScreen> {
           _verificationId = verificationID;
           canResnedPhone = false;
         });
-        await Future.delayed(Duration(seconds: 60));
-        setState(() {
-          canResnedPhone = true;
-        });
-      },
-      codeAutoRetrievalTimeout: (String verificationID) {
-        if (mounted) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  content: Text('인증 가능한 기간이 지났습니다. 재시도하세요.'),
-                );
-              });
+        await Future.delayed(Duration(seconds: 120));
+        if (this.mounted) {
+          setState(() {
+            canResnedPhone = true;
+          });
         }
       },
-      timeout: const Duration(seconds: 60),
+      codeAutoRetrievalTimeout: (String verificationID) {
+        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
+          if (mounted) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Text('인증 가능한 기간이 지났습니다. 재시도하세요.'),
+                  );
+                });
+          }
+        } else {
+          timer?.cancel();
+        }
+      },
+      timeout: const Duration(seconds: 120),
     );
   }
 
