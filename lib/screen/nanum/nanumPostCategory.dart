@@ -47,6 +47,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         typeList[i].selected = true;
         typeList[i].backgroundColor = Color(0xFF045558);
         typeList[i].fontColor = Colors.white;
+        _type = typeList[i].label;
       }
     }
     super.initState();
