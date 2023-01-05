@@ -7,9 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
+final List<bool> _selectedType = <bool>[false, false];
 
-List<String> purposeType = ['홍보', '모집'];
-String _dropdownValue = '홍보';
+const List<Widget> gender = <Widget>[
+  Text('홍보', style: TextStyle(fontSize: 17)),
+  Text('모집', style: TextStyle(fontSize: 17))
+];
+// List<String> purposeType = ['홍보', '모집'];
+// String _dropdownValue = '홍보';
 
 final TextEditingController _nickname = TextEditingController();
 final TextEditingController _organizationName = TextEditingController();
@@ -62,6 +67,7 @@ class _participatorState extends State<participator> {
       hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
       labelStyle: TextStyle(color: primaryColor, fontSize: 17),
     ),
+    autofocus: true,
     controller: _nickname,
     validator: (value) {
       if (value != null) {
@@ -74,12 +80,12 @@ class _participatorState extends State<participator> {
   ));
 
   void storeParticipatorInfo(
-      String? nickname, String? protectorAge, String? dropdownValue) async {
+      String? nickname, String? protectorAge, List<bool>? selectedType) async {
     // image url 포함해 firestore에 document 저장
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
       "nickname": nickname,
       "protectorAge": protectorAge,
-      "dropdownValue": dropdownValue,
+      "dropdownValue": selectedType,
       "groups": [],
       "profilePic": "",
     });
@@ -141,22 +147,37 @@ class _participatorState extends State<participator> {
                           }
                         },
                       ),
-                      SizedBox(height: height * 0.02),
-                      DropdownButton(
-                        value: _dropdownValue,
-                        items: purposeType
-                            .map((String item) => DropdownMenuItem<String>(
-                                  child: Text('$item',
-                                      style: TextStyle(fontSize: 20)),
-                                  value: item,
-                                ))
-                            .toList(),
-                        onChanged: (dynamic newValue) {
-                          setState(() {
-                            _dropdownValue = newValue;
-                          });
-                        },
-                        elevation: 8,
+                      SizedBox(height: height * 0.05),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("소속", style: TextStyle(fontSize: 17)),
+                          SizedBox(
+                            width: width * 0.1,
+                          ),
+                          ToggleButtons(
+                            direction: Axis.horizontal,
+                            onPressed: (int index) {
+                              HapticFeedback.lightImpact(); // 약한 진동
+                              setState(() {
+                                _selectedType[index] = true;
+                                _selectedType[(1 - index).abs()] = false;
+                              });
+                            },
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                            selectedBorderColor: primaryColor,
+                            selectedColor: Colors.white,
+                            fillColor: primaryColor,
+                            color: primaryColor,
+                            constraints: BoxConstraints(
+                              minHeight: height * 0.06,
+                              minWidth: width * 0.3,
+                            ),
+                            isSelected: _selectedType,
+                            children: gender,
+                          )
+                        ],
                       ),
                     ])),
           )
@@ -164,11 +185,12 @@ class _participatorState extends State<participator> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
-            if (_formKey_participator.currentState!.validate()) {
+            if (_formKey_participator.currentState!.validate() &&
+                (_selectedType[0] || _selectedType[1])) {
               doesDocExist = await checkDocExist(_nickname.text);
               if (doesDocExist == false) {
                 storeParticipatorInfo(
-                    _nickname.text, _organizationName.text, _dropdownValue);
+                    _nickname.text, _organizationName.text, _selectedType);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => VerifyEmail()));
               }

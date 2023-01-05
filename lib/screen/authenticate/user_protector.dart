@@ -4,6 +4,7 @@ import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 GlobalKey<FormState> _formKey_protector = GlobalKey<FormState>();
 
@@ -17,9 +18,18 @@ final TextEditingController _protectorAge = TextEditingController();
 final TextEditingController _childAge = TextEditingController();
 final TextEditingController _belong = TextEditingController();
 
-const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
-const List<Widget> type = <Widget>[Text('뇌병변 장애'), Text('발달 장애')];
-const List<Widget> degree = <Widget>[Text('심한 장애'), Text('심하지 않은 장애')];
+const List<Widget> gender = <Widget>[
+  Text('남자', style: TextStyle(fontSize: 17)),
+  Text('여자', style: TextStyle(fontSize: 17))
+];
+const List<Widget> type = <Widget>[
+  Text('뇌병변 장애', style: TextStyle(fontSize: 17)),
+  Text('발달 장애', style: TextStyle(fontSize: 17))
+];
+const List<Widget> degree = <Widget>[
+  Text('심한 장애', style: TextStyle(fontSize: 17)),
+  Text('심하지 않은 장애', style: TextStyle(fontSize: 17))
+];
 
 class protector extends StatefulWidget {
   const protector({Key? key}) : super(key: key);
@@ -42,8 +52,9 @@ class _protectorState extends State<protector> {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'),
+              return const AlertDialog(
+                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    style: TextStyle(fontSize: 17)),
               );
             });
       }
@@ -51,8 +62,8 @@ class _protectorState extends State<protector> {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              content: Text('사용가능한 닉네임입니다.'),
+            return const AlertDialog(
+              content: Text('사용가능한 닉네임입니다.', style: TextStyle(fontSize: 17)),
             );
           });
     }
@@ -71,9 +82,10 @@ class _protectorState extends State<protector> {
     decoration: const InputDecoration(
       labelText: "닉네임을 입력하세요",
       hintText: "(예: 홍길동) ",
-      hintStyle: TextStyle(color: Colors.grey),
-      labelStyle: TextStyle(color: primaryColor),
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
     ),
+    autofocus: true,
     controller: _nickname,
     validator: (value) {
       if (value != null) {
@@ -124,11 +136,14 @@ class _protectorState extends State<protector> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("보호자 정보 입력 페이지"),
+          title: Text("세부 정보 입력"),
+          titleTextStyle: TextStyle(fontSize: height * 0.04),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
@@ -142,7 +157,7 @@ class _protectorState extends State<protector> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         nicknameField,
-                        const SizedBox(height: 10.0),
+                        SizedBox(height: height * 0.02),
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: "보호자 나이",
@@ -152,6 +167,7 @@ class _protectorState extends State<protector> {
                             labelStyle:
                                 TextStyle(color: primaryColor, fontSize: 17),
                           ),
+                          keyboardType: TextInputType.number,
                           controller: _protectorAge,
                           validator: (value) {
                             if (value != null) {
@@ -164,7 +180,7 @@ class _protectorState extends State<protector> {
                             }
                           },
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: height * 0.02),
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: "자녀 나이",
@@ -174,6 +190,7 @@ class _protectorState extends State<protector> {
                             labelStyle:
                                 TextStyle(color: primaryColor, fontSize: 17),
                           ),
+                          keyboardType: TextInputType.number,
                           controller: _childAge,
                           validator: (value) {
                             if (value != null) {
@@ -186,7 +203,7 @@ class _protectorState extends State<protector> {
                             }
                           },
                         ),
-                        const SizedBox(height: 10.0),
+                        SizedBox(height: height * 0.02),
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: "소속 복지관/학교",
@@ -207,17 +224,18 @@ class _protectorState extends State<protector> {
                             }
                           },
                         ),
-                        const SizedBox(height: 15.0),
+                        SizedBox(height: height * 0.03),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text("보호자 성별"),
+                            Text("보호자 성별", style: TextStyle(fontSize: 17)),
                             SizedBox(
                               width: 30,
                             ),
                             ToggleButtons(
                               direction: Axis.horizontal,
                               onPressed: (int index) {
+                                HapticFeedback.lightImpact(); // 약한 진동
                                 setState(() {
                                   _selectedProtectorGender[index] = true;
                                   _selectedProtectorGender[(1 - index).abs()] =
@@ -230,26 +248,27 @@ class _protectorState extends State<protector> {
                               selectedColor: Colors.white,
                               fillColor: primaryColor,
                               color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
+                              constraints: BoxConstraints(
+                                minHeight: height * 0.06,
+                                minWidth: width * 0.3,
                               ),
                               isSelected: _selectedProtectorGender,
                               children: gender,
                             )
                           ],
                         ),
-                        const SizedBox(height: 15.0),
+                        SizedBox(height: height * 0.03),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("자녀 성별"),
+                            Text("자녀 성별", style: TextStyle(fontSize: 17)),
                             SizedBox(
                               width: 30,
                             ),
                             ToggleButtons(
                               direction: Axis.horizontal,
                               onPressed: (int index) {
+                                HapticFeedback.lightImpact(); // 약한 진동
                                 setState(() {
                                   _selectedChildGender[index] = true;
                                   _selectedChildGender[(1 - index).abs()] =
@@ -262,26 +281,27 @@ class _protectorState extends State<protector> {
                               selectedColor: Colors.white,
                               fillColor: primaryColor,
                               color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
+                              constraints: BoxConstraints(
+                                minHeight: height * 0.06,
+                                minWidth: width * 0.3,
                               ),
                               isSelected: _selectedChildGender,
                               children: gender,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 15.0),
+                        SizedBox(height: height * 0.03),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("장애 유형"),
+                            Text("장애 유형", style: TextStyle(fontSize: 17)),
                             SizedBox(
                               width: 30,
                             ),
                             ToggleButtons(
                               direction: Axis.horizontal,
                               onPressed: (int index) {
+                                HapticFeedback.lightImpact(); // 약한 진동
                                 setState(() {
                                   _selectedChildType[index] = true;
                                   _selectedChildType[(1 - index).abs()] = false;
@@ -293,26 +313,27 @@ class _protectorState extends State<protector> {
                               selectedColor: Colors.white,
                               fillColor: primaryColor,
                               color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
+                              constraints: BoxConstraints(
+                                minHeight: height * 0.06,
+                                minWidth: width * 0.3,
                               ),
                               isSelected: _selectedChildType,
                               children: type,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 15.0),
+                        SizedBox(height: height * 0.03),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("장애 정도"),
+                            Text("장애 정도", style: TextStyle(fontSize: 17)),
                             SizedBox(
                               width: 30,
                             ),
                             ToggleButtons(
                               direction: Axis.horizontal,
                               onPressed: (int index) {
+                                HapticFeedback.lightImpact(); // 약한 진동
                                 setState(() {
                                   _selectedChildDegree[index] = true;
                                   _selectedChildDegree[(1 - index).abs()] =
@@ -325,21 +346,23 @@ class _protectorState extends State<protector> {
                               selectedColor: Colors.white,
                               fillColor: primaryColor,
                               color: primaryColor,
-                              constraints: const BoxConstraints(
-                                minHeight: 40.0,
-                                minWidth: 80.0,
+                              constraints: BoxConstraints(
+                                minHeight: height * 0.06,
+                                minWidth: width * 0.3,
                               ),
                               isSelected: _selectedChildDegree,
                               children: degree,
                             ),
                           ],
-                        )
+                        ),
+                        SizedBox(height: height * 0.03),
                       ])),
             )
           ])
         ])),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            HapticFeedback.lightImpact(); // 약한 진동
             if (_formKey_protector.currentState!.validate() &&
                 _nickname.text.split(' ').first != '' &&
                 _protectorAge.text.split(' ').first != '' &&
@@ -367,7 +390,7 @@ class _protectorState extends State<protector> {
             ;
           },
           backgroundColor: primaryColor,
-          child: const Text("완료"),
+          child: const Text("완료", style: TextStyle(fontSize: 17)),
         ));
   }
 }

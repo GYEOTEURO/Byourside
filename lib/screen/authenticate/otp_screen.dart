@@ -125,9 +125,11 @@ class _OTPScreenState extends State<OTPScreen> {
               padding: const EdgeInsets.all(30.0),
               child: Pinput(
                 length: 6,
+                autofocus: true,
                 defaultPinTheme: defaultPinTheme,
                 controller: otpCode,
                 pinAnimationType: PinAnimationType.fade,
+                keyboardType: TextInputType.number,
                 onSubmitted: (pin) async {
                   try {
                     final PhoneAuthCredential credential =

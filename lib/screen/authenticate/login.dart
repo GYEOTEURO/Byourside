@@ -30,7 +30,7 @@ class _Login extends State<Login> {
     double width = MediaQuery.of(context).size.width;
     final emailField = TextFormField(
         controller: _email,
-        autofocus: false,
+        autofocus: true,
         validator: (value) => value != null && !EmailValidator.validate(value)
             ? '유효한 이메일을 입력하세요.'
             : null,
@@ -46,7 +46,6 @@ class _Login extends State<Login> {
     final passwordField = TextFormField(
         obscureText: _obscureText,
         controller: _password,
-        autofocus: false,
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
             return '필수 입력란';
