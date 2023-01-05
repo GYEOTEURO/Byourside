@@ -29,6 +29,9 @@ class _NanumPostContentState extends State<NanumPostContent> {
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection("groups");
 
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("user");
+
   Future<bool> checkGroupExist(String name) async {
     var collection = FirebaseFirestore.instance.collection('groupList');
     var doc = await collection.doc(name).get();
@@ -70,6 +73,8 @@ class _NanumPostContentState extends State<NanumPostContent> {
                   .createGroup(
                       FirebaseAuth.instance.currentUser!.displayName.toString(),
                       FirebaseAuth.instance.currentUser!.uid.toString(),
+                      post.nickname!,
+                      post.uid!,
                       groupName);
 
               String groupId = await getGroupId(groupName);
@@ -77,7 +82,10 @@ class _NanumPostContentState extends State<NanumPostContent> {
                 "members":
                     FieldValue.arrayUnion(["${post.uid}_${post.nickname}"])
               });
-
+              // await userCollection.doc(post.uid).update({
+              //   "groups":
+              //       FieldValue.arrayUnion(["${doc.uid}_${doc.nickname}"])
+              // })
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
                     context,

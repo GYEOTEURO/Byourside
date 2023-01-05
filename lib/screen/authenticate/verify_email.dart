@@ -67,7 +67,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text(e.toString()),
+                content: Text("오류 : ${e.toString()}"),
               );
             });
       }
@@ -100,7 +100,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size.fromHeight(50),
                 ),
-                icon: Icon(Icons.email, size: 32),
+                icon: Icon(
+                  Icons.email,
+                  size: 32,
+                  color: primaryColor,
+                ),
                 label: Text(
                   '이메일 재전송',
                   style: TextStyle(fontSize: 24),

@@ -4,6 +4,7 @@ import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   final Function? toggleView;
@@ -25,6 +26,8 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     final emailField = TextFormField(
         controller: _email,
         autofocus: false,
@@ -33,7 +36,10 @@ class _Login extends State<Login> {
             : null,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "이메일",
+            hintText: "(예: abcd@google.com)",
+            labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
+            hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+            labelStyle: TextStyle(color: primaryColor, fontSize: 17),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
@@ -53,10 +59,15 @@ class _Login extends State<Login> {
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "비밀번호",
+            hintText: "(예: 12345678)",
+            labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
+            hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+            labelStyle: TextStyle(color: primaryColor, fontSize: 17),
             suffixIcon: IconButton(
-              icon:
-                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              icon: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                semanticLabel: "비밀번호 보기",
+              ),
               onPressed: () {
                 setState(() {
                   _obscureText = !_obscureText;
@@ -71,13 +82,15 @@ class _Login extends State<Login> {
         onPressed: () {
           widget.toggleView!();
         },
-        child: const Text('회원가입', style: TextStyle(color: primaryColor)));
+        child: const Text('회원가입',
+            style: TextStyle(color: primaryColor, fontSize: 17)));
 
     final forgotPassword = TextButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ForgotPassword(),
             )),
-        child: const Text('비밀번호 찾기', style: TextStyle(color: primaryColor)));
+        child: const Text('비밀번호 찾기',
+            style: TextStyle(color: primaryColor, fontSize: 17)));
 
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
@@ -87,6 +100,7 @@ class _Login extends State<Login> {
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
+          HapticFeedback.lightImpact(); // 약한 진동
           if (_formKey.currentState!.validate()) {
             dynamic result = await _auth.signInEmailPassword(
                 LoginUser(email: _email.text, password: _password.text));
@@ -96,7 +110,8 @@ class _Login extends State<Login> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: Text(result.code),
+                      content: Text("재시도하세요. 오류 : ${result.code}",
+                          style: TextStyle(color: Colors.black, fontSize: 17)),
                     );
                   });
             }
@@ -104,7 +119,8 @@ class _Login extends State<Login> {
         },
         child: Text(
           "로그인",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
+          style: TextStyle(
+              color: Theme.of(context).primaryColorLight, fontSize: 17),
           textAlign: TextAlign.center,
         ),
       ),
@@ -113,6 +129,8 @@ class _Login extends State<Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        centerTitle: true,
+        titleTextStyle: TextStyle(fontSize: height * 0.04),
         title: const Text('로그인'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -122,20 +140,22 @@ class _Login extends State<Login> {
           Form(
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 45.0),
+                  SizedBox(height: height * 0.03),
                   emailField,
-                  const SizedBox(height: 25.0),
+                  SizedBox(height: height * 0.04),
                   passwordField,
+                  SizedBox(height: height * 0.01),
                   registerButton,
+                  SizedBox(height: height * 0.003),
                   forgotPassword,
-                  const SizedBox(height: 35.0),
+                  SizedBox(height: height * 0.03),
                   loginEmailPasswordButton,
-                  const SizedBox(height: 15.0),
+                  SizedBox(height: height * 0.02),
                 ],
               ),
             ),
