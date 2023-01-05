@@ -108,18 +108,21 @@ class _OndoPostPageState extends State<OndoPostPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            semanticLabel: '뒤로가기',
+          ),
           color: Colors.white,
         ),
-        actions: const [
-          IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-          )
-        ],
+        // actions: const [
+        //   IconButton(
+        //     onPressed: null,
+        //     icon: Icon(
+        //       Icons.menu,
+        //       color: Colors.white,
+        //     ),
+        //   )
+        // ],
       ),
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: GestureDetector(
@@ -127,6 +130,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
           child: SingleChildScrollView(
             padding: EdgeInsets.all(25),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // 제목
                 Container(
