@@ -65,7 +65,7 @@ class _Register extends State<Register> {
 
     final emailField = TextFormField(
         controller: _email,
-        autofocus: false,
+        autofocus: true,
         validator: (value) {
           if (value != null) {
             if (value.contains('@') && value.endsWith('.com')) {
@@ -86,7 +86,6 @@ class _Register extends State<Register> {
     final passwordField = TextFormField(
         obscureText: _obscureText,
         controller: _password,
-        autofocus: false,
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
             return '필수 입력란';

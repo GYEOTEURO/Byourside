@@ -78,6 +78,7 @@ class _someoneElseState extends State<someoneElse> {
       hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
       labelStyle: TextStyle(color: primaryColor, fontSize: 17),
     ),
+    autofocus: true,
     controller: _nickname,
     validator: (value) {
       if (value != null) {

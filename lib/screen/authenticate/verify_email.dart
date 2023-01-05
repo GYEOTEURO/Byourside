@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/main.dart';
+import 'package:flutter/services.dart';
 
 class VerifyEmail extends StatefulWidget {
   @override
@@ -76,42 +77,50 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   @override
   Widget build(BuildContext context) {
-    print(isEmailVerified);
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     if (isEmailVerified) {
       return BottomNavBar(primaryColor: primaryColor);
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('이메일 확인'),
-          backgroundColor: primaryColor,
+          centerTitle: true,
+          elevation: 0,
+          title: Text("이메일 확인"),
+          titleTextStyle: TextStyle(fontSize: height * 0.04),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '확인 이메일이 전송되었습니다. 메일함을 확인하세요',
-                style: TextStyle(fontSize: 20, color: primaryColor),
+                '확인 이메일이 전송되었습니다.\n메일함을 확인하세요',
+                style: TextStyle(fontSize: 24, color: primaryColor),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 24),
+              SizedBox(height: height * 0.2),
               ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50),
-                ),
-                icon: Icon(
-                  Icons.email,
-                  size: 32,
-                  color: primaryColor,
-                ),
-                label: Text(
-                  '이메일 재전송',
-                  style: TextStyle(fontSize: 24),
-                ),
-                onPressed: canResendEmail ? sendVerificationEmail : null,
-              ),
-              SizedBox(height: 8),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(50),
+                      backgroundColor: primaryColor),
+                  icon: const Icon(
+                    Icons.email,
+                    size: 32,
+                    color: Colors.white,
+                    semanticLabel: "메일", //semanticLabel 속성 추가하기
+                  ),
+                  label: Text(
+                    '이메일 재전송',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  onPressed: (() {
+                    HapticFeedback.lightImpact(); // 약한 진동
+                    canResendEmail ? sendVerificationEmail : null;
+                  })),
+              SizedBox(height: height * 0.03),
               TextButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(50),
@@ -121,6 +130,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     style: TextStyle(fontSize: 24, color: primaryColor),
                   ),
                   onPressed: () {
+                    HapticFeedback.lightImpact(); // 약한 진동
                     Navigator.of(context).popUntil((route) => route.isFirst);
 
                     FirebaseAuth.instance.signOut();

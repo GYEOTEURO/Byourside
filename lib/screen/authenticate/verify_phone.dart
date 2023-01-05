@@ -42,6 +42,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     final linkButton = ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
@@ -56,11 +58,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '휴대폰 인증',
-          style: TextStyle(fontSize: 17),
-        ),
-        backgroundColor: primaryColor,
+        centerTitle: true,
+        elevation: 0,
+        title: Text("휴대폰 인증"),
+        titleTextStyle: TextStyle(fontSize: height * 0.04),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +73,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               child: const Center(
                 child: Text(
                   '휴대폰 번호 입력',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
             ),
@@ -85,7 +87,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                         hintText: '(예: 1012345678)',
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
                         labelStyle:
-                            TextStyle(color: primaryColor, fontSize: 20),
+                            TextStyle(color: primaryColor, fontSize: 17),
                         prefix: Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
@@ -94,6 +96,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                           ),
                         ),
                       ),
+                      autofocus: true,
                       maxLength: 10,
                       keyboardType: TextInputType.number,
                       controller: _controller,
@@ -142,6 +145,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 child: Text('동의하고 인증',
                     style: TextStyle(color: Colors.white, fontSize: 17))),
           ),
+          SizedBox(height: height * 0.02),
         ],
       ),
     );
