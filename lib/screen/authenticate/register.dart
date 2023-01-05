@@ -71,7 +71,10 @@ class _Register extends State<Register> {
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "이메일",
+            hintText: "(예: abcd@google.com)",
+            labelText: "이메일을 입력하세요. (형식: \".com\"으로 끝나는 메일만 가능합니다)",
+            hintStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: primaryColor),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
 
@@ -91,7 +94,10 @@ class _Register extends State<Register> {
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "비밀번호",
+            hintText: "(예: 12345678)",
+            labelText: "비밀번호를 입력하세요. (형식: 8자리 이상이어야 합니다)",
+            hintStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: primaryColor),
             suffixIcon: IconButton(
               icon:
                   Icon(_obscureText ? Icons.visibility : Icons.visibility_off),

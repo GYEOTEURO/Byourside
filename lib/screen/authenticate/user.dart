@@ -12,7 +12,7 @@ enum Select { protector, participator, someoneElse }
 List<String> purposeType = ['홍보', '모집'];
 String _dropdownValue = '홍보';
 
-GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+GlobalKey<FormState> _formKey_user = GlobalKey<FormState>();
 
 const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
 const List<Widget> type = <Widget>[Text('뇌병변 장애'), Text('발달 장애')];
@@ -61,7 +61,7 @@ class _SetupUserState extends State<SetupUser> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다.'),
+                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'),
               );
             });
       }
@@ -104,9 +104,8 @@ class _SetupUserState extends State<SetupUser> {
         .collection('displayNameList')
         .doc('$nickname')
         .set({'current': true});
-    await user?.updateDisplayName(nickname);
-    // print(user);
     if (user != null) {
+      await user?.updateDisplayName(nickname);
       FirebaseUser(uid: user?.uid, displayName: nickname);
     }
   }
@@ -126,7 +125,6 @@ class _SetupUserState extends State<SetupUser> {
         .doc('$nickname')
         .set({'current': true});
     await user?.updateDisplayName(nickname);
-    print(user);
     if (user != null) {
       FirebaseUser(uid: user?.uid, displayName: nickname);
     }
@@ -153,28 +151,38 @@ class _SetupUserState extends State<SetupUser> {
 
   final nicknameField = Container(
       child: TextFormField(
-    decoration: InputDecoration(labelText: "닉네임을 입력하세요"),
+    decoration: InputDecoration(
+      labelText: "닉네임을 입력하세요",
+      hintText: "닉네임을 입력하세요 (예: 홍길동) ",
+      hintStyle: TextStyle(color: Colors.grey),
+      labelStyle: TextStyle(color: primaryColor),
+    ),
     controller: _nickname,
     validator: (value) {
       if (value != null) {
         if (value.split(' ').first != '' && value.isNotEmpty) {
           return null;
         }
-        return '유효한 닉네임을 입력하세요';
+        return '필수 입력란입니다. 닉네임을 입력하세요';
       }
     },
   ));
 
   final someoneElseField = Container(
       child: TextFormField(
-    decoration: InputDecoration(labelText: "방문 목적"),
+    decoration: const InputDecoration(
+      labelText: "방문 목적",
+      hintText: "방문 목적을 입력하세요. (예: 자녀 장애 초기증상 판별)",
+      hintStyle: TextStyle(color: Colors.grey),
+      labelStyle: TextStyle(color: primaryColor),
+    ),
     controller: _purpose,
     validator: (value) {
       if (value != null) {
         if (value.split(' ').first != '' && value.isNotEmpty) {
           return null;
         }
-        return '유효한 방문 목적을 입력하세요';
+        return '필수 입력란입니다. 방문 목적을 입력하세요';
       }
     },
   ));
@@ -193,7 +201,7 @@ class _SetupUserState extends State<SetupUser> {
       body: SingleChildScrollView(
           child: Column(children: [
         Form(
-            key: _formKey,
+            key: _formKey_user,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -252,8 +260,12 @@ class _SetupUserState extends State<SetupUser> {
                           children: <Widget>[
                               nicknameField,
                               TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: "보호자 나이"),
+                                decoration: const InputDecoration(
+                                  labelText: "보호자 나이",
+                                  hintText: "숫자를 입력하세요. (예: 33)",
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  labelStyle: TextStyle(color: primaryColor),
+                                ),
                                 controller: _protectorAge,
                                 validator: (value) {
                                   if (value != null) {
@@ -262,13 +274,18 @@ class _SetupUserState extends State<SetupUser> {
                                         isNumeric(value)) {
                                       return null;
                                     }
-                                    return '유효한 나이를 입력하세요';
+                                    return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다. (예: 33)';
                                   }
                                 },
                               ),
                               const SizedBox(height: 5),
                               TextFormField(
-                                decoration: InputDecoration(labelText: "자녀 나이"),
+                                decoration: const InputDecoration(
+                                  labelText: "자녀 나이",
+                                  hintText: "숫자를 입력하세요. (예: 7)",
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  labelStyle: TextStyle(color: primaryColor),
+                                ),
                                 controller: _childAge,
                                 validator: (value) {
                                   if (value != null) {
@@ -277,13 +294,17 @@ class _SetupUserState extends State<SetupUser> {
                                         isNumeric(value)) {
                                       return null;
                                     }
-                                    return '유효한 나이를 입력하세요';
+                                    return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다. (예: 7)';
                                   }
                                 },
                               ),
                               TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: "소속 복지관/학교"),
+                                decoration: const InputDecoration(
+                                  labelText: "소속 복지관/학교",
+                                  hintText: "소속을 입력하세요. (예: 서울뇌성마비복지관)",
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  labelStyle: TextStyle(color: primaryColor),
+                                ),
                                 controller: _belong,
                                 validator: (value) {
                                   if (value != null) {
@@ -291,7 +312,7 @@ class _SetupUserState extends State<SetupUser> {
                                         value.isNotEmpty) {
                                       return null;
                                     }
-                                    return '유효한 소속을 입력하세요';
+                                    return '필수 입력란입니다. 소속을 입력하세요';
                                   }
                                 },
                               ),
@@ -429,8 +450,12 @@ class _SetupUserState extends State<SetupUser> {
                           children: [
                               nicknameField,
                               TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: "개인/단체 이름"),
+                                decoration: const InputDecoration(
+                                  labelText: "개인/단체 이름",
+                                  hintText: "개인/단체 이름을 입력하세요. (예: 00복지관)",
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  labelStyle: TextStyle(color: primaryColor),
+                                ),
                                 controller: _organizationName,
                                 validator: (value) {
                                   if (value != null) {
@@ -438,7 +463,7 @@ class _SetupUserState extends State<SetupUser> {
                                         value.isNotEmpty) {
                                       return null;
                                     }
-                                    return '유효한 개인/단체 이름을 입력하세요';
+                                    return '필수 입력란입니다. 개인/단체 이름을 입력하세요';
                                   }
                                 },
                               ),
@@ -473,10 +498,7 @@ class _SetupUserState extends State<SetupUser> {
         onPressed: () async {
           (protector)
               ? {
-                  if (_formKey.currentState!.validate() &&
-                      // _formKey_protector_kid_age.currentState!.validate() &&
-                      // _formKey_protector_belong.currentState!.validate() &&
-                      // _formKey_user_protector.currentState!.validate() &&
+                  if (_formKey_user.currentState!.validate() &&
                       _nickname.text.split(' ').first != '' &&
                       _protectorAge.text.split(' ').first != '' &&
                       _childAge.text.split(' ').first != '' &&
@@ -509,7 +531,7 @@ class _SetupUserState extends State<SetupUser> {
               : null;
           (participator)
               ? {
-                  if (_formKey.currentState!.validate())
+                  if (_formKey_user.currentState!.validate())
                     {
                       doesDocExist = await checkDocExist(_nickname.text),
                       if (doesDocExist == false)
@@ -526,8 +548,7 @@ class _SetupUserState extends State<SetupUser> {
               : null;
           (someoneElse)
               ? {
-                  if (_formKey.currentState!.validate() &&
-                      // _formKey_user_someone.currentState!.validate() &&
+                  if (_formKey_user.currentState!.validate() &&
                       _purpose.text != null &&
                       _purpose.text != '')
                     {
