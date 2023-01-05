@@ -59,7 +59,7 @@ class _CategoryPageState extends State<CategoryPage>
             semanticLabel: "장애 유형 필터링",
           ),
           onPressed: () async {
-            HapticFeedback.lightImpact();// 약한 진동
+            HapticFeedback.lightImpact(); // 약한 진동
             _type = await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -83,7 +83,7 @@ class _CategoryPageState extends State<CategoryPage>
               semanticLabel: "검색",
             ),
             onPressed: () {
-              HapticFeedback.lightImpact();// 약한 진동
+              HapticFeedback.lightImpact(); // 약한 진동
               showSearch(context: context, delegate: Search('ondoPost'));
             },
           ),
@@ -102,11 +102,12 @@ class _CategoryPageState extends State<CategoryPage>
           String label = tab.text!;
           if (label == '정보') {
             return Container(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: 
-              infoDetailCategoryPage(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
-              //infoTest(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
-          );}
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                child: infoDetailCategoryPage(
+                    primaryColor: Color(0xFF045558), collectionName: "ondoPost")
+                //infoTest(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
+                );
+          }
           return OndoPostList(
               primaryColor: Color(0xFF045558),
               collectionName: "ondoPost",

@@ -15,7 +15,20 @@ class OndoPostModel {
   List<String>? scrapPeople;
   List<String>? keyword;
 
-  OndoPostModel({this.id, this.uid, this.title, this.nickname, this.content, this.datetime, this.images, this.category, this.type, this.likes, this.likesPeople, this.scrapPeople, this.keyword});
+  OndoPostModel(
+      {this.id,
+      this.uid,
+      this.title,
+      this.nickname,
+      this.content,
+      this.datetime,
+      this.images,
+      this.category,
+      this.type,
+      this.likes,
+      this.likesPeople,
+      this.scrapPeople,
+      this.keyword});
 
   // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
   // 이외는 uid = doc.data()!["uid"],
@@ -28,18 +41,22 @@ class OndoPostModel {
         datetime = doc.data()!["datetime"],
         // ignore: prefer_null_aware_operators
         images = doc.data()!["images"] == null
-            ? null : doc.data()!["images"].cast<String>(),
+            ? null
+            : doc.data()!["images"].cast<String>(),
         category = doc.data()!["category"],
         type = doc.data()!["type"],
         likes = doc.data()!["likes"],
         // ignore: prefer_null_aware_operators
         likesPeople = doc.data()!["likesPeople"] == null
-            ? null : doc.data()!["likesPeople"].cast<String>(),
+            ? null
+            : doc.data()!["likesPeople"].cast<String>(),
         // ignore: prefer_null_aware_operators
         scrapPeople = doc.data()!["scrapPeople"] == null
-            ? null : doc.data()!["scrapPeople"].cast<String>(),
+            ? null
+            : doc.data()!["scrapPeople"].cast<String>(),
         keyword = doc.data()!["keyword"] == null
-            ? null : doc.data()!["keyword"].cast<String>();
+            ? null
+            : doc.data()!["keyword"].cast<String>();
 
   Map<String, dynamic> toMap() {
     return {

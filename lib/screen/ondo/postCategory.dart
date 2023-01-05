@@ -13,6 +13,7 @@ class PostCategory extends StatefulWidget {
   final Color primaryColor;
   final String title;
   final Category categories;
+
   @override
   State<PostCategory> createState() => _PostCategoryState();
 }
@@ -43,6 +44,33 @@ class _PostCategoryState extends State<PostCategory> {
     ButtonProperties(label: '초기 증상 발견/생활 속 Tip'),
   ];
 
+  @override
+  void initState() {
+    // TODO: 이전에 클릭한 사항들 남겨두기
+    _category = widget.categories.category;
+    _type = widget.categories.type;
+    print('init 시 게시판 종류: ${_category}, 장애 유형: ${_type}');
+
+    for (int i = 0; i < categoryList.length; i++) {
+      if (categoryList[i].label == _category) {
+        categoryList[i].selected = true;
+        categoryList[i].backgroundColor = Color(0xFF045558);
+        categoryList[i].fontColor = Colors.white;
+        break;
+      }
+    }
+
+    for (int i = 0; i < 2; i++) {
+      if (typeList[i].label == _type) {
+        typeList[i].selected = true;
+        typeList[i].backgroundColor = Color(0xFF045558);
+        typeList[i].fontColor = Colors.white;
+      }
+    }
+
+    super.initState();
+  }
+
   void _onClickCategory(int index) {
     setState(() {
       if (categoryList[index].selected) {
@@ -50,11 +78,12 @@ class _PostCategoryState extends State<PostCategory> {
         categoryList[index].backgroundColor = Colors.white;
         categoryList[index].fontColor = Colors.black;
       } else {
-        _category = categoryList[index].label;
-        widget.categories.category = _category;
+        // _category = categoryList[index].label;
+        // widget.categories.category = _category;
         categoryList[index].selected = true;
         categoryList[index].backgroundColor = Color(0xFF045558);
         categoryList[index].fontColor = Colors.white;
+
         // 나머지 버튼들은 비활성화
         for (int i = 0; i < 6; i++) {
           if (i == index) {
@@ -81,8 +110,8 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].backgroundColor = Colors.white;
         typeList[index].fontColor = Colors.black;
       } else {
-        _type = typeList[index].label;
-        widget.categories.type = _type;
+        // _type = typeList[index].label;
+        // widget.categories.type = _type;
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
@@ -110,7 +139,26 @@ class _PostCategoryState extends State<PostCategory> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            // pop 할 때, 파라미터를 두 개를 어떻게 넘기는 지 리스트로 넣는 수 밖에 없는 건지 몰라서 일단 넘기는 거 아직...
+            // 선택한 게시판 종류 반영
+            widget.categories.category = null;
+            for (int i = 0; i < categoryList.length; i++) {
+              if (categoryList[i].selected) {
+                _category = categoryList[i].label;
+                widget.categories.category = _category;
+                break;
+              }
+            }
+
+            widget.categories.type = null;
+            for (int i = 0; i < typeList.length; i++) {
+              if (typeList[i].selected) {
+                _type = typeList[i].label;
+                widget.categories.category = _type;
+                break;
+              }
+            }
+            // 장애 유형 selected 된 상태에 따라 type 값 지정
+
             Navigator.pop(context, widget.categories);
           },
           icon: const Icon(Icons.arrow_back),

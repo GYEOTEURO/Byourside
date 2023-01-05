@@ -60,7 +60,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         typeList[index].backgroundColor = Colors.white;
         typeList[index].fontColor = Colors.black;
       } else {
-        _type = typeList[index].label;
+        // _type = typeList[index].label;
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
@@ -87,6 +87,13 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            _type = null;
+            for (int i = 0; i < typeList.length; i++) {
+              if (typeList[i].selected) {
+                _type = typeList[i].label;
+                break;
+              }
+            }
             Navigator.pop(context, _type);
           },
           icon: const Icon(Icons.arrow_back),
