@@ -2,14 +2,16 @@ import 'package:byourside/model/db_get.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Search extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
-        icon: Icon(Icons.close),
+        icon: Icon(Icons.close, semanticLabel: "입력 내용 지우기"),
         onPressed: () {
+          HapticFeedback.lightImpact();// 약한 진동
           query = "";
         },
       ),
@@ -19,8 +21,9 @@ class Search extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기"),
       onPressed: () {
+        HapticFeedback.lightImpact();// 약한 진동
         Navigator.pop(context);
       },
     );
@@ -49,6 +52,7 @@ class Search extends SearchDelegate {
                 elevation: 2,
                 child: InkWell(
                   onTap: () {
+                    HapticFeedback.lightImpact();// 약한 진동
                     selectedResult = post.id;
                     print(selectedResult);
                     showResults(context);
@@ -58,23 +62,39 @@ class Search extends SearchDelegate {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                       children: [
-                                  Column(
+                        Expanded(
+                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,                     
                                     children: [
-                                      Text(
-                                        post.title!,
-                                        style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                      SelectionArea(
+                                        child: Text(
+                                          post.title!,
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                      ))),
+                                      SelectionArea(
+                                        child: Text(
+                                          '${post.nickname} / $date / ${post.category}',
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(color: Colors.black54),
                                       )),
-                                      Text(
-                                        '${post.nickname} / $date / ${post.category}',
-                                        style: const TextStyle(color: Colors.black54),
-                                      ),
                                     ],
-                                  ),
-                                  
+                                  )),
+                                  if (post.images!.isNotEmpty)
+                                    Semantics(
+                                      label: '사용자가 올린 사진',
+                                      child: Image.network(
+                                      post.images![0],
+                                      width: 100,
+                                      height: 100,
+                                  )),  
                                 ],
                             ),
                       )

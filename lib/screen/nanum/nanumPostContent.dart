@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import '../../model/db_get.dart';
 import '../../model/db_set.dart';
 import '../../model/nanum_post.dart';
@@ -53,18 +54,27 @@ class _NanumPostContentState extends State<NanumPostContent> {
       Align(
           alignment: Alignment.centerLeft,
           child: Container(
-              child: Text(
-            post.title!,
-            style: const TextStyle(fontSize: 25),
-          ))),
+              child: SelectionArea(
+                child: Text(
+                  ' ${post.title!}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+          )))),
       Row(children: [
         Expanded(
             child: TextButton(
-          child: Text(
-            "${post.nickname!} / $date / ${post.type}",
-            style: const TextStyle(color: Colors.black54),
-          ),
+              child: SelectionArea(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                  "${post.nickname!} / $date / ${post.type}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15
+              )))),
           onPressed: () async {
+            HapticFeedback.lightImpact();// 약한 진동
             var groupName = "${user?.displayName}_${post.nickname}";
             var groupNameReverse = "${post.nickname}_${user?.displayName}";
             if (await checkGroupExist(groupName) != true &&
@@ -122,85 +132,110 @@ class _NanumPostContentState extends State<NanumPostContent> {
         )),
         if (user?.uid == post.uid)
           (RichText(
-              text: TextSpan(children: [
-            TextSpan(
+              text: TextSpan(
                 text: changeState,
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15),
                 recognizer: TapGestureRecognizer()
                   ..onTapDown = (details) {
+                    HapticFeedback.lightImpact();// 약한 진동
                     DBSet.updateIsCompleted(
                         collectionName!, post.id!, !post.isCompleted!);
                   })
-          ])))
+          ))
         else
           (Text(dealState)),
         if (user?.uid == post.uid)
           (RichText(
               text: TextSpan(
-            children: [
-              TextSpan(
                   text: "삭제",
-                  style: const TextStyle(color: Colors.black),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15),
                   recognizer: TapGestureRecognizer()
                     ..onTapDown = (details) {
+                      HapticFeedback.lightImpact();// 약한 진동
                       Navigator.pop(context);
                       DBSet.deletePost(collectionName!, post.id!);
                     })
-            ],
-          ))),
+          )),
       ]),
-      Divider(thickness: 1, height: 1, color: Colors.blueGrey[200]),
+      Divider(thickness: 1, height: 1, color: Colors.black),
       Container(
           padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
           alignment: Alignment.centerLeft,
-          child: Text(
-            "가격: ${post.price!}원",
-            style: const TextStyle(fontSize: 20),
-          )),
+          child: SelectionArea(
+            child: Text(
+              "가격 ${post.price!}원",
+              style: const TextStyle(fontSize: 18),
+          ))),
       if (post.images!.isNotEmpty)
         (Container(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: Column(
               children: [
                 for (String url in post.images!)
-                  (Container(
-                    child: Image.network(url),
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  Semantics(
+                    label: '사용자가 올린 사진',
+                    child: Container(
+                      child: Image.network(url),
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                   ))
               ],
             ))),
       Container(
           alignment: Alignment.centerLeft,
-          child: Text(
-            post.content!,
-            style: const TextStyle(fontSize: 15),
-          )),
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+          child: SelectionArea(
+            child: Text(
+              post.content!,
+              style: const TextStyle(fontSize: 17),
+          ))),
+      //Divider(thickness: 1, height: 1, color: Colors.black),
       Row(children: [
-        IconButton(
-            alignment: Alignment.centerLeft,
+          OutlinedButton.icon(
             onPressed: () {
-              post.likesPeople!.contains(user?.uid)
-                  ? DBSet.cancelLike(collectionName!, post.id!, user!.uid)
-                  : DBSet.addLike(collectionName!, post.id!, user!.uid);
+                HapticFeedback.lightImpact();// 약한 진동
+                post.likesPeople!.contains(user?.uid)
+                    ? DBSet.cancelLike(collectionName!, post.id!, user!.uid)
+                    : DBSet.addLike(collectionName!, post.id!, user!.uid);
+              },
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(188.5, 37),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4))
+                ),
+                side: BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
+                foregroundColor: Color.fromARGB(255, 255, 45, 45),
+              ),
+              icon: post.likesPeople!.contains(user?.uid)
+                  ? const Icon(Icons.favorite, semanticLabel: "좋아요 취소")
+                  : const Icon(Icons.favorite_outline, semanticLabel: "좋아요 추가"), 
+              label: Text('좋아요  ${post.likes}'),
+              ),
+              Text(' '),
+              OutlinedButton.icon(
+            onPressed: () {
+              HapticFeedback.lightImpact();// 약한 진동
+              post.scrapPeople!.contains(user?.uid)
+                  ? DBSet.cancelScrap(collectionName!, post.id!, user!.uid)
+                  : DBSet.addScrap(collectionName!, post.id!, user!.uid);
             },
-            icon: post.likesPeople!.contains(user?.uid)
-                ? const Icon(Icons.favorite)
-                : const Icon(Icons.favorite_outline),
-            color: Color.fromARGB(255, 207, 77, 68)),
-        Text('${post.likes!} '),
-        IconButton(
-          alignment: Alignment.centerLeft,
-          onPressed: () {
-            post.scrapPeople!.contains(user?.uid)
-                ? DBSet.cancelScrap(collectionName!, post.id!, user!.uid)
-                : DBSet.addScrap(collectionName!, post.id!, user!.uid);
-          },
-          icon: post.scrapPeople!.contains(user?.uid)
-              ? const Icon(Icons.star)
-              : const Icon(Icons.star_outline),
-          color: const Color.fromARGB(255, 244, 231, 98),
-        ),
-      ]),
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(188.5, 37),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4))
+                ),
+                side: BorderSide(color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
+                foregroundColor: Color.fromARGB(255, 64, 130, 75),
+              ),
+              icon: post.scrapPeople!.contains(user?.uid)
+                ? const Icon(Icons.star, semanticLabel: "스크랩 취소")
+                : const Icon(Icons.star_outline, semanticLabel: "스크랩 추가"),
+              label: Text('스크랩'),
+              ),
+        ]),
     ]);
   }
 
