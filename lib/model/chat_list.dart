@@ -38,7 +38,8 @@ class ChatList {
   }
 
   // creating a group
-  Future createGroup(String userName, String id, String groupName) async {
+  Future createGroup(String userName, String id, String userName2, String id2,
+      String groupName) async {
     // if (await checkDocExist(groupName)) {
     // } else {
     DocumentReference groupDocumentReference = await groupCollection.add({
@@ -61,6 +62,14 @@ class ChatList {
       "groupId": groupDocumentReference.id,
     });
 
+    if (userName2 != "none" && id2 != "none") {
+      DocumentReference userDocumentReference2 = userCollection.doc(id2);
+      print("$id2, $userName2");
+      await userDocumentReference2.update({
+        "groups":
+            FieldValue.arrayUnion(["${groupDocumentReference.id}_$groupName"])
+      });
+    }
     DocumentReference userDocumentReference = userCollection.doc(uid);
     return await userDocumentReference.update({
       "groups":
