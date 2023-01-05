@@ -153,7 +153,7 @@ class _PostCategoryState extends State<PostCategory> {
             for (int i = 0; i < typeList.length; i++) {
               if (typeList[i].selected) {
                 _type = typeList[i].label;
-                widget.categories.category = _type;
+                widget.categories.type = _type;
                 break;
               }
             }
