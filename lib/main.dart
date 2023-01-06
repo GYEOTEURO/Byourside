@@ -23,7 +23,7 @@ import 'firebase_options.dart';
 Future<bool> getPermission() async {
   Map<Permission, PermissionStatus> permissions = await [
     Permission.storage,
-    Permission.sensors,
+    Permission.speech,
     Permission.bluetooth,
     Permission.notification
   ].request();

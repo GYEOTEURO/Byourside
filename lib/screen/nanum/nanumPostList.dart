@@ -24,7 +24,7 @@ class NanumPostList extends StatefulWidget {
 
 class _NanumPostListState extends State<NanumPostList> {
   bool completedValue = false; //true: 거래완료 제외, false: 거래완료 포함
-  String? _type;
+  List<String>? _type;
 
   void changeCompletedValue(bool value) {
     setState(() {
@@ -33,11 +33,21 @@ class _NanumPostListState extends State<NanumPostList> {
   }
 
   Widget _buildListItem(PostListModel? post) {
-    String date = post!.datetime!.toDate().toString().split(' ')[0];
+    String date = post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
     String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
 
-    return Container(
-        height: 90,
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    String? type;
+    if(post.type!.length == 1) { type = post.type![0]; }
+    else if(post.type!.length > 1) { 
+      post.type!.sort();
+      type = "${post.type![0]}/${post.type![1]}"; 
+    }
+
+    return SizedBox(
+        height: height / 7,
         child: Card(
             //semanticContainer: true,
             elevation: 2,
@@ -64,7 +74,8 @@ class _NanumPostListState extends State<NanumPostList> {
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SelectionArea(
+                          Container(
+                              margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
                               child: Text(post.title!,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
@@ -73,16 +84,21 @@ class _NanumPostListState extends State<NanumPostList> {
                                     color: Colors.black,
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold,
-                                  ))),
-                          SelectionArea(
-                              child: Text(
-                            '${post.nickname!} / $date / ${post.type} / $isCompleted',
+                                    fontFamily: 'NanumGothic'
+                          ))),
+                          Text(
+                            post.type!.isEmpty ?
+                            '${post.nickname!} | $date | $isCompleted'
+                            : '${post.nickname!} | $date | $isCompleted | $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 14),
-                          )),
+                                color: Colors.black, 
+                                fontSize: 14,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w600,),
+                          ),
                         ],
                       )),
                       if (post.images!.isNotEmpty)
@@ -90,8 +106,8 @@ class _NanumPostListState extends State<NanumPostList> {
                             label: '사용자가 올린 사진',
                             child: Image.network(
                               post.images![0],
-                              width: 100,
-                              height: 100,
+                              width: width * 0.2,
+                              height: height * 0.2,
                             ))),
                     ],
                   ),
@@ -106,7 +122,12 @@ class _NanumPostListState extends State<NanumPostList> {
       appBar: AppBar(
           backgroundColor: widget.primaryColor,
           centerTitle: true,
-          title: Text("마음나눔"),
+          title: Text(
+            "마음나눔",
+            style:TextStyle(
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.bold
+            )),
           leading: IconButton(
               icon: Icon(Icons.filter_alt,
                   semanticLabel: "장애 유형 필터링", color: Colors.white),
@@ -162,7 +183,11 @@ class _NanumPostListState extends State<NanumPostList> {
                       Center(
                           child: Text(
                         "거래완료 제외",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'NanumGothic',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,),
                       )),
                     ],
                   )))),
@@ -182,7 +207,12 @@ class _NanumPostListState extends State<NanumPostList> {
                     return _buildListItem(post);
                   });
             } else
-              return const Text('게시물 목록을 가져오는 중...');
+              return const SelectionArea(
+                child: Text(
+                  '게시물 목록을 가져오는 중...',
+                  style: TextStyle(
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w600,)));
           }),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(
