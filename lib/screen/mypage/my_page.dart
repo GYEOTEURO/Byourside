@@ -93,8 +93,11 @@ class _Mypage extends State<Mypage> {
       appBar: AppBar(
         title: const Text(
           '마이페이지',
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
           semanticsLabel: '마이페이지(나의 정보 화면)',
         ),
+        centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
@@ -126,10 +129,10 @@ class _Mypage extends State<Mypage> {
                     semanticsLabel: '사용자 닉네임: ${displayName}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                    )),
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        fontFamily: 'NanumGothic')),
               ],
             ),
             SizedBox(
@@ -146,7 +149,8 @@ class _Mypage extends State<Mypage> {
               style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'NanumGothic'),
             ),
             SizedBox(
               height: 10,
@@ -166,7 +170,9 @@ class _Mypage extends State<Mypage> {
                         label: Text(
                           myEntires[index],
                           semanticsLabel: myEntires[index],
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'NanumGothic'),
                         ),
                         onPressed: () {
                           HapticFeedback.lightImpact(); // 약한 진동
@@ -187,7 +193,8 @@ class _Mypage extends State<Mypage> {
               style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'NanumGothic'),
             ),
             SizedBox(
               height: 10,
@@ -207,7 +214,9 @@ class _Mypage extends State<Mypage> {
                         label: Text(
                           etcEntires[index],
                           semanticsLabel: etcEntires[index],
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'NanumGothic'),
                         ),
                         onPressed: () async {
                           HapticFeedback.lightImpact(); // 약한 진동

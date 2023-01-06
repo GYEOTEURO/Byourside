@@ -91,6 +91,8 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         title: Text(
           widget.title,
           semanticsLabel: widget.title,
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -130,7 +132,8 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)))),
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic')))),
                 Expanded(
                     child: Row(children: [
                   Expanded(
@@ -147,7 +150,9 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                                   typeList[index].label,
                                   semanticsLabel: typeList[index].label,
                                   style: TextStyle(
-                                      color: typeList[index].fontColor),
+                                      color: typeList[index].fontColor,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w600),
                                 ));
                           }))
                 ])),
