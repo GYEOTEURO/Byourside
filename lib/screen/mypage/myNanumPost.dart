@@ -81,8 +81,8 @@ class _MyNanumPostState extends State<MyNanumPost> {
                                 ? '$date | $isCompleted'
                                 : '$date | $isCompleted | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '$date $isCompleted'
-                                : '$date $isCompleted $type',
+                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $isCompleted'
+                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $isCompleted $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,

@@ -33,17 +33,19 @@ class _NanumPostListState extends State<NanumPostList> {
   }
 
   Widget _buildListItem(PostListModel? post) {
-    String date = post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+    String date =
+        post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
     String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     String? type;
-    if(post.type!.length == 1) { type = post.type![0]; }
-    else if(post.type!.length > 1) { 
+    if (post.type!.length == 1) {
+      type = post.type![0];
+    } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}"; 
+      type = "${post.type![0]}/${post.type![1]}";
     }
 
     return SizedBox(
@@ -77,27 +79,31 @@ class _NanumPostListState extends State<NanumPostList> {
                           Container(
                               margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
                               child: Text(post.title!,
+                                  semanticsLabel: post.title!,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
                                   softWrap: false,
                                   style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'NanumGothic'
-                          ))),
+                                      color: Colors.black,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'NanumGothic'))),
                           Text(
-                            post.type!.isEmpty ?
-                            '${post.nickname!} | $date | $isCompleted'
-                            : '${post.nickname!} | $date | $isCompleted | $type',
+                            post.type!.isEmpty
+                                ? '${post.nickname!} | $date | $isCompleted'
+                                : '${post.nickname!} | $date | $isCompleted | $type',
+                            semanticsLabel: post.type!.isEmpty
+                                ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted'
+                                : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted  $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
-                                color: Colors.black, 
-                                fontSize: 14,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,),
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       )),
@@ -122,12 +128,10 @@ class _NanumPostListState extends State<NanumPostList> {
       appBar: AppBar(
           backgroundColor: widget.primaryColor,
           centerTitle: true,
-          title: Text(
-            "마음나눔",
-            style:TextStyle(
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.bold
-            )),
+          title: Text("마음나눔",
+              semanticsLabel: '마음나눔',
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           leading: IconButton(
               icon: Icon(Icons.filter_alt,
                   semanticLabel: "장애 유형 필터링", color: Colors.white),
@@ -183,11 +187,13 @@ class _NanumPostListState extends State<NanumPostList> {
                       Center(
                           child: Text(
                         "거래완료 제외",
+                        semanticsLabel: "거래완료 제외",
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'NanumGothic',
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,),
+                          fontWeight: FontWeight.w600,
+                        ),
                       )),
                     ],
                   )))),
@@ -208,11 +214,12 @@ class _NanumPostListState extends State<NanumPostList> {
                   });
             } else
               return const SelectionArea(
-                child: Text(
-                  '게시물 목록을 가져오는 중...',
-                  style: TextStyle(
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w600,)));
+                  child: Text('게시물 목록을 가져오는 중...',
+                      semanticsLabel: '게시물 목록을 가져오는 중...',
+                      style: TextStyle(
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      )));
           }),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(
