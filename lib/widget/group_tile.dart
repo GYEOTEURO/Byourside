@@ -1,6 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import '../screen/chat/chat_page.dart';
 
 class GroupTile extends StatefulWidget {
@@ -26,6 +26,7 @@ class _GroupTileState extends State<GroupTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          HapticFeedback.lightImpact(); // 약한 진동
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -36,25 +37,41 @@ class _GroupTileState extends State<GroupTile> {
                       )));
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 5),
           child: ListTile(
+            contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),
             leading: CircleAvatar(
               radius: 30,
               backgroundColor: Theme.of(context).primaryColor,
               child: Text(
-                widget.groupName.substring(0, 1).toUpperCase(),
+                (widget.groupName.split('_')[0] == widget.userName)
+                    ? widget.groupName
+                        .split('_')[1]
+                        .substring(0, 1)
+                        .toUpperCase()
+                    : widget.groupName.substring(0, 1).toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w500),
+                    color: Colors.white,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
               ),
             ),
             title: Text(
               widget.groupName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              semanticsLabel: widget.groupName,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic'),
             ),
             subtitle: Text(
               // widget.recentMsg,
-              widget.groupId, style: const TextStyle(fontSize: 13),
+              widget.groupId, semanticsLabel: widget.groupId,
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
             ),
           ),
         ));
