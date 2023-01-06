@@ -107,7 +107,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
           '채팅 목록',
           semanticsLabel: '채팅 목록',
         ),
-        titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: primaryColor,
       ),
       body: groupList(width),

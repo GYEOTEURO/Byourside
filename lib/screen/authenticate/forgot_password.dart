@@ -35,7 +35,6 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
           '비밀번호 변경',
           semanticsLabel: "비밀번호 변경",
         ),
-        titleTextStyle: TextStyle(fontSize: height * 0.03),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

@@ -128,7 +128,6 @@ class _participatorState extends State<participator> {
             "세부 정보 입력",
             semanticsLabel: "세부 정보 입력",
           ),
-          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Column(children: [
