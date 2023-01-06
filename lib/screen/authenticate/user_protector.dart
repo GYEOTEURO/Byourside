@@ -160,7 +160,6 @@ class _protectorState extends State<protector> {
             "세부 정보 입력",
             semanticsLabel: "세부 정보 입력",
           ),
-          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
@@ -311,41 +310,43 @@ class _protectorState extends State<protector> {
                                 ),
                               ),
                               SizedBox(height: height * 0.03),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("자녀 성별",
-                                        semanticsLabel: "자녀 성별",
-                                        style: TextStyle(fontSize: 17)),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    ToggleButtons(
-                                      direction: Axis.horizontal,
-                                      onPressed: (int index) {
-                                        HapticFeedback.lightImpact(); // 약한 진동
-                                        setState(() {
-                                          _selectedChildGender[index] = true;
-                                          _selectedChildGender[
-                                              (1 - index).abs()] = false;
-                                        });
-                                      },
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(8)),
-                                      selectedBorderColor: primaryColor,
-                                      selectedColor: Colors.white,
-                                      fillColor: primaryColor,
-                                      color: primaryColor,
-                                      constraints: BoxConstraints(
-                                        minHeight: height * 0.06,
-                                        minWidth: width * 0.25,
+                              Center(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("자녀 성별",
+                                          semanticsLabel: "자녀 성별",
+                                          style: TextStyle(fontSize: 17)),
+                                      SizedBox(
+                                        width: 30,
                                       ),
-                                      isSelected: _selectedChildGender,
-                                      children: gender,
-                                    ),
-                                  ],
+                                      ToggleButtons(
+                                        direction: Axis.horizontal,
+                                        onPressed: (int index) {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          setState(() {
+                                            _selectedChildGender[index] = true;
+                                            _selectedChildGender[
+                                                (1 - index).abs()] = false;
+                                          });
+                                        },
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8)),
+                                        selectedBorderColor: primaryColor,
+                                        selectedColor: Colors.white,
+                                        fillColor: primaryColor,
+                                        color: primaryColor,
+                                        constraints: BoxConstraints(
+                                          minHeight: height * 0.06,
+                                          minWidth: width * 0.25,
+                                        ),
+                                        isSelected: _selectedChildGender,
+                                        children: gender,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(height: height * 0.03),

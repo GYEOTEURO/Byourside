@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/authenticate/otp_screen.dart';
@@ -49,7 +50,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             backgroundColor: MaterialStateProperty.all(primaryColor)),
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          _launchUrl;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const PersonalData()));
         },
         child: Text(
           '개인정보처리방침',
@@ -65,7 +67,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             "휴대폰 인증",
             semanticsLabel: "휴대폰 인증",
           ),
-          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(

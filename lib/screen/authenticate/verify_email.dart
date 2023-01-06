@@ -90,7 +90,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
             "이메일 확인",
             semanticsLabel: "이메일 확인",
           ),
-          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Padding(

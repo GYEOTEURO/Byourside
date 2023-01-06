@@ -36,7 +36,6 @@ class _SearchPageState extends State<SearchPage> {
           "검색",
           semanticsLabel: "검색",
         ),
-        titleTextStyle: TextStyle(fontSize: height * 0.03),
         centerTitle: true,
       ),
       body: Column(

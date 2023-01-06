@@ -149,7 +149,6 @@ class _Login extends State<Login> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        titleTextStyle: TextStyle(fontSize: height * 0.03),
         title: const Text(
           '로그인',
           semanticsLabel: "로그인",

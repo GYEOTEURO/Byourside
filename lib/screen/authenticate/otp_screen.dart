@@ -104,7 +104,6 @@ class _OTPScreenState extends State<OTPScreen> {
           key: _formKey,
           appBar: AppBar(
             centerTitle: true,
-            titleTextStyle: TextStyle(fontSize: height * 0.03),
             title: Text(
               'OTP 인증',
               semanticsLabel: 'OTP 인증',

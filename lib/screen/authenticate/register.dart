@@ -1,5 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
+import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,8 +58,7 @@ class _Register extends State<Register> {
         child: Text(
           "휴대폰 인증",
           semanticsLabel: "휴대폰 인증",
-          style: TextStyle(
-              color: Theme.of(context).primaryColorLight, fontSize: 17),
+          style: TextStyle(color: Colors.white, fontSize: 17),
           textAlign: TextAlign.center,
         ),
       ),
@@ -152,8 +152,9 @@ class _Register extends State<Register> {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
         onPressed: () {
-          HapticFeedback.lightImpact(); // 약한 진동
-          _launchUrl;
+          // _launchUrl;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const PersonalData()));
         },
         child: Text('개인정보처리방침',
             semanticsLabel: '개인정보처리방침',
@@ -203,8 +204,7 @@ class _Register extends State<Register> {
         child: Text(
           "동의하고 회원가입",
           semanticsLabel: "동의하고 회원가입",
-          style: TextStyle(
-              color: Theme.of(context).primaryColorLight, fontSize: 17),
+          style: TextStyle(color: Colors.white, fontSize: 17),
           textAlign: TextAlign.center,
         ),
       ),
@@ -218,7 +218,6 @@ class _Register extends State<Register> {
           '회원가입',
           semanticsLabel: '회원가입',
         ),
-        titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(

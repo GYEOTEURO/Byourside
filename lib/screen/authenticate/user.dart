@@ -36,7 +36,6 @@ class _SetupUserState extends State<SetupUser> {
               "유형 선택",
               semanticsLabel: "유형 선택",
             ),
-            titleTextStyle: TextStyle(fontSize: height * 0.03),
             backgroundColor: primaryColor),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -73,9 +72,7 @@ class _SetupUserState extends State<SetupUser> {
                                       '장애 아동 보호자',
                                       semanticsLabel: '장애 아동 보호자',
                                       style: TextStyle(
-                                          color: Theme.of(context)
-                                              .primaryColorLight,
-                                          fontSize: 20),
+                                          color: Colors.white, fontSize: 20),
                                       textAlign: TextAlign.center,
                                     ),
                                   )),
@@ -101,9 +98,7 @@ class _SetupUserState extends State<SetupUser> {
                                       '관계자',
                                       semanticsLabel: '관계자',
                                       style: TextStyle(
-                                          color: Theme.of(context)
-                                              .primaryColorLight,
-                                          fontSize: 20),
+                                          color: Colors.white, fontSize: 20),
                                       textAlign: TextAlign.center,
                                     ),
                                   )),
@@ -129,9 +124,7 @@ class _SetupUserState extends State<SetupUser> {
                                       '그외',
                                       semanticsLabel: '그외',
                                       style: TextStyle(
-                                          color: Theme.of(context)
-                                              .primaryColorLight,
-                                          fontSize: 20),
+                                          color: Colors.white, fontSize: 20),
                                       textAlign: TextAlign.center,
                                     ),
                                   )),
