@@ -97,10 +97,10 @@ class _NanumPostPageState extends State<NanumPostPage> {
       // 상단 앱 바
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(
-          widget.title,
-          semanticsLabel: widget.title,
-        ),
+        title: Text(widget.title,
+            semanticsLabel: widget.title,
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -125,6 +125,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     // 제목
                     Container(
                         child: TextFormField(
+                      style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600),
                       autofocus: true,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -151,8 +154,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               semanticsLabel: '카테고리(장애 유형) 선택',
                               style: TextStyle(
                                   color: Colors.black,
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'NanumGothic'),
                             ),
                             IconButton(
                                 onPressed: () async {
@@ -188,8 +191,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                 semanticsLabel: '사진 첨부하기',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'NanumGothic'),
                               ),
                               IconButton(
                                   onPressed: () {
@@ -251,6 +254,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                         child: TextFormField(
                           focusNode: myFocus,
                           textInputAction: TextInputAction.next,
+                          style: TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "가격은 비어있을 수 없습니다";
@@ -273,6 +279,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     Container(
                         padding: EdgeInsets.only(top: 20, bottom: 5),
                         child: TextField(
+                          style: TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
                           focusNode: myFocus1,
                           textInputAction: TextInputAction.done,
                           controller: _content,

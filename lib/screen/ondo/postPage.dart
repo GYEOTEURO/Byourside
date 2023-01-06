@@ -130,6 +130,9 @@ class _OndoPostPageState extends State<OndoPostPage> {
                     // 제목
                     Container(
                         child: TextFormField(
+                      style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600),
                       autofocus: true,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -157,8 +160,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
                               semanticsLabel: '카테고리(게시판 종류와 장애 유형) 선택',
                               style: TextStyle(
                                   color: Colors.black,
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'NanumGothic'),
                             ),
                             IconButton(
                                 onPressed: () async {
@@ -189,14 +192,12 @@ class _OndoPostPageState extends State<OndoPostPage> {
                             // 위젯을 양쪽으로 딱 붙임
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                '사진 첨부하기',
-                                semanticsLabel: '사진 첨부하기',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    letterSpacing: 2.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              Text('사진 첨부하기',
+                                  semanticsLabel: '사진 첨부하기',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'NanumGothic')),
                               IconButton(
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
@@ -275,6 +276,9 @@ class _OndoPostPageState extends State<OndoPostPage> {
                     Container(
                         padding: EdgeInsets.only(top: 20, bottom: 5),
                         child: TextField(
+                          style: TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
                           focusNode: myFocus,
                           textInputAction: TextInputAction.done,
                           controller: _content,

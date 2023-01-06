@@ -54,6 +54,7 @@ void main() async {
     androidProvider: AndroidProvider.playIntegrity,
   );
   runApp(GetMaterialApp(
+    theme: ThemeData(fontFamily: 'NanumGothic'),
     home: MyApp(),
     // debugShowCheckedModeBanner: false,
   ));

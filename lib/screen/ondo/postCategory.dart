@@ -196,7 +196,8 @@ class _PostCategoryState extends State<PostCategory> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)))),
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic')))),
                 Expanded(
                     flex: 2,
                     child: Row(children: [
@@ -213,8 +214,10 @@ class _PostCategoryState extends State<PostCategory> {
                                     ),
                                     child: Text(categoryList[index].label,
                                         style: TextStyle(
-                                            color: categoryList[index]
-                                                .fontColor)));
+                                            color:
+                                                categoryList[index].fontColor,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w600)));
                               }))
                     ])),
                 const Center(
@@ -224,7 +227,8 @@ class _PostCategoryState extends State<PostCategory> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)))),
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic')))),
                 Expanded(
                     child: Row(children: [
                   Expanded(
@@ -240,7 +244,9 @@ class _PostCategoryState extends State<PostCategory> {
                                 child: Text(
                                   typeList[index].label,
                                   style: TextStyle(
-                                      color: typeList[index].fontColor),
+                                      color: typeList[index].fontColor,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w600),
                                 ));
                           }))
                 ])),
