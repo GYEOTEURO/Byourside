@@ -453,6 +453,7 @@ class _protectorState extends State<protector> {
                     _selectedChildType,
                     _selectedChildDegree,
                     _belong.text);
+                Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => VerifyEmail()));
               }

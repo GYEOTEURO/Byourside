@@ -148,21 +148,24 @@ class _someoneElseState extends State<someoneElse> {
           titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
-        body: Column(children: [
-          Form(
-            key: _formKey_someoneELse,
-            child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: height * 0.03),
-                      nicknameField,
-                      SizedBox(height: height * 0.03),
-                      someoneElseField
-                    ])),
-          )
-        ]),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(children: [
+            Form(
+              key: _formKey_someoneELse,
+              child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: height * 0.03),
+                        nicknameField,
+                        SizedBox(height: height * 0.03),
+                        someoneElseField
+                      ])),
+            )
+          ]),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
@@ -172,6 +175,7 @@ class _someoneElseState extends State<someoneElse> {
               doesDocExist = await checkDocExist(_nickname.text);
               if (doesDocExist == false) {
                 storeSomeoneElseInfo(_nickname.text, _purpose.text);
+                Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => VerifyEmail()));
               }

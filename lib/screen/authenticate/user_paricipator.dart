@@ -225,6 +225,7 @@ class _participatorState extends State<participator> {
               if (doesDocExist == false) {
                 storeParticipatorInfo(
                     _nickname.text, _organizationName.text, _selectedType);
+                Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => VerifyEmail()));
               }
