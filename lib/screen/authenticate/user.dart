@@ -51,34 +51,41 @@ class _SetupUserState extends State<SetupUser> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: height * 0.04),
-                              Material(
-                                  elevation: 5.0,
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  color: Theme.of(context).primaryColor,
-                                  child: MaterialButton(
-                                    minWidth:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20.0, 15.0, 20.0, 15.0),
-                                    onPressed: () {
-                                      HapticFeedback.lightImpact();
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => protector()),
-                                      );
-                                    },
-                                    child: Text(
-                                      '장애 아동 보호자',
-                                      semanticsLabel: '장애 아동 보호자',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontFamily: 'NanumGothic',
-                                          fontWeight: FontWeight.w500),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )),
+                              SizedBox(
+                                height: height * 0.04,
+                                width: width * 0.8,
+                              ),
+                              Center(
+                                child: Material(
+                                    elevation: 5.0,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    color: Theme.of(context).primaryColor,
+                                    child: MaterialButton(
+                                      minWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.9,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20.0, 15.0, 20.0, 15.0),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  protector()),
+                                        );
+                                      },
+                                      child: Text(
+                                        '장애 아동 보호자',
+                                        semanticsLabel: '장애 아동 보호자',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )),
+                              ),
                               SizedBox(height: height * 0.04),
                               Material(
                                   elevation: 5.0,
