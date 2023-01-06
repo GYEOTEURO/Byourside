@@ -14,7 +14,7 @@ class NanumAppBar extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _NanumAppBarState extends State<NanumAppBar> {
-  String? _type;
+  List<String>? _type;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

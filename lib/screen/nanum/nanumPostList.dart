@@ -24,7 +24,7 @@ class NanumPostList extends StatefulWidget {
 
 class _NanumPostListState extends State<NanumPostList> {
   bool completedValue = false; //true: 거래완료 제외, false: 거래완료 포함
-  String? _type;
+  List<String>? _type;
 
   void changeCompletedValue(bool value) {
     setState(() {

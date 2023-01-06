@@ -10,7 +10,7 @@ class NanumPostModel {
   bool? isCompleted;
   Timestamp? datetime;
   List<String>? images;
-  String? type;
+  List<String>? type;
   int? likes;
   List<String>? likesPeople;
   List<String>? scrapPeople;
