@@ -57,36 +57,34 @@ class _EduViewPageState extends State<EduViewPage> {
                           primaryColor: primaryColor,
                         )));
           },
-          child: Center(
-            child: Column(
+          child: Column(
               children: [
-                if (post.images!.isNotEmpty)
-                  (Container(
+                Container(
+                      margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
                       width: width / 2.5,
                       height: height / 4,
-                      child: Semantics(
-                          label: '사용자가 올린 사진',
-                          child: Image.network(
-                            post.images![0],
-                          ))))
-                else
-                  (Container(
-                    margin: EdgeInsets.all(10),
-                    color: Colors.grey,
-                    width: width / 2.5,
-                    height: height / 5,
-                    child: Center(
-                        child: Text('사진 없음',
-                            semanticsLabel: '사진 없음',
-                            style: TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            ))),
+                      child: (post.images!.isNotEmpty) ?
+                        Semantics(
+                            label: '사용자가 올린 사진',
+                            child: Image.network(
+                              post.images![0],
+                            )) :
+                        Container(
+                          color: Colors.grey,
+                          child: Center(
+                            child: Text('사진 없음',
+                                semanticsLabel: '사진 없음',
+                                style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                        ))),
                   )),
                 Expanded(
                     child: Container(
                         padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
-                        child: Text(post.title!,
+                        child: Text(
+                          post.title!,
+                          semanticsLabel: post.title,
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
@@ -96,27 +94,29 @@ class _EduViewPageState extends State<EduViewPage> {
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'NanumGothic')))),
                 Expanded(
-                    child: Text(
-                  post.type!.isEmpty
-                      ? '${post.nickname!} | $date'
-                      : '${post.nickname!} | $date | $type',
-                  semanticsLabel: post.type!.isEmpty
-                      ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
-                      : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $type',
-                  overflow: TextOverflow.fade,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w600,
-                  ),
-                )),
+                    child: Container(
+                        padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                        child: Text(
+                          post.type!.isEmpty
+                              ? '${post.nickname!} | $date'
+                              : '${post.nickname!} | $date | $type',
+                          semanticsLabel: post.type!.isEmpty
+                              ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
+                              : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $type',
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                          softWrap: false,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ),
+                ))),
               ],
             ),
           ),
-        ));
+        );
   }
 
   @override
