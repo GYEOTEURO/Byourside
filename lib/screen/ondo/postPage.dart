@@ -322,7 +322,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
 
 class Category {
   String? category;
-  String? type;
+  List<String>? type;
 
   Category(this.category, this.type);
 }

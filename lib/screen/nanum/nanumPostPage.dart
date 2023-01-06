@@ -30,7 +30,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
-  String? _type;
+  List<String>? _type;
 
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기

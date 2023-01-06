@@ -34,7 +34,7 @@ class ButtonProperties {
 
 class _PostCategoryState extends State<PostCategory> {
   String? _category = null;
-  String? _type = null;
+  List<String>? _type = [];
 
   List<ButtonProperties> categoryList = [
     ButtonProperties(label: '자유게시판'),
@@ -61,11 +61,15 @@ class _PostCategoryState extends State<PostCategory> {
       }
     }
 
-    for (int i = 0; i < 2; i++) {
-      if (typeList[i].label == _type) {
-        typeList[i].selected = true;
-        typeList[i].backgroundColor = Color(0xFF045558);
-        typeList[i].fontColor = Colors.white;
+    if (_type != null) {
+      for (int j = 0; j < _type!.length; j++) {
+        for (int i = 0; i < 2; i++) {
+          if (typeList[i].label == _type![j]) {
+            typeList[i].selected = true;
+            typeList[i].backgroundColor = Color(0xFF045558);
+            typeList[i].fontColor = Colors.white;
+          }
+        }
       }
     }
 
@@ -119,16 +123,16 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
         // 나머지 버튼들은 비활성화
-        for (int i = 0; i < 2; i++) {
-          if (i == index) {
-            print(i);
-            continue;
-          } else {
-            typeList[i].selected = false;
-            typeList[i].backgroundColor = Colors.white;
-            typeList[i].fontColor = Colors.black;
-          }
-        }
+        //   for (int i = 0; i < 2; i++) {
+        //     if (i == index) {
+        //       print(i);
+        //       continue;
+        //     } else {
+        //       typeList[i].selected = false;
+        //       typeList[i].backgroundColor = Colors.white;
+        //       typeList[i].fontColor = Colors.black;
+        //     }
+        //   }
       }
     });
   }
@@ -153,14 +157,17 @@ class _PostCategoryState extends State<PostCategory> {
               }
             }
 
-            widget.categories.type = null;
+            widget.categories.type = [];
             for (int i = 0; i < typeList.length; i++) {
               if (typeList[i].selected) {
-                _type = typeList[i].label;
-                widget.categories.type = _type;
-                break;
+                if (_type == null) {
+                  _type = [typeList[i].label];
+                } else {
+                  _type!.add(typeList[i].label);
+                }
               }
             }
+            widget.categories.type = _type;
             // 장애 유형 selected 된 상태에 따라 type 값 지정
 
             Navigator.pop(context, widget.categories);

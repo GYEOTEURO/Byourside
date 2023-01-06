@@ -9,7 +9,7 @@ class OndoPostModel {
   Timestamp? datetime;
   List<String>? images;
   String? category;
-  String? type;
+  List<String>? type;
   int? likes;
   List<String>? likesPeople;
   List<String>? scrapPeople;

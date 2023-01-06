@@ -30,7 +30,7 @@ class _CategoryPageState extends State<CategoryPage>
   ];
   String _selectedInfoDetail = "전체";
 
-  String? _type;
+  List<String>? _type;
 
   static const List<Tab> categoryTabs = <Tab>[
     Tab(text: '전체'),
