@@ -33,7 +33,18 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return NanumPost(collectionName: collectionName, documentID: selectedResult!, primaryColor: Color(0xFF045558));
+    return Container();
+  }
+
+  @override
+  void showResults(BuildContext context) {
+    Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NanumPost(
+                    collectionName: collectionName, 
+                    documentID: selectedResult!, 
+                    primaryColor: Color(0xFF045558))));
   }
 
   final String collectionName;

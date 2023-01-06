@@ -30,13 +30,21 @@ class Search extends SearchDelegate {
   }
 
   String? selectedResult;
-
+        
   @override
   Widget buildResults(BuildContext context) {
-    return OndoPost(
-              collectionName: collectionName, 
-              documentID: selectedResult!, 
-              primaryColor: Color(0xFF045558));
+    return Container();
+  }
+
+  @override
+  void showResults(BuildContext context) {
+    Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OndoPost(
+                    collectionName: collectionName, 
+                    documentID: selectedResult!, 
+                    primaryColor: Color(0xFF045558))));
   }
 
   final String collectionName;
