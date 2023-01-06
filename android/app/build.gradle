@@ -72,13 +72,21 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:30.4.1')
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
+implementation 'com.google.android.material:material:1.4.0'
+
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-//    implementation 'com.google.android.play:integrity::LATEST_VERSION'
+    implementation 'com.google.android.play:integrity'
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation "androidx.activity:activity:1.7.0-alpha02"
+    implementation 'com.google.firebase:firebase-appcheck-debug:16.1.0'
+    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
+    implementation "androidx.browser:browser:1.4.0"
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:'
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+
 
 }
