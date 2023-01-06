@@ -142,7 +142,12 @@ class _PostCategoryState extends State<PostCategory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          semanticsLabel: widget.title,
+        ),
+        titleTextStyle:
+            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -191,6 +196,7 @@ class _PostCategoryState extends State<PostCategory> {
                     child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Text('게시판 종류',
+                            semanticsLabel: '게시판 종류',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -210,6 +216,8 @@ class _PostCategoryState extends State<PostCategory> {
                                           categoryList[index].backgroundColor,
                                     ),
                                     child: Text(categoryList[index].label,
+                                        semanticsLabel:
+                                            categoryList[index].label,
                                         style: TextStyle(
                                             color: categoryList[index]
                                                 .fontColor)));
@@ -219,6 +227,7 @@ class _PostCategoryState extends State<PostCategory> {
                     child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Text('장애 유형',
+                            semanticsLabel: '장애 유형',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -237,6 +246,7 @@ class _PostCategoryState extends State<PostCategory> {
                                         typeList[index].backgroundColor),
                                 child: Text(
                                   typeList[index].label,
+                                  semanticsLabel: typeList[index].label,
                                   style: TextStyle(
                                       color: typeList[index].fontColor),
                                 ));

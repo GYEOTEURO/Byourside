@@ -86,6 +86,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                     shape: BoxShape.circle),
                 child: Text(
                   '+${(_images.length - 5).toString()}',
+                  semanticsLabel: '+${(_images.length - 5).toString()}',
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -100,6 +101,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
         backgroundColor: widget.primaryColor,
         title: Text(
           widget.title,
+          semanticsLabel: widget.title,
           style:
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
@@ -153,6 +155,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                       children: [
                         Text(
                           '카테고리 선택',
+                          semanticsLabel: '카테고리 선택',
                           style: TextStyle(
                               color: Colors.black,
                               letterSpacing: 2.0,
@@ -171,7 +174,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                           )));
                               print(
                                   "카테고리: ${_categories.category}, 타입: ${_categories.type}");
-                              if(_categories.type == null) _categories.type = [];
+                              if (_categories.type == null)
+                                _categories.type = [];
                             },
                             icon: Icon(
                               Icons.navigate_next,
@@ -189,6 +193,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                         children: [
                           Text(
                             '사진 & 영상 첨부하기',
+                            semanticsLabel: '사진 & 영상 첨부하기',
                             style: TextStyle(
                                 color: Colors.black,
                                 letterSpacing: 2.0,
