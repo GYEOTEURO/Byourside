@@ -84,7 +84,7 @@ class DBGet {
 }
   // Firestore의 ondo collection에 있는 정보에 속하는 카테고리 데이터 모두 불러오기("전체 정보" 카테고리 가져오기)
   static Stream<List<PostListModel>> readAllInfoCollection({required String collection, List<String>? type}) {
-    if(type == null || type!.isEmpty){
+    if(type == null || type!.isEmpty || type.length > 1){
       return FirebaseFirestore.instance
         .collection(collection)
         .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
@@ -97,7 +97,7 @@ class DBGet {
       return FirebaseFirestore.instance
         .collection(collection)
         .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
-        .where("type", arrayContainsAny: type)
+        .where("type", isEqualTo: type)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
