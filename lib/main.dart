@@ -21,13 +21,16 @@ import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
 
 Future<bool> getPermission() async {
+  // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
   Map<Permission, PermissionStatus> permissions = await [
     Permission.storage,
     Permission.speech,
     Permission.bluetooth,
     Permission.notification
   ].request();
+
   print('per1 : $permissions');
+
   if (permissions.values.every((element) => element.isGranted)) {
     return Future.value(true);
   } else {
@@ -54,6 +57,7 @@ void main() async {
     androidProvider: AndroidProvider.playIntegrity,
   );
   runApp(GetMaterialApp(
+    theme: ThemeData(fontFamily: 'NanumGothic'),
     home: MyApp(),
     // debugShowCheckedModeBanner: false,
   ));

@@ -235,7 +235,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       )));
         },
         backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.add, semanticLabel: "글쓰기"),
+        child: const Icon(Icons.add, semanticLabel: "마음나눔 글쓰기"),
       ),
     );
   }

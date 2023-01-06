@@ -46,6 +46,8 @@ class _ToDeveloperState extends State<ToDeveloper> {
         title: Text(
           "개발자에게 문의하기",
           semanticsLabel: '개발자에게 문의하기',
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
@@ -72,12 +74,17 @@ class _ToDeveloperState extends State<ToDeveloper> {
                   SizedBox(height: 20),
                   Text("'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
                       semanticsLabel: "'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          fontFamily: 'NanumGothic')),
                   SizedBox(height: 30),
                   TextFormField(
                       autofocus: true,
                       controller: _message,
+                      style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600),
                       minLines: 3,
                       maxLines: 8,
                       decoration: InputDecoration(

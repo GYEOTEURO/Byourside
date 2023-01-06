@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class PostCategory extends StatefulWidget {
   const PostCategory(
@@ -117,22 +118,9 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].backgroundColor = Colors.white;
         typeList[index].fontColor = Colors.black;
       } else {
-        // _type = typeList[index].label;
-        // widget.categories.type = _type;
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
-        // 나머지 버튼들은 비활성화
-        //   for (int i = 0; i < 2; i++) {
-        //     if (i == index) {
-        //       print(i);
-        //       continue;
-        //     } else {
-        //       typeList[i].selected = false;
-        //       typeList[i].backgroundColor = Colors.white;
-        //       typeList[i].fontColor = Colors.black;
-        //     }
-        //   }
       }
     });
   }
@@ -162,7 +150,7 @@ class _PostCategoryState extends State<PostCategory> {
               }
             }
 
-            widget.categories.type = [];
+            // 장애 유형 selected 된 상태에 따라 type 값 지정
             _type = [];
             for (int i = 0; i < typeList.length; i++) {
               if (typeList[i].selected) {
@@ -174,9 +162,12 @@ class _PostCategoryState extends State<PostCategory> {
               }
             }
             widget.categories.type = _type;
-            // 장애 유형 selected 된 상태에 따라 type 값 지정
-
-            Navigator.pop(context, widget.categories);
+            if (widget.categories.category == null) {
+              Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+                  backgroundColor: Colors.white);
+            } else {
+              Navigator.pop(context, widget.categories);
+            }
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -200,7 +191,8 @@ class _PostCategoryState extends State<PostCategory> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)))),
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic')))),
                 Expanded(
                     flex: 2,
                     child: Row(children: [
@@ -219,8 +211,10 @@ class _PostCategoryState extends State<PostCategory> {
                                         semanticsLabel:
                                             categoryList[index].label,
                                         style: TextStyle(
-                                            color: categoryList[index]
-                                                .fontColor)));
+                                            color:
+                                                categoryList[index].fontColor,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w600)));
                               }))
                     ])),
                 const Center(
@@ -231,7 +225,8 @@ class _PostCategoryState extends State<PostCategory> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)))),
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic')))),
                 Expanded(
                     child: Row(children: [
                   Expanded(
@@ -248,7 +243,9 @@ class _PostCategoryState extends State<PostCategory> {
                                   typeList[index].label,
                                   semanticsLabel: typeList[index].label,
                                   style: TextStyle(
-                                      color: typeList[index].fontColor),
+                                      color: typeList[index].fontColor,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w600),
                                 ));
                           }))
                 ])),

@@ -32,7 +32,7 @@ class ButtonProperties {
 
 class _NanumPostCategoryState extends State<NanumPostCategory> {
   // String? _category = null;
-  List<String>? _type = null;
+  List<String>? _type = [];
 
   List<ButtonProperties> typeList = [
     ButtonProperties(label: '발달장애'),
@@ -88,9 +88,12 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(widget.title, semanticsLabel: widget.title),
-        titleTextStyle:
-            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
+        title: Text(
+          widget.title,
+          semanticsLabel: widget.title,
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -129,7 +132,8 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black)))),
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic')))),
                 Expanded(
                     child: Row(children: [
                   Expanded(
@@ -146,7 +150,9 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                                   typeList[index].label,
                                   semanticsLabel: typeList[index].label,
                                   style: TextStyle(
-                                      color: typeList[index].fontColor),
+                                      color: typeList[index].fontColor,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w600),
                                 ));
                           }))
                 ])),
