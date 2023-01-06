@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class PostCategory extends StatefulWidget {
   const PostCategory(
@@ -167,8 +168,12 @@ class _PostCategoryState extends State<PostCategory> {
               }
             }
             widget.categories.type = _type;
-
-            Navigator.pop(context, widget.categories);
+            if (widget.categories.category == null) {
+              Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+                  backgroundColor: Colors.white);
+            } else {
+              Navigator.pop(context, widget.categories);
+            }
           },
           icon: const Icon(
             Icons.arrow_back,
