@@ -85,9 +85,14 @@ class _ChatPageState extends State<ChatPage> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: primaryColor),
-                                  child: const Text("취소",
-                                      semanticsLabel: "취소",
-                                      style: TextStyle(fontSize: 17)),
+                                  child: const Text(
+                                    "취소",
+                                    semanticsLabel: "취소",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: width * 0.01,
@@ -112,9 +117,14 @@ class _ChatPageState extends State<ChatPage> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: primaryColor),
-                                  child: const Text("나가기",
-                                      semanticsLabel: "나가기",
-                                      style: TextStyle(fontSize: 17)),
+                                  child: const Text(
+                                    "나가기",
+                                    semanticsLabel: "나가기",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 )
                               ],
                             )));
@@ -149,10 +159,17 @@ class _ChatPageState extends State<ChatPage> {
                   Expanded(
                       child: TextFormField(
                     controller: messageController,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
                     autofocus: true,
                     decoration: const InputDecoration(
-                      hintStyle: TextStyle(color: Colors.white, fontSize: 17),
+                      hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
                       hintText: "메시지 보내기",
                       border: InputBorder.none,
                     ),

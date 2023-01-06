@@ -154,10 +154,16 @@ class _participatorState extends State<participator> {
                               borderRadius: BorderRadius.circular(20)),
                           labelText: "개인/단체 이름",
                           hintText: "(예: 00복지관)",
-                          hintStyle:
-                              TextStyle(color: Colors.grey, fontSize: 17),
-                          labelStyle:
-                              TextStyle(color: primaryColor, fontSize: 17),
+                          hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          labelStyle: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
                         ),
                         controller: _organizationName,
                         validator: (value) {
@@ -179,9 +185,14 @@ class _participatorState extends State<participator> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("소속",
-                                      semanticsLabel: "소속",
-                                      style: TextStyle(fontSize: 17)),
+                                  Text(
+                                    "소속",
+                                    semanticsLabel: "소속",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                   SizedBox(
                                     width: width * 0.1,
                                   ),
@@ -231,8 +242,14 @@ class _participatorState extends State<participator> {
             }
           },
           backgroundColor: primaryColor,
-          child: const Text("완료",
-              semanticsLabel: "완료", style: TextStyle(fontSize: 17)),
+          child: const Text(
+            "완료",
+            semanticsLabel: "완료",
+            style: TextStyle(
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+          ),
         ));
   }
 }

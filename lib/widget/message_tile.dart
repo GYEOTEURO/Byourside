@@ -57,17 +57,23 @@ class _MessageTileState extends State<MessageTile> {
                 semanticsLabel: widget.sender,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 2),
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 2,
+                  fontFamily: 'NanumGothic',
+                ),
               ),
               SizedBox(height: height * 0.01),
               Text(
                 widget.message,
                 semanticsLabel: widget.message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 17, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 17,
+                    color: Colors.white,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
               )
             ],
           ),

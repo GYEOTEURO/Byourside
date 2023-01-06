@@ -156,7 +156,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                             }
                           },
                           style: const TextStyle(
-                              color: Colors.black, fontSize: 17),
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -181,8 +184,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: const Text("취소",
-                      semanticsLabel: "취소", style: TextStyle(fontSize: 17)),
+                  child: const Text(
+                    "취소",
+                    semanticsLabel: "취소",
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -218,8 +227,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: const Text("만들기",
-                      semanticsLabel: "만들기", style: TextStyle(fontSize: 17)),
+                  child: const Text(
+                    "만들기",
+                    semanticsLabel: "만들기",
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                  ),
                 )
               ],
             );
@@ -292,10 +307,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
           SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Text("추가 버튼을 눌러 채팅을 시작하세요.",
-                semanticsLabel: "추가 버튼을 눌러 채팅을 시작하세요.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 17)),
+            child: Text(
+              "추가 버튼을 눌러 채팅을 시작하세요.",
+              semanticsLabel: "추가 버튼을 눌러 채팅을 시작하세요.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+            ),
           )
         ],
       ),

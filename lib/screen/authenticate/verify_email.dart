@@ -104,7 +104,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     child: Text(
                       '확인 이메일이 전송되었습니다.\n메일함을 확인하세요',
                       semanticsLabel: '확인 이메일이 전송되었습니다. 메일함을 확인하세요',
-                      style: TextStyle(fontSize: 24, color: primaryColor),
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: primaryColor,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -114,7 +118,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     child: Text(
                       '(2분 후 재전송 가능합니다)',
                       semanticsLabel: '(2분 후 재전송 가능합니다)',
-                      style: TextStyle(fontSize: 17, color: primaryColor),
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: primaryColor,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -133,7 +141,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
                           label: Text(
                             '이메일 재전송',
                             semanticsLabel: "이메일 재전송",
-                            style: TextStyle(fontSize: 24),
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
                           ),
                           onPressed: (() async {
                             HapticFeedback.lightImpact(); // 약한 진동
@@ -158,7 +169,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       child: Text(
                         '취소',
                         semanticsLabel: '취소',
-                        style: TextStyle(fontSize: 24, color: primaryColor),
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: primaryColor,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
                         HapticFeedback.lightImpact(); // 약한 진동

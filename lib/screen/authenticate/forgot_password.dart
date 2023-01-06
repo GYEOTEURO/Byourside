@@ -49,7 +49,11 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                     "비밀번호를 재설정할 이메일을 입력하세요.", //semanticLabel 속성 추가하기
 
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, color: primaryColor),
+                style: TextStyle(
+                    fontSize: 24,
+                    color: primaryColor,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
               ),
               SizedBox(height: height * 0.01),
               TextFormField(
@@ -76,8 +80,16 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                       const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   hintText: "(예: abcd@google.com)",
                   labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-                  labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
+                  labelStyle: TextStyle(
+                      color: primaryColor,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (email) =>
@@ -93,7 +105,10 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                 icon: const Icon(Icons.email_outlined, semanticLabel: "메일"),
                 label: const Text(
                   '비밀번호 재설정',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
                   semanticsLabel: "비밀번호 재설정",
                 ),
                 onPressed: () {

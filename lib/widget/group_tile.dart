@@ -52,18 +52,26 @@ class _GroupTileState extends State<GroupTile> {
                     : widget.groupName.substring(0, 1).toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w600),
+                    color: Colors.white,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
               ),
             ),
             title: Text(
               widget.groupName,
               semanticsLabel: widget.groupName,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic'),
             ),
             subtitle: Text(
               // widget.recentMsg,
               widget.groupId, semanticsLabel: widget.groupId,
-              style: const TextStyle(fontSize: 15),
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
             ),
           ),
         ));

@@ -187,10 +187,16 @@ class _protectorState extends State<protector> {
                                 borderRadius: BorderRadius.circular(20)),
                             labelText: "보호자 나이",
                             hintText: "(예: 33)",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 17),
-                            labelStyle:
-                                TextStyle(color: primaryColor, fontSize: 17),
+                            hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
+                            labelStyle: TextStyle(
+                                color: primaryColor,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
                           ),
                           keyboardType: TextInputType.number,
                           controller: _protectorAge,
@@ -219,10 +225,16 @@ class _protectorState extends State<protector> {
                                 borderRadius: BorderRadius.circular(20)),
                             labelText: "자녀 나이",
                             hintText: "(예: 7)",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 17),
-                            labelStyle:
-                                TextStyle(color: primaryColor, fontSize: 17),
+                            hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
+                            labelStyle: TextStyle(
+                                color: primaryColor,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
                           ),
                           keyboardType: TextInputType.number,
                           controller: _childAge,
@@ -251,10 +263,16 @@ class _protectorState extends State<protector> {
                                 borderRadius: BorderRadius.circular(20)),
                             labelText: "소속 복지관/학교",
                             hintText: "(예: 서울뇌성마비복지관)",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 17),
-                            labelStyle:
-                                TextStyle(color: primaryColor, fontSize: 17),
+                            hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
+                            labelStyle: TextStyle(
+                                color: primaryColor,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
                           ),
                           controller: _belong,
                           validator: (value) {
@@ -276,9 +294,14 @@ class _protectorState extends State<protector> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text("보호자 성별",
-                                        semanticsLabel: "보호자 성별",
-                                        style: TextStyle(fontSize: 17)),
+                                    Text(
+                                      "보호자 성별",
+                                      semanticsLabel: "보호자 성별",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                     SizedBox(
                                       width: 30,
                                     ),
@@ -316,9 +339,14 @@ class _protectorState extends State<protector> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("자녀 성별",
-                                          semanticsLabel: "자녀 성별",
-                                          style: TextStyle(fontSize: 17)),
+                                      Text(
+                                        "자녀 성별",
+                                        semanticsLabel: "자녀 성별",
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                       SizedBox(
                                         width: 30,
                                       ),
@@ -355,9 +383,14 @@ class _protectorState extends State<protector> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("장애 유형",
-                                        semanticsLabel: "장애 유형",
-                                        style: TextStyle(fontSize: 17)),
+                                    Text(
+                                      "장애 유형",
+                                      semanticsLabel: "장애 유형",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                     SizedBox(
                                       width: 30,
                                     ),
@@ -393,9 +426,14 @@ class _protectorState extends State<protector> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("장애 정도",
-                                        semanticsLabel: "장애 정도",
-                                        style: TextStyle(fontSize: 17)),
+                                    Text(
+                                      "장애 정도",
+                                      semanticsLabel: "장애 정도",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                     SizedBox(
                                       width: 30,
                                     ),
@@ -462,8 +500,14 @@ class _protectorState extends State<protector> {
             ;
           },
           backgroundColor: primaryColor,
-          child: const Text("완료",
-              semanticsLabel: "완료", style: TextStyle(fontSize: 17)),
+          child: const Text(
+            "완료",
+            semanticsLabel: "완료",
+            style: TextStyle(
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+          ),
         ));
   }
 }

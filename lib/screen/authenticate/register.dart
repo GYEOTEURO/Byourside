@@ -58,7 +58,11 @@ class _Register extends State<Register> {
         child: Text(
           "휴대폰 인증",
           semanticsLabel: "휴대폰 인증",
-          style: TextStyle(color: Colors.white, fontSize: 17),
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
         ),
       ),
@@ -75,7 +79,11 @@ class _Register extends State<Register> {
             return '유효한 이메일 주소를 입력하세요.';
           }
         },
-        style: const TextStyle(color: Colors.black, fontSize: 17),
+        style: const TextStyle(
+            color: Colors.black,
+            fontSize: 17,
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.w500),
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -89,8 +97,16 @@ class _Register extends State<Register> {
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "(예: abcd@google.com)",
             labelText: "이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)",
-            hintStyle: TextStyle(color: Colors.grey, fontSize: 20),
-            labelStyle: TextStyle(color: primaryColor, fontSize: 20),
+            hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 20,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+            labelStyle: TextStyle(
+                color: primaryColor,
+                fontSize: 20,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
 
@@ -107,7 +123,11 @@ class _Register extends State<Register> {
           // Return null if the entered password is valid
           return null;
         },
-        style: const TextStyle(color: Colors.black, fontSize: 17),
+        style: const TextStyle(
+            color: Colors.black,
+            fontSize: 17,
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.w500),
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -121,8 +141,16 @@ class _Register extends State<Register> {
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "(예: 12345678)",
             labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
-            hintStyle: TextStyle(color: Colors.grey, fontSize: 20),
-            labelStyle: TextStyle(color: primaryColor, fontSize: 20),
+            hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 20,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+            labelStyle: TextStyle(
+                color: primaryColor,
+                fontSize: 20,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscureText ? Icons.visibility : Icons.visibility_off,
@@ -144,9 +172,15 @@ class _Register extends State<Register> {
           FirebaseAuth.instance.currentUser?.delete();
           widget.toggleView!();
         },
-        child: const Text('로그인 페이지로 돌아가기',
-            semanticsLabel: "로그인 페이지로 돌아가기",
-            style: TextStyle(color: primaryColor, fontSize: 17)));
+        child: const Text(
+          '로그인 페이지로 돌아가기',
+          semanticsLabel: "로그인 페이지로 돌아가기",
+          style: TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+        ));
 
     final linkButton = ElevatedButton(
         style: ButtonStyle(
@@ -156,9 +190,15 @@ class _Register extends State<Register> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const PersonalData()));
         },
-        child: Text('개인정보처리방침',
-            semanticsLabel: '개인정보처리방침',
-            style: TextStyle(color: Colors.white, fontSize: 17)));
+        child: Text(
+          '개인정보처리방침',
+          semanticsLabel: '개인정보처리방침',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+        ));
 
     final registerButton = Material(
       elevation: 5.0,
@@ -181,8 +221,13 @@ class _Register extends State<Register> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: Text(result.code,
-                            style: TextStyle(color: Colors.black)),
+                        content: Text(
+                          result.code,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                        ),
                       );
                     });
               } else {
@@ -193,9 +238,14 @@ class _Register extends State<Register> {
                   context: context,
                   builder: (context) {
                     return const AlertDialog(
-                      content: Text("재시도 하세요.",
-                          semanticsLabel: "재시도 하세요.",
-                          style: TextStyle(color: Colors.black)),
+                      content: Text(
+                        "재시도 하세요.",
+                        semanticsLabel: "재시도 하세요.",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
+                      ),
                     );
                   });
             }
@@ -204,7 +254,11 @@ class _Register extends State<Register> {
         child: Text(
           "동의하고 회원가입",
           semanticsLabel: "동의하고 회원가입",
-          style: TextStyle(color: Colors.white, fontSize: 17),
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
         ),
       ),
