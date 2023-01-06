@@ -130,12 +130,10 @@ class _PostCategoryState extends State<PostCategory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(
-          widget.title,
-          semanticsLabel: widget.title,
-        ),
-        titleTextStyle:
-            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
+        title: Text(widget.title,
+            semanticsLabel: widget.title,
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
