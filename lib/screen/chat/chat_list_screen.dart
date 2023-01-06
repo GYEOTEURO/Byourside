@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
-
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/chat/search_page.dart';
@@ -9,6 +8,7 @@ import 'package:byourside/widget/group_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ChatListScreen extends StatefulWidget {
   const ChatListScreen({Key? key}) : super(key: key);
@@ -64,19 +64,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
         .collection("user")
         .where(_auth.currentUser!.uid)
         .snapshots();
-
-    // Future<QuerySnapshot<Map<String, dynamic>>> li = FirebaseFirestore.instance
-    //       .collection('groups')
-    //       .where("members",
-    //           isEqualTo:
-    //               "${_auth.currentUser!.uid}_${_auth.currentUser!.displayName}")
-    //       .get();
   }
 
   gettingUserData() async {
-    // _auth.currentUser!.displayName;
-    // _auth.currentUser!.email;
-
     // getting the list of snapshots in our stream
     await ChatList(uid: _auth.currentUser!.uid)
         .getUserGroups()
@@ -91,11 +81,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
               onPressed: () {
+                HapticFeedback.lightImpact(); // 약한 진동
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -103,20 +96,21 @@ class _ChatListScreenState extends State<ChatListScreen> {
               },
               icon: const Icon(
                 Icons.search,
+                semanticLabel: "검색", //semanticLabel 속성 추가하기
               ))
         ],
         elevation: 0,
         centerTitle: true,
         title: const Text(
-          '메세지 목록',
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
+          '채팅 목록',
         ),
+        titleTextStyle: TextStyle(fontSize: height * 0.04),
         backgroundColor: primaryColor,
       ),
       body: groupList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          HapticFeedback.lightImpact(); // 약한 진동
           popUpDialog(context);
         },
         elevation: 0,
@@ -124,7 +118,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         child: const Icon(
           Icons.add,
           color: Colors.white,
-          size: 30,
+          semanticLabel: "추가", //semanticLabel 속성 추가하기
         ),
       ),
     );
@@ -157,7 +151,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               });
                             }
                           },
-                          style: const TextStyle(color: Colors.black),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 17),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -177,18 +172,17 @@ class _ChatListScreenState extends State<ChatListScreen> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    HapticFeedback.lightImpact(); // 약한 진동
                     Navigator.of(context).pop();
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: const Text("취소"),
+                  child: const Text("취소", style: TextStyle(fontSize: 17)),
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    HapticFeedback.lightImpact(); // 약한 진동
                     if (groupName != "") {
-                      // setState(() {
-                      //   _isLoading = true;
-                      // });
                       if (await checkGroupExist(groupName) != true) {
                         ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
                             .createGroup(
@@ -216,7 +210,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: const Text("만들기"),
+                  child: const Text("만들기", style: TextStyle(fontSize: 17)),
                 )
               ],
             );
@@ -232,16 +226,21 @@ class _ChatListScreenState extends State<ChatListScreen> {
           if (snapshot.hasData) {
             if (snapshot.data['groups'] != null) {
               if (snapshot.data['groups'].length != 0) {
-                return ListView.builder (
+                return ListView.builder(
+                  padding: EdgeInsets.all(5),
                   itemCount: snapshot.data['groups'].length,
                   itemBuilder: (context, index) {
-                     return GroupTile(
+                    int reverseIndex =
+                        snapshot.data['groups'].length - index - 1;
+
+                    return GroupTile(
                         userName: snapshot.data['nickname'],
-                        groupId: getId(snapshot.data['groups'][index]),
-                        groupName: getName(snapshot.data['groups'][index]),
+                        groupId: getId(snapshot.data['groups'][reverseIndex]),
+                        groupName:
+                            getName(snapshot.data['groups'][reverseIndex]),
                         recentMsg: ""
                         //recentMsg: getRecentMsg(snapshot.data['groups'][index])
-                        
+
                         );
                   },
                 );
@@ -260,31 +259,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
           }
         });
   }
-  // return StreamBuilder<QuerySnapshot>(
-  //   stream: getGroups(),
-  //   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  //     return snapshot.hasData
-  //         ? ListView.builder(
-  //             scrollDirection: Axis.vertical,
-  //             shrinkWrap: true,
-  //             itemCount: snapshot.data?.docs.length,
-  //             itemBuilder: (context, index) {
-
-  // String recent;
-  // FirebaseFirestore.instance
-  //         .collection('groups')
-  //         .doc(snapshot.data['groups'][index])
-  //         .get().then((value) => value.data().toString());
-  // int reverseIndex = snapshot.data['groups'].length - index - 1;
-  //   return GroupTile(
-  //       userName: FirebaseAuth.instance.currentUser!.displayName
-  //           .toString(),
-  //       groupId: snapshot.data?.docs[index]['groupId'],
-  //       groupName: snapshot.data?.docs[index]['groupName'],
-  //       recentMsg: snapshot.data?.docs[index]['recentMessage']);
-  // },
-  //   )
-  // : Container();
 
   noGroupWidget() {
     return Container(
@@ -295,21 +269,19 @@ class _ChatListScreenState extends State<ChatListScreen> {
         children: [
           GestureDetector(
             onTap: () {
+              HapticFeedback.lightImpact(); // 약한 진동
               popUpDialog(context);
             },
             child: Icon(
               Icons.add_circle,
-              color: Colors.grey[700],
+              color: Colors.black,
+              semanticLabel: "추가", //semanticLabel 속성 추가하기
               size: 75,
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            "추가 버튼을 눌러 채팅을 시작하세요.",
-            textAlign: TextAlign.center,
-          )
+          SizedBox(height: 20),
+          const Text("추가 버튼을 눌러 채팅을 시작하세요.",
+              textAlign: TextAlign.center, style: TextStyle(fontSize: 17)),
         ],
       ),
     );
