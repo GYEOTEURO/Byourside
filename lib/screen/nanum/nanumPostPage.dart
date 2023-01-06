@@ -2,6 +2,7 @@ import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -146,6 +147,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                         ),
                         IconButton(
                             onPressed: () async {
+                              HapticFeedback.lightImpact(); // 약한 진동
                               _type = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -156,7 +158,10 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                           )));
                               print("타입: ${_type}");
                             },
-                            icon: Icon(Icons.navigate_next))
+                            icon: Icon(
+                              Icons.navigate_next,
+                              semanticLabel: '카테고리(장애 유형) 선택',
+                            ))
                       ],
                     )),
                 // 사진 및 영상 첨부
@@ -176,10 +181,14 @@ class _NanumPostPageState extends State<NanumPostPage> {
                           ),
                           IconButton(
                               onPressed: () {
+                                HapticFeedback.lightImpact(); // 약한 진동
                                 getImage(ImageSource.gallery);
                                 _show();
                               },
-                              icon: Icon(Icons.attach_file))
+                              icon: Icon(
+                                Icons.attach_file,
+                                semanticLabel: '사진이나 영상 첨부',
+                              ))
                         ],
                       ),
                       Visibility(
@@ -233,7 +242,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]'))
                       ],
-                      decoration: InputDecoration(labelText: "가격을 입력하세요"),
+                      decoration: InputDecoration(
+                          labelText: "가격을 입력하세요",
+                          hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)'),
                       controller: _price,
                     )),
                 // 게시글 내용
@@ -259,27 +270,39 @@ class _NanumPostPageState extends State<NanumPostPage> {
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Navigator.pop(context);
-          List<String> urls =
-              _images.isEmpty ? [] : await DBSet.uploadFile(_images);
-          NanumPostModel postData = NanumPostModel(
-              uid: user!.uid,
-              nickname: user!.displayName,
-              title: _title.text,
-              content: _content.text,
-              price: _price.text,
-              type: _type,
-              isCompleted: false,
-              datetime: Timestamp.now(),
-              images: urls,
-              likes: 0,
-              likesPeople: [],
-              scrapPeople: [],
-              keyword: _title.text.split(' '));
-          DBSet.addNanumPost('nanumPost', postData);
+          HapticFeedback.lightImpact(); // 약한 진동
+          if (_price.text.isEmpty) {
+            Get.snackbar(
+              '전송 실패!',
+              '문의 사항을 적어주세요',
+              backgroundColor: Colors.white,
+            );
+          } else {
+            Navigator.pop(context);
+            List<String> urls =
+                _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+            NanumPostModel postData = NanumPostModel(
+                uid: user!.uid,
+                nickname: user!.displayName,
+                title: _title.text,
+                content: _content.text,
+                price: _price.text,
+                type: _type,
+                isCompleted: false,
+                datetime: Timestamp.now(),
+                images: urls,
+                likes: 0,
+                likesPeople: [],
+                scrapPeople: [],
+                keyword: _title.text.split(' '));
+            DBSet.addNanumPost('nanumPost', postData);
+          }
         },
         backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.navigate_next),
+        child: const Icon(
+          Icons.navigate_next,
+          semanticLabel: '마음 나눔 게시글 작성 완료',
+        ),
       ),
     );
   }

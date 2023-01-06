@@ -1,5 +1,6 @@
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -72,6 +73,7 @@ class _PostCategoryState extends State<PostCategory> {
   }
 
   void _onClickCategory(int index) {
+    HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
       if (categoryList[index].selected) {
         categoryList[index].selected = false;
@@ -104,6 +106,7 @@ class _PostCategoryState extends State<PostCategory> {
   ];
 
   void _onClickType(int index) {
+    HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
       if (typeList[index].selected) {
         typeList[index].selected = false;
@@ -139,6 +142,7 @@ class _PostCategoryState extends State<PostCategory> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            HapticFeedback.lightImpact(); // 약한 진동
             // 선택한 게시판 종류 반영
             widget.categories.category = null;
             for (int i = 0; i < categoryList.length; i++) {
@@ -161,7 +165,10 @@ class _PostCategoryState extends State<PostCategory> {
 
             Navigator.pop(context, widget.categories);
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            semanticLabel: '뒤로가기',
+          ),
           color: Colors.white,
         ),
       ),

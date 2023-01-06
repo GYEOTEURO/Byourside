@@ -1,6 +1,7 @@
 import 'package:byourside/screen/nanum/nanumPostPage.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -54,6 +55,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
   }
 
   void _onClickType(int index) {
+    HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
       if (typeList[index].selected) {
         typeList[index].selected = false;
@@ -87,6 +89,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            HapticFeedback.lightImpact(); // 약한 진동
             _type = null;
             for (int i = 0; i < typeList.length; i++) {
               if (typeList[i].selected) {
@@ -96,7 +99,10 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
             }
             Navigator.pop(context, _type);
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            semanticLabel: '뒤로가기',
+          ),
           color: Colors.white,
         ),
       ),

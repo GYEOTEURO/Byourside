@@ -8,6 +8,7 @@ import 'package:byourside/screen/mypage/to_developer.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Mypage extends StatefulWidget {
   @override
@@ -38,10 +39,10 @@ class _Mypage extends State<Mypage> {
     "마음나눔 스크랩"
   ];
   final List<Icon> myIcons = <Icon>[
-    Icon(Icons.groups),
-    Icon(Icons.volunteer_activism),
-    Icon(Icons.star_border_outlined),
-    Icon(Icons.star_border_outlined)
+    Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),
+    Icon(Icons.volunteer_activism, semanticLabel: '내가 쓴 마음나눔 글 목록 화면으로 이동'),
+    Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음온도 글 목록 화면으로 이동'),
+    Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음나눔 글 목록 화면으로 이동')
   ];
   final List<Widget> myConnectPage = <Widget>[
     MyOndoPost(),
@@ -52,9 +53,9 @@ class _Mypage extends State<Mypage> {
 
   final List<String> etcEntires = <String>["자주 묻는 질문", "개발자에게 문의하기", "로그아웃"];
   final List<Icon> etcIcons = <Icon>[
-    Icon(Icons.help),
-    Icon(Icons.question_answer),
-    Icon(Icons.logout)
+    Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
+    Icon(Icons.question_answer, semanticLabel: '개발자에게 문의하기 화면으로 이동'),
+    Icon(Icons.logout, semanticLabel: '로그아웃')
   ];
 
   void _logout(context) async {
@@ -90,7 +91,10 @@ class _Mypage extends State<Mypage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('마이페이지'),
+        title: const Text(
+          '마이페이지',
+          semanticsLabel: '마이페이지(나의 정보 화면)',
+        ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
@@ -102,12 +106,13 @@ class _Mypage extends State<Mypage> {
             Row(
               children: [
                 RawMaterialButton(
-                  onPressed: () {},
+                  onPressed: null,
                   elevation: 2.0,
                   fillColor: Colors.grey,
                   child: Icon(
                     Icons.person,
                     size: 50.0,
+                    semanticLabel: '사용자의 기본 프로필 사진',
                   ),
                   padding: EdgeInsets.all(15.0),
                   shape: CircleBorder(),
@@ -117,6 +122,8 @@ class _Mypage extends State<Mypage> {
                 ),
                 // 나만의 명함 만들기
                 Text(displayName,
+                    overflow: TextOverflow.ellipsis,
+                    semanticsLabel: '사용자 닉네임: ${displayName}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 25,
@@ -135,6 +142,7 @@ class _Mypage extends State<Mypage> {
             // 이름 입력
             Text(
               "나의 활동",
+              semanticsLabel: '나의 활동',
               style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -157,9 +165,11 @@ class _Mypage extends State<Mypage> {
                         icon: myIcons[index],
                         label: Text(
                           myEntires[index],
+                          semanticsLabel: myEntires[index],
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                         onPressed: () {
+                          HapticFeedback.lightImpact(); // 약한 진동
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -173,6 +183,7 @@ class _Mypage extends State<Mypage> {
             ),
             Text(
               "기타",
+              semanticsLabel: '기타',
               style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -195,9 +206,11 @@ class _Mypage extends State<Mypage> {
                         icon: etcIcons[index],
                         label: Text(
                           etcEntires[index],
+                          semanticsLabel: etcEntires[index],
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                         onPressed: () async {
+                          HapticFeedback.lightImpact(); // 약한 진동
                           if (index == 0) {
                             await Navigator.push(
                               context,
