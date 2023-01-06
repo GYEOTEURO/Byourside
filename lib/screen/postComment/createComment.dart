@@ -1,13 +1,19 @@
 import 'package:byourside/model/db_set.dart';
+import 'package:byourside/screen/postComment/scrollController.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import '../../main.dart';
 import '../../model/comment.dart';
 
-
 class CreateComment extends StatefulWidget {
-  const CreateComment({super.key, required this.collectionName, required this.documentID, required this.primaryColor});
+  const CreateComment(
+      {super.key,
+      required this.collectionName,
+      required this.documentID,
+      required this.primaryColor});
 
   final String collectionName;
   final String documentID;
@@ -18,40 +24,50 @@ class CreateComment extends StatefulWidget {
 }
 
 class _CreateCommentState extends State<CreateComment> {
-
   final User? user = FirebaseAuth.instance.currentUser;
+  final scrollController = Get.put(ScrollDownForComment());
 
   @override
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
     final TextEditingController comment = TextEditingController();
-    
-    return Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: comment,
-                    minLines: 1,
-                    maxLines: 8,
-                    decoration: const InputDecoration(
-                      labelText: "댓글을 작성해주세요.",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1),
-                      ),
-                    )
-                ),
-                ),
-                FloatingActionButton.extended(
-                  heroTag: 'saveComment',
+
+    return GestureDetector(
+        //onTap: () => HapticFeedback.lightImpact(), //약한 진동
+        child: Row(children: [
+          Expanded(
+            child: TextField(
+                controller: comment,
+                minLines: 1,
+                maxLines: 5,
+                decoration: InputDecoration(
+                  labelText: "댓글을 작성해주세요.",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    borderSide: BorderSide(width: 1),
+                  ),
+                suffixIcon: IconButton(
                   onPressed: () {
-                    CommentModel commentData = CommentModel(uid: user!.uid, nickname: "mg", content: comment.text, datetime: Timestamp.now());
-                    DBSet.addComment(collectionName, documentID, commentData); 
+                    HapticFeedback.lightImpact(); // 약한 진동
+                    FocusScope.of(context).unfocus();
+                    CommentModel commentData = CommentModel(
+                        uid: user!.uid,
+                        nickname: user!.displayName,
+                        content: comment.text,
+                        datetime: Timestamp.now());
+                    DBSet.addComment(collectionName, documentID, commentData);
+                    scrollController.scrollController.animateTo(
+                      scrollController.scrollController.position.maxScrollExtent, 
+                      duration: Duration(milliseconds: 10), 
+                      curve: Curves.ease);
                   },
-                  label: const Icon(Icons.send),
-                  backgroundColor: primaryColor, 
-                ),
-              ]
-  );}
+                  icon: Icon(Icons.send, 
+                    semanticLabel: "작성한 댓글 저장",
+                    color: primaryColor,
+                  ))
+                )),
+          ),
+        ]));
+  }
 }

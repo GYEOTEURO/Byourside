@@ -20,18 +20,19 @@ class MessageTile extends StatefulWidget {
 class _MessageTileState extends State<MessageTile> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Container(
         padding: EdgeInsets.only(
-            top: 4,
-            bottom: 4,
-            left: widget.sentByMe ? 0 : 24,
-            right: widget.sentByMe ? 24 : 0),
+            top: 5,
+            bottom: 5,
+            left: widget.sentByMe ? 0 : 20,
+            right: widget.sentByMe ? 20 : 0),
         alignment:
             widget.sentByMe ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           margin: widget.sentByMe
-              ? const EdgeInsets.only(left: 30)
-              : const EdgeInsets.only(right: 30),
+              ? const EdgeInsets.only(left: 20)
+              : const EdgeInsets.only(right: 20),
           padding:
               const EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
           decoration: BoxDecoration(
@@ -46,26 +47,33 @@ class _MessageTileState extends State<MessageTile> {
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20),
                   ),
-            color: widget.sentByMe
-                ? primaryColor
-                : Colors.grey[700],
+            color: widget.sentByMe ? primaryColor : Colors.grey[700],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.sender.toUpperCase(),
+                semanticsLabel: widget.sender,
                 textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: -0.5),
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 2,
+                  fontFamily: 'NanumGothic',
+                ),
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              SizedBox(height: height * 0.01),
               Text(
                 widget.message,
+                semanticsLabel: widget.message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 17,
+                    color: Colors.white,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
               )
             ],
           ),
