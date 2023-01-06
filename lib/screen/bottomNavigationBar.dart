@@ -32,7 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
 
   List<Icon> bottomIcons = [
-    Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
+    Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
     Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
     Icon(Icons.chat_outlined, semanticLabel: "채팅"),
     Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
