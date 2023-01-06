@@ -6,6 +6,7 @@ import 'package:byourside/screen/authenticate/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
@@ -103,8 +104,11 @@ class _OTPScreenState extends State<OTPScreen> {
         key: _formKey,
         appBar: AppBar(
           centerTitle: true,
-          titleTextStyle: TextStyle(fontSize: height * 0.04),
-          title: Text('OTP 인증'),
+          titleTextStyle: TextStyle(fontSize: height * 0.03),
+          title: Text(
+            'OTP 인증',
+            semanticsLabel: 'OTP 인증',
+          ),
           backgroundColor: primaryColor,
         ),
         body: Column(
@@ -114,9 +118,10 @@ class _OTPScreenState extends State<OTPScreen> {
               child: Center(
                 child: Text(
                   '+82-${widget.phone}로 전송된\n인증번호를 입력하세요.',
+                  semanticsLabel: "+82-${widget.phone}로 전송된\n인증번호를 입력하세요.",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 26,
+                    fontSize: 24,
                   ),
                 ),
               ),
@@ -160,8 +165,10 @@ class _OTPScreenState extends State<OTPScreen> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(primaryColor)),
+                backgroundColor: MaterialStateProperty.all(primaryColor),
+              ),
               onPressed: () async {
+                HapticFeedback.lightImpact(); // 약한 진동
                 String pin = otpCode.text.toString();
                 try {
                   if (FirebaseAuth.instance.currentUser!.phoneNumber == null) {
@@ -202,18 +209,18 @@ class _OTPScreenState extends State<OTPScreen> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            content: Text("재시도하세요. 오류: $e",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize:
-                                        17)), //"인증번호가 일치하지 않습니다.\n재시도하세요."),
+                            content: Text("인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                style: const TextStyle(color: Colors.black)),
                           );
                         });
                   }
                 }
               },
-              child: Text("다음", style: TextStyle(fontSize: 17)),
+              child: Text("다음",
+                  semanticsLabel: "다음", style: TextStyle(fontSize: 17)),
             ),
+            SizedBox(height: height * 0.04),
             canResnedPhone
                 ? ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -230,11 +237,13 @@ class _OTPScreenState extends State<OTPScreen> {
                       style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
+                      HapticFeedback.lightImpact(); // 약한 진동
                       verifyPhone();
                     },
                   )
                 : SizedBox(
                     height: height * 0.01,
+                    width: width * 0.01,
                   ),
           ],
         ),
@@ -275,7 +284,8 @@ class _OTPScreenState extends State<OTPScreen> {
                 builder: (context) {
                   return AlertDialog(
                     content: Text('인증 가능한 기간이 지났습니다. 재시도하세요.',
-                        style: TextStyle(color: Colors.black, fontSize: 17)),
+                        semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
+                        style: TextStyle(color: Colors.black)),
                   );
                 });
           }
@@ -288,13 +298,9 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
-    print("인증 완료 ${authCredential.smsCode}");
     await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
     setState(() {
       otpCode.text = authCredential.smsCode!;
     });
-    // if (authCredential.smsCode != null) {
-    //   print("complete");
-    // }
   }
 }

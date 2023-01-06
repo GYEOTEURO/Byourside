@@ -41,7 +41,7 @@ class _Register extends State<Register> {
     double width = MediaQuery.of(context).size.width;
     final loginPhoneButton = Material(
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(20.0),
       color: Theme.of(context).primaryColor,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
@@ -56,6 +56,7 @@ class _Register extends State<Register> {
         },
         child: Text(
           "휴대폰 인증",
+          semanticsLabel: "휴대폰 인증",
           style: TextStyle(
               color: Theme.of(context).primaryColorLight, fontSize: 17),
           textAlign: TextAlign.center,
@@ -74,14 +75,24 @@ class _Register extends State<Register> {
             return '유효한 이메일 주소를 입력하세요.';
           }
         },
+        style: const TextStyle(color: Colors.black, fontSize: 17),
         decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                borderRadius: BorderRadius.circular(20)),
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "(예: abcd@google.com)",
             labelText: "이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)",
             hintStyle: TextStyle(color: Colors.grey, fontSize: 20),
             labelStyle: TextStyle(color: primaryColor, fontSize: 20),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
 
     final passwordField = TextFormField(
         obscureText: _obscureText,
@@ -96,7 +107,17 @@ class _Register extends State<Register> {
           // Return null if the entered password is valid
           return null;
         },
+        style: const TextStyle(color: Colors.black, fontSize: 17),
         decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                borderRadius: BorderRadius.circular(20)),
             contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "(예: 12345678)",
             labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
@@ -115,7 +136,7 @@ class _Register extends State<Register> {
               },
             ),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
 
     final txtButton = TextButton(
         onPressed: () {
@@ -124,6 +145,7 @@ class _Register extends State<Register> {
           widget.toggleView!();
         },
         child: const Text('로그인 페이지로 돌아가기',
+            semanticsLabel: "로그인 페이지로 돌아가기",
             style: TextStyle(color: primaryColor, fontSize: 17)));
 
     final linkButton = ElevatedButton(
@@ -134,11 +156,12 @@ class _Register extends State<Register> {
           _launchUrl;
         },
         child: Text('개인정보처리방침',
+            semanticsLabel: '개인정보처리방침',
             style: TextStyle(color: Colors.white, fontSize: 17)));
 
     final registerButton = Material(
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(20.0),
       color: Theme.of(context).primaryColor,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
@@ -158,8 +181,7 @@ class _Register extends State<Register> {
                     builder: (context) {
                       return AlertDialog(
                         content: Text(result.code,
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 17)),
+                            style: TextStyle(color: Colors.black)),
                       );
                     });
               } else {
@@ -171,7 +193,8 @@ class _Register extends State<Register> {
                   builder: (context) {
                     return const AlertDialog(
                       content: Text("재시도 하세요.",
-                          style: TextStyle(color: Colors.black, fontSize: 17)),
+                          semanticsLabel: "재시도 하세요.",
+                          style: TextStyle(color: Colors.black)),
                     );
                   });
             }
@@ -179,6 +202,7 @@ class _Register extends State<Register> {
         },
         child: Text(
           "동의하고 회원가입",
+          semanticsLabel: "동의하고 회원가입",
           style: TextStyle(
               color: Theme.of(context).primaryColorLight, fontSize: 17),
           textAlign: TextAlign.center,
@@ -190,8 +214,11 @@ class _Register extends State<Register> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('회원가입'),
-        titleTextStyle: TextStyle(fontSize: height * 0.04),
+        title: const Text(
+          '회원가입',
+          semanticsLabel: '회원가입',
+        ),
+        titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(

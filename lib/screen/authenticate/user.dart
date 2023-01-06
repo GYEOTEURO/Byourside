@@ -32,8 +32,11 @@ class _SetupUserState extends State<SetupUser> {
         appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            title: Text("유형 선택"),
-            titleTextStyle: TextStyle(fontSize: height * 0.04),
+            title: Text(
+              "유형 선택",
+              semanticsLabel: "유형 선택",
+            ),
+            titleTextStyle: TextStyle(fontSize: height * 0.03),
             backgroundColor: primaryColor),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +51,7 @@ class _SetupUserState extends State<SetupUser> {
                       SizedBox(height: height * 0.04),
                       Material(
                           elevation: 5.0,
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(20.0),
                           color: Theme.of(context).primaryColor,
                           child: MaterialButton(
                             minWidth: MediaQuery.of(context).size.width,
@@ -63,16 +66,17 @@ class _SetupUserState extends State<SetupUser> {
                             },
                             child: Text(
                               '장애 아동 보호자',
+                              semanticsLabel: '장애 아동 보호자',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
-                                  fontSize: 17),
+                                  fontSize: 20),
                               textAlign: TextAlign.center,
                             ),
                           )),
                       SizedBox(height: height * 0.04),
                       Material(
                           elevation: 5.0,
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(20.0),
                           color: Theme.of(context).primaryColor,
                           child: MaterialButton(
                             minWidth: MediaQuery.of(context).size.width,
@@ -87,16 +91,17 @@ class _SetupUserState extends State<SetupUser> {
                             },
                             child: Text(
                               '관계자',
+                              semanticsLabel: '관계자',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
-                                  fontSize: 17),
+                                  fontSize: 20),
                               textAlign: TextAlign.center,
                             ),
                           )),
                       SizedBox(height: height * 0.04),
                       Material(
                           elevation: 5.0,
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(20.0),
                           color: Theme.of(context).primaryColor,
                           child: MaterialButton(
                             minWidth: MediaQuery.of(context).size.width,
@@ -111,9 +116,10 @@ class _SetupUserState extends State<SetupUser> {
                             },
                             child: Text(
                               '그외',
+                              semanticsLabel: '그외',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
-                                  fontSize: 17),
+                                  fontSize: 20),
                               textAlign: TextAlign.center,
                             ),
                           )),

@@ -35,13 +35,22 @@ class _Login extends State<Login> {
             ? '유효한 이메일을 입력하세요.'
             : null,
         decoration: InputDecoration(
-            contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "(예: abcd@google.com)",
-            labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
-            hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-            labelStyle: TextStyle(color: primaryColor, fontSize: 17),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))));
+          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "(예: abcd@google.com)",
+          labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+          labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.circular(20)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        ));
 
     final passwordField = TextFormField(
         obscureText: _obscureText,
@@ -57,31 +66,40 @@ class _Login extends State<Login> {
           return null;
         },
         decoration: InputDecoration(
-            contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "(예: 12345678)",
-            labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
-            hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-            labelStyle: TextStyle(color: primaryColor, fontSize: 17),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
-                semanticLabel: "비밀번호 보기",
-              ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
+          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "(예: 12345678)",
+          labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+          labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscureText ? Icons.visibility : Icons.visibility_off,
+              semanticLabel: "비밀번호 보기",
             ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(32.0),
-            )));
+            onPressed: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+          ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.circular(20)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        ));
 
     final registerButton = TextButton(
         onPressed: () {
           widget.toggleView!();
         },
         child: const Text('회원가입',
+            semanticsLabel: '회원가입',
             style: TextStyle(color: primaryColor, fontSize: 17)));
 
     final forgotPassword = TextButton(
@@ -89,11 +107,12 @@ class _Login extends State<Login> {
               builder: (context) => ForgotPassword(),
             )),
         child: const Text('비밀번호 찾기',
+            semanticsLabel: '비밀번호 찾기',
             style: TextStyle(color: primaryColor, fontSize: 17)));
 
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(20.0),
       color: Theme.of(context).primaryColor,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
@@ -109,8 +128,8 @@ class _Login extends State<Login> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: Text("재시도하세요. 오류 : ${result.code}",
-                          style: TextStyle(color: Colors.black, fontSize: 17)),
+                      content: Text("아이디 또는 비밀번호가 일치하지 않습니다.",
+                          style: TextStyle(color: Colors.black)),
                     );
                   });
             }
@@ -118,6 +137,7 @@ class _Login extends State<Login> {
         },
         child: Text(
           "로그인",
+          semanticsLabel: "로그인",
           style: TextStyle(
               color: Theme.of(context).primaryColorLight, fontSize: 17),
           textAlign: TextAlign.center,
@@ -129,8 +149,11 @@ class _Login extends State<Login> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        titleTextStyle: TextStyle(fontSize: height * 0.04),
-        title: const Text('로그인'),
+        titleTextStyle: TextStyle(fontSize: height * 0.03),
+        title: const Text(
+          '로그인',
+          semanticsLabel: "로그인",
+        ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(

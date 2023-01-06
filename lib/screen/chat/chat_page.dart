@@ -54,8 +54,11 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text(widget.groupName),
-        titleTextStyle: TextStyle(fontSize: height * 0.04),
+        title: Text(
+          widget.groupName,
+          semanticsLabel: widget.groupName,
+        ),
+        titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(

@@ -41,9 +41,11 @@ class _participatorState extends State<participator> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                    style: TextStyle(color: Colors.black, fontSize: 17)),
-              );
+                  content: Text(
+                '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                style: TextStyle(color: Colors.black),
+              ));
             });
       }
     } else {
@@ -52,7 +54,8 @@ class _participatorState extends State<participator> {
           builder: (context) {
             return AlertDialog(
               content: Text('사용가능한 닉네임입니다.',
-                  style: TextStyle(color: Colors.black, fontSize: 17)),
+                  semanticsLabel: '사용가능한 닉네임입니다.',
+                  style: TextStyle(color: Colors.black)),
             );
           });
     }
@@ -61,7 +64,16 @@ class _participatorState extends State<participator> {
 
   final nicknameField = Container(
       child: TextFormField(
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
+      errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(20)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
       labelText: "닉네임을 입력하세요",
       hintText: "(예: 홍길동) ",
       hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
@@ -112,8 +124,11 @@ class _participatorState extends State<participator> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("세부 정보 입력"),
-          titleTextStyle: TextStyle(fontSize: height * 0.04),
+          title: Text(
+            "세부 정보 입력",
+            semanticsLabel: "세부 정보 입력",
+          ),
+          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Column(children: [
@@ -128,7 +143,16 @@ class _participatorState extends State<participator> {
                       nicknameField,
                       SizedBox(height: height * 0.02),
                       TextFormField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(20)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(20)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(20)),
                           labelText: "개인/단체 이름",
                           hintText: "(예: 00복지관)",
                           hintStyle:
@@ -148,37 +172,47 @@ class _participatorState extends State<participator> {
                         },
                       ),
                       SizedBox(height: height * 0.05),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("소속", style: TextStyle(fontSize: 17)),
-                          SizedBox(
-                            width: width * 0.1,
-                          ),
-                          ToggleButtons(
-                            direction: Axis.horizontal,
-                            onPressed: (int index) {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              setState(() {
-                                _selectedType[index] = true;
-                                _selectedType[(1 - index).abs()] = false;
-                              });
-                            },
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            selectedBorderColor: primaryColor,
-                            selectedColor: Colors.white,
-                            fillColor: primaryColor,
-                            color: primaryColor,
-                            constraints: BoxConstraints(
-                              minHeight: height * 0.06,
-                              minWidth: width * 0.3,
-                            ),
-                            isSelected: _selectedType,
-                            children: gender,
-                          )
-                        ],
-                      ),
+                      Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(children: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("소속",
+                                      semanticsLabel: "소속",
+                                      style: TextStyle(fontSize: 17)),
+                                  SizedBox(
+                                    width: width * 0.1,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      HapticFeedback.lightImpact(); // 약한 진동
+                                      setState(() {
+                                        _selectedType[index] = true;
+                                        _selectedType[(1 - index).abs()] =
+                                            false;
+                                      });
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
+                                    color: primaryColor,
+                                    constraints: BoxConstraints(
+                                      minHeight: height * 0.06,
+                                      minWidth: width * 0.3,
+                                    ),
+                                    isSelected: _selectedType,
+                                    children: gender,
+                                  )
+                                ],
+                              ),
+                            )
+                          ]))
                     ])),
           )
         ]),
@@ -197,7 +231,8 @@ class _participatorState extends State<participator> {
             }
           },
           backgroundColor: primaryColor,
-          child: const Text("완료", style: TextStyle(fontSize: 17)),
+          child: const Text("완료",
+              semanticsLabel: "완료", style: TextStyle(fontSize: 17)),
         ));
   }
 }

@@ -68,7 +68,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text("오류 : ${e.toString()}"),
+                content: Text("재시도하세요.\n오류 : ${e.toString()}"),
               );
             });
       }
@@ -87,8 +87,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("이메일 확인"),
-          titleTextStyle: TextStyle(fontSize: height * 0.04),
+          title: Text(
+            "이메일 확인",
+            semanticsLabel: "이메일 확인",
+          ),
+          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Padding(
@@ -98,6 +101,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
             children: [
               Text(
                 '확인 이메일이 전송되었습니다.\n메일함을 확인하세요',
+                semanticsLabel: '확인 이메일이 전송되었습니다.\n메일함을 확인하세요',
                 style: TextStyle(fontSize: 24, color: primaryColor),
                 textAlign: TextAlign.center,
               ),
@@ -114,6 +118,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   ),
                   label: Text(
                     '이메일 재전송',
+                    semanticsLabel: "이메일 재전송",
                     style: TextStyle(fontSize: 24),
                   ),
                   onPressed: (() {
@@ -127,6 +132,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   ),
                   child: Text(
                     '취소',
+                    semanticsLabel: '취소',
                     style: TextStyle(fontSize: 24, color: primaryColor),
                   ),
                   onPressed: () {
