@@ -82,13 +82,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {
-                HapticFeedback.lightImpact(); // 약한 진동
+                HapticFeedback.lightImpact();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -96,7 +98,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               },
               icon: const Icon(
                 Icons.search,
-                semanticLabel: "검색", //semanticLabel 속성 추가하기
+                semanticLabel: "검색",
               ))
         ],
         elevation: 0,
@@ -108,10 +110,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
         titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: primaryColor,
       ),
-      body: groupList(),
+      body: groupList(width),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          HapticFeedback.lightImpact(); // 약한 진동
+          HapticFeedback.lightImpact();
           popUpDialog(context);
         },
         elevation: 0,
@@ -119,7 +121,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         child: const Icon(
           Icons.add,
           color: Colors.white,
-          semanticLabel: "추가", //semanticLabel 속성 추가하기
+          semanticLabel: "추가",
         ),
       ),
     );
@@ -226,7 +228,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         });
   }
 
-  groupList() {
+  groupList(double width) {
     return StreamBuilder(
         stream: groups,
         builder: (context, AsyncSnapshot snapshot) {
@@ -253,10 +255,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   },
                 );
               } else {
-                return noGroupWidget();
+                return noGroupWidget(width);
               }
             } else {
-              return noGroupWidget();
+              return noGroupWidget(width);
             }
           } else {
             return const Center(
@@ -268,30 +270,34 @@ class _ChatListScreenState extends State<ChatListScreen> {
         });
   }
 
-  noGroupWidget() {
+  noGroupWidget(double width) {
     return Container(
-      padding: const EdgeInsets.all(100.0),
+      width: width,
+      padding: const EdgeInsets.all(50.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
             onTap: () {
-              HapticFeedback.lightImpact(); // 약한 진동
+              HapticFeedback.lightImpact();
               popUpDialog(context);
             },
             child: Icon(
               Icons.add_circle,
               color: Colors.black,
-              semanticLabel: "추가", //semanticLabel 속성 추가하기
+              semanticLabel: "추가",
               size: 75,
             ),
           ),
-          SizedBox(height: 20),
-          const Text("추가 버튼을 눌러 채팅을 시작하세요.",
-              semanticsLabel: "추가 버튼을 눌러 채팅을 시작하세요.",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 17)),
+          SizedBox(height: 10),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text("추가 버튼을 눌러 채팅을 시작하세요.",
+                semanticsLabel: "추가 버튼을 눌러 채팅을 시작하세요.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17)),
+          )
         ],
       ),
     );
