@@ -95,24 +95,21 @@ class _NanumPostPageState extends State<NanumPostPage> {
       // 상단 앱 바
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          semanticsLabel: widget.title,
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            semanticLabel: '뒤로가기',
+          ),
           color: Colors.white,
         ),
-        actions: const [
-          IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-          )
-        ],
       ),
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: GestureDetector(
@@ -128,7 +125,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                   textInputAction: TextInputAction.next,
                   onSubmitted: (_) =>
                       FocusScope.of(context).requestFocus(myFocus),
-                  decoration: InputDecoration(labelText: "제목을 입력하세요"),
+                  decoration: InputDecoration(
+                      labelText: "제목을 입력하세요", hintText: "제목을 입력하세요"),
                   controller: _title,
                 )),
                 // 카테고리 선택
@@ -140,6 +138,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                       children: [
                         Text(
                           '카테고리 선택',
+                          semanticsLabel: '카테고리(장애 유형) 선택',
                           style: TextStyle(
                               color: Colors.black,
                               letterSpacing: 2.0,
@@ -173,7 +172,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '사진 & 영상 첨부하기',
+                            '사진 첨부하기',
+                            semanticsLabel: '사진 첨부하기',
                             style: TextStyle(
                                 color: Colors.black,
                                 letterSpacing: 2.0,
@@ -187,7 +187,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               },
                               icon: Icon(
                                 Icons.attach_file,
-                                semanticLabel: '사진이나 영상 첨부',
+                                semanticLabel: '사진 첨부하기',
                               ))
                         ],
                       ),
@@ -206,7 +206,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                   crossAxisSpacing: 5,
                                   children: List.generate(
                                       5,
-                                      (index) => DottedBorder(
+                                      (index) => Semantics(
+                                          label: "선택한 사진 목록",
+                                          child: DottedBorder(
                                             color: Colors.grey,
                                             dashPattern: [5, 3],
                                             borderType: BorderType.RRect,
@@ -227,7 +229,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                                                   .path))))
                                                   : null,
                                             ),
-                                          )).toList())))
+                                          ))).toList())))
                     ])),
                 // 가격 설정
                 Container(
@@ -258,6 +260,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                       maxLines: 10,
                       decoration: const InputDecoration(
                         labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                        hintText:
+                            "거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1),
@@ -273,8 +277,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
           HapticFeedback.lightImpact(); // 약한 진동
           if (_price.text.isEmpty) {
             Get.snackbar(
-              '전송 실패!',
-              '문의 사항을 적어주세요',
+              '작성 실패!',
+              '가격을 적어주세요',
               backgroundColor: Colors.white,
             );
           } else {

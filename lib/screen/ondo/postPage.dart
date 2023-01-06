@@ -115,15 +115,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
           ),
           color: Colors.white,
         ),
-        // actions: const [
-        //   IconButton(
-        //     onPressed: null,
-        //     icon: Icon(
-        //       Icons.menu,
-        //       color: Colors.white,
-        //     ),
-        //   )
-        // ],
       ),
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: GestureDetector(
@@ -153,6 +144,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                       children: [
                         Text(
                           '카테고리 선택',
+                          semanticsLabel: '카테고리(게시판 종류와 장애 유형) 선택',
                           style: TextStyle(
                               color: Colors.black,
                               letterSpacing: 2.0,
@@ -187,7 +179,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '사진 & 영상 첨부하기',
+                            '사진 첨부하기',
+                            semanticsLabel: '사진 첨부하기',
                             style: TextStyle(
                                 color: Colors.black,
                                 letterSpacing: 2.0,
@@ -201,7 +194,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                               },
                               icon: Icon(
                                 Icons.attach_file,
-                                semanticLabel: '사진이나 영상 첨부',
+                                semanticLabel: '사진 첨부하기',
                               ))
                         ],
                       ),
