@@ -10,8 +10,27 @@ class NanumPostModel {
   bool? isCompleted;
   Timestamp? datetime;
   List<String>? images;
+  List<String>? type;
+  int? likes;
+  List<String>? likesPeople;
+  List<String>? scrapPeople;
+  List<String>? keyword;
 
-  NanumPostModel({this.id, this.uid, this.title, this.nickname, this.content, this.price, this.isCompleted, this.datetime, this.images});
+  NanumPostModel(
+      {this.id,
+      this.uid,
+      this.title,
+      this.nickname,
+      this.content,
+      this.price,
+      this.isCompleted,
+      this.datetime,
+      this.images,
+      this.type,
+      this.likes,
+      this.likesPeople,
+      this.scrapPeople,
+      this.keyword});
 
   NanumPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
@@ -24,8 +43,24 @@ class NanumPostModel {
         datetime = doc.data()!["datetime"],
         // ignore: prefer_null_aware_operators
         images = doc.data()!["images"] == null
-            ? null : doc.data()!["images"].cast<String>();
-            
+            ? null
+            : doc.data()!["images"].cast<String>(),
+        type = doc.data()!["type"] == null
+            ? null
+            : doc.data()!["type"].cast<String>(),
+        likes = doc.data()!["likes"],
+        // ignore: prefer_null_aware_operators
+        likesPeople = doc.data()!["likesPeople"] == null
+            ? null
+            : doc.data()!["likesPeople"].cast<String>(),
+        // ignore: prefer_null_aware_operators
+        scrapPeople = doc.data()!["scrapPeople"] == null
+            ? null
+            : doc.data()!["scrapPeople"].cast<String>(),
+        keyword = doc.data()!["keyword"] == null
+            ? null
+            : doc.data()!["keyword"].cast<String>();
+
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
@@ -36,6 +71,11 @@ class NanumPostModel {
       'isCompleted': isCompleted,
       'datetime': datetime,
       'images': images,
+      'type': type,
+      'likes': likes,
+      'likesPeople': likesPeople,
+      'scrapPeople': scrapPeople,
+      'keyword': keyword,
     };
   }
 }

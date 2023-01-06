@@ -1,24 +1,65 @@
+import 'package:byourside/screen/authenticate/user.dart';
+import 'package:byourside/screen/authenticate/user_paricipator.dart';
+import 'package:byourside/screen/authenticate/user_protector.dart';
+import 'package:byourside/screen/authenticate/user_someoneElse.dart';
+import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
-import 'package:byourside/screen/home/home.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/screen/ondo/postCategory.dart';
+import 'package:byourside/screen/ondo/postList.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:byourside/screen/bottomNavigationBar.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'firebase_options.dart';
 
+Future<bool> getPermission() async {
+  // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
+  Map<Permission, PermissionStatus> permissions = await [
+    Permission.storage,
+    Permission.speech,
+    Permission.bluetooth,
+    Permission.notification
+  ].request();
+
+  print('per1 : $permissions');
+
+  if (permissions.values.every((element) => element.isGranted)) {
+    return Future.value(true);
+  } else {
+    return Future.value(false);
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  getPermission();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
+  FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.instance;
+  // firebaseAppCheck.installAppCheckProviderFactory(
+  //     PlayIntegrityAppCheckProviderFactory.getInstance());
+  await firebaseAppCheck.activate(
+    webRecaptchaSiteKey: '6LdtvqkjAAAAALWlvmPxUEoi3Sj2bsjbJmJt1Uw8',
+    // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
+    // your preferred provider. Choose from:
+    // 1. debug provider
+    // 2. safety net provider
+    // 3. play integrity provider
+    androidProvider: AndroidProvider.playIntegrity,
+  );
+  runApp(GetMaterialApp(
+    theme: ThemeData(fontFamily: 'NanumGothic'),
     home: MyApp(),
-    debugShowCheckedModeBanner: false,
+    // debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -29,21 +70,29 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late TabController controller;
-
   @override
   Widget build(BuildContext context) {
-    return FirebasePhoneAuthProvider(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: '곁',
-        initialRoute: "/login",
-        routes: {
-          "/login": (context) => LoginScreen(primaryColor: primaryColor),
-          "/home": (context) => BottomNavBar(primaryColor: primaryColor),
-          "/phone": (context) => VerifyPhone(),
-        },
-      ),
+    return Stack(
+      children: <Widget>[
+        FirebasePhoneAuthProvider(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(fontFamily: 'NanumGothic'),
+            title: '곁',
+            initialRoute: "/login",
+            routes: {
+              "/login": (context) => LoginScreen(primaryColor: primaryColor),
+              "/home": (context) => BottomNavBar(primaryColor: primaryColor),
+              "/phone": (context) => VerifyPhone(),
+              "/email": (context) => VerifyEmail(),
+              "/user": (context) => SetupUser(),
+              "/user_protector": (context) => protector(),
+              "/user_participator": (context) => participator(),
+              "/user_someoneElse": (context) => someoneElse(),
+            },
+          ),
+        ),
+      ],
     );
   }
 }
