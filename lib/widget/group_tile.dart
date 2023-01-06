@@ -57,11 +57,13 @@ class _GroupTileState extends State<GroupTile> {
             ),
             title: Text(
               widget.groupName,
+              semanticsLabel: widget.groupName,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
             subtitle: Text(
               // widget.recentMsg,
-              widget.groupId, style: const TextStyle(fontSize: 15),
+              widget.groupId, semanticsLabel: widget.groupId,
+              style: const TextStyle(fontSize: 15),
             ),
           ),
         ));

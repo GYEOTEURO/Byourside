@@ -31,7 +31,11 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         backgroundColor: primaryColor,
         centerTitle: true,
         elevation: 0,
-        title: const Text('비밀번호 변경'),
+        title: const Text(
+          '비밀번호 변경',
+          semanticsLabel: "비밀번호 변경",
+        ),
+        titleTextStyle: TextStyle(fontSize: height * 0.03),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -42,6 +46,9 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
             children: [
               const Text(
                 '비밀번호를 재설정할 이메일을 입력하세요.',
+                semanticsLabel:
+                    "비밀번호를 재설정할 이메일을 입력하세요.", //semanticLabel 속성 추가하기
+
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, color: primaryColor),
               ),
@@ -51,7 +58,20 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                 autofocus: true,
                 cursorColor: primaryColor,
                 textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                      borderRadius: BorderRadius.circular(20)),
+                  errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.red),
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                      borderRadius: BorderRadius.circular(20)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
                   focusColor: primaryColor,
                   contentPadding:
                       const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -69,13 +89,13 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
               SizedBox(height: height * 0.01),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
+                    minimumSize: Size.fromHeight(height * 0.06),
                     backgroundColor: primaryColor),
-                icon:
-                    const Icon(Icons.email_outlined, semanticLabel: "비밀번호 초기화"),
+                icon: const Icon(Icons.email_outlined, semanticLabel: "메일"),
                 label: const Text(
                   '비밀번호 재설정',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 20),
+                  semanticsLabel: "비밀번호 재설정",
                 ),
                 onPressed: () {
                   if (formKey.currentState!.validate()) {

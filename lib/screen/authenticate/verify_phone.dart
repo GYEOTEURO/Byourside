@@ -53,6 +53,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         },
         child: Text(
           '개인정보처리방침',
+          semanticsLabel: '개인정보처리방침',
           style: TextStyle(fontSize: 17),
         ));
 
@@ -60,8 +61,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text("휴대폰 인증"),
-        titleTextStyle: TextStyle(fontSize: height * 0.04),
+        title: Text(
+          "휴대폰 인증",
+          semanticsLabel: "휴대폰 인증",
+        ),
+        titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
@@ -73,6 +77,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               child: const Center(
                 child: Text(
                   '휴대폰 번호 입력',
+                  semanticsLabel: '휴대폰 번호 입력',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
@@ -82,7 +87,18 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 child: Container(
                   margin: EdgeInsets.only(top: 40, right: 20, left: 20),
                   child: TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
+                        errorBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
                         labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
                         hintText: '(예: 1012345678)',
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
@@ -130,10 +146,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                content: Text('이미 가입된 번호입니다.',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 17)),
-                              );
+                                  content: Text(
+                                '이미 가입된 번호입니다.',
+                                semanticsLabel: '이미 가입된 번호입니다.',
+                                style: TextStyle(color: Colors.black),
+                              ));
                             });
                       }
                     } else {
@@ -143,6 +160,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   }
                 },
                 child: Text('동의하고 인증',
+                    semanticsLabel: '동의하고 인증',
                     style: TextStyle(color: Colors.white, fontSize: 17))),
           ),
           SizedBox(height: height * 0.02),

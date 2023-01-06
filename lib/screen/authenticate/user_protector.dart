@@ -53,8 +53,10 @@ class _protectorState extends State<protector> {
             context: context,
             builder: (context) {
               return const AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                    style: TextStyle(fontSize: 17)),
+                content: Text(
+                  '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                  semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                ),
               );
             });
       }
@@ -63,7 +65,10 @@ class _protectorState extends State<protector> {
           context: context,
           builder: (context) {
             return const AlertDialog(
-              content: Text('사용가능한 닉네임입니다.', style: TextStyle(fontSize: 17)),
+              content: Text(
+                '사용가능한 닉네임입니다.',
+                semanticsLabel: '사용가능한 닉네임입니다.',
+              ),
             );
           });
     }
@@ -79,7 +84,16 @@ class _protectorState extends State<protector> {
 
   final nicknameField = Container(
       child: TextFormField(
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
+      errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(20)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
       labelText: "닉네임을 입력하세요",
       hintText: "(예: 홍길동) ",
       hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
@@ -142,24 +156,36 @@ class _protectorState extends State<protector> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("세부 정보 입력"),
-          titleTextStyle: TextStyle(fontSize: height * 0.04),
+          title: Text(
+            "세부 정보 입력",
+            semanticsLabel: "세부 정보 입력",
+          ),
+          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
             child: Column(children: [
           Column(children: [
             Form(
-              key: _formKey_protector,
-              child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
+                key: _formKey_protector,
+                child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         nicknameField,
                         SizedBox(height: height * 0.02),
                         TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(20)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
                             labelText: "보호자 나이",
                             hintText: "(예: 33)",
                             hintStyle:
@@ -182,7 +208,16 @@ class _protectorState extends State<protector> {
                         ),
                         SizedBox(height: height * 0.02),
                         TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(20)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
                             labelText: "자녀 나이",
                             hintText: "(예: 7)",
                             hintStyle:
@@ -205,7 +240,16 @@ class _protectorState extends State<protector> {
                         ),
                         SizedBox(height: height * 0.02),
                         TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(20)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
                             labelText: "소속 복지관/학교",
                             hintText: "(예: 서울뇌성마비복지관)",
                             hintStyle:
@@ -225,139 +269,165 @@ class _protectorState extends State<protector> {
                           },
                         ),
                         SizedBox(height: height * 0.03),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text("보호자 성별", style: TextStyle(fontSize: 17)),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                HapticFeedback.lightImpact(); // 약한 진동
-                                setState(() {
-                                  _selectedProtectorGender[index] = true;
-                                  _selectedProtectorGender[(1 - index).abs()] =
-                                      false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: BoxConstraints(
-                                minHeight: height * 0.06,
-                                minWidth: width * 0.3,
+                        Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Column(children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("보호자 성별",
+                                        semanticsLabel: "보호자 성별",
+                                        style: TextStyle(fontSize: 17)),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    ToggleButtons(
+                                      direction: Axis.horizontal,
+                                      onPressed: (int index) {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        setState(() {
+                                          _selectedProtectorGender[index] =
+                                              true;
+                                          _selectedProtectorGender[
+                                              (1 - index).abs()] = false;
+                                        });
+                                      },
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      selectedBorderColor: primaryColor,
+                                      selectedColor: Colors.white,
+                                      fillColor: primaryColor,
+                                      color: primaryColor,
+                                      constraints: BoxConstraints(
+                                        minHeight: height * 0.06,
+                                        minWidth: width * 0.25,
+                                      ),
+                                      isSelected: _selectedProtectorGender,
+                                      children: gender,
+                                    )
+                                  ],
+                                ),
                               ),
-                              isSelected: _selectedProtectorGender,
-                              children: gender,
-                            )
-                          ],
-                        ),
-                        SizedBox(height: height * 0.03),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("자녀 성별", style: TextStyle(fontSize: 17)),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                HapticFeedback.lightImpact(); // 약한 진동
-                                setState(() {
-                                  _selectedChildGender[index] = true;
-                                  _selectedChildGender[(1 - index).abs()] =
-                                      false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: BoxConstraints(
-                                minHeight: height * 0.06,
-                                minWidth: width * 0.3,
+                              SizedBox(height: height * 0.03),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("자녀 성별",
+                                        semanticsLabel: "자녀 성별",
+                                        style: TextStyle(fontSize: 17)),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    ToggleButtons(
+                                      direction: Axis.horizontal,
+                                      onPressed: (int index) {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        setState(() {
+                                          _selectedChildGender[index] = true;
+                                          _selectedChildGender[
+                                              (1 - index).abs()] = false;
+                                        });
+                                      },
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      selectedBorderColor: primaryColor,
+                                      selectedColor: Colors.white,
+                                      fillColor: primaryColor,
+                                      color: primaryColor,
+                                      constraints: BoxConstraints(
+                                        minHeight: height * 0.06,
+                                        minWidth: width * 0.25,
+                                      ),
+                                      isSelected: _selectedChildGender,
+                                      children: gender,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              isSelected: _selectedChildGender,
-                              children: gender,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.03),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("장애 유형", style: TextStyle(fontSize: 17)),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                HapticFeedback.lightImpact(); // 약한 진동
-                                setState(() {
-                                  _selectedChildType[index] = true;
-                                  _selectedChildType[(1 - index).abs()] = false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: BoxConstraints(
-                                minHeight: height * 0.06,
-                                minWidth: width * 0.3,
+                              SizedBox(height: height * 0.03),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("장애 유형",
+                                        semanticsLabel: "장애 유형",
+                                        style: TextStyle(fontSize: 17)),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    ToggleButtons(
+                                      direction: Axis.horizontal,
+                                      onPressed: (int index) {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        setState(() {
+                                          _selectedChildType[index] = true;
+                                          _selectedChildType[
+                                              (1 - index).abs()] = false;
+                                        });
+                                      },
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      selectedBorderColor: primaryColor,
+                                      selectedColor: Colors.white,
+                                      fillColor: primaryColor,
+                                      color: primaryColor,
+                                      constraints: BoxConstraints(
+                                        minHeight: height * 0.06,
+                                        minWidth: width * 0.3,
+                                      ),
+                                      isSelected: _selectedChildType,
+                                      children: type,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              isSelected: _selectedChildType,
-                              children: type,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.03),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("장애 정도", style: TextStyle(fontSize: 17)),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            ToggleButtons(
-                              direction: Axis.horizontal,
-                              onPressed: (int index) {
-                                HapticFeedback.lightImpact(); // 약한 진동
-                                setState(() {
-                                  _selectedChildDegree[index] = true;
-                                  _selectedChildDegree[(1 - index).abs()] =
-                                      false;
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              selectedBorderColor: primaryColor,
-                              selectedColor: Colors.white,
-                              fillColor: primaryColor,
-                              color: primaryColor,
-                              constraints: BoxConstraints(
-                                minHeight: height * 0.06,
-                                minWidth: width * 0.3,
+                              SizedBox(height: height * 0.03),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("장애 정도",
+                                        semanticsLabel: "장애 정도",
+                                        style: TextStyle(fontSize: 17)),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    ToggleButtons(
+                                      direction: Axis.horizontal,
+                                      onPressed: (int index) {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        setState(() {
+                                          _selectedChildDegree[index] = true;
+                                          _selectedChildDegree[
+                                              (1 - index).abs()] = false;
+                                        });
+                                      },
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      selectedBorderColor: primaryColor,
+                                      selectedColor: Colors.white,
+                                      fillColor: primaryColor,
+                                      color: primaryColor,
+                                      constraints: BoxConstraints(
+                                        minHeight: height * 0.06,
+                                        minWidth: width * 0.3,
+                                      ),
+                                      isSelected: _selectedChildDegree,
+                                      children: degree,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              isSelected: _selectedChildDegree,
-                              children: degree,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.03),
-                      ])),
-            )
+                              SizedBox(height: height * 0.03),
+                            ])),
+                      ],
+                    )))
           ])
         ])),
         floatingActionButton: FloatingActionButton(
@@ -390,7 +460,8 @@ class _protectorState extends State<protector> {
             ;
           },
           backgroundColor: primaryColor,
-          child: const Text("완료", style: TextStyle(fontSize: 17)),
+          child: const Text("완료",
+              semanticsLabel: "완료", style: TextStyle(fontSize: 17)),
         ));
   }
 }

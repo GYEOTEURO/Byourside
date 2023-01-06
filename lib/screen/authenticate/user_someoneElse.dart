@@ -34,7 +34,8 @@ class _someoneElseState extends State<someoneElse> {
             builder: (context) {
               return AlertDialog(
                 content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                    style: TextStyle(color: Colors.black, fontSize: 17)),
+                    semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    style: TextStyle(color: Colors.black)),
               );
             });
       }
@@ -44,7 +45,8 @@ class _someoneElseState extends State<someoneElse> {
           builder: (context) {
             return AlertDialog(
               content: Text('사용가능한 닉네임입니다.',
-                  style: TextStyle(color: Colors.black, fontSize: 17)),
+                  semanticsLabel: '사용가능한 닉네임입니다.',
+                  style: TextStyle(color: Colors.black)),
             );
           });
     }
@@ -53,7 +55,16 @@ class _someoneElseState extends State<someoneElse> {
 
   final someoneElseField = Container(
       child: TextFormField(
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
+      errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(20)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
       labelText: "방문 목적",
       hintText: "(예: 자녀 장애 초기증상 판별)",
       hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
@@ -72,7 +83,16 @@ class _someoneElseState extends State<someoneElse> {
 
   final nicknameField = Container(
       child: TextFormField(
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
+      errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(20)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(20)),
       labelText: "닉네임을 입력하세요",
       hintText: "(예: 홍길동) ",
       hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
@@ -121,8 +141,11 @@ class _someoneElseState extends State<someoneElse> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("세부 정보 입력"),
-          titleTextStyle: TextStyle(fontSize: height * 0.04),
+          title: Text(
+            "세부 정보 입력",
+            semanticsLabel: "세부 정보 입력",
+          ),
+          titleTextStyle: TextStyle(fontSize: height * 0.03),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Column(children: [
@@ -157,6 +180,7 @@ class _someoneElseState extends State<someoneElse> {
           backgroundColor: primaryColor,
           child: const Text(
             "완료",
+            semanticsLabel: "완료",
             style: TextStyle(fontSize: 17),
           ),
         ));

@@ -34,6 +34,7 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: primaryColor,
         title: const Text(
           "검색",
+          semanticsLabel: "검색",
         ),
         titleTextStyle: TextStyle(fontSize: height * 0.03),
         centerTitle: true,
@@ -173,10 +174,12 @@ class _SearchPageState extends State<SearchPage> {
       ),
       title: Text(
         groupName,
+        semanticsLabel: groupName,
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
       ),
       subtitle: Text(
         "${groupId}",
+        semanticsLabel: groupId.toString(),
         style: const TextStyle(fontSize: 15),
       ),
       trailing: InkWell(
@@ -203,6 +206,7 @@ class _SearchPageState extends State<SearchPage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: const Text(
                   "참여",
+                  semanticsLabel: "참여",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -217,6 +221,7 @@ class _SearchPageState extends State<SearchPage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: const Text(
                   "참여",
+                  semanticsLabel: "참여",
                   style: TextStyle(color: Colors.white, fontSize: 17),
                 ),
               ),

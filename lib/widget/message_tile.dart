@@ -21,7 +21,6 @@ class _MessageTileState extends State<MessageTile> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Container(
         padding: EdgeInsets.only(
             top: 5,
@@ -55,6 +54,7 @@ class _MessageTileState extends State<MessageTile> {
             children: [
               Text(
                 widget.sender.toUpperCase(),
+                semanticsLabel: widget.sender,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: 17,
@@ -65,6 +65,7 @@ class _MessageTileState extends State<MessageTile> {
               SizedBox(height: height * 0.01),
               Text(
                 widget.message,
+                semanticsLabel: widget.message,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 17, color: Colors.white),
               )

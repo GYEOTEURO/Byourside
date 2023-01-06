@@ -103,8 +103,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
         centerTitle: true,
         title: const Text(
           '채팅 목록',
+          semanticsLabel: '채팅 목록',
         ),
-        titleTextStyle: TextStyle(fontSize: height * 0.04),
+        titleTextStyle: TextStyle(fontSize: height * 0.03),
         backgroundColor: primaryColor,
       ),
       body: groupList(),
@@ -133,6 +134,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             return AlertDialog(
               title: const Text(
                 "그룹 만들기",
+                semanticsLabel: "그룹 만들기",
                 textAlign: TextAlign.left,
               ),
               content: Column(
@@ -144,6 +146,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               color: Theme.of(context).primaryColor),
                         )
                       : TextField(
+                          autofocus: true,
                           onChanged: (val) {
                             if (mounted) {
                               setState(() {
@@ -177,7 +180,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: const Text("취소", style: TextStyle(fontSize: 17)),
+                  child: const Text("취소",
+                      semanticsLabel: "취소", style: TextStyle(fontSize: 17)),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -201,7 +205,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               context: context,
                               builder: (context) {
                                 return const AlertDialog(
-                                  content: Text('이미 존재하는 채팅방 이름입니다.'),
+                                  content: Text(
+                                    '이미 존재하는 채팅방 이름입니다.',
+                                    semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
+                                  ),
                                 );
                               });
                         }
@@ -210,7 +217,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: const Text("만들기", style: TextStyle(fontSize: 17)),
+                  child: const Text("만들기",
+                      semanticsLabel: "만들기", style: TextStyle(fontSize: 17)),
                 )
               ],
             );
@@ -281,7 +289,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
           ),
           SizedBox(height: 20),
           const Text("추가 버튼을 눌러 채팅을 시작하세요.",
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 17)),
+              semanticsLabel: "추가 버튼을 눌러 채팅을 시작하세요.",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 17)),
         ],
       ),
     );
