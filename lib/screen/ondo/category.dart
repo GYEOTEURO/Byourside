@@ -1,6 +1,5 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/infoDetailCategory.dart';
-import 'package:byourside/screen/ondo/info_test.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/search_page.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
@@ -30,7 +29,7 @@ class _CategoryPageState extends State<CategoryPage>
   ];
   String _selectedInfoDetail = "전체";
 
-  String? _type;
+  List<String>? _type;
 
   static const List<Tab> categoryTabs = <Tab>[
     Tab(text: '전체'),
@@ -59,7 +58,7 @@ class _CategoryPageState extends State<CategoryPage>
             semanticLabel: "장애 유형 필터링",
           ),
           onPressed: () async {
-            HapticFeedback.lightImpact();// 약한 진동
+            HapticFeedback.lightImpact(); // 약한 진동
             _type = await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -74,7 +73,12 @@ class _CategoryPageState extends State<CategoryPage>
           },
         ),
         title: Center(
-          child: Text("마음온도"),
+          child: Text(
+            "마음온도",
+            style: TextStyle(
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.bold
+            )),
         ),
         actions: <Widget>[
           IconButton(
@@ -83,7 +87,7 @@ class _CategoryPageState extends State<CategoryPage>
               semanticLabel: "검색",
             ),
             onPressed: () {
-              HapticFeedback.lightImpact();// 약한 진동
+              HapticFeedback.lightImpact(); // 약한 진동
               showSearch(context: context, delegate: Search('ondoPost'));
             },
           ),
@@ -102,10 +106,9 @@ class _CategoryPageState extends State<CategoryPage>
           String label = tab.text!;
           if (label == '정보') {
             return Container(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
               child: 
               infoDetailCategoryPage(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
-              //infoTest(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
           );}
           return OndoPostList(
               primaryColor: Color(0xFF045558),

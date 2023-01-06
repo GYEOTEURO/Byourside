@@ -23,7 +23,17 @@ class _EduViewPageState extends State<EduViewPage> {
 
   Widget _buildListItem(String? collectionName, PostListModel? post){
     
-    String date = post!.datetime!.toDate().toString().split(' ')[0];
+    String date = post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    String? type;
+    if(post.type!.length == 1) { type = post.type![0]; }
+    else if(post.type!.length > 1) { 
+      post.type!.sort();
+      type = "${post.type![0]}/${post.type![1]}"; 
+    }
 
     return Card(
               elevation: 5,
@@ -44,50 +54,60 @@ class _EduViewPageState extends State<EduViewPage> {
               },
               child: Center(
                   child: Column(
-                    children: <Widget>[
+                    children: [
                         if(post.images!.isNotEmpty)(
-                           Semantics(
+                          Container(
+                            width: width / 2.5,
+                            height: height / 4,
+                            child: Semantics(
                             label: '사용자가 올린 사진',
                             child: Image.network(
                               post.images![0],
-                              width: 170,
-                              height: 170,))
-                        )
+                            ))
+                        ))
                         else(
-                          SizedBox(
-                            width: 170,
-                            height: 170,
-                            //색깔 넣고
-                            //사진 없음 표시
-                            child: Icon(Icons.square, 
-                              color: Colors.white)
-                        )), 
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            color: Colors.grey,
+                            width: width / 2.5,
+                            height: height / 5,
+                            child: Center(child: Text(
+                              '사진 없음',
+                              style: TextStyle(
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w600,
+                              ))),
+                          )
+                        ), 
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
-                            child: SelectionArea(
-                              child: Text(
+                            child: Text(
                                 post.title!,
                                 overflow: TextOverflow.fade,
                                 maxLines: 1,
                                 softWrap: false,
                                 style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                        ))))),
+                                  fontFamily: 'NanumGothic'
+                        )))),
                         Expanded(
-                          child: SelectionArea(
-                            child: Text(
-                              '${post.nickname!} / $date / ${post.type}',
+                          child: Text(
+                              post.type!.isEmpty ?
+                              '${post.nickname!} | $date'
+                              : '${post.nickname!} | $date | $type',
                               overflow: TextOverflow.fade,
                               maxLines: 1,
                               softWrap: false,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w600,
                                 ),
-                        ))),
+                        )),
                     ],
                   ),
                 ),
@@ -118,7 +138,13 @@ class _EduViewPageState extends State<EduViewPage> {
                         return _buildListItem(collectionName, post);
                       });
                     }
-                    else return const Text('게시물 목록을 가져오는 중...');
+                    else return const SelectionArea(
+                      child: Text(
+                        '게시물 목록을 가져오는 중...',
+                        style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        )));
             }),
 
        // 누르면 글 작성하는 PostPage로 navigate하는 버튼

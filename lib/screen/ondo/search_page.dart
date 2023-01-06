@@ -33,7 +33,10 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return OndoPost(collectionName: collectionName, documentID: selectedResult!, primaryColor: Color(0xFF045558));
+    return OndoPost(
+              collectionName: collectionName, 
+              documentID: selectedResult!, 
+              primaryColor: Color(0xFF045558));
   }
 
   final String collectionName;
@@ -44,17 +47,26 @@ class Search extends SearchDelegate {
 
     Widget _buildListItem(PostListModel? post){
     
-    String date = post!.datetime!.toDate().toString().split(' ')[0];
-              
+    String date = post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+    
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    String? type;
+    if(post.type!.length == 1) { type = post.type![0]; }
+    else if(post.type!.length > 1) { 
+      post.type!.sort();
+      type = "${post.type![0]}/${post.type![1]}"; 
+    }
+
     return Container(
-        height: 90,
+        height: height / 7,
         child: Card(
                 elevation: 2,
                 child: InkWell(
                   onTap: () {
                     HapticFeedback.lightImpact();// 약한 진동
                     selectedResult = post.id;
-                    print(selectedResult);
                     showResults(context);
                   },
                   child: Container(
@@ -66,7 +78,8 @@ class Search extends SearchDelegate {
                                  child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,                     
                                     children: [
-                                      SelectionArea(
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                                         child: Text(
                                           post.title!,
                                           overflow: TextOverflow.fade,
@@ -74,17 +87,23 @@ class Search extends SearchDelegate {
                                           softWrap: false,
                                           style: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 19,
                                           fontWeight: FontWeight.bold,
+                                          fontFamily: 'NanumGothic'
                                       ))),
-                                      SelectionArea(
-                                        child: Text(
-                                          '${post.nickname} / $date / ${post.category}',
+                                      Text(
+                                           post.type!.isEmpty ?
+                                        '${post.nickname} | $date | ${post.category!}'
+                                        : '${post.nickname} | $date | ${post.category!} | $type',
                                           overflow: TextOverflow.fade,
                                           maxLines: 1,
                                           softWrap: false,
-                                          style: const TextStyle(color: Colors.black54),
-                                      )),
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'NanumGothic',
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,),
+                                      ),
                                     ],
                                   )),
                                   if (post.images!.isNotEmpty)
@@ -92,8 +111,8 @@ class Search extends SearchDelegate {
                                       label: '사용자가 올린 사진',
                                       child: Image.network(
                                       post.images![0],
-                                      width: 100,
-                                      height: 100,
+                                      width: width * 0.2,
+                                      height: height * 0.2,
                                   )),  
                                 ],
                             ),
