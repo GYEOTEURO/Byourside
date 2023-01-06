@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
@@ -106,6 +107,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
         title: const Text(
           '채팅 목록',
           semanticsLabel: '채팅 목록',
+          style:
+              TextStyle(fontFamily: 'Nanumothic', fontWeight: FontWeight.w600),
         ),
         backgroundColor: primaryColor,
       ),
