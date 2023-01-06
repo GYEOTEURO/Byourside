@@ -1,4 +1,3 @@
-import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,7 +50,10 @@ class _CommentListState extends State<CommentList> {
 
   Widget _buildListItem(
       String? collectionName, String? documentID, CommentModel? comment) {
-    String date = comment!.datetime!.toDate().toString().split(' ')[0];
+    List<String> datetime = comment!.datetime!.toDate().toString().split(' ');
+    String date = datetime[0].replaceAll('-', '/');
+    String hour = datetime[1].split(':')[0];
+    String minute = datetime[1].split(':')[1];
 
     return Card(
         elevation: 2,
@@ -66,10 +68,12 @@ class _CommentListState extends State<CommentList> {
                           child: SelectionArea(
                             child: Text(
                               "  ${comment.content!}",
+                              semanticsLabel: "${comment.content!}",
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'NanumGothic'
                               ))))),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,22 +143,26 @@ class _CommentListState extends State<CommentList> {
                               });
                             }
                           },
-                          child: SelectionArea(
-                            child: Align(
+                          child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "${comment.nickname} / $date",
+                                "${comment.nickname} | $date $hour:$minute",
+                                semanticsLabel: "닉네임 ${comment.nickname}, $date $hour시$minute분",
                                 style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 15,
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
                                 ),
-                          ))),
+                          )),
                         )),
                         if (user?.uid == comment.uid)
                           RichText(
                               text: TextSpan(
                                   text: "삭제",
-                                  style: const TextStyle(color: Colors.black),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'NanumGothic'),
                                   recognizer: TapGestureRecognizer()
                                     ..onTapDown = (details) {
                                       HapticFeedback.lightImpact();// 약한 진동
@@ -178,13 +186,20 @@ class _CommentListState extends State<CommentList> {
           if (snapshot.hasData) {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
-                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
+                shrinkWrap: true, //ListView in ListView를 가능하게
                 itemBuilder: (_, index) {
                   CommentModel comment = snapshot.data![index];
                   return _buildListItem(collectionName, documentID, comment);
                 });
           } else
-            return const Text("댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!");
+            return const SelectionArea(child: Text(
+              "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
+              semanticsLabel: "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
+              style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w600,
+              ),));
         });
   }
 }

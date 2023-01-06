@@ -1,7 +1,9 @@
 import 'package:byourside/screen/postComment/commentList.dart';
 import 'package:byourside/screen/ondo/ondoPostContent.dart';
 import 'package:byourside/screen/postComment/createComment.dart';
+import 'package:byourside/screen/postComment/scrollController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../main.dart';
 
 class OndoPost extends StatefulWidget {
@@ -20,6 +22,8 @@ class OndoPost extends StatefulWidget {
 }
 
 class _OndoPostState extends State<OndoPost> {
+  final scrollController = Get.put(ScrollDownForComment());
+  
   @override
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
@@ -28,10 +32,16 @@ class _OndoPostState extends State<OndoPost> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("마음온도"),
+          title: Text(
+            "마음온도",
+            style: TextStyle(
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.bold
+            )),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
+          controller: scrollController.scrollController, //댓글 전송 누르면 맨 아래로 이동 가능하게
           child: Column(children: [
                   Container(
                     margin: EdgeInsets.all(7), 
@@ -47,14 +57,16 @@ class _OndoPostState extends State<OndoPost> {
                               collectionName: collectionName,
                               documentID: documentID,
                               primaryColor: primaryColor)),
+                  
                   Container(
                     margin: EdgeInsets.all(7), 
                     padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
                     child: CommentList(
                               collectionName: collectionName,
                               documentID: documentID,
-                              primaryColor: primaryColor),
-        )]),
-        ));
+                              primaryColor: primaryColor)),
+          ])
+        ),
+    );
   }
 }

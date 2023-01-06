@@ -43,7 +43,20 @@ class _OndoPostContentState extends State<OndoPostContent> {
   }
 
   Widget _buildListItem(String? collectionName, OndoPostModel? post) {
-    String date = post!.datetime!.toDate().toString().split(' ')[0];
+    List<String> datetime = post!.datetime!.toDate().toString().split(' ');
+    String date = datetime[0].replaceAll('-', '/');
+    String hour = datetime[1].split(':')[0];
+    String minute = datetime[1].split(':')[1];
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    String? type;
+    if(post.type!.length == 1) { type = post.type![0]; }
+    else if(post.type!.length > 1) { 
+      post.type!.sort();
+      type = "${post.type![0]}/${post.type![1]}"; 
+    }
 
     return Column(children: [
       Align(
@@ -52,19 +65,26 @@ class _OndoPostContentState extends State<OndoPostContent> {
               child: SelectionArea(
                   child: Text(
             ' ${post.title!}',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'NanumGothic'),
           )))),
       Row(children: [
         Expanded(
             child: TextButton(
-                child: SelectionArea(
-                    child: Align(
+                child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "${post.nickname!} / $date / ${post.type}",
+                          post.type!.isEmpty ?
+                          "${post.nickname!} | $date $hour:$minute"
+                          : "${post.nickname!} | $date $hour:$minute | $type",
                           style: const TextStyle(
-                              color: Colors.black, fontSize: 15),
-                        ))),
+                              color: Colors.black, 
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,),
+                        )),
                 onPressed: () async {
                   HapticFeedback.lightImpact(); // 약한 진동
                   var groupName = "${user?.displayName}_${post.nickname}";
@@ -120,17 +140,25 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                   }
                 })),
-        if (user?.uid == post.uid)
-          (RichText(
-              text: TextSpan(
-                  text: "삭제",
-                  style: const TextStyle(color: Colors.black, fontSize: 15),
-                  recognizer: TapGestureRecognizer()
-                    ..onTapDown = (details) {
-                      HapticFeedback.lightImpact(); // 약한 진동
-                      Navigator.pop(context);
-                      DBSet.deletePost(collectionName!, post.id!);
-                    }))),
+      if (user?.uid == post.uid)
+          ((OutlinedButton(
+            style: ElevatedButton.styleFrom(
+              side: BorderSide(color: widget.primaryColor, width: 1.5),
+              foregroundColor: widget.primaryColor,
+            ),
+            child: Text(
+              '삭제',
+              style: const TextStyle(
+                color: Color(0xFF045558),
+                fontSize: 14,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w600,)),
+            onPressed: () {
+              HapticFeedback.lightImpact();// 약한 진동
+              Navigator.pop(context);
+              DBSet.deletePost(collectionName!, post.id!);
+            },
+          )))
       ]),
       Divider(thickness: 1, height: 1, color: Colors.black),
       if (post.images!.isNotEmpty)
@@ -148,56 +176,70 @@ class _OndoPostContentState extends State<OndoPostContent> {
               ],
             ))),
       Container(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
           alignment: Alignment.centerLeft,
           child: SelectionArea(
               child: Text(
             post.content!,
-            style: const TextStyle(fontSize: 17),
+            style: const TextStyle(
+              fontSize: 16,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w600,),
           ))),
       //Divider(thickness: 1, height: 0.5, color: Colors.black),
-      Row(children: [
-        OutlinedButton.icon(
-          onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
-            post.likesPeople!.contains(user?.uid)
-                ? DBSet.cancelLike(collectionName!, post.id!, user!.uid)
-                : DBSet.addLike(collectionName!, post.id!, user!.uid);
-          },
-          style: ElevatedButton.styleFrom(
-            fixedSize: Size(188.5, 37),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4))),
-            side:
-                BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
-            foregroundColor: Color.fromARGB(255, 255, 45, 45),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          OutlinedButton.icon(
+            onPressed: () {
+              HapticFeedback.lightImpact(); // 약한 진동
+              post.likesPeople!.contains(user?.uid)
+                  ? DBSet.cancelLike(collectionName!, post.id!, user!.uid)
+                  : DBSet.addLike(collectionName!, post.id!, user!.uid);
+            },
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(width*0.38, height*0.06),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4))),
+              side:
+                  BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
+              foregroundColor: Color.fromARGB(255, 255, 45, 45),
+            ),
+            icon: post.likesPeople!.contains(user?.uid)
+                ? const Icon(Icons.favorite, semanticLabel: "좋아요 취소")
+                : const Icon(Icons.favorite_outline, semanticLabel: "좋아요 추가"),
+            label: Text(
+              '좋아요  ${post.likes}',
+              style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w600
+              )),
           ),
-          icon: post.likesPeople!.contains(user?.uid)
-              ? const Icon(Icons.favorite, semanticLabel: "좋아요 취소")
-              : const Icon(Icons.favorite_outline, semanticLabel: "좋아요 추가"),
-          label: Text('좋아요  ${post.likes}'),
-        ),
-        Text(' '),
-        OutlinedButton.icon(
-          onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
-            post.scrapPeople!.contains(user?.uid)
-                ? DBSet.cancelScrap(collectionName!, post.id!, user!.uid)
-                : DBSet.addScrap(collectionName!, post.id!, user!.uid);
-          },
-          style: ElevatedButton.styleFrom(
-            fixedSize: Size(188.5, 37),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4))),
-            side:
-                BorderSide(color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
-            foregroundColor: Color.fromARGB(255, 64, 130, 75),
+          OutlinedButton.icon(
+            onPressed: () {
+              HapticFeedback.lightImpact(); // 약한 진동
+              post.scrapPeople!.contains(user?.uid)
+                  ? DBSet.cancelScrap(collectionName!, post.id!, user!.uid)
+                  : DBSet.addScrap(collectionName!, post.id!, user!.uid);
+            },
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(width*0.38, height*0.06),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4))),
+              side:
+                  BorderSide(color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
+              foregroundColor: Color.fromARGB(255, 64, 130, 75),
+            ),
+            icon: post.scrapPeople!.contains(user?.uid)
+                ? const Icon(Icons.star, semanticLabel: "스크랩 취소")
+                : const Icon(Icons.star_outline, semanticLabel: "스크랩 추가"),
+            label: Text(
+              '스크랩',
+              style: TextStyle(
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w600
+              )),
           ),
-          icon: post.scrapPeople!.contains(user?.uid)
-              ? const Icon(Icons.star, semanticLabel: "스크랩 취소")
-              : const Icon(Icons.star_outline, semanticLabel: "스크랩 추가"),
-          label: Text('스크랩'),
-        ),
       ]),
     ]);
   }
@@ -215,7 +257,13 @@ class _OndoPostContentState extends State<OndoPostContent> {
             OndoPostModel? post = snapshot.data;
             return _buildListItem(collectionName, post);
           } else
-            return const Text('게시물을 찾을 수 없습니다.');
+            return const SelectionArea(
+              child: Text(
+                '게시물을 찾을 수 없습니다.',
+                style: TextStyle(
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
+                )));
         });
   }
 }
