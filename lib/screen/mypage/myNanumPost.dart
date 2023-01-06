@@ -20,10 +20,23 @@ class _MyNanumPostState extends State<MyNanumPost> {
   final User? user = FirebaseAuth.instance.currentUser;
 
   Widget _buildListItem(String collectionName, PostListModel? post) {
-    String date = post!.datetime!.toDate().toString().split(' ')[0];
+    String date =
+        post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
     String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    String? type;
+    if (post.type!.length == 1) {
+      type = post.type![0];
+    } else if (post.type!.length > 1) {
+      post.type!.sort();
+      type = "${post.type![0]}/${post.type![1]}";
+    }
+
     return Container(
-        height: 90,
+        height: height / 7,
         child: Card(
             //semanticContainer: true,
             elevation: 2,
@@ -51,27 +64,34 @@ class _MyNanumPostState extends State<MyNanumPost> {
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SelectionArea(
+                          Container(
+                              margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
                               child: Text(post.title!,
-                                  semanticsLabel: post.title!,
+                                  semanticsLabel: post.title,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
                                   softWrap: false,
                                   style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ))),
-                          SelectionArea(
-                              child: Text(
-                            '$date / $isCompleted / ${post.type}',
-                            semanticsLabel:
-                                '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 / $isCompleted / ${post.type}',
+                                      color: Colors.black,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'NanumGothic'))),
+                          Text(
+                            post.type!.isEmpty
+                                ? '$date | $isCompleted'
+                                : '$date | $isCompleted | $type',
+                            semanticsLabel: post.type!.isEmpty
+                                ? '$date $isCompleted'
+                                : '$date $isCompleted $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
-                            style: const TextStyle(color: Colors.black),
-                          )),
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NanumGothic',
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ],
                       )),
                       if (post.images!.isNotEmpty)
@@ -79,8 +99,8 @@ class _MyNanumPostState extends State<MyNanumPost> {
                             label: '사용자가 올린 사진',
                             child: Image.network(
                               post.images![0],
-                              width: 100,
-                              height: 70,
+                              width: width * 0.2,
+                              height: height * 0.2,
                             ))),
                     ],
                   ),
@@ -91,7 +111,10 @@ class _MyNanumPostState extends State<MyNanumPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title,
+            semanticsLabel: widget.title,
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: StreamBuilder<List<PostListModel>>(
@@ -107,7 +130,12 @@ class _MyNanumPostState extends State<MyNanumPost> {
                     return _buildListItem(widget.collectionName, post);
                   });
             } else
-              return const Text('게시글 목록을 가져오는 중...');
+              return const SelectionArea(
+                  child: Text('게시글 목록을 가져오는 중...',
+                      semanticsLabel: '게시글 목록을 가져오는 중...',
+                      style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600)));
           }),
     );
   }
