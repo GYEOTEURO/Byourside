@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "334257891538-t1u0fq0nj18t9m3unt3d379sugdbql2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.byourside",
+            "certificate_hash": "c26e0d043d8cff2ac4d45c36b533a4e24f8aab60"
+          }
+        },
+        {
           "client_id": "334257891538-old2gvc9lblc6gm28r5ooh6jebamplnj.apps.googleusercontent.com",
           "client_type": 3
         }
