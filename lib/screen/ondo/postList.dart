@@ -147,23 +147,6 @@ class _OndoPostListState extends State<OndoPostList> {
                 ),
               ));
           }),
-
-      // 누르면 글 작성하는 PostPage로 navigate하는 버튼
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          HapticFeedback.lightImpact(); // 약한 진동
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const OndoPostPage(
-                        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: primaryColor,
-                        title: '마음온도 글쓰기',
-                      )));
-        },
-        backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.add, semanticLabel: "글쓰기"),
-      ),
     );
   }
 }
