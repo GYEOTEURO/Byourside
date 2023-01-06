@@ -31,26 +31,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Mypage(),
   ];
 
-  List<Icon> bottomIcons = [
-    Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
-    Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
-    Icon(Icons.chat_outlined, semanticLabel: "채팅"),
-    Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
-  ];
+  // List<Icon> bottomIcons = [
+  //   Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
+  //   Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
+  //   Icon(Icons.chat_outlined, semanticLabel: "채팅"),
+  //   Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
+  // ];
 
-  List<Icon> bottomUnselectedIcons = [
-    Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
-    Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
-    Icon(Icons.chat_outlined, semanticLabel: "채팅"),
-    Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
-  ];
+  // List<Icon> bottomUnselectedIcons = [
+  //   Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
+  //   Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
+  //   Icon(Icons.chat_outlined, semanticLabel: "채팅"),
+  //   Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
+  // ];
 
-  List<Icon> bottomSelectedIcons = [
-    Icon(Icons.group_rounded, semanticLabel: "마음온도"),
-    Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
-    Icon(Icons.chat, semanticLabel: "채팅"),
-    Icon(Icons.account_circle, semanticLabel: "마이페이지")
-  ];
+  // List<Icon> bottomSelectedIcons = [
+  //   Icon(Icons.group_rounded, semanticLabel: "마음온도"),
+  //   Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
+  //   Icon(Icons.chat, semanticLabel: "채팅"),
+  //   Icon(Icons.account_circle, semanticLabel: "마이페이지")
+  // ];
 
   void _onItemTapped(int index) {
     // 다른 탭으로 넘어갈 때, 필터링 초기화
@@ -60,13 +60,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
     // 탭을 클릭했을떄 지정한 페이지로 이동
     setState(() {
       _selectedIndex = index;
-      for (int i = 0; i < 4; i++) {
-        if (_selectedIndex == i) {
-          bottomIcons[i] = bottomSelectedIcons[i];
-        } else {
-          bottomIcons[i] = bottomUnselectedIcons[i];
-        }
-      }
+      // for (int i = 0; i < 4; i++) {
+      //   if (_selectedIndex == i) {
+      //     bottomIcons[i] = bottomSelectedIcons[i];
+      //   } else {
+      //     bottomIcons[i] = bottomUnselectedIcons[i];
+      //   }
+      // }
     });
   }
 
@@ -79,22 +79,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color(0xFF045558),
-        unselectedItemColor: Colors.white,
-        items: <BottomNavigationBarItem>[
+        unselectedItemColor: Colors.black,
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: bottomIcons[0],
+            icon: Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
             label: '마음온도',
           ),
           BottomNavigationBarItem(
-            icon: bottomIcons[1],
+            icon: Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
             label: '마음나눔',
           ),
           BottomNavigationBarItem(
-            icon: bottomIcons[2],
+            icon: Icon(Icons.chat, semanticLabel: "채팅"),
             label: '채팅',
           ),
           BottomNavigationBarItem(
-            icon: bottomIcons[3],
+            icon: Icon(Icons.account_circle, semanticLabel: "마이페이지"),
             label: '마이페이지',
           ),
         ],
