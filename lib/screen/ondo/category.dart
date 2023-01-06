@@ -130,7 +130,7 @@ class _CategoryPageState extends State<CategoryPage>
                       )));
         },
         backgroundColor: Color(0xFF045558),
-        child: const Icon(Icons.add, semanticLabel: "글쓰기"),
+        child: const Icon(Icons.add, semanticLabel: "마음온도 글쓰기"),
       ),
     );
   }
