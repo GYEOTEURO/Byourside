@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -29,14 +30,21 @@ class _FreqQuestionState extends State<FreqQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("자주 묻는 질문"),
+          title: Text(
+            "자주 묻는 질문",
+            semanticsLabel: '자주 묻는 질문',
+          ),
           centerTitle: true,
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             onPressed: () {
+              HapticFeedback.lightImpact(); // 약한 진동
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(
+              Icons.arrow_back,
+              semanticLabel: '뒤로가기',
+            ),
             color: Colors.white,
           ),
         ),
@@ -52,10 +60,12 @@ class _FreqQuestionState extends State<FreqQuestion> {
                 ),
                 // 1번
                 Text(_questions[0],
+                    semanticsLabel: _questions[0],
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 SizedBox(height: 10),
                 Text(_answers[0],
+                    semanticsLabel: _answers[0],
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
                 SizedBox(height: 10),
@@ -63,10 +73,12 @@ class _FreqQuestionState extends State<FreqQuestion> {
                 SizedBox(height: 20),
                 // 2번
                 Text(_questions[1],
+                    semanticsLabel: _questions[1],
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 SizedBox(height: 10),
                 Text(_answers[1],
+                    semanticsLabel: _answers[1],
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
                 SizedBox(height: 10),
@@ -74,10 +86,12 @@ class _FreqQuestionState extends State<FreqQuestion> {
                 SizedBox(height: 20),
                 // 3번
                 Text(_questions[2],
+                    semanticsLabel: _questions[2],
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 SizedBox(height: 10),
                 Text(_answers[2],
+                    semanticsLabel: _answers[2],
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
                 SizedBox(height: 10),
@@ -85,10 +99,12 @@ class _FreqQuestionState extends State<FreqQuestion> {
                 SizedBox(height: 20),
                 // 4번
                 Text(_questions[3],
+                    semanticsLabel: _questions[3],
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 SizedBox(height: 10),
                 Text(_answers[3],
+                    semanticsLabel: _answers[3],
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
                 SizedBox(height: 10),
@@ -96,10 +112,12 @@ class _FreqQuestionState extends State<FreqQuestion> {
                 SizedBox(height: 20),
                 // 5번
                 Text(_questions[4],
+                    semanticsLabel: _questions[4],
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                 SizedBox(height: 10),
                 Text(_answers[4],
+                    semanticsLabel: _answers[4],
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
                 SizedBox(height: 30),

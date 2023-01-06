@@ -106,6 +106,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            HapticFeedback.lightImpact(); // 약한 진동
             Navigator.pop(context);
           },
           icon: const Icon(
