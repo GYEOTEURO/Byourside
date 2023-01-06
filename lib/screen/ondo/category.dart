@@ -73,12 +73,10 @@ class _CategoryPageState extends State<CategoryPage>
           },
         ),
         title: Center(
-          child: Text(
-            "마음온도",
-            style: TextStyle(
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.bold
-            )),
+          child: Text("마음온도",
+              semanticsLabel: "마음온도",
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         ),
         actions: <Widget>[
           IconButton(
@@ -106,10 +104,11 @@ class _CategoryPageState extends State<CategoryPage>
           String label = tab.text!;
           if (label == '정보') {
             return Container(
-              padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-              child: 
-              infoDetailCategoryPage(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
-          );}
+                padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+                child: infoDetailCategoryPage(
+                    primaryColor: Color(0xFF045558),
+                    collectionName: "ondoPost"));
+          }
           return OndoPostList(
               primaryColor: Color(0xFF045558),
               collectionName: "ondoPost",
