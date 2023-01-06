@@ -1,8 +1,10 @@
 import 'package:byourside/model/db_set.dart';
+import 'package:byourside/screen/postComment/scrollController.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import '../../main.dart';
 import '../../model/comment.dart';
 
@@ -23,6 +25,7 @@ class CreateComment extends StatefulWidget {
 
 class _CreateCommentState extends State<CreateComment> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final scrollController = Get.put(ScrollDownForComment());
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class _CreateCommentState extends State<CreateComment> {
             child: TextField(
                 controller: comment,
                 minLines: 1,
-                maxLines: 8,
+                maxLines: 5,
                 decoration: InputDecoration(
                   labelText: "댓글을 작성해주세요.",
                   border: OutlineInputBorder(
@@ -54,6 +57,10 @@ class _CreateCommentState extends State<CreateComment> {
                         content: comment.text,
                         datetime: Timestamp.now());
                     DBSet.addComment(collectionName, documentID, commentData);
+                    scrollController.scrollController.animateTo(
+                      scrollController.scrollController.position.maxScrollExtent, 
+                      duration: Duration(milliseconds: 10), 
+                      curve: Curves.ease);
                   },
                   icon: Icon(Icons.send, 
                     semanticLabel: "작성한 댓글 저장",
