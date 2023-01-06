@@ -117,8 +117,6 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].backgroundColor = Colors.white;
         typeList[index].fontColor = Colors.black;
       } else {
-        // _type = typeList[index].label;
-        // widget.categories.type = _type;
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
@@ -157,7 +155,7 @@ class _PostCategoryState extends State<PostCategory> {
               }
             }
 
-            widget.categories.type = [];
+            // 장애 유형 selected 된 상태에 따라 type 값 지정
             _type = [];
             for (int i = 0; i < typeList.length; i++) {
               if (typeList[i].selected) {
@@ -169,7 +167,6 @@ class _PostCategoryState extends State<PostCategory> {
               }
             }
             widget.categories.type = _type;
-            // 장애 유형 selected 된 상태에 따라 type 값 지정
 
             Navigator.pop(context, widget.categories);
           },
