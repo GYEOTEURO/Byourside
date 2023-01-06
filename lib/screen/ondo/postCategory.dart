@@ -158,6 +158,7 @@ class _PostCategoryState extends State<PostCategory> {
             }
 
             widget.categories.type = [];
+            _type = [];
             for (int i = 0; i < typeList.length; i++) {
               if (typeList[i].selected) {
                 if (_type == null) {
