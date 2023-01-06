@@ -91,6 +91,7 @@ class _Mypage extends State<Mypage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('마이페이지'),
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
