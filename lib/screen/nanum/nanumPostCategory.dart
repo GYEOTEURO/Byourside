@@ -88,7 +88,9 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(widget.title),
+        title: Text(widget.title, semanticsLabel: widget.title),
+        titleTextStyle:
+            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -123,6 +125,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                     child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Text('장애 유형',
+                            semanticsLabel: '장애 유형',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -141,6 +144,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
                                         typeList[index].backgroundColor),
                                 child: Text(
                                   typeList[index].label,
+                                  semanticsLabel: typeList[index].label,
                                   style: TextStyle(
                                       color: typeList[index].fontColor),
                                 ));
