@@ -14,14 +14,19 @@ class NanumAppBar extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _NanumAppBarState extends State<NanumAppBar> {
-  String? _type;
+  List<String>? _type;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
         centerTitle: true,
-        title: Text("마음나눔"),
+        title: Text(
+          "마음나눔",
+          style: TextStyle(
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.bold
+          )),
         leading: IconButton(
           icon: Icon(Icons.filter_alt,
               semanticLabel: "장애 유형 필터링", color: Colors.white),

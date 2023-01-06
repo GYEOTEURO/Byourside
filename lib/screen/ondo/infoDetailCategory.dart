@@ -22,12 +22,11 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
 
   // 선택값.
   String _dropdownValue = '전체 정보';
+  String _changePage = '전체 정보';
 
   // 드롭박스.
   OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
-  static const double _dropdownWidth = 400;
-  static const double _dropdownHeight = 45;
 
   // 드롭다운 생성.
   void _createOverlay() {
@@ -58,12 +57,17 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
 
   @override
   Widget build(BuildContext context) {
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return GestureDetector(
       onTap: () => _removeOverlay(),
       child: Scaffold(
         body: Column(
                 children: [
-                  Align(
+                  Row(children: [
+                    Align(
                     alignment: Alignment.topCenter,
                     child: InkWell(
                       onTap: () {
@@ -73,8 +77,9 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
                       child: CompositedTransformTarget(
                         link: _layerLink,
                         child: Container(
-                          width: _dropdownWidth,
-                          height: _dropdownHeight,
+                          margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                          width: width * 0.8,
+                          height: height * 0.07,
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -87,14 +92,15 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
                             children: [
                               // 선택값.
                               Text(
-                                _dropdownValue,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  height: 22 / 16,
-                                  color: Colors.black,
-                                ),
+                                  _dropdownValue,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    height: 22 / 16,
+                                    color: Colors.black,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                               ),
-
                               // 아이콘.
                               const Icon(
                                 Icons.arrow_downward,
@@ -107,27 +113,51 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
                       ),
                     ),
                   ),
-                  if(_dropdownValue == '교육/세미나' || _dropdownValue == '복지/혜택')(
+                  ElevatedButton(
+                      child: Text(
+                        '이동',
+                        style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        )),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(width * 0.1, height * 0.07),
+                        foregroundColor: Colors.white,
+                        backgroundColor: widget.primaryColor,
+                      ),
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        setState(() {
+                          _changePage = _dropdownValue;
+                        });
+                    })
+                  ]),
+                  if(_changePage == '교육/세미나' || _changePage == '복지/혜택')(
                     Expanded(
-                      child: EduViewPage(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _dropdownValue)
+                      child: EduViewPage(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _changePage)
                   ))
-                  else(
+                  else if(_changePage == '전체 정보' || _changePage == '병원/센터 후기' || _changePage == '법률/제도' || _changePage == '초기 증상 발견/생활 속 Tip')(
                     Expanded(
-                      child: OndoPostList(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _dropdownValue)
-                  )),
-        ])
-    ));
+                      child: OndoPostList(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _changePage)
+                  ))
+              ])
+        )
+    );
   }
 
   // 드롭다운.
   OverlayEntry _customDropdown() {
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return OverlayEntry(
       maintainState: true,
       builder: (context) => Positioned(
-        width: _dropdownWidth,
+        width: width * 0.8,
         child: CompositedTransformFollower(
           link: _layerLink,
-          offset: const Offset(0, _dropdownHeight),
+          offset: Offset(0, height*0.07),
           child: Material(
             color: Colors.white,
             child: Container(
@@ -160,6 +190,8 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage>{
                           fontSize: 16,
                           height: 22 / 16,
                           color: Colors.black,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),

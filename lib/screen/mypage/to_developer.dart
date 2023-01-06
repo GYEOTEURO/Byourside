@@ -1,10 +1,12 @@
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 class ToDeveloper extends StatefulWidget {
   const ToDeveloper({super.key});
@@ -41,14 +43,21 @@ class _ToDeveloperState extends State<ToDeveloper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("개발자에게 문의하기"),
+        title: Text(
+          "개발자에게 문의하기",
+          semanticsLabel: '개발자에게 문의하기',
+        ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           onPressed: () {
+            HapticFeedback.lightImpact(); // 약한 진동
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+            semanticLabel: '뒤로가기',
+          ),
           color: Colors.white,
         ),
       ),
@@ -62,17 +71,19 @@ class _ToDeveloperState extends State<ToDeveloper> {
                 children: [
                   SizedBox(height: 20),
                   Text("'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
+                      semanticsLabel: "'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
                       style:
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                   SizedBox(height: 30),
-                  TextField(
+                  TextFormField(
                       autofocus: true,
                       controller: _message,
                       minLines: 3,
                       maxLines: 8,
                       decoration: InputDecoration(
                         labelText: '문의할 사항을 남겨주세요',
-                        hintText: 'Enter messages',
+                        hintText:
+                            '문의할 사항을 남겨주세요. 불편한 점과 응원의 메시지 등 자유롭게 작성해주세요.',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1),
@@ -89,10 +100,22 @@ class _ToDeveloperState extends State<ToDeveloper> {
               ))),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.navigate_next),
+        child: const Icon(
+          Icons.navigate_next,
+          semanticLabel: '문의 사항 전송 후, 마이 페이지로 이동',
+        ),
         onPressed: () {
-          sendMsg2dev(displayName, _message.text);
-          Navigator.pop(context);
+          HapticFeedback.lightImpact(); // 약한 진동
+          if (_message.text.isEmpty) {
+            Get.snackbar(
+              '전송 실패!',
+              '문의 사항을 적어주세요',
+              backgroundColor: Colors.white,
+            );
+          } else {
+            sendMsg2dev(displayName, _message.text);
+            Navigator.pop(context);
+          }
         },
       ),
     );
