@@ -35,6 +35,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
   File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
+  final _formkey = GlobalKey<FormState>();
+
   final picker = ImagePicker();
   final myFocus = FocusNode(); // 초점 이동
   final myFocus1 = FocusNode(); // 초점 이동
@@ -115,173 +117,186 @@ class _NanumPostPageState extends State<NanumPostPage> {
       body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(25),
-            child: Column(
-              children: [
-                // 제목
-                Container(
-                    child: TextField(
-                  autofocus: true,
-                  textInputAction: TextInputAction.next,
-                  onSubmitted: (_) =>
-                      FocusScope.of(context).requestFocus(myFocus),
-                  decoration: InputDecoration(
-                      labelText: "제목을 입력하세요", hintText: "제목을 입력하세요"),
-                  controller: _title,
-                )),
-                // 카테고리 선택
-                Container(
-                    padding: EdgeInsets.only(top: 10, bottom: 5),
-                    child: Row(
-                      // 위젯을 양쪽으로 딱 붙임
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '카테고리 선택',
-                          semanticsLabel: '카테고리(장애 유형) 선택',
-                          style: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: 2.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        IconButton(
-                            onPressed: () async {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              _type = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NanumPostCategory(
-                                            primaryColor: widget.primaryColor,
-                                            title: widget.title,
-                                            preType: _type,
-                                          )));
-                              print("타입: ${_type}");
-                            },
-                            icon: Icon(
-                              Icons.navigate_next,
-                              semanticLabel: '카테고리(장애 유형) 선택',
-                            ))
-                      ],
-                    )),
-                // 사진 및 영상 첨부
-                Container(
-                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                    child: Column(children: [
-                      Row(
-                        // 위젯을 양쪽으로 딱 붙임
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '사진 첨부하기',
-                            semanticsLabel: '사진 첨부하기',
-                            style: TextStyle(
-                                color: Colors.black,
-                                letterSpacing: 2.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                HapticFeedback.lightImpact(); // 약한 진동
-                                getImage(ImageSource.gallery);
-                                _show();
-                              },
-                              icon: Icon(
-                                Icons.attach_file,
-                                semanticLabel: '사진 첨부하기',
-                              ))
-                        ],
-                      ),
-                      Visibility(
-                          visible: _visibility,
-                          child: SizedBox(
-                              height: 100,
-                              child: GridView.count(
-                                  shrinkWrap:
-                                      true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
-                                  padding: EdgeInsets.all(2),
-                                  // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
-                                  crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
-                                  // 가로(cross), 세로(main) 아이템 간의 간격 지정
-                                  mainAxisSpacing: 5,
-                                  crossAxisSpacing: 5,
-                                  children: List.generate(
-                                      5,
-                                      (index) => Semantics(
-                                          label: "선택한 사진 목록",
-                                          child: DottedBorder(
-                                            color: Colors.grey,
-                                            dashPattern: [5, 3],
-                                            borderType: BorderType.RRect,
-                                            radius: Radius.circular(5),
-                                            child: Container(
-                                              child: Center(
-                                                  child: _boxContents[index]),
-                                              decoration: index <=
-                                                      _images.length - 1
-                                                  ? BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      image: DecorationImage(
-                                                          fit: BoxFit.cover,
-                                                          image: FileImage(File(
-                                                              _images[index]
-                                                                  .path))))
-                                                  : null,
-                                            ),
-                                          ))).toList())))
-                    ])),
-                // 가격 설정
-                Container(
-                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                    child: TextField(
-                      focusNode: myFocus,
+              padding: EdgeInsets.all(25),
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  children: [
+                    // 제목
+                    Container(
+                        child: TextFormField(
+                      autofocus: true,
                       textInputAction: TextInputAction.next,
-                      onSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(myFocus1);
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "제목은 비어있을 수 없습니다";
+                        }
+                        return null;
                       },
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9]'))
-                      ],
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).requestFocus(myFocus),
                       decoration: InputDecoration(
-                          labelText: "가격을 입력하세요",
-                          hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)'),
-                      controller: _price,
+                          labelText: "제목을 입력하세요", hintText: "제목을 입력하세요"),
+                      controller: _title,
                     )),
-                // 게시글 내용
-                Container(
-                    padding: EdgeInsets.only(top: 20, bottom: 5),
-                    child: TextField(
-                      focusNode: myFocus1,
-                      textInputAction: TextInputAction.done,
-                      controller: _content,
-                      minLines: 8,
-                      maxLines: 10,
-                      decoration: const InputDecoration(
-                        labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
-                        hintText:
-                            "거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1),
-                        ),
-                      ),
-                    ))
-              ],
-            ),
-          )),
+                    // 카테고리 선택
+                    Container(
+                        padding: EdgeInsets.only(top: 10, bottom: 5),
+                        child: Row(
+                          // 위젯을 양쪽으로 딱 붙임
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '카테고리 선택',
+                              semanticsLabel: '카테고리(장애 유형) 선택',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  letterSpacing: 2.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                                onPressed: () async {
+                                  HapticFeedback.lightImpact(); // 약한 진동
+                                  _type = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              NanumPostCategory(
+                                                primaryColor:
+                                                    widget.primaryColor,
+                                                title: widget.title,
+                                                preType: _type,
+                                              )));
+                                  print("타입: ${_type}");
+                                },
+                                icon: Icon(
+                                  Icons.navigate_next,
+                                  semanticLabel: '카테고리(장애 유형) 선택',
+                                ))
+                          ],
+                        )),
+                    // 사진 및 영상 첨부
+                    Container(
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        child: Column(children: [
+                          Row(
+                            // 위젯을 양쪽으로 딱 붙임
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '사진 첨부하기',
+                                semanticsLabel: '사진 첨부하기',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    HapticFeedback.lightImpact(); // 약한 진동
+                                    getImage(ImageSource.gallery);
+                                    _show();
+                                  },
+                                  icon: Icon(
+                                    Icons.attach_file,
+                                    semanticLabel: '사진 첨부하기',
+                                  ))
+                            ],
+                          ),
+                          Visibility(
+                              visible: _visibility,
+                              child: SizedBox(
+                                  height: 100,
+                                  child: GridView.count(
+                                      shrinkWrap:
+                                          true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
+                                      padding: EdgeInsets.all(2),
+                                      // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
+                                      crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
+                                      // 가로(cross), 세로(main) 아이템 간의 간격 지정
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5,
+                                      children: List.generate(
+                                          5,
+                                          (index) => Semantics(
+                                              label: "선택한 사진 목록",
+                                              child: DottedBorder(
+                                                color: Colors.grey,
+                                                dashPattern: [5, 3],
+                                                borderType: BorderType.RRect,
+                                                radius: Radius.circular(5),
+                                                child: Container(
+                                                  child: Center(
+                                                      child:
+                                                          _boxContents[index]),
+                                                  decoration: index <=
+                                                          _images.length - 1
+                                                      ? BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: FileImage(
+                                                                  File(_images[
+                                                                          index]
+                                                                      .path))))
+                                                      : null,
+                                                ),
+                                              ))).toList())))
+                        ])),
+                    // 가격 설정
+                    Container(
+                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        child: TextFormField(
+                          focusNode: myFocus,
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "가격은 비어있을 수 없습니다";
+                            }
+                            return null;
+                          },
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(myFocus1);
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                          ],
+                          decoration: InputDecoration(
+                              labelText: "가격을 입력하세요",
+                              hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)'),
+                          controller: _price,
+                        )),
+                    // 게시글 내용
+                    Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 5),
+                        child: TextField(
+                          focusNode: myFocus1,
+                          textInputAction: TextInputAction.done,
+                          controller: _content,
+                          minLines: 8,
+                          maxLines: 10,
+                          decoration: const InputDecoration(
+                            labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                            hintText:
+                                "거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(width: 1),
+                            ),
+                          ),
+                        ))
+                  ],
+                ),
+              ))),
       // 글 작성 완료 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           HapticFeedback.lightImpact(); // 약한 진동
-          if (_price.text.isEmpty) {
-            Get.snackbar(
-              '작성 실패!',
-              '가격을 적어주세요',
-              backgroundColor: Colors.white,
-            );
-          } else {
+          if (_formkey.currentState!.validate()) {
             Navigator.pop(context);
             List<String> urls =
                 _images.isEmpty ? [] : await DBSet.uploadFile(_images);
