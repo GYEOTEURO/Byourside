@@ -121,17 +121,6 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].selected = true;
         typeList[index].backgroundColor = Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
-        // 나머지 버튼들은 비활성화
-        //   for (int i = 0; i < 2; i++) {
-        //     if (i == index) {
-        //       print(i);
-        //       continue;
-        //     } else {
-        //       typeList[i].selected = false;
-        //       typeList[i].backgroundColor = Colors.white;
-        //       typeList[i].fontColor = Colors.black;
-        //     }
-        //   }
       }
     });
   }
@@ -141,7 +130,12 @@ class _PostCategoryState extends State<PostCategory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          semanticsLabel: widget.title,
+        ),
+        titleTextStyle:
+            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -193,6 +187,7 @@ class _PostCategoryState extends State<PostCategory> {
                     child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Text('게시판 종류',
+                            semanticsLabel: '게시판 종류',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -213,6 +208,8 @@ class _PostCategoryState extends State<PostCategory> {
                                           categoryList[index].backgroundColor,
                                     ),
                                     child: Text(categoryList[index].label,
+                                        semanticsLabel:
+                                            categoryList[index].label,
                                         style: TextStyle(
                                             color:
                                                 categoryList[index].fontColor,
@@ -224,6 +221,7 @@ class _PostCategoryState extends State<PostCategory> {
                     child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Text('장애 유형',
+                            semanticsLabel: '장애 유형',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -243,6 +241,7 @@ class _PostCategoryState extends State<PostCategory> {
                                         typeList[index].backgroundColor),
                                 child: Text(
                                   typeList[index].label,
+                                  semanticsLabel: typeList[index].label,
                                   style: TextStyle(
                                       color: typeList[index].fontColor,
                                       fontFamily: 'NanumGothic',

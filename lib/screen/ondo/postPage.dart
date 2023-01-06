@@ -87,6 +87,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                     shape: BoxShape.circle),
                 child: Text(
                   '+${(_images.length - 5).toString()}',
+                  semanticsLabel: '+${(_images.length - 5).toString()}',
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -101,6 +102,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
         backgroundColor: widget.primaryColor,
         title: Text(
           widget.title,
+          semanticsLabel: widget.title,
           style:
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
@@ -255,23 +257,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                                 ),
                                               )).toList())))
                         ])),
-                    // 지도 첨부 -> 실패...
-                    // Container(
-                    //     padding: EdgeInsets.only(top: 5, bottom: 5),
-                    //     child: Row(
-                    //       // 위젯을 양쪽으로 딱 붙임
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: const [
-                    //         Text(
-                    //           '지도 첨부하기',
-                    //           style: TextStyle(
-                    //               color: Colors.black,
-                    //               letterSpacing: 2.0,
-                    //               fontWeight: FontWeight.bold),
-                    //         ),
-                    //         IconButton(onPressed: null, icon: Icon(Icons.map))
-                    //       ],
-                    //     )),
                     // 게시글 내용
                     Container(
                         padding: EdgeInsets.only(top: 20, bottom: 5),

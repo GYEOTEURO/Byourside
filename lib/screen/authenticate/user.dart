@@ -32,94 +32,121 @@ class _SetupUserState extends State<SetupUser> {
         appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            title: Text("유형 선택"),
-            titleTextStyle: TextStyle(fontSize: height * 0.04),
+            title: Text(
+              "유형 선택",
+              semanticsLabel: "유형 선택",
+            ),
             backgroundColor: primaryColor),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(height: height * 0.04),
-                      Material(
-                          elevation: 5.0,
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Theme.of(context).primaryColor,
-                          child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.fromLTRB(
-                                20.0, 15.0, 20.0, 15.0),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => protector()),
-                              );
-                            },
-                            child: Text(
-                              '장애 아동 보호자',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontSize: 17),
-                              textAlign: TextAlign.center,
-                            ),
-                          )),
-                      SizedBox(height: height * 0.04),
-                      Material(
-                          elevation: 5.0,
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Theme.of(context).primaryColor,
-                          child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.fromLTRB(
-                                20.0, 15.0, 20.0, 15.0),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => participator()),
-                              );
-                            },
-                            child: Text(
-                              '관계자',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontSize: 17),
-                              textAlign: TextAlign.center,
-                            ),
-                          )),
-                      SizedBox(height: height * 0.04),
-                      Material(
-                          elevation: 5.0,
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Theme.of(context).primaryColor,
-                          child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.fromLTRB(
-                                20.0, 15.0, 20.0, 15.0),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => someoneElse()),
-                              );
-                            },
-                            child: Text(
-                              '그외',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontSize: 17),
-                              textAlign: TextAlign.center,
-                            ),
-                          )),
-                      const SizedBox(height: 15.0),
-                    ]),
-              ),
-            ]));
+        body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                height: height * 0.04,
+                                width: width * 0.8,
+                              ),
+                              Center(
+                                child: Material(
+                                    elevation: 5.0,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    color: Theme.of(context).primaryColor,
+                                    child: MaterialButton(
+                                      minWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.9,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20.0, 15.0, 20.0, 15.0),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  protector()),
+                                        );
+                                      },
+                                      child: Text(
+                                        '장애 아동 보호자',
+                                        semanticsLabel: '장애 아동 보호자',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(height: height * 0.04),
+                              Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Theme.of(context).primaryColor,
+                                  child: MaterialButton(
+                                    minWidth:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    onPressed: () {
+                                      HapticFeedback.lightImpact(); // 약한 진동
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                participator()),
+                                      );
+                                    },
+                                    child: Text(
+                                      '관계자',
+                                      semanticsLabel: '관계자',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w500),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
+                              SizedBox(height: height * 0.04),
+                              Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Theme.of(context).primaryColor,
+                                  child: MaterialButton(
+                                    minWidth:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    onPressed: () {
+                                      HapticFeedback.lightImpact(); // 약한 진동
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                someoneElse()),
+                                      );
+                                    },
+                                    child: Text(
+                                      '그외',
+                                      semanticsLabel: '그외',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w500),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
+                              const SizedBox(height: 15.0),
+                            ]),
+                      )),
+                ])));
   }
 }

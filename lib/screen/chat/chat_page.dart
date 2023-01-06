@@ -4,6 +4,7 @@ import 'package:byourside/widget/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ChatPage extends StatefulWidget {
   final String groupId;
@@ -25,6 +26,7 @@ class _ChatPageState extends State<ChatPage> {
   Stream<QuerySnapshot>? chats;
   TextEditingController messageController = TextEditingController();
   String admin = "";
+  int count = 0;
 
   @override
   void initState() {
@@ -47,73 +49,152 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: height * 0.08,
         centerTitle: true,
         elevation: 0,
-        title: Text(widget.groupName),
+        title: Text(
+          widget.groupName,
+          semanticsLabel: widget.groupName,
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
               onPressed: () async {
-                ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
-                    .toggleGroupJoin(
-                        widget.groupId,
-                        ChatList().getGroupAdmin(widget.groupId).toString(),
-                        widget.groupName)
-                    .whenComplete(() {
-                  Navigator.pop(context);
-                });
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        title: const Text(
+                          "그룹을 나가시겠습니까?",
+                          semanticsLabel: "그룹을 나가시겠습니까?",
+                          textAlign: TextAlign.left,
+                        ),
+                        content: Padding(
+                            padding: EdgeInsets.all(30),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    HapticFeedback.lightImpact(); // 약한 진동
+                                    Navigator.of(context).pop();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryColor),
+                                  child: const Text(
+                                    "취소",
+                                    semanticsLabel: "취소",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * 0.01,
+                                  height: height * 0.05,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    HapticFeedback.lightImpact(); // 약한 진동
+                                    ChatList(
+                                            uid: FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                        .toggleGroupJoin(
+                                            widget.groupId,
+                                            ChatList()
+                                                .getGroupAdmin(widget.groupId)
+                                                .toString(),
+                                            widget.groupName)
+                                        .whenComplete(() {
+                                      Navigator.of(context)
+                                          .popUntil((_) => count++ >= 1);
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryColor),
+                                  child: const Text(
+                                    "나가기",
+                                    semanticsLabel: "나가기",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )
+                              ],
+                            )));
+                  },
+                );
               },
-              icon: const Icon(Icons.exit_to_app))
+              icon: const Icon(
+                Icons.exit_to_app,
+                semanticLabel: "나가기",
+              ))
         ],
       ),
       body: Stack(
         children: [
           Positioned(
               child: Container(
-                  height: MediaQuery.of(context).size.height -
+                  height: height * 0.8 -
                       MediaQuery.of(context).viewPadding.top -
-                      MediaQuery.of(context).viewPadding.bottom -
-                      140,
+                      MediaQuery.of(context).viewPadding.bottom,
                   child: chatMessages())),
           Container(
             alignment: Alignment.bottomCenter,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              width: MediaQuery.of(context).size.width,
+              height: height * 0.12,
+
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              width: width,
               color: primaryColor, //Colors.grey[700],
               child: Row(
                 children: [
                   Expanded(
                       child: TextFormField(
                     controller: messageController,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                    autofocus: true,
                     decoration: const InputDecoration(
-                      hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                      hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
                       hintText: "메시지 보내기",
                       border: InputBorder.none,
                     ),
                   )),
-                  const SizedBox(
-                    width: 12,
+                  SizedBox(
+                    width: width * 0.1,
+                    height: height * 0.05,
                   ),
                   GestureDetector(
                     onTap: () {
+                      HapticFeedback.lightImpact(); // 약한 진동
                       sendMessage();
                     },
                     child: Container(
-                      height: 50,
-                      width: 50,
+                      height: height * 0.05,
+                      width: width * 0.14,
                       decoration: BoxDecoration(
-                        color: Colors.black, //Theme.of(context).primaryColor,
+                        color: Colors.white, //Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: const Center(
                         child: Icon(
                           Icons.send,
-                          color: Colors.white,
+                          color: primaryColor,
+                          semanticLabel: "전송", //semanticLabel 속성 추가하기
                         ),
                       ),
                     ),

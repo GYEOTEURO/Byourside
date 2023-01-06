@@ -51,9 +51,22 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           fontFamily: 'Georgia',
           textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-            bodyText2: TextStyle(fontSize: 17.0, fontFamily: 'Hind'),
+            headline1: TextStyle(
+                fontSize: 72.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'NanumGothic'),
+            headline6: TextStyle(
+                fontSize: 20.0,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+            bodyText2: TextStyle(
+                fontSize: 17.0,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+            bodyText1: TextStyle(
+                fontSize: 17.0,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
           ),
         ),
         home: Wrapper(),

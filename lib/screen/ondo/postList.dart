@@ -26,10 +26,22 @@ class OndoPostList extends StatefulWidget {
 
 class _OndoPostListState extends State<OndoPostList> {
   Widget _buildListItem(PostListModel? post) {
-    String date = post!.datetime!.toDate().toString().split(' ')[0];
+    String date =
+        post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
 
-    return Container(
-        height: 90,
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    String? type;
+    if (post.type!.length == 1) {
+      type = post.type![0];
+    } else if (post.type!.length > 1) {
+      post.type!.sort();
+      type = "${post.type![0]}/${post.type![1]}";
+    }
+
+    return SizedBox(
+        height: height / 7,
         child: Card(
             //semanticContainer: true,
             elevation: 2,
@@ -51,45 +63,51 @@ class _OndoPostListState extends State<OndoPostList> {
                   padding: const EdgeInsets.all(2),
                   margin: EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SelectionArea(
-                              child: Text(post.title!,
-                                  overflow: TextOverflow.fade,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  ))),
-                          SelectionArea(
-                              child: Text(
-                            '${post.nickname!} / $date / ${post.type}',
-                            overflow: TextOverflow.fade,
-                            maxLines: 1,
-                            softWrap: false,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
+                                child: Text(post.title!,
+                                    semanticsLabel: post.title!,
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'NanumGothic'))),
+                            Text(
+                              post.type!.isEmpty
+                                  ? '${post.nickname!} | $date'
+                                  : '${post.nickname!} | $date | $type',
+                              semanticsLabel: post.type!.isEmpty
+                                  ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
+                                  : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $type',
+                              overflow: TextOverflow.fade,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'NanumGothic',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600),
                             ),
-                          )),
-                        ],
-                      )),
-                      if (post.images!.isNotEmpty)
-                        Semantics(
-                            label: '사용자가 올린 사진',
-                            child: Image.network(
-                              post.images![0],
-                              width: 100,
-                              height: 100,
-                            )),
-                    ],
-                  ),
+                          ],
+                        )),
+                        if (post.images!.isNotEmpty)
+                          Semantics(
+                              label: '사용자가 올린 사진',
+                              child: Image.network(
+                                post.images![0],
+                                width: width * 0.2,
+                                height: height * 0.2,
+                              )),
+                      ]),
                 ))));
   }
 
@@ -119,7 +137,15 @@ class _OndoPostListState extends State<OndoPostList> {
                     return _buildListItem(post);
                   });
             } else
-              return const Text('게시글 목록 가져오는 중...');
+              return const SelectionArea(
+                  child: Text(
+                '게시글 목록 가져오는 중...',
+                semanticsLabel: '게시글 목록 가져오는 중...',
+                style: TextStyle(
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
+                ),
+              ));
           }),
 
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼

@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/authenticate/otp_screen.dart';
@@ -42,108 +43,158 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     final linkButton = ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          _launchUrl;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const PersonalData()));
         },
         child: Text(
           '개인정보처리방침',
+          semanticsLabel: '개인정보처리방침',
           style: TextStyle(fontSize: 17),
         ));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '휴대폰 인증',
-          style: TextStyle(fontSize: 17),
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          title: Text(
+            "휴대폰 인증",
+            semanticsLabel: "휴대폰 인증",
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
-        backgroundColor: primaryColor,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(padding: const EdgeInsets.all(20)),
-          Column(children: [
-            Container(
-              child: const Center(
-                child: Text(
-                  '휴대폰 번호 입력',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              SizedBox(height: height * 0.02),
+              Container(
+                child: const Center(
+                  child: Text(
+                    '휴대폰 번호 입력',
+                    semanticsLabel: '휴대폰 번호 입력',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      fontFamily: 'NanumGothic',
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Form(
-                key: _formKey_phone,
-                child: Container(
-                  margin: EdgeInsets.only(top: 40, right: 20, left: 20),
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
-                        hintText: '(예: 1012345678)',
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-                        labelStyle:
-                            TextStyle(color: primaryColor, fontSize: 20),
-                        prefix: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            '+82',
-                            style: TextStyle(fontSize: 17),
+              SizedBox(height: height * 0.01),
+              Form(
+                  key: _formKey_phone,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 40, right: 20, left: 20),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius: BorderRadius.circular(20)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(20)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius: BorderRadius.circular(20)),
+                          labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
+                          hintText: '(예: 1012345678)',
+                          hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          labelStyle: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          prefix: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              '+82',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ),
-                      ),
-                      maxLength: 10,
-                      keyboardType: TextInputType.number,
-                      controller: _controller,
-                      validator: (value) {
-                        if (value != null) {
-                          if (value.split(' ').first != '' &&
-                              value.isNotEmpty &&
-                              isNumeric(value)) {
-                            return null;
+                        autofocus: true,
+                        maxLength: 10,
+                        keyboardType: TextInputType.number,
+                        controller: _controller,
+                        validator: (value) {
+                          if (value != null) {
+                            if (value.split(' ').first != '' &&
+                                value.isNotEmpty &&
+                                isNumeric(value)) {
+                              return null;
+                            }
+                            return '유효한 전화번호를 입력하세요. 숫자만 입력 가능합니다.';
                           }
-                          return '유효한 전화번호를 입력하세요. 숫자만 입력 가능합니다.';
-                        }
-                      }),
-                ))
-          ]),
-          linkButton,
-          Container(
-            margin: EdgeInsets.all(20),
-            // width: double.infinity,
-            child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(primaryColor)),
-                onPressed: () async {
-                  HapticFeedback.lightImpact(); // 약한 진동
-                  if (_formKey_phone.currentState!.validate()) {
-                    doesDocExist = await checkDocExist(_controller.text);
+                        }),
+                  )),
+              SizedBox(height: height * 0.01),
+              linkButton,
+              SizedBox(height: height * 0.02),
+              Container(
+                margin: EdgeInsets.all(20),
+                // width: double.infinity,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(primaryColor)),
+                    onPressed: () async {
+                      HapticFeedback.lightImpact(); // 약한 진동
+                      if (_formKey_phone.currentState!.validate()) {
+                        doesDocExist = await checkDocExist(_controller.text);
 
-                    if (doesDocExist == true) {
-                      if (mounted) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text('이미 가입된 번호입니다.',
+                        if (doesDocExist == true) {
+                          if (mounted) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                      content: Text(
+                                    '이미 가입된 번호입니다.',
+                                    semanticsLabel: '이미 가입된 번호입니다.',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 17)),
-                              );
-                            });
+                                        color: Colors.black,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ));
+                                });
+                          }
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  OTPScreen(_controller.text)));
+                        }
                       }
-                    } else {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => OTPScreen(_controller.text)));
-                    }
-                  }
-                },
-                child: Text('동의하고 인증',
-                    style: TextStyle(color: Colors.white, fontSize: 17))),
+                    },
+                    child: Text(
+                      '동의하고 인증',
+                      semanticsLabel: '동의하고 인증',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                    )),
+              ),
+              SizedBox(height: height * 0.02),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

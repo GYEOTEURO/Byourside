@@ -6,50 +6,85 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DBGet {
   // Firestore의 collection에 있는 모든 데이터 불러오기
-  static Stream<List<PostListModel>> readAllCollection({required String collection, List<String>? type}) =>
-        FirebaseFirestore.instance
-        .collection(collection)
-        .where("type", whereIn: type)
-        .orderBy('datetime', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
-        .toList());
+  static Stream<List<PostListModel>> readAllCollection({required String collection, List<String>? type}) {
+        if(type == null || type!.isEmpty){
+          return FirebaseFirestore.instance
+            .collection(collection)
+            .orderBy('datetime', descending: true)
+            .snapshots()
+            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+            .toList());
+        }
+        else{
+          return FirebaseFirestore.instance
+            .collection(collection)
+            .where("type", arrayContainsAny: type)
+            .orderBy('datetime', descending: true)
+            .snapshots()
+            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+            .toList());
+        }
+  }
   
   // Firestore의 마음나눔 collection에 있는 거래중인 데이터 불러오기 (거래 완료 제외)
-  static Stream<List<PostListModel>> readIsCompletedCollection({required String collection, List<String>? type}) =>
-        FirebaseFirestore.instance
+  static Stream<List<PostListModel>> readIsCompletedCollection({required String collection, List<String>? type}) {
+    if(type == null || type!.isEmpty){
+      return FirebaseFirestore.instance
         .collection(collection)
-        .where("type", whereIn: type)
         .where("isCompleted", isEqualTo: false)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
+    }
+    else{
+      return FirebaseFirestore.instance
+        .collection(collection)
+        .where("type", arrayContainsAny: type)
+        .where("isCompleted", isEqualTo: false)
+        .orderBy('datetime', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+        .toList());
+    }
+  }
 
    // 검색을 위한 쿼리 비교
-  static Stream<List<PostListModel>> readSearchDocs(query, {required String collection}) =>
+  static Stream<List<PostListModel>> readSearchDocs(String query, {required String collection}) =>
         FirebaseFirestore.instance
         .collection(collection)
-        .where("keyword", arrayContains: query)
+        .where("keyword", arrayContainsAny: [query])
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
         .toList());
 
+
   // Firestore의 ondo collection에 있는 특정 카테고리 데이터 불러오기 (자유/정보의 세부 카테고리)
-  static Stream<List<PostListModel>> readCategoryCollection({required String collection, required String category, List<String>? type}) =>
-        FirebaseFirestore.instance
-        .collection(collection)
-        .where("category", isEqualTo: category)
-        .where("type", whereIn: type)
-        .orderBy('datetime', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
-        .toList());
-  
+  static Stream<List<PostListModel>> readCategoryCollection({required String collection, required String category, List<String>? type}) {
+        if(type == null || type!.isEmpty){
+          return FirebaseFirestore.instance
+            .collection(collection)
+            .where("category", isEqualTo: category)
+            .orderBy('datetime', descending: true)
+            .snapshots()
+            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+            .toList());
+        }
+        else{
+          return FirebaseFirestore.instance
+            .collection(collection)
+            .where("category", isEqualTo: category)
+            .where("type", arrayContainsAny: type)
+            .orderBy('datetime', descending: true)
+            .snapshots()
+            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))
+            .toList());
+        }
+}
   // Firestore의 ondo collection에 있는 정보에 속하는 카테고리 데이터 모두 불러오기("전체 정보" 카테고리 가져오기)
   static Stream<List<PostListModel>> readAllInfoCollection({required String collection, List<String>? type}) {
-    if(type == null || type.length > 1) {
+    if(type == null || type!.isEmpty || type.length > 1){
       return FirebaseFirestore.instance
         .collection(collection)
         .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
@@ -62,7 +97,7 @@ class DBGet {
       return FirebaseFirestore.instance
         .collection(collection)
         .where("category", whereIn: ["복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"])
-        .where("type", isEqualTo: type![0])
+        .where("type", isEqualTo: type)
         .orderBy('datetime', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collection))

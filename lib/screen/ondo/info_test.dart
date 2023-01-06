@@ -4,21 +4,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class infoTest extends StatefulWidget {
-  const infoTest({Key? key, required this.primaryColor, required this.collectionName}) : super(key: key);
+class info_before extends StatefulWidget {
+  const info_before(
+      {Key? key, required this.primaryColor, required this.collectionName})
+      : super(key: key);
 
   final Color primaryColor;
   final String collectionName;
   //final String? type;
 
   @override
-  State<infoTest> createState() => _infoTest();
+  State<info_before> createState() => _info_beforeState();
 }
 
-class _infoTest extends State<infoTest>{
-  
+class _info_beforeState extends State<info_before> {
   // 드롭다운 리스트.
-  static const List<String> _dropdownList = ["전체 정보", "복지/혜택", "교육/세미나", "병원/센터 후기", "법률/제도", "초기 증상 발견/생활 속 Tip"];
+  static const List<String> _dropdownList = [
+    "전체 정보",
+    "복지/혜택",
+    "교육/세미나",
+    "병원/센터 후기",
+    "법률/제도",
+    "초기 증상 발견/생활 속 Tip"
+  ];
 
   // 선택값.
   String _dropdownValue = '전체 정보';
@@ -26,7 +34,7 @@ class _infoTest extends State<infoTest>{
   // 드롭박스.
   OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
-  static const double _dropdownWidth = 340;
+  static const double _dropdownWidth = 400;
   static const double _dropdownHeight = 45;
 
   // 드롭다운 생성.
@@ -45,13 +53,11 @@ class _infoTest extends State<infoTest>{
 
   @override
   void dispose() {
-    try{
+    try {
       _overlayEntry?.dispose();
-    }
-    catch(e){
+    } catch (e) {
       _removeOverlay();
-    }
-    finally{
+    } finally {
       super.dispose();
     }
   }
@@ -59,68 +65,67 @@ class _infoTest extends State<infoTest>{
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _removeOverlay(),
-      child: Scaffold(
-        body: Column(
-                children: [
-                  Row(children: [
-                    Align(
-                    alignment: Alignment.topCenter,
-                    child: InkWell(
-                      onTap: () {
-                        HapticFeedback.lightImpact();// 약한 진동
-                        _createOverlay();
-                      },
-                      child: CompositedTransformTarget(
-                        link: _layerLink,
-                        child: Container(
-                          width: _dropdownWidth,
-                          height: _dropdownHeight,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // 선택값.
-                              Text(
-                                _dropdownValue,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  height: 22 / 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-
-                              // 아이콘.
-                              const Icon(
-                                Icons.arrow_downward,
-                                semanticLabel: "정보 게시판의 하위 게시판 선택",
-                                size: 16,
-                              ),
-                            ],
-                          ),
+        onTap: () => _removeOverlay(),
+        child: Scaffold(
+            body: Column(children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: InkWell(
+              onTap: () {
+                HapticFeedback.lightImpact(); // 약한 진동
+                _createOverlay();
+              },
+              child: CompositedTransformTarget(
+                link: _layerLink,
+                child: Container(
+                  width: _dropdownWidth,
+                  height: _dropdownHeight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // 선택값.
+                      Text(
+                        _dropdownValue,
+                        semanticsLabel: _dropdownValue,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          height: 22 / 16,
+                          color: Colors.black,
                         ),
                       ),
-                    ),
+
+                      // 아이콘.
+                      const Icon(
+                        Icons.arrow_downward,
+                        semanticLabel: "정보 게시판의 하위 게시판 선택",
+                        size: 16,
+                      ),
+                    ],
                   ),
-                  ElevatedButton(onPressed: null, child: Text('이동'))
-                  ],),
-                  
-                  if(_dropdownValue == '교육/세미나' || _dropdownValue == '복지/혜택')(
-                    Expanded(
-                      child: EduViewPage(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _dropdownValue)
-                  ))
-                  else(
-                    Expanded(
-                      child: OndoPostList(primaryColor: widget.primaryColor, collectionName: widget.collectionName, category: _dropdownValue)
-                  )),
-        ])
-    ));
+                ),
+              ),
+            ),
+          ),
+          if (_dropdownValue == '교육/세미나' || _dropdownValue == '복지/혜택')
+            (Expanded(
+                child: EduViewPage(
+                    primaryColor: widget.primaryColor,
+                    collectionName: widget.collectionName,
+                    category: _dropdownValue)))
+          else
+            (Expanded(
+                child: OndoPostList(
+                    primaryColor: widget.primaryColor,
+                    collectionName: widget.collectionName,
+                    category: _dropdownValue))),
+        ])));
   }
 
   // 드롭다운.
@@ -135,7 +140,9 @@ class _infoTest extends State<infoTest>{
           child: Material(
             color: Colors.white,
             child: Container(
-              height: (22.0 * _dropdownList.length) + (21 * (_dropdownList.length - 1)) + 20,
+              height: (22.0 * _dropdownList.length) +
+                  (21 * (_dropdownList.length - 1)) +
+                  20,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(5),
@@ -150,7 +157,7 @@ class _infoTest extends State<infoTest>{
                     pressedOpacity: 1,
                     minSize: 0,
                     onPressed: () {
-                      HapticFeedback.lightImpact();// 약한 진동
+                      HapticFeedback.lightImpact(); // 약한 진동
                       setState(() {
                         _dropdownValue = _dropdownList.elementAt(index);
                       });
@@ -160,6 +167,7 @@ class _infoTest extends State<infoTest>{
                       alignment: Alignment.centerLeft,
                       child: Text(
                         _dropdownList.elementAt(index),
+                        semanticsLabel: _dropdownList.elementAt(index),
                         style: const TextStyle(
                           fontSize: 16,
                           height: 22 / 16,

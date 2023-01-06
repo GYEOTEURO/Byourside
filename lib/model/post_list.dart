@@ -9,7 +9,7 @@ class PostListModel {
   List<String>? images;
   String? category;
   bool? isCompleted;
-  String? type;
+  List<String>? type;
 
   PostListModel({this.id, this.nickname, this.title, this.datetime, this.images, this.category, this.isCompleted, this.type});
 
@@ -23,5 +23,6 @@ class PostListModel {
             ? null : doc["images"].cast<String>(),
         category = (collection == 'ondoPost') ? doc["category"] : null,
         isCompleted = (collection == 'nanumPost') ? doc["isCompleted"] : null,
-        type = doc["type"];
+        type = doc["type"] == null
+            ? null : doc["type"].cast<String>();
 }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../model/chat_list.dart';
 
@@ -25,45 +26,66 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
         title: const Text(
           "검색",
-          style: TextStyle(fontSize: 27, color: Colors.white),
+          semanticsLabel: "검색",
         ),
+        centerTitle: true,
       ),
       body: Column(
         children: [
           Container(
             color: Theme.of(context).primaryColor,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
+                    autofocus: true,
                     controller: searchController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10)),
+                      errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(10)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10)),
+                      hintStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
                       hintText: "검색",
                     ),
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
+                    HapticFeedback.lightImpact(); // 약한 진동
                     initiateSearchMethod();
                   },
                   child: Container(
-                    width: 40,
-                    height: 40,
+                    width: width * 0.14,
+                    height: height * 0.04,
                     decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(20)),
                     child: const Icon(
                       Icons.search,
+                      semanticLabel: "검색", //semanticLabel 속성 추가하기
                       color: Colors.white,
                     ),
                   ),
@@ -85,13 +107,13 @@ class _SearchPageState extends State<SearchPage> {
 
   initiateSearchMethod() async {
     if (searchController.text.isNotEmpty) {
-      if (this.mounted) {
+      if (mounted) {
         setState(() {
           isLoading = true;
         });
       }
       await ChatList().searchByName(searchController.text).then((snapshot) {
-        if (this.mounted) {
+        if (mounted) {
           setState(() {
             searchSnapshot = snapshot;
             isLoading = false;
@@ -122,19 +144,20 @@ class _SearchPageState extends State<SearchPage> {
 
   joinedOrNot(String userName, String groupId, String groupName, String admin) {
     try {
-      Future.delayed(const Duration(seconds: 2), () async {
+      Future.delayed(const Duration(seconds: 3), () async {
         await ChatList(uid: uid)
             .isUserJoined(groupName, groupId, userName)
             .then((value) {
           if (mounted) {
             setState(() {
+              Duration(seconds: 3);
               isJoined = value;
             });
           }
         });
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -142,22 +165,40 @@ class _SearchPageState extends State<SearchPage> {
       String admin, String recentMsg) {
     joinedOrNot(userName, groupId, groupName, admin);
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       leading: CircleAvatar(
         radius: 30,
         backgroundColor: Theme.of(context).primaryColor,
         child: Text(
-          groupName.substring(0, 1).toUpperCase(),
-          style: const TextStyle(color: Colors.white),
+          (groupName.split('_')[0] == userName)
+              ? groupName.split('_')[1].substring(0, 1).toUpperCase()
+              : groupName.substring(0, 1).toUpperCase(),
+          style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          textAlign: TextAlign.center,
         ),
       ),
       title: Text(
         groupName,
-        style: const TextStyle(fontWeight: FontWeight.w600),
+        semanticsLabel: groupName,
+        style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+            fontFamily: 'NanumGothic'),
       ),
-      subtitle: Text("${groupId}"),
+      subtitle: Text(
+        "${groupId}",
+        semanticsLabel: groupId.toString(),
+        style: const TextStyle(
+            fontSize: 15,
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.w500),
+      ),
       trailing: InkWell(
         onTap: () async {
+          HapticFeedback.lightImpact(); // 약한 진동
           if (mounted) {
             await ChatList(uid: uid)
                 .toggleGroupJoin(groupId, userName, groupName);
@@ -179,9 +220,13 @@ class _SearchPageState extends State<SearchPage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: const Text(
                   "참여",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
+                  semanticsLabel: "참여",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
+                ))
             : Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -191,7 +236,12 @@ class _SearchPageState extends State<SearchPage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: const Text(
                   "참여",
-                  style: TextStyle(color: Colors.white),
+                  semanticsLabel: "참여",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
                 ),
               ),
       ),

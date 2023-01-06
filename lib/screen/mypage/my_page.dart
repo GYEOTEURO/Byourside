@@ -98,6 +98,7 @@ class _Mypage extends State<Mypage> {
           semanticsLabel: '마이페이지(나의 정보 화면)',
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(

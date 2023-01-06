@@ -45,7 +45,13 @@ class NanumPostModel {
         images = doc.data()!["images"] == null
             ? null
             : doc.data()!["images"].cast<String>(),
+<<<<<<< HEAD
         type = doc.data()!["type"],
+=======
+        type = doc.data()!["type"] == null
+            ? null
+            : doc.data()!["type"].cast<String>(),
+>>>>>>> feature/post/search
         likes = doc.data()!["likes"],
         // ignore: prefer_null_aware_operators
         likesPeople = doc.data()!["likesPeople"] == null
