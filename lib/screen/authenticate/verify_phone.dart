@@ -80,7 +80,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   child: Text(
                     '휴대폰 번호 입력',
                     semanticsLabel: '휴대폰 번호 입력',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      fontFamily: 'NanumGothic',
+                    ),
                   ),
                 ),
               ),
@@ -104,15 +108,24 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                               borderRadius: BorderRadius.circular(20)),
                           labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
                           hintText: '(예: 1012345678)',
-                          hintStyle:
-                              TextStyle(color: Colors.grey, fontSize: 17),
-                          labelStyle:
-                              TextStyle(color: primaryColor, fontSize: 17),
+                          hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          labelStyle: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
                           prefix: Padding(
                             padding: EdgeInsets.all(5),
                             child: Text(
                               '+82',
-                              style: TextStyle(fontSize: 17),
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -155,7 +168,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                       content: Text(
                                     '이미 가입된 번호입니다.',
                                     semanticsLabel: '이미 가입된 번호입니다.',
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
                                   ));
                                 });
                           }
@@ -166,9 +182,15 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                         }
                       }
                     },
-                    child: Text('동의하고 인증',
-                        semanticsLabel: '동의하고 인증',
-                        style: TextStyle(color: Colors.white, fontSize: 17))),
+                    child: Text(
+                      '동의하고 인증',
+                      semanticsLabel: '동의하고 인증',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                    )),
               ),
               SizedBox(height: height * 0.02),
             ],

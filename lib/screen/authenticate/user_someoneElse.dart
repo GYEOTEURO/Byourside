@@ -33,9 +33,14 @@ class _someoneElseState extends State<someoneElse> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                    semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                    style: TextStyle(color: Colors.black)),
+                content: Text(
+                  '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                  semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
+                ),
               );
             });
       }
@@ -44,9 +49,14 @@ class _someoneElseState extends State<someoneElse> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text('사용가능한 닉네임입니다.',
-                  semanticsLabel: '사용가능한 닉네임입니다.',
-                  style: TextStyle(color: Colors.black)),
+              content: Text(
+                '사용가능한 닉네임입니다.',
+                semanticsLabel: '사용가능한 닉네임입니다.',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
+              ),
             );
           });
     }
@@ -67,8 +77,16 @@ class _someoneElseState extends State<someoneElse> {
           borderRadius: BorderRadius.circular(20)),
       labelText: "방문 목적",
       hintText: "(예: 자녀 장애 초기증상 판별)",
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+      hintStyle: TextStyle(
+          color: Colors.grey,
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500),
+      labelStyle: TextStyle(
+          color: primaryColor,
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500),
     ),
     controller: _purpose,
     validator: (value) {
@@ -95,8 +113,16 @@ class _someoneElseState extends State<someoneElse> {
           borderRadius: BorderRadius.circular(20)),
       labelText: "닉네임을 입력하세요",
       hintText: "(예: 홍길동) ",
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+      hintStyle: TextStyle(
+          color: Colors.grey,
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500),
+      labelStyle: TextStyle(
+          color: primaryColor,
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500),
     ),
     autofocus: true,
     controller: _nickname,
@@ -184,7 +210,10 @@ class _someoneElseState extends State<someoneElse> {
           child: const Text(
             "완료",
             semanticsLabel: "완료",
-            style: TextStyle(fontSize: 17),
+            style: TextStyle(
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
           ),
         ));
   }

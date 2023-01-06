@@ -49,7 +49,10 @@ class _SearchPageState extends State<SearchPage> {
                   child: TextField(
                     autofocus: true,
                     controller: searchController,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(color: Colors.white),
@@ -60,8 +63,11 @@ class _SearchPageState extends State<SearchPage> {
                       focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(10)),
-                      hintStyle:
-                          const TextStyle(color: Colors.white, fontSize: 17),
+                      hintStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
                       hintText: "검색",
                     ),
                   ),
@@ -167,19 +173,28 @@ class _SearchPageState extends State<SearchPage> {
           (groupName.split('_')[0] == userName)
               ? groupName.split('_')[1].substring(0, 1).toUpperCase()
               : groupName.substring(0, 1).toUpperCase(),
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
         ),
       ),
       title: Text(
         groupName,
         semanticsLabel: groupName,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+        style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+            fontFamily: 'NanumGothic'),
       ),
       subtitle: Text(
         "${groupId}",
         semanticsLabel: groupId.toString(),
-        style: const TextStyle(fontSize: 15),
+        style: const TextStyle(
+            fontSize: 15,
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.w500),
       ),
       trailing: InkWell(
         onTap: () async {
@@ -207,9 +222,10 @@ class _SearchPageState extends State<SearchPage> {
                   "참여",
                   semanticsLabel: "참여",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17,
-                  ),
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
                 ))
             : Container(
                 decoration: BoxDecoration(
@@ -221,7 +237,11 @@ class _SearchPageState extends State<SearchPage> {
                 child: const Text(
                   "참여",
                   semanticsLabel: "참여",
-                  style: TextStyle(color: Colors.white, fontSize: 17),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
                 ),
               ),
       ),

@@ -38,8 +38,16 @@ class _Login extends State<Login> {
           contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "(예: abcd@google.com)",
           labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-          labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+          hintStyle: TextStyle(
+              color: Colors.grey,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          labelStyle: TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(20)),
@@ -69,8 +77,16 @@ class _Login extends State<Login> {
           contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "(예: 12345678)",
           labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-          labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+          hintStyle: TextStyle(
+              color: Colors.grey,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          labelStyle: TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
           suffixIcon: IconButton(
             icon: Icon(
               _obscureText ? Icons.visibility : Icons.visibility_off,
@@ -98,17 +114,29 @@ class _Login extends State<Login> {
         onPressed: () {
           widget.toggleView!();
         },
-        child: const Text('회원가입',
-            semanticsLabel: '회원가입',
-            style: TextStyle(color: primaryColor, fontSize: 17)));
+        child: const Text(
+          '회원가입',
+          semanticsLabel: '회원가입',
+          style: TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+        ));
 
     final forgotPassword = TextButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ForgotPassword(),
             )),
-        child: const Text('비밀번호 찾기',
-            semanticsLabel: '비밀번호 찾기',
-            style: TextStyle(color: primaryColor, fontSize: 17)));
+        child: const Text(
+          '비밀번호 찾기',
+          semanticsLabel: '비밀번호 찾기',
+          style: TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+        ));
 
     final loginEmailPasswordButton = Material(
       elevation: 5.0,
@@ -128,8 +156,13 @@ class _Login extends State<Login> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: Text("아이디 또는 비밀번호가 일치하지 않습니다.",
-                          style: TextStyle(color: Colors.black)),
+                      content: Text(
+                        "아이디 또는 비밀번호가 일치하지 않습니다.",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
+                      ),
                     );
                   });
             }
@@ -139,7 +172,10 @@ class _Login extends State<Login> {
           "로그인",
           semanticsLabel: "로그인",
           style: TextStyle(
-              color: Theme.of(context).primaryColorLight, fontSize: 17),
+              color: Theme.of(context).primaryColorLight,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
         ),
       ),

@@ -85,7 +85,10 @@ class _OTPScreenState extends State<OTPScreen> {
     width: 56,
     height: 56,
     textStyle: TextStyle(
-        fontSize: 20, color: primaryColor, fontWeight: FontWeight.w600),
+        fontSize: 20,
+        color: primaryColor,
+        fontFamily: 'NanumGothic',
+        fontWeight: FontWeight.w500),
     decoration: BoxDecoration(
       border: Border.all(color: primaryColor),
       borderRadius: BorderRadius.circular(20),
@@ -124,6 +127,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
+                        fontFamily: 'NanumGothic',
                       ),
                     ),
                     SizedBox(height: height * 0.05),
@@ -132,7 +136,11 @@ class _OTPScreenState extends State<OTPScreen> {
                       child: Text(
                         '(2분 후 재전송 가능합니다)',
                         semanticsLabel: '(2분 후 재전송 가능합니다)',
-                        style: TextStyle(fontSize: 17, color: primaryColor),
+                        style: TextStyle(
+                            fontSize: 17,
+                            color: primaryColor,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -233,18 +241,27 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  content: Text("인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                      semanticsLabel:
-                                          "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                      style:
-                                          const TextStyle(color: Colors.black)),
+                                  content: Text(
+                                    "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                    semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 );
                               });
                         }
                       }
                     },
-                    child: Text("다음",
-                        semanticsLabel: "다음", style: TextStyle(fontSize: 17)),
+                    child: Text(
+                      "다음",
+                      semanticsLabel: "다음",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 SizedBox(height: height * 0.04),
@@ -263,7 +280,10 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                           label: Text(
                             '인증번호 재전송',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact(); // 약한 진동
@@ -312,9 +332,14 @@ class _OTPScreenState extends State<OTPScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    content: Text('인증 가능한 기간이 지났습니다. 재시도하세요.',
-                        semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
-                        style: TextStyle(color: Colors.black)),
+                    content: Text(
+                      '인증 가능한 기간이 지났습니다. 재시도하세요.',
+                      semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                    ),
                   );
                 });
           }
