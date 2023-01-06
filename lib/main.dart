@@ -1,4 +1,7 @@
 import 'package:byourside/screen/authenticate/user.dart';
+import 'package:byourside/screen/authenticate/user_paricipator.dart';
+import 'package:byourside/screen/authenticate/user_protector.dart';
+import 'package:byourside/screen/authenticate/user_someoneElse.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
@@ -83,6 +86,9 @@ class _MyAppState extends State<MyApp> {
               "/phone": (context) => VerifyPhone(),
               "/email": (context) => VerifyEmail(),
               "/user": (context) => SetupUser(),
+              "/user_protector": (context) => protector(),
+              "/user_participator": (context) => participator(),
+              "/user_someoneElse": (context) => someoneElse(),
             },
           ),
         ),

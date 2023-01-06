@@ -85,6 +85,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     shape: BoxShape.circle),
                 child: Text(
                   '+${(_images.length - 5).toString()}',
+                  semanticsLabel: '+${(_images.length - 5).toString()}',
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2

@@ -21,7 +21,10 @@ class _NanumAppBarState extends State<NanumAppBar> {
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
         centerTitle: true,
-        title: Text("마음나눔"),
+        title: Text("마음나눔",
+            semanticsLabel: "마음나눔",
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: Icon(Icons.filter_alt,
               semanticLabel: "장애 유형 필터링", color: Colors.white),

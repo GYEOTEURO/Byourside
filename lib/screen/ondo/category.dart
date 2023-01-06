@@ -1,6 +1,5 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/infoDetailCategory.dart';
-import 'package:byourside/screen/ondo/info_test.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/search_page.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
@@ -74,7 +73,10 @@ class _CategoryPageState extends State<CategoryPage>
           },
         ),
         title: Center(
-          child: Text("마음온도"),
+          child: Text("마음온도",
+              semanticsLabel: "마음온도",
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         ),
         actions: <Widget>[
           IconButton(
@@ -102,11 +104,10 @@ class _CategoryPageState extends State<CategoryPage>
           String label = tab.text!;
           if (label == '정보') {
             return Container(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
                 child: infoDetailCategoryPage(
-                    primaryColor: Color(0xFF045558), collectionName: "ondoPost")
-                //infoTest(primaryColor: Color(0xFF045558), collectionName: "ondoPost")
-                );
+                    primaryColor: Color(0xFF045558),
+                    collectionName: "ondoPost"));
           }
           return OndoPostList(
               primaryColor: Color(0xFF045558),

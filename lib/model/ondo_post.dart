@@ -44,7 +44,9 @@ class OndoPostModel {
             ? null
             : doc.data()!["images"].cast<String>(),
         category = doc.data()!["category"],
-        type = doc.data()!["type"],
+        type = doc.data()!["type"] == null
+            ? null
+            : doc.data()!["type"].cast<String>(),
         likes = doc.data()!["likes"],
         // ignore: prefer_null_aware_operators
         likesPeople = doc.data()!["likesPeople"] == null
