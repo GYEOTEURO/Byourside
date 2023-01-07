@@ -1,3 +1,4 @@
+import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
@@ -25,6 +26,9 @@ class EduViewPage extends StatefulWidget {
 }
 
 class _EduViewPageState extends State<EduViewPage> {
+
+  final overlayController = Get.put(OverlayController());
+  
   Widget _buildListItem(String? collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
@@ -47,6 +51,7 @@ class _EduViewPageState extends State<EduViewPage> {
           //Read Document
           onTap: () {
             HapticFeedback.lightImpact(); // 약한 진동
+            overlayController.controlOverlay(null);
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -158,6 +163,7 @@ class _EduViewPageState extends State<EduViewPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
+          overlayController.controlOverlay(null);
           Navigator.push(
               context,
               MaterialPageRoute(
