@@ -66,22 +66,20 @@ class _CommentListState extends State<CommentList> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                           child: SelectionArea(
-                            child: Text(
-                              "  ${comment.content!}",
-                              semanticsLabel: "${comment.content!}",
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'NanumGothic'
-                              ))))),
+                              child: Text("  ${comment.content!}",
+                                  semanticsLabel: "${comment.content!}",
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'NanumGothic'))))),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                             child: TextButton(
                           onPressed: () async {
-                            HapticFeedback.lightImpact();// 약한 진동
+                            HapticFeedback.lightImpact(); // 약한 진동
                             var groupName =
                                 "${user?.displayName}_${comment.nickname}";
                             var groupNameReverse =
@@ -121,6 +119,14 @@ class _CommentListState extends State<CommentList> {
                                 true) {
                               String groupId =
                                   await getGroupId(groupNameReverse);
+                              await groupCollection.doc(groupId).update({
+                                "members": FieldValue.arrayUnion(
+                                    ["${user?.uid}_${user?.displayName}"])
+                              });
+                              await userCollection.doc(user?.uid).update({
+                                "groups": FieldValue.arrayUnion(
+                                    ["${groupId}_${groupName}"])
+                              });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
                                     context,
@@ -132,6 +138,14 @@ class _CommentListState extends State<CommentList> {
                               });
                             } else {
                               String groupId = await getGroupId(groupName);
+                              await groupCollection.doc(groupId).update({
+                                "members": FieldValue.arrayUnion(
+                                    ["${user?.uid}_${user?.displayName}"])
+                              });
+                              await userCollection.doc(user?.uid).update({
+                                "groups": FieldValue.arrayUnion(
+                                    ["${groupId}_${groupName}"])
+                              });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
                                     context,
@@ -147,29 +161,29 @@ class _CommentListState extends State<CommentList> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "${comment.nickname} | $date $hour:$minute",
-                                semanticsLabel: "닉네임 ${comment.nickname}, $date $hour시$minute분",
+                                semanticsLabel:
+                                    "닉네임 ${comment.nickname}, $date $hour시$minute분",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
                                 ),
-                          )),
+                              )),
                         )),
                         if (user?.uid == comment.uid)
                           RichText(
                               text: TextSpan(
                                   text: "삭제",
                                   style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'NanumGothic'),
+                                      color: Colors.black,
+                                      fontFamily: 'NanumGothic'),
                                   recognizer: TapGestureRecognizer()
                                     ..onTapDown = (details) {
-                                      HapticFeedback.lightImpact();// 약한 진동
+                                      HapticFeedback.lightImpact(); // 약한 진동
                                       DBSet.deleteComment(collectionName!,
                                           documentID!, comment.id!);
-                                    })
-                          )
+                                    }))
                       ]),
                 ]))));
   }
@@ -186,20 +200,23 @@ class _CommentListState extends State<CommentList> {
           if (snapshot.hasData) {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
-                physics: const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
+                physics:
+                    const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
                 shrinkWrap: true, //ListView in ListView를 가능하게
                 itemBuilder: (_, index) {
                   CommentModel comment = snapshot.data![index];
                   return _buildListItem(collectionName, documentID, comment);
                 });
           } else
-            return const SelectionArea(child: Text(
+            return const SelectionArea(
+                child: Text(
               "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
               semanticsLabel: "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
               style: TextStyle(
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w600,
-              ),));
+              ),
+            ));
         });
   }
 }
