@@ -35,6 +35,8 @@ class _SearchPageState extends State<SearchPage> {
         title: const Text(
           "검색",
           semanticsLabel: "검색",
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),

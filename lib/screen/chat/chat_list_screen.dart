@@ -162,7 +162,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               color: Colors.black,
                               fontSize: 17,
                               fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -236,7 +236,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                   ),
                 )
               ],
@@ -317,7 +317,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
+                  fontWeight: FontWeight.w600),
             ),
           )
         ],
