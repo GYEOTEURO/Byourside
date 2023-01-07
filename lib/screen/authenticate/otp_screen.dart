@@ -167,20 +167,58 @@ class _OTPScreenState extends State<OTPScreen> {
                             .signInWithCredential(credential)
                             .then((value) async {
                           if (value.user != null) {
-                            FirebaseUser(
-                                uid: value.user?.uid, phoneNum: widget.phone);
+                            setState(() {
+                              FirebaseUser(
+                                  uid: value.user?.uid, phoneNum: widget.phone);
+                            });
+                            await FirebaseAuth.instance.currentUser!.reload();
                           }
                         });
+                        await FirebaseAuth.instance.currentUser!.reload();
+                        if (await FirebaseAuth
+                                .instance.currentUser?.phoneNumber !=
+                            null) {
+                          timer?.cancel();
+                        } else if (user?.phoneNum == null ||
+                            user?.phoneNum == "") {
+                          setState(() {
+                            FirebaseUser(
+                                uid: user?.uid, phoneNum: widget.phone);
+                          });
+                          if (await FirebaseAuth
+                                  .instance.currentUser?.phoneNumber !=
+                              null) {
+                            timer?.cancel();
+                          } else {
+                            if (await FirebaseAuth
+                                    .instance.currentUser?.phoneNumber !=
+                                null) {
+                              timer?.cancel();
+                              Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SetupUser()));
+                            }
+                          }
+                        }
                       } catch (e) {
-                        // ScaffoldMessenger.of(context)
-                        //     .showSnackBar(SnackBar(content: Text(e.toString())));
-                        // FirebaseUser(code: e.toString(), uid: null);
-                      }
-                      await FirebaseAuth.instance.currentUser!.reload();
-
-                      if (FirebaseAuth.instance.currentUser?.phoneNumber !=
-                          null) {
-                        timer?.cancel();
+                        if (mounted) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text(
+                                    "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                    semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                );
+                              });
+                        }
                       }
                     },
                   ),
@@ -217,23 +255,34 @@ class _OTPScreenState extends State<OTPScreen> {
                             }
                           });
                           await FirebaseAuth.instance.currentUser!.reload();
-                        } else if (user?.phoneNum == null ||
-                            user?.phoneNum == "") {
-                          setState(() {
-                            FirebaseUser(
-                                uid: user?.uid, phoneNum: widget.phone);
-                          });
-                        } else {
-                          Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SetupUser()));
-                        }
-
-                        if (FirebaseAuth.instance.currentUser?.phoneNumber !=
-                            null) {
-                          timer?.cancel();
+                          if (await FirebaseAuth
+                                  .instance.currentUser?.phoneNumber !=
+                              null) {
+                            timer?.cancel();
+                          } else if (user?.phoneNum == null ||
+                              user?.phoneNum == "") {
+                            setState(() {
+                              FirebaseUser(
+                                  uid: user?.uid, phoneNum: widget.phone);
+                            });
+                            if (await FirebaseAuth
+                                    .instance.currentUser?.phoneNumber !=
+                                null) {
+                              timer?.cancel();
+                            } else {
+                              if (await FirebaseAuth
+                                      .instance.currentUser?.phoneNumber !=
+                                  null) {
+                                timer?.cancel();
+                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SetupUser()));
+                              }
+                            }
+                          }
                         }
                       } catch (e) {
                         if (mounted) {
