@@ -2,6 +2,7 @@ import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/nanum/type_controller.dart';
 import 'package:byourside/screen/ondo/category.dart';
+import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   final ondoController = Get.put(OndoTypeController());
   final nanumController = Get.put(NanumTypeController());
+  final overlayController = Get.put(OverlayController());
 
   int _selectedIndex = 0;
   // static TextStyle optionStyle =
@@ -53,6 +55,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
 
   void _onItemTapped(int index) {
+    // 정보게시판 dropdown 열려있을때 닫아주기
+    if(overlayController.overlayEntry != null){
+      overlayController.controlOverlay(null);
+    }
+
     // 다른 탭으로 넘어갈 때, 필터링 초기화
     ondoController.filtering(null);
     nanumController.filtering(null);
