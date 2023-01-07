@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -277,7 +278,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                 borderSide: BorderSide(width: 1),
                               ),
                               hintText:
-                                  "(참고: 복지/혜택 게시판과 교육/세미나 게시판은 사진을 첨부하지 않을 시,게시글 목록에서 흰색 배경이 보입니다.)"),
+                                  "(참고: 복지/혜택 게시판과 교육/세미나 게시판은 사진을 첨부하지 않을 시,게시글 목록에서 회색 배경에 사진 없음으로 보입니다.)"),
                         ))
                   ],
                 )),
@@ -286,27 +287,32 @@ class _OndoPostPageState extends State<OndoPostPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           HapticFeedback.lightImpact(); // 약한 진동
-          if (_formkey.currentState!.validate()) {
-            Navigator.pop(context);
-            List<String> urls =
-                _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+          if (_categories.category == null) {
+            Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+                backgroundColor: Colors.white);
+          } else {
+            if (_formkey.currentState!.validate()) {
+              Navigator.pop(context);
+              List<String> urls =
+                  _images.isEmpty ? [] : await DBSet.uploadFile(_images);
 
-            if (_categories.category == '자유게시판') _categories.category = '자유';
+              if (_categories.category == '자유게시판') _categories.category = '자유';
 
-            OndoPostModel postData = OndoPostModel(
-                uid: user!.uid,
-                nickname: user!.displayName,
-                title: _title.text,
-                content: _content.text,
-                category: _categories.category,
-                type: _categories.type,
-                datetime: Timestamp.now(),
-                images: urls,
-                likes: 0,
-                likesPeople: [],
-                scrapPeople: [],
-                keyword: _title.text.split(' '));
-            DBSet.addOndoPost('ondoPost', postData);
+              OndoPostModel postData = OndoPostModel(
+                  uid: user!.uid,
+                  nickname: user!.displayName,
+                  title: _title.text,
+                  content: _content.text,
+                  category: _categories.category,
+                  type: _categories.type,
+                  datetime: Timestamp.now(),
+                  images: urls,
+                  likes: 0,
+                  likesPeople: [],
+                  scrapPeople: [],
+                  keyword: _title.text.split(' '));
+              DBSet.addOndoPost('ondoPost', postData);
+            }
           }
         },
         backgroundColor: widget.primaryColor,
