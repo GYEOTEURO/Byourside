@@ -61,8 +61,8 @@ class _EduViewPageState extends State<EduViewPage> {
               children: [
                 Container(
                       margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
-                      width: width / 2.5,
-                      height: height / 4,
+                      width: width * 0.4,
+                      height: width * 0.4,
                       child: (post.images!.isNotEmpty) ?
                         Semantics(
                             label: '사용자가 올린 사진',

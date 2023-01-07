@@ -1,6 +1,5 @@
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
@@ -82,12 +81,22 @@ class _OndoPostListState extends State<OndoPostList> {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'NanumGothic'))),
                             Text(
+                              widget.category.contains('전체') ?
+                              post.type!.isEmpty
+                                  ? '${post.nickname!} | $date | ${post.category}'
+                                  : '${post.nickname!} | $date | ${post.category} | $type'
+                              :
                               post.type!.isEmpty
                                   ? '${post.nickname!} | $date'
                                   : '${post.nickname!} | $date | $type',
-                              semanticsLabel: post.type!.isEmpty
+                              semanticsLabel: widget.category.contains('전체') ?
+                                post.type!.isEmpty
+                                  ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category}'
+                                  : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category} $type'
+                                :
+                                post.type!.isEmpty
                                   ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
-                                  : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $type',
+                                  : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $type',
                               overflow: TextOverflow.fade,
                               maxLines: 1,
                               softWrap: false,
