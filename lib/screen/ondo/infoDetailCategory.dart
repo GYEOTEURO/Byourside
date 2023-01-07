@@ -1,8 +1,10 @@
 import 'package:byourside/screen/ondo/eduViewPage.dart';
+import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class infoDetailCategoryPage extends StatefulWidget {
   const infoDetailCategoryPage(
@@ -11,13 +13,15 @@ class infoDetailCategoryPage extends StatefulWidget {
 
   final Color primaryColor;
   final String collectionName;
-  //final String? type;
 
   @override
   State<infoDetailCategoryPage> createState() => _infoDetailCategoryPageState();
 }
 
 class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
+
+  final overlayController = Get.put(OverlayController());
+
   // 드롭다운 리스트.
   static const List<String> _dropdownList = [
     "전체 정보",
@@ -33,27 +37,27 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
   String _changePage = '전체 정보';
 
   // 드롭박스.
-  OverlayEntry? _overlayEntry;
+  //OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
 
   // 드롭다운 생성.
   void _createOverlay() {
-    if (_overlayEntry == null) {
-      _overlayEntry = _customDropdown();
-      Overlay.of(context)?.insert(_overlayEntry!);
+    if (overlayController.overlayEntry == null) {
+      overlayController.controlOverlay(_customDropdown());
+      Overlay.of(context)?.insert(overlayController.overlayEntry!);
     }
   }
 
   // 드롭다운 해제.
   void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+    //overlayController.overlayEntry?.remove();
+    overlayController.controlOverlay(null);
   }
 
   @override
   void dispose() {
     try {
-      _overlayEntry?.dispose();
+      overlayController.overlayEntry?.dispose();
     } catch (e) {
       _removeOverlay();
     } finally {
@@ -70,7 +74,9 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
         onTap: () => _removeOverlay(),
         child: Scaffold(
             body: Column(children: [
-          Row(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
             Align(
               alignment: Alignment.topCenter,
               child: InkWell(
@@ -82,7 +88,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
                   link: _layerLink,
                   child: Container(
                     margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    width: width * 0.8,
+                    width: width * 0.79,
                     height: height * 0.07,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
@@ -118,7 +124,9 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
                 ),
               ),
             ),
-            ElevatedButton(
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+              child: ElevatedButton(
                 child: Text('이동',
                     semanticsLabel: '이동',
                     style: TextStyle(
@@ -126,7 +134,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
                       fontWeight: FontWeight.w600,
                     )),
                 style: ElevatedButton.styleFrom(
-                  fixedSize: Size(width * 0.1, height * 0.07),
+                  fixedSize: Size(width * 0.06, height * 0.07),
                   foregroundColor: Colors.white,
                   backgroundColor: widget.primaryColor,
                 ),
@@ -135,7 +143,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
                   setState(() {
                     _changePage = _dropdownValue;
                   });
-                })
+                }))
           ]),
           if (_changePage == '교육/세미나' || _changePage == '복지/혜택')
             (Expanded(

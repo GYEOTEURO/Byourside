@@ -1,4 +1,5 @@
 import 'package:byourside/model/post_list.dart';
+import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,9 @@ class OndoPostList extends StatefulWidget {
 }
 
 class _OndoPostListState extends State<OndoPostList> {
+
+  final overlayController = Get.put(OverlayController());
+  
   Widget _buildListItem(PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
@@ -48,6 +52,7 @@ class _OndoPostListState extends State<OndoPostList> {
                 //Read Document
                 onTap: () {
                   HapticFeedback.lightImpact(); // 약한 진동
+                  overlayController.controlOverlay(null);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

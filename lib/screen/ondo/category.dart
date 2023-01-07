@@ -1,5 +1,6 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/infoDetailCategory.dart';
+import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:byourside/screen/ondo/search_page.dart';
@@ -50,6 +51,7 @@ class _CategoryPageState extends State<CategoryPage>
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OndoTypeController());
+    final overlayController = Get.put(OverlayController());
 
     return Scaffold(
       appBar: AppBar(
@@ -60,6 +62,7 @@ class _CategoryPageState extends State<CategoryPage>
           ),
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
+            overlayController.controlOverlay(null);
             _type = await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -87,6 +90,7 @@ class _CategoryPageState extends State<CategoryPage>
             ),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
+              overlayController.controlOverlay(null);
               showSearch(context: context, delegate: Search('ondoPost'));
             },
           ),
@@ -120,6 +124,7 @@ class _CategoryPageState extends State<CategoryPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
+          overlayController.controlOverlay(null);
           Navigator.push(
               context,
               MaterialPageRoute(
