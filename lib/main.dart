@@ -5,6 +5,7 @@ import 'package:byourside/screen/authenticate/user_someoneElse.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/screen/chat/chat_list_screen.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -83,6 +84,7 @@ class _MyAppState extends State<MyApp> {
               "/user_protector": (context) => protector(),
               "/user_participator": (context) => participator(),
               "/user_someoneElse": (context) => someoneElse(),
+              "/chat_list": (context) => ChatListScreen(),
             },
           ),
         ),
