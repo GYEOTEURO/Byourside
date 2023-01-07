@@ -133,7 +133,7 @@ class _PostCategoryState extends State<PostCategory> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
