@@ -73,7 +73,8 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/icons/playstore.png"
-  adaptive_icon_background: "assets/icons/playstore.png" 
+  adaptive_icon_background: "#045558"
+  adaptive_icon_foreground: "assets/icons/playstore.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
