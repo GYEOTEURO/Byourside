@@ -59,11 +59,10 @@ class _ChatPageState extends State<ChatPage> {
         title: Text(
           widget.groupName,
           semanticsLabel: widget.groupName,
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         backgroundColor: Theme.of(context).primaryColor,
-        // actions: [
-
-        // ],
       ),
       body: Stack(
         children: [
@@ -90,14 +89,14 @@ class _ChatPageState extends State<ChatPage> {
                     style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     autofocus: true,
                     decoration: const InputDecoration(
                       hintStyle: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       hintText: "메시지 보내기",
                       border: InputBorder.none,
                     ),
