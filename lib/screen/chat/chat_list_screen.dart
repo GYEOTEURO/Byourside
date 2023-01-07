@@ -162,7 +162,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               color: Colors.black,
                               fontSize: 17,
                               fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w500),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -236,7 +236,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w500),
                   ),
                 )
               ],
@@ -262,8 +262,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
                     return GroupTile(
                         userName: snapshot.data['nickname'],
-                        groupId:
-                            "", //getId(snapshot.data['groups'][reverseIndex]),
+                        groupId: "", //getId(snapshot.data['groups'][reverseIndex]),
                         groupName:
                             getName(snapshot.data['groups'][reverseIndex]),
                         recentMsg: ""
@@ -318,7 +317,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w500),
             ),
           )
         ],
