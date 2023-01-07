@@ -30,6 +30,9 @@ class _OndoPostContentState extends State<OndoPostContent> {
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection("groups");
 
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("user");
+
   Future<bool> checkGroupExist(String name) async {
     var collection = FirebaseFirestore.instance.collection('groupList');
     var doc = await collection.doc(name).get();
@@ -124,6 +127,14 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                   } else if (await checkGroupExist(groupName) != true) {
                     String groupId = await getGroupId(groupNameReverse);
+                    await groupCollection.doc(groupId).update({
+                      "members": FieldValue.arrayUnion(
+                          ["${user?.uid}_${user?.displayName}"])
+                    });
+                    await userCollection.doc(user?.uid).update({
+                      "groups":
+                          FieldValue.arrayUnion(["${groupId}_${groupName}"])
+                    });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
                           context,
@@ -135,6 +146,14 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                   } else {
                     String groupId = await getGroupId(groupName);
+                    await groupCollection.doc(groupId).update({
+                      "members": FieldValue.arrayUnion(
+                          ["${user?.uid}_${user?.displayName}"])
+                    });
+                    await userCollection.doc(user?.uid).update({
+                      "groups":
+                          FieldValue.arrayUnion(["${groupId}_${groupName}"])
+                    });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
                           context,
