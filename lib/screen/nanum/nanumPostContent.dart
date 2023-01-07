@@ -128,6 +128,13 @@ class _NanumPostContentState extends State<NanumPostContent> {
               });
             } else if (await checkGroupExist(groupName) != true) {
               String groupId = await getGroupId(groupNameReverse);
+              await groupCollection.doc(groupId).update({
+                "members":
+                    FieldValue.arrayUnion(["${user?.uid}_${user?.displayName}"])
+              });
+              await userCollection.doc(user?.uid).update({
+                "groups": FieldValue.arrayUnion(["${groupId}_${groupName}"])
+              });
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
                     context,
@@ -139,6 +146,13 @@ class _NanumPostContentState extends State<NanumPostContent> {
               });
             } else {
               String groupId = await getGroupId(groupName);
+              await groupCollection.doc(groupId).update({
+                "members":
+                    FieldValue.arrayUnion(["${user?.uid}_${user?.displayName}"])
+              });
+              await userCollection.doc(user?.uid).update({
+                "groups": FieldValue.arrayUnion(["${groupId}_${groupName}"])
+              });
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
                     context,
