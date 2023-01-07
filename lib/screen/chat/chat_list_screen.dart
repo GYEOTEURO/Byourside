@@ -262,8 +262,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
                     return GroupTile(
                         userName: snapshot.data['nickname'],
-                        groupId:
-                            "", //getId(snapshot.data['groups'][reverseIndex]),
+                        groupId: getId(snapshot.data['groups'][reverseIndex]),
                         groupName:
                             getName(snapshot.data['groups'][reverseIndex]),
                         recentMsg: ""
