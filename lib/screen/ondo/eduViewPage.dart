@@ -51,7 +51,9 @@ class _EduViewPageState extends State<EduViewPage> {
           //Read Document
           onTap: () {
             HapticFeedback.lightImpact(); // 약한 진동
-            overlayController.controlOverlay(null);
+            if(overlayController.overlayEntry != null){
+              overlayController.controlOverlay(null);
+            }
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -163,7 +165,9 @@ class _EduViewPageState extends State<EduViewPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          overlayController.controlOverlay(null);
+          if(overlayController.overlayEntry != null){
+              overlayController.controlOverlay(null);
+          }
           Navigator.push(
               context,
               MaterialPageRoute(

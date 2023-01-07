@@ -52,7 +52,9 @@ class _OndoPostListState extends State<OndoPostList> {
                 //Read Document
                 onTap: () {
                   HapticFeedback.lightImpact(); // 약한 진동
-                  overlayController.controlOverlay(null);
+                  if(overlayController.overlayEntry != null){
+                    overlayController.controlOverlay(null);
+                  }
                   Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -62,7 +62,9 @@ class _CategoryPageState extends State<CategoryPage>
           ),
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
-            overlayController.controlOverlay(null);
+            if(overlayController.overlayEntry != null){
+              overlayController.controlOverlay(null);
+            }
             _type = await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -90,7 +92,9 @@ class _CategoryPageState extends State<CategoryPage>
             ),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
-              overlayController.controlOverlay(null);
+              if(overlayController.overlayEntry != null){
+                overlayController.controlOverlay(null);
+              }
               showSearch(context: context, delegate: Search('ondoPost'));
             },
           ),
@@ -124,7 +128,9 @@ class _CategoryPageState extends State<CategoryPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          overlayController.controlOverlay(null);
+          if(overlayController.overlayEntry != null){
+              overlayController.controlOverlay(null);
+          }
           Navigator.push(
               context,
               MaterialPageRoute(
