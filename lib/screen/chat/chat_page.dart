@@ -59,6 +59,8 @@ class _ChatPageState extends State<ChatPage> {
         title: Text(
           widget.groupName,
           semanticsLabel: widget.groupName,
+          style:
+              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
@@ -72,6 +74,9 @@ class _ChatPageState extends State<ChatPage> {
                           "그룹을 나가시겠습니까?",
                           semanticsLabel: "그룹을 나가시겠습니까?",
                           textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
                         ),
                         content: Padding(
                             padding: EdgeInsets.all(30),
@@ -91,7 +96,7 @@ class _ChatPageState extends State<ChatPage> {
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                                 SizedBox(
@@ -123,7 +128,7 @@ class _ChatPageState extends State<ChatPage> {
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 )
                               ],
@@ -162,14 +167,14 @@ class _ChatPageState extends State<ChatPage> {
                     style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     autofocus: true,
                     decoration: const InputDecoration(
                       hintStyle: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       hintText: "메시지 보내기",
                       border: InputBorder.none,
                     ),
