@@ -6,7 +6,7 @@ class OverlayController extends GetxController {
   OverlayEntry? overlayEntry = null;
 
   void controlOverlay(entry) {
-    if(entry == null){
+    if(overlayEntry != null && entry == null){
       overlayEntry!.remove();
     }
     overlayEntry = entry;
