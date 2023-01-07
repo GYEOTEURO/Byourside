@@ -104,6 +104,11 @@ class _CategoryPageState extends State<CategoryPage>
           tabs: categoryTabs,
           indicatorColor: Colors.white,
           unselectedLabelColor: Colors.grey,
+          onTap: ((value) {
+            if(overlayController.overlayEntry != null){
+              overlayController.controlOverlay(null);
+            }
+          }),
         ),
         backgroundColor: Color(0xFF045558),
       ),
