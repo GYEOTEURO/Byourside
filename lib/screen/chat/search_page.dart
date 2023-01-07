@@ -197,54 +197,77 @@ class _SearchPageState extends State<SearchPage> {
             fontWeight: FontWeight.w500),
       ),
       trailing: InkWell(
-        onTap: () async {
-          HapticFeedback.lightImpact(); // 약한 진동
-          if (mounted) {
-            await ChatList(uid: uid)
-                .toggleGroupJoin(groupId, userName, groupName);
-            setState(() {
-              isJoined = !isJoined;
-            });
-          } else {
-            // print("mount1");
-          }
-        },
-        child: isJoined
-            ? Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black,
-                  border: Border.all(color: Colors.white, width: 1),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: const Text(
-                  "참여",
-                  semanticsLabel: "참여",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w500),
-                ))
-            : Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).primaryColor,
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: const Text(
-                  "참여",
-                  semanticsLabel: "참여",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-      ),
+          onTap: () {
+            HapticFeedback.lightImpact(); // 약한 진동
+            if (mounted) {
+              ChatList(uid: uid).toggleGroupJoin(groupId, userName, groupName);
+              setState(() {
+                isJoined = !isJoined;
+
+                if (mounted) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: isJoined
+                              ? Text(
+                                  "참여 완료.",
+                                  semanticsLabel: "참여 완료",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w500),
+                                )
+                              : Text(
+                                  "참여가 취소되었습니다.",
+                                  semanticsLabel: "참여가 취소되었습니다.",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w500),
+                                ),
+                        );
+                      });
+                }
+              });
+            } else {
+              // print("mount1");
+            }
+          },
+          child: //isJoined ?
+              Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                    border: Border.all(color: Colors.white, width: 1),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: const Text(
+                    "참여",
+                    semanticsLabel: "참여",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                  ))
+          // : Container(
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       color: Theme.of(context).primaryColor,
+          //     ),
+          //     padding:
+          //         const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          //     child: const Text(
+          //       "참여",
+          //       semanticsLabel: "참여",
+          //       style: TextStyle(
+          //           color: Colors.white,
+          //           fontSize: 17,
+          //           fontFamily: 'NanumGothic',
+          //           fontWeight: FontWeight.w500),
+          ),
     );
   }
 }
