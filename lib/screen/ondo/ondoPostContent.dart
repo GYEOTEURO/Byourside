@@ -26,6 +26,14 @@ class OndoPostContent extends StatefulWidget {
 
 class _OndoPostContentState extends State<OndoPostContent> {
   final User? user = FirebaseAuth.instance.currentUser;
+  List<String> _decList = [
+    "불법 정보를 포함하고 있습니다.", 
+    "게시판 성격에 부적절합니다.",
+    "음란물입니다.",
+    "스팸홍보/도배글입니다.",
+    "욕설/비하/혐오/차별적 표현을 포함하고 있습니다.",
+    "청소년에게 유해한 내용입니다.",
+    "상업적 광고 및 판매글입니다."];
 
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection("groups");
@@ -61,6 +69,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
       post.type!.sort();
       type = "${post.type![0]}/${post.type![1]}";
     }
+
+    String _declaration = _decList[0];
 
     return Column(children: [
       Align(
@@ -183,6 +193,96 @@ class _OndoPostContentState extends State<OndoPostContent> {
               HapticFeedback.lightImpact(); // 약한 진동
               Navigator.pop(context);
               DBSet.deletePost(collectionName!, post.id!);
+            },
+          )))
+        else(
+          (OutlinedButton(
+            style: ElevatedButton.styleFrom(
+              side: BorderSide(color: widget.primaryColor, width: 1.5),
+              foregroundColor: widget.primaryColor,
+            ),
+            child: Text(
+                '신고',
+                semanticsLabel: '신고',
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 14,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
+                )),
+            onPressed: () {
+              HapticFeedback.lightImpact(); // 약한 진동
+              showDialog(
+                context: context, 
+                builder: (context){
+                  return AlertDialog(
+                    title: Text(
+                      '신고 사유를 알려주세요.',
+                      semanticsLabel: '신고 사유를 알려주세요.',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      )),
+                    content: StatefulBuilder(
+                      builder: (context, setState) {
+                      return Column(
+                      children: _decList.map((e) =>
+                          new RadioListTile(
+                            title: Text(
+                              e,
+                              semanticsLabel: e,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w600,
+                              )),
+                            value: e,
+                            groupValue: _declaration,
+                            onChanged: (String? value){
+                              setState(() {
+                                _declaration = value!;
+                              });
+                            }
+                          )).toList(),  
+                      );}
+                    ),
+                    actions: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: widget.primaryColor,
+                        ),
+                        onPressed: () {
+                          DBSet.declaration('post', _declaration, post.id!);
+                          Navigator.pop(context);
+                        }, 
+                        child: Text(
+                          '신고',
+                          semanticsLabel: '신고',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ))
+                        ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: widget.primaryColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }, 
+                        child: Text(
+                          '취소',
+                          semanticsLabel: '취소',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ))
+                      )
+                    ]);
+             });
             },
           )))
       ]),

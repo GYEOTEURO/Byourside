@@ -99,5 +99,10 @@ class DBSet {
   static cancelScrap(String collectionName, String documentID, String uid) async {
     await FirebaseFirestore.instance.collection(collectionName).doc(documentID).update({'scrapPeople': FieldValue.arrayRemove([uid])});
   }
+
+  // 신고
+  static declaration(String classification, String reason, String id) async {
+    await FirebaseFirestore.instance.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_${reason}'])});
+  }
 }
 
