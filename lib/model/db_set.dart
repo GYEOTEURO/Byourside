@@ -102,7 +102,7 @@ class DBSet {
 
   // 신고
   static declaration(String classification, String reason, String id) async {
-    await FirebaseFirestore.instance.collection('report').doc('declaration').update({'${classification}_${reason}': FieldValue.arrayUnion([id])});
+    await FirebaseFirestore.instance.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_${reason}'])});
   }
 }
 

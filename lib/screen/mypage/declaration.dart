@@ -20,10 +20,11 @@ class _DeclarationState extends State<Declaration> {
     "사칭/사기 사용자입니다.",
     "상업적 광고 및 판매 사용자입니다."];
 
+  final TextEditingController _nickname = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     String _declaration = _decList[0];
-    final TextEditingController _nickname = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +78,7 @@ class _DeclarationState extends State<Declaration> {
                     foregroundColor: Colors.white,
                 ),
                 onPressed: () {
-                  //DBSet.declaration('user', _declaration, _nickname.text);
+                  DBSet.declaration('user', _declaration, _nickname.text);
                   showDialog(
                     context: context, 
                     builder: (context){
