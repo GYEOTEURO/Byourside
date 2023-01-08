@@ -252,7 +252,7 @@ class _CommentListState extends State<CommentList> {
                                             backgroundColor: widget.primaryColor,
                                         ),
                                         onPressed: () {
-                                          DBSet.declaration('post', _declaration, comment.id!);
+                                          DBSet.declaration('comment', _declaration, comment.id!);
                                           Navigator.pop(context);
                                         }, 
                                         child: Text(
