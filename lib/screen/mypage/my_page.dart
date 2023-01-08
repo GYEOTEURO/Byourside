@@ -1,4 +1,5 @@
 import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/screen/mypage/declaration.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
 import 'package:byourside/screen/mypage/myNanumPost.dart';
 import 'package:byourside/screen/mypage/myOndoPost.dart';
@@ -51,9 +52,10 @@ class _Mypage extends State<Mypage> {
     MyScrapNanumPost()
   ];
 
-  final List<String> etcEntires = <String>["자주 묻는 질문", "개발자에게 문의하기", "로그아웃"];
+  final List<String> etcEntires = <String>["자주 묻는 질문", "사용자 신고하기", "개발자에게 문의하기", "로그아웃"];
   final List<Icon> etcIcons = <Icon>[
     Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
+    Icon(Icons.report, semanticLabel: '사용자 신고 화면으로 이동'),
     Icon(Icons.question_answer, semanticLabel: '개발자에게 문의하기 화면으로 이동'),
     Icon(Icons.logout, semanticLabel: '로그아웃')
   ];
@@ -201,7 +203,7 @@ class _Mypage extends State<Mypage> {
               height: 10,
             ),
             Expanded(
-                flex: 3,
+                flex: 5,
                 child: ListView.builder(
                     // physics: const NeverScrollableScrollPhysics(),
                     // padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -228,6 +230,12 @@ class _Mypage extends State<Mypage> {
                                   builder: (context) => const FreqQuestion()),
                             );
                           } else if (index == 1) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Declaration()),
+                            );
+                          } else if (index == 2) {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
