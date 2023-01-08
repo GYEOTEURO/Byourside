@@ -109,6 +109,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: TextStyle(
