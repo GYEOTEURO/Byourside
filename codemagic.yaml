@@ -1,0 +1,14 @@
+workflows:
+  byourside:
+    name: Build for iOS 
+    instance_type: mac_mini_m1
+    max_build_duration: 10
+    scripts:
+      - name: Emulator tests
+        script: | 
+          flutter config --enable-web
+          # The ampersand is used to run the emulator in the background without blocking the next command:
+          flutter emulators --launch emulator &
+          # adb wait-for-device is used to wait for the emulator to finish loading:
+          adb wait-for-device
+          flutter -d emulator-5554 test integration_test 
