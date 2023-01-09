@@ -2,7 +2,13 @@ workflows:
   byourside:
     name: Build for iOS 
     instance_type: mac_mini_m1
-    max_build_duration: 10
+    max_build_duration: 20
+    environment:
+      groups:        
+      - keystore_credentials
+      - firebase_credentials
+      flutter: 3.3.1
+      xcode: latest
     scripts:
       - name: Emulator tests
         script: | 
@@ -12,3 +18,4 @@ workflows:
           # adb wait-for-device is used to wait for the emulator to finish loading:
           adb wait-for-device
           flutter -d emulator-5554 test integration_test 
+      
