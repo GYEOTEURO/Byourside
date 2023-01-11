@@ -1,20 +1,41 @@
 import 'package:byourside/screen/authenticate/user.dart';
+import 'package:byourside/screen/authenticate/user_paricipator.dart';
+import 'package:byourside/screen/authenticate/user_protector.dart';
+import 'package:byourside/screen/authenticate/user_someoneElse.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/screen/chat/chat_list_screen.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'package:get/get.dart';
 import 'package:byourside/screen/bottomNavigationBar.dart';
-// import 'package:flutter_recaptcha_v3/flutter_recaptcha_v2.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
+
+Future<bool> getPermission() async {
+  // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
+  Map<Permission, PermissionStatus> permissions = await [
+    Permission.storage,
+    Permission.speech,
+    Permission.bluetooth,
+    Permission.notification
+  ].request();
+
+  print('per1 : $permissions');
+
+  if (permissions.values.every((element) => element.isGranted)) {
+    return Future.value(true);
+  } else {
+    return Future.value(false);
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  getPermission();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -30,9 +51,10 @@ void main() async {
     // 3. play integrity provider
     androidProvider: AndroidProvider.playIntegrity,
   );
-  runApp(MaterialApp(
+  runApp(GetMaterialApp(
+    theme: ThemeData(fontFamily: 'NanumGothic'),
     home: MyApp(),
-    debugShowCheckedModeBanner: false,
+    // debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -43,8 +65,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late TabController controller;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -52,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         FirebasePhoneAuthProvider(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
+            theme: ThemeData(fontFamily: 'NanumGothic'),
             title: '곁',
             initialRoute: "/login",
             routes: {
@@ -60,6 +81,10 @@ class _MyAppState extends State<MyApp> {
               "/phone": (context) => VerifyPhone(),
               "/email": (context) => VerifyEmail(),
               "/user": (context) => SetupUser(),
+              "/user_protector": (context) => protector(),
+              "/user_participator": (context) => participator(),
+              "/user_someoneElse": (context) => someoneElse(),
+              "/chat_list": (context) => ChatListScreen(),
             },
           ),
         ),
