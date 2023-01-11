@@ -68,6 +68,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -170,6 +172,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
+                                    semanticLabel: "이미 가입된 번호입니다.",
                                       content: Text(
                                     '이미 가입된 번호입니다.',
                                     semanticsLabel: '이미 가입된 번호입니다.',

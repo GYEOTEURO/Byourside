@@ -217,6 +217,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                 context: context, 
                 builder: (context){
                   return AlertDialog(
+                    semanticLabel: '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                     title: Text(
                       '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
                       semanticsLabel: '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
@@ -250,39 +251,42 @@ class _NanumPostContentState extends State<NanumPostContent> {
                       );}
                     ),
                     actions: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: widget.primaryColor,
-                        ),
-                        onPressed: () {
-                          DBSet.declaration('post', _declaration, post.id!);
-                          Navigator.pop(context);
-                        }, 
-                        child: Text(
-                          '신고',
-                          semanticsLabel: '신고',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          ))
-                        ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: widget.primaryColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }, 
-                        child: Text(
-                          '취소',
-                          semanticsLabel: '취소',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          ))
-                      )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: widget.primaryColor,
+                          ),
+                          onPressed: () {
+                            DBSet.declaration('post', _declaration, post.id!);
+                            Navigator.pop(context);
+                          }, 
+                          child: Text(
+                            '신고',
+                            semanticsLabel: '신고',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            ))
+                          ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: widget.primaryColor,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }, 
+                          child: Text(
+                            '취소',
+                            semanticsLabel: '취소',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            ))
+                        )])
                     ]);
              });
             },

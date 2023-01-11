@@ -112,6 +112,8 @@ class _OTPScreenState extends State<OTPScreen> {
               semanticsLabel: 'OTP 인증',
             ),
             backgroundColor: primaryColor,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -208,6 +210,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
+                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요.",
                                   content: Text(
                                     "인증번호가 일치하지 않습니다.\n재시도하세요.",
                                     semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
@@ -290,6 +293,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
+                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요.",
                                   content: Text(
                                     "인증번호가 일치하지 않습니다.\n재시도하세요.",
                                     semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
@@ -382,6 +386,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
+                    semanticLabel: "인증 가능한 기간이 지났습니다. 재시도하세요.",
                     content: Text(
                       '인증 가능한 기간이 지났습니다. 재시도하세요.',
                       semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',

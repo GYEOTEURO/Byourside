@@ -271,10 +271,11 @@ class _Register extends State<Register> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
+                        semanticLabel: "이미 가입되었습니다. 약관 동의가 필요합니다. 휴대폰 인증을 진행하세요. 오류가 지속될 경우 문의해주세요.",
                         content: Text(
-                          "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될경우 문의해주세요.",
+                          "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
                           semanticsLabel:
-                              "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될경우 문의해주세요.",
+                              "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'NanumGothic',
@@ -290,6 +291,7 @@ class _Register extends State<Register> {
                   context: context,
                   builder: (context) {
                     return const AlertDialog(
+                      semanticLabel: "재시도하세요.",
                       content: Text(
                         "재시도 하세요.",
                         semanticsLabel: "재시도 하세요.",
