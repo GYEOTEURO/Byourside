@@ -217,8 +217,9 @@ class _OndoPostContentState extends State<OndoPostContent> {
                 builder: (context){
                   return AlertDialog(
                     title: Text(
-                      '신고 사유를 알려주세요.',
-                      semanticsLabel: '신고 사유를 알려주세요.',
+                      '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                      semanticsLabel: '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'NanumGothic',
