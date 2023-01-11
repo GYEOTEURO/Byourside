@@ -9,7 +9,7 @@ class Search extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
-        icon: Icon(Icons.close, semanticLabel: "입력 내용 지우기"),
+        icon: Icon(Icons.close, semanticLabel: "입력 내용 지우기", color: Color(0xFF045558)),
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
           query = "";
@@ -21,7 +21,7 @@ class Search extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기"),
+      icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Color(0xFF045558)),
       onPressed: () {
         HapticFeedback.lightImpact(); // 약한 진동
         Navigator.pop(context);

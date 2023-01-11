@@ -36,7 +36,9 @@ class _PersonalDataState extends State<PersonalData> {
                 semanticsLabel: "개인정보 처리방침",
                 style: TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-            backgroundColor: primaryColor),
+            backgroundColor: primaryColor,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),),
         body: SingleChildScrollView(
             padding: EdgeInsets.all(20),
             scrollDirection: Axis.vertical,

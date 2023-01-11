@@ -33,6 +33,7 @@ class _someoneElseState extends State<someoneElse> {
             context: context,
             builder: (context) {
               return AlertDialog(
+                semanticLabel: "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.",
                 content: Text(
                   '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
                   semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
@@ -49,6 +50,7 @@ class _someoneElseState extends State<someoneElse> {
           context: context,
           builder: (context) {
             return AlertDialog(
+              semanticLabel: "사용가능한 닉네임입니다.",
               content: Text(
                 '사용가능한 닉네임입니다.',
                 semanticsLabel: '사용가능한 닉네임입니다.',
@@ -182,6 +184,8 @@ class _someoneElseState extends State<someoneElse> {
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,

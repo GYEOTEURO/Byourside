@@ -117,6 +117,8 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).primaryColor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
       ),
       body: StreamBuilder<List<PostListModel>>(
           stream: DBGet.readScrapPost(

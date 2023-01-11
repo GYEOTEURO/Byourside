@@ -31,6 +31,8 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         backgroundColor: primaryColor,
         centerTitle: true,
         elevation: 0,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
         title: const Text('비밀번호 변경',
             semanticsLabel: "비밀번호 변경",
             style: TextStyle(
