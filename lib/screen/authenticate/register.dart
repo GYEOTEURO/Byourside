@@ -72,7 +72,12 @@ class _Register extends State<Register> {
       ),
     );
 
-    final emailField = TextFormField(
+    final emailField = Semantics(
+      container: true,
+      textField: true,
+      label: '이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)',
+      hint: '(예: abcd@google.com)',
+      child: TextFormField(
         controller: _email,
         autofocus: true,
         validator: (value) {
@@ -112,9 +117,14 @@ class _Register extends State<Register> {
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w500),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)))));
 
-    final passwordField = TextFormField(
+    final passwordField = Semantics(
+      container: true,
+      textField: true,
+      label: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
+      hint: '(예: 12345678)',
+      child: TextFormField(
         obscureText: _obscureText,
         controller: _password,
         validator: (value) {
@@ -168,7 +178,7 @@ class _Register extends State<Register> {
               },
             ),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)))));
 
     final txtButton = TextButton(
         onPressed: () {
@@ -261,10 +271,11 @@ class _Register extends State<Register> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
+                        semanticLabel: "이미 가입되었습니다. 약관 동의가 필요합니다. 휴대폰 인증을 진행하세요. 오류가 지속될 경우 문의해주세요.",
                         content: Text(
-                          "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될경우 문의해주세요.",
+                          "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
                           semanticsLabel:
-                              "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될경우 문의해주세요.",
+                              "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'NanumGothic',
@@ -280,6 +291,7 @@ class _Register extends State<Register> {
                   context: context,
                   builder: (context) {
                     return const AlertDialog(
+                      semanticLabel: "재시도하세요.",
                       content: Text(
                         "재시도 하세요.",
                         semanticsLabel: "재시도 하세요.",

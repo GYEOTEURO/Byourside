@@ -51,5 +51,24 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	
+    <!-- Permission options for the `speech` group -->
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>speech</string>
+
+    <!-- Permission options for the `photos` group -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>photos</string>
+
+    <!-- Permission options for the `reminder` group -->
+    <key>NSRemindersUsageDescription</key>
+    <string>reminders</string>
+
+    <!-- Permission options for the `bluetooth` -->
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>bluetooth</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>bluetooth</string>
+
 </dict>
 </plist>
