@@ -161,8 +161,38 @@ class _PostCategoryState extends State<PostCategory> {
             }
             widget.categories.type = _type;
             if (widget.categories.category == null) {
-              Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
-                  backgroundColor: Colors.white);
+              // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+              //     backgroundColor: Colors.white);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
+                        content: Text('게시판 종류를 선택해주세요',
+                            semanticsLabel: '게시판 종류를 선택해주세요',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            )),
+                        actions: [
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: widget.primaryColor,
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('확인',
+                                  semanticsLabel: '확인',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  )))
+                        ]);
+                  });
             } else {
               Navigator.pop(context, widget.categories);
             }

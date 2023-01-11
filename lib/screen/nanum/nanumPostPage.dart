@@ -125,24 +125,27 @@ class _NanumPostPageState extends State<NanumPostPage> {
                   children: [
                     // 제목
                     Container(
-                        child: TextFormField(
-                      style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600),
-                      autofocus: true,
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "제목은 비어있을 수 없습니다";
-                        }
-                        return null;
-                      },
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(myFocus),
-                      decoration: InputDecoration(
-                          labelText: "제목을 입력하세요", hintText: "제목을 입력하세요"),
-                      controller: _title,
-                    )),
+                        child: Semantics(
+                            label: "제목을 입력하세요",
+                            child: TextFormField(
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                              autofocus: true,
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "제목은 비어있을 수 없습니다";
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (_) =>
+                                  FocusScope.of(context).requestFocus(myFocus),
+                              decoration: InputDecoration(
+                                  labelText: "제목을 입력하세요",
+                                  hintText: "제목을 입력하세요"),
+                              controller: _title,
+                            ))),
                     // 카테고리 선택
                     Container(
                         padding: EdgeInsets.only(top: 10, bottom: 5),
@@ -252,53 +255,58 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     // 가격 설정
                     Container(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: TextFormField(
-                          focusNode: myFocus,
-                          textInputAction: TextInputAction.next,
-                          style: TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "가격은 비어있을 수 없습니다";
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (_) {
-                            FocusScope.of(context).requestFocus(myFocus1);
-                          },
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp('[0-9]'))
-                          ],
-                          decoration: InputDecoration(
-                              labelText: "가격을 입력하세요",
-                              hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)'),
-                          controller: _price,
-                        )),
+                        child: Semantics(
+                            label: "가격을 입력하세요",
+                            child: TextFormField(
+                              focusNode: myFocus,
+                              textInputAction: TextInputAction.next,
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "가격은 비어있을 수 없습니다";
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (_) {
+                                FocusScope.of(context).requestFocus(myFocus1);
+                              },
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('[0-9]'))
+                              ],
+                              decoration: InputDecoration(
+                                  labelText: "가격을 입력하세요",
+                                  hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)'),
+                              controller: _price,
+                            ))),
                     // 게시글 내용
                     Container(
                         padding: EdgeInsets.only(top: 20, bottom: 5),
-                        child: TextField(
-                          style: TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                          focusNode: myFocus1,
-                          textInputAction: TextInputAction.done,
-                          controller: _content,
-                          minLines: 8,
-                          maxLines: 10,
-                          decoration: const InputDecoration(
-                            labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
-                            hintText:
-                                "거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                              borderSide: BorderSide(width: 1),
-                            ),
-                          ),
-                        ))
+                        child: Semantics(
+                            label: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                            child: TextField(
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                              focusNode: myFocus1,
+                              textInputAction: TextInputAction.done,
+                              controller: _content,
+                              minLines: 8,
+                              maxLines: 10,
+                              decoration: const InputDecoration(
+                                labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                                hintText:
+                                    "거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요",
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                  borderSide: BorderSide(width: 1),
+                                ),
+                              ),
+                            )))
                   ],
                 ),
               ))),
