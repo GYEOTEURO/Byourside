@@ -132,25 +132,28 @@ class _OndoPostPageState extends State<OndoPostPage> {
                   children: [
                     // 제목
                     Container(
-                        child: TextFormField(
-                      style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600),
-                      autofocus: true,
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "제목은 비어있을 수 없습니다";
-                        }
-                        return null;
-                      },
-                      // style: TextStyle(fontFamily: 'NanumGothic'),
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(myFocus),
-                      decoration: InputDecoration(
-                          labelText: "제목을 입력하세요", hintText: "제목을 입력하세요"),
-                      controller: _title,
-                    )),
+                        child: Semantics(
+                            label: "제목을 입력하세요",
+                            child: TextFormField(
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                              autofocus: true,
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "제목은 비어있을 수 없습니다";
+                                }
+                                return null;
+                              },
+                              // style: TextStyle(fontFamily: 'NanumGothic'),
+                              onFieldSubmitted: (_) =>
+                                  FocusScope.of(context).requestFocus(myFocus),
+                              decoration: InputDecoration(
+                                  labelText: "제목을 입력하세요",
+                                  hintText: "제목을 입력하세요"),
+                              controller: _title,
+                            ))),
                     // 카테고리 선택
                     Container(
                         padding: EdgeInsets.only(top: 10, bottom: 5),
@@ -261,25 +264,27 @@ class _OndoPostPageState extends State<OndoPostPage> {
                     // 게시글 내용
                     Container(
                         padding: EdgeInsets.only(top: 20, bottom: 5),
-                        child: TextField(
-                          style: TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                          focusNode: myFocus,
-                          textInputAction: TextInputAction.done,
-                          controller: _content,
-                          minLines: 8,
-                          maxLines: 10,
-                          decoration: const InputDecoration(
-                              labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요.",
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                borderSide: BorderSide(width: 1),
-                              ),
-                              hintText:
-                                  "(참고: 복지/혜택 게시판과 교육/세미나 게시판은 사진을 첨부하지 않을 시,게시글 목록에서 회색 배경에 사진 없음으로 보입니다.)"),
-                        ))
+                        child: Semantics(
+                            label: "마음 온도에 올릴 게시글 내용을 작성해주세요",
+                            child: TextField(
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                              focusNode: myFocus,
+                              textInputAction: TextInputAction.done,
+                              controller: _content,
+                              minLines: 8,
+                              maxLines: 10,
+                              decoration: const InputDecoration(
+                                  labelText: "마음 온도에 올릴 게시글 내용을 작성해주세요.",
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(width: 1),
+                                  ),
+                                  hintText:
+                                      "(참고: 복지/혜택 게시판과 교육/세미나 게시판은 사진을 첨부하지 않을 시,게시글 목록에서 회색 배경에 사진 없음으로 보입니다.)"),
+                            )))
                   ],
                 )),
           )),
@@ -288,8 +293,38 @@ class _OndoPostPageState extends State<OndoPostPage> {
         onPressed: () async {
           HapticFeedback.lightImpact(); // 약한 진동
           if (_categories.category == null) {
-            Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
-                backgroundColor: Colors.white);
+            // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+            //     backgroundColor: Colors.white);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                      semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
+                      content: Text('게시판 종류를 선택해주세요',
+                          semanticsLabel: '게시판 종류를 선택해주세요',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          )),
+                      actions: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: widget.primaryColor,
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('확인',
+                                semanticsLabel: '확인',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                )))
+                      ]);
+                });
           } else {
             if (_formkey.currentState!.validate()) {
               Navigator.pop(context);

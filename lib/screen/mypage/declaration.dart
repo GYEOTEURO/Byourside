@@ -18,9 +18,11 @@ class _DeclarationState extends State<Declaration> {
     "욕설/비하/혐오/차별적 표현을 사용했습니다.",
     "청소년에게 유해한 내용을 게시했습니다.",
     "사칭/사기 사용자입니다.",
-    "상업적 광고 및 판매 사용자입니다."];
+    "상업적 광고 및 판매 사용자입니다."
+  ];
 
   final TextEditingController _nickname = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,101 +31,103 @@ class _DeclarationState extends State<Declaration> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          widget.title,
+        title: Text(widget.title,
             semanticsLabel: widget.title,
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: SingleChildScrollView(
-        child: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            TextField(
-                controller: _nickname,
-                maxLines: 1,
-                decoration: InputDecoration(
-                  labelText: "신고할 닉네임을 입력해주세요.",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    borderSide: BorderSide(width: 1),
-            ))),
-            StatefulBuilder(
-                      builder: (context, setState) {
-                      return Column(
-                        children: _decList.map((e) =>
-                          new RadioListTile(
-                            title: Text(
-                              e,
-                              semanticsLabel: e,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,
+          padding: EdgeInsets.all(30),
+          child: Form(
+              key: _formkey,
+              child: Column(children: [
+                Semantics(
+                    label: "신고할 닉네임 입력",
+                    child: TextFormField(
+                        controller: _nickname,
+                        maxLines: 1,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "신고할 닉네임은 비어있을 수 없습니다";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            semanticCounterText: "신고할 닉네임 입력",
+                            labelText: "신고할 닉네임을 입력해주세요.",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(width: 1),
+                            )))),
+                StatefulBuilder(builder: (context, setState) {
+                  return Column(
+                      children: _decList
+                          .map((e) => new RadioListTile(
+                              title: Text(e,
+                                  semanticsLabel: e,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                              value: e,
+                              groupValue: _declaration,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  _declaration = value!;
+                                });
+                              }))
+                          .toList());
+                }),
+              ]))),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: widget.primaryColor,
+          foregroundColor: Colors.white,
+          onPressed: () {
+            if (_formkey.currentState!.validate()) {
+              DBSet.declaration('user', _declaration, _nickname.text);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        semanticLabel:
+                            "정상적으로 신고되었습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
+                        content: Text('정상적으로 신고되었습니다.',
+                            semanticsLabel: '정상적으로 신고되었습니다.',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
                             )),
-                            value: e,
-                            groupValue: _declaration,
-                            onChanged: (String? value){
-                              setState(() {
-                                _declaration = value!;
-                              });
-                            }
-                          )).toList()  
-            );}),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.primaryColor,
-                    foregroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  DBSet.declaration('user', _declaration, _nickname.text);
-                  showDialog(
-                    context: context, 
-                    builder: (context){
-                      return AlertDialog(
-                        content: Text(
-                          '신고되었습니다.',
-                          semanticsLabel: '신고되었습니다.',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          )),
                         actions: [
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: widget.primaryColor,
-                              foregroundColor: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              '확인',
-                              semanticsLabel: '확인',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,
-                              ))
-                            )
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: widget.primaryColor,
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('확인',
+                                  semanticsLabel: '확인',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  )))
                         ]);
                   });
-                }, 
-                child: Text(
-                  '신고',
-                  semanticsLabel: '신고',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w600,
-                  ))
-            ),
-          ])
-        )
-      ) 
+            }
+          },
+          child: Text('신고',
+              semanticsLabel: '신고',
+              style: const TextStyle(
+                fontSize: 14,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w600,
+              ))),
     );
   }
 }

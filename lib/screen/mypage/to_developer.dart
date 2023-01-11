@@ -22,6 +22,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
   User? user;
 
   TextEditingController _message = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -67,44 +68,58 @@ class _ToDeveloperState extends State<ToDeveloper> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
               padding: EdgeInsets.all(30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  Text("'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
-                      semanticsLabel: "'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          fontFamily: 'NanumGothic')),
-                  SizedBox(height: 30),
-                  TextFormField(
-                      autofocus: true,
-                      controller: _message,
-                      style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600),
-                      minLines: 3,
-                      maxLines: 8,
-                      decoration: InputDecoration(
-                        labelText: '문의할 사항을 남겨주세요',
-                        hintText:
-                            '문의할 사항을 남겨주세요. 불편한 점과 응원의 메시지 등 자유롭게 작성해주세요.',
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              width: 1, color: Theme.of(context).primaryColor),
-                        ),
-                        labelStyle:
-                            TextStyle(color: Theme.of(context).primaryColor),
-                      )),
-                ],
-              ))),
+              child: Form(
+                  key: _formkey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      Text("'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
+                          semanticsLabel:
+                              "'곁'이 더 성장할 수 있도록 개발자들에게 소중한 의견을 남겨주세요!",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              fontFamily: 'NanumGothic')),
+                      SizedBox(height: 30),
+                      Semantics(
+                          label: "문의할 사항을 남겨주세요",
+                          child: TextFormField(
+                              autofocus: true,
+                              controller: _message,
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                              minLines: 3,
+                              maxLines: 8,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "문의할 사항은 비어있을 수 없습니다";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: '문의할 사항을 남겨주세요',
+                                hintText:
+                                    '문의할 사항을 남겨주세요. 불편한 점과 응원의 메시지 등 자유롭게 작성해주세요.',
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                  borderSide: BorderSide(width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                labelStyle: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ))),
+                    ],
+                  )))),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(
@@ -113,13 +128,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
         ),
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          if (_message.text.isEmpty) {
-            Get.snackbar(
-              '전송 실패!',
-              '문의 사항을 적어주세요',
-              backgroundColor: Colors.white,
-            );
-          } else {
+          if (_formkey.currentState!.validate()) {
             sendMsg2dev(displayName, _message.text);
             Navigator.pop(context);
           }
