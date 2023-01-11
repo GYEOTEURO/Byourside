@@ -30,15 +30,20 @@ class _PersonalPolicyState extends State<PersonalPolicy> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true,
-            elevation: 0,
-            title: Text("개인정보 처리방침",
-                semanticsLabel: "개인정보 처리방침",
-                style: TextStyle(
-                    fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-            backgroundColor: primaryColor,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),),
+          centerTitle: true,
+          elevation: 0,
+          title: Text("사용자 정책",
+              semanticsLabel: "사용자 정책",
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+          backgroundColor: primaryColor,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  semanticLabel: "뒤로 가기", color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
         body: SingleChildScrollView(
             padding: EdgeInsets.all(20),
             scrollDirection: Axis.vertical,
@@ -47,8 +52,8 @@ class _PersonalPolicyState extends State<PersonalPolicy> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const <Widget>[
                   Text(
-                    "곁 개인정보 처리방침",
-                    semanticsLabel: "곁 개인정보 처리방침",
+                    "곁 사용자 정책",
+                    semanticsLabel: "곁 사용자 정책",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
