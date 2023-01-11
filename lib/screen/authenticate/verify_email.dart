@@ -67,7 +67,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text("재시도하세요.\n오류 : ${e.toString()}"),
+                semanticLabel: "재시도하세요. 오류 ${e.toString()}",
+                content: Text(
+                  "재시도하세요.\n오류 : ${e.toString()}",
+                  semanticsLabel: "재시도하세요.\n오류 : ${e.toString()}",
+                  ),
               );
             });
       }
@@ -91,6 +95,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
         ),
         body: Padding(
             padding: EdgeInsets.all(20),

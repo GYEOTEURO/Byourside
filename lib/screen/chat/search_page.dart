@@ -39,6 +39,8 @@ class _SearchPageState extends State<SearchPage> {
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
       ),
       body: Column(
         children: [
@@ -211,6 +213,7 @@ class _SearchPageState extends State<SearchPage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
+                          semanticLabel: isJoined ? "참여 완료" : "참여가 취소되었습니다.",
                           content: isJoined
                               ? Text(
                                   "참여 완료.",

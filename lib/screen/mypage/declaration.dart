@@ -36,6 +36,12 @@ class _DeclarationState extends State<Declaration> {
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).primaryColor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(30),
@@ -61,6 +67,18 @@ class _DeclarationState extends State<Declaration> {
                                   BorderRadius.all(Radius.circular(4)),
                               borderSide: BorderSide(width: 1),
                             )))),
+                Container(
+                    margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    child: Text(
+                        '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                        semanticsLabel:
+                            '신고 사유를 알려주세요.신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        ))),
                 StatefulBuilder(builder: (context, setState) {
                   return Column(
                       children: _decList
