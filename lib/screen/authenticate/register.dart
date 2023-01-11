@@ -214,23 +214,15 @@ class _Register extends State<Register> {
               fontWeight: FontWeight.w500),
         ));
 
-    final linkButton_policy = ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(primaryColor)),
-        onPressed: () {
-          // _launchUrl;
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const PersonalPolicy()));
-        },
-        child: Text(
-          '사용자 정책',
-          semanticsLabel: '사용자 정책',
+    final age = Text(
+          '만 15세 이상입니다.',
+          semanticsLabel: '만 15세 이상입니다.',
           style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 17,
               fontFamily: 'NanumGothic',
               fontWeight: FontWeight.w500),
-        ));
+        );
 
     final linkButton_using = ElevatedButton(
         style: ButtonStyle(
@@ -398,7 +390,7 @@ class _Register extends State<Register> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            linkButton_policy,
+                            age,
                             SizedBox(
                               width: width * 0.05,
                             ),
@@ -428,8 +420,9 @@ class _Register extends State<Register> {
                           _policy == false ||
                           _personal == false ||
                           _using == false)
-                      ? Text("가입 및 동의가 필요합니다.",
-                          semanticsLabel: "가입 및 동의가 필요합니다.",
+                      ? Text("휴대폰 인증으로 넘어가려면\n가입 및 동의가 필요합니다.",
+                          semanticsLabel: "휴대전화 인증으로 넘어가려면 가입 및 동의가 필요합니다.",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w500))
