@@ -31,10 +31,10 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         backgroundColor: primaryColor,
         centerTitle: true,
         elevation: 0,
-        title: const Text(
-          '비밀번호 변경',
-          semanticsLabel: "비밀번호 변경",
-        ),
+        title: const Text('비밀번호 변경',
+            semanticsLabel: "비밀번호 변경",
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
