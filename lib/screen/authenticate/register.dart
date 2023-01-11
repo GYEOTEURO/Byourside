@@ -30,7 +30,9 @@ class Register extends StatefulWidget {
 
 class _Register extends State<Register> {
   final AuthService _auth = AuthService();
-
+  bool _personal = false;
+  bool _using = false;
+  bool _policy = false;
   bool _obscureText = true;
   bool _isRegister = false;
   final _email = TextEditingController();
@@ -293,8 +295,31 @@ class _Register extends State<Register> {
                   SizedBox(height: height * 0.01),
                   txtButton,
                   SizedBox(height: height * 0.003),
-                  linkButton,
-                  SizedBox(height: height * 0.03),
+                  Row(
+                    children: [
+                      linkButton,
+                      Checkbox(
+                        value: _personal,
+                        onChanged: (value) {
+                          setState(() {
+                            _personal = value!;
+                          });
+                        },
+                      ),
+                      // SizedBox(
+                      //   height: height * 0.01,
+                      // ),
+                      // Switch(
+                      //   value: _personal,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _personal = value!;
+                      //     });
+                      //   },
+                      // )
+                    ],
+                  ),
+                  SizedBox(height: height * 0.02),
                   registerButton,
                   SizedBox(height: height * 0.02),
                   (_isRegister == false) ? SizedBox() : loginPhoneButton,
