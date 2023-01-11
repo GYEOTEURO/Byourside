@@ -20,7 +20,12 @@ class _OndoAppBarState extends State<OndoAppBar> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         centerTitle: true,
-        title: Text("마음온도"),
+        title: Text(
+          "마음온도",
+          semanticsLabel: "마음온도",
+        ),
+        titleTextStyle:
+            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
         leading: IconButton(
             icon: Icon(Icons.filter_alt, color: Colors.white), onPressed: null),
         actions: [
@@ -30,10 +35,7 @@ class _OndoAppBarState extends State<OndoAppBar> {
                 search();
               }),
           IconButton(
-              icon: Icon(Icons.menu, color: Colors.white),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
+              icon: Icon(Icons.menu, color: Colors.white), onPressed: null),
         ],
       ),
     );
