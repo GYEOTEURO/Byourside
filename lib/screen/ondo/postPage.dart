@@ -284,6 +284,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                 )),
           )),
       // 글 작성 완료 버튼
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           HapticFeedback.lightImpact(); // 약한 진동

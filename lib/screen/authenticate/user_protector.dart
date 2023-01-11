@@ -161,10 +161,10 @@ class _protectorState extends State<protector> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text(
-            "세부 정보 입력",
-            semanticsLabel: "세부 정보 입력",
-          ),
+          title: Text("세부 정보 입력",
+              semanticsLabel: "세부 정보 입력",
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(
