@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
-class PersonalData extends StatefulWidget {
-  const PersonalData({Key? key}) : super(key: key);
+class UsingPolicy extends StatefulWidget {
+  const UsingPolicy({Key? key}) : super(key: key);
 
   @override
-  State<PersonalData> createState() => _PersonalDataState();
+  State<UsingPolicy> createState() => _UsingPolicyState();
 }
 
-class _PersonalDataState extends State<PersonalData> {
+class _UsingPolicyState extends State<UsingPolicy> {
   @override
   void initState() {
     super.initState();

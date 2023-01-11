@@ -86,10 +86,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text(
-            "이메일 확인",
-            semanticsLabel: "이메일 확인",
-          ),
+          title: Text("이메일 확인",
+              semanticsLabel: "이메일 확인",
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Padding(
