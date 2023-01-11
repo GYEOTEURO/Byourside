@@ -63,10 +63,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text(
-            "휴대폰 인증",
-            semanticsLabel: "휴대폰 인증",
-          ),
+          title: Text("휴대폰 인증",
+              semanticsLabel: "휴대폰 인증",
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         body: SingleChildScrollView(

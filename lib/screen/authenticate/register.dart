@@ -1,6 +1,8 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
+import 'package:byourside/screen/authenticate/personal_policy.dart';
+import 'package:byourside/screen/authenticate/using_policy.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -194,7 +196,7 @@ class _Register extends State<Register> {
               fontWeight: FontWeight.w500),
         ));
 
-    final linkButton = ElevatedButton(
+    final linkButton_personal = ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
         onPressed: () {
@@ -205,6 +207,42 @@ class _Register extends State<Register> {
         child: Text(
           '개인정보처리방침',
           semanticsLabel: '개인정보처리방침',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+        ));
+
+    final linkButton_policy = ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(primaryColor)),
+        onPressed: () {
+          // _launchUrl;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const PersonalPolicy()));
+        },
+        child: Text(
+          '사용자 정책',
+          semanticsLabel: '사용자 정책',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+        ));
+
+    final linkButton_using = ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(primaryColor)),
+        onPressed: () {
+          // _launchUrl;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const UsingPolicy()));
+        },
+        child: Text(
+          '이용 약관',
+          semanticsLabel: '이용 약관',
           style: TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -234,8 +272,9 @@ class _Register extends State<Register> {
                     builder: (context) {
                       return AlertDialog(
                         content: Text(
-                          result.code,
-                          semanticsLabel: result.code,
+                          "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될경우 문의해주세요.",
+                          semanticsLabel:
+                              "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될경우 문의해주세요.",
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'NanumGothic',
@@ -281,10 +320,10 @@ class _Register extends State<Register> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          '회원가입',
-          semanticsLabel: '회원가입',
-        ),
+        title: const Text('회원가입',
+            semanticsLabel: '회원가입',
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
@@ -299,41 +338,100 @@ class _Register extends State<Register> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: height * 0.03),
                   emailField,
-                  SizedBox(height: height * 0.04),
+                  SizedBox(height: height * 0.02),
                   passwordField,
-                  SizedBox(height: height * 0.01),
                   txtButton,
-                  SizedBox(height: height * 0.003),
-                  Row(
-                    children: [
-                      linkButton,
-                      Checkbox(
-                        value: _personal,
-                        onChanged: (value) {
-                          setState(() {
-                            _personal = value!;
-                          });
-                        },
-                      ),
-                      // SizedBox(
-                      //   height: height * 0.01,
-                      // ),
-                      // Switch(
-                      //   value: _personal,
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _personal = value!;
-                      //     });
-                      //   },
-                      // )
-                    ],
+                  SizedBox(height: height * 0.01),
+                  Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            linkButton_personal,
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text("동의",
+                                semanticsLabel: "동의",
+                                style: TextStyle(
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500)),
+                            Checkbox(
+                              value: _personal,
+                              onChanged: (value) {
+                                setState(() {
+                                  _personal = value!;
+                                });
+                              },
+                              activeColor: primaryColor,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            linkButton_using,
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text("동의",
+                                semanticsLabel: "동의",
+                                style: TextStyle(
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500)),
+                            Checkbox(
+                              value: _using,
+                              onChanged: (value) {
+                                setState(() {
+                                  _using = value!;
+                                });
+                              },
+                              activeColor: primaryColor,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            linkButton_policy,
+                            SizedBox(
+                              width: width * 0.05,
+                            ),
+                            Text("동의",
+                                semanticsLabel: "동의",
+                                style: TextStyle(
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500)),
+                            Checkbox(
+                              value: _policy,
+                              onChanged: (value) {
+                                setState(() {
+                                  _policy = value!;
+                                });
+                              },
+                              activeColor: primaryColor,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: height * 0.02),
+                  SizedBox(height: height * 0.03),
                   registerButton,
-                  SizedBox(height: height * 0.02),
-                  (_isRegister == false) ? SizedBox() : loginPhoneButton,
+                  SizedBox(height: height * 0.03),
+                  (_isRegister == false ||
+                          _policy == false ||
+                          _personal == false ||
+                          _using == false)
+                      ? Text("가입 및 동의가 필요합니다.",
+                          semanticsLabel: "가입 및 동의가 필요합니다.",
+                          style: TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500))
+                      : loginPhoneButton, //Text("$_policy, $_isRegister"), //
                 ],
               ),
             ),
