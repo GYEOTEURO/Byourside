@@ -45,19 +45,19 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final linkButton = ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(primaryColor)),
-        onPressed: () {
-          HapticFeedback.lightImpact(); // 약한 진동
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const PersonalData()));
-        },
-        child: Text(
-          '개인정보처리방침',
-          semanticsLabel: '개인정보처리방침',
-          style: TextStyle(fontSize: 17),
-        ));
+    // final linkButton = ElevatedButton(
+    //     style: ButtonStyle(
+    //         backgroundColor: MaterialStateProperty.all(primaryColor)),
+    //     onPressed: () {
+    //       HapticFeedback.lightImpact(); // 약한 진동
+    //       Navigator.push(context,
+    //           MaterialPageRoute(builder: (context) => const PersonalData()));
+    //     },
+    //     child: Text(
+    //       '개인정보처리방침',
+    //       semanticsLabel: '개인정보처리방침',
+    //       style: TextStyle(fontSize: 17),
+    //     ));
 
     return Scaffold(
         appBar: AppBar(
@@ -144,8 +144,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                           }
                         }),
                   )),
-              SizedBox(height: height * 0.01),
-              linkButton,
+              // SizedBox(height: height * 0.01),
+              // linkButton,
               SizedBox(height: height * 0.02),
               Container(
                 margin: EdgeInsets.all(20),
