@@ -32,10 +32,10 @@ class _SetupUserState extends State<SetupUser> {
         appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            title: Text(
-              "유형 선택",
-              semanticsLabel: "유형 선택",
-            ),
+            title: Text("유형 선택",
+                semanticsLabel: "유형 선택",
+                style: TextStyle(
+                    fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
             backgroundColor: primaryColor),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
