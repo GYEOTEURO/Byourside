@@ -28,7 +28,12 @@ class _Login extends State<Login> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final emailField = TextFormField(
+    final emailField = Semantics(
+      container: true,
+      textField: true,
+      label: '이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)',
+      hint: '(예: abcd@google.com)',
+      child: TextFormField(
         controller: _email,
         autofocus: true,
         validator: (value) => value != null && !EmailValidator.validate(value)
@@ -58,9 +63,14 @@ class _Login extends State<Login> {
               borderSide: BorderSide(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(20)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-        ));
+    )));
 
-    final passwordField = TextFormField(
+    final passwordField = Semantics(
+      container: true,
+      textField: true,
+      label: '비밀번호를 입력하세요. (8자리 이상이어야 합니다)',
+      hint: '(예: 12345678)',
+      child: TextFormField(
         obscureText: _obscureText,
         controller: _password,
         validator: (value) {
@@ -108,7 +118,7 @@ class _Login extends State<Login> {
               borderSide: BorderSide(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(20)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-        ));
+        )));
 
     final registerButton = TextButton(
         onPressed: () {
@@ -158,6 +168,7 @@ class _Login extends State<Login> {
                     return AlertDialog(
                       content: Text(
                         "아이디 또는 비밀번호가 일치하지 않습니다.",
+                        semanticsLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'NanumGothic',

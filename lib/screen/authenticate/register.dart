@@ -70,7 +70,12 @@ class _Register extends State<Register> {
       ),
     );
 
-    final emailField = TextFormField(
+    final emailField = Semantics(
+      container: true,
+      textField: true,
+      label: '이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)',
+      hint: '(예: abcd@google.com)',
+      child: TextFormField(
         controller: _email,
         autofocus: true,
         validator: (value) {
@@ -110,9 +115,14 @@ class _Register extends State<Register> {
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w500),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)))));
 
-    final passwordField = TextFormField(
+    final passwordField = Semantics(
+      container: true,
+      textField: true,
+      label: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
+      hint: '(예: 12345678)',
+      child: TextFormField(
         obscureText: _obscureText,
         controller: _password,
         validator: (value) {
@@ -166,7 +176,7 @@ class _Register extends State<Register> {
               },
             ),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))));
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)))));
 
     final txtButton = TextButton(
         onPressed: () {
@@ -225,6 +235,7 @@ class _Register extends State<Register> {
                       return AlertDialog(
                         content: Text(
                           result.code,
+                          semanticsLabel: result.code,
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'NanumGothic',

@@ -19,16 +19,16 @@ final TextEditingController _childAge = TextEditingController();
 final TextEditingController _belong = TextEditingController();
 
 const List<Widget> gender = <Widget>[
-  Text('남자', style: TextStyle(fontSize: 17)),
-  Text('여자', style: TextStyle(fontSize: 17))
+  Text('남자', semanticsLabel: '남자', style: TextStyle(fontSize: 17)),
+  Text('여자', semanticsLabel: '여자', style: TextStyle(fontSize: 17))
 ];
 const List<Widget> type = <Widget>[
-  Text('뇌병변 장애', style: TextStyle(fontSize: 17)),
-  Text('발달 장애', style: TextStyle(fontSize: 17))
+  Text('뇌병변 장애', semanticsLabel: '뇌병변 장애', style: TextStyle(fontSize: 17)),
+  Text('발달 장애', semanticsLabel: '발달 장애', style: TextStyle(fontSize: 17))
 ];
 const List<Widget> degree = <Widget>[
-  Text('심한 장애', style: TextStyle(fontSize: 17)),
-  Text('심하지 않은 장애', style: TextStyle(fontSize: 17))
+  Text('심한 장애', semanticsLabel: '심한 장애', style: TextStyle(fontSize: 17)),
+  Text('심하지 않은 장애', semanticsLabel: '심하지 않은 장애', style: TextStyle(fontSize: 17))
 ];
 
 class protector extends StatefulWidget {
@@ -83,6 +83,11 @@ class _protectorState extends State<protector> {
   }
 
   final nicknameField = Container(
+      child: Semantics(
+      container: true,
+      textField: true,
+      label: "닉네임을 입력하세요",
+      hint: '(예: 홍길동)',
       child: TextFormField(
     decoration: InputDecoration(
       enabledBorder: OutlineInputBorder(
@@ -109,7 +114,7 @@ class _protectorState extends State<protector> {
         return '필수 입력란입니다. 닉네임을 입력하세요';
       }
     },
-  ));
+  )));
 
   void storeProtectorInfo(
       String? nickname,
@@ -174,7 +179,12 @@ class _protectorState extends State<protector> {
                       children: <Widget>[
                         nicknameField,
                         SizedBox(height: height * 0.02),
-                        TextFormField(
+                        Semantics(
+                        container: true,
+                        textField: true,
+                        label: "보호자 나이",
+                        hint: '(예: 33)',
+                        child: TextFormField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: primaryColor),
@@ -210,9 +220,14 @@ class _protectorState extends State<protector> {
                               return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다.';
                             }
                           },
-                        ),
+                        )),
                         SizedBox(height: height * 0.02),
-                        TextFormField(
+                        Semantics(
+                        container: true,
+                        textField: true,
+                        label: "자녀 나이",
+                        hint: '(예: 7)',
+                        child: TextFormField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: primaryColor),
@@ -248,9 +263,14 @@ class _protectorState extends State<protector> {
                               return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다.';
                             }
                           },
-                        ),
+                        )),
                         SizedBox(height: height * 0.02),
-                        TextFormField(
+                        Semantics(
+                        container: true,
+                        textField: true,
+                        label: "소속 복지관/학교",
+                        hint: '(예: 서울뇌성마비복지관)',
+                        child: TextFormField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: primaryColor),
@@ -284,7 +304,7 @@ class _protectorState extends State<protector> {
                               return '필수 입력란입니다. 소속을 입력하세요';
                             }
                           },
-                        ),
+                        )),
                         SizedBox(height: height * 0.03),
                         Padding(
                             padding: EdgeInsets.all(10.0),

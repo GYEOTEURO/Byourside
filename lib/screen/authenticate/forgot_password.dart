@@ -56,47 +56,52 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                     fontWeight: FontWeight.w500),
               ),
               SizedBox(height: height * 0.01),
-              TextFormField(
-                controller: emailController,
-                autofocus: true,
-                cursorColor: primaryColor,
-                textInputAction: TextInputAction.done,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(20)),
-                  errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.red),
-                      borderRadius: BorderRadius.circular(20)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(20)),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0)),
-                  focusColor: primaryColor,
-                  contentPadding:
-                      const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  hintText: "(예: abcd@google.com)",
-                  labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
-                  hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 17,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w500),
-                  labelStyle: TextStyle(
-                      color: primaryColor,
-                      fontSize: 17,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w500),
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (email) =>
-                    email != null && !EmailValidator.validate(email)
-                        ? '유효한 이메일을 입력하세요.'
-                        : null,
-              ),
+              Semantics(
+                container: true,
+                textField: true,
+                label: '이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)',
+                hint: '(예: abcd@google.com)',
+                child: TextFormField(
+                  controller: emailController,
+                  autofocus: true,
+                  cursorColor: primaryColor,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(20)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.red),
+                        borderRadius: BorderRadius.circular(20)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(20)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                    focusColor: primaryColor,
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    hintText: "(예: abcd@google.com)",
+                    labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
+                    hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                    labelStyle: TextStyle(
+                        color: primaryColor,
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (email) =>
+                      email != null && !EmailValidator.validate(email)
+                          ? '유효한 이메일을 입력하세요.'
+                          : null,
+              )),
               SizedBox(height: height * 0.01),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(

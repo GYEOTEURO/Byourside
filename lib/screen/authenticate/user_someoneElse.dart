@@ -64,77 +64,87 @@ class _someoneElseState extends State<someoneElse> {
   }
 
   final someoneElseField = Container(
-      child: TextFormField(
-    decoration: InputDecoration(
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(20)),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      labelText: "방문 목적",
-      hintText: "(예: 자녀 장애 초기증상 판별)",
-      hintStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: 17,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w500),
-      labelStyle: TextStyle(
-          color: primaryColor,
-          fontSize: 17,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w500),
-    ),
-    controller: _purpose,
-    validator: (value) {
-      if (value != null) {
-        if (value.split(' ').first != '' && value.isNotEmpty) {
-          return null;
-        }
-        return '필수 입력란입니다. 방문 목적을 입력하세요';
-      }
-    },
-  ));
+      child: Semantics(
+        container: true,
+        textField: true,
+        label: '방문 목적',
+        hint: '(예: 자녀 장애 초기증상 판별)',
+        child: TextFormField(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            labelText: "방문 목적",
+            hintText: "(예: 자녀 장애 초기증상 판별)",
+            hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+            labelStyle: TextStyle(
+                color: primaryColor,
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+          ),
+          controller: _purpose,
+          validator: (value) {
+            if (value != null) {
+              if (value.split(' ').first != '' && value.isNotEmpty) {
+                return null;
+              }
+              return '필수 입력란입니다. 방문 목적을 입력하세요';
+            }
+          },
+  )));
 
   final nicknameField = Container(
-      child: TextFormField(
-    decoration: InputDecoration(
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(20)),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      labelText: "닉네임을 입력하세요",
-      hintText: "(예: 홍길동) ",
-      hintStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: 17,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w500),
-      labelStyle: TextStyle(
-          color: primaryColor,
-          fontSize: 17,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w500),
-    ),
-    autofocus: true,
-    controller: _nickname,
-    validator: (value) {
-      if (value != null) {
-        if (value.split(' ').first != '' && value.isNotEmpty) {
-          return null;
-        }
-        return '필수 입력란입니다. 닉네임을 입력하세요';
-      }
-    },
-  ));
+      child: Semantics(
+        container: true,
+        textField: true,
+        label: '닉네임을 입력하세요.',
+        hint: '(예: 홍길동)',
+        child: TextFormField(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            labelText: "닉네임을 입력하세요",
+            hintText: "(예: 홍길동) ",
+            hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+            labelStyle: TextStyle(
+                color: primaryColor,
+                fontSize: 17,
+                fontFamily: 'NanumGothic',
+                fontWeight: FontWeight.w500),
+          ),
+          autofocus: true,
+          controller: _nickname,
+          validator: (value) {
+            if (value != null) {
+              if (value.split(' ').first != '' && value.isNotEmpty) {
+                return null;
+              }
+              return '필수 입력란입니다. 닉네임을 입력하세요';
+            }
+          },
+  )));
 
   void storeSomeoneElseInfo(String? nickname, String? purpose) async {
     // image url 포함해 firestore에 document 저장
