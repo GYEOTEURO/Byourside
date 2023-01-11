@@ -10,8 +10,8 @@ GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
 final List<bool> _selectedType = <bool>[false, false];
 
 const List<Widget> gender = <Widget>[
-  Text('홍보', style: TextStyle(fontSize: 17)),
-  Text('모집', style: TextStyle(fontSize: 17))
+  Text('홍보', semanticsLabel: '홍보', style: TextStyle(fontSize: 17)),
+  Text('모집', semanticsLabel: '모집', style: TextStyle(fontSize: 17))
 ];
 // List<String> purposeType = ['홍보', '모집'];
 // String _dropdownValue = '홍보';
@@ -63,33 +63,38 @@ class _participatorState extends State<participator> {
   }
 
   final nicknameField = Container(
-      child: TextFormField(
-    decoration: InputDecoration(
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(20)),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      labelText: "닉네임을 입력하세요",
-      hintText: "(예: 홍길동) ",
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
-    ),
-    autofocus: true,
-    controller: _nickname,
-    validator: (value) {
-      if (value != null) {
-        if (value.split(' ').first != '' && value.isNotEmpty) {
-          return null;
-        }
-        return '필수 입력란입니다. 닉네임을 입력하세요';
-      }
-    },
-  ));
+      child: Semantics(
+        container: true,
+        textField: true,
+        label: '닉네임을 입력하세요',
+        hint: '(예: 홍길동)',
+        child: TextFormField(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(20)),
+            labelText: "닉네임을 입력하세요",
+            hintText: "(예: 홍길동) ",
+            hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
+            labelStyle: TextStyle(color: primaryColor, fontSize: 17),
+          ),
+          autofocus: true,
+          controller: _nickname,
+          validator: (value) {
+            if (value != null) {
+              if (value.split(' ').first != '' && value.isNotEmpty) {
+                return null;
+              }
+              return '필수 입력란입니다. 닉네임을 입력하세요';
+            }
+          },
+  )));
 
   void storeParticipatorInfo(
       String? nickname, String? protectorAge, List<bool>? selectedType) async {
@@ -141,41 +146,46 @@ class _participatorState extends State<participator> {
                       SizedBox(height: height * 0.02),
                       nicknameField,
                       SizedBox(height: height * 0.02),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.circular(20)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          labelText: "개인/단체 이름",
-                          hintText: "(예: 00복지관)",
-                          hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                          labelStyle: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                        ),
-                        controller: _organizationName,
-                        validator: (value) {
-                          if (value != null) {
-                            if (value.split(' ').first != '' &&
-                                value.isNotEmpty) {
-                              return null;
+                      Semantics(
+                        container: true,
+                        textField: true,
+                        label: '개인/단체 이름',
+                        hint: '(예: 00복지관)',
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(20)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                                borderRadius: BorderRadius.circular(20)),
+                            labelText: "개인/단체 이름",
+                            hintText: "(예: 00복지관)",
+                            hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
+                            labelStyle: TextStyle(
+                                color: primaryColor,
+                                fontSize: 17,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w500),
+                          ),
+                          controller: _organizationName,
+                          validator: (value) {
+                            if (value != null) {
+                              if (value.split(' ').first != '' &&
+                                  value.isNotEmpty) {
+                                return null;
+                              }
+                              return '필수 입력란입니다. 개인/단체 이름을 입력하세요';
                             }
-                            return '필수 입력란입니다. 개인/단체 이름을 입력하세요';
-                          }
-                        },
-                      ),
+                          },
+                      )),
                       SizedBox(height: height * 0.05),
                       Padding(
                           padding: EdgeInsets.all(10.0),

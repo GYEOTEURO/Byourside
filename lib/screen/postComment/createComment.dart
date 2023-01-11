@@ -37,7 +37,11 @@ class _CreateCommentState extends State<CreateComment> {
         //onTap: () => HapticFeedback.lightImpact(), //약한 진동
         child: Row(children: [
           Expanded(
-            child: TextField(
+            child: Semantics(
+              container: true,
+              textField: true,
+              label: '댓글을 작성해주세요.',
+              child: TextFormField(
                 controller: comment,
                 minLines: 1,
                 maxLines: 5,
@@ -66,7 +70,8 @@ class _CreateCommentState extends State<CreateComment> {
                     semanticLabel: "작성한 댓글 저장",
                     color: primaryColor,
                   ))
-                )),
+                ))
+            )
           ),
         ]));
   }

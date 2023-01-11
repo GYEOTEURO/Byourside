@@ -329,6 +329,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                           label: Text(
                             '인증번호 재전송',
+                            semanticsLabel: '인증번호 재전송',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'NanumGothic',

@@ -67,7 +67,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text("재시도하세요.\n오류 : ${e.toString()}"),
+                content: Text(
+                  "재시도하세요.\n오류 : ${e.toString()}",
+                  semanticsLabel: "재시도하세요.\n오류 : ${e.toString()}",
+                  ),
               );
             });
       }
