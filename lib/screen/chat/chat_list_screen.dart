@@ -170,7 +170,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   _isLoading == true
                       ? Center(
                           child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor),
+                              color: Color(0xFF045558)),
                         )
                       : TextField(
                           autofocus: true,
@@ -188,16 +188,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF045558)),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.red),
                                   borderRadius: BorderRadius.circular(20)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF045558)),
                                   borderRadius: BorderRadius.circular(20))),
                         ),
                 ],
