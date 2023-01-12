@@ -107,13 +107,17 @@ class _OTPScreenState extends State<OTPScreen> {
           key: _formKey,
           appBar: AppBar(
             centerTitle: true,
-            title: Text(
-              'OTP 인증',
-              semanticsLabel: 'OTP 인증',
-            ),
+            title: Text('OTP 인증',
+                semanticsLabel: 'OTP 인증',
+                style: TextStyle(
+                    fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
             backgroundColor: primaryColor,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+                icon: Icon(Icons.arrow_back,
+                    semanticLabel: "뒤로 가기", color: Colors.white),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -210,7 +214,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요.",
+                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                                   content: Text(
                                     "인증번호가 일치하지 않습니다.\n재시도하세요.",
                                     semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
@@ -219,6 +223,24 @@ class _OTPScreenState extends State<OTPScreen> {
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                      ),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        Navigator.pop(context);
+                                      }, 
+                                      child: Text(
+                                        '확인',
+                                        semanticsLabel: '확인',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600,
+                                        ))
+                                    )]
                                 );
                               });
                         }
@@ -293,7 +315,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요.",
+                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                                   content: Text(
                                     "인증번호가 일치하지 않습니다.\n재시도하세요.",
                                     semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
@@ -302,6 +324,24 @@ class _OTPScreenState extends State<OTPScreen> {
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
                                   ),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                      ),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        Navigator.pop(context);
+                                      }, 
+                                      child: Text(
+                                        '확인',
+                                        semanticsLabel: '확인',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600,
+                                        ))
+                                  )]
                                 );
                               });
                         }
@@ -386,7 +426,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    semanticLabel: "인증 가능한 기간이 지났습니다. 재시도하세요.",
+                    semanticLabel: "인증 가능한 기간이 지났습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                     content: Text(
                       '인증 가능한 기간이 지났습니다. 재시도하세요.',
                       semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
@@ -395,6 +435,24 @@ class _OTPScreenState extends State<OTPScreen> {
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w500),
                     ),
+                    actions: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          HapticFeedback.lightImpact(); // 약한 진동
+                          Navigator.pop(context);
+                        }, 
+                        child: Text(
+                          '확인',
+                          semanticsLabel: '확인',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ))
+                    )]
                   );
                 });
           }

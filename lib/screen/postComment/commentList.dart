@@ -56,6 +56,24 @@ class _CommentListState extends State<CommentList> {
     }
   }
 
+  List<String> blockList = [];
+
+  // 차단 목록
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
+      List.from(value.data()!['blockList']).forEach((element){
+        if(!blockList.contains(element)) { blockList.add(element); }
+      });
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBlockList(user!.uid);
+  }
+
   Widget _buildListItem(
       String? collectionName, String? documentID, CommentModel? comment) {
     List<String> datetime = comment!.datetime!.toDate().toString().split(' ');
@@ -182,18 +200,79 @@ class _CommentListState extends State<CommentList> {
                               )),
                         )),
                         if (user?.uid == comment.uid)
-                          (RichText(
-                              text: TextSpan(
-                                  text: "삭제",
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'NanumGothic'),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTapDown = (details) {
-                                      HapticFeedback.lightImpact(); // 약한 진동
-                                      DBSet.deleteComment(collectionName!,
-                                          documentID!, comment.id!);
-                                    })))
+                          (OutlinedButton(
+                            style: ElevatedButton.styleFrom(
+                              side: BorderSide(color: widget.primaryColor, width: 1.5),
+                              foregroundColor: widget.primaryColor,
+                            ),
+                            child: Text(
+                                '삭제',
+                                semanticsLabel: '댓글 삭제',
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 45, 45),
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            onPressed: () {
+                              HapticFeedback.lightImpact(); // 약한 진동
+                              showDialog(
+                                context: context, 
+                                builder: (context){
+                                  return AlertDialog(
+                                    semanticLabel: '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                    title: Text(
+                                      '댓글을 삭제하시겠습니까?',
+                                      semanticsLabel: '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: widget.primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback.lightImpact(); // 약한 진동
+                                            DBSet.deleteComment(collectionName!, documentID!, comment.id!);
+                                            Navigator.pop(context);
+                                          }, 
+                                          child: Text(
+                                            '삭제',
+                                            semanticsLabel: '삭제',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            ))
+                                          ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: widget.primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback.lightImpact(); // 약한 진동
+                                            Navigator.pop(context);
+                                          }, 
+                                          child: Text(
+                                            '취소',
+                                            semanticsLabel: '취소',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            ))
+                                        )])
+                                    ]);
+                            });
+                            },
+                          ))
                            else(
                           (OutlinedButton(
                             style: ElevatedButton.styleFrom(
@@ -257,6 +336,7 @@ class _CommentListState extends State<CommentList> {
                                               backgroundColor: widget.primaryColor,
                                           ),
                                           onPressed: () {
+                                            HapticFeedback.lightImpact(); // 약한 진동
                                             DBSet.declaration('comment', _declaration, comment.id!);
                                             Navigator.pop(context);
                                           }, 
@@ -274,6 +354,7 @@ class _CommentListState extends State<CommentList> {
                                             backgroundColor: widget.primaryColor,
                                           ),
                                           onPressed: () {
+                                            HapticFeedback.lightImpact(); // 약한 진동
                                             Navigator.pop(context);
                                           }, 
                                           child: Text(
@@ -310,7 +391,8 @@ class _CommentListState extends State<CommentList> {
                 shrinkWrap: true, //ListView in ListView를 가능하게
                 itemBuilder: (_, index) {
                   CommentModel comment = snapshot.data![index];
-                  return _buildListItem(collectionName, documentID, comment);
+                  if(blockList.contains(comment.nickname)) { return Container(); }
+                  else { return _buildListItem(collectionName, documentID, comment); }
                 });
           } else
             return const SelectionArea(

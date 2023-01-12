@@ -213,7 +213,7 @@ class _SearchPageState extends State<SearchPage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          semanticLabel: isJoined ? "참여 완료" : "참여가 취소되었습니다.",
+                          semanticLabel: isJoined ? "참여 완료. 돌아가려면 하단의 확인 버튼을 눌러주세요." : "참여가 취소되었습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                           content: isJoined
                               ? Text(
                                   "참여 완료.",
@@ -231,6 +231,24 @@ class _SearchPageState extends State<SearchPage> {
                                       fontFamily: 'NanumGothic',
                                       fontWeight: FontWeight.w500),
                                 ),
+                          actions: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor,
+                              ),
+                              onPressed: () {
+                                HapticFeedback.lightImpact(); // 약한 진동
+                                Navigator.pop(context);
+                              }, 
+                              child: Text(
+                                '확인',
+                                semanticsLabel: '확인',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                ))
+                            )]
                         );
                       });
                 }

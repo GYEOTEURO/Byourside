@@ -23,14 +23,33 @@ Future<String> callAsyncFetch() =>
 
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final User? user = FirebaseAuth.instance.currentUser;
+
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
+  List<String> blockList = [];
+
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
+      });
+    });
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
     gettingUserData();
+    getBlockList(user!.uid);
   }
 
   Future<bool> checkGroupExist(String name) async {
@@ -136,12 +155,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
         builder: (context) {
           return StatefulBuilder(builder: ((context, setState) {
             return AlertDialog(
-              semanticLabel: "그룹 만들기입니다. 취소를 원하시면 왼쪽 취소 버튼을, 만들기를 원하시면 그룹 이름 입력 후 오른쪽 만들기 버튼을 눌러주세요.",
-              title: const Text(
-                "그룹 만들기",
-                semanticsLabel: "그룹 만들기",
-                textAlign: TextAlign.left,
-              ),
+              semanticLabel:
+                  "그룹 만들기입니다. 취소를 원하시면 왼쪽 취소 버튼을, 만들기를 원하시면 그룹 이름 입력 후 오른쪽 만들기 버튼을 눌러주세요.",
+              title: const Text("그룹 만들기",
+                  semanticsLabel: "그룹 만들기",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w600)),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -218,12 +240,30 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return const AlertDialog(
-                                  semanticLabel: "이미 존재하는 채팅방 이름입니다.",
+                                return AlertDialog(
+                                  semanticLabel: "이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                                   content: Text(
                                     '이미 존재하는 채팅방 이름입니다.',
                                     semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
                                   ),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                      ),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        Navigator.pop(context);
+                                      }, 
+                                      child: Text(
+                                        '확인',
+                                        semanticsLabel: '확인',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600,
+                                        ))
+                                  )]
                                 );
                               });
                         }
@@ -238,13 +278,28 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w500),
                   ),
                 )
               ],
             );
           }));
         });
+  }
+
+  bool makeCheck(List input) {
+    bool check = true;
+    for (var j in input) {
+      print('ssssssssssssssssss');
+      print(input);
+
+      if (blockList.contains(j)) {
+        check = false;
+        print(check);
+        continue;
+      }
+    }
+    return check;
   }
 
   groupList(double width) {
@@ -259,18 +314,24 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   padding: EdgeInsets.all(5),
                   itemCount: snapshot.data['groups'].length,
                   itemBuilder: (context, index) {
+                    bool check = true;
                     int reverseIndex =
                         snapshot.data['groups'].length - index - 1;
-
-                    return GroupTile(
-                        userName: snapshot.data['nickname'],
-                        groupId: getId(snapshot.data['groups'][reverseIndex]),
-                        groupName:
-                            getName(snapshot.data['groups'][reverseIndex]),
-                        recentMsg: ""
-                        //recentMsg: getRecentMsg(snapshot.data['groups'][index])
-
-                        );
+                    // print('-------------');
+                    // print(snapshot.data['groups'][reverseIndex].split('_'));
+                    check = makeCheck(
+                        snapshot.data['groups'][reverseIndex].split('_'));
+                    if (check) {
+                      return GroupTile(
+                          userName: snapshot.data['nickname'],
+                          groupId: getId(snapshot.data['groups'][reverseIndex]),
+                          groupName:
+                              getName(snapshot.data['groups'][reverseIndex]),
+                          recentMsg:
+                              "" //getRecentMsg(snapshot.data['groups'][index])
+                          );
+                    } else
+                      return Container();
                   },
                 );
               } else {

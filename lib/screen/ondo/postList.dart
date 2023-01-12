@@ -2,6 +2,8 @@ import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +29,25 @@ class OndoPostList extends StatefulWidget {
 class _OndoPostListState extends State<OndoPostList> {
 
   final overlayController = Get.put(OverlayController());
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  List<String> blockList = [];
+
+  // 차단 목록
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
+      List.from(value.data()!['blockList']).forEach((element){
+        if(!blockList.contains(element)) { blockList.add(element); }
+      });
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBlockList(user!.uid);
+  }
   
   Widget _buildListItem(PostListModel? post) {
     String date =
@@ -117,7 +138,7 @@ class _OndoPostListState extends State<OndoPostList> {
                         )),
                         if (post.images!.isNotEmpty)
                           Semantics(
-                              label: '사용자가 올린 사진',
+                              label: post.imgInfos![0],
                               child: Image.network(
                                 post.images![0],
                                 width: width * 0.2,
@@ -150,18 +171,20 @@ class _OndoPostListState extends State<OndoPostList> {
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
                     PostListModel post = snapshot.data![index];
-                    return _buildListItem(post);
+                    if(blockList.contains(post.nickname)) { return Container(); }
+                    else { return _buildListItem(post); }
                   });
             } else
               return const SelectionArea(
-                  child: Text(
-                '게시글 목록 가져오는 중...',
-                semanticsLabel: '게시글 목록 가져오는 중...',
-                style: TextStyle(
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600,
+                  child: Center(
+                    child: Text(
+                      '게시글 목록 가져오는 중...',
+                      semanticsLabel: '게시글 목록 가져오는 중...',
+                      style: TextStyle(
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
                 ),
-              ));
+              )));
           }),
     );
   }

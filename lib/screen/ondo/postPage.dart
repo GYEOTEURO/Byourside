@@ -100,14 +100,14 @@ class _OndoPostPageState extends State<OndoPostPage> {
               fit: BoxFit.contain, // 보고 수정
             )),
         Semantics(
-            label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
+            label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
             child: TextFormField(
               maxLines: 2,
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                  labelText: "사진에 대한 간략한 설명을 적어주세요",
+                  labelText: "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
                   hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지"),
               controller: _imgInfos[index],
             ))
@@ -248,7 +248,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                 children: [
                                   Semantics(
                                       label:
-                                          "선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 슼",
+                                          "선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.",
                                       child: CarouselSlider(
                                         items: List.generate(_images.length,
                                             (index) {

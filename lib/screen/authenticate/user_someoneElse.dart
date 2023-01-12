@@ -33,7 +33,7 @@ class _someoneElseState extends State<someoneElse> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                semanticLabel: "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.",
+                semanticLabel: "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                 content: Text(
                   '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
                   semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
@@ -42,6 +42,24 @@ class _someoneElseState extends State<someoneElse> {
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w500),
                 ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                    ),
+                    onPressed: () {
+                      HapticFeedback.lightImpact(); // 약한 진동
+                      Navigator.pop(context);
+                    }, 
+                    child: Text(
+                      '확인',
+                      semanticsLabel: '확인',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ))
+                )]
               );
             });
       }
@@ -50,7 +68,7 @@ class _someoneElseState extends State<someoneElse> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              semanticLabel: "사용가능한 닉네임입니다.",
+              semanticLabel: "사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
               content: Text(
                 '사용가능한 닉네임입니다.',
                 semanticsLabel: '사용가능한 닉네임입니다.',
@@ -59,6 +77,24 @@ class _someoneElseState extends State<someoneElse> {
                     fontFamily: 'NanumGothic',
                     fontWeight: FontWeight.w500),
               ),
+              actions: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                  ),
+                  onPressed: () {
+                    HapticFeedback.lightImpact(); // 약한 진동
+                    Navigator.pop(context);
+                  }, 
+                  child: Text(
+                    '확인',
+                    semanticsLabel: '확인',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w600,
+                    ))
+              )]
             );
           });
     }
@@ -155,6 +191,7 @@ class _someoneElseState extends State<someoneElse> {
       "purpose": purpose,
       "groups": [],
       "profilePic": "",
+      "blockList": [],
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
