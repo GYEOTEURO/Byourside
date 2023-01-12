@@ -28,7 +28,6 @@ class EduViewPage extends StatefulWidget {
 }
 
 class _EduViewPageState extends State<EduViewPage> {
-
   final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -36,12 +35,18 @@ class _EduViewPageState extends State<EduViewPage> {
 
   // 차단 목록
   getBlockList(String uid) async {
-    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
-      List.from(value.data()!['blockList']).forEach((element){
-        if(!blockList.contains(element)) { blockList.add(element); }
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
@@ -49,7 +54,7 @@ class _EduViewPageState extends State<EduViewPage> {
     super.initState();
     getBlockList(user!.uid);
   }
-  
+
   Widget _buildListItem(String? collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
@@ -66,85 +71,84 @@ class _EduViewPageState extends State<EduViewPage> {
     }
 
     return Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: InkWell(
-          //Read Document
-          onTap: () {
-            HapticFeedback.lightImpact(); // 약한 진동
-            if(overlayController.overlayEntry != null){
-              overlayController.controlOverlay(null);
-            }
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => OndoPost(
-                          // Post 위젯에 documentID를 인자로 넘김
-                          collectionName: widget.collectionName,
-                          documentID: post.id!,
-                          primaryColor: primaryColor,
-                        )));
-          },
-          child: Column(
-              children: [
-                Container(
-                      margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
-                      width: width * 0.4,
-                      height: width * 0.4,
-                      child: (post.images!.isNotEmpty) ?
-                        Semantics(
-                            label: post.imgInfos![0],
-                            child: Image.network(
-                              post.images![0],
-                            )) :
-                        Container(
-                          color: Colors.grey,
-                          child: Center(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: InkWell(
+        //Read Document
+        onTap: () {
+          HapticFeedback.lightImpact(); // 약한 진동
+          if (overlayController.overlayEntry != null) {
+            overlayController.controlOverlay(null);
+          }
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OndoPost(
+                        // Post 위젯에 documentID를 인자로 넘김
+                        collectionName: widget.collectionName,
+                        documentID: post.id!,
+                        primaryColor: primaryColor,
+                      )));
+        },
+        child: Column(
+          children: [
+            Container(
+                margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                width: width * 0.4,
+                height: width * 0.4,
+                child: (post.images!.isNotEmpty)
+                    ? Semantics(
+                        label: post.imgInfos![0],
+                        child: Image.network(
+                          post.images![0],
+                        ))
+                    : Container(
+                        color: Colors.grey,
+                        child: Center(
                             child: Text('사진 없음',
                                 semanticsLabel: '사진 없음',
                                 style: TextStyle(
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
-                        ))),
-                  )),
-                Expanded(
-                    child: Container(
-                        padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
-                        child: Text(
-                          post.title!,
-                          semanticsLabel: post.title,
-                            overflow: TextOverflow.fade,
-                            maxLines: 1,
-                            softWrap: false,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'NanumGothic')))),
-                Expanded(
-                    child: Container(
-                        padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
-                        child: Text(
-                          post.type!.isEmpty
-                              ? '${post.nickname!} | $date'
-                              : '${post.nickname!} | $date | $type',
-                          semanticsLabel: post.type!.isEmpty
-                              ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
-                              : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $type',
-                          overflow: TextOverflow.fade,
-                          maxLines: 1,
-                          softWrap: false,
-                          style: const TextStyle(
+                                ))),
+                      )),
+            Expanded(
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                    child: Text(post.title!,
+                        semanticsLabel: post.title,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          ),
-                ))),
-              ],
-            ),
-          ),
-        );
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'NanumGothic')))),
+            Expanded(
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                    child: Text(
+                      post.type!.isEmpty
+                          ? '${post.nickname!} | $date'
+                          : '${post.nickname!} | $date | $type',
+                      semanticsLabel: post.type!.isEmpty
+                          ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
+                          : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $type',
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ))),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -170,26 +174,29 @@ class _EduViewPageState extends State<EduViewPage> {
                   ),
                   itemBuilder: (_, index) {
                     PostListModel post = snapshot.data![index];
-                    if(blockList.contains(post.nickname)) { return Container(); }
-                    else { return _buildListItem(collectionName, post); }
+                    if (blockList.contains(post.nickname)) {
+                      return Container();
+                    } else {
+                      return _buildListItem(collectionName, post);
+                    }
                   });
             } else
               return const SelectionArea(
                   child: Center(
-                    child: Text('게시물 목록을 가져오는 중...',
-                      semanticsLabel: '게시물 목록을 가져오는 중...',
-                      style: TextStyle(
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      ))));
+                      child: Text('게시물 목록을 가져오는 중...',
+                          semanticsLabel: '게시물 목록을 가져오는 중...',
+                          style: TextStyle(
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ))));
           }),
 
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          if(overlayController.overlayEntry != null){
-              overlayController.controlOverlay(null);
+          if (overlayController.overlayEntry != null) {
+            overlayController.controlOverlay(null);
           }
           Navigator.push(
               context,

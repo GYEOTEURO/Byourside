@@ -35,7 +35,7 @@ class _NanumSearchState extends State<NanumSearch> {
         }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override

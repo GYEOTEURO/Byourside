@@ -34,7 +34,7 @@ class _BlockState extends State<Block> {
         }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
