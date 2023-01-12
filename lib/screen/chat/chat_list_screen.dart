@@ -271,16 +271,32 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   bool makeCheck(List input) {
     bool check = true;
-    for (var j in input) {
-      print('ssssssssssssssssss');
-      print(input);
 
-      if (blockList.contains(j)) {
+    List<String> blockGroup = [];
+
+    FirebaseFirestore.instance
+        .collection('groups')
+        .doc(input[0])
+        .get()
+        .then((value) {
+      List.from(value.data()!['members']).forEach((element) {
+        if (!blockGroup.contains(element)) {
+          blockGroup.add(element);
+        }
+      });
+    });
+
+    print(blockGroup);
+    for (var i in input) {
+      print('-------');
+      print(i);
+      if (blockGroup.contains(i)) check = false;
+
+      if (blockList.contains(i)) {
         check = false;
-        print(check);
-        continue;
       }
     }
+
     return check;
   }
 
