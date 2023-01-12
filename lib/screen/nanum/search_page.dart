@@ -41,7 +41,7 @@ class _NanumSearchState extends State<NanumSearch> {
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(PostListModel? post) {

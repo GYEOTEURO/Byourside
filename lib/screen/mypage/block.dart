@@ -40,7 +40,7 @@ class _BlockState extends State<Block> {
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   @override
@@ -136,7 +136,7 @@ class _BlockState extends State<Block> {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
               DBSet.addBlock(user!.uid, _nickname.text);
-              getBlockList(user!.uid);
+              if (mounted) getBlockList(user!.uid);
               showDialog(
                   context: context,
                   builder: (context) {

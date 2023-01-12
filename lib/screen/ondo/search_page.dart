@@ -41,7 +41,7 @@ class _OndoSearchState extends State<OndoSearch> {
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(PostListModel? post) {
