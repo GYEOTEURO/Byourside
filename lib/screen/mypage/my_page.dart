@@ -203,7 +203,7 @@ class _Mypage extends State<Mypage> {
     final SignOut = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Theme.of(context).primaryColor,
+      color: Color(0xFF045558),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -215,7 +215,7 @@ class _Mypage extends State<Mypage> {
         },
         child: Text(
           "Log out",
-          style: TextStyle(color: Theme.of(context).primaryColorLight),
+          style: TextStyle(color: Color(0xFF045558)),
           textAlign: TextAlign.center,
         ),
       ),
