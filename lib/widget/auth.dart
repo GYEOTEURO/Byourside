@@ -6,20 +6,24 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   FirebaseUser? _firebaseUser(User? user) {
-    return user != null ? FirebaseUser(uid: user.uid, phoneNum: user.phoneNumber, displayName: user.displayName) : null;
+    return user != null
+        ? FirebaseUser(
+            uid: user.uid,
+            phoneNum: user.phoneNumber,
+            displayName: user.displayName)
+        : null;
   }
 
   Stream<FirebaseUser?> get user {
     return _auth.authStateChanges().map(_firebaseUser);
   }
 
-
   Future signInEmailPassword(LoginUser _login) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-          email: _login.email.toString(),
-          password: _login.password.toString());
+              email: _login.email.toString(),
+              password: _login.password.toString());
       User? user = userCredential.user;
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
@@ -27,13 +31,12 @@ class AuthService {
     }
   }
 
-
   Future registerEmailPassword(LoginUser _login) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-          email: _login.email.toString(),
-          password: _login.password.toString(),
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _login.email.toString(),
+        password: _login.password.toString(),
       );
       User? user = userCredential.user;
 
@@ -43,9 +46,11 @@ class AuthService {
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        return FirebaseUser(uid: null, code: 'The password provided is too weak.');
+        return FirebaseUser(
+            uid: null, code: 'The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        return FirebaseUser(uid: null, code: 'The account already exists for that email.');
+        return FirebaseUser(
+            uid: null, code: 'The account already exists for that email.');
       }
       // return FirebaseUser(code: e.code, uid: null);
     } catch (e) {
@@ -90,6 +95,29 @@ class AuthService {
   Future signOut() async {
     try {
       return await _auth.signOut();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<bool> checkAccount(password) async {
+    try {
+      AuthCredential credential = await EmailAuthProvider.credential(
+          email: _auth.currentUser!.email!, password: password);
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Firebase로부터 회원 탈퇴
+  Future withdrawalAccount(password) async {
+    try {
+      AuthCredential credential = await EmailAuthProvider.credential(
+          email: _auth.currentUser!.email!, password: password);
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+      return _auth.currentUser!.delete();
     } catch (e) {
       return null;
     }
