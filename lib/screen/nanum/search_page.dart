@@ -1,58 +1,44 @@
 import 'package:byourside/model/db_get.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanumPost.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Search extends SearchDelegate {
+class NanumSearch extends StatefulWidget {
+  NanumSearch({Key? key}) : super(key: key);
+  final Color primaryColor = Color(0xFF045558);
+  final String title = "마음나눔 게시글 검색";
+  final String collectionName = 'nanumPost';
+
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        icon: Icon(Icons.close, semanticLabel: "입력 내용 지우기", color: Color(0xFF045558)),
-        onPressed: () {
-          HapticFeedback.lightImpact(); // 약한 진동
-          query = "";
-        },
-      ),
-    ];
+  State<NanumSearch> createState() => _NanumSearchState();
+}
+
+class _NanumSearchState extends State<NanumSearch> {
+  final TextEditingController query = TextEditingController();
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  List<String> blockList = [];
+
+  // 차단 목록
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
+      List.from(value.data()!['blockList']).forEach((element){
+        if(!blockList.contains(element)) { blockList.add(element); }
+      });
+    });
+    setState(() {});
   }
 
   @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Color(0xFF045558)),
-      onPressed: () {
-        HapticFeedback.lightImpact(); // 약한 진동
-        Navigator.pop(context);
-      },
-    );
+  void initState() {
+    super.initState();
+    getBlockList(user!.uid);
   }
 
-  String? selectedResult;
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container();
-  }
-
-  @override
-  void showResults(BuildContext context) {
-    Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => NanumPost(
-                    collectionName: collectionName, 
-                    documentID: selectedResult!, 
-                    primaryColor: Color(0xFF045558))));
-  }
-
-  final String collectionName;
-  Search(this.collectionName) : super(searchFieldLabel: "검색어를 입력하세요.");
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    Widget _buildListItem(PostListModel? post) {
+  Widget _buildListItem(PostListModel? post) {
       String date = post!.datetime!
           .toDate()
           .toString()
@@ -78,9 +64,13 @@ class Search extends SearchDelegate {
               child: InkWell(
                   onTap: () {
                     HapticFeedback.lightImpact(); // 약한 진동
-                    selectedResult = post.id;
-                    print(selectedResult);
-                    showResults(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NanumPost(
+                            collectionName: widget.collectionName, 
+                            documentID: post.id!, 
+                            primaryColor: Color(0xFF045558))));
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
@@ -135,21 +125,59 @@ class Search extends SearchDelegate {
                   ))));
     }
 
-    return StreamBuilder<List<PostListModel>>(
-        stream: DBGet.readSearchDocs(query, collection: collectionName),
-        builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (_, index) {
-                  PostListModel post = snapshot.data![index];
-                  return _buildListItem(post);
-                });
-          } else
-            return Text(
-              "",
-              semanticsLabel: '',
-            );
-        });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(widget.title,
+            semanticsLabel: widget.title,
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+        backgroundColor: Theme.of(context).primaryColor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              HapticFeedback.lightImpact(); // 약한 진동
+              Navigator.pop(context);
+            }),
+      ),
+      body: Container(
+          margin: EdgeInsets.all(20),
+          child: Column(
+            children: [
+                Semantics(
+                    label: "검색할 키워드 입력",
+                    child: TextFormField(
+                        controller: query,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            semanticCounterText: "검색할 키워드 입력",
+                            labelText: "검색할 키워드를 입력해주세요.",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                              borderSide: BorderSide(width: 1),
+           )))),
+          Expanded(
+            child: StreamBuilder<List<PostListModel>>(
+              stream: DBGet.readSearchDocs(query.text, collection: widget.collectionName),
+              builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (_, index) {
+                        PostListModel post = snapshot.data![index];
+                        if(blockList.contains(post.nickname)) { return Container(); }
+                        else { return _buildListItem(post); }
+                      });
+                } else
+                  return Text(
+                    "",
+                    semanticsLabel: '',
+                  );
+              }))])));
   }
 }
