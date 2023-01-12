@@ -179,7 +179,10 @@ class _NanumPostListState extends State<NanumPostList> {
               ),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
-                showSearch(context: context, delegate: Search('nanumPost'));
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NanumSearch()));
               },
             ),
           ],
