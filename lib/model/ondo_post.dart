@@ -8,6 +8,7 @@ class OndoPostModel {
   String? content;
   Timestamp? datetime;
   List<String>? images;
+  List<String>? imgInfos;
   String? category;
   List<String>? type;
   int? likes;
@@ -23,6 +24,7 @@ class OndoPostModel {
       this.content,
       this.datetime,
       this.images,
+      this.imgInfos,
       this.category,
       this.type,
       this.likes,
@@ -43,6 +45,8 @@ class OndoPostModel {
         images = doc.data()!["images"] == null
             ? null
             : doc.data()!["images"].cast<String>(),
+        // imgInfos 추가 해야함
+
         category = doc.data()!["category"],
         type = doc.data()!["type"] == null
             ? null
