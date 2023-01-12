@@ -1,5 +1,6 @@
 import 'dart:ffi';
 // import 'package:flutter/src/widgets/basic.dart' as C;
+import 'package:byourside/main.dart';
 import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -46,6 +47,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
   final myFocus = FocusNode(); // 초점 이동
   final _formkey = GlobalKey<FormState>();
   int _current = 0; // 현재 이미지 인덱스
+  int indicatorLen = 1;
   // List<dynamic> _imgInfos = []; // 사진 세부 정보
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
@@ -63,9 +65,11 @@ class _OndoPostPageState extends State<OndoPostPage> {
         for (int i = 0; i < images.length; i++)
           _imgInfos.add(TextEditingController());
 
+        indicatorLen = _images.length;
         //_images = images.map<File>((xfile) => File(xfile.path)).toList();
       });
-      print("이미지 세부 설명: ${_imgInfos}");
+      print("이미지 세부 설명: ${_imgInfos}\n 이미지: ${_images}");
+      _show();
     }
   }
 
@@ -83,19 +87,22 @@ class _OndoPostPageState extends State<OndoPostPage> {
   }
 
   Widget _imageWidget(index) {
-    return Column(
+    return SingleChildScrollView(
+        child: Center(
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Semantics(
             label: "사용자가 선택한 사진 ${index + 1}",
             child: Image(
               image: FileImage(File(_images[index].path)),
-              width: MediaQuery.of(context).size.width,
               fit: BoxFit.contain, // 보고 수정
             )),
         Semantics(
             label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
             child: TextFormField(
-              maxLines: 1,
+              maxLines: 2,
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
@@ -105,35 +112,13 @@ class _OndoPostPageState extends State<OndoPostPage> {
               controller: _imgInfos[index],
             ))
       ],
-    );
+    )));
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _boxContents = [
-      Container(),
-      Container(),
-      Container(),
-      Container(),
-      _images.length <= 5
-          ? Container()
-          : FittedBox(
-              child: Container(
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    shape: BoxShape.circle),
-                child: Text(
-                  '+${(_images.length - 5).toString()}',
-                  semanticsLabel: '+${(_images.length - 5).toString()}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                ),
-              ),
-            )
-    ];
+    double maxWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       // 상단 앱 바
       appBar: AppBar(
@@ -160,10 +145,10 @@ class _OndoPostPageState extends State<OndoPostPage> {
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(25),
-            child: Form(
-                key: _formkey,
+          child: Form(
+            key: _formkey,
+            child: SingleChildScrollView(
+                padding: EdgeInsets.all(25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -245,9 +230,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
                                     getImage(ImageSource.gallery);
-                                    if (_images.isNotEmpty) {
-                                      _show();
-                                    }
                                   },
                                   icon: Icon(
                                     Icons.attach_file,
@@ -255,9 +237,14 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   ))
                             ],
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Visibility(
                               visible: _visibility,
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Semantics(
                                       label:
@@ -267,9 +254,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                             (index) {
                                           return Container(
                                               padding: EdgeInsets.all(3),
-                                              // height: MediaQuery.of(context)
-                                              //     .size
-                                              //     .width * 1.5,
+                                              height: maxWidth,
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
@@ -277,18 +262,17 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                         }),
                                         options: CarouselOptions(
                                             height: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.6,
+                                                .size
+                                                .width,
                                             initialPage: 0,
-                                            autoPlay: true,
+                                            autoPlay: false,
                                             enlargeCenterPage: true,
                                             enableInfiniteScroll: false,
                                             viewportFraction: 1,
                                             aspectRatio: 2.0,
-                                            onPageChanged: ((index, reason) {
+                                            onPageChanged: ((idx, reason) {
                                               setState(() {
-                                                _current = index;
+                                                _current = idx;
                                               });
                                             })),
                                       )),
@@ -298,8 +282,10 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   Semantics(
                                     label: "현재 보이는 사진 순서 표시",
                                     child: CarouselIndicator(
-                                      count: _images.length,
+                                      count: indicatorLen,
                                       index: _current,
+                                      color: Colors.black26,
+                                      activeColor: primaryColor,
                                     ),
                                   )
                                 ],
@@ -375,6 +361,10 @@ class _OndoPostPageState extends State<OndoPostPage> {
               Navigator.pop(context);
               List<String> urls =
                   _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+              List<String> imgInfos = [];
+              for (int i = 0; i < _imgInfos.length; i++) {
+                imgInfos.add(_imgInfos[i].text);
+              }
 
               if (_categories.category == '자유게시판') _categories.category = '자유';
 
@@ -387,6 +377,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                   type: _categories.type,
                   datetime: Timestamp.now(),
                   images: urls,
+                  imgInfos: imgInfos,
                   likes: 0,
                   likesPeople: [],
                   scrapPeople: [],
