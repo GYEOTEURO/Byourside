@@ -62,7 +62,7 @@ class _Mypage extends State<Mypage> {
     "개인정보 처리방침",
     "서비스 이용약관",
     "로그아웃",
-    "탈퇴"
+    // "탈퇴"
   ];
   final List<Icon> etcIcons = <Icon>[
     Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
@@ -71,10 +71,10 @@ class _Mypage extends State<Mypage> {
     Icon(Icons.report, semanticLabel: '개인정보 처리방침 화면으로 이동'),
     Icon(Icons.receipt_long_rounded, semanticLabel: '서비스 이용약관 화면으로 이동'),
     Icon(Icons.logout, semanticLabel: '로그아웃'),
-    Icon(
-      Icons.outbox,
-      semanticLabel: '탈퇴',
-    )
+    // Icon(
+    //   Icons.outbox,
+    //   semanticLabel: '탈퇴',
+    // )
   ];
 
   void _logout(context) async {
@@ -178,6 +178,7 @@ class _Mypage extends State<Mypage> {
                   ElevatedButton(
                     onPressed: () async {
                       _withdrawal(context, password);
+                      // Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     style:
                         ElevatedButton.styleFrom(backgroundColor: primaryColor),
@@ -381,9 +382,10 @@ class _Mypage extends State<Mypage> {
                             );
                           } else if (index == 5) {
                             _logout(context);
-                          } else {
-                            popUpDialog(context);
                           }
+                          //  else {
+                          //   popUpDialog(context);
+                          // }
                         },
                       );
                     })),
