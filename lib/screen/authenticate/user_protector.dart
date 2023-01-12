@@ -139,6 +139,7 @@ class _protectorState extends State<protector> {
       "belong": belong,
       "groups": [],
       "profilePic": "",
+      "blockList": [],
     });
     FirebaseFirestore.instance
         .collection('displayNameList')

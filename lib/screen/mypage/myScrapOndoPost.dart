@@ -133,11 +133,12 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                   });
             } else
               return const SelectionArea(
-                  child: Text('스크랩 목록을 가져오는 중...',
+                  child: Center(
+                    child: Text('스크랩 목록을 가져오는 중...',
                       semanticsLabel: '스크랩 목록을 가져오는 중...',
                       style: TextStyle(
                           fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600)));
+                          fontWeight: FontWeight.w600))));
           }),
     );
   }

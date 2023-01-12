@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             initialRoute: "/login",
             routes: {
               "/login": (context) => LoginScreen(primaryColor: primaryColor),
-              "/home": (context) => BottomNavBar(primaryColor: primaryColor),
+              "/": (context) => BottomNavBar(primaryColor: primaryColor),
               "/phone": (context) => VerifyPhone(),
               "/email": (context) => VerifyEmail(),
               "/user": (context) => SetupUser(),

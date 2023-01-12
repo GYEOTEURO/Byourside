@@ -107,6 +107,7 @@ class _participatorState extends State<participator> {
       "dropdownValue": selectedType,
       "groups": [],
       "profilePic": "",
+      "blockList": [],
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
