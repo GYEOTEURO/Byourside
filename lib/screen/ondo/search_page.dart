@@ -35,7 +35,7 @@ class _OndoSearchState extends State<OndoSearch> {
         }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override

@@ -45,7 +45,7 @@ class _OndoPostListState extends State<OndoPostList> {
         }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
