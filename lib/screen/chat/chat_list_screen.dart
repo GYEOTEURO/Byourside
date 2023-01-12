@@ -49,7 +49,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   void initState() {
     super.initState();
     gettingUserData();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Future<bool> checkGroupExist(String name) async {
@@ -169,8 +169,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 children: [
                   _isLoading == true
                       ? Center(
-                          child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor),
+                          child: CircularProgressIndicator(color: primaryColor),
                         )
                       : TextField(
                           autofocus: true,
@@ -188,16 +187,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.red),
                                   borderRadius: BorderRadius.circular(20)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20))),
                         ),
                 ],
