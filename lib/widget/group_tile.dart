@@ -75,7 +75,8 @@ class _GroupTileState extends State<GroupTile> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                          semanticLabel: "그룹을 나가시겠습니까? 취소를 원하시면 왼쪽의 취소 버튼을, 나가기를 원하시면 오른쪽의 나가기 버튼을 눌러주세요.",
+                          semanticLabel:
+                              "그룹을 나가시겠습니까? 취소를 원하시면 왼쪽의 취소 버튼을, 나가기를 원하시면 오른쪽의 나가기 버튼을 눌러주세요.",
                           title: const Text(
                             "그룹을 나가시겠습니까?",
                             semanticsLabel: "그룹을 나가시겠습니까?",
