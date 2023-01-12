@@ -49,7 +49,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor,
+            color: Color(0xFF045558),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Row(
               children: [
@@ -89,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
                     width: width * 0.14,
                     height: height * 0.04,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        color: Color(0xFF045558).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20)),
                     child: const Icon(
                       Icons.search,
