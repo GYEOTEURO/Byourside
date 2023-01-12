@@ -2,6 +2,8 @@ import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,6 +30,25 @@ class EduViewPage extends StatefulWidget {
 class _EduViewPageState extends State<EduViewPage> {
 
   final overlayController = Get.put(OverlayController());
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  List<String> blockList = [];
+
+  // 차단 목록
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
+      List.from(value.data()!['blockList']).forEach((element){
+        if(!blockList.contains(element)) { blockList.add(element); }
+      });
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBlockList(user!.uid);
+  }
   
   Widget _buildListItem(String? collectionName, PostListModel? post) {
     String date =
@@ -149,7 +170,8 @@ class _EduViewPageState extends State<EduViewPage> {
                   ),
                   itemBuilder: (_, index) {
                     PostListModel post = snapshot.data![index];
-                    return _buildListItem(collectionName, post);
+                    if(blockList.contains(post.nickname)) { return Container(); }
+                    else { return _buildListItem(collectionName, post); }
                   });
             } else
               return const SelectionArea(
