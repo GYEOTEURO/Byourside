@@ -45,8 +45,9 @@ class OndoPostModel {
         images = doc.data()!["images"] == null
             ? null
             : doc.data()!["images"].cast<String>(),
-        // imgInfos 추가 해야함
-
+        imgInfos = doc.data()!["imgInfos"] == null
+            ? null
+            : doc.data()!["imgInfos"].cast<String>(),
         category = doc.data()!["category"],
         type = doc.data()!["type"] == null
             ? null
@@ -72,6 +73,7 @@ class OndoPostModel {
       'content': content,
       'datetime': datetime,
       'images': images,
+      'imgInfos': imgInfos,
       'category': category,
       'type': type,
       'likes': likes,

@@ -95,7 +95,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                       )),
                       if (post.images!.isNotEmpty)
                         (Semantics(
-                            label: '사용자가 올린 사진',
+                            label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
