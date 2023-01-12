@@ -363,7 +363,11 @@ class _OndoPostPageState extends State<OndoPostPage> {
                   _images.isEmpty ? [] : await DBSet.uploadFile(_images);
               List<String> imgInfos = [];
               for (int i = 0; i < _imgInfos.length; i++) {
-                imgInfos.add(_imgInfos[i].text);
+                if (_imgInfos[i].text == null) {
+                  imgInfos.add("설명 정보가 없는 사진입니다");
+                } else {
+                  imgInfos.add(_imgInfos[i].text);
+                }
               }
 
               if (_categories.category == '자유게시판') _categories.category = '자유';

@@ -354,7 +354,11 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 _images.isEmpty ? [] : await DBSet.uploadFile(_images);
             List<String> imgInfos = [];
             for (int i = 0; i < _imgInfos.length; i++) {
-              imgInfos.add(_imgInfos[i].text);
+              if (_imgInfos[i].text == null) {
+                imgInfos.add("설명 정보가 없는 사진입니다");
+              } else {
+                imgInfos.add(_imgInfos[i].text);
+              }
             }
             NanumPostModel postData = NanumPostModel(
                 uid: user!.uid,
