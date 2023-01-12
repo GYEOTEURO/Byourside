@@ -136,12 +136,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
         builder: (context) {
           return StatefulBuilder(builder: ((context, setState) {
             return AlertDialog(
-              semanticLabel: "그룹 만들기입니다. 취소를 원하시면 왼쪽 취소 버튼을, 만들기를 원하시면 그룹 이름 입력 후 오른쪽 만들기 버튼을 눌러주세요.",
-              title: const Text(
-                "그룹 만들기",
-                semanticsLabel: "그룹 만들기",
-                textAlign: TextAlign.left,
-              ),
+              semanticLabel:
+                  "그룹 만들기입니다. 취소를 원하시면 왼쪽 취소 버튼을, 만들기를 원하시면 그룹 이름 입력 후 오른쪽 만들기 버튼을 눌러주세요.",
+              title: const Text("그룹 만들기",
+                  semanticsLabel: "그룹 만들기",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w600)),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -238,7 +241,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w500),
                   ),
                 )
               ],
