@@ -155,6 +155,7 @@ class _someoneElseState extends State<someoneElse> {
       "purpose": purpose,
       "groups": [],
       "profilePic": "",
+      "blockList": [],
     });
     FirebaseFirestore.instance
         .collection('displayNameList')

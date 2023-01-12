@@ -104,5 +104,15 @@ class DBSet {
   static declaration(String classification, String reason, String id) async {
     await FirebaseFirestore.instance.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_${reason}'])});
   }
+
+  // 차단 신청
+  static addBlock(String uid, String nickname) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).update({'blockList': FieldValue.arrayUnion([nickname])});
+  }
+
+  // 차단 해제
+  static cancelBlock(String uid, String nickname) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).update({'blockList': FieldValue.arrayRemove([nickname])});
+  }
 }
 
