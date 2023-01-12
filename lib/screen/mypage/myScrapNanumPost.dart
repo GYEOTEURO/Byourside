@@ -96,7 +96,7 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
                       )),
                       if (post.images!.isNotEmpty)
                         (Semantics(
-                            label: '사용자가 올린 사진',
+                            label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
@@ -134,11 +134,12 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
                   });
             } else
               return const SelectionArea(
-                  child: Text('스크랩 목록을 가져오는 중...',
+                  child: Center(
+                    child: Text('스크랩 목록을 가져오는 중...',
                       semanticsLabel: '스크랩 목록을 가져오는 중...',
                       style: TextStyle(
                           fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600)));
+                          fontWeight: FontWeight.w600))));
           }),
     );
   }

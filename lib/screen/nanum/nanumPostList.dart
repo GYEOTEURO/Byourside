@@ -3,6 +3,8 @@ import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanumPost.dart';
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/nanum/search_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,6 +32,26 @@ class _NanumPostListState extends State<NanumPostList> {
     setState(() {
       completedValue = !value;
     });
+  }
+
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  List<String> blockList = [];
+
+  // 차단 목록
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
+      List.from(value.data()!['blockList']).forEach((element){
+        if(!blockList.contains(element)) { blockList.add(element); }
+      });
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBlockList(user!.uid);
   }
 
   Widget _buildListItem(PostListModel? post) {
@@ -109,7 +131,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       )),
                       if (post.images!.isNotEmpty)
                         (Semantics(
-                            label: '사용자가 올린 사진',
+                            label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
@@ -157,7 +179,10 @@ class _NanumPostListState extends State<NanumPostList> {
               ),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
-                showSearch(context: context, delegate: Search('nanumPost'));
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NanumSearch()));
               },
             ),
           ],
@@ -210,16 +235,18 @@ class _NanumPostListState extends State<NanumPostList> {
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
                     PostListModel post = snapshot.data![index];
-                    return _buildListItem(post);
+                    if(blockList.contains(post.nickname)) { return Container(); }
+                    else { return _buildListItem(post); }
                   });
             } else
               return const SelectionArea(
-                  child: Text('게시물 목록을 가져오는 중...',
+                  child: Center(
+                    child: Text('게시물 목록을 가져오는 중...',
                       semanticsLabel: '게시물 목록을 가져오는 중...',
                       style: TextStyle(
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w600,
-                      )));
+                      ))));
           }),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(

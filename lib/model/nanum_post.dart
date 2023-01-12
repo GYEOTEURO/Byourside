@@ -47,8 +47,9 @@ class NanumPostModel {
         images = doc.data()!["images"] == null
             ? null
             : doc.data()!["images"].cast<String>(),
-        // imgInfos 추가 해야함
-
+        imgInfos = doc.data()!["imgInfos"] == null
+            ? null
+            : doc.data()!["imgInfos"].cast<String>(),
         type = doc.data()!["type"] == null
             ? null
             : doc.data()!["type"].cast<String>(),
@@ -75,6 +76,7 @@ class NanumPostModel {
       'isCompleted': isCompleted,
       'datetime': datetime,
       'images': images,
+      'imgInfos': imgInfos,
       'type': type,
       'likes': likes,
       'likesPeople': likesPeople,

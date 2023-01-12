@@ -1,6 +1,8 @@
+import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/using_policy.dart';
+import 'package:byourside/screen/mypage/block.dart';
 import 'package:byourside/screen/mypage/declaration.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
 import 'package:byourside/screen/mypage/myNanumPost.dart';
@@ -57,18 +59,25 @@ class _Mypage extends State<Mypage> {
   final List<String> etcEntires = <String>[
     "자주 묻는 질문",
     "사용자 신고하기",
+    "사용자 차단하기",
     "개발자에게 문의하기",
     "개인정보 처리방침",
     "서비스 이용약관",
-    "로그아웃"
+    "로그아웃",
+    // "탈퇴"
   ];
   final List<Icon> etcIcons = <Icon>[
     Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
-    Icon(Icons.dnd_forwardslash, semanticLabel: '사용자 신고 화면으로 이동'),
+    Icon(Icons.report_problem, semanticLabel: '사용자 신고 화면으로 이동'),
+    Icon(Icons.dnd_forwardslash, semanticLabel: '사용자 차단 화면으로 이동'),
     Icon(Icons.question_answer, semanticLabel: '개발자에게 문의하기 화면으로 이동'),
-    Icon(Icons.report, semanticLabel: '개인정보 처리방침 화면으로 이동'),
+    Icon(Icons.archive, semanticLabel: '개인정보 처리방침 화면으로 이동'),
     Icon(Icons.receipt_long_rounded, semanticLabel: '서비스 이용약관 화면으로 이동'),
-    Icon(Icons.logout, semanticLabel: '로그아웃')
+    Icon(Icons.logout, semanticLabel: '로그아웃'),
+    // Icon(
+    //   Icons.outbox,
+    //   semanticLabel: '탈퇴',
+    // )
   ];
 
   void _logout(context) async {
@@ -77,9 +86,119 @@ class _Mypage extends State<Mypage> {
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
+  // void _withdrawal(context, password) async {
+  //   FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
+  //   await _auth.withdrawalAccount(password);
+  //   Navigator.of(context).popUntil((route) => route.isFirst);
+  // }
+
   @override
   Widget build(BuildContext context) {
     // final user =  Provider.of<FirebaseUser?>(context);
+    String password = "";
+
+    // void popUpDialog(BuildContext context) {
+    //   showDialog(
+    //       barrierDismissible: false,
+    //       context: context,
+    //       builder: (context) {
+    //         return StatefulBuilder(builder: ((context, setState) {
+    //           return AlertDialog(
+    //             semanticLabel:
+    //                 "탈퇴 버튼입니다. 탈퇴 후 동일한 번호로 재가입이 불가능합니다. 탈퇴를 원하시면 비밀번호를 입력하세요.",
+    //             title: const Text(
+    //               "탈퇴",
+    //               semanticsLabel: "탈퇴",
+    //               textAlign: TextAlign.left,
+    //               style: const TextStyle(
+    //                   color: Colors.black,
+    //                   fontSize: 17,
+    //                   fontFamily: 'NanumGothic',
+    //                   fontWeight: FontWeight.w600),
+    //             ),
+    //             content: Column(
+    //               mainAxisSize: MainAxisSize.min,
+    //               children: [
+    //                 Text(
+    //                   "비밀번호를 입력하세요.\n동일한 번호로 재가입이 불가능합니다.",
+    //                   semanticsLabel: "비밀번호를 입력하세요. 동일한 번호로 재가입이 불가능합니다.",
+    //                   textAlign: TextAlign.left,
+    //                   style: const TextStyle(
+    //                       color: Colors.black,
+    //                       fontSize: 15,
+    //                       fontFamily: 'NanumGothic',
+    //                       fontWeight: FontWeight.w600),
+    //                 ),
+    //                 SizedBox(
+    //                   height: MediaQuery.of(context).size.height * 0.02,
+    //                 ),
+    //                 TextField(
+    //                   autofocus: true,
+    //                   onChanged: (val) {
+    //                     if (mounted) {
+    //                       setState(() {
+    //                         password = val;
+    //                       });
+    //                     }
+    //                   },
+    //                   style: const TextStyle(
+    //                       color: Colors.black,
+    //                       fontSize: 17,
+    //                       fontFamily: 'NanumGothic',
+    //                       fontWeight: FontWeight.w600),
+    //                   decoration: InputDecoration(
+    //                       enabledBorder: OutlineInputBorder(
+    //                           borderSide: BorderSide(
+    //                               color: Theme.of(context).primaryColor),
+    //                           borderRadius: BorderRadius.circular(20)),
+    //                       errorBorder: OutlineInputBorder(
+    //                           borderSide: const BorderSide(color: Colors.red),
+    //                           borderRadius: BorderRadius.circular(20)),
+    //                       focusedBorder: OutlineInputBorder(
+    //                           borderSide: BorderSide(
+    //                               color: Theme.of(context).primaryColor),
+    //                           borderRadius: BorderRadius.circular(20))),
+    //                 ),
+    //               ],
+    //             ),
+    //             actions: [
+    //               ElevatedButton(
+    //                 onPressed: () {
+    //                   HapticFeedback.lightImpact(); // 약한 진동
+    //                   Navigator.of(context).pop();
+    //                 },
+    //                 style:
+    //                     ElevatedButton.styleFrom(backgroundColor: primaryColor),
+    //                 child: const Text(
+    //                   "취소",
+    //                   semanticsLabel: "취소",
+    //                   style: TextStyle(
+    //                       fontSize: 17,
+    //                       fontFamily: 'NanumGothic',
+    //                       fontWeight: FontWeight.w500),
+    //                 ),
+    //               ),
+    //               ElevatedButton(
+    //                 onPressed: () async {
+    //                   _withdrawal(context, password);
+    //                   // Navigator.of(context).popUntil((route) => route.isFirst);
+    //                 },
+    //                 style:
+    //                     ElevatedButton.styleFrom(backgroundColor: primaryColor),
+    //                 child: const Text(
+    //                   "완료",
+    //                   semanticsLabel: "완료",
+    //                   style: TextStyle(
+    //                       fontSize: 17,
+    //                       fontFamily: 'NanumGothic',
+    //                       fontWeight: FontWeight.w500),
+    //                 ),
+    //               )
+    //             ],
+    //           );
+    //         }));
+    //       });
+    // }
 
     final SignOut = Material(
       elevation: 5.0,
@@ -249,16 +368,21 @@ class _Mypage extends State<Mypage> {
                           } else if (index == 2) {
                             await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ToDeveloper()),
+                              MaterialPageRoute(builder: (context) => Block()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PersonalData()),
+                                  builder: (context) => const ToDeveloper()),
                             );
                           } else if (index == 4) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PersonalData()),
+                            );
+                          } else if (index == 5) {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -267,6 +391,9 @@ class _Mypage extends State<Mypage> {
                           } else {
                             _logout(context);
                           }
+                          //  else {
+                          //   popUpDialog(context);
+                          // }
                         },
                       );
                     })),

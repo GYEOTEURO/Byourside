@@ -1,5 +1,6 @@
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
+import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -178,24 +179,79 @@ class _NanumPostContentState extends State<NanumPostContent> {
           },
         )),
         if (user?.uid == post.uid)
-          ((OutlinedButton(
+          (OutlinedButton(
             style: ElevatedButton.styleFrom(
               side: BorderSide(color: widget.primaryColor, width: 1.5),
               foregroundColor: widget.primaryColor,
             ),
-            child: Text('삭제',
-                semanticsLabel: '삭제',
+            child: Text(
+                '삭제',
+                semanticsLabel: '글 삭제',
                 style: const TextStyle(
-                    color: Color(0xFF045558),
-                    fontSize: 14,
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w600)),
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 14,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
+                )),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
-              Navigator.pop(context);
-              DBSet.deletePost(collectionName!, post.id!);
+              showDialog(
+                context: context, 
+                builder: (context){
+                  return AlertDialog(
+                    semanticLabel: '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                    title: Text(
+                      '글을 삭제하시겠습니까?',
+                      semanticsLabel: '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      )),
+                    actions: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: widget.primaryColor,
+                          ),
+                          onPressed: () {
+                            HapticFeedback.lightImpact(); // 약한 진동
+                            Navigator.pushNamed(context, '/');
+                            DBSet.deletePost(collectionName!, post.id!);
+                          }, 
+                          child: Text(
+                            '삭제',
+                            semanticsLabel: '삭제',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            ))
+                          ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: widget.primaryColor,
+                          ),
+                          onPressed: () {
+                            HapticFeedback.lightImpact(); // 약한 진동
+                            Navigator.pop(context);
+                          }, 
+                          child: Text(
+                            '취소',
+                            semanticsLabel: '취소',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            ))
+                        )])
+                    ]);
+            });
             },
-          )))
+          ))
         else(
           (OutlinedButton(
             style: ElevatedButton.styleFrom(
@@ -259,6 +315,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                             backgroundColor: widget.primaryColor,
                           ),
                           onPressed: () {
+                            HapticFeedback.lightImpact(); // 약한 진동
                             DBSet.declaration('post', _declaration, post.id!);
                             Navigator.pop(context);
                           }, 
@@ -276,6 +333,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                             backgroundColor: widget.primaryColor,
                           ),
                           onPressed: () {
+                            HapticFeedback.lightImpact(); // 약한 진동
                             Navigator.pop(context);
                           }, 
                           child: Text(
@@ -368,11 +426,11 @@ class _NanumPostContentState extends State<NanumPostContent> {
             padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
             child: Column(
               children: [
-                for (String url in post.images!)
+                for (int i=0; i<post.images!.length; i++)
                   Semantics(
-                      label: '사용자가 올린 사진',
+                      label: post.imgInfos![i],
                       child: Container(
-                        child: Image.network(url),
+                        child: Image.network(post.images![i]),
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                       ))
               ],
@@ -456,12 +514,13 @@ class _NanumPostContentState extends State<NanumPostContent> {
             return _buildListItem(collectionName, post);
           } else
             return const SelectionArea(
-                child: Text('게시물을 찾을 수 없습니다.',
+                child: Center(
+                    child: Text('게시물을 찾을 수 없습니다.',
                     semanticsLabel: '게시물을 찾을 수 없습니다.',
                     style: TextStyle(
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w600,
-                    )));
+                    ))));
         });
   }
 }
