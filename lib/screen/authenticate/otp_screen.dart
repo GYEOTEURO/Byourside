@@ -107,13 +107,17 @@ class _OTPScreenState extends State<OTPScreen> {
           key: _formKey,
           appBar: AppBar(
             centerTitle: true,
-            title: Text(
-              'OTP 인증',
-              semanticsLabel: 'OTP 인증',
-            ),
+            title: Text('OTP 인증',
+                semanticsLabel: 'OTP 인증',
+                style: TextStyle(
+                    fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
             backgroundColor: primaryColor,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+                icon: Icon(Icons.arrow_back,
+                    semanticLabel: "뒤로 가기", color: Colors.white),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,

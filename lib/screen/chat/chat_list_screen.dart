@@ -23,14 +23,33 @@ Future<String> callAsyncFetch() =>
 
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final User? user = FirebaseAuth.instance.currentUser;
+
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
+  List<String> blockList = [];
+
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
+      });
+    });
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
     gettingUserData();
+    getBlockList(user!.uid);
   }
 
   Future<bool> checkGroupExist(String name) async {
@@ -250,6 +269,21 @@ class _ChatListScreenState extends State<ChatListScreen> {
         });
   }
 
+  bool makeCheck(List input) {
+    bool check = true;
+    for (var j in input) {
+      print('ssssssssssssssssss');
+      print(input);
+
+      if (blockList.contains(j)) {
+        check = false;
+        print(check);
+        continue;
+      }
+    }
+    return check;
+  }
+
   groupList(double width) {
     return StreamBuilder(
         stream: groups,
@@ -262,18 +296,24 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   padding: EdgeInsets.all(5),
                   itemCount: snapshot.data['groups'].length,
                   itemBuilder: (context, index) {
+                    bool check = true;
                     int reverseIndex =
                         snapshot.data['groups'].length - index - 1;
-
-                    return GroupTile(
-                        userName: snapshot.data['nickname'],
-                        groupId: getId(snapshot.data['groups'][reverseIndex]),
-                        groupName:
-                            getName(snapshot.data['groups'][reverseIndex]),
-                        recentMsg: ""
-                        //recentMsg: getRecentMsg(snapshot.data['groups'][index])
-
-                        );
+                    // print('-------------');
+                    // print(snapshot.data['groups'][reverseIndex].split('_'));
+                    check = makeCheck(
+                        snapshot.data['groups'][reverseIndex].split('_'));
+                    if (check) {
+                      return GroupTile(
+                          userName: snapshot.data['nickname'],
+                          groupId: getId(snapshot.data['groups'][reverseIndex]),
+                          groupName:
+                              getName(snapshot.data['groups'][reverseIndex]),
+                          recentMsg:
+                              "" //getRecentMsg(snapshot.data['groups'][index])
+                          );
+                    } else
+                      return Container();
                   },
                 );
               } else {
