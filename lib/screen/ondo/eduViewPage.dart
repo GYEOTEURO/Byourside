@@ -52,7 +52,7 @@ class _EduViewPageState extends State<EduViewPage> {
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(String? collectionName, PostListModel? post) {
