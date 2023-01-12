@@ -426,11 +426,11 @@ class _NanumPostContentState extends State<NanumPostContent> {
             padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
             child: Column(
               children: [
-                for (String url in post.images!)
+                for (int i=0; i<post.images!.length; i++)
                   Semantics(
-                      label: '사용자가 올린 사진',
+                      label: post.imgInfos![i],
                       child: Container(
-                        child: Image.network(url),
+                        child: Image.network(post.images![i]),
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                       ))
               ],
