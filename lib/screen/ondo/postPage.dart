@@ -69,7 +69,12 @@ class _OndoPostPageState extends State<OndoPostPage> {
         //_images = images.map<File>((xfile) => File(xfile.path)).toList();
       });
       print("이미지 세부 설명: ${_imgInfos}\n 이미지: ${_images}");
-      _show();
+      if (indicatorLen == 0) {
+        indicatorLen = 1;
+        _hide();
+      } else {
+        _show();
+      }
     }
   }
 
@@ -100,14 +105,16 @@ class _OndoPostPageState extends State<OndoPostPage> {
               fit: BoxFit.contain, // 보고 수정
             )),
         Semantics(
-            label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+            label:
+                "사진 ${index + 1}에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
             child: TextFormField(
               maxLines: 2,
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                  labelText: "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+                  labelText:
+                      "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
                   hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지"),
               controller: _imgInfos[index],
             ))
@@ -363,12 +370,14 @@ class _OndoPostPageState extends State<OndoPostPage> {
                   _images.isEmpty ? [] : await DBSet.uploadFile(_images);
               List<String> imgInfos = [];
               for (int i = 0; i < _imgInfos.length; i++) {
-                if (_imgInfos[i].text == null) {
+                if (_imgInfos[i].text == "") {
                   imgInfos.add("설명 정보가 없는 사진입니다");
                 } else {
                   imgInfos.add(_imgInfos[i].text);
                 }
               }
+
+              print("사진 상세 정보: ${imgInfos}");
 
               if (_categories.category == '자유게시판') _categories.category = '자유';
 
