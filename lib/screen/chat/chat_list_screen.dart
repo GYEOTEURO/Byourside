@@ -240,12 +240,30 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return const AlertDialog(
-                                  semanticLabel: "이미 존재하는 채팅방 이름입니다.",
+                                return AlertDialog(
+                                  semanticLabel: "이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                                   content: Text(
                                     '이미 존재하는 채팅방 이름입니다.',
                                     semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
                                   ),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                      ),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        Navigator.pop(context);
+                                      }, 
+                                      child: Text(
+                                        '확인',
+                                        semanticsLabel: '확인',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600,
+                                        ))
+                                  )]
                                 );
                               });
                         }
