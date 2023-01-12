@@ -231,7 +231,7 @@ class _Mypage extends State<Mypage> {
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF045558),
       ),
       body: Container(
         padding: const EdgeInsets.all(30),

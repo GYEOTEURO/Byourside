@@ -116,9 +116,13 @@ class _MyNanumPostState extends State<MyNanumPost> {
             semanticsLabel: widget.title,
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF045558),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: StreamBuilder<List<PostListModel>>(
           stream: DBGet.readCreatePost(
@@ -135,11 +139,11 @@ class _MyNanumPostState extends State<MyNanumPost> {
             } else
               return const SelectionArea(
                   child: Center(
-                    child: Text('게시글 목록을 가져오는 중...',
-                      semanticsLabel: '게시글 목록을 가져오는 중...',
-                      style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600))));
+                      child: Text('게시글 목록을 가져오는 중...',
+                          semanticsLabel: '게시글 목록을 가져오는 중...',
+                          style: TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600))));
           }),
     );
   }

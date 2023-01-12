@@ -14,7 +14,6 @@ class Block extends StatefulWidget {
 }
 
 class _BlockState extends State<Block> {
-
   final TextEditingController _nickname = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
@@ -24,9 +23,15 @@ class _BlockState extends State<Block> {
 
   // 차단 목록
   getBlockList(String uid) async {
-    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
-      List.from(value.data()!['blockList']).forEach((element){
-        if(!blockList.contains(element)) { blockList.add(element); }
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
       });
     });
     setState(() {});
@@ -37,7 +42,7 @@ class _BlockState extends State<Block> {
     super.initState();
     getBlockList(user!.uid);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +52,7 @@ class _BlockState extends State<Block> {
             semanticsLabel: widget.title,
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF045558),
         leading: IconButton(
             icon: Icon(Icons.arrow_back,
                 semanticLabel: "뒤로 가기", color: Colors.white),
@@ -60,20 +65,18 @@ class _BlockState extends State<Block> {
           padding: EdgeInsets.all(30),
           child: Form(
               key: _formkey,
-              child: Column(
-                children: [
+              child: Column(children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: Text(
-                      '사용자를 차단하면,\n해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다.',
-                      semanticsLabel:
-                          '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      ))),
+                    margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: Text('사용자를 차단하면,\n해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다.',
+                        semanticsLabel:
+                            '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        ))),
                 Semantics(
                     label: "차단할 닉네임 입력",
                     child: TextFormField(
@@ -95,46 +98,36 @@ class _BlockState extends State<Block> {
                             )))),
                 Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: Text(
-                        '차단한 사용자 목록',
-                        semanticsLabel:
-                            '차단한 사용자 목록',
+                    child: Text('차단한 사용자 목록',
+                        semanticsLabel: '차단한 사용자 목록',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 18,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
                         ))),
-                if(blockList.isEmpty)(
-                  Center(
-                    child: Text(
-                      '없음',
-                      semanticsLabel: '차단한 사용자 목록 없음',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      )
-                  ))
-                )
-                else(
-                  Column(
-                  children:
-                      blockList
-                        .map((e) =>
-                          new Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Text(
-                                '- $e',
-                                semanticsLabel: e,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontFamily: 'NanumGothic',
-                                  fontWeight: FontWeight.w600,
-                              ))
-                        ))
-                        .toList()
-                  ))
+                if (blockList.isEmpty)
+                  (Center(
+                      child: Text('없음',
+                          semanticsLabel: '차단한 사용자 목록 없음',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ))))
+                else
+                  (Column(
+                      children: blockList
+                          .map((e) => new Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: Text('- $e',
+                                  semanticsLabel: e,
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  ))))
+                          .toList()))
               ]))),
       floatingActionButton: FloatingActionButton(
           backgroundColor: widget.primaryColor,
@@ -150,8 +143,10 @@ class _BlockState extends State<Block> {
                     return AlertDialog(
                         semanticLabel:
                             "정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
-                        content: Text('정상적으로 차단되었습니다.\n해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
-                            semanticsLabel: '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
+                        content: Text(
+                            '정상적으로 차단되었습니다.\n해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
+                            semanticsLabel:
+                                '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
                             style: const TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',

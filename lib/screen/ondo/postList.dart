@@ -27,7 +27,6 @@ class OndoPostList extends StatefulWidget {
 }
 
 class _OndoPostListState extends State<OndoPostList> {
-
   final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -35,9 +34,15 @@ class _OndoPostListState extends State<OndoPostList> {
 
   // 차단 목록
   getBlockList(String uid) async {
-    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
-      List.from(value.data()!['blockList']).forEach((element){
-        if(!blockList.contains(element)) { blockList.add(element); }
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
       });
     });
     setState(() {});
@@ -48,7 +53,7 @@ class _OndoPostListState extends State<OndoPostList> {
     super.initState();
     getBlockList(user!.uid);
   }
-  
+
   Widget _buildListItem(PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
@@ -73,7 +78,7 @@ class _OndoPostListState extends State<OndoPostList> {
                 //Read Document
                 onTap: () {
                   HapticFeedback.lightImpact(); // 약한 진동
-                  if(overlayController.overlayEntry != null){
+                  if (overlayController.overlayEntry != null) {
                     overlayController.controlOverlay(null);
                   }
                   Navigator.push(
@@ -109,22 +114,20 @@ class _OndoPostListState extends State<OndoPostList> {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'NanumGothic'))),
                             Text(
-                              widget.category.contains('전체') ?
-                              post.type!.isEmpty
-                                  ? '${post.nickname!} | $date | ${post.category}'
-                                  : '${post.nickname!} | $date | ${post.category} | $type'
-                              :
-                              post.type!.isEmpty
-                                  ? '${post.nickname!} | $date'
-                                  : '${post.nickname!} | $date | $type',
-                              semanticsLabel: widget.category.contains('전체') ?
-                                post.type!.isEmpty
-                                  ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category}'
-                                  : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category} $type'
-                                :
-                                post.type!.isEmpty
-                                  ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
-                                  : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $type',
+                              widget.category.contains('전체')
+                                  ? post.type!.isEmpty
+                                      ? '${post.nickname!} | $date | ${post.category}'
+                                      : '${post.nickname!} | $date | ${post.category} | $type'
+                                  : post.type!.isEmpty
+                                      ? '${post.nickname!} | $date'
+                                      : '${post.nickname!} | $date | $type',
+                              semanticsLabel: widget.category.contains('전체')
+                                  ? post.type!.isEmpty
+                                      ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category}'
+                                      : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category} $type'
+                                  : post.type!.isEmpty
+                                      ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
+                                      : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $type',
                               overflow: TextOverflow.fade,
                               maxLines: 1,
                               softWrap: false,
@@ -171,18 +174,21 @@ class _OndoPostListState extends State<OndoPostList> {
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
                     PostListModel post = snapshot.data![index];
-                    if(blockList.contains(post.nickname)) { return Container(); }
-                    else { return _buildListItem(post); }
+                    if (blockList.contains(post.nickname)) {
+                      return Container();
+                    } else {
+                      return _buildListItem(post);
+                    }
                   });
             } else
               return const SelectionArea(
                   child: Center(
-                    child: Text(
-                      '게시글 목록 가져오는 중...',
-                      semanticsLabel: '게시글 목록 가져오는 중...',
-                      style: TextStyle(
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
+                      child: Text(
+                '게시글 목록 가져오는 중...',
+                semanticsLabel: '게시글 목록 가져오는 중...',
+                style: TextStyle(
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
                 ),
               )));
           }),
