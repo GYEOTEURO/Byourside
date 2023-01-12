@@ -1,34 +1,45 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
-class Declaration extends StatefulWidget {
-  Declaration({Key? key}) : super(key: key);
+class Block extends StatefulWidget {
+  Block({Key? key}) : super(key: key);
   final Color primaryColor = Color(0xFF045558);
-  final String title = "사용자 신고";
+  final String title = "사용자 차단";
 
   @override
-  State<Declaration> createState() => _DeclarationState();
+  State<Block> createState() => _BlockState();
 }
 
-class _DeclarationState extends State<Declaration> {
-  List<String> _decList = [
-    "불법 정보를 게시했습니다.",
-    "음란물을 게시했습니다.",
-    "스팸홍보/도배글을 게시했습니다.",
-    "욕설/비하/혐오/차별적 표현을 사용했습니다.",
-    "청소년에게 유해한 내용을 게시했습니다.",
-    "사칭/사기 사용자입니다.",
-    "상업적 광고 및 판매 사용자입니다."
-  ];
+class _BlockState extends State<Block> {
 
   final TextEditingController _nickname = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  List<String> blockList = [];
+
+  // 차단 목록
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
+      List.from(value.data()!['blockList']).forEach((element){
+        if(!blockList.contains(element)) { blockList.add(element); }
+      });
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBlockList(user!.uid);
+  }
+  
   @override
   Widget build(BuildContext context) {
-    String _declaration = _decList[0];
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -49,58 +60,81 @@ class _DeclarationState extends State<Declaration> {
           padding: EdgeInsets.all(30),
           child: Form(
               key: _formkey,
-              child: Column(children: [
+              child: Column(
+                children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Text(
+                      '사용자를 차단하면,\n해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다.',
+                      semanticsLabel:
+                          '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ))),
                 Semantics(
-                    label: "신고할 닉네임 입력",
+                    label: "차단할 닉네임 입력",
                     child: TextFormField(
                         controller: _nickname,
                         maxLines: 1,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "신고할 닉네임은 비어있을 수 없습니다";
+                            return "차단할 닉네임은 비어있을 수 없습니다";
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                            semanticCounterText: "신고할 닉네임 입력",
-                            labelText: "신고할 닉네임을 입력해주세요.",
+                            semanticCounterText: "차단할 닉네임 입력",
+                            labelText: "차단할 닉네임을 입력해주세요.",
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4)),
                               borderSide: BorderSide(width: 1),
                             )))),
                 Container(
-                    margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
                     child: Text(
-                        '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                        '차단한 사용자 목록',
                         semanticsLabel:
-                            '신고 사유를 알려주세요.신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
+                            '차단한 사용자 목록',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 18,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
                         ))),
-                StatefulBuilder(builder: (context, setState) {
-                  return Column(
-                      children: _decList
-                          .map((e) => new RadioListTile(
-                              title: Text(e,
-                                  semanticsLabel: e,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              value: e,
-                              groupValue: _declaration,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _declaration = value!;
-                                });
-                              }))
-                          .toList());
-                }),
+                if(blockList.isEmpty)(
+                  Center(
+                    child: Text(
+                      '없음',
+                      semanticsLabel: '차단한 사용자 목록 없음',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      )
+                  ))
+                )
+                else(
+                  Column(
+                  children:
+                      blockList
+                        .map((e) =>
+                          new Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child: Text(
+                                '- $e',
+                                semanticsLabel: e,
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                              ))
+                        ))
+                        .toList()
+                  ))
               ]))),
       floatingActionButton: FloatingActionButton(
           backgroundColor: widget.primaryColor,
@@ -108,15 +142,16 @@ class _DeclarationState extends State<Declaration> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
-              DBSet.declaration('user', _declaration, _nickname.text);
+              DBSet.addBlock(user!.uid, _nickname.text);
+              getBlockList(user!.uid);
               showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
                         semanticLabel:
-                            "정상적으로 신고되었습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
-                        content: Text('정상적으로 신고되었습니다.',
-                            semanticsLabel: '정상적으로 신고되었습니다.',
+                            "정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
+                        content: Text('정상적으로 차단되었습니다.\n해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
+                            semanticsLabel: '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
                             style: const TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',
@@ -144,8 +179,8 @@ class _DeclarationState extends State<Declaration> {
                   });
             }
           },
-          child: Text('신고',
-              semanticsLabel: '신고',
+          child: Text('차단',
+              semanticsLabel: '차단',
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'NanumGothic',
