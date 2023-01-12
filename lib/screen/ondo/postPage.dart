@@ -1,6 +1,8 @@
 import 'dart:ffi';
 // import 'package:flutter/src/widgets/basic.dart' as C;
 import 'package:byourside/screen/ondo/postCategory.dart';
+import 'package:carousel_indicator/carousel_indicator.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,7 @@ class OndoPostPage extends StatefulWidget {
 class _OndoPostPageState extends State<OndoPostPage> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
+  List<TextEditingController> _imgInfos = [];
 
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -42,6 +45,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
   final picker = ImagePicker();
   final myFocus = FocusNode(); // 초점 이동
   final _formkey = GlobalKey<FormState>();
+  int _current = 0; // 현재 이미지 인덱스
+  // List<dynamic> _imgInfos = []; // 사진 세부 정보
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
@@ -53,8 +58,14 @@ class _OndoPostPageState extends State<OndoPostPage> {
       setState(() {
         _images = images; // 가져온 이미지를 _image에 저장
 
+        // 선택한 이미지 길이 만큼 초기화
+        _imgInfos = [];
+        for (int i = 0; i < images.length; i++)
+          _imgInfos.add(TextEditingController());
+
         //_images = images.map<File>((xfile) => File(xfile.path)).toList();
       });
+      print("이미지 세부 설명: ${_imgInfos}");
     }
   }
 
@@ -69,6 +80,32 @@ class _OndoPostPageState extends State<OndoPostPage> {
     setState(() {
       _visibility = true;
     });
+  }
+
+  Widget _imageWidget(index) {
+    return Column(
+      children: [
+        Semantics(
+            label: "사용자가 선택한 사진 ${index + 1}",
+            child: Image(
+              image: FileImage(File(_images[index].path)),
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.contain, // 보고 수정
+            )),
+        Semantics(
+            label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
+            child: TextFormField(
+              maxLines: 1,
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                  labelText: "사진에 대한 간략한 설명을 적어주세요",
+                  hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지"),
+              controller: _imgInfos[index],
+            ))
+      ],
+    );
   }
 
   @override
@@ -208,7 +245,9 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
                                     getImage(ImageSource.gallery);
-                                    _show();
+                                    if (_images.isNotEmpty) {
+                                      _show();
+                                    }
                                   },
                                   icon: Icon(
                                     Icons.attach_file,
@@ -218,48 +257,53 @@ class _OndoPostPageState extends State<OndoPostPage> {
                           ),
                           Visibility(
                               visible: _visibility,
-                              child: SizedBox(
-                                  height: 100,
-                                  child: GridView.count(
-                                      shrinkWrap:
-                                          true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
-                                      padding: EdgeInsets.all(2),
-                                      // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
-                                      crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
-                                      // 가로(cross), 세로(main) 아이템 간의 간격 지정
-                                      mainAxisSpacing: 5,
-                                      crossAxisSpacing: 5,
-                                      children: List.generate(
-                                          5,
-                                          (index) => Semantics(
-                                                label: "선택한 사진 목록",
-                                                child: DottedBorder(
-                                                  color: Colors.grey,
-                                                  dashPattern: [5, 3],
-                                                  borderType: BorderType.RRect,
-                                                  radius: Radius.circular(5),
-                                                  child: Container(
-                                                    child: Center(
-                                                        child: _boxContents[
-                                                            index]),
-                                                    decoration: index <=
-                                                            _images.length - 1
-                                                        ? BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            image: DecorationImage(
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                image: FileImage(
-                                                                    File(_images[
-                                                                            index]
-                                                                        .path))))
-                                                        : null,
-                                                  ),
-                                                ),
-                                              )).toList())))
+                              child: Column(
+                                children: [
+                                  Semantics(
+                                      label:
+                                          "선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 슼",
+                                      child: CarouselSlider(
+                                        items: List.generate(_images.length,
+                                            (index) {
+                                          return Container(
+                                              padding: EdgeInsets.all(3),
+                                              // height: MediaQuery.of(context)
+                                              //     .size
+                                              //     .width * 1.5,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: _imageWidget(index));
+                                        }),
+                                        options: CarouselOptions(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            initialPage: 0,
+                                            autoPlay: true,
+                                            enlargeCenterPage: true,
+                                            enableInfiniteScroll: false,
+                                            viewportFraction: 1,
+                                            aspectRatio: 2.0,
+                                            onPageChanged: ((index, reason) {
+                                              setState(() {
+                                                _current = index;
+                                              });
+                                            })),
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Semantics(
+                                    label: "현재 보이는 사진 순서 표시",
+                                    child: CarouselIndicator(
+                                      count: _images.length,
+                                      index: _current,
+                                    ),
+                                  )
+                                ],
+                              ))
                         ])),
                     // 게시글 내용
                     Container(
