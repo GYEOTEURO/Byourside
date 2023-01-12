@@ -78,7 +78,7 @@ class _CommentListState extends State<CommentList> {
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(

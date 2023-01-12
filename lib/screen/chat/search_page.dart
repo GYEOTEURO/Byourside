@@ -176,7 +176,7 @@ class _SearchPageState extends State<SearchPage> {
       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       leading: CircleAvatar(
         radius: 30,
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: primaryColor,
         child: Text(
           (groupName.split('_')[0] == userName)
               ? groupName.split('_')[1].substring(0, 1).toUpperCase()
