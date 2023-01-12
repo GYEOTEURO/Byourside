@@ -368,8 +368,7 @@ class _Mypage extends State<Mypage> {
                           } else if (index == 2) {
                             await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => Block()),
+                              MaterialPageRoute(builder: (context) => Block()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(
@@ -389,7 +388,7 @@ class _Mypage extends State<Mypage> {
                               MaterialPageRoute(
                                   builder: (context) => const UsingPolicy()),
                             );
-                          } else if (index == 5) {
+                          } else {
                             _logout(context);
                           }
                           //  else {
