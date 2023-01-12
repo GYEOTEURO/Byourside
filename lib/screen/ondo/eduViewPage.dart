@@ -153,12 +153,13 @@ class _EduViewPageState extends State<EduViewPage> {
                   });
             } else
               return const SelectionArea(
-                  child: Text('게시물 목록을 가져오는 중...',
+                  child: Center(
+                    child: Text('게시물 목록을 가져오는 중...',
                       semanticsLabel: '게시물 목록을 가져오는 중...',
                       style: TextStyle(
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w600,
-                      )));
+                      ))));
           }),
 
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼

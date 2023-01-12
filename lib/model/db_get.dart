@@ -175,4 +175,5 @@ class DBGet {
           .map((snapshot) => snapshot.docs
               .map((doc) => PostListModel.fromMap(doc, collection))
               .toList());
+
 }

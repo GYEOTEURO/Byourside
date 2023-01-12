@@ -1,6 +1,7 @@
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/using_policy.dart';
+import 'package:byourside/screen/mypage/block.dart';
 import 'package:byourside/screen/mypage/declaration.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
 import 'package:byourside/screen/mypage/myNanumPost.dart';
@@ -57,6 +58,7 @@ class _Mypage extends State<Mypage> {
   final List<String> etcEntires = <String>[
     "자주 묻는 질문",
     "사용자 신고하기",
+    "사용자 차단하기",
     "개발자에게 문의하기",
     "개인정보 처리방침",
     "서비스 이용약관",
@@ -64,9 +66,10 @@ class _Mypage extends State<Mypage> {
   ];
   final List<Icon> etcIcons = <Icon>[
     Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
-    Icon(Icons.dnd_forwardslash, semanticLabel: '사용자 신고 화면으로 이동'),
+    Icon(Icons.report_problem, semanticLabel: '사용자 신고 화면으로 이동'),
+    Icon(Icons.dnd_forwardslash, semanticLabel: '사용자 차단 화면으로 이동'),
     Icon(Icons.question_answer, semanticLabel: '개발자에게 문의하기 화면으로 이동'),
-    Icon(Icons.report, semanticLabel: '개인정보 처리방침 화면으로 이동'),
+    Icon(Icons.archive, semanticLabel: '개인정보 처리방침 화면으로 이동'),
     Icon(Icons.receipt_long_rounded, semanticLabel: '서비스 이용약관 화면으로 이동'),
     Icon(Icons.logout, semanticLabel: '로그아웃')
   ];
@@ -250,15 +253,21 @@ class _Mypage extends State<Mypage> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const ToDeveloper()),
+                                  builder: (context) => Block()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PersonalData()),
+                                  builder: (context) => const ToDeveloper()),
                             );
                           } else if (index == 4) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PersonalData()),
+                            );
+                          } else if (index == 5) {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
