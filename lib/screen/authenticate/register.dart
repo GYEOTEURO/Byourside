@@ -73,112 +73,127 @@ class _Register extends State<Register> {
     );
 
     final emailField = Semantics(
-      container: true,
-      textField: true,
-      label: '이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)',
-      hint: '(예: abcd@google.com)',
-      child: TextFormField(
-        controller: _email,
-        autofocus: true,
-        validator: (value) {
-          if (value != null) {
-            if (value.contains('@') && value.endsWith('.com')) {
-              return null;
-            }
-            return '유효한 이메일 주소를 입력하세요.';
-          }
-        },
-        style: const TextStyle(
-            color: Colors.black,
-            fontSize: 17,
-            fontFamily: 'NanumGothic',
-            fontWeight: FontWeight.w500),
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(20)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "(예: abcd@google.com)",
-            labelText: "이메일을 입력하세요. (\".com\"으로 끝나야 합니다.)",
-            hintStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 20,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-            labelStyle: TextStyle(
-                color: primaryColor,
-                fontSize: 20,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)))));
+        container: true,
+        textField: true,
+        label: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+        hint: '(예: abcd@google.com)',
+        child: TextFormField(
+            controller: _email,
+            autofocus: true,
+            validator: (value) {
+              if (value != null) {
+                if (value.contains('@') && value.endsWith('.com')) {
+                  return null;
+                }
+                return '유효한 이메일 주소를 입력하세요.';
+              }
+            },
+            decoration: InputDecoration(
+              hintText: "(예: abcd@google.com)",
+              labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            )));
 
     final passwordField = Semantics(
-      container: true,
-      textField: true,
-      label: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
-      hint: '(예: 12345678)',
-      child: TextFormField(
-        obscureText: _obscureText,
-        controller: _password,
-        validator: (value) {
-          if (value == null || value.trim().isEmpty) {
-            return '필수 입력란';
-          }
-          if (value.trim().length < 8) {
-            return '비밀번호는 8자 이상으로 구성해야합니다.';
-          }
-          // Return null if the entered password is valid
-          return null;
-        },
-        style: const TextStyle(
-            color: Colors.black,
-            fontSize: 17,
-            fontFamily: 'NanumGothic',
-            fontWeight: FontWeight.w500),
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(20)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "(예: 12345678)",
-            labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
-            hintStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 20,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-            labelStyle: TextStyle(
-                color: primaryColor,
-                fontSize: 20,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
-                semanticLabel: "비밀번호 보기",
+        container: true,
+        textField: true,
+        label: '비밀번호', //비밀번호를 입력하세요. (8자리 이상이어야 합니다)
+        hint: '(예: 12345678)',
+        child: TextFormField(
+            obscureText: _obscureText,
+            controller: _password,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return '필수 입력란';
+              }
+              if (value.trim().length < 8) {
+                return '비밀번호는 8자 이상으로 구성해야합니다.';
+              }
+              // Return null if the entered password is valid
+              return null;
+            },
+            decoration: InputDecoration(
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintText: "(예: 12345678)",
+              labelText: "비밀번호", //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  semanticLabel: "비밀번호 보기",
+                  color: primaryColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
               ),
-              onPressed: () {
-                HapticFeedback.lightImpact(); // 약한 진동
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            ),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)))));
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            )));
 
     final txtButton = TextButton(
         onPressed: () {
@@ -215,14 +230,14 @@ class _Register extends State<Register> {
         ));
 
     final age = Text(
-          '만 15세 이상입니다.',
-          semanticsLabel: '만 15세 이상입니다.',
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 17,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500),
-        );
+      '만 15세 이상입니다.',
+      semanticsLabel: '만 15세 이상입니다.',
+      style: TextStyle(
+          color: Colors.black,
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500),
+    );
 
     final linkButton_using = ElevatedButton(
         style: ButtonStyle(
@@ -263,35 +278,34 @@ class _Register extends State<Register> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        semanticLabel: "이미 가입되었습니다. 약관 동의가 필요합니다. 휴대폰 인증을 진행하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                        content: Text(
-                          "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
-                          semanticsLabel:
-                              "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                        ),
-                        actions: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
-                            ),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              Navigator.pop(context);
-                            }, 
-                            child: Text(
-                              '확인',
-                              semanticsLabel: '확인',
-                              style: const TextStyle(
-                                fontSize: 14,
+                          semanticLabel:
+                              "이미 가입되었습니다. 약관 동의가 필요합니다. 휴대폰 인증을 진행하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                          content: Text(
+                            "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
+                            semanticsLabel:
+                                "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
+                            style: TextStyle(
+                                color: Colors.black,
                                 fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,
-                              ))
-                            )]
-                      );
+                                fontWeight: FontWeight.w500),
+                          ),
+                          actions: [
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor,
+                                ),
+                                onPressed: () {
+                                  HapticFeedback.lightImpact(); // 약한 진동
+                                  Navigator.pop(context);
+                                },
+                                child: Text('확인',
+                                    semanticsLabel: '확인',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w600,
+                                    )))
+                          ]);
                     });
               } else {
                 _isRegister = true;
@@ -301,34 +315,32 @@ class _Register extends State<Register> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      semanticLabel: "재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                      content: Text(
-                        "재시도 하세요.",
-                        semanticsLabel: "재시도 하세요.",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w500),
-                      ),
-                      actions: [
+                        semanticLabel: "재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                        content: Text(
+                          "재시도 하세요.",
+                          semanticsLabel: "재시도 하세요.",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                        ),
+                        actions: [
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(
+                              style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
-                            ),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              Navigator.pop(context);
-                            }, 
-                            child: Text(
-                              '확인',
-                              semanticsLabel: '확인',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,
-                              ))
-                            )]
-                    );
+                              ),
+                              onPressed: () {
+                                HapticFeedback.lightImpact(); // 약한 진동
+                                Navigator.pop(context);
+                              },
+                              child: Text('확인',
+                                  semanticsLabel: '확인',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  )))
+                        ]);
                   });
             }
           }
@@ -347,128 +359,168 @@ class _Register extends State<Register> {
     );
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('회원가입',
-            semanticsLabel: '회원가입',
-            style: TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Form(
-            autovalidateMode: AutovalidateMode.always,
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  emailField,
-                  SizedBox(height: height * 0.02),
-                  passwordField,
-                  txtButton,
-                  SizedBox(height: height * 0.01),
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('회원가입',
+              semanticsLabel: '회원가입',
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Form(
+                autovalidateMode: AutovalidateMode.always,
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "이메일을 입력하세요.",
+                        semanticsLabel: "이메일을 입력하세요.",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 17,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "'.com'으로 끝나는 메일만 가능합니다.",
+                        semanticsLabel: "'.com'으로 끝나는 메일만 가능합니다.",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      emailField,
+                      SizedBox(height: height * 0.02),
+                      Text(
+                        "비밀번호를 입력하세요.",
+                        semanticsLabel: "비밀번호를 입력하세요.",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 17,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "8자리 이상이어야 합니다.",
+                        semanticsLabel: "8자리 이상이어야 합니다.",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      passwordField,
+                      txtButton,
+                      SizedBox(height: height * 0.01),
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            linkButton_personal,
-                            SizedBox(
-                              width: width * 0.05,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                linkButton_personal,
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text("동의",
+                                    semanticsLabel: "동의",
+                                    style: TextStyle(
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500)),
+                                Checkbox(
+                                  value: _personal,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _personal = value!;
+                                    });
+                                  },
+                                  activeColor: primaryColor,
+                                ),
+                              ],
                             ),
-                            Text("동의",
-                                semanticsLabel: "동의",
-                                style: TextStyle(
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500)),
-                            Checkbox(
-                              value: _personal,
-                              onChanged: (value) {
-                                setState(() {
-                                  _personal = value!;
-                                });
-                              },
-                              activeColor: primaryColor,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                linkButton_using,
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text("동의",
+                                    semanticsLabel: "동의",
+                                    style: TextStyle(
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500)),
+                                Checkbox(
+                                  value: _using,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _using = value!;
+                                    });
+                                  },
+                                  activeColor: primaryColor,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                age,
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text("동의",
+                                    semanticsLabel: "동의",
+                                    style: TextStyle(
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500)),
+                                Checkbox(
+                                  value: _policy,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _policy = value!;
+                                    });
+                                  },
+                                  activeColor: primaryColor,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            linkButton_using,
-                            SizedBox(
-                              width: width * 0.05,
-                            ),
-                            Text("동의",
-                                semanticsLabel: "동의",
-                                style: TextStyle(
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500)),
-                            Checkbox(
-                              value: _using,
-                              onChanged: (value) {
-                                setState(() {
-                                  _using = value!;
-                                });
-                              },
-                              activeColor: primaryColor,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            age,
-                            SizedBox(
-                              width: width * 0.05,
-                            ),
-                            Text("동의",
-                                semanticsLabel: "동의",
-                                style: TextStyle(
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500)),
-                            Checkbox(
-                              value: _policy,
-                              onChanged: (value) {
-                                setState(() {
-                                  _policy = value!;
-                                });
-                              },
-                              activeColor: primaryColor,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: height * 0.03),
+                      registerButton,
+                      SizedBox(height: height * 0.03),
+                      (_isRegister == false ||
+                              _policy == false ||
+                              _personal == false ||
+                              _using == false)
+                          ? Text("휴대폰 인증으로 넘어가려면\n가입 및 동의가 필요합니다.",
+                              semanticsLabel: "휴대전화 인증으로 넘어가려면 가입 및 동의가 필요합니다.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w500))
+                          : loginPhoneButton, //Text("$_policy, $_isRegister"), //
+                    ],
                   ),
-                  SizedBox(height: height * 0.03),
-                  registerButton,
-                  SizedBox(height: height * 0.03),
-                  (_isRegister == false ||
-                          _policy == false ||
-                          _personal == false ||
-                          _using == false)
-                      ? Text("휴대폰 인증으로 넘어가려면\n가입 및 동의가 필요합니다.",
-                          semanticsLabel: "휴대전화 인증으로 넘어가려면 가입 및 동의가 필요합니다.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500))
-                      : loginPhoneButton, //Text("$_policy, $_isRegister"), //
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

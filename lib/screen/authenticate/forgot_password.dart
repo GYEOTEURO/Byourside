@@ -32,7 +32,11 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         centerTitle: true,
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         title: const Text('비밀번호 변경',
             semanticsLabel: "비밀번호 변경",
             style: TextStyle(
@@ -46,65 +50,85 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '비밀번호를 재설정할 이메일을 입력하세요.',
+                '비밀번호를 재설정할\n이메일을 입력하세요.',
                 semanticsLabel:
                     "비밀번호를 재설정할 이메일을 입력하세요.", //semanticLabel 속성 추가하기
 
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 22,
                     color: primaryColor,
                     fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: height * 0.01),
+              SizedBox(height: height * 0.02),
+              Text(
+                "'.com'으로 끝나는 메일만 가능합니다.",
+                semanticsLabel: "'.com'으로 끝나는 메일만 가능합니다.",
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 17,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: height * 0.03),
               Semantics(
-                container: true,
-                textField: true,
-                label: '이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)',
-                hint: '(예: abcd@google.com)',
-                child: TextFormField(
-                  controller: emailController,
-                  autofocus: true,
-                  cursorColor: primaryColor,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(20)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.red),
-                        borderRadius: BorderRadius.circular(20)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(20)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0)),
-                    focusColor: primaryColor,
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    hintText: "(예: abcd@google.com)",
-                    labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
-                    hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 17,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w500),
-                    labelStyle: TextStyle(
-                        color: primaryColor,
-                        fontSize: 17,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w500),
-                  ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (email) =>
-                      email != null && !EmailValidator.validate(email)
-                          ? '유효한 이메일을 입력하세요.'
-                          : null,
-              )),
-              SizedBox(height: height * 0.01),
+                  container: true,
+                  textField: true,
+                  label: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+                  hint: '(예: abcd@google.com)',
+                  child: TextFormField(
+                    controller: emailController,
+                    autofocus: true,
+                    cursorColor: primaryColor,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      floatingLabelStyle: TextStyle(
+                          color: primaryColor,
+                          fontSize: 22,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                      errorStyle: TextStyle(
+                          color: Color.fromARGB(255, 255, 45, 45),
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                      contentPadding:
+                          const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      hintText: "(예: abcd@google.com)",
+                      labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+                      hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                      labelStyle: TextStyle(
+                          color: primaryColor,
+                          fontSize: 17,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w500),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(20)),
+                      errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 255, 45, 45)),
+                          borderRadius: BorderRadius.circular(20)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(20)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (email) =>
+                        email != null && !EmailValidator.validate(email)
+                            ? '유효한 이메일을 입력하세요.'
+                            : null,
+                  )),
+              SizedBox(height: height * 0.03),
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(height * 0.06),

@@ -29,96 +29,122 @@ class _Login extends State<Login> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final emailField = Semantics(
-      container: true,
-      textField: true,
-      label: '이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)',
-      hint: '(예: abcd@google.com)',
-      child: TextFormField(
-        controller: _email,
-        autofocus: true,
-        validator: (value) => value != null && !EmailValidator.validate(value)
-            ? '유효한 이메일을 입력하세요.'
-            : null,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "(예: abcd@google.com)",
-          labelText: "이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)",
-          hintStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 17,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500),
-          labelStyle: TextStyle(
-              color: primaryColor,
-              fontSize: 17,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.circular(20)),
-          errorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.circular(20)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.circular(20)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-    )));
+        container: true,
+        textField: true,
+        label: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+        hint: '(예: abcd@google.com)',
+        child: TextFormField(
+            controller: _email,
+            autofocus: true,
+            validator: (value) =>
+                value != null && !EmailValidator.validate(value)
+                    ? '유효한 이메일을 입력하세요.'
+                    : null,
+            decoration: InputDecoration(
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintText: "(예: abcd@google.com)",
+              labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            )));
 
     final passwordField = Semantics(
-      container: true,
-      textField: true,
-      label: '비밀번호를 입력하세요. (8자리 이상이어야 합니다)',
-      hint: '(예: 12345678)',
-      child: TextFormField(
-        obscureText: _obscureText,
-        controller: _password,
-        validator: (value) {
-          if (value == null || value.trim().isEmpty) {
-            return '필수 입력란';
-          }
-          if (value.trim().length < 8) {
-            return '비밀번호는 8자 이상으로 구성해야합니다.';
-          }
-          // Return null if the entered password is valid
-          return null;
-        },
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "(예: 12345678)",
-          labelText: "비밀번호를 입력하세요. (8자리 이상이어야 합니다)",
-          hintStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 17,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500),
-          labelStyle: TextStyle(
-              color: primaryColor,
-              fontSize: 17,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500),
-          suffixIcon: IconButton(
-            icon: Icon(
-              _obscureText ? Icons.visibility : Icons.visibility_off,
-              semanticLabel: "비밀번호 보기",
-            ),
-            onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
+        container: true,
+        textField: true,
+        label: '비밀번호', //비밀번호를 입력하세요. (8자리 이상이어야 합니다)
+        hint: '(예: 12345678)',
+        child: TextFormField(
+            obscureText: _obscureText,
+            controller: _password,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return '필수 입력란';
+              }
+              if (value.trim().length < 8) {
+                return '비밀번호는 8자 이상으로 구성해야합니다.';
+              }
+              // Return null if the entered password is valid
+              return null;
             },
-          ),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.circular(20)),
-          errorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.circular(20)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.circular(20)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-        )));
+            decoration: InputDecoration(
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintText: "(예: 12345678)",
+              labelText: "비밀번호", //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  semanticLabel: "비밀번호 보기",
+                  color: primaryColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            )));
 
     final registerButton = TextButton(
         onPressed: () {
@@ -166,34 +192,33 @@ class _Login extends State<Login> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      semanticLabel: "아이디 또는 비밀번호가 일치하지 않습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                      content: Text(
-                        "아이디 또는 비밀번호가 일치하지 않습니다.",
-                        semanticsLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w500),
-                      ),
-                      actions: [
+                        semanticLabel:
+                            "아이디 또는 비밀번호가 일치하지 않습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                        content: Text(
+                          "아이디 또는 비밀번호가 일치하지 않습니다.",
+                          semanticsLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                        ),
+                        actions: [
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(
+                              style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
-                            ),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              Navigator.pop(context);
-                            }, 
-                            child: Text(
-                              '확인',
-                              semanticsLabel: '확인',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,
-                              ))
-                            )]
-                    );
+                              ),
+                              onPressed: () {
+                                HapticFeedback.lightImpact(); // 약한 진동
+                                Navigator.pop(context);
+                              },
+                              child: Text('확인',
+                                  semanticsLabel: '확인',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  )))
+                        ]);
                   });
             }
           }
@@ -232,9 +257,46 @@ class _Login extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Text(
+                    "이메일을 입력하세요.",
+                    semanticsLabel: "이메일을 입력하세요.",
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 22,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "'.com'으로 끝나는 메일만 가능합니다.",
+                    semanticsLabel: "'.com'으로 끝나는 메일만 가능합니다.",
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600),
+                  ),
                   SizedBox(height: height * 0.03),
                   emailField,
                   SizedBox(height: height * 0.04),
+                  Text(
+                    "비밀번호를 입력하세요.",
+                    semanticsLabel: "비밀번호를 입력하세요.",
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 22,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "8자리 이상이어야 합니다.",
+                    semanticsLabel: "8자리 이상이어야 합니다.",
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 17,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: height * 0.03),
                   passwordField,
                   SizedBox(height: height * 0.01),
                   registerButton,
