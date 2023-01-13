@@ -10,6 +10,7 @@ class NanumPostModel {
   bool? isCompleted;
   Timestamp? datetime;
   List<String>? images;
+  List<String>? imgInfos;
   List<String>? type;
   int? likes;
   List<String>? likesPeople;
@@ -26,6 +27,7 @@ class NanumPostModel {
       this.isCompleted,
       this.datetime,
       this.images,
+      this.imgInfos,
       this.type,
       this.likes,
       this.likesPeople,
@@ -45,6 +47,9 @@ class NanumPostModel {
         images = doc.data()!["images"] == null
             ? null
             : doc.data()!["images"].cast<String>(),
+        imgInfos = doc.data()!["imgInfos"] == null
+            ? null
+            : doc.data()!["imgInfos"].cast<String>(),
         type = doc.data()!["type"] == null
             ? null
             : doc.data()!["type"].cast<String>(),
@@ -71,6 +76,7 @@ class NanumPostModel {
       'isCompleted': isCompleted,
       'datetime': datetime,
       'images': images,
+      'imgInfos': imgInfos,
       'type': type,
       'likes': likes,
       'likesPeople': likesPeople,

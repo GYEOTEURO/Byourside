@@ -40,12 +40,16 @@ class _SearchPageState extends State<SearchPage> {
         ),
         centerTitle: true,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor,
+            color: Color(0xFF045558),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Row(
               children: [
@@ -85,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
                     width: width * 0.14,
                     height: height * 0.04,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        color: Color(0xFF045558).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20)),
                     child: const Icon(
                       Icons.search,
@@ -172,7 +176,7 @@ class _SearchPageState extends State<SearchPage> {
       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       leading: CircleAvatar(
         radius: 30,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: primaryColor,
         child: Text(
           (groupName.split('_')[0] == userName)
               ? groupName.split('_')[1].substring(0, 1).toUpperCase()
@@ -213,25 +217,43 @@ class _SearchPageState extends State<SearchPage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          semanticLabel: isJoined ? "참여 완료" : "참여가 취소되었습니다.",
-                          content: isJoined
-                              ? Text(
-                                  "참여 완료.",
-                                  semanticsLabel: "참여 완료",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'NanumGothic',
-                                      fontWeight: FontWeight.w500),
-                                )
-                              : Text(
-                                  "참여가 취소되었습니다.",
-                                  semanticsLabel: "참여가 취소되었습니다.",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'NanumGothic',
-                                      fontWeight: FontWeight.w500),
-                                ),
-                        );
+                            semanticLabel: isJoined
+                                ? "참여 완료. 돌아가려면 하단의 확인 버튼을 눌러주세요."
+                                : "참여가 취소되었습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                            content: isJoined
+                                ? Text(
+                                    "참여 완료.",
+                                    semanticsLabel: "참여 완료",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                : Text(
+                                    "참여가 취소되었습니다.",
+                                    semanticsLabel: "참여가 취소되었습니다.",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                            actions: [
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: primaryColor,
+                                  ),
+                                  onPressed: () {
+                                    HapticFeedback.lightImpact(); // 약한 진동
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('확인',
+                                      semanticsLabel: '확인',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w600,
+                                      )))
+                            ]);
                       });
                 }
               });

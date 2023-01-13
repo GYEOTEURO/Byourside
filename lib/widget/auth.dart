@@ -100,26 +100,26 @@ class AuthService {
     }
   }
 
-  Future<bool> checkAccount(password) async {
-    try {
-      AuthCredential credential = await EmailAuthProvider.credential(
-          email: _auth.currentUser!.email!, password: password);
-      await _auth.currentUser!.reauthenticateWithCredential(credential);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
+  // Future<bool> checkAccount(password) async {
+  //   try {
+  //     AuthCredential credential = await EmailAuthProvider.credential(
+  //         email: _auth.currentUser!.email!, password: password);
+  //     await _auth.currentUser!.reauthenticateWithCredential(credential);
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
 
-  // Firebase로부터 회원 탈퇴
-  Future withdrawalAccount(password) async {
-    try {
-      AuthCredential credential = await EmailAuthProvider.credential(
-          email: _auth.currentUser!.email!, password: password);
-      await _auth.currentUser!.reauthenticateWithCredential(credential);
-      return _auth.currentUser!.delete();
-    } catch (e) {
-      return null;
-    }
-  }
+  // // Firebase로부터 회원 탈퇴
+  // Future withdrawalAccount(password) async {
+  //   try {
+  //     AuthCredential credential = await EmailAuthProvider.credential(
+  //         email: _auth.currentUser!.email!, password: password);
+  //     await _auth.currentUser!.reauthenticateWithCredential(credential);
+  //     return _auth.currentUser!.delete();
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
 }
