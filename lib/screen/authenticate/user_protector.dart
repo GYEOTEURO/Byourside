@@ -53,30 +53,29 @@ class _protectorState extends State<protector> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                semanticLabel: "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                content: Text(
-                  '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                  semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                ),
-                actions: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                    ),
-                    onPressed: () {
-                      HapticFeedback.lightImpact(); // 약한 진동
-                      Navigator.pop(context);
-                    }, 
-                    child: Text(
-                      '확인',
-                      semanticsLabel: '확인',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      ))
-                )]
-              );
+                  semanticLabel:
+                      "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                  content: Text(
+                    '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                  ),
+                  actions: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          HapticFeedback.lightImpact(); // 약한 진동
+                          Navigator.pop(context);
+                        },
+                        child: Text('확인',
+                            semanticsLabel: '확인',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            )))
+                  ]);
             });
       }
     } else {
@@ -84,30 +83,28 @@ class _protectorState extends State<protector> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              semanticLabel: "사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-              content: Text(
-                '사용가능한 닉네임입니다.',
-                semanticsLabel: '사용가능한 닉네임입니다.',
-              ),
-              actions: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                  ),
-                  onPressed: () {
-                    HapticFeedback.lightImpact(); // 약한 진동
-                    Navigator.pop(context);
-                  }, 
-                  child: Text(
-                    '확인',
-                    semanticsLabel: '확인',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w600,
-                    ))
-              )]
-            );
+                semanticLabel: "사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                content: Text(
+                  '사용가능한 닉네임입니다.',
+                  semanticsLabel: '사용가능한 닉네임입니다.',
+                ),
+                actions: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                      ),
+                      onPressed: () {
+                        HapticFeedback.lightImpact(); // 약한 진동
+                        Navigator.pop(context);
+                      },
+                      child: Text('확인',
+                          semanticsLabel: '확인',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          )))
+                ]);
           });
     }
     return doc.exists;
@@ -122,37 +119,59 @@ class _protectorState extends State<protector> {
 
   final nicknameField = Container(
       child: Semantics(
-      container: true,
-      textField: true,
-      label: "닉네임을 입력하세요",
-      hint: '(예: 홍길동)',
-      child: TextFormField(
-    decoration: InputDecoration(
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(20)),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.circular(20)),
-      labelText: "닉네임을 입력하세요",
-      hintText: "(예: 홍길동) ",
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 17),
-      labelStyle: TextStyle(color: primaryColor, fontSize: 17),
-    ),
-    autofocus: true,
-    controller: _nickname,
-    validator: (value) {
-      if (value != null) {
-        if (value.split(' ').first != '' && value.isNotEmpty) {
-          return null;
-        }
-        return '필수 입력란입니다. 닉네임을 입력하세요';
-      }
-    },
-  )));
+          container: true,
+          textField: true,
+          label: "닉네임",
+          hint: '(예: 홍길동)',
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: "닉네임",
+              hintText: "(예: 홍길동) ",
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+            autofocus: true,
+            controller: _nickname,
+            validator: (value) {
+              if (value != null) {
+                if (value.split(' ').first != '' && value.isNotEmpty) {
+                  return null;
+                }
+                return '필수 입력란입니다. 닉네임을 입력하세요';
+              }
+            },
+          )));
 
   void storeProtectorInfo(
       String? nickname,
@@ -206,7 +225,11 @@ class _protectorState extends State<protector> {
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+              icon: Icon(Icons.arrow_back,
+                  semanticLabel: "뒤로 가기", color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         body: SingleChildScrollView(
             child: Column(children: [
@@ -218,134 +241,222 @@ class _protectorState extends State<protector> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        Text(
+                          "닉네임을 입력하세요.",
+                          semanticsLabel: "닉네임을 입력하세요.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: height * 0.02),
                         nicknameField,
+                        SizedBox(height: height * 0.04),
+                        Text(
+                          "보호자 나이를 입력하세요.",
+                          semanticsLabel: "보호자 나이를 입력하세요.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
                         SizedBox(height: height * 0.02),
                         Semantics(
-                        container: true,
-                        textField: true,
-                        label: "보호자 나이",
-                        hint: '(예: 33)',
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.red),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            labelText: "보호자 나이",
-                            hintText: "(예: 33)",
-                            hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w500),
-                            labelStyle: TextStyle(
-                                color: primaryColor,
-                                fontSize: 17,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w500),
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: _protectorAge,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty &&
-                                  isNumeric(value)) {
-                                return null;
-                              }
-                              return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다.';
-                            }
-                          },
-                        )),
+                            container: true,
+                            textField: true,
+                            label: "보호자 나이",
+                            hint: '(예: 33)',
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "보호자 나이",
+                                hintText: "(예: 33)",
+                                floatingLabelStyle: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 22,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                errorStyle: TextStyle(
+                                    color: Color.fromARGB(255, 255, 45, 45),
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                contentPadding: const EdgeInsets.fromLTRB(
+                                    20.0, 15.0, 20.0, 15.0),
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                labelStyle: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 255, 45, 45)),
+                                    borderRadius: BorderRadius.circular(20)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(32.0)),
+                              ),
+                              keyboardType: TextInputType.number,
+                              controller: _protectorAge,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.split(' ').first != '' &&
+                                      value.isNotEmpty &&
+                                      isNumeric(value)) {
+                                    return null;
+                                  }
+                                  return '숫자만 입력 가능합니다.';
+                                }
+                              },
+                            )),
+                        SizedBox(height: height * 0.04),
+                        Text(
+                          "자녀 나이를 입력하세요.",
+                          semanticsLabel: "자녀 나이를 입력하세요.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
                         SizedBox(height: height * 0.02),
                         Semantics(
-                        container: true,
-                        textField: true,
-                        label: "자녀 나이",
-                        hint: '(예: 7)',
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.red),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            labelText: "자녀 나이",
-                            hintText: "(예: 7)",
-                            hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w500),
-                            labelStyle: TextStyle(
-                                color: primaryColor,
-                                fontSize: 17,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w500),
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: _childAge,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty &&
-                                  isNumeric(value)) {
-                                return null;
-                              }
-                              return '유효한 나이를 입력하세요. 숫자만 입력 가능합니다.';
-                            }
-                          },
-                        )),
+                            container: true,
+                            textField: true,
+                            label: "자녀 나이",
+                            hint: '(예: 7)',
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "자녀 나이",
+                                hintText: "(예: 7)",
+                                floatingLabelStyle: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 22,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                errorStyle: TextStyle(
+                                    color: Color.fromARGB(255, 255, 45, 45),
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                contentPadding: const EdgeInsets.fromLTRB(
+                                    20.0, 15.0, 20.0, 15.0),
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                labelStyle: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 255, 45, 45)),
+                                    borderRadius: BorderRadius.circular(20)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(32.0)),
+                              ),
+                              keyboardType: TextInputType.number,
+                              controller: _childAge,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.split(' ').first != '' &&
+                                      value.isNotEmpty &&
+                                      isNumeric(value)) {
+                                    return null;
+                                  }
+                                  return '숫자만 입력 가능합니다.';
+                                }
+                              },
+                            )),
+                        SizedBox(height: height * 0.04),
+                        Text(
+                          "소속 복지관/학교를 입력하세요.",
+                          semanticsLabel: "소속 복지관/학교를 입력하세요.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
                         SizedBox(height: height * 0.02),
                         Semantics(
-                        container: true,
-                        textField: true,
-                        label: "소속 복지관/학교",
-                        hint: '(예: 서울뇌성마비복지관)',
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.red),
-                                borderRadius: BorderRadius.circular(20)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(20)),
-                            labelText: "소속 복지관/학교",
-                            hintText: "(예: 서울뇌성마비복지관)",
-                            hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w500),
-                            labelStyle: TextStyle(
-                                color: primaryColor,
-                                fontSize: 17,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w500),
-                          ),
-                          controller: _belong,
-                          validator: (value) {
-                            if (value != null) {
-                              if (value.split(' ').first != '' &&
-                                  value.isNotEmpty) {
-                                return null;
-                              }
-                              return '필수 입력란입니다. 소속을 입력하세요';
-                            }
-                          },
-                        )),
+                            container: true,
+                            textField: true,
+                            label: "소속 복지관/학교",
+                            hint: '(예: 서울뇌성마비복지관)',
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "소속 복지관/학교",
+                                hintText: "(예: 서울뇌성마비복지관)",
+                                floatingLabelStyle: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 22,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                errorStyle: TextStyle(
+                                    color: Color.fromARGB(255, 255, 45, 45),
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                contentPadding: const EdgeInsets.fromLTRB(
+                                    20.0, 15.0, 20.0, 15.0),
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                labelStyle: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 17,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w500),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 255, 45, 45)),
+                                    borderRadius: BorderRadius.circular(20)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(32.0)),
+                              ),
+                              controller: _belong,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.split(' ').first != '' &&
+                                      value.isNotEmpty) {
+                                    return null;
+                                  }
+                                  return '필수 입력란입니다. 소속을 입력하세요';
+                                }
+                              },
+                            )),
                         SizedBox(height: height * 0.03),
                         Padding(
                             padding: EdgeInsets.all(10.0),
