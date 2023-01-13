@@ -47,10 +47,30 @@ class _CreateCommentState extends State<CreateComment> {
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: "댓글을 작성해주세요.",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    borderSide: BorderSide(width: 1),
-                  ),
+                  floatingLabelStyle: TextStyle(
+                    color: primaryColor,
+                    fontSize: 22,
+                    fontFamily: 'NanumGothic',
+                    fontWeight: FontWeight.w500),
+                  contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
+                  labelStyle: TextStyle(
+                      color: primaryColor,
+                      fontSize: 17,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w500),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor),
+                      borderRadius: BorderRadius.circular(20)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor),
+                      borderRadius: BorderRadius.circular(20)),
+                  border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                 suffixIcon: IconButton(
                   onPressed: () {
                     HapticFeedback.lightImpact(); // 약한 진동
