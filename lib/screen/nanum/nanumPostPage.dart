@@ -109,9 +109,15 @@ class _NanumPostPageState extends State<NanumPostPage> {
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                  labelText:
-                      "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
-                  hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지"),
+                labelText:
+                    "사진에 대한 간략한 설명을 적어주세요.\n보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+                hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지",
+                enabledBorder: UnderlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderSide: BorderSide(width: 1, color: Color(0xFF045558)),
+                ),
+                labelStyle: TextStyle(color: Color(0xFF045558)),
+              ),
               controller: _imgInfos[index],
             ))
       ],
@@ -170,8 +176,16 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               onFieldSubmitted: (_) =>
                                   FocusScope.of(context).requestFocus(myFocus),
                               decoration: InputDecoration(
-                                  labelText: "제목을 입력하세요",
-                                  hintText: "제목을 입력하세요"),
+                                labelText: "제목을 입력하세요",
+                                hintText: "제목을 입력하세요",
+                                enabledBorder: UnderlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Color(0xFF045558)),
+                                ),
+                                labelStyle: TextStyle(color: Color(0xFF045558)),
+                              ),
                               controller: _title,
                             ))),
                     // 카테고리 선택
@@ -286,13 +300,15 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                       count: indicatorLen,
                                       index: _current,
                                       color: Colors.black26,
-                                      activeColor:
-                                          Theme.of(context).primaryColor,
+                                      activeColor: Color(0xFF045558),
                                     ),
                                   )
                                 ],
                               ))
                         ])),
+                    SizedBox(
+                      height: 10,
+                    ),
                     // 가격 설정
                     Container(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -319,8 +335,16 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                     RegExp('[0-9]'))
                               ],
                               decoration: InputDecoration(
-                                  labelText: "가격을 입력하세요",
-                                  hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)'),
+                                labelText: "가격을 입력하세요",
+                                hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)',
+                                enabledBorder: UnderlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Color(0xFF045558)),
+                                ),
+                                labelStyle: TextStyle(color: Color(0xFF045558)),
+                              ),
                               controller: _price,
                             ))),
                     // 게시글 내용
@@ -346,6 +370,13 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(width: 1),
                                 ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Color(0xFF045558)),
+                                ),
+                                labelStyle: TextStyle(color: Color(0xFF045558)),
                               ),
                             )))
                   ],

@@ -62,13 +62,20 @@ class _DeclarationState extends State<Declaration> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            semanticCounterText: "신고할 닉네임 입력",
-                            labelText: "신고할 닉네임을 입력해주세요.",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                              borderSide: BorderSide(width: 1),
-                            )))),
+                          semanticCounterText: "신고할 닉네임 입력",
+                          labelText: "신고할 닉네임을 입력해주세요.",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide:
+                                BorderSide(width: 1, color: Color(0xFF045558)),
+                          ),
+                          labelStyle: TextStyle(color: Color(0xFF045558)),
+                        ))),
                 Container(
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
                     child: Text(
