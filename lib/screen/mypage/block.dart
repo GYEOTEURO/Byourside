@@ -89,13 +89,20 @@ class _BlockState extends State<Block> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            semanticCounterText: "차단할 닉네임 입력",
-                            labelText: "차단할 닉네임을 입력해주세요.",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                              borderSide: BorderSide(width: 1),
-                            )))),
+                          hintText: "차단할 닉네임 입력",
+                          labelText: "차단할 닉네임을 입력해주세요.",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            borderSide:
+                                BorderSide(width: 1, color: Color(0xFF045558)),
+                          ),
+                          labelStyle: TextStyle(color: Color(0xFF045558)),
+                        ))),
                 Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
                     child: Text('차단한 사용자 목록',
