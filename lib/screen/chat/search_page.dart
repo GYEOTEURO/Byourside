@@ -66,7 +66,8 @@ class _SearchPageState extends State<SearchPage> {
                           borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(10)),
                       errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.red),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 255, 45, 45)),
                           borderRadius: BorderRadius.circular(10)),
                       focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(color: Colors.white),
