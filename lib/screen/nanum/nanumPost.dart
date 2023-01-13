@@ -37,9 +37,13 @@ class _NanumPostState extends State<NanumPost> {
               semanticsLabel: "마음나눔",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Color(0xFF045558),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+              icon: Icon(Icons.arrow_back,
+                  semanticLabel: "뒤로 가기", color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         body: SingleChildScrollView(
           controller:

@@ -166,7 +166,7 @@ class _Login extends State<Login> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      semanticLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
+                      semanticLabel: "아이디 또는 비밀번호가 일치하지 않습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                       content: Text(
                         "아이디 또는 비밀번호가 일치하지 않습니다.",
                         semanticsLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
@@ -175,6 +175,24 @@ class _Login extends State<Login> {
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w500),
                       ),
+                      actions: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                            ),
+                            onPressed: () {
+                              HapticFeedback.lightImpact(); // 약한 진동
+                              Navigator.pop(context);
+                            }, 
+                            child: Text(
+                              '확인',
+                              semanticsLabel: '확인',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'NanumGothic',
+                                fontWeight: FontWeight.w600,
+                              ))
+                            )]
                     );
                   });
             }

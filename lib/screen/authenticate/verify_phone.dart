@@ -172,15 +172,34 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    semanticLabel: "이미 가입된 번호입니다.",
-                                      content: Text(
-                                    '이미 가입된 번호입니다.',
-                                    semanticsLabel: '이미 가입된 번호입니다.',
-                                    style: TextStyle(
+                                    semanticLabel: "이미 가입된 번호입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                    content: Text(
+                                      '이미 가입된 번호입니다.',
+                                      semanticsLabel: '이미 가입된 번호입니다.',
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
-                                  ));
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          Navigator.pop(context);
+                                        }, 
+                                        child: Text(
+                                          '확인',
+                                          semanticsLabel: '확인',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w600,
+                                          ))
+                                    )]
+                                  );
                                 });
                           }
                         } else {

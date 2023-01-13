@@ -42,14 +42,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
         }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
     gettingUserData();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Future<bool> checkGroupExist(String name) async {
@@ -169,8 +169,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 children: [
                   _isLoading == true
                       ? Center(
-                          child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor),
+                          child: CircularProgressIndicator(color: primaryColor),
                         )
                       : TextField(
                           autofocus: true,
@@ -188,16 +187,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.red),
                                   borderRadius: BorderRadius.circular(20)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20))),
                         ),
                 ],
@@ -240,13 +237,31 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return const AlertDialog(
-                                  semanticLabel: "이미 존재하는 채팅방 이름입니다.",
-                                  content: Text(
-                                    '이미 존재하는 채팅방 이름입니다.',
-                                    semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
-                                  ),
-                                );
+                                return AlertDialog(
+                                    semanticLabel:
+                                        "이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                    content: Text(
+                                      '이미 존재하는 채팅방 이름입니다.',
+                                      semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('확인',
+                                              semanticsLabel: '확인',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'NanumGothic',
+                                                fontWeight: FontWeight.w600,
+                                              )))
+                                    ]);
                               });
                         }
                       }
