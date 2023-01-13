@@ -33,34 +33,33 @@ class _someoneElseState extends State<someoneElse> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                semanticLabel: "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                content: Text(
-                  '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                  semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w500),
-                ),
-                actions: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                    ),
-                    onPressed: () {
-                      HapticFeedback.lightImpact(); // 약한 진동
-                      Navigator.pop(context);
-                    }, 
-                    child: Text(
-                      '확인',
-                      semanticsLabel: '확인',
-                      style: const TextStyle(
-                        fontSize: 14,
+                  semanticLabel:
+                      "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                  content: Text(
+                    '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
+                    style: TextStyle(
+                        color: Colors.black,
                         fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      ))
-                )]
-              );
+                        fontWeight: FontWeight.w500),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          HapticFeedback.lightImpact(); // 약한 진동
+                          Navigator.pop(context);
+                        },
+                        child: Text('확인',
+                            semanticsLabel: '확인',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            )))
+                  ]);
             });
       }
     } else {
@@ -68,34 +67,32 @@ class _someoneElseState extends State<someoneElse> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              semanticLabel: "사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-              content: Text(
-                '사용가능한 닉네임입니다.',
-                semanticsLabel: '사용가능한 닉네임입니다.',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'NanumGothic',
-                    fontWeight: FontWeight.w500),
-              ),
-              actions: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                  ),
-                  onPressed: () {
-                    HapticFeedback.lightImpact(); // 약한 진동
-                    Navigator.pop(context);
-                  }, 
-                  child: Text(
-                    '확인',
-                    semanticsLabel: '확인',
-                    style: const TextStyle(
-                      fontSize: 14,
+                semanticLabel: "사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                content: Text(
+                  '사용가능한 닉네임입니다.',
+                  semanticsLabel: '사용가능한 닉네임입니다.',
+                  style: TextStyle(
+                      color: Colors.black,
                       fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w600,
-                    ))
-              )]
-            );
+                      fontWeight: FontWeight.w500),
+                ),
+                actions: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                      ),
+                      onPressed: () {
+                        HapticFeedback.lightImpact(); // 약한 진동
+                        Navigator.pop(context);
+                      },
+                      child: Text('확인',
+                          semanticsLabel: '확인',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          )))
+                ]);
           });
     }
     return doc.exists;
@@ -103,86 +100,114 @@ class _someoneElseState extends State<someoneElse> {
 
   final someoneElseField = Container(
       child: Semantics(
-        container: true,
-        textField: true,
-        label: '방문 목적',
-        hint: '(예: 자녀 장애 초기증상 판별)',
-        child: TextFormField(
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(20)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            labelText: "방문 목적",
-            hintText: "(예: 자녀 장애 초기증상 판별)",
-            hintStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 17,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-            labelStyle: TextStyle(
-                color: primaryColor,
-                fontSize: 17,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-          ),
-          controller: _purpose,
-          validator: (value) {
-            if (value != null) {
-              if (value.split(' ').first != '' && value.isNotEmpty) {
-                return null;
+          container: true,
+          textField: true,
+          label: '방문 목적',
+          hint: '(예: 자녀 장애 초기증상 판별)',
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: "방문 목적",
+              hintText: "(예: 자녀 장애 초기증상 판별)",
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+            controller: _purpose,
+            validator: (value) {
+              if (value != null) {
+                if (value.split(' ').first != '' && value.isNotEmpty) {
+                  return null;
+                }
+                return '필수 입력란입니다. 방문 목적을 입력하세요';
               }
-              return '필수 입력란입니다. 방문 목적을 입력하세요';
-            }
-          },
-  )));
+            },
+          )));
 
   final nicknameField = Container(
       child: Semantics(
-        container: true,
-        textField: true,
-        label: '닉네임을 입력하세요.',
-        hint: '(예: 홍길동)',
-        child: TextFormField(
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(20)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: primaryColor),
-                borderRadius: BorderRadius.circular(20)),
-            labelText: "닉네임을 입력하세요",
-            hintText: "(예: 홍길동) ",
-            hintStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 17,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-            labelStyle: TextStyle(
-                color: primaryColor,
-                fontSize: 17,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w500),
-          ),
-          autofocus: true,
-          controller: _nickname,
-          validator: (value) {
-            if (value != null) {
-              if (value.split(' ').first != '' && value.isNotEmpty) {
-                return null;
+          container: true,
+          textField: true,
+          label: '닉네임을 입력하세요.',
+          hint: '(예: 홍길동)',
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: "닉네임을 입력하세요",
+              hintText: "(예: 홍길동) ",
+              floatingLabelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 22,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              errorStyle: TextStyle(
+                  color: Color.fromARGB(255, 255, 45, 45),
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: primaryColor,
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              errorBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+                  borderRadius: BorderRadius.circular(20)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(20)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+            autofocus: true,
+            controller: _nickname,
+            validator: (value) {
+              if (value != null) {
+                if (value.split(' ').first != '' && value.isNotEmpty) {
+                  return null;
+                }
+                return '필수 입력란입니다. 닉네임을 입력하세요';
               }
-              return '필수 입력란입니다. 닉네임을 입력하세요';
-            }
-          },
-  )));
+            },
+          )));
 
   void storeSomeoneElseInfo(String? nickname, String? purpose) async {
     // image url 포함해 firestore에 document 저장
@@ -222,7 +247,11 @@ class _someoneElseState extends State<someoneElse> {
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+              icon: Icon(Icons.arrow_back,
+                  semanticLabel: "뒤로 가기", color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -234,8 +263,28 @@ class _someoneElseState extends State<someoneElse> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        SizedBox(height: height * 0.04),
+                        Text(
+                          "닉네임을 입력하세요.",
+                          semanticsLabel: "닉네임을 입력하세요.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
                         SizedBox(height: height * 0.03),
                         nicknameField,
+                        SizedBox(height: height * 0.03),
+                        Text(
+                          "방문 목적을 입력하세요.",
+                          semanticsLabel: "방문 목적을 입력하세요.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
                         SizedBox(height: height * 0.03),
                         someoneElseField
                       ])),

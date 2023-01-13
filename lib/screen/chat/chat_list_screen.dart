@@ -190,8 +190,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                   borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.red),
+                                  borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 255, 45, 45)),
                                   borderRadius: BorderRadius.circular(20)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: primaryColor),
@@ -286,16 +286,32 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   bool makeCheck(List input) {
     bool check = true;
-    for (var j in input) {
-      print('ssssssssssssssssss');
-      print(input);
 
-      if (blockList.contains(j)) {
+    List<String> blockGroup = [];
+
+    FirebaseFirestore.instance
+        .collection('groups')
+        .doc(input[0])
+        .get()
+        .then((value) {
+      List.from(value.data()!['members']).forEach((element) {
+        if (!blockGroup.contains(element)) {
+          blockGroup.add(element);
+        }
+      });
+    });
+
+    print(blockGroup);
+    for (var i in input) {
+      print('-------');
+      print(i);
+      if (blockGroup.contains(i)) check = false;
+
+      if (blockList.contains(i)) {
         check = false;
-        print(check);
-        continue;
       }
     }
+
     return check;
   }
 
