@@ -67,11 +67,29 @@ class _VerifyEmailState extends State<VerifyEmail> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                semanticLabel: "재시도하세요. 오류 ${e.toString()}",
+                semanticLabel: "재시도하세요. 오류 ${e.toString()} 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                 content: Text(
                   "재시도하세요.\n오류 : ${e.toString()}",
                   semanticsLabel: "재시도하세요.\n오류 : ${e.toString()}",
-                  ),
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                    ),
+                    onPressed: () {
+                      HapticFeedback.lightImpact(); // 약한 진동
+                      Navigator.pop(context);
+                    }, 
+                    child: Text(
+                      '확인',
+                      semanticsLabel: '확인',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ))
+                )]
               );
             });
       }

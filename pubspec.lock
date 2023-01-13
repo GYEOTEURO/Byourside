@@ -43,6 +43,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  carousel_indicator:
+    dependency: "direct main"
+    description:
+      name: carousel_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
+  carousel_slider:
+    dependency: "direct main"
+    description:
+      name: carousel_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.1"
   change_app_package_name:
     dependency: "direct dev"
     description:

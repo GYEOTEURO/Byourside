@@ -23,14 +23,33 @@ Future<String> callAsyncFetch() =>
 
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final User? user = FirebaseAuth.instance.currentUser;
+
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
+  List<String> blockList = [];
+
+  getBlockList(String uid) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
+      });
+    });
+    if (mounted) setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
     gettingUserData();
+    if (mounted) getBlockList(user!.uid);
   }
 
   Future<bool> checkGroupExist(String name) async {
@@ -150,8 +169,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 children: [
                   _isLoading == true
                       ? Center(
-                          child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor),
+                          child: CircularProgressIndicator(color: primaryColor),
                         )
                       : TextField(
                           autofocus: true,
@@ -169,16 +187,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.red),
                                   borderRadius: BorderRadius.circular(20)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide: BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20))),
                         ),
                 ],
@@ -221,13 +237,31 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return const AlertDialog(
-                                  semanticLabel: "이미 존재하는 채팅방 이름입니다.",
-                                  content: Text(
-                                    '이미 존재하는 채팅방 이름입니다.',
-                                    semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
-                                  ),
-                                );
+                                return AlertDialog(
+                                    semanticLabel:
+                                        "이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                    content: Text(
+                                      '이미 존재하는 채팅방 이름입니다.',
+                                      semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('확인',
+                                              semanticsLabel: '확인',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'NanumGothic',
+                                                fontWeight: FontWeight.w600,
+                                              )))
+                                    ]);
                               });
                         }
                       }
@@ -250,6 +284,37 @@ class _ChatListScreenState extends State<ChatListScreen> {
         });
   }
 
+  bool makeCheck(List input) {
+    bool check = true;
+
+    List<String> blockGroup = [];
+
+    FirebaseFirestore.instance
+        .collection('groups')
+        .doc(input[0])
+        .get()
+        .then((value) {
+      List.from(value.data()!['members']).forEach((element) {
+        if (!blockGroup.contains(element)) {
+          blockGroup.add(element);
+        }
+      });
+    });
+
+    print(blockGroup);
+    for (var i in input) {
+      print('-------');
+      print(i);
+      if (blockGroup.contains(i)) check = false;
+
+      if (blockList.contains(i)) {
+        check = false;
+      }
+    }
+
+    return check;
+  }
+
   groupList(double width) {
     return StreamBuilder(
         stream: groups,
@@ -262,18 +327,24 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   padding: EdgeInsets.all(5),
                   itemCount: snapshot.data['groups'].length,
                   itemBuilder: (context, index) {
+                    bool check = true;
                     int reverseIndex =
                         snapshot.data['groups'].length - index - 1;
-
-                    return GroupTile(
-                        userName: snapshot.data['nickname'],
-                        groupId: getId(snapshot.data['groups'][reverseIndex]),
-                        groupName:
-                            getName(snapshot.data['groups'][reverseIndex]),
-                        recentMsg: ""
-                        //recentMsg: getRecentMsg(snapshot.data['groups'][index])
-
-                        );
+                    // print('-------------');
+                    // print(snapshot.data['groups'][reverseIndex].split('_'));
+                    check = makeCheck(
+                        snapshot.data['groups'][reverseIndex].split('_'));
+                    if (check) {
+                      return GroupTile(
+                          userName: snapshot.data['nickname'],
+                          groupId: getId(snapshot.data['groups'][reverseIndex]),
+                          groupName:
+                              getName(snapshot.data['groups'][reverseIndex]),
+                          recentMsg:
+                              "" //getRecentMsg(snapshot.data['groups'][index])
+                          );
+                    } else
+                      return Container();
                   },
                 );
               } else {

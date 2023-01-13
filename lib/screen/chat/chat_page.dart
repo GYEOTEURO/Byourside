@@ -1,5 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
+import 'package:byourside/model/db_set.dart';
 import 'package:byourside/widget/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,6 +29,16 @@ class _ChatPageState extends State<ChatPage> {
   String admin = "";
   int count = 0;
 
+  List<String> _decList = [
+    "불법 정보를 포함하고 있습니다.",
+    "음란물입니다.",
+    "스팸홍보/도배 내용을 포함하고 있습니다.",
+    "욕설/비하/혐오/차별적 표현을 포함하고 있습니다.",
+    "청소년에게 유해한 내용입니다.",
+    "사칭/사기입니다.",
+    "상업적 광고 및 판매 내용을 포함하고 있습니다."
+  ];
+
   @override
   void initState() {
     getChatandAdmin();
@@ -51,6 +62,8 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    String _declaration = _decList[0];
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: height * 0.08,
@@ -62,9 +75,115 @@ class _ChatPageState extends State<ChatPage> {
           style:
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: primaryColor,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        actions: [
+          OutlinedButton(
+            style: ElevatedButton.styleFrom(
+              side: BorderSide(color: primaryColor, width: 1.5),
+              foregroundColor: primaryColor,
+            ),
+            child: Text('신고',
+                semanticsLabel: '신고',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w600,
+                )),
+            onPressed: () async {
+              FocusManager.instance.primaryFocus?.unfocus();
+              // await Future.delayed(Duration(seconds: 2));
+
+              HapticFeedback.lightImpact(); // 약한 진동
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: AlertDialog(
+                            semanticLabel:
+                                '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                            title: Text(
+                                '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                                semanticsLabel:
+                                    '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            content:
+                                StatefulBuilder(builder: (context, setState) {
+                              return Column(
+                                children: _decList
+                                    .map((e) => new RadioListTile(
+                                        title: Text(e,
+                                            semanticsLabel: e,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                        value: e,
+                                        groupValue: _declaration,
+                                        onChanged: (String? value) {
+                                          setState(() {
+                                            _declaration = value!;
+                                          });
+                                        }))
+                                    .toList(),
+                              );
+                            }),
+                            actions: [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          DBSet.declaration('chat',
+                                              _declaration, widget.groupId);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('신고',
+                                            semanticsLabel: '신고',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            ))),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('취소',
+                                            semanticsLabel: '취소',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            )))
+                                  ])
+                            ]));
+                  });
+            },
+          )
+        ],
       ),
       body: Stack(
         children: [

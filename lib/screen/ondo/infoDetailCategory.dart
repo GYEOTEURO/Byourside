@@ -19,7 +19,6 @@ class infoDetailCategoryPage extends StatefulWidget {
 }
 
 class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
-
   final overlayController = Get.put(OverlayController());
 
   // 드롭다운 리스트.
@@ -74,9 +73,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
         onTap: () => _removeOverlay(),
         child: Scaffold(
             body: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Align(
               alignment: Alignment.topCenter,
               child: InkWell(
@@ -125,25 +122,25 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
-              child: ElevatedButton(
-                child: Text('이동',
-                    semanticsLabel: '이동',
-                    style: TextStyle(
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w600,
-                    )),
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(width * 0.06, height * 0.07),
-                  foregroundColor: Colors.white,
-                  backgroundColor: widget.primaryColor,
-                ),
-                onPressed: () {
-                  HapticFeedback.lightImpact();
-                  setState(() {
-                    _changePage = _dropdownValue;
-                  });
-                }))
+                margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: ElevatedButton(
+                    child: Text('이동',
+                        semanticsLabel: '이동',
+                        style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        )),
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(width * 0.06, height * 0.07),
+                      foregroundColor: Colors.white,
+                      backgroundColor: widget.primaryColor,
+                    ),
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
+                      setState(() {
+                        _changePage = _dropdownValue;
+                      });
+                    }))
           ]),
           if (_changePage == '교육/세미나' || _changePage == '복지/혜택')
             (Expanded(
@@ -157,7 +154,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
               _changePage == '초기 증상 발견/생활 속 Tip')
             (Expanded(
                 child: OndoPostList(
-                    primaryColor: widget.primaryColor,
+                    primaryColor: Color(0xFF045558),
                     collectionName: widget.collectionName,
                     category: _changePage)))
         ])));

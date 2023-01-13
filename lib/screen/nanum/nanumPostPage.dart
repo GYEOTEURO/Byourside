@@ -1,4 +1,6 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
+import 'package:carousel_indicator/carousel_indicator.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +29,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _price = TextEditingController();
   final TextEditingController _content = TextEditingController();
-
+  List<TextEditingController> _imgInfos = [];
   final User? user = FirebaseAuth.instance.currentUser;
 
   List<String>? _type = [];
@@ -36,6 +38,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
   final _formkey = GlobalKey<FormState>();
+  int indicatorLen = 1;
+  int _current = 0; // 현재 이미지 인덱스
 
   final picker = ImagePicker();
   final myFocus = FocusNode(); // 초점 이동
@@ -43,6 +47,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
+
   Future getImage(ImageSource imageSource) async {
     // final image = await picker.pickImage(source: imageSource);
     final List<XFile>? images = await picker.pickMultiImage();
@@ -50,8 +55,22 @@ class _NanumPostPageState extends State<NanumPostPage> {
     if (images != null) {
       setState(() {
         _images = images; // 가져온 이미지를 _image에 저장
-        print(_images);
+
+        // 선택한 이미지 길이 만큼 초기화
+        _imgInfos = [];
+        for (int i = 0; i < images.length; i++)
+          _imgInfos.add(TextEditingController());
+
+        indicatorLen = _images.length;
+        //_images = images.map<File>((xfile) => File(xfile.path)).toList();
       });
+      print("이미지 세부 설명: ${_imgInfos}\n 이미지: ${_images}");
+      if (indicatorLen == 0) {
+        indicatorLen = 1;
+        _hide();
+      } else {
+        _show();
+      }
     }
   }
 
@@ -68,32 +87,41 @@ class _NanumPostPageState extends State<NanumPostPage> {
     });
   }
 
+  Widget _imageWidget(index) {
+    return SingleChildScrollView(
+        child: Center(
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Semantics(
+            label: "사용자가 선택한 사진 ${index + 1}",
+            child: Image(
+              image: FileImage(File(_images[index].path)),
+              fit: BoxFit.contain, // 보고 수정
+            )),
+        Semantics(
+            label:
+                "사진 ${index + 1}에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+            child: TextFormField(
+              maxLines: 2,
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                  labelText:
+                      "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+                  hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지"),
+              controller: _imgInfos[index],
+            ))
+      ],
+    )));
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> _boxContents = [
-      Container(),
-      Container(),
-      Container(),
-      Container(),
-      _images.length <= 5
-          ? Container()
-          : FittedBox(
-              child: Container(
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    shape: BoxShape.circle),
-                child: Text(
-                  '+${(_images.length - 5).toString()}',
-                  semanticsLabel: '+${(_images.length - 5).toString()}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                ),
-              ),
-            )
-    ];
+    double maxWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       // 상단 앱 바
       appBar: AppBar(
@@ -117,10 +145,10 @@ class _NanumPostPageState extends State<NanumPostPage> {
       // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
       body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-              padding: EdgeInsets.all(25),
-              child: Form(
-                key: _formkey,
+          child: Form(
+              key: _formkey,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(25),
                 child: Column(
                   children: [
                     // 제목
@@ -210,47 +238,60 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                   ))
                             ],
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Visibility(
                               visible: _visibility,
-                              child: SizedBox(
-                                  height: 100,
-                                  child: GridView.count(
-                                      shrinkWrap:
-                                          true, // 높이가 설정되어있지 않았을 때 이미지 가져올 경우 생기는 위젯을 대비
-                                      padding: EdgeInsets.all(2),
-                                      // 총 10개 업로드할 수 있지만 미리보기는 5개로 제한
-                                      crossAxisCount: 5, // 가로로 배치할 위젯 개수 지정
-                                      // 가로(cross), 세로(main) 아이템 간의 간격 지정
-                                      mainAxisSpacing: 5,
-                                      crossAxisSpacing: 5,
-                                      children: List.generate(
-                                          5,
-                                          (index) => Semantics(
-                                              label: "선택한 사진 목록",
-                                              child: DottedBorder(
-                                                color: Colors.grey,
-                                                dashPattern: [5, 3],
-                                                borderType: BorderType.RRect,
-                                                radius: Radius.circular(5),
-                                                child: Container(
-                                                  child: Center(
-                                                      child:
-                                                          _boxContents[index]),
-                                                  decoration: index <=
-                                                          _images.length - 1
-                                                      ? BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          image: DecorationImage(
-                                                              fit: BoxFit.cover,
-                                                              image: FileImage(
-                                                                  File(_images[
-                                                                          index]
-                                                                      .path))))
-                                                      : null,
-                                                ),
-                                              ))).toList())))
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Semantics(
+                                      label:
+                                          "선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.",
+                                      child: CarouselSlider(
+                                        items: List.generate(_images.length,
+                                            (index) {
+                                          return Container(
+                                              padding: EdgeInsets.all(3),
+                                              height: maxWidth,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: _imageWidget(index));
+                                        }),
+                                        options: CarouselOptions(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            initialPage: 0,
+                                            autoPlay: false,
+                                            enlargeCenterPage: true,
+                                            enableInfiniteScroll: false,
+                                            viewportFraction: 1,
+                                            aspectRatio: 2.0,
+                                            onPageChanged: ((idx, reason) {
+                                              setState(() {
+                                                _current = idx;
+                                              });
+                                            })),
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Semantics(
+                                    label: "현재 보이는 사진 순서 표시",
+                                    child: CarouselIndicator(
+                                      count: indicatorLen,
+                                      index: _current,
+                                      color: Colors.black26,
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                    ),
+                                  )
+                                ],
+                              ))
                         ])),
                     // 가격 설정
                     Container(
@@ -318,6 +359,14 @@ class _NanumPostPageState extends State<NanumPostPage> {
             Navigator.pop(context);
             List<String> urls =
                 _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+            List<String> imgInfos = [];
+            for (int i = 0; i < _imgInfos.length; i++) {
+              if (_imgInfos[i].text == "") {
+                imgInfos.add("설명 정보가 없는 사진입니다");
+              } else {
+                imgInfos.add(_imgInfos[i].text);
+              }
+            }
             NanumPostModel postData = NanumPostModel(
                 uid: user!.uid,
                 nickname: user!.displayName,
@@ -328,6 +377,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 isCompleted: false,
                 datetime: Timestamp.now(),
                 images: urls,
+                imgInfos: imgInfos,
                 likes: 0,
                 likesPeople: [],
                 scrapPeople: [],

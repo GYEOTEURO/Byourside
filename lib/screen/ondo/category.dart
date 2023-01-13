@@ -95,7 +95,10 @@ class _CategoryPageState extends State<CategoryPage>
               if(overlayController.overlayEntry != null){
                 overlayController.controlOverlay(null);
               }
-              showSearch(context: context, delegate: Search('ondoPost'));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => OndoSearch()));
             },
           ),
         ],
