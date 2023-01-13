@@ -106,7 +106,8 @@ class _ToDeveloperState extends State<ToDeveloper> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1),
+                                  borderSide: BorderSide(
+                                      width: 2, color: Color(0xFF045558)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius:
