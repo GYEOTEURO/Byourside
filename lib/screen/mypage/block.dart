@@ -68,7 +68,8 @@ class _BlockState extends State<Block> {
               child: Column(children: [
                 Container(
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: Text('사용자를 차단하면,\n해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다.',
+                    child: Text(
+                        '사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
                         semanticsLabel:
                             '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
                         textAlign: TextAlign.center,
@@ -102,6 +103,9 @@ class _BlockState extends State<Block> {
                                 BorderSide(width: 1, color: Color(0xFF045558)),
                           ),
                           labelStyle: TextStyle(color: Color(0xFF045558)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF045558)),
+                          ),
                         ))),
                 Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 20),

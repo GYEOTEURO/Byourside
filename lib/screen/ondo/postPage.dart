@@ -114,11 +114,13 @@ class _OndoPostPageState extends State<OndoPostPage> {
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 labelText:
-                    "사진에 대한 간략한 설명을 적어주세요.\n보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+                    "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
                 hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지",
                 enabledBorder: UnderlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(width: 1, color: Color(0xFF045558)),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 2.5, color: Color(0xFF045558)),
                 ),
                 labelStyle: TextStyle(color: Color(0xFF045558)),
               ),
@@ -185,21 +187,25 @@ class _OndoPostPageState extends State<OndoPostPage> {
                               onFieldSubmitted: (_) =>
                                   FocusScope.of(context).requestFocus(myFocus),
                               decoration: InputDecoration(
-                                labelText: "제목을 입력하세요",
-                                hintText: "제목을 입력하세요",
-                                enabledBorder: UnderlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  borderSide: BorderSide(
-                                      width: 1, color: Color(0xFF045558)),
-                                ),
-                                labelStyle: TextStyle(color: Color(0xFF045558)),
-                              ),
+                                  labelText: "제목을 입력하세요",
+                                  hintText: "제목을 입력하세요",
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Color(0xFF045558)),
+                                  ),
+                                  labelStyle:
+                                      TextStyle(color: Color(0xFF045558)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 2.5, color: Color(0xFF045558)),
+                                  )),
                               controller: _title,
                             ))),
                     // 카테고리 선택
                     Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 5),
+                        padding: EdgeInsets.only(top: 20, bottom: 5),
                         child: Row(
                           // 위젯을 양쪽으로 딱 붙임
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,7 +241,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                         )),
                     // 사진 및 영상 첨부
                     Container(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        padding: EdgeInsets.only(top: 10, bottom: 5),
                         child: Column(children: [
                           Row(
                             // 위젯을 양쪽으로 딱 붙임
@@ -306,7 +312,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                       count: indicatorLen,
                                       index: _current,
                                       color: Colors.black26,
-                                      activeColor: primaryColor,
+                                      activeColor: widget.primaryColor,
                                     ),
                                   )
                                 ],
@@ -314,7 +320,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                         ])),
                     // 게시글 내용
                     Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 5),
+                        padding: EdgeInsets.only(top: 30, bottom: 5),
                         child: Semantics(
                             label: "마음 온도에 올릴 게시글 내용을 작성해주세요",
                             child: TextField(
@@ -322,7 +328,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600),
                               focusNode: myFocus,
-                              textInputAction: TextInputAction.done,
                               controller: _content,
                               minLines: 8,
                               maxLines: 10,
@@ -338,6 +343,10 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                         BorderRadius.all(Radius.circular(10.0)),
                                     borderSide: BorderSide(
                                         width: 1, color: Color(0xFF045558)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 2, color: Color(0xFF045558)),
                                   ),
                                   labelStyle:
                                       TextStyle(color: Color(0xFF045558)),

@@ -55,6 +55,7 @@ class _DeclarationState extends State<Declaration> {
                     child: TextFormField(
                         controller: _nickname,
                         maxLines: 1,
+                        textInputAction: TextInputAction.done,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "신고할 닉네임은 비어있을 수 없습니다";
@@ -73,6 +74,9 @@ class _DeclarationState extends State<Declaration> {
                                 BorderRadius.all(Radius.circular(10.0)),
                             borderSide:
                                 BorderSide(width: 1, color: Color(0xFF045558)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF045558)),
                           ),
                           labelStyle: TextStyle(color: Color(0xFF045558)),
                         ))),
@@ -101,6 +105,7 @@ class _DeclarationState extends State<Declaration> {
                                   )),
                               value: e,
                               groupValue: _declaration,
+                              activeColor: Color(0xFF045558),
                               onChanged: (String? value) {
                                 setState(() {
                                   _declaration = value!;
