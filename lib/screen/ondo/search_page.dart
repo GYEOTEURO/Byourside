@@ -156,10 +156,31 @@ class _OndoSearchState extends State<OndoSearch> {
                       decoration: InputDecoration(
                           semanticCounterText: "검색할 키워드 입력",
                           labelText: "검색할 키워드를 입력해주세요.",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1),
-                          )))),
+                          floatingLabelStyle: TextStyle(
+                            color: widget.primaryColor,
+                            fontSize: 22,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
+                          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          labelStyle: TextStyle(
+                              color: widget.primaryColor,
+                              fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: widget.primaryColor),
+                              borderRadius: BorderRadius.circular(20)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: widget.primaryColor),
+                              borderRadius: BorderRadius.circular(20)),
+                          border:
+                              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                          ))),
               Expanded(
                   child: StreamBuilder<List<PostListModel>>(
                       stream: DBGet.readSearchDocs(query.text,
