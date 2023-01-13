@@ -51,7 +51,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF045558),
         leading: IconButton(
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
@@ -112,16 +112,14 @@ class _ToDeveloperState extends State<ToDeveloper> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0)),
                                   borderSide: BorderSide(
-                                      width: 1,
-                                      color: Theme.of(context).primaryColor),
+                                      width: 1, color: Color(0xFF045558)),
                                 ),
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                                labelStyle: TextStyle(color: Color(0xFF045558)),
                               ))),
                     ],
                   )))),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color(0xFF045558),
         child: const Icon(
           Icons.navigate_next,
           semanticLabel: '문의 사항 전송 후, 마이 페이지로 이동',

@@ -33,7 +33,8 @@ class _CommentListState extends State<CommentList> {
     "욕설/비하/혐오/차별적 표현을 사용했습니다.",
     "청소년에게 유해한 내용을 작성했습니다.",
     "사칭/사기입니다.",
-    "상업적 광고 및 판매 댓글입니다."];
+    "상업적 광고 및 판매 댓글입니다."
+  ];
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection("user");
@@ -60,18 +61,24 @@ class _CommentListState extends State<CommentList> {
 
   // 차단 목록
   getBlockList(String uid) async {
-    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
-      List.from(value.data()!['blockList']).forEach((element){
-        if(!blockList.contains(element)) { blockList.add(element); }
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(
@@ -202,11 +209,11 @@ class _CommentListState extends State<CommentList> {
                         if (user?.uid == comment.uid)
                           (OutlinedButton(
                             style: ElevatedButton.styleFrom(
-                              side: BorderSide(color: widget.primaryColor, width: 1.5),
+                              side: BorderSide(
+                                  color: widget.primaryColor, width: 1.5),
                               foregroundColor: widget.primaryColor,
                             ),
-                            child: Text(
-                                '삭제',
+                            child: Text('삭제',
                                 semanticsLabel: '댓글 삭제',
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 255, 45, 45),
@@ -217,70 +224,83 @@ class _CommentListState extends State<CommentList> {
                             onPressed: () {
                               HapticFeedback.lightImpact(); // 약한 진동
                               showDialog(
-                                context: context, 
-                                builder: (context){
-                                  return AlertDialog(
-                                    semanticLabel: '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                    title: Text(
-                                      '댓글을 삭제하시겠습니까?',
-                                      semanticsLabel: '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                    actions: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: widget.primaryColor,
-                                          ),
-                                          onPressed: () {
-                                            HapticFeedback.lightImpact(); // 약한 진동
-                                            DBSet.deleteComment(collectionName!, documentID!, comment.id!);
-                                            Navigator.pop(context);
-                                          }, 
-                                          child: Text(
-                                            '삭제',
-                                            semanticsLabel: '삭제',
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                        semanticLabel:
+                                            '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                        title: Text('댓글을 삭제하시겠습니까?',
+                                            semanticsLabel:
+                                                '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                            textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'NanumGothic',
                                               fontWeight: FontWeight.w600,
-                                            ))
-                                          ),
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: widget.primaryColor,
-                                          ),
-                                          onPressed: () {
-                                            HapticFeedback.lightImpact(); // 약한 진동
-                                            Navigator.pop(context);
-                                          }, 
-                                          child: Text(
-                                            '취소',
-                                            semanticsLabel: '취소',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            ))
-                                        )])
-                                    ]);
-                            });
+                                            )),
+                                        actions: [
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          widget.primaryColor,
+                                                    ),
+                                                    onPressed: () {
+                                                      HapticFeedback
+                                                          .lightImpact(); // 약한 진동
+                                                      DBSet.deleteComment(
+                                                          collectionName!,
+                                                          documentID!,
+                                                          comment.id!);
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('삭제',
+                                                        semanticsLabel: '삭제',
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'NanumGothic',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ))),
+                                                ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          widget.primaryColor,
+                                                    ),
+                                                    onPressed: () {
+                                                      HapticFeedback
+                                                          .lightImpact(); // 약한 진동
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('취소',
+                                                        semanticsLabel: '취소',
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'NanumGothic',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        )))
+                                              ])
+                                        ]);
+                                  });
                             },
                           ))
-                           else(
-                          (OutlinedButton(
+                        else
+                          ((OutlinedButton(
                             style: ElevatedButton.styleFrom(
-                              side: BorderSide(color: widget.primaryColor, width: 1.5),
+                              side: BorderSide(
+                                  color: widget.primaryColor, width: 1.5),
                               foregroundColor: widget.primaryColor,
                             ),
-                            child: Text(
-                                '신고',
+                            child: Text('신고',
                                 semanticsLabel: '신고',
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 255, 45, 45),
@@ -291,83 +311,98 @@ class _CommentListState extends State<CommentList> {
                             onPressed: () {
                               HapticFeedback.lightImpact(); // 약한 진동
                               showDialog(
-                                context: context, 
-                                builder: (context){
-                                  return AlertDialog(
-                                    semanticLabel: '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                    title: Text(
-                                      '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
-                                      semanticsLabel: '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                    content: StatefulBuilder(
-                                      builder: (context, setState) {
-                                      return Column(
-                                      children: _decList.map((e) =>
-                                          new RadioListTile(
-                                            title: Text(
-                                              e,
-                                              semanticsLabel: e,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontFamily: 'NanumGothic',
-                                                fontWeight: FontWeight.w600,
-                                              )),
-                                            value: e,
-                                            groupValue: _declaration,
-                                            onChanged: (String? value){
-                                              setState(() {
-                                                _declaration = value!;
-                                              });
-                                            }
-                                          )).toList(),  
-                                      );}
-                                    ),
-                                    actions: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: widget.primaryColor,
-                                          ),
-                                          onPressed: () {
-                                            HapticFeedback.lightImpact(); // 약한 진동
-                                            DBSet.declaration('comment', _declaration, comment.id!);
-                                            Navigator.pop(context);
-                                          }, 
-                                          child: Text(
-                                            '신고',
-                                            semanticsLabel: '신고',
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                        semanticLabel:
+                                            '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                        title: Text(
+                                            '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                                            semanticsLabel:
+                                                '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
+                                            textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'NanumGothic',
                                               fontWeight: FontWeight.w600,
-                                            ))
-                                          ),
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: widget.primaryColor,
-                                          ),
-                                          onPressed: () {
-                                            HapticFeedback.lightImpact(); // 약한 진동
-                                            Navigator.pop(context);
-                                          }, 
-                                          child: Text(
-                                            '취소',
-                                            semanticsLabel: '취소',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            ))
-                                        )])
-                                    ]);
-                            });
+                                            )),
+                                        content: StatefulBuilder(
+                                            builder: (context, setState) {
+                                          return Column(
+                                            children: _decList
+                                                .map((e) => new RadioListTile(
+                                                    title: Text(e,
+                                                        semanticsLabel: e,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'NanumGothic',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        )),
+                                                    value: e,
+                                                    groupValue: _declaration,
+                                                    onChanged: (String? value) {
+                                                      setState(() {
+                                                        _declaration = value!;
+                                                      });
+                                                    }))
+                                                .toList(),
+                                          );
+                                        }),
+                                        actions: [
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          widget.primaryColor,
+                                                    ),
+                                                    onPressed: () {
+                                                      HapticFeedback
+                                                          .lightImpact(); // 약한 진동
+                                                      DBSet.declaration(
+                                                          'comment',
+                                                          _declaration,
+                                                          comment.id!);
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('신고',
+                                                        semanticsLabel: '신고',
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'NanumGothic',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ))),
+                                                ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          widget.primaryColor,
+                                                    ),
+                                                    onPressed: () {
+                                                      HapticFeedback
+                                                          .lightImpact(); // 약한 진동
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('취소',
+                                                        semanticsLabel: '취소',
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'NanumGothic',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        )))
+                                              ])
+                                        ]);
+                                  });
                             },
                           )))
                       ]),
@@ -391,8 +426,11 @@ class _CommentListState extends State<CommentList> {
                 shrinkWrap: true, //ListView in ListView를 가능하게
                 itemBuilder: (_, index) {
                   CommentModel comment = snapshot.data![index];
-                  if(blockList.contains(comment.nickname)) { return Container(); }
-                  else { return _buildListItem(collectionName, documentID, comment); }
+                  if (blockList.contains(comment.nickname)) {
+                    return Container();
+                  } else {
+                    return _buildListItem(collectionName, documentID, comment);
+                  }
                 });
           } else
             return const SelectionArea(

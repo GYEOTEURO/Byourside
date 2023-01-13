@@ -40,18 +40,24 @@ class _NanumPostListState extends State<NanumPostList> {
 
   // 차단 목록
   getBlockList(String uid) async {
-    await FirebaseFirestore.instance.collection('user').doc(uid).get().then((value) {
-      List.from(value.data()!['blockList']).forEach((element){
-        if(!blockList.contains(element)) { blockList.add(element); }
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid)
+        .get()
+        .then((value) {
+      List.from(value.data()!['blockList']).forEach((element) {
+        if (!blockList.contains(element)) {
+          blockList.add(element);
+        }
       });
     });
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    getBlockList(user!.uid);
+    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(PostListModel? post) {
@@ -131,7 +137,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       )),
                       if (post.images!.isNotEmpty)
                         (Semantics(
-                            label: '사용자가 올린 사진',
+                            label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
@@ -179,7 +185,8 @@ class _NanumPostListState extends State<NanumPostList> {
               ),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
-                showSearch(context: context, delegate: Search('nanumPost'));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NanumSearch()));
               },
             ),
           ],
@@ -232,18 +239,21 @@ class _NanumPostListState extends State<NanumPostList> {
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
                     PostListModel post = snapshot.data![index];
-                    if(blockList.contains(post.nickname)) { return Container(); }
-                    else { return _buildListItem(post); }
+                    if (blockList.contains(post.nickname)) {
+                      return Container();
+                    } else {
+                      return _buildListItem(post);
+                    }
                   });
             } else
               return const SelectionArea(
                   child: Center(
-                    child: Text('게시물 목록을 가져오는 중...',
-                      semanticsLabel: '게시물 목록을 가져오는 중...',
-                      style: TextStyle(
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      ))));
+                      child: Text('게시물 목록을 가져오는 중...',
+                          semanticsLabel: '게시물 목록을 가져오는 중...',
+                          style: TextStyle(
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          ))));
           }),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(

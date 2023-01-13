@@ -62,9 +62,13 @@ class _ChatPageState extends State<ChatPage> {
           style:
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: primaryColor,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: Stack(
         children: [

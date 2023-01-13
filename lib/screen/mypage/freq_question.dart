@@ -35,7 +35,7 @@ class _FreqQuestionState extends State<FreqQuestion> {
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
           centerTitle: true,
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Color(0xFF045558),
           leading: IconButton(
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
