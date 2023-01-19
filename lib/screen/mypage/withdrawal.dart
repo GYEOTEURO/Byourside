@@ -78,7 +78,7 @@
 //                               BorderSide(color: Theme.of(context).primaryColor),
 //                           borderRadius: BorderRadius.circular(20)),
 //                       errorBorder: OutlineInputBorder(
-//                           borderSide: const BorderSide(color: Colors.red),
+//                           borderSide: const BorderSide(color:                   Color.fromARGB(255, 255, 45, 45)),
 //                           borderRadius: BorderRadius.circular(20)),
 //                       focusedBorder: OutlineInputBorder(
 //                           borderSide:
