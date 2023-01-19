@@ -19,49 +19,8 @@ class _MyBlockState extends State<MyBlock> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
-  List<String> blockList = [];
-
-  // 차단 목록
-  getBlockList(String uid) async {
-    await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uid)
-        .get()
-        .then((value) {
-      List.from(value.data()!['blockList']).forEach((element) {
-        if (!blockList.contains(element)) {
-          blockList.add(element);
-        }
-      });
-    });
-    if (mounted) setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (mounted) getBlockList(user!.uid);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.title,
-            semanticsLabel: widget.title,
-            style: TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF045558),
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
-            onPressed: () {
-              HapticFeedback.lightImpact(); // 약한 진동
-              Navigator.pop(context);
-            }),
-      ),
-      body: SingleChildScrollView(
+  Widget _buildListItem(List<String> blockList){
+    return SingleChildScrollView(
           padding: EdgeInsets.all(30),
           child: Form(
               key: _formkey,
@@ -147,7 +106,6 @@ class _MyBlockState extends State<MyBlock> {
                                 onPressed: () {
                                   HapticFeedback.lightImpact(); // 약한 진동
                                   DBSet.cancelBlock(user!.uid, e);
-                                  if (mounted) getBlockList(user!.uid);
                                 }, 
                                 child: Text('차단 해제',
                                   semanticsLabel: '차단 해제',
@@ -159,7 +117,37 @@ class _MyBlockState extends State<MyBlock> {
                               )
                             ]))
                           .toList()))
-              ]))),
+              ])));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(widget.title,
+            semanticsLabel: widget.title,
+            style: TextStyle(
+                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+        backgroundColor: Color(0xFF045558),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                semanticLabel: "뒤로 가기", color: Colors.white),
+            onPressed: () {
+              HapticFeedback.lightImpact(); // 약한 진동
+              Navigator.pop(context);
+            }),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          List<String> blockList = [];
+          if(snapshot.hasData) {
+            blockList = snapshot.data!['blockList'].cast<String>();
+          }
+          return _buildListItem(blockList);
+        }
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: widget.primaryColor,
           foregroundColor: Colors.white,
@@ -167,7 +155,6 @@ class _MyBlockState extends State<MyBlock> {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
               DBSet.addBlock(user!.uid, _nickname.text);
-              if (mounted) getBlockList(user!.uid);
               showDialog(
                   context: context,
                   builder: (context) {

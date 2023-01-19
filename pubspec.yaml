@@ -65,6 +65,7 @@ dependencies:
   get: ^4.6.5
   carousel_slider:
   carousel_indicator:
+  multiple_stream_builder: ^3.0.2
 
 
 dev_dependencies:

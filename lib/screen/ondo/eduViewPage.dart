@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import '../../main.dart';
 import '../../model/db_get.dart';
 import '../../model/post_list.dart';
@@ -30,30 +31,6 @@ class EduViewPage extends StatefulWidget {
 class _EduViewPageState extends State<EduViewPage> {
   final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
-
-  List<String> blockList = [];
-
-  // 차단 목록
-  getBlockList(String uid) async {
-    await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uid)
-        .get()
-        .then((value) {
-      List.from(value.data()!['blockList']).forEach((element) {
-        if (!blockList.contains(element)) {
-          blockList.add(element);
-        }
-      });
-    });
-    if (mounted) setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (mounted) getBlockList(user!.uid);
-  }
 
   Widget _buildListItem(String? collectionName, PostListModel? post) {
     String date =
@@ -156,16 +133,23 @@ class _EduViewPageState extends State<EduViewPage> {
     final controller = Get.put(OndoTypeController());
     String collectionName = widget.collectionName;
 
+    List<String> blockList;
+    
     return Scaffold(
-      body: StreamBuilder<List<PostListModel>>(
-          stream: DBGet.readCategoryCollection(
-              collection: widget.collectionName,
-              category: widget.category,
-              type: controller.type),
-          builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
-            if (snapshot.hasData) {
+      body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
+          streams: StreamTuple2(
+            DBGet.readCategoryCollection(collection: widget.collectionName, category: widget.category, type: controller.type),
+            FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+          builder: (context, snapshots) {
+            if(snapshots.snapshot2.data!["blockList"] == null){
+              blockList = [];
+            }
+            else{
+              blockList = snapshots.snapshot2.data!["blockList"].cast<String>();
+            }
+            if (snapshots.snapshot1.hasData) {
               return GridView.builder(
-                  itemCount: snapshot.data!.length,
+                  itemCount: snapshots.snapshot1.data!.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, //1 개의 행에 보여줄 item 개수
                     childAspectRatio: 1 / 1.2, //item 의 가로 1, 세로 2 의 비율
@@ -173,7 +157,7 @@ class _EduViewPageState extends State<EduViewPage> {
                     crossAxisSpacing: 8, //수직 Padding
                   ),
                   itemBuilder: (_, index) {
-                    PostListModel post = snapshot.data![index];
+                    PostListModel post = snapshots.snapshot1.data![index];
                     if (blockList.contains(post.nickname)) {
                       return Container();
                     } else {
