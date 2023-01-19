@@ -260,7 +260,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
           Row(
             children: [
               Declaration(decList: _decList, collectionType: 'post', id: post.id!),
-              BlockUser(nickname: post.nickname!, collectionType: 'post')
+              Block(nickname: post.nickname!, collectionType: 'post')
           ]))
       ]),
       Divider(thickness: 1, height: 1, color: Colors.black),

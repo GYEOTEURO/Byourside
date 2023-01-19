@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
-class Block extends StatefulWidget {
-  Block({Key? key}) : super(key: key);
+class MyBlock extends StatefulWidget {
+  MyBlock({Key? key}) : super(key: key);
   final Color primaryColor = Color(0xFF045558);
   final String title = "사용자 차단";
 
   @override
-  State<Block> createState() => _BlockState();
+  State<MyBlock> createState() => _MyBlockState();
 }
 
-class _BlockState extends State<Block> {
+class _MyBlockState extends State<MyBlock> {
   final TextEditingController _nickname = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 

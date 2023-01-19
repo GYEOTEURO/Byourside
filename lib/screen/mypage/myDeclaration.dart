@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
-class Declaration extends StatefulWidget {
-  Declaration({Key? key}) : super(key: key);
+class MyDeclaration extends StatefulWidget {
+  MyDeclaration({Key? key}) : super(key: key);
   final Color primaryColor = Color(0xFF045558);
   final String title = "사용자 신고";
 
   @override
-  State<Declaration> createState() => _DeclarationState();
+  State<MyDeclaration> createState() => _MyDeclarationState();
 }
 
-class _DeclarationState extends State<Declaration> {
+class _MyDeclarationState extends State<MyDeclaration> {
   List<String> _decList = [
     "불법 정보를 게시했습니다.",
     "음란물을 게시했습니다.",
