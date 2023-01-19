@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
-class BlockUser extends StatefulWidget {
-  BlockUser({super.key, required this.nickname, required this.collectionType});
+class Block extends StatefulWidget {
+  Block({super.key, required this.nickname, required this.collectionType});
   final Color primaryColor = Color(0xFF045558);
   final String nickname;
   final String collectionType;
 
   @override
-  State<BlockUser> createState() => _BlockUserState();
+  State<Block> createState() => _BlockState();
 }
 
-class _BlockUserState extends State<BlockUser> {
+class _BlockState extends State<Block> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 

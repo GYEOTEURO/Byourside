@@ -2,8 +2,8 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/using_policy.dart';
-import 'package:byourside/screen/mypage/block.dart';
-import 'package:byourside/screen/mypage/declaration.dart';
+import 'package:byourside/screen/mypage/myBlock.dart';
+import 'package:byourside/screen/mypage/myDeclaration.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
 import 'package:byourside/screen/mypage/myNanumPost.dart';
 import 'package:byourside/screen/mypage/myOndoPost.dart';
@@ -363,12 +363,12 @@ class _Mypage extends State<Mypage> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Declaration()),
+                                  builder: (context) => MyDeclaration()),
                             );
                           } else if (index == 2) {
                             await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Block()),
+                              MaterialPageRoute(builder: (context) => MyBlock()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(

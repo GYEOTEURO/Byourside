@@ -299,7 +299,7 @@ class _CommentListState extends State<CommentList> {
                           (Row(
                             children: [
                               Declaration(decList: _decList, collectionType: 'comment', id: comment.id!),
-                              BlockUser(nickname: comment.nickname!, collectionType: 'comment')
+                              Block(nickname: comment.nickname!, collectionType: 'comment')
                           ]))
                       ]),
                 ]))));
