@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import '../../model/db_get.dart';
 
 class OndoPostList extends StatefulWidget {
@@ -29,30 +30,6 @@ class OndoPostList extends StatefulWidget {
 class _OndoPostListState extends State<OndoPostList> {
   final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
-
-  List<String> blockList = [];
-
-  // 차단 목록
-  getBlockList(String uid) async {
-    await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uid)
-        .get()
-        .then((value) {
-      List.from(value.data()!['blockList']).forEach((element) {
-        if (!blockList.contains(element)) {
-          blockList.add(element);
-        }
-      });
-    });
-    if (mounted) setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (mounted) getBlockList(user!.uid);
-  }
 
   Widget _buildListItem(PostListModel? post) {
     String date =
@@ -155,9 +132,11 @@ class _OndoPostListState extends State<OndoPostList> {
   Widget build(BuildContext context) {
     final controller = Get.put(OndoTypeController());
 
+    List<String> blockList;
+
     return Scaffold(
-      body: StreamBuilder<List<PostListModel>>(
-          stream: (widget.category.contains('전체'))
+      body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
+          streams: StreamTuple2((widget.category.contains('전체'))
               ? ((widget.category == '전체')
                   ? DBGet.readAllCollection(
                       collection: widget.collectionName, type: controller.type)
@@ -166,14 +145,21 @@ class _OndoPostListState extends State<OndoPostList> {
               : DBGet.readCategoryCollection(
                   collection: widget.collectionName,
                   category: widget.category,
-                  type: controller.type),
-          builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
-            if (snapshot.hasData) {
+                  type: controller.type), 
+              FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+          builder: (context, snapshots) {
+            if(snapshots.snapshot2.data!["blockList"] == null){
+              blockList = [];
+            }
+            else{
+              blockList = snapshots.snapshot2.data!["blockList"].cast<String>();
+            }
+            if (snapshots.snapshot1.hasData) {
               return ListView.builder(
-                  itemCount: snapshot.data!.length,
+                  itemCount: snapshots.snapshot1.data!.length,
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
-                    PostListModel post = snapshot.data![index];
+                    PostListModel post = snapshots.snapshot1.data![index];
                     if (blockList.contains(post.nickname)) {
                       return Container();
                     } else {

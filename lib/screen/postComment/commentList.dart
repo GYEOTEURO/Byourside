@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import '../../model/comment.dart';
 import '../../model/db_get.dart';
 import '../../model/db_set.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class CommentList extends StatefulWidget {
   const CommentList(
@@ -57,30 +58,6 @@ class _CommentListState extends State<CommentList> {
     } catch (e) {
       return "error..";
     }
-  }
-
-  List<String> blockList = [];
-
-  // 차단 목록
-  getBlockList(String uid) async {
-    await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uid)
-        .get()
-        .then((value) {
-      List.from(value.data()!['blockList']).forEach((element) {
-        if (!blockList.contains(element)) {
-          blockList.add(element);
-        }
-      });
-    });
-    if (mounted) setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (mounted) getBlockList(user!.uid);
   }
 
   Widget _buildListItem(
@@ -310,18 +287,27 @@ class _CommentListState extends State<CommentList> {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
 
-    return StreamBuilder<List<CommentModel>>(
-        stream: DBGet.readComment(
-            collection: collectionName, documentID: documentID),
-        builder: (context, AsyncSnapshot<List<CommentModel>> snapshot) {
-          if (snapshot.hasData) {
+    List<String> blockList;
+
+    return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
+        streams: StreamTuple2(
+          DBGet.readComment(collection: collectionName, documentID: documentID), 
+          FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+        builder: (context, snapshots) {
+          if(snapshots.snapshot2.data!["blockList"] == null){
+            blockList = [];
+          }
+          else{
+            blockList = snapshots.snapshot2.data!["blockList"].cast<String>();
+          }
+          if (snapshots.snapshot1.hasData) {
             return ListView.builder(
-                itemCount: snapshot.data!.length,
+                itemCount: snapshots.snapshot1.data!.length,
                 physics:
                     const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
                 shrinkWrap: true, //ListView in ListView를 가능하게
                 itemBuilder: (_, index) {
-                  CommentModel comment = snapshot.data![index];
+                  CommentModel comment = snapshots.snapshot1.data![index];
                   if (blockList.contains(comment.nickname)) {
                     return Container();
                   } else {
