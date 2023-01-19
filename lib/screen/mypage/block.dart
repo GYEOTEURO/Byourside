@@ -118,15 +118,35 @@ class _BlockState extends State<Block> {
                 else
                   (Column(
                       children: blockList
-                          .map((e) => new Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Text('- $e',
+                          .map((e) => new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('$e ',
                                   semanticsLabel: e,
                                   style: const TextStyle(
                                     fontSize: 17,
                                     fontFamily: 'NanumGothic',
                                     fontWeight: FontWeight.w600,
-                                  ))))
+                                  )),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: widget.primaryColor,
+                                  foregroundColor: Colors.white,
+                                ),
+                                onPressed: () {
+                                  HapticFeedback.lightImpact(); // 약한 진동
+                                  DBSet.cancelBlock(user!.uid, e);
+                                  if (mounted) getBlockList(user!.uid);
+                                }, 
+                                child: Text('차단 해제',
+                                  semanticsLabel: '차단 해제',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'NanumGothic',
+                                    fontWeight: FontWeight.w600,
+                                  ))
+                              )
+                            ]))
                           .toList()))
               ]))),
       floatingActionButton: FloatingActionButton(
