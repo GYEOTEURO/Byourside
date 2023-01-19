@@ -1,5 +1,7 @@
 import 'package:byourside/model/chat_list.dart';
+import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
+import 'package:byourside/screen/declaration.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -255,104 +257,11 @@ class _NanumPostContentState extends State<NanumPostContent> {
             },
           ))
         else(
-          (OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              side: BorderSide(color: widget.primaryColor, width: 1.5),
-              foregroundColor: widget.primaryColor,
-            ),
-            child: Text(
-                '신고',
-                semanticsLabel: '신고',
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 255, 45, 45),
-                  fontSize: 14,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600,
-                )),
-            onPressed: () {
-              HapticFeedback.lightImpact(); // 약한 진동
-              showDialog(
-                context: context, 
-                builder: (context){
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: AlertDialog(
-                    semanticLabel: '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                    title: Text(
-                      '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
-                      semanticsLabel: '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      )),
-                    content: StatefulBuilder(
-                      builder: (context, setState) {
-                      return Column(
-                      children: _decList.map((e) =>
-                          new RadioListTile(
-                            title: Text(
-                              e,
-                              semanticsLabel: e,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'NanumGothic',
-                                fontWeight: FontWeight.w600,
-                              )),
-                            value: e,
-                            groupValue: _declaration,
-                            onChanged: (String? value){
-                              setState(() {
-                                _declaration = value!;
-                              });
-                            }
-                          )).toList(),  
-                      );}
-                    ),
-                    actions: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: widget.primaryColor,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.lightImpact(); // 약한 진동
-                            DBSet.declaration('post', _declaration, post.id!);
-                            Navigator.pop(context);
-                          }, 
-                          child: Text(
-                            '신고',
-                            semanticsLabel: '신고',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            ))
-                          ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: widget.primaryColor,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.lightImpact(); // 약한 진동
-                            Navigator.pop(context);
-                          }, 
-                          child: Text(
-                            '취소',
-                            semanticsLabel: '취소',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            ))
-                        )])
-                    ]));
-             });
-            },
-          )))
+          Row(
+            children: [
+              Declaration(decList: _decList, collectionType: 'post', id: post.id!),
+              BlockUser(nickname: post.nickname!, collectionType: 'post')
+          ]))
       ]),
       Divider(thickness: 1, height: 1, color: Colors.black),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
