@@ -31,7 +31,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: primaryColor,
+        backgroundColor: Color(0xFF045558),
         title: const Text(
           "검색",
           semanticsLabel: "검색",
@@ -105,7 +105,7 @@ class _SearchPageState extends State<SearchPage> {
           isLoading
               ? const Center(
                   child: CircularProgressIndicator(
-                    color: primaryColor,
+                    color: Color(0xFF045558),
                   ),
                 )
               : groupList(),
@@ -177,7 +177,7 @@ class _SearchPageState extends State<SearchPage> {
       contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       leading: CircleAvatar(
         radius: 30,
-        backgroundColor: primaryColor,
+        backgroundColor: Color(0xFF045558),
         child: Text(
           (groupName.split('_')[0] == userName)
               ? groupName.split('_')[1].substring(0, 1).toUpperCase()
@@ -241,7 +241,7 @@ class _SearchPageState extends State<SearchPage> {
                             actions: [
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: primaryColor,
+                                    backgroundColor: Color(0xFF045558),
                                   ),
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
