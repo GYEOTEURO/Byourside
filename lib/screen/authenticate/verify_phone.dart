@@ -69,7 +69,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, semanticLabel: "뒤로 가기", color: Colors.white), onPressed: () { Navigator.pop(context); }),
+              icon: Icon(Icons.arrow_back,
+                  semanticLabel: "뒤로 가기", color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -96,60 +100,61 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   child: Container(
                     margin: EdgeInsets.only(top: 40, right: 20, left: 20),
                     child: Semantics(
-                      container: true,
-                      textField: true,
-                      label: '휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)',
-                      hint: '(예: 1012345678)',
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.red),
-                              borderRadius: BorderRadius.circular(20)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
-                          hintText: '(예: 1012345678)',
-                          hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                          labelStyle: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                          prefix: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              '+82',
-                              style: TextStyle(
+                        container: true,
+                        textField: true,
+                        label: '휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)',
+                        hint: '(예: 1012345678)',
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor),
+                                  borderRadius: BorderRadius.circular(20)),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 255, 45, 45)),
+                                  borderRadius: BorderRadius.circular(20)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor),
+                                  borderRadius: BorderRadius.circular(20)),
+                              labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
+                              hintText: '(예: 1012345678)',
+                              hintStyle: TextStyle(
+                                  color: Colors.grey,
                                   fontSize: 17,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w500),
+                              labelStyle: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w500),
+                              prefix: Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  '+82',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontFamily: 'NanumGothic',
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        autofocus: true,
-                        maxLength: 10,
-                        keyboardType: TextInputType.number,
-                        controller: _controller,
-                        validator: (value) {
-                          if (value != null) {
-                            if (value.split(' ').first != '' &&
-                                value.isNotEmpty &&
-                                isNumeric(value)) {
-                              return null;
-                            }
-                            return '유효한 전화번호를 입력하세요. 숫자만 입력 가능합니다.';
-                          }
-                        })),
+                            autofocus: true,
+                            maxLength: 10,
+                            keyboardType: TextInputType.number,
+                            controller: _controller,
+                            validator: (value) {
+                              if (value != null) {
+                                if (value.split(' ').first != '' &&
+                                    value.isNotEmpty &&
+                                    isNumeric(value)) {
+                                  return null;
+                                }
+                                return '유효한 전화번호를 입력하세요. 숫자만 입력 가능합니다.';
+                              }
+                            })),
                   )),
               // SizedBox(height: height * 0.01),
               // linkButton,
@@ -172,34 +177,34 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    semanticLabel: "이미 가입된 번호입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                    content: Text(
-                                      '이미 가입된 번호입니다.',
-                                      semanticsLabel: '이미 가입된 번호입니다.',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w500),
-                                    ),
-                                    actions: [
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: primaryColor,
-                                        ),
-                                        onPressed: () {
-                                          HapticFeedback.lightImpact(); // 약한 진동
-                                          Navigator.pop(context);
-                                        }, 
-                                        child: Text(
-                                          '확인',
-                                          semanticsLabel: '확인',
-                                          style: const TextStyle(
-                                            fontSize: 14,
+                                      semanticLabel:
+                                          "이미 가입된 번호입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                      content: Text(
+                                        '이미 가입된 번호입니다.',
+                                        semanticsLabel: '이미 가입된 번호입니다.',
+                                        style: TextStyle(
+                                            color: Colors.black,
                                             fontFamily: 'NanumGothic',
-                                            fontWeight: FontWeight.w600,
-                                          ))
-                                    )]
-                                  );
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: primaryColor,
+                                            ),
+                                            onPressed: () {
+                                              HapticFeedback
+                                                  .lightImpact(); // 약한 진동
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('확인',
+                                                semanticsLabel: '확인',
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'NanumGothic',
+                                                  fontWeight: FontWeight.w600,
+                                                )))
+                                      ]);
                                 });
                           }
                         } else {
