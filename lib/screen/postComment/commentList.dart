@@ -294,11 +294,11 @@ class _CommentListState extends State<CommentList> {
           DBGet.readComment(collection: collectionName, documentID: documentID), 
           FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
         builder: (context, snapshots) {
-          if(snapshots.snapshot2.data!["blockList"] == null){
-            blockList = [];
+          if(snapshots.snapshot2.hasData){
+            blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
           }
           else{
-            blockList = snapshots.snapshot2.data!["blockList"].cast<String>();
+            blockList = [];
           }
           if (snapshots.snapshot1.hasData) {
             return ListView.builder(
