@@ -300,7 +300,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         }
       });
     });
-
+    print("input:  $input");
     print(blockGroup);
     for (var i in input) {
       print('-------');
@@ -330,8 +330,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     bool check = true;
                     int reverseIndex =
                         snapshot.data['groups'].length - index - 1;
-                    // print('-------------');
-                    // print(snapshot.data['groups'][reverseIndex].split('_'));
                     check = makeCheck(
                         snapshot.data['groups'][reverseIndex].split('_'));
                     if (check) {
