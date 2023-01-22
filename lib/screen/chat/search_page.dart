@@ -153,14 +153,13 @@ class _SearchPageState extends State<SearchPage> {
 
   joinedOrNot(String userName, String groupId, String groupName, String admin) {
     try {
-      Future.delayed(const Duration(seconds: 3), () async {
+      Future.delayed(const Duration(seconds: 0), () async {
         await ChatList(uid: uid)
             .isUserJoined(groupName, groupId, userName)
             .then((value) {
           if (mounted) {
             setState(() {
-              Duration(seconds: 3);
-              isJoined = value;
+              isJoined = !value;
             });
           }
         });
@@ -206,10 +205,11 @@ class _SearchPageState extends State<SearchPage> {
             fontWeight: FontWeight.w500),
       ),
       trailing: InkWell(
-          onTap: () {
+          onTap: () async {
             HapticFeedback.lightImpact(); // 약한 진동
             if (mounted) {
-              ChatList(uid: uid).toggleGroupJoin(groupId, userName, groupName);
+              await ChatList(uid: uid)
+                  .toggleGroupJoin(groupId, userName, groupName);
               setState(() {
                 isJoined = !isJoined;
 

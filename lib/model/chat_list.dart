@@ -108,7 +108,7 @@ class ChatList {
     DocumentSnapshot documentSnapshot = await userDocumentReference.get();
 
     List<dynamic> groups = await documentSnapshot['groups'];
-    if (groups.contains("${uid}_$userName")) {
+    if (groups.contains("${groupId}_$groupName")) {
       return true;
     } else {
       return false;
