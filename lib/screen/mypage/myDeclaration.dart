@@ -81,7 +81,7 @@ class _MyDeclarationState extends State<MyDeclaration> {
                           labelStyle: TextStyle(color: Color(0xFF045558)),
                         ))),
                 Container(
-                    margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    margin: EdgeInsets.fromLTRB(0, 30, 0, 10),
                     child: Text(
                         '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
                         semanticsLabel:

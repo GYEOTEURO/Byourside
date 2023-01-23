@@ -159,8 +159,20 @@ class _NanumPostPageState extends State<NanumPostPage> {
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(25),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 제목
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      '제목',
+                      semanticsLabel: '제목',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
                         child: Semantics(
                             label: "제목을 입력하세요",
@@ -309,14 +321,25 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                       color: Colors.black26,
                                       activeColor: Color(0xFF045558),
                                     ),
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
                                 ],
                               ))
                         ])),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     // 가격 설정
+                    Text(
+                      '가격',
+                      semanticsLabel: '가격',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
                         padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: Semantics(
@@ -359,6 +382,17 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               controller: _price,
                             ))),
                     // 게시글 내용
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      '마음 나눔에 올릴 게시글 내용',
+                      semanticsLabel: '마음 나눔에 올릴 게시글 내용',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
                         padding: EdgeInsets.only(top: 40, bottom: 5),
                         child: Semantics(

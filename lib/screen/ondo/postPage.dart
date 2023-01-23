@@ -165,9 +165,20 @@ class _OndoPostPageState extends State<OndoPostPage> {
             child: SingleChildScrollView(
                 padding: EdgeInsets.all(25),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 제목
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      '제목',
+                      semanticsLabel: '제목',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
                         child: Semantics(
                             label: "제목을 입력하세요",
@@ -314,13 +325,27 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                       color: Colors.black26,
                                       activeColor: widget.primaryColor,
                                     ),
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
                                 ],
                               ))
                         ])),
                     // 게시글 내용
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      '마음 온도에 올릴 게시글 내용',
+                      semanticsLabel: '마음 온도에 올릴 게시글 내용',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
-                        padding: EdgeInsets.only(top: 30, bottom: 5),
+                        padding: EdgeInsets.only(top: 20, bottom: 5),
                         child: Semantics(
                             label: "마음 온도에 올릴 게시글 내용을 작성해주세요",
                             child: TextField(

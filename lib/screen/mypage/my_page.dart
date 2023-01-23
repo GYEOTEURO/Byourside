@@ -368,7 +368,8 @@ class _Mypage extends State<Mypage> {
                           } else if (index == 2) {
                             await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyBlock()),
+                              MaterialPageRoute(
+                                  builder: (context) => MyBlock()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(
