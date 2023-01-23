@@ -88,7 +88,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
             ' ${post.title!}',
             semanticsLabel: '${post.title!}',
             style: const TextStyle(
-                fontSize: 19,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'NanumGothic'),
           )))),

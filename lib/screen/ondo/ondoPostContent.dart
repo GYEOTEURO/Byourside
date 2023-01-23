@@ -83,7 +83,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
             ' ${post.title!}',
             semanticsLabel: ' ${post.title!}',
             style: const TextStyle(
-                fontSize: 19,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'NanumGothic'),
           )))),
