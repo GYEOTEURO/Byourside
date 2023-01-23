@@ -19,105 +19,103 @@ class _MyBlockState extends State<MyBlock> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
-  Widget _buildListItem(List<String> blockList){
+  Widget _buildListItem(List<String> blockList) {
     return SingleChildScrollView(
-          padding: EdgeInsets.all(30),
-          child: Form(
-              key: _formkey,
-              child: Column(children: [
-                Container(
-                    margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: Text(
-                        '사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
-                        semanticsLabel:
-                            '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600,
-                        ))),
-                Semantics(
-                    label: "차단할 닉네임 입력",
-                    child: TextFormField(
-                        controller: _nickname,
-                        maxLines: 1,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "차단할 닉네임은 비어있을 수 없습니다";
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          hintText: "차단할 닉네임 입력",
-                          labelText: "차단할 닉네임을 입력해주세요.",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Color(0xFF045558)),
-                          ),
-                          labelStyle: TextStyle(color: Color(0xFF045558)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF045558)),
-                          ),
-                        ))),
-                Container(
-                    margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: Text('차단한 사용자 목록',
-                        semanticsLabel: '차단한 사용자 목록',
-                        textAlign: TextAlign.center,
+        padding: EdgeInsets.all(30),
+        child: Form(
+            key: _formkey,
+            child: Column(children: [
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
+                  child: Text('사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
+                      semanticsLabel:
+                          '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ))),
+              Semantics(
+                  label: "차단할 닉네임 입력",
+                  child: TextFormField(
+                      controller: _nickname,
+                      maxLines: 1,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "차단할 닉네임은 비어있을 수 없습니다";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: "차단할 닉네임 입력",
+                        labelText: "차단할 닉네임을 입력해주세요.",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(width: 1, color: Color(0xFF045558)),
+                        ),
+                        labelStyle: TextStyle(color: Color(0xFF045558)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF045558)),
+                        ),
+                      ))),
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 50, 0, 30),
+                  child: Text('차단한 사용자 목록',
+                      semanticsLabel: '차단한 사용자 목록',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600,
+                      ))),
+              if (blockList.isEmpty)
+                (Center(
+                    child: Text('없음',
+                        semanticsLabel: '차단한 사용자 목록 없음',
                         style: const TextStyle(
                           fontSize: 18,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
-                        ))),
-                if (blockList.isEmpty)
-                  (Center(
-                      child: Text('없음',
-                          semanticsLabel: '차단한 사용자 목록 없음',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          ))))
-                else
-                  (Column(
-                      children: blockList
-                          .map((e) => new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('$e ',
-                                  semanticsLabel: e,
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: widget.primaryColor,
-                                  foregroundColor: Colors.white,
-                                ),
-                                onPressed: () {
-                                  HapticFeedback.lightImpact(); // 약한 진동
-                                  DBSet.cancelBlock(user!.uid, e);
-                                }, 
-                                child: Text('차단 해제',
-                                  semanticsLabel: '차단 해제',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w600,
-                                  ))
-                              )
-                            ]))
-                          .toList()))
-              ])));
+                        ))))
+              else
+                (Column(
+                    children: blockList
+                        .map((e) => new Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('$e ',
+                                      semanticsLabel: e,
+                                      style: const TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: widget.primaryColor,
+                                        foregroundColor: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        HapticFeedback.lightImpact(); // 약한 진동
+                                        DBSet.cancelBlock(user!.uid, e);
+                                      },
+                                      child: Text('차단 해제',
+                                          semanticsLabel: '차단 해제',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w600,
+                                          )))
+                                ]))
+                        .toList()))
+            ])));
   }
 
   @override
@@ -139,15 +137,17 @@ class _MyBlockState extends State<MyBlock> {
             }),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots(),
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          List<String> blockList = [];
-          if(snapshot.hasData) {
-            blockList = snapshot.data!['blockList'].cast<String>();
-          }
-          return _buildListItem(blockList);
-        }
-      ),
+          stream: FirebaseFirestore.instance
+              .collection('user')
+              .doc(user!.uid)
+              .snapshots(),
+          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            List<String> blockList = [];
+            if (snapshot.hasData) {
+              blockList = snapshot.data!['blockList'].cast<String>();
+            }
+            return _buildListItem(blockList);
+          }),
       floatingActionButton: FloatingActionButton(
           backgroundColor: widget.primaryColor,
           foregroundColor: Colors.white,
