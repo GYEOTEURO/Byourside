@@ -83,6 +83,7 @@ class _Mypage extends State<Mypage> {
   void _logout(context) async {
     FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
     await _auth.signOut();
+    setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
@@ -211,6 +212,7 @@ class _Mypage extends State<Mypage> {
           FirebaseUser(
               uid: null, phoneNum: null, displayName: null, code: null);
           await _auth.signOut();
+          setState(() {});
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
         child: Text(
@@ -368,7 +370,8 @@ class _Mypage extends State<Mypage> {
                           } else if (index == 2) {
                             await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyBlock()),
+                              MaterialPageRoute(
+                                  builder: (context) => MyBlock()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(
