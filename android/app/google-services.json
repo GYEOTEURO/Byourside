@@ -47,6 +47,14 @@
           }
         },
         {
+          "client_id": "334257891538-uhj3sfv8ufna34s83974mlbbunjoj3mb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byourside.android",
+            "certificate_hash": "c0acecff37471b47702b1e125cc67e9303e77cbc"
+          }
+        },
+        {
           "client_id": "334257891538-old2gvc9lblc6gm28r5ooh6jebamplnj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -64,10 +72,10 @@
               "client_type": 3
             },
             {
-              "client_id": "334257891538-llj35u2n9u73iq1ffcka8oop81sktc2o.apps.googleusercontent.com",
+              "client_id": "334257891538-bg05534uem2r7bon722b0dtmit565mjp.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.byourside"
+                "bundle_id": "com.byourside.ios"
               }
             }
           ]
@@ -124,10 +132,10 @@
               "client_type": 3
             },
             {
-              "client_id": "334257891538-llj35u2n9u73iq1ffcka8oop81sktc2o.apps.googleusercontent.com",
+              "client_id": "334257891538-bg05534uem2r7bon722b0dtmit565mjp.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.byourside"
+                "bundle_id": "com.byourside.ios"
               }
             }
           ]
