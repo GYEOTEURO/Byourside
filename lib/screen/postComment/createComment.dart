@@ -25,19 +25,17 @@ class CreateComment extends StatefulWidget {
 
 class _CreateCommentState extends State<CreateComment> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final TextEditingController comment = TextEditingController();
   final scrollController = Get.put(ScrollDownForComment());
 
   @override
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
-    final TextEditingController comment = TextEditingController();
 
     return GestureDetector(
-        //onTap: () => HapticFeedback.lightImpact(), //약한 진동
-        child: Row(children: [
-          Expanded(
-            child: Semantics(
+        onTap: () => HapticFeedback.lightImpact(), //약한 진동
+        child: Semantics(
               container: true,
               textField: true,
               label: '댓글을 작성해주세요.',
@@ -92,7 +90,6 @@ class _CreateCommentState extends State<CreateComment> {
                   ))
                 ))
             )
-          ),
-        ]));
+          );
   }
 }
