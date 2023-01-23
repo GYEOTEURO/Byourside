@@ -1,6 +1,4 @@
-import 'dart:developer';
-import 'dart:typed_data';
-import 'dart:ui';
+import 'dart:async';
 
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
@@ -10,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class ChatListScreen extends StatefulWidget {
   const ChatListScreen({Key? key}) : super(key: key);
@@ -24,7 +23,6 @@ Future<String> callAsyncFetch() =>
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final User? user = FirebaseAuth.instance.currentUser;
-
   Stream? groups;
   bool _isLoading = false;
   String groupName = "";
@@ -287,57 +285,62 @@ class _ChatListScreenState extends State<ChatListScreen> {
   bool makeCheck(List input) {
     bool check = true;
 
-    List<String> blockGroup = [];
+    // List<String> blockGroup = [];
 
-    FirebaseFirestore.instance
-        .collection('groups')
-        .doc(input[0])
-        .get()
-        .then((value) {
-      List.from(value.data()!['members']).forEach((element) {
-        if (!blockGroup.contains(element)) {
-          blockGroup.add(element);
-        }
-      });
-    });
+    // FirebaseFirestore.instance
+    //     .collection('groups')
+    //     .doc(input[0])
+    //     .get()
+    //     .then((value) {
+    //   List.from(value.data()!['members']).forEach((element) {
+    //     print("* $element");
+    //     if (!blockGroup.contains(element)) {
+    //       blockGroup.add(element);
+    //       print("see this : $blockGroup");
+    //     }
+    //   });
+    // });
     print("input:  $input");
-    print(blockGroup);
+    // print("and this.. : $blockGroup");
+    print(blockList);
     for (var i in input) {
       print('-------');
       print(i);
-      if (blockGroup.contains(i)) check = false;
+      // if (blockGroup.contains(i)) check = false;
 
       if (blockList.contains(i)) {
         check = false;
       }
     }
-
+    print(check);
     return check;
   }
 
   groupList(double width) {
-    return StreamBuilder(
-        stream: groups,
-        builder: (context, AsyncSnapshot snapshot) {
+    return StreamBuilder2<a, DocumentSnapshot>(
+        streams: StreamTuple2(),
+        builder: (context, snapshot) {
           // make some checks
-          if (snapshot.hasData) {
-            if (snapshot.data['groups'] != null) {
-              if (snapshot.data['groups'].length != 0) {
+          if (snapshot.snapshot2.hasData) {
+            if (snapshot.snapshot2.data!['groups'] != null) {
+              if (snapshot.snapshot2.data!['groups'].length != 0) {
                 return ListView.builder(
                   padding: EdgeInsets.all(5),
-                  itemCount: snapshot.data['groups'].length,
+                  itemCount: snapshot.snapshot2.data!['groups'].length,
                   itemBuilder: (context, index) {
                     bool check = true;
                     int reverseIndex =
-                        snapshot.data['groups'].length - index - 1;
-                    check = makeCheck(
-                        snapshot.data['groups'][reverseIndex].split('_'));
+                        snapshot.snapshot2.data!['groups'].length - index - 1;
+                    check = makeCheck(snapshot
+                        .snapshot2.data!['groups'][reverseIndex]
+                        .split('_'));
                     if (check) {
                       return GroupTile(
-                          userName: snapshot.data['nickname'],
-                          groupId: getId(snapshot.data['groups'][reverseIndex]),
-                          groupName:
-                              getName(snapshot.data['groups'][reverseIndex]),
+                          userName: snapshot.snapshot2.data!['nickname'],
+                          groupId: getId(
+                              snapshot.snapshot2.data!['groups'][reverseIndex]),
+                          groupName: getName(
+                              snapshot.snapshot2.data!['groups'][reverseIndex]),
                           recentMsg:
                               "" //getRecentMsg(snapshot.data['groups'][index])
                           );
