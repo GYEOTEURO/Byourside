@@ -95,6 +95,20 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 ),
               ),
               SizedBox(height: height * 0.01),
+              Container(
+                child: const Center(
+                  child: Text(
+                    '맨앞 0을 제외하고 10자리를 입력하세요.',
+                    semanticsLabel: '맨앞 0을 제외하고 10자리를 입력하세요.',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      fontFamily: 'NanumGothic',
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.01),
               Form(
                   key: _formKey_phone,
                   child: Container(
@@ -102,7 +116,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     child: Semantics(
                         container: true,
                         textField: true,
-                        label: '휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)',
+                        label: '휴대폰 번호를 입력하세요.',
                         hint: '(예: 1012345678)',
                         child: TextFormField(
                             decoration: InputDecoration(
@@ -118,7 +132,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                   borderSide: BorderSide(
                                       color: Theme.of(context).primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
-                              labelText: "휴대폰 번호를 입력하세요. (맨앞 0을 제외하고 10자리 입력)",
+                              labelText: "휴대폰 번호를 입력하세요.",
                               hintText: '(예: 1012345678)',
                               hintStyle: TextStyle(
                                   color: Colors.grey,
