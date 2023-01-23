@@ -71,7 +71,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                                   softWrap: false,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 19,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'NanumGothic'))),
                           Text(
@@ -87,7 +87,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'NanumGothic',
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
                         ],
