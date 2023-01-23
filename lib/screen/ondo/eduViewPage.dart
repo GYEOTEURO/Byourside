@@ -99,7 +99,7 @@ class _EduViewPageState extends State<EduViewPage> {
                         softWrap: false,
                         style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'NanumGothic')))),
             Expanded(

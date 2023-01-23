@@ -90,7 +90,7 @@ class _NanumPostListState extends State<NanumPostList> {
                                   softWrap: false,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 19,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'NanumGothic'))),
                           Text(
@@ -105,7 +105,7 @@ class _NanumPostListState extends State<NanumPostList> {
                             softWrap: false,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 14,
+                              fontSize: 13,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600,
                             ),
