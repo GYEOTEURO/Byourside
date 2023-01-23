@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:byourside/screen/block.dart';
 import 'package:flutter/material.dart';
 
 class MessageTile extends StatefulWidget {
@@ -52,18 +53,39 @@ class _MessageTileState extends State<MessageTile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.sender.toUpperCase(),
-                semanticsLabel: widget.sender,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 2,
-                  fontFamily: 'NanumGothic',
-                ),
-              ),
+              widget.sentByMe
+                  ? Text(
+                      widget.sender.toUpperCase(),
+                      semanticsLabel: widget.sender,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 2,
+                        fontFamily: 'NanumGothic',
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        Text(
+                          widget.sender.toUpperCase(),
+                          semanticsLabel: widget.sender,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 2,
+                            fontFamily: 'NanumGothic',
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Block(nickname: widget.sender, collectionType: 'chat')
+                      ],
+                    ),
               SizedBox(height: height * 0.01),
               Text(
                 widget.message,
