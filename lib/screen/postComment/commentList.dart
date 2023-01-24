@@ -276,7 +276,9 @@ class _CommentListState extends State<CommentList> {
                           (Row(
                             children: [
                               Declaration(decList: _decList, collectionType: 'comment', id: comment.id!),
-                              Block(nickname: comment.nickname!, collectionType: 'comment')
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Block(nickname: comment.nickname!, collectionType: 'comment')),
                           ]))
                       ]),
                 ]))));
