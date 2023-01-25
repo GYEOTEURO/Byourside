@@ -70,7 +70,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   semanticLabel:
                       "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                   content: Text(
-                    "메일함을 확인하세요.\n 오류가 지속될 경우 문의해주세요.",
+                    "메일함을 확인하세요.\n오류가 지속될 경우 문의해주세요.",
                     semanticsLabel: "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요.",
                   ),
                   actions: [
