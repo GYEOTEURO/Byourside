@@ -68,10 +68,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
             builder: (context) {
               return AlertDialog(
                   semanticLabel:
-                      "재시도하세요. 오류 ${e.toString()} 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                      "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                   content: Text(
-                    "재시도하세요.\n오류 : ${e.toString()}",
-                    semanticsLabel: "재시도하세요.\n오류 : ${e.toString()}",
+                    "메일함을 확인하세요.\n 오류가 지속될 경우 문의해주세요.",
+                    semanticsLabel: "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요.",
                   ),
                   actions: [
                     ElevatedButton(
