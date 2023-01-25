@@ -502,14 +502,23 @@ class _Register extends State<Register> {
                         ),
                       ),
                       SizedBox(height: height * 0.03),
-                      registerButton,
+                      (_policy == false ||
+                              _personal == false ||
+                              _using == false)
+                          ? Text("약관에 모두 동의하셔야 가입할 수 있습니다.",
+                              semanticsLabel: "약관에 모두 동의하셔야 가입할 수 있습니다.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w500))
+                          : registerButton,
                       SizedBox(height: height * 0.03),
                       (_isRegister == false ||
                               _policy == false ||
                               _personal == false ||
                               _using == false)
-                          ? Text("휴대폰 인증으로 넘어가려면\n가입 및 동의가 필요합니다.",
-                              semanticsLabel: "휴대전화 인증으로 넘어가려면 가입 및 동의가 필요합니다.",
+                          ? Text("이후 휴대전화 인증이 가능합니다.",
+                              semanticsLabel: "이후 휴대전화 인증이 가능합니다.",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'NanumGothic',

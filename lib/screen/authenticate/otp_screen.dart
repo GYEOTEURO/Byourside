@@ -31,8 +31,14 @@ class _OTPScreenState extends State<OTPScreen> {
   void initState() {
     super.initState();
     if (FirebaseAuth.instance.currentUser != null) {
-      isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber != null;
-
+      isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber !=
+              null &&
+          FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '';
+      print("___________________________________________");
+      print(
+          FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '');
+      print("hjihi: $isPhoneVerified");
+      print("shsh");
       if (!isPhoneVerified) {
         verifyPhone();
 
@@ -62,6 +68,7 @@ class _OTPScreenState extends State<OTPScreen> {
       setState(() {
         isPhoneVerified =
             FirebaseAuth.instance.currentUser!.phoneNumber != null;
+        print("here: $isPhoneVerified");
       });
     }
     if (isPhoneVerified) {
@@ -181,32 +188,23 @@ class _OTPScreenState extends State<OTPScreen> {
                           }
                         });
                         await FirebaseAuth.instance.currentUser!.reload();
-                        if (await FirebaseAuth
-                                .instance.currentUser?.phoneNumber !=
-                            null) {
-                          timer?.cancel();
-                        } else if (user?.phoneNum == null ||
-                            user?.phoneNum == "") {
+
+                        if (user?.phoneNum == null || user?.phoneNum == "") {
                           setState(() {
                             FirebaseUser(
                                 uid: user?.uid, phoneNum: widget.phone);
                           });
-                          if (await FirebaseAuth
-                                  .instance.currentUser?.phoneNumber !=
-                              null) {
-                            timer?.cancel();
-                          } else {
-                            if (await FirebaseAuth
+                        }
+                        if (await FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
-                                null) {
-                              timer?.cancel();
-                              Navigator.pop(context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SetupUser()));
-                            }
-                          }
+                                null &&
+                            !(user?.phoneNum == null || user?.phoneNum == "")) {
+                          timer?.cancel();
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SetupUser()));
                         }
                       } catch (e) {
                         if (mounted) {
@@ -281,34 +279,23 @@ class _OTPScreenState extends State<OTPScreen> {
                             }
                           });
                           await FirebaseAuth.instance.currentUser!.reload();
-                          if (await FirebaseAuth
-                                  .instance.currentUser?.phoneNumber !=
-                              null) {
-                            timer?.cancel();
-                          } else if (user?.phoneNum == null ||
-                              user?.phoneNum == "") {
-                            setState(() {
-                              FirebaseUser(
-                                  uid: user?.uid, phoneNum: widget.phone);
-                            });
-                            if (await FirebaseAuth
+                        }
+                        if (user?.phoneNum == null || user?.phoneNum == "") {
+                          setState(() {
+                            FirebaseUser(
+                                uid: user?.uid, phoneNum: widget.phone);
+                          });
+                        }
+                        if (await FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
-                                null) {
-                              timer?.cancel();
-                            } else {
-                              if (await FirebaseAuth
-                                      .instance.currentUser?.phoneNumber !=
-                                  null) {
-                                timer?.cancel();
-                                Navigator.pop(context);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SetupUser()));
-                              }
-                            }
-                          }
+                                null &&
+                            !(user?.phoneNum == null || user?.phoneNum == "")) {
+                          timer?.cancel();
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SetupUser()));
                         }
                       } catch (e) {
                         if (mounted) {
@@ -466,22 +453,22 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
-    try {
-      await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
-      setState(() {
-        otpCode.text = authCredential.smsCode!;
-        FirebaseUser(phoneNum: widget.phone);
-      });
-      storePhoneNum(widget.phone);
-      if (await FirebaseAuth.instance.currentUser?.phoneNumber != null) {
-        timer?.cancel();
+    // try {
+    //   await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
+    //   setState(() {
+    //     otpCode.text = authCredential.smsCode!;
+    //     FirebaseUser(phoneNum: widget.phone);
+    //   });
+    //   storePhoneNum(widget.phone);
+    //   if (await FirebaseAuth.instance.currentUser?.phoneNumber != null) {
+    //     timer?.cancel();
 
-        Navigator.pop(context);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const SetupUser()));
-      }
-    } catch (e) {
-      print(e);
-    }
+    //     Navigator.pop(context);
+    //     Navigator.push(context,
+    //         MaterialPageRoute(builder: (context) => const SetupUser()));
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 }
