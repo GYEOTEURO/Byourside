@@ -214,6 +214,7 @@ class _Mypage extends State<Mypage> {
           await _auth.signOut();
           setState(() {});
           Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.pushNamed(context, '/login');
         },
         child: Text(
           "Log out",
