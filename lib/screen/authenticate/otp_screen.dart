@@ -34,11 +34,11 @@ class _OTPScreenState extends State<OTPScreen> {
       isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber !=
               null &&
           FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '';
-      print("___________________________________________");
-      print(
-          FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '');
-      print("hjihi: $isPhoneVerified");
-      print("shsh");
+      // print("___________________________________________");
+      // print(
+      //     FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '');
+      // print("hjihi: $isPhoneVerified");
+      // print("shsh");
       if (!isPhoneVerified) {
         verifyPhone();
 
@@ -68,7 +68,6 @@ class _OTPScreenState extends State<OTPScreen> {
       setState(() {
         isPhoneVerified =
             FirebaseAuth.instance.currentUser!.phoneNumber != null;
-        print("here: $isPhoneVerified");
       });
     }
     if (isPhoneVerified) {
