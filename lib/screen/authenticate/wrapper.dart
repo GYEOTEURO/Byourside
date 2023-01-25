@@ -11,18 +11,14 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser?>(context);
 
-    print(user?.uid);
-    print(user?.phoneNum);
-    print(user?.displayName);
+    // print(user?.uid);
+    // print(user?.phoneNum);
+    // print(user?.displayName);
     if (user == null) {
       return Handler();
     } else if (user.phoneNum == null || user.phoneNum == "") {
-      print(user.phoneNum);
-      print(user.uid);
       return VerifyPhone();
     } else if (user.displayName == null || user.displayName == "") {
-      print(user.phoneNum);
-      print("here");
       return SetupUser();
     } else {
       return VerifyEmail();
