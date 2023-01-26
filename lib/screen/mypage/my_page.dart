@@ -85,6 +85,7 @@ class _Mypage extends State<Mypage> {
     await _auth.signOut();
     setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.pushNamed(context, '/login');
   }
 
   // void _withdrawal(context, password) async {
