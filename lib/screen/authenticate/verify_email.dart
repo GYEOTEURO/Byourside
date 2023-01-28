@@ -44,11 +44,14 @@ class _VerifyEmailState extends State<VerifyEmail> {
     if (await FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
-    setState(() {
-      if (FirebaseAuth.instance.currentUser != null) {
-        isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (FirebaseAuth.instance.currentUser != null) {
+          isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+        }
+      });
+    }
+
     if (isEmailVerified) timer?.cancel();
   }
 
@@ -57,9 +60,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
       if (user != null) {
-        setState(() => canResendEmail = false);
+        if (mounted) setState(() => canResendEmail = false);
         await Future.delayed(Duration(seconds: 120));
-        setState(() => canResendEmail = true);
+        if (mounted) setState(() => canResendEmail = true);
       }
     } catch (e) {
       if (mounted) {
@@ -179,9 +182,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                             final user = FirebaseAuth.instance.currentUser!;
                             await user.sendEmailVerification();
                             if (user != null) {
-                              setState(() => canResendEmail = false);
+                              if (mounted)
+                                setState(() => canResendEmail = false);
                               await Future.delayed(Duration(seconds: 120));
-                              setState(() => canResendEmail = true);
+                              if (mounted)
+                                setState(() => canResendEmail = true);
                               // sendVerificationEmail();
                             }
                           }))
@@ -204,12 +209,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       ),
                       onPressed: () {
                         HapticFeedback.lightImpact(); // 약한 진동
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        Navigator.pop(context);
+                        // Navigator.of(context)
+                        //     .popUntil((route) => route.isFirst);
 
-                        FirebaseAuth.instance.signOut();
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        // FirebaseAuth.instance.signOut();
+                        // Navigator.of(context)
+                        //     .popUntil((route) => route.isFirst);
                       })
                 ],
               ),
