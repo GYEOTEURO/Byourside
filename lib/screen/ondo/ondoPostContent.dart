@@ -76,8 +76,6 @@ class _OndoPostContentState extends State<OndoPostContent> {
       type = "${post.type![0]}/${post.type![1]}";
     }
 
-    String _declaration = _decList[0];
-
     return Column(children: [
       Align(
           alignment: Alignment.centerLeft,
@@ -224,7 +222,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact(); // 약한 진동
-                            Navigator.pushNamed(context, '/');
+                            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                             DBSet.deletePost(collectionName!, post.id!);
                           }, 
                           child: Text(

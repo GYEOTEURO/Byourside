@@ -61,7 +61,7 @@ class _BlockState extends State<Block> {
                       ),
                       onPressed: () {
                         HapticFeedback.lightImpact(); // 약한 진동
-                        if(widget.collectionType == 'post' || widget.collectionType == 'chat') { Navigator.pushNamed(context, '/'); }
+                        if(widget.collectionType == 'post') { Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false); }
                         else { Navigator.pop(context); }
                         DBSet.addBlock(user!.uid, widget.nickname);
                       }, 

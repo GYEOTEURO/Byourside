@@ -226,7 +226,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact(); // 약한 진동
-                            Navigator.pushNamed(context, '/');
+                            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                             DBSet.deletePost(collectionName!, post.id!);
                           }, 
                           child: Text(
