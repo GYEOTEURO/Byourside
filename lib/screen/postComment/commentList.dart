@@ -186,14 +186,12 @@ class _CommentListState extends State<CommentList> {
                         if (user?.uid == comment.uid)
                           (OutlinedButton(
                             style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  color: widget.primaryColor, width: 1.5),
-                              foregroundColor: widget.primaryColor,
+                              backgroundColor: Colors.grey.shade300,
                             ),
                             child: Text('삭제',
                                 semanticsLabel: '댓글 삭제',
                                 style: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 45, 45),
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
@@ -204,81 +202,95 @@ class _CommentListState extends State<CommentList> {
                                   context: context,
                                   builder: (context) {
                                     return SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: AlertDialog(
-                                        semanticLabel:
-                                            '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                        title: Text('댓글을 삭제하시겠습니까?',
-                                            semanticsLabel:
+                                        scrollDirection: Axis.vertical,
+                                        child: AlertDialog(
+                                            semanticLabel:
                                                 '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                        actions: [
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          widget.primaryColor,
-                                                    ),
-                                                    onPressed: () {
-                                                      HapticFeedback
-                                                          .lightImpact(); // 약한 진동
-                                                      DBSet.deleteComment(
-                                                          collectionName!,
-                                                          documentID!,
-                                                          comment.id!);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text('삭제',
-                                                        semanticsLabel: '삭제',
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                          fontFamily:
-                                                              'NanumGothic',
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ))),
-                                                ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          widget.primaryColor,
-                                                    ),
-                                                    onPressed: () {
-                                                      HapticFeedback
-                                                          .lightImpact(); // 약한 진동
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text('취소',
-                                                        semanticsLabel: '취소',
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                          fontFamily:
-                                                              'NanumGothic',
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        )))
-                                              ])
-                                        ]));
+                                            title: Text('댓글을 삭제하시겠습니까?',
+                                                semanticsLabel:
+                                                    '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'NanumGothic',
+                                                  fontWeight: FontWeight.w600,
+                                                )),
+                                            actions: [
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              widget
+                                                                  .primaryColor,
+                                                        ),
+                                                        onPressed: () {
+                                                          HapticFeedback
+                                                              .lightImpact(); // 약한 진동
+                                                          DBSet.deleteComment(
+                                                              collectionName!,
+                                                              documentID!,
+                                                              comment.id!);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text('삭제',
+                                                            semanticsLabel:
+                                                                '삭제',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              fontFamily:
+                                                                  'NanumGothic',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ))),
+                                                    ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              widget
+                                                                  .primaryColor,
+                                                        ),
+                                                        onPressed: () {
+                                                          HapticFeedback
+                                                              .lightImpact(); // 약한 진동
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text('취소',
+                                                            semanticsLabel:
+                                                                '취소',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              fontFamily:
+                                                                  'NanumGothic',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            )))
+                                                  ])
+                                            ]));
                                   });
                             },
                           ))
                         else
-                          (Row(
-                            children: [
-                              Declaration(decList: _decList, collectionType: 'comment', id: comment.id!),
-                              Container(
+                          (Row(children: [
+                            Declaration(
+                                decList: _decList,
+                                collectionType: 'comment',
+                                id: comment.id!),
+                            Container(
                                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Block(nickname: comment.nickname!, collectionType: 'comment')),
+                                child: Block(
+                                    nickname: comment.nickname!,
+                                    collectionType: 'comment')),
                           ]))
                       ]),
                 ]))));
@@ -293,13 +305,18 @@ class _CommentListState extends State<CommentList> {
 
     return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
         streams: StreamTuple2(
-          DBGet.readComment(collection: collectionName, documentID: documentID), 
-          FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+            DBGet.readComment(
+                collection: collectionName, documentID: documentID),
+            FirebaseFirestore.instance
+                .collection('user')
+                .doc(user!.uid)
+                .snapshots()),
         builder: (context, snapshots) {
-          if(snapshots.snapshot2.hasData){
-            blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
-          }
-          else{
+          if (snapshots.snapshot2.hasData) {
+            blockList = snapshots.snapshot2.data!["blockList"] == null
+                ? []
+                : snapshots.snapshot2.data!["blockList"].cast<String>();
+          } else {
             blockList = [];
           }
           if (snapshots.snapshot1.hasData) {
