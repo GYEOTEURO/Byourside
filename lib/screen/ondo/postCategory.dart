@@ -125,8 +125,7 @@ class _PostCategoryState extends State<PostCategory> {
     });
   }
 
-  void _onClickBackKey(BuildContext context) {
-    HapticFeedback.lightImpact(); // 약한 진동
+  Future<bool> _onClickBackKey() async {
     // 선택한 게시판 종류 반영
     widget.categories.category = null;
     for (int i = 0; i < categoryList.length; i++) {
@@ -152,9 +151,9 @@ class _PostCategoryState extends State<PostCategory> {
     if (widget.categories.category == null) {
       // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
       //     backgroundColor: Colors.white);
-      showDialog(
+      return await showDialog(
           context: context,
-          builder: (context) {
+          builder: (BuildContext context) {
             return AlertDialog(
                 semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
                 content: Text('게시판 종류를 선택해주세요',
@@ -184,6 +183,7 @@ class _PostCategoryState extends State<PostCategory> {
           });
     } else {
       Navigator.pop(context, widget.categories);
+      return false;
     }
   }
 
@@ -191,10 +191,10 @@ class _PostCategoryState extends State<PostCategory> {
 
   @override
   Widget build(BuildContext context) {
+    // _firstMainScreenProvider  = Provider.of.<FirstMainScreenProvider>(context);
     return WillPopScope(
-        onWillPop: () async {
-          if (indexBackKey == null) _onClickBackKey(context);
-          return false;
+        onWillPop: () {
+          return _onClickBackKey();
         },
         child: Scaffold(
           appBar: AppBar(
