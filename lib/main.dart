@@ -55,10 +55,11 @@ void main() async {
     theme: ThemeData(
         fontFamily: 'NanumGothic',
         // 폰 자체 뒤로가기 에러 해결
-        pageTransitionsTheme: PageTransitionsTheme(builders: {
-          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        //pageTransitionsTheme: PageTransitionsTheme(builders: {
+        //  TargetPlatform.android: CupertinoPageTransitionsBuilder(),
           //TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-        })),
+        //})
+        ),
     home: MyApp(),
     // debugShowCheckedModeBanner: false,
   ));
@@ -81,10 +82,11 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeData(
                 fontFamily: 'NanumGothic',
                 // 폰 자체 뒤로가기 에러 해결
-                pageTransitionsTheme: PageTransitionsTheme(builders: {
-                  TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                //pageTransitionsTheme: PageTransitionsTheme(builders: {
+                //  TargetPlatform.android: CupertinoPageTransitionsBuilder(),
                   //TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                })),
+                //})
+                ),
             title: '곁',
             initialRoute: "/login",
             routes: {
