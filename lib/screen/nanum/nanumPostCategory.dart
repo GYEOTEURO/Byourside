@@ -83,8 +83,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
     });
   }
 
-  void _onClickBackKey(BuildContext context) {
-    HapticFeedback.lightImpact(); // 약한 진동
+  Future<bool> _onClickBackKey() async {
     _type = [];
     for (int i = 0; i < typeList.length; i++) {
       if (typeList[i].selected) {
@@ -96,6 +95,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
       }
     }
     Navigator.pop(context, _type);
+    return false;
   }
 
   int? indexBackKey;
@@ -104,8 +104,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          if (indexBackKey == null) _onClickBackKey(context);
-          return false;
+          return _onClickBackKey();
         },
         child: Scaffold(
           appBar: AppBar(
