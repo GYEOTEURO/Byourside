@@ -125,159 +125,168 @@ class _PostCategoryState extends State<PostCategory> {
     });
   }
 
+  int? indexBackKey;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: widget.primaryColor,
-        title: Text(widget.title,
-            semanticsLabel: widget.title,
-            style: TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
-            // 선택한 게시판 종류 반영
-            widget.categories.category = null;
-            for (int i = 0; i < categoryList.length; i++) {
-              if (categoryList[i].selected) {
-                _category = categoryList[i].label;
-                widget.categories.category = _category;
-                break;
-              }
-            }
-
-            // 장애 유형 selected 된 상태에 따라 type 값 지정
-            _type = [];
-            for (int i = 0; i < typeList.length; i++) {
-              if (typeList[i].selected) {
-                if (_type == null) {
-                  _type = [typeList[i].label];
-                } else {
-                  _type!.add(typeList[i].label);
+    return WillPopScope(
+        onWillPop: () async {
+          if (indexBackKey == null) _onClickType(indexBackKey!);
+          return false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: widget.primaryColor,
+            title: Text(widget.title,
+                semanticsLabel: widget.title,
+                style: TextStyle(
+                    fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: () {
+                HapticFeedback.lightImpact(); // 약한 진동
+                // 선택한 게시판 종류 반영
+                widget.categories.category = null;
+                for (int i = 0; i < categoryList.length; i++) {
+                  if (categoryList[i].selected) {
+                    _category = categoryList[i].label;
+                    widget.categories.category = _category;
+                    break;
+                  }
                 }
-              }
-            }
-            widget.categories.type = _type;
-            if (widget.categories.category == null) {
-              // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
-              //     backgroundColor: Colors.white);
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                        semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
-                        content: Text('게시판 종류를 선택해주세요',
-                            semanticsLabel: '게시판 종류를 선택해주세요',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            )),
-                        actions: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: widget.primaryColor,
-                                foregroundColor: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('확인',
-                                  semanticsLabel: '확인',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w600,
-                                  )))
-                        ]);
-                  });
-            } else {
-              Navigator.pop(context, widget.categories);
-            }
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            semanticLabel: '뒤로가기',
+
+                // 장애 유형 selected 된 상태에 따라 type 값 지정
+                _type = [];
+                for (int i = 0; i < typeList.length; i++) {
+                  if (typeList[i].selected) {
+                    if (_type == null) {
+                      _type = [typeList[i].label];
+                    } else {
+                      _type!.add(typeList[i].label);
+                    }
+                  }
+                }
+                widget.categories.type = _type;
+                if (widget.categories.category == null) {
+                  // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+                  //     backgroundColor: Colors.white);
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
+                            content: Text('게시판 종류를 선택해주세요',
+                                semanticsLabel: '게시판 종류를 선택해주세요',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            actions: [
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: widget.primaryColor,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('확인',
+                                      semanticsLabel: '확인',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w600,
+                                      )))
+                            ]);
+                      });
+                } else {
+                  Navigator.pop(context, widget.categories);
+                }
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                semanticLabel: '뒤로가기',
+              ),
+              color: Colors.white,
+            ),
           ),
-          color: Colors.white,
-        ),
-      ),
-      body: Container(
-          padding: EdgeInsets.all(20),
-          child: Center(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                const Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text('게시판 종류',
-                            semanticsLabel: '게시판 종류',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: 'NanumGothic')))),
-                Expanded(
-                    flex: 2,
-                    child: Row(children: [
+          body: Container(
+              padding: EdgeInsets.all(20),
+              child: Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                    const Center(
+                        child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Text('게시판 종류',
+                                semanticsLabel: '게시판 종류',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                    fontFamily: 'NanumGothic')))),
+                    Expanded(
+                        flex: 2,
+                        child: Row(children: [
+                          Expanded(
+                              child: ListView.builder(
+                                  padding: const EdgeInsets.all(15),
+                                  itemCount: categoryList.length,
+                                  itemBuilder: (context, index) {
+                                    indexBackKey = index;
+                                    return ElevatedButton(
+                                        onPressed: () =>
+                                            _onClickCategory(index),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: categoryList[index]
+                                              .backgroundColor,
+                                        ),
+                                        child: Text(categoryList[index].label,
+                                            semanticsLabel:
+                                                categoryList[index].label,
+                                            style: TextStyle(
+                                                color: categoryList[index]
+                                                    .fontColor,
+                                                fontFamily: 'NanumGothic',
+                                                fontWeight: FontWeight.w600)));
+                                  }))
+                        ])),
+                    const Center(
+                        child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Text('장애 유형',
+                                semanticsLabel: '장애 유형',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                    fontFamily: 'NanumGothic')))),
+                    Expanded(
+                        child: Row(children: [
                       Expanded(
                           child: ListView.builder(
                               padding: const EdgeInsets.all(15),
-                              itemCount: categoryList.length,
+                              itemCount: typeList.length,
                               itemBuilder: (context, index) {
                                 return ElevatedButton(
-                                    onPressed: () => _onClickCategory(index),
+                                    onPressed: () => _onClickType(index),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          categoryList[index].backgroundColor,
-                                    ),
-                                    child: Text(categoryList[index].label,
-                                        semanticsLabel:
-                                            categoryList[index].label,
-                                        style: TextStyle(
-                                            color:
-                                                categoryList[index].fontColor,
-                                            fontFamily: 'NanumGothic',
-                                            fontWeight: FontWeight.w600)));
+                                        backgroundColor:
+                                            typeList[index].backgroundColor),
+                                    child: Text(
+                                      typeList[index].label,
+                                      semanticsLabel: typeList[index].label,
+                                      style: TextStyle(
+                                          color: typeList[index].fontColor,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600),
+                                    ));
                               }))
                     ])),
-                const Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text('장애 유형',
-                            semanticsLabel: '장애 유형',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: 'NanumGothic')))),
-                Expanded(
-                    child: Row(children: [
-                  Expanded(
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(15),
-                          itemCount: typeList.length,
-                          itemBuilder: (context, index) {
-                            return ElevatedButton(
-                                onPressed: () => _onClickType(index),
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        typeList[index].backgroundColor),
-                                child: Text(
-                                  typeList[index].label,
-                                  semanticsLabel: typeList[index].label,
-                                  style: TextStyle(
-                                      color: typeList[index].fontColor,
-                                      fontFamily: 'NanumGothic',
-                                      fontWeight: FontWeight.w600),
-                                ));
-                          }))
-                ])),
-              ]))),
-    );
+                  ]))),
+        ));
   }
 }
