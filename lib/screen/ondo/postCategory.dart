@@ -125,13 +125,75 @@ class _PostCategoryState extends State<PostCategory> {
     });
   }
 
+  void _onClickBackKey(BuildContext context) {
+    HapticFeedback.lightImpact(); // 약한 진동
+    // 선택한 게시판 종류 반영
+    widget.categories.category = null;
+    for (int i = 0; i < categoryList.length; i++) {
+      if (categoryList[i].selected) {
+        _category = categoryList[i].label;
+        widget.categories.category = _category;
+        break;
+      }
+    }
+
+    // 장애 유형 selected 된 상태에 따라 type 값 지정
+    _type = [];
+    for (int i = 0; i < typeList.length; i++) {
+      if (typeList[i].selected) {
+        if (_type == null) {
+          _type = [typeList[i].label];
+        } else {
+          _type!.add(typeList[i].label);
+        }
+      }
+    }
+    widget.categories.type = _type;
+    if (widget.categories.category == null) {
+      // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
+      //     backgroundColor: Colors.white);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+                semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
+                content: Text('게시판 종류를 선택해주세요',
+                    semanticsLabel: '게시판 종류를 선택해주세요',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'NanumGothic',
+                      fontWeight: FontWeight.w600,
+                    )),
+                actions: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: widget.primaryColor,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('확인',
+                          semanticsLabel: '확인',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600,
+                          )))
+                ]);
+          });
+    } else {
+      Navigator.pop(context, widget.categories);
+    }
+  }
+
   int? indexBackKey;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          if (indexBackKey == null) _onClickType(indexBackKey!);
+          if (indexBackKey == null) _onClickBackKey(context);
           return false;
         },
         child: Scaffold(
