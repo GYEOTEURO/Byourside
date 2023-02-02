@@ -72,7 +72,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                                   softWrap: false,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 19,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'NanumGothic'))),
                           Text(
@@ -88,7 +88,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'NanumGothic',
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
                         ],

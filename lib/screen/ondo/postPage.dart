@@ -95,26 +95,26 @@ class _OndoPostPageState extends State<OndoPostPage> {
     return SingleChildScrollView(
         child: Center(
             child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Semantics(
             label: "사용자가 선택한 사진 ${index + 1}",
             child: Image(
               image: FileImage(File(_images[index].path)),
-              fit: BoxFit.contain, // 보고 수정
+              fit: BoxFit.contain,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width * 0.7, // 보고 수정
             )),
         Semantics(
-            label:
-                "사진 ${index + 1}에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+            label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
             child: TextFormField(
               maxLines: 2,
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                labelText:
-                    "사진에 대한 간략한 설명을 적어주세요. 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.",
+                labelText: "사진에 대한 간략한 설명을 적어주세요",
                 hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지",
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Color(0xFF045558)),
@@ -165,9 +165,20 @@ class _OndoPostPageState extends State<OndoPostPage> {
             child: SingleChildScrollView(
                 padding: EdgeInsets.all(25),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 제목
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      '제목',
+                      semanticsLabel: '제목',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
                         child: Semantics(
                             label: "제목을 입력하세요",
@@ -273,6 +284,18 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Text(
+                                    '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
+                                    semanticsLabel:
+                                        '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
+                                    style: TextStyle(
+                                        color: Color(0xFF045558),
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'NanumGothic'),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Semantics(
                                       label:
                                           "선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.",
@@ -314,13 +337,27 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                       color: Colors.black26,
                                       activeColor: widget.primaryColor,
                                     ),
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
                                 ],
                               ))
                         ])),
                     // 게시글 내용
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      '마음 온도에 올릴 게시글 내용',
+                      semanticsLabel: '마음 온도에 올릴 게시글 내용',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'NanumGothic'),
+                    ),
                     Container(
-                        padding: EdgeInsets.only(top: 30, bottom: 5),
+                        padding: EdgeInsets.only(top: 20, bottom: 5),
                         child: Semantics(
                             label: "마음 온도에 올릴 게시글 내용을 작성해주세요",
                             child: TextField(
@@ -357,7 +394,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
                 )),
           )),
       // 글 작성 완료 버튼
-
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           HapticFeedback.lightImpact(); // 약한 진동

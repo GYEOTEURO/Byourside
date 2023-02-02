@@ -83,80 +83,102 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
     });
   }
 
+  Future<bool> _onClickBackKey() async {
+    _type = [];
+    for (int i = 0; i < typeList.length; i++) {
+      if (typeList[i].selected) {
+        if (_type == null) {
+          _type = [typeList[i].label];
+        } else {
+          _type!.add(typeList[i].label);
+        }
+      }
+    }
+    Navigator.pop(context, _type);
+    return false;
+  }
+
+  int? indexBackKey;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: widget.primaryColor,
-        title: Text(
-          widget.title,
-          semanticsLabel: widget.title,
-          style:
-              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
-            _type = [];
-            for (int i = 0; i < typeList.length; i++) {
-              if (typeList[i].selected) {
-                if (_type == null) {
-                  _type = [typeList[i].label];
-                } else {
-                  _type!.add(typeList[i].label);
+    return WillPopScope(
+        onWillPop: () async {
+          return _onClickBackKey();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: widget.primaryColor,
+            title: Text(
+              widget.title,
+              semanticsLabel: widget.title,
+              style: TextStyle(
+                  fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+            ),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: () {
+                HapticFeedback.lightImpact(); // 약한 진동
+                _type = [];
+                for (int i = 0; i < typeList.length; i++) {
+                  if (typeList[i].selected) {
+                    if (_type == null) {
+                      _type = [typeList[i].label];
+                    } else {
+                      _type!.add(typeList[i].label);
+                    }
+                  }
                 }
-              }
-            }
-            Navigator.pop(context, _type);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            semanticLabel: '뒤로가기',
+                Navigator.pop(context, _type);
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                semanticLabel: '뒤로가기',
+              ),
+              color: Colors.white,
+            ),
           ),
-          color: Colors.white,
-        ),
-      ),
-      body: Container(
-          padding: EdgeInsets.all(20),
-          child: Center(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                const Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text('장애 유형',
-                            semanticsLabel: '장애 유형',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: 'NanumGothic')))),
-                Expanded(
-                    child: Row(children: [
-                  Expanded(
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(15),
-                          itemCount: typeList.length,
-                          itemBuilder: (context, index) {
-                            return ElevatedButton(
-                                onPressed: () => _onClickType(index),
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        typeList[index].backgroundColor),
-                                child: Text(
-                                  typeList[index].label,
-                                  semanticsLabel: typeList[index].label,
-                                  style: TextStyle(
-                                      color: typeList[index].fontColor,
-                                      fontFamily: 'NanumGothic',
-                                      fontWeight: FontWeight.w600),
-                                ));
-                          }))
-                ])),
-              ]))),
-    );
+          body: Container(
+              padding: EdgeInsets.all(20),
+              child: Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                    const Center(
+                        child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Text('장애 유형',
+                                semanticsLabel: '장애 유형',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                    fontFamily: 'NanumGothic')))),
+                    Expanded(
+                        child: Row(children: [
+                      Expanded(
+                          child: ListView.builder(
+                              padding: const EdgeInsets.all(15),
+                              itemCount: typeList.length,
+                              itemBuilder: (context, index) {
+                                indexBackKey = index;
+                                return ElevatedButton(
+                                    onPressed: () => _onClickType(index),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            typeList[index].backgroundColor),
+                                    child: Text(
+                                      typeList[index].label,
+                                      semanticsLabel: typeList[index].label,
+                                      style: TextStyle(
+                                          color: typeList[index].fontColor,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600),
+                                    ));
+                              }))
+                    ])),
+                  ]))),
+        ));
   }
 }

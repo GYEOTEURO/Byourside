@@ -31,8 +31,14 @@ class _OTPScreenState extends State<OTPScreen> {
   void initState() {
     super.initState();
     if (FirebaseAuth.instance.currentUser != null) {
-      isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber != null;
-
+      isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber !=
+              null &&
+          FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '';
+      // print("___________________________________________");
+      // print(
+      //     FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '');
+      // print("hjihi: $isPhoneVerified");
+      // print("shsh");
       if (!isPhoneVerified) {
         verifyPhone();
 
@@ -181,32 +187,23 @@ class _OTPScreenState extends State<OTPScreen> {
                           }
                         });
                         await FirebaseAuth.instance.currentUser!.reload();
-                        if (await FirebaseAuth
-                                .instance.currentUser?.phoneNumber !=
-                            null) {
-                          timer?.cancel();
-                        } else if (user?.phoneNum == null ||
-                            user?.phoneNum == "") {
+
+                        if (user?.phoneNum == null || user?.phoneNum == "") {
                           setState(() {
                             FirebaseUser(
                                 uid: user?.uid, phoneNum: widget.phone);
                           });
-                          if (await FirebaseAuth
-                                  .instance.currentUser?.phoneNumber !=
-                              null) {
-                            timer?.cancel();
-                          } else {
-                            if (await FirebaseAuth
+                        }
+                        if (await FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
-                                null) {
-                              timer?.cancel();
-                              Navigator.pop(context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SetupUser()));
-                            }
-                          }
+                                null &&
+                            !(user?.phoneNum == null || user?.phoneNum == "")) {
+                          timer?.cancel();
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SetupUser()));
                         }
                       } catch (e) {
                         if (mounted) {
@@ -214,34 +211,35 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                  content: Text(
-                                    "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                    semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: primaryColor,
-                                      ),
-                                      onPressed: () {
-                                        HapticFeedback.lightImpact(); // 약한 진동
-                                        Navigator.pop(context);
-                                      }, 
-                                      child: Text(
-                                        '확인',
-                                        semanticsLabel: '확인',
-                                        style: const TextStyle(
-                                          fontSize: 14,
+                                    semanticLabel:
+                                        "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                    content: Text(
+                                      "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                      semanticsLabel:
+                                          "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                      style: const TextStyle(
+                                          color: Colors.black,
                                           fontFamily: 'NanumGothic',
-                                          fontWeight: FontWeight.w600,
-                                        ))
-                                    )]
-                                );
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('확인',
+                                              semanticsLabel: '확인',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'NanumGothic',
+                                                fontWeight: FontWeight.w600,
+                                              )))
+                                    ]);
                               });
                         }
                       }
@@ -280,34 +278,23 @@ class _OTPScreenState extends State<OTPScreen> {
                             }
                           });
                           await FirebaseAuth.instance.currentUser!.reload();
-                          if (await FirebaseAuth
-                                  .instance.currentUser?.phoneNumber !=
-                              null) {
-                            timer?.cancel();
-                          } else if (user?.phoneNum == null ||
-                              user?.phoneNum == "") {
-                            setState(() {
-                              FirebaseUser(
-                                  uid: user?.uid, phoneNum: widget.phone);
-                            });
-                            if (await FirebaseAuth
+                        }
+                        if (user?.phoneNum == null || user?.phoneNum == "") {
+                          setState(() {
+                            FirebaseUser(
+                                uid: user?.uid, phoneNum: widget.phone);
+                          });
+                        }
+                        if (await FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
-                                null) {
-                              timer?.cancel();
-                            } else {
-                              if (await FirebaseAuth
-                                      .instance.currentUser?.phoneNumber !=
-                                  null) {
-                                timer?.cancel();
-                                Navigator.pop(context);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SetupUser()));
-                              }
-                            }
-                          }
+                                null &&
+                            !(user?.phoneNum == null || user?.phoneNum == "")) {
+                          timer?.cancel();
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SetupUser()));
                         }
                       } catch (e) {
                         if (mounted) {
@@ -315,34 +302,35 @@ class _OTPScreenState extends State<OTPScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  semanticLabel: "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                  content: Text(
-                                    "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                    semanticsLabel: "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: primaryColor,
-                                      ),
-                                      onPressed: () {
-                                        HapticFeedback.lightImpact(); // 약한 진동
-                                        Navigator.pop(context);
-                                      }, 
-                                      child: Text(
-                                        '확인',
-                                        semanticsLabel: '확인',
-                                        style: const TextStyle(
-                                          fontSize: 14,
+                                    semanticLabel:
+                                        "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                    content: Text(
+                                      "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                      semanticsLabel:
+                                          "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                      style: const TextStyle(
+                                          color: Colors.black,
                                           fontFamily: 'NanumGothic',
-                                          fontWeight: FontWeight.w600,
-                                        ))
-                                  )]
-                                );
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('확인',
+                                              semanticsLabel: '확인',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'NanumGothic',
+                                                fontWeight: FontWeight.w600,
+                                              )))
+                                    ]);
                               });
                         }
                       }
@@ -426,34 +414,33 @@ class _OTPScreenState extends State<OTPScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    semanticLabel: "인증 가능한 기간이 지났습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                    content: Text(
-                      '인증 가능한 기간이 지났습니다. 재시도하세요.',
-                      semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    actions: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                        ),
-                        onPressed: () {
-                          HapticFeedback.lightImpact(); // 약한 진동
-                          Navigator.pop(context);
-                        }, 
-                        child: Text(
-                          '확인',
-                          semanticsLabel: '확인',
-                          style: const TextStyle(
-                            fontSize: 14,
+                      semanticLabel:
+                          "인증 가능한 기간이 지났습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                      content: Text(
+                        '인증 가능한 기간이 지났습니다. 재시도하세요.',
+                        semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
+                        style: TextStyle(
+                            color: Colors.black,
                             fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          ))
-                    )]
-                  );
+                            fontWeight: FontWeight.w500),
+                      ),
+                      actions: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                            ),
+                            onPressed: () {
+                              HapticFeedback.lightImpact(); // 약한 진동
+                              Navigator.pop(context);
+                            },
+                            child: Text('확인',
+                                semanticsLabel: '확인',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                )))
+                      ]);
                 });
           }
         } else {
@@ -465,9 +452,22 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   _onVerificationCompleted(PhoneAuthCredential authCredential) async {
-    await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
-    setState(() {
-      otpCode.text = authCredential.smsCode!;
-    });
+    // try {
+    //   await (await _auth.currentUser)?.updatePhoneNumber(authCredential);
+    //   setState(() {
+    //     otpCode.text = authCredential.smsCode!;
+    //     FirebaseUser(phoneNum: widget.phone);
+    //   });
+    //   storePhoneNum(widget.phone);
+    //   if (await FirebaseAuth.instance.currentUser?.phoneNumber != null) {
+    //     timer?.cancel();
+
+    //     Navigator.pop(context);
+    //     Navigator.push(context,
+    //         MaterialPageRoute(builder: (context) => const SetupUser()));
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
   }
 }

@@ -19,32 +19,15 @@ class _BlockState extends State<Block> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      style: widget.collectionType == 'chat'
-          ? ElevatedButton.styleFrom(
-              side: BorderSide(color: Colors.white, width: 1.5),
-              foregroundColor: widget.primaryColor,
-              backgroundColor: Colors.grey[700])
-          : ElevatedButton.styleFrom(
-              side: BorderSide(color: widget.primaryColor, width: 1.5),
-              foregroundColor: widget.primaryColor,
-            ),
-      child: widget.collectionType == 'chat'
-          ? Text('차단',
-              semanticsLabel: '차단',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w600,
-              ))
-          : Text('차단',
-              semanticsLabel: '차단',
-              style: const TextStyle(
-                color: Color.fromARGB(255, 255, 45, 45),
-                fontSize: 14,
-                fontFamily: 'NanumGothic',
-                fontWeight: FontWeight.w600,
-              )),
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade300),
+      child: Text('차단',
+          semanticsLabel: '차단',
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontFamily: 'NanumGothic',
+            fontWeight: FontWeight.w600,
+          )),
       onPressed: () {
         HapticFeedback.lightImpact(); // 약한 진동
         showDialog(
@@ -76,7 +59,8 @@ class _BlockState extends State<Block> {
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
                                     if (widget.collectionType == 'post') {
-                                      Navigator.pushNamed(context, '/');
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/', (_) => false);
                                     } else {
                                       Navigator.pop(context);
                                     }

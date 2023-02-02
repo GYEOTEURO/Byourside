@@ -73,7 +73,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
                                   softWrap: false,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 19,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'NanumGothic'))),
                           Text(
@@ -89,7 +89,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'NanumGothic',
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
                         ],

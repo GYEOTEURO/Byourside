@@ -46,7 +46,7 @@ class _GroupTileState extends State<GroupTile> {
             contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),
             leading: CircleAvatar(
               radius: 30,
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: primaryColor,
               child: Text(
                 (widget.groupName.split('_')[0] == widget.userName)
                     ? widget.groupName
