@@ -159,12 +159,12 @@ class _participatorState extends State<participator> {
             },
           )));
 
-  void storeParticipatorInfo(
-      String? nickname, String? protectorAge, List<bool>? selectedType) async {
+  void storeParticipatorInfo(String? nickname, String? organizationName,
+      List<bool>? selectedType) async {
     // image url 포함해 firestore에 document 저장
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
       "nickname": nickname,
-      "protectorAge": protectorAge,
+      "organizationName": organizationName,
       "dropdownValue": selectedType,
       "groups": [],
       "profilePic": "",
