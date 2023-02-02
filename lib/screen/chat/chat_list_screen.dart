@@ -220,7 +220,13 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   onPressed: () async {
                     HapticFeedback.lightImpact(); // 약한 진동
                     if (groupName != "") {
-                      if (await checkGroupExist(groupName) != true) {
+                      bool check = true;
+                      for (int i = 0; i < groupName.length; i++) {
+                        if (groupName[i] == '_' || groupName[i] == ' ') {
+                          check = false;
+                        }
+                      }
+                      if (await checkGroupExist(groupName) != true && check) {
                         ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
                             .createGroup(
                                 FirebaseAuth.instance.currentUser!.displayName
@@ -232,6 +238,37 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                 groupName)
                             .whenComplete(() => _isLoading = false);
                         Navigator.of(context).pop();
+                      } else if (check == false) {
+                        if (mounted) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                    semanticLabel: "특수기호 _와 공백은 포함이 불가능합니다.",
+                                    content: Text(
+                                      '특수기호 _와 공백은 포함이 불가능합니다.',
+                                      semanticsLabel: '특수기호 _와 공백은 포함이 불가능합니다.',
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('확인',
+                                              semanticsLabel: '확인',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'NanumGothic',
+                                                fontWeight: FontWeight.w600,
+                                              )))
+                                    ]);
+                              });
+                        }
                       } else {
                         if (mounted) {
                           showDialog(
