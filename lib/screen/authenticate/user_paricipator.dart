@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
 final List<bool> _selectedType = <bool>[false, false];
 
-const List<Widget> gender = <Widget>[
+const List<Widget> type_p = <Widget>[
   Text('홍보', semanticsLabel: '홍보', style: TextStyle(fontSize: 17)),
   Text('모집', semanticsLabel: '모집', style: TextStyle(fontSize: 17))
 ];
@@ -347,7 +347,7 @@ class _participatorState extends State<participator> {
                                         minWidth: width * 0.3,
                                       ),
                                       isSelected: _selectedType,
-                                      children: gender,
+                                      children: type_p,
                                     )
                                   ],
                                 ),
