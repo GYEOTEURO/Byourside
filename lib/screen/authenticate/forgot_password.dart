@@ -160,7 +160,39 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
-      Navigator.of(context).pop();
+      if (mounted) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                  semanticLabel: "메일함을 확인하세요.",
+                  content: Text(
+                    "메일함을 확인하세요.",
+                    semanticsLabel: "메일함을 확인하세요.",
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w500),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                        ),
+                        onPressed: () {
+                          HapticFeedback.lightImpact(); // 약한 진동
+                          Navigator.pop(context);
+                        },
+                        child: Text('확인',
+                            semanticsLabel: '확인',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600,
+                            )))
+                  ]);
+            });
+      }
     } on FirebaseAuthException catch (e) {
       print(e);
       Navigator.of(context).pop();

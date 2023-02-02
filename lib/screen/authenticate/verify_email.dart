@@ -44,11 +44,14 @@ class _VerifyEmailState extends State<VerifyEmail> {
     if (await FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
-    setState(() {
-      if (FirebaseAuth.instance.currentUser != null) {
-        isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (FirebaseAuth.instance.currentUser != null) {
+          isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+        }
+      });
+    }
+
     if (isEmailVerified) timer?.cancel();
   }
 
@@ -57,9 +60,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
       if (user != null) {
-        setState(() => canResendEmail = false);
+        if (mounted) setState(() => canResendEmail = false);
         await Future.delayed(Duration(seconds: 120));
-        setState(() => canResendEmail = true);
+        if (mounted) setState(() => canResendEmail = true);
       }
     } catch (e) {
       if (mounted) {
@@ -68,10 +71,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
             builder: (context) {
               return AlertDialog(
                   semanticLabel:
-                      "재시도하세요. 오류 ${e.toString()} 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                      "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
                   content: Text(
-                    "재시도하세요.\n오류 : ${e.toString()}",
-                    semanticsLabel: "재시도하세요.\n오류 : ${e.toString()}",
+                    "메일함을 확인하세요.\n오류가 지속될 경우 문의해주세요.",
+                    semanticsLabel: "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요.",
                   ),
                   actions: [
                     ElevatedButton(
@@ -179,9 +182,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                             final user = FirebaseAuth.instance.currentUser!;
                             await user.sendEmailVerification();
                             if (user != null) {
-                              setState(() => canResendEmail = false);
+                              if (mounted)
+                                setState(() => canResendEmail = false);
                               await Future.delayed(Duration(seconds: 120));
-                              setState(() => canResendEmail = true);
+                              if (mounted)
+                                setState(() => canResendEmail = true);
                               // sendVerificationEmail();
                             }
                           }))
@@ -204,12 +209,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       ),
                       onPressed: () {
                         HapticFeedback.lightImpact(); // 약한 진동
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        Navigator.pop(context);
+                        // Navigator.of(context)
+                        //     .popUntil((route) => route.isFirst);
 
-                        FirebaseAuth.instance.signOut();
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        // FirebaseAuth.instance.signOut();
+                        // Navigator.of(context)
+                        //     .popUntil((route) => route.isFirst);
                       })
                 ],
               ),

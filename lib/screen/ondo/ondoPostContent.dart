@@ -3,6 +3,8 @@ import 'package:byourside/model/ondo_post.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
+import 'package:carousel_indicator/carousel_indicator.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +30,17 @@ class OndoPostContent extends StatefulWidget {
 
 class _OndoPostContentState extends State<OndoPostContent> {
   final User? user = FirebaseAuth.instance.currentUser;
+  int _current = 0; // 현재 이미지 인덱스
+
   List<String> _decList = [
-    "불법 정보를 포함하고 있습니다.", 
+    "불법 정보를 포함하고 있습니다.",
     "게시판 성격에 부적절합니다.",
     "음란물입니다.",
     "스팸홍보/도배글입니다.",
     "욕설/비하/혐오/차별적 표현을 포함하고 있습니다.",
     "청소년에게 유해한 내용입니다.",
-    "상업적 광고 및 판매글입니다."];
+    "상업적 광고 및 판매글입니다."
+  ];
 
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection("groups");
@@ -72,8 +77,6 @@ class _OndoPostContentState extends State<OndoPostContent> {
       type = "${post.type![0]}/${post.type![1]}";
     }
 
-    String _declaration = _decList[0];
-
     return Column(children: [
       Align(
           alignment: Alignment.centerLeft,
@@ -83,7 +86,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
             ' ${post.title!}',
             semanticsLabel: ' ${post.title!}',
             style: const TextStyle(
-                fontSize: 19,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'NanumGothic'),
           )))),
@@ -180,14 +183,12 @@ class _OndoPostContentState extends State<OndoPostContent> {
         if (user?.uid == post.uid)
           (OutlinedButton(
             style: ElevatedButton.styleFrom(
-              side: BorderSide(color: widget.primaryColor, width: 1.5),
-              foregroundColor: widget.primaryColor,
+              backgroundColor: Colors.grey.shade300,
             ),
-            child: Text(
-                '삭제',
+            child: Text('삭제',
                 semanticsLabel: '글 삭제',
                 style: const TextStyle(
-                  color: Color.fromARGB(255, 255, 45, 45),
+                  color: Colors.black,
                   fontSize: 14,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w600,
@@ -195,88 +196,112 @@ class _OndoPostContentState extends State<OndoPostContent> {
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
               showDialog(
-                context: context, 
-                builder: (context){
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: AlertDialog(
-                    semanticLabel: '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                    title: Text(
-                      '글을 삭제하시겠습니까?',
-                      semanticsLabel: '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w600,
-                      )),
-                    actions: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: widget.primaryColor,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.lightImpact(); // 약한 진동
-                            Navigator.pushNamed(context, '/');
-                            DBSet.deletePost(collectionName!, post.id!);
-                          }, 
-                          child: Text(
-                            '삭제',
-                            semanticsLabel: '삭제',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            ))
-                          ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: widget.primaryColor,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.lightImpact(); // 약한 진동
-                            Navigator.pop(context);
-                          }, 
-                          child: Text(
-                            '취소',
-                            semanticsLabel: '취소',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            ))
-                        )])
-                    ]));
-            });
+                  context: context,
+                  builder: (context) {
+                    return SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: AlertDialog(
+                            semanticLabel:
+                                '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                            title: Text('글을 삭제하시겠습니까?',
+                                semanticsLabel:
+                                    '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            actions: [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: widget.primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context, '/', (_) => false);
+                                          DBSet.deletePost(
+                                              collectionName!, post.id!);
+                                        },
+                                        child: Text('삭제',
+                                            semanticsLabel: '삭제',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            ))),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: widget.primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('취소',
+                                            semanticsLabel: '취소',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w600,
+                                            )))
+                                  ])
+                            ]));
+                  });
             },
           ))
-        else(
-          Row(
-            children: [
-              Declaration(decList: _decList, collectionType: 'post', id: post.id!),
-              Block(nickname: post.nickname!, collectionType: 'post')
+        else
+          (Row(children: [
+            Declaration(
+                decList: _decList, collectionType: 'post', id: post.id!),
+            Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Block(nickname: post.nickname!, collectionType: 'post')),
           ]))
       ]),
       Divider(thickness: 1, height: 1, color: Colors.black),
       if (post.images!.isNotEmpty)
-        (Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-            child: Column(
-              children: [
-                for (int i=0; i<post.images!.length; i++)
-                  Semantics(
-                      label: post.imgInfos![i],
-                      child: Container(
-                        child: Image.network(post.images![i]),
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                      ))
-              ],
-            ))),
+        (Column(children: [
+          Container(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              child: CarouselSlider(
+                  items: List.generate(post.images!.length, (index) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Semantics(
+                            label: post.imgInfos![index],
+                            child: Image.network(post.images![index])));
+                  }),
+                  options: CarouselOptions(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      initialPage: 0,
+                      autoPlay: false,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                      viewportFraction: 1,
+                      aspectRatio: 2.0,
+                      onPageChanged: ((idx, reason) {
+                        setState(() {
+                          _current = idx;
+                        });
+                      })))),
+          Semantics(
+            label: "현재 보이는 사진 순서 표시",
+            child: CarouselIndicator(
+              count: post.images!.length,
+              index: _current,
+              color: Colors.black26,
+              activeColor: widget.primaryColor,
+            ),
+          ),
+        ])),
       Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+          padding: EdgeInsets.fromLTRB(0, 25, 0, 20),
           alignment: Alignment.centerLeft,
           child: SelectionArea(
               child: Text(
@@ -356,11 +381,11 @@ class _OndoPostContentState extends State<OndoPostContent> {
             return const SelectionArea(
                 child: Center(
                     child: Text('게시물을 찾을 수 없습니다.',
-                    semanticsLabel: '게시물을 찾을 수 없습니다.',
-                    style: TextStyle(
-                      fontFamily: 'NanumGothic',
-                      fontWeight: FontWeight.w600,
-                    ))));
+                        semanticsLabel: '게시물을 찾을 수 없습니다.',
+                        style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        ))));
         });
   }
 }

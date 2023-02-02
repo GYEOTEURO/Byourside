@@ -121,15 +121,25 @@ class _SearchPageState extends State<SearchPage> {
           isLoading = true;
         });
       }
-      await ChatList().searchByName(searchController.text).then((snapshot) {
+      if(searchController.text.contains('_')){
         if (mounted) {
           setState(() {
-            searchSnapshot = snapshot;
             isLoading = false;
-            hasUserSearched = true;
+            hasUserSearched = false;
           });
         }
+      }
+      else{
+        await ChatList().searchByName(searchController.text).then((snapshot) {
+          if (mounted) {
+            setState(() {
+              searchSnapshot = snapshot;
+              isLoading = false;
+              hasUserSearched = true;
+            });
+          }
       });
+     }
     }
   }
 

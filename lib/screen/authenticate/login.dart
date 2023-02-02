@@ -227,7 +227,7 @@ class _Login extends State<Login> {
           "로그인",
           semanticsLabel: "로그인",
           style: TextStyle(
-              color: Theme.of(context).primaryColorLight,
+              color: Colors.white,
               fontSize: 17,
               fontFamily: 'NanumGothic',
               fontWeight: FontWeight.w500),
