@@ -1,5 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/screen/authenticate/login_screen.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/using_policy.dart';
 import 'package:byourside/screen/mypage/myBlock.dart';
@@ -85,7 +86,12 @@ class _Mypage extends State<Mypage> {
     await _auth.signOut();
     setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.pushNamed(context, '/login');
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => LoginScreen(
+        primaryColor: primaryColor,
+      ),
+    ));
+    // Navigator.pushNamed(context, '/login');
   }
 
   // void _withdrawal(context, password) async {
@@ -215,7 +221,12 @@ class _Mypage extends State<Mypage> {
           await _auth.signOut();
           setState(() {});
           Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.pushNamed(context, '/login');
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => LoginScreen(
+              primaryColor: primaryColor,
+            ),
+          ));
+          // Navigator.pushNamed(context, '/login');
         },
         child: Text(
           "Log out",
