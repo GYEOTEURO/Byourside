@@ -146,6 +146,11 @@ class _participatorState extends State<participator> {
             controller: _nickname,
             validator: (value) {
               if (value != null) {
+                for (int i = 0; i < value.length; i++) {
+                  if (value[i] == '_') {
+                    return '특수기호 _는 포함이 불가능합니다.';
+                  }
+                }
                 if (value.split(' ').first != '' && value.isNotEmpty) {
                   return null;
                 }
@@ -217,6 +222,16 @@ class _participatorState extends State<participator> {
                           style: TextStyle(
                               color: primaryColor,
                               fontSize: 17,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: height * 0.01),
+                        Text(
+                          "특수기호 '_'는 사용이 불가합니다.",
+                          semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 14,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600),
                         ),
