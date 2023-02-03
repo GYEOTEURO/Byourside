@@ -33,9 +33,8 @@ class _BlockState extends State<Block> {
         showDialog(
             context: context,
             builder: (context) {
-              return SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: AlertDialog(
+              return AlertDialog(
+                      scrollable: true,
                       semanticLabel:
                           '사용자를 차단하시겠습니까? 사용자를 차단하면, 해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다. 차단 목록 확인과 관리는 마이페이지의 사용자 차단하기에서 확인하실 수 있습니다. 차단을 원하시면 하단 왼쪽의 차단 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                       title: Text(
@@ -89,7 +88,7 @@ class _BlockState extends State<Block> {
                                         fontWeight: FontWeight.w600,
                                       )))
                             ])
-                      ]));
+                      ]);
             });
       },
     );
