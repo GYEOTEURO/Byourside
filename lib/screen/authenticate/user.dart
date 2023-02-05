@@ -4,6 +4,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/user_protector.dart';
+import 'package:byourside/screen/authenticate/user_self.dart';
 import 'package:byourside/screen/authenticate/user_someoneElse.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,13 +130,41 @@ class _SetupUserState extends State<SetupUser> {
                                       HapticFeedback.lightImpact(); // 약한 진동
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
+                                            builder: (context) => self()),
+                                      );
+                                    },
+                                    child: Text(
+                                      '장애인 당사자',
+                                      semanticsLabel: '장애인 당사자',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w500),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
+                              SizedBox(height: height * 0.04),
+                              Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Theme.of(context).primaryColor,
+                                  child: MaterialButton(
+                                    minWidth:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    onPressed: () {
+                                      HapticFeedback.lightImpact(); // 약한 진동
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
                                             builder: (context) =>
                                                 someoneElse()),
                                       );
                                     },
                                     child: Text(
-                                      '그외',
-                                      semanticsLabel: '그외',
+                                      '그 외',
+                                      semanticsLabel: '그 외',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
