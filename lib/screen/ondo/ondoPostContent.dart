@@ -198,9 +198,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: AlertDialog(
+                    return AlertDialog(
+                            scrollable: true,
                             semanticLabel:
                                 '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                             title: Text('글을 삭제하시겠습니까?',
@@ -251,7 +250,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                                               fontWeight: FontWeight.w600,
                                             )))
                                   ])
-                            ]));
+                            ]);
                   });
             },
           ))
