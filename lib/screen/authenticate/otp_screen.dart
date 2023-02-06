@@ -26,10 +26,10 @@ class _OTPScreenState extends State<OTPScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Timer? timer;
   bool canResnedPhone = false;
-
   @override
   void initState() {
     super.initState();
+
     if (FirebaseAuth.instance.currentUser != null) {
       isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber !=
               null &&
@@ -108,6 +108,11 @@ class _OTPScreenState extends State<OTPScreen> {
     if (isPhoneVerified) {
       return SetupUser();
     } else {
+      String phone1 = widget.phone.substring(0, 2);
+      String phone2 = widget.phone.substring(2, 6);
+      String phone3 = widget.phone.substring(
+        6,
+      );
       final user = Provider.of<FirebaseUser?>(context);
       return Scaffold(
           key: _formKey,
@@ -127,15 +132,35 @@ class _OTPScreenState extends State<OTPScreen> {
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
+            padding: EdgeInsets.all(20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "2/4",
+                        semanticsLabel: "2/4",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 20,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
-                  margin: EdgeInsets.only(top: 40),
+                  margin: EdgeInsets.only(top: 20),
                   child: Center(
                       child: Column(children: [
                     Text(
-                      '+82-${widget.phone}로 전송된\n인증번호를 입력하세요.',
-                      semanticsLabel: "+82-${widget.phone}로 전송된\n인증번호를 입력하세요.",
+                      '0${phone1} ${phone2} ${phone3}로 전송된\n인증번호를 입력하세요.',
+                      semanticsLabel:
+                          "0${phone1} ${phone2} ${phone3}로 전송된\n인증번호를 입력하세요.",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
@@ -248,100 +273,107 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(primaryColor),
-                    ),
-                    onPressed: () async {
-                      HapticFeedback.lightImpact(); // 약한 진동
-                      String pin = otpCode.text.toString();
-                      try {
-                        if (FirebaseAuth.instance.currentUser!.phoneNumber ==
-                            null) {
-                          final PhoneAuthCredential credential =
-                              PhoneAuthProvider.credential(
-                                  verificationId: _verificationId!,
-                                  smsCode: pin);
-                          await _auth.currentUser
-                              ?.updatePhoneNumber(credential);
-                          storePhoneNum(widget.phone);
-                          await _auth
-                              .signInWithCredential(credential)
-                              .then((value) async {
-                            if (value.user != null) {
-                              setState(() {
-                                FirebaseUser(
-                                    uid: value.user?.uid,
-                                    phoneNum: widget.phone);
-                              });
-                              await FirebaseAuth.instance.currentUser!.reload();
-                            }
-                          });
-                          await FirebaseAuth.instance.currentUser!.reload();
+                  child: Container(
+                    margin: EdgeInsets.all(20),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(primaryColor),
+                      ),
+                      onPressed: () async {
+                        HapticFeedback.lightImpact(); // 약한 진동
+                        String pin = otpCode.text.toString();
+                        try {
+                          if (FirebaseAuth.instance.currentUser!.phoneNumber ==
+                              null) {
+                            final PhoneAuthCredential credential =
+                                PhoneAuthProvider.credential(
+                                    verificationId: _verificationId!,
+                                    smsCode: pin);
+                            await _auth.currentUser
+                                ?.updatePhoneNumber(credential);
+                            storePhoneNum(widget.phone);
+                            await _auth
+                                .signInWithCredential(credential)
+                                .then((value) async {
+                              if (value.user != null) {
+                                setState(() {
+                                  FirebaseUser(
+                                      uid: value.user?.uid,
+                                      phoneNum: widget.phone);
+                                });
+                                await FirebaseAuth.instance.currentUser!
+                                    .reload();
+                              }
+                            });
+                            await FirebaseAuth.instance.currentUser!.reload();
+                          }
+                          if (user?.phoneNum == null || user?.phoneNum == "") {
+                            setState(() {
+                              FirebaseUser(
+                                  uid: user?.uid, phoneNum: widget.phone);
+                            });
+                          }
+                          if (await FirebaseAuth
+                                      .instance.currentUser?.phoneNumber !=
+                                  null &&
+                              !(user?.phoneNum == null ||
+                                  user?.phoneNum == "")) {
+                            timer?.cancel();
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SetupUser()));
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                      semanticLabel:
+                                          "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                      content: Text(
+                                        "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                        semanticsLabel:
+                                            "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'NanumGothic',
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: primaryColor,
+                                            ),
+                                            onPressed: () {
+                                              HapticFeedback
+                                                  .lightImpact(); // 약한 진동
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('확인',
+                                                semanticsLabel: '확인',
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'NanumGothic',
+                                                  fontWeight: FontWeight.w600,
+                                                )))
+                                      ]);
+                                });
+                          }
                         }
-                        if (user?.phoneNum == null || user?.phoneNum == "") {
-                          setState(() {
-                            FirebaseUser(
-                                uid: user?.uid, phoneNum: widget.phone);
-                          });
-                        }
-                        if (await FirebaseAuth
-                                    .instance.currentUser?.phoneNumber !=
-                                null &&
-                            !(user?.phoneNum == null || user?.phoneNum == "")) {
-                          timer?.cancel();
-                          Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SetupUser()));
-                        }
-                      } catch (e) {
-                        if (mounted) {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                    semanticLabel:
-                                        "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                    content: Text(
-                                      "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                      semanticsLabel:
-                                          "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'NanumGothic',
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    actions: [
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: primaryColor,
-                                          ),
-                                          onPressed: () {
-                                            HapticFeedback
-                                                .lightImpact(); // 약한 진동
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('확인',
-                                              semanticsLabel: '확인',
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontFamily: 'NanumGothic',
-                                                fontWeight: FontWeight.w600,
-                                              )))
-                                    ]);
-                              });
-                        }
-                      }
-                    },
-                    child: Text(
-                      "다음",
-                      semanticsLabel: "다음",
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w500),
+                      },
+                      child: Text(
+                        "다음",
+                        semanticsLabel: "다음",
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),

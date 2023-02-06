@@ -238,7 +238,24 @@ class _protectorState extends State<protector> {
         ),
         body: SingleChildScrollView(
             child: Column(children: [
-          Column(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "3/4",
+                    semanticsLabel: "3/4",
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 20,
+                        fontFamily: 'NanumGothic',
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
             Form(
                 key: _formKey_protector,
                 child: Padding(

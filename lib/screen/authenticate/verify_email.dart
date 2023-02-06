@@ -41,6 +41,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   Future checkEmailVerified() async {
     // call after email verification
+    // print(canResendEmail);
     if (await FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
@@ -61,6 +62,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
       await user.sendEmailVerification();
       if (user != null) {
         if (mounted) setState(() => canResendEmail = false);
+        // print("here");
         await Future.delayed(Duration(seconds: 120));
         if (mounted) setState(() => canResendEmail = true);
       }
@@ -122,104 +124,131 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 Navigator.pop(context);
               }),
         ),
-        body: Padding(
-            padding: EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Text(
-                      '확인 이메일이 전송되었습니다.\n메일함을 확인하세요.',
-                      semanticsLabel: '확인 이메일이 전송되었습니다. 메일함을 확인하세요.',
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: primaryColor,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w500),
-                      textAlign: TextAlign.center,
-                    ),
+        body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "4/4",
+                        semanticsLabel: "4/4",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 20,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: height * 0.1),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Text(
-                      '(2분 후 재전송 가능합니다)',
-                      semanticsLabel: '(2분 후 재전송 가능합니다)',
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: primaryColor,
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w500),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: height * 0.1),
-                  canResendEmail
-                      ? ElevatedButton.icon(
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          '확인 이메일이 전송되었습니다.\n메일함을 확인하세요.',
+                          semanticsLabel: '확인 이메일이 전송되었습니다. 메일함을 확인하세요.',
+                          style: TextStyle(
+                              fontSize: 24,
+                              color: primaryColor,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: height * 0.1),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          '(2분 후 재전송 가능합니다)',
+                          semanticsLabel: '(2분 후 재전송 가능합니다)',
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: primaryColor,
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: height * 0.1),
+                      canResendEmail
+                          ? Container(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                      minimumSize: Size.fromHeight(50),
+                                      backgroundColor: primaryColor),
+                                  icon: const Icon(
+                                    Icons.email,
+                                    size: 32,
+                                    color: Colors.white,
+                                    semanticLabel: "메일", //semanticLabel 속성 추가하기
+                                  ),
+                                  label: Text(
+                                    '이메일 재전송',
+                                    semanticsLabel: "이메일 재전송",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  onPressed: (() async {
+                                    HapticFeedback.lightImpact(); // 약한 진동
+
+                                    final user =
+                                        FirebaseAuth.instance.currentUser!;
+                                    await user.sendEmailVerification();
+                                    if (user != null) {
+                                      if (mounted)
+                                        setState(() => canResendEmail = false);
+                                      // print("ss");
+                                      await Future.delayed(
+                                          Duration(seconds: 120));
+                                      if (mounted)
+                                        setState(() => canResendEmail = true);
+                                      // sendVerificationEmail();
+                                    }
+                                  })))
+                          : SizedBox(
+                              height: height * 0.03,
+                            ),
+                      SizedBox(height: height * 0.03),
+                      TextButton(
                           style: ElevatedButton.styleFrom(
-                              minimumSize: Size.fromHeight(50),
-                              backgroundColor: primaryColor),
-                          icon: const Icon(
-                            Icons.email,
-                            size: 32,
-                            color: Colors.white,
-                            semanticLabel: "메일", //semanticLabel 속성 추가하기
+                            minimumSize: Size.fromHeight(50),
                           ),
-                          label: Text(
-                            '이메일 재전송',
-                            semanticsLabel: "이메일 재전송",
+                          child: Text(
+                            '취소',
+                            semanticsLabel: '취소',
                             style: TextStyle(
                                 fontSize: 24,
+                                color: primaryColor,
                                 fontFamily: 'NanumGothic',
                                 fontWeight: FontWeight.w500),
                           ),
-                          onPressed: (() async {
+                          onPressed: () {
                             HapticFeedback.lightImpact(); // 약한 진동
+                            Navigator.pop(context);
+                            // Navigator.of(context)
+                            //     .popUntil((route) => route.isFirst);
 
-                            final user = FirebaseAuth.instance.currentUser!;
-                            await user.sendEmailVerification();
-                            if (user != null) {
-                              if (mounted)
-                                setState(() => canResendEmail = false);
-                              await Future.delayed(Duration(seconds: 120));
-                              if (mounted)
-                                setState(() => canResendEmail = true);
-                              // sendVerificationEmail();
-                            }
-                          }))
-                      : SizedBox(
-                          height: height * 0.03,
-                        ),
-                  SizedBox(height: height * 0.03),
-                  TextButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size.fromHeight(50),
-                      ),
-                      child: Text(
-                        '취소',
-                        semanticsLabel: '취소',
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: primaryColor,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w500),
-                      ),
-                      onPressed: () {
-                        HapticFeedback.lightImpact(); // 약한 진동
-                        Navigator.pop(context);
-                        // Navigator.of(context)
-                        //     .popUntil((route) => route.isFirst);
-
-                        // FirebaseAuth.instance.signOut();
-                        // Navigator.of(context)
-                        //     .popUntil((route) => route.isFirst);
-                      })
-                ],
-              ),
-            )),
+                            // FirebaseAuth.instance.signOut();
+                            // Navigator.of(context)
+                            //     .popUntil((route) => route.isFirst);
+                          })
+                    ],
+                  ),
+                ),
+              ])
+            ])),
       );
     }
   }

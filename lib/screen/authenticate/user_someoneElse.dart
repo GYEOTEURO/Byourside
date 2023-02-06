@@ -259,53 +259,70 @@ class _someoneElseState extends State<someoneElse> {
               }),
         ),
         body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Form(
-              key: _formKey_someoneELse,
-              child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+            scrollDirection: Axis.vertical,
+            child: Column(children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: height * 0.04),
-                        Text(
-                          "닉네임을 입력하세요.",
-                          semanticsLabel: "닉네임을 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Text(
-                          "특수기호 '_'는 사용이 불가합니다.",
-                          semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.03),
-                        nicknameField,
-                        SizedBox(height: height * 0.03),
-                        Text(
-                          "방문 목적을 입력하세요.",
-                          semanticsLabel: "방문 목적을 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.03),
-                        someoneElseField
-                      ])),
-            )
-          ]),
-        ),
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "3/4",
+                        semanticsLabel: "3/4",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 20,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                Form(
+                  key: _formKey_someoneELse,
+                  child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "닉네임을 입력하세요.",
+                              semanticsLabel: "닉네임을 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.01),
+                            Text(
+                              "특수기호 '_'는 사용이 불가합니다.",
+                              semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.03),
+                            nicknameField,
+                            SizedBox(height: height * 0.03),
+                            Text(
+                              "방문 목적을 입력하세요.",
+                              semanticsLabel: "방문 목적을 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.03),
+                            someoneElseField
+                          ])),
+                )
+              ]),
+            ])),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동

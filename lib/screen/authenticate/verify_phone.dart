@@ -79,7 +79,25 @@ class _VerifyPhoneState extends State<VerifyPhone> {
           scrollDirection: Axis.vertical,
           padding: EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "2/4",
+                      semanticsLabel: "2/4",
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 20,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: height * 0.02),
               Container(
                 child: const Center(
@@ -175,7 +193,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               SizedBox(height: height * 0.02),
               Container(
                 margin: EdgeInsets.all(20),
-                // width: double.infinity,
+                width: double.infinity,
                 child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
