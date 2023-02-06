@@ -8,6 +8,7 @@ import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // change to 개인정보처리방침
@@ -370,9 +371,28 @@ class _Register extends State<Register> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
+          padding: EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "1/4",
+                      semanticsLabel: "1/4",
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 20,
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+              ),
               Form(
                 autovalidateMode: AutovalidateMode.always,
                 key: _formKey,

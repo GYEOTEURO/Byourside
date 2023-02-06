@@ -287,207 +287,232 @@ class selfState extends State<self> {
               }),
         ),
         body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Form(
-              key: _formKey_self,
-              child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+            scrollDirection: Axis.vertical,
+            child: Column(children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: height * 0.04),
-                        Text(
-                          "닉네임을 입력하세요.",
-                          semanticsLabel: "닉네임을 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Text(
-                          "특수기호 '_'는 사용이 불가합니다.",
-                          semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.03),
-                        nicknameField,
-                        SizedBox(height: height * 0.04),
-                        Text(
-                          "나이를 입력하세요.",
-                          semanticsLabel: "나이를 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.02),
-                        Semantics(
-                            container: true,
-                            textField: true,
-                            label: "나이",
-                            hint: '(예: 21)',
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "나이",
-                                hintText: "(예: 21)",
-                                floatingLabelStyle: TextStyle(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "3/4",
+                        semanticsLabel: "3/4",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 20,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                Form(
+                  key: _formKey_self,
+                  child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "닉네임을 입력하세요.",
+                              semanticsLabel: "닉네임을 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.01),
+                            Text(
+                              "특수기호 '_'는 사용이 불가합니다.",
+                              semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.03),
+                            nicknameField,
+                            SizedBox(height: height * 0.04),
+                            Text(
+                              "나이를 입력하세요.",
+                              semanticsLabel: "나이를 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.02),
+                            Semantics(
+                                container: true,
+                                textField: true,
+                                label: "나이",
+                                hint: '(예: 21)',
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: "나이",
+                                    hintText: "(예: 21)",
+                                    floatingLabelStyle: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 22,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    errorStyle: TextStyle(
+                                        color: Color.fromARGB(255, 255, 45, 45),
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    labelStyle: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: primaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 255, 45, 45)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: primaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(32.0)),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  controller: _selfAge,
+                                  validator: (value) {
+                                    if (value != null) {
+                                      if (value.split(' ').first != '' &&
+                                          value.isNotEmpty &&
+                                          isNumeric(value)) {
+                                        return null;
+                                      }
+                                      return '숫자만 입력 가능합니다.';
+                                    }
+                                  },
+                                )),
+                            SizedBox(height: height * 0.03),
+                            Text(
+                              "방문 목적을 입력하세요.",
+                              semanticsLabel: "방문 목적을 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.03),
+                            someoneElseField,
+                            SizedBox(height: height * 0.03),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "장애 유형",
+                                    semanticsLabel: "장애 유형",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      HapticFeedback.lightImpact(); // 약한 진동
+                                      setState(() {
+                                        _selectedType[index] = true;
+                                        _selectedType[(1 - index).abs()] =
+                                            false;
+                                      });
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
                                     color: primaryColor,
-                                    fontSize: 22,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                errorStyle: TextStyle(
-                                    color: Color.fromARGB(255, 255, 45, 45),
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                contentPadding: const EdgeInsets.fromLTRB(
-                                    20.0, 15.0, 20.0, 15.0),
-                                hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                labelStyle: TextStyle(
+                                    constraints: BoxConstraints(
+                                      minHeight: height * 0.06,
+                                      minWidth: width * 0.3,
+                                    ),
+                                    isSelected: _selectedType,
+                                    children: type,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: height * 0.03),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "장애 정도",
+                                    semanticsLabel: "장애 정도",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  ToggleButtons(
+                                    direction: Axis.horizontal,
+                                    onPressed: (int index) {
+                                      HapticFeedback.lightImpact(); // 약한 진동
+                                      setState(() {
+                                        _selectedDegree[index] = true;
+                                        _selectedDegree[(1 - index).abs()] =
+                                            false;
+                                      });
+                                    },
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    selectedBorderColor: primaryColor,
+                                    selectedColor: Colors.white,
+                                    fillColor: primaryColor,
                                     color: primaryColor,
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: primaryColor),
-                                    borderRadius: BorderRadius.circular(20)),
-                                errorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 255, 45, 45)),
-                                    borderRadius: BorderRadius.circular(20)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: primaryColor),
-                                    borderRadius: BorderRadius.circular(20)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(32.0)),
+                                    constraints: BoxConstraints(
+                                      minHeight: height * 0.06,
+                                      minWidth: width * 0.3,
+                                    ),
+                                    isSelected: _selectedDegree,
+                                    children: degree,
+                                  ),
+                                ],
                               ),
-                              keyboardType: TextInputType.number,
-                              controller: _selfAge,
-                              validator: (value) {
-                                if (value != null) {
-                                  if (value.split(' ').first != '' &&
-                                      value.isNotEmpty &&
-                                      isNumeric(value)) {
-                                    return null;
-                                  }
-                                  return '숫자만 입력 가능합니다.';
-                                }
-                              },
-                            )),
-                        SizedBox(height: height * 0.03),
-                        Text(
-                          "방문 목적을 입력하세요.",
-                          semanticsLabel: "방문 목적을 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.03),
-                        someoneElseField,
-                        SizedBox(height: height * 0.03),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "장애 유형",
-                                semanticsLabel: "장애 유형",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              ToggleButtons(
-                                direction: Axis.horizontal,
-                                onPressed: (int index) {
-                                  HapticFeedback.lightImpact(); // 약한 진동
-                                  setState(() {
-                                    _selectedType[index] = true;
-                                    _selectedType[(1 - index).abs()] = false;
-                                  });
-                                },
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
-                                selectedBorderColor: primaryColor,
-                                selectedColor: Colors.white,
-                                fillColor: primaryColor,
-                                color: primaryColor,
-                                constraints: BoxConstraints(
-                                  minHeight: height * 0.06,
-                                  minWidth: width * 0.3,
-                                ),
-                                isSelected: _selectedType,
-                                children: type,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: height * 0.03),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "장애 정도",
-                                semanticsLabel: "장애 정도",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              ToggleButtons(
-                                direction: Axis.horizontal,
-                                onPressed: (int index) {
-                                  HapticFeedback.lightImpact(); // 약한 진동
-                                  setState(() {
-                                    _selectedDegree[index] = true;
-                                    _selectedDegree[(1 - index).abs()] = false;
-                                  });
-                                },
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
-                                selectedBorderColor: primaryColor,
-                                selectedColor: Colors.white,
-                                fillColor: primaryColor,
-                                color: primaryColor,
-                                constraints: BoxConstraints(
-                                  minHeight: height * 0.06,
-                                  minWidth: width * 0.3,
-                                ),
-                                isSelected: _selectedDegree,
-                                children: degree,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: height * 0.03),
-                      ])),
-            )
-          ]),
-        ),
+                            ),
+                            SizedBox(height: height * 0.03),
+                          ])),
+                )
+              ]),
+            ])),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동

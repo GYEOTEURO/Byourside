@@ -49,9 +49,26 @@ class _SetupUserState extends State<SetupUser> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "3/4",
+                                      semanticsLabel: "3/4",
+                                      style: TextStyle(
+                                          color: primaryColor,
+                                          fontSize: 20,
+                                          fontFamily: 'NanumGothic',
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               SizedBox(
                                 height: height * 0.04,
                                 width: width * 0.8,

@@ -206,157 +206,182 @@ class _participatorState extends State<participator> {
               }),
         ),
         body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Form(
-              key: _formKey_participator,
-              child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+            scrollDirection: Axis.vertical,
+            child: Column(children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: height * 0.02),
-                        Text(
-                          "닉네임을 입력하세요.",
-                          semanticsLabel: "닉네임을 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Text(
-                          "특수기호 '_'는 사용이 불가합니다.",
-                          semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.04),
-                        nicknameField,
-                        SizedBox(height: height * 0.04),
-                        Text(
-                          "개인/단체 이름을 입력하세요.",
-                          semanticsLabel: "개인/단체 이름을 입력하세요.",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: height * 0.04),
-                        Semantics(
-                            container: true,
-                            textField: true,
-                            label: '개인/단체 이름',
-                            hint: '(예: 00복지관)',
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                floatingLabelStyle: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 22,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                errorStyle: TextStyle(
-                                    color: Color.fromARGB(255, 255, 45, 45),
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                contentPadding: const EdgeInsets.fromLTRB(
-                                    20.0, 15.0, 20.0, 15.0),
-                                labelText: "개인/단체 이름",
-                                hintText: "(예: 00복지관)",
-                                hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                labelStyle: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 17,
-                                    fontFamily: 'NanumGothic',
-                                    fontWeight: FontWeight.w500),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                    borderRadius: BorderRadius.circular(20)),
-                                errorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 255, 45, 45)),
-                                    borderRadius: BorderRadius.circular(20)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                    borderRadius: BorderRadius.circular(20)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(32.0)),
-                              ),
-                              controller: _organizationName,
-                              validator: (value) {
-                                if (value != null) {
-                                  if (value.split(' ').first != '' &&
-                                      value.isNotEmpty) {
-                                    return null;
-                                  }
-                                  return '필수 입력란입니다. 개인/단체 이름을 입력하세요';
-                                }
-                              },
-                            )),
-                        SizedBox(height: height * 0.05),
-                        Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(children: [
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "소속",
-                                      semanticsLabel: "소속",
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          fontFamily: 'NanumGothic',
-                                          fontWeight: FontWeight.w500),
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "3/4",
+                        semanticsLabel: "3/4",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 20,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                Form(
+                  key: _formKey_participator,
+                  child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "닉네임을 입력하세요.",
+                              semanticsLabel: "닉네임을 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.01),
+                            Text(
+                              "특수기호 '_'는 사용이 불가합니다.",
+                              semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.04),
+                            nicknameField,
+                            SizedBox(height: height * 0.04),
+                            Text(
+                              "개인/단체 이름을 입력하세요.",
+                              semanticsLabel: "개인/단체 이름을 입력하세요.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 17,
+                                  fontFamily: 'NanumGothic',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: height * 0.04),
+                            Semantics(
+                                container: true,
+                                textField: true,
+                                label: '개인/단체 이름',
+                                hint: '(예: 00복지관)',
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    floatingLabelStyle: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 22,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    errorStyle: TextStyle(
+                                        color: Color.fromARGB(255, 255, 45, 45),
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20.0, 15.0, 20.0, 15.0),
+                                    labelText: "개인/단체 이름",
+                                    hintText: "(예: 00복지관)",
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    labelStyle: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 17,
+                                        fontFamily: 'NanumGothic',
+                                        fontWeight: FontWeight.w500),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 255, 45, 45)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(32.0)),
+                                  ),
+                                  controller: _organizationName,
+                                  validator: (value) {
+                                    if (value != null) {
+                                      if (value.split(' ').first != '' &&
+                                          value.isNotEmpty) {
+                                        return null;
+                                      }
+                                      return '필수 입력란입니다. 개인/단체 이름을 입력하세요';
+                                    }
+                                  },
+                                )),
+                            SizedBox(height: height * 0.05),
+                            Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(children: [
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "소속",
+                                          semanticsLabel: "소속",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontFamily: 'NanumGothic',
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.1,
+                                        ),
+                                        ToggleButtons(
+                                          direction: Axis.horizontal,
+                                          onPressed: (int index) {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            setState(() {
+                                              _selectedType[index] = true;
+                                              _selectedType[(1 - index).abs()] =
+                                                  false;
+                                            });
+                                          },
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          selectedBorderColor: primaryColor,
+                                          selectedColor: Colors.white,
+                                          fillColor: primaryColor,
+                                          color: primaryColor,
+                                          constraints: BoxConstraints(
+                                            minHeight: height * 0.06,
+                                            minWidth: width * 0.3,
+                                          ),
+                                          isSelected: _selectedType,
+                                          children: type_p,
+                                        )
+                                      ],
                                     ),
-                                    SizedBox(
-                                      width: width * 0.1,
-                                    ),
-                                    ToggleButtons(
-                                      direction: Axis.horizontal,
-                                      onPressed: (int index) {
-                                        HapticFeedback.lightImpact(); // 약한 진동
-                                        setState(() {
-                                          _selectedType[index] = true;
-                                          _selectedType[(1 - index).abs()] =
-                                              false;
-                                        });
-                                      },
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(8)),
-                                      selectedBorderColor: primaryColor,
-                                      selectedColor: Colors.white,
-                                      fillColor: primaryColor,
-                                      color: primaryColor,
-                                      constraints: BoxConstraints(
-                                        minHeight: height * 0.06,
-                                        minWidth: width * 0.3,
-                                      ),
-                                      isSelected: _selectedType,
-                                      children: type_p,
-                                    )
-                                  ],
-                                ),
-                              )
-                            ]))
-                      ])),
-            )
-          ]),
-        ),
+                                  )
+                                ]))
+                          ])),
+                )
+              ]),
+            ])),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
