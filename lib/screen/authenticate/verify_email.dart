@@ -135,8 +135,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "4/4",
-                        semanticsLabel: "4/4",
+                        "4/4 단계",
+                        semanticsLabel: "4/4 단계",
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 20,
