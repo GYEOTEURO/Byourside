@@ -142,8 +142,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "2/4",
-                        semanticsLabel: "2/4",
+                        "2/4 단계",
+                        semanticsLabel: "2/4 단계",
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 20,

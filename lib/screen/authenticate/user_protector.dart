@@ -245,8 +245,8 @@ class _protectorState extends State<protector> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "3/4",
-                    semanticsLabel: "3/4",
+                    "3/4 단계",
+                    semanticsLabel: "3/4 단계",
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 20,

@@ -382,8 +382,8 @@ class _Register extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "1/4",
-                      semanticsLabel: "1/4",
+                      "1/4 단계",
+                      semanticsLabel: "1/4 단계",
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 20,
