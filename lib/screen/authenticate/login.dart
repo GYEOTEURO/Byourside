@@ -123,7 +123,7 @@ class _Login extends State<Login> {
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility : Icons.visibility_off,
-                  semanticLabel: "비밀번호 보기",
+                  semanticLabel: _obscureText ? "비밀번호 보기 활성화" : "비밀번호 보기 비활성화",
                   color: primaryColor,
                 ),
                 onPressed: () {
