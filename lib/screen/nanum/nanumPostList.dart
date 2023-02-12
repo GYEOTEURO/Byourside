@@ -178,7 +178,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       (completedValue == true)
                           ? (IconButton(
                               icon: Icon(Icons.check_box_outlined,
-                                  semanticLabel: "거래 완료 포함",
+                                  semanticLabel: "비활성화됨. 거래 완료 제외",
                                   color: Colors.white),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
@@ -186,7 +186,7 @@ class _NanumPostListState extends State<NanumPostList> {
                               }))
                           : (IconButton(
                               icon: Icon(Icons.square_rounded,
-                                  semanticLabel: "거래 완료 제외",
+                                  semanticLabel: "활성화됨. 거래 완료 제외",
                                   color: Colors.white),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
