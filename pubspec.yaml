@@ -67,6 +67,7 @@ dependencies:
   carousel_indicator:
   multiple_stream_builder: ^3.0.2
   percent_indicator: ^4.0.1
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
