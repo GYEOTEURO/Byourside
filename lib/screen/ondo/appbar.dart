@@ -1,7 +1,7 @@
 import 'package:byourside/main.dart';
 import 'package:flutter/material.dart';
 
-class OndoAppBar extends StatefulWidget with PreferredSizeWidget {
+class OndoAppBar extends StatefulWidget implements PreferredSizeWidget {
   const OndoAppBar({Key? key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
 

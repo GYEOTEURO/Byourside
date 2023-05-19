@@ -29,7 +29,7 @@ class DBSet {
         await imageRef.putFile(file);
         final String url = await imageRef.getDownloadURL();
         urls.add(url);
-      } on FirebaseException catch(e) {} 
+      } on FirebaseException {} 
     } 
 
     return urls;
