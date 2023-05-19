@@ -75,6 +75,7 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons:
   change_app_package_name:
+  test: ^1.24.1
 flutter_icons:
   android: true
   ios: true
