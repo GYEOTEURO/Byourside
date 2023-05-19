@@ -10,44 +10,41 @@ on:
     branches: [ "test" ]
   pull_request:
     branches: [ "test" ]
-
+    
 jobs:
-  flutter_test:
-    name: Run flutter test and analyze
+  # 하나의 job을 "build"라고 합니다.
+  # 이번 실습에서는 하나의 job 만을 사용할
+  # 것이기 때문에 하나의 build만 정의될 것입니다.
+  build:
+    name: Running Test and CI / CD
+    # 해당 작업이 실행 될 인스턴스 환경입니다.
+    # 이번 실습에서는 ubuntu 를 사용할 것입니다.
     runs-on: ubuntu-latest
-
+    # job의 구성요소인 step들을 정의한 공간입니다.
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter_action@v1
+      # 하나의 step은 name 과 uses(혹은 run)으로 구성
+      # name은 step의 이름이 정의되어 있고
+      # uses 는 미리 만들어진 action을 이용하는 것이고
+      # run 은 직접 인스턴스에 커맨드를 실행하는 것입니다.
+      # 첫번째 스텝은 action입니다
+      # Github repository의 소스를 가져오는 action입니다.
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      
+      # 두번째 step은 인스턴스에 Flutter SDK를 설치하는 action 입니다.
+      # with 커맨드를 사용하여 SDK의 상세 버전을 설정할 수 있습니다.
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v1
         with:
-          channel: "stable"
-      - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
-
-#       # Note: This workflow uses the latest stable version of the Dart SDK.
-#       # You can specify other versions if desired, see documentation here:
-#       # https://github.com/dart-lang/setup-dart/blob/main/README.md
-#       # - uses: dart-lang/setup-dart@v1
-#       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
-
-#       - name: Install dependencies
-#         run: dart pub get
-
-#       # Uncomment this step to verify the use of 'dart format' on each commit.
-#       # - name: Verify formatting
-#       #   run: dart format --output=none --set-exit-if-changed .
-
-#       # Consider passing '--fatal-infos' for slightly stricter analysis.
-#       - name: Analyze project source
-#         run: dart analyze
-
-#       # Your project will need to have tests in test/ and a dependency on
-#       # package:test for this step to succeed. Note that Flutter projects will
-#       # want to change this to 'flutter test'.
-#       - name: Run tests
-#         run: dart test
-        
-#       # Set up Flutter.
-#       - name: Set up Flutter
-#       - run: flutter doctor -v
+          channel: 'stable'
+          flutter-version: '3.10.1'
+      
+      # 세번째 step은 해당 레포지토리가 사용하는 패키지를
+      #  import하는 단계입니다. 직접 인스턴스에 커맨드를 입력합니다.
+      - name: Import Flutter Package
+        run: |
+          flutter pub get
+      # 네번째 step은 작성된 코드를 test하는 단계입니다.
+      - name: Test Flutter
+        run: |
+          flutter test
