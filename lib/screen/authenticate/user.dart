@@ -1,15 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:byourside/main.dart';
-import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/user_protector.dart';
 import 'package:byourside/screen/authenticate/user_self.dart';
 import 'package:byourside/screen/authenticate/user_someoneElse.dart';
-import 'package:byourside/screen/authenticate/verify_email.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
 class SetupUser extends StatefulWidget {

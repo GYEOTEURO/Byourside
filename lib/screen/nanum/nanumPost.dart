@@ -1,4 +1,3 @@
-import 'package:byourside/screen/nanum/appbar.dart';
 import 'package:byourside/screen/nanum/nanumPostContent.dart';
 import 'package:byourside/screen/postComment/commentList.dart';
 import 'package:byourside/screen/postComment/createComment.dart';

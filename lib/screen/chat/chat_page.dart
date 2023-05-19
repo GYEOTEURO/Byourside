@@ -3,7 +3,6 @@ import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/model/db_set.dart';
 import 'package:byourside/widget/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

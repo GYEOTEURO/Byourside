@@ -2,7 +2,6 @@ import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
-import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
