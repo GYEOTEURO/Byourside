@@ -1,22 +1,15 @@
-import 'dart:ffi';
-// import 'package:flutter/src/widgets/basic.dart' as C;
-import 'package:byourside/main.dart';
 import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/db_set.dart';
 import '../../model/ondo_post.dart';
-import 'package:flutter/foundation.dart';
 
 class OndoPostPage extends StatefulWidget {
   const OndoPostPage(

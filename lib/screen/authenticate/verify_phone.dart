@@ -1,5 +1,4 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/authenticate/otp_screen.dart';

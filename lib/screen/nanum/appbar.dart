@@ -2,7 +2,7 @@ import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class NanumAppBar extends StatefulWidget with PreferredSizeWidget {
+class NanumAppBar extends StatefulWidget implements PreferredSizeWidget {
   const NanumAppBar({Key? key, required this.primaryColor}) : super(key: key);
   final Color primaryColor;
 

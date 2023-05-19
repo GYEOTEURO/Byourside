@@ -1,18 +1,14 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/db_set.dart';
 import '../../model/nanum_post.dart';
-import '../ondo/postPage.dart';
-// import 'package:flutter/src/widgets/basic.dart' as C;
 
 class NanumPostPage extends StatefulWidget {
   const NanumPostPage(
