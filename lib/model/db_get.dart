@@ -5,6 +5,7 @@ import 'package:byourside/model/post_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DBGet {
+
   // Firestore의 collection에 있는 모든 데이터 불러오기
   static Stream<List<PostListModel>> readAllCollection({required String collection, List<String>? type}) {
         if(type == null || type.isEmpty){
