@@ -48,7 +48,7 @@ dependencies:
   cloud_firestore: ^4.0.3
   provider: ^6.0.4
   google_sign_in: ^5.4.2
-  pinput: 
+  pinput: ^2.2.31
   iamport_flutter: ^0.10.0
   email_validator: ^2.0.1
   url_launcher: ^6.1.6
@@ -76,6 +76,7 @@ dev_dependencies:
   flutter_launcher_icons:
   change_app_package_name:
   test: ^1.24.1
+  flutter_lints: ^2.0.1
 flutter_icons:
   android: true
   ios: true
@@ -106,6 +107,7 @@ flutter:
     - images/cat.jpeg
     - images/hug 1.png
     - images/곁.png
+    - assets/config/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
