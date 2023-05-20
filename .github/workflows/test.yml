@@ -30,7 +30,31 @@ jobs:
       # Github repository의 소스를 가져오는 action입니다.
       - name: Checkout source code
         uses: actions/checkout@v2
-      
+    
+      - name: Set up environment variables
+        run: |
+          echo "WEB_RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }}" >> assets/config/.env
+          echo "WEB_MESSAGING_SENDER_ID=${{ secrets.WEB_MESSAGING_SENDER_ID }}" >> assets/config/.env
+          echo "WEB_MEASUREMENT_ID=${{ secrets.WEB_MEASUREMENT_ID }}" >> assets/config/.env
+          echo "WEB_APP_ID=${{ secrets.WEB_APP_ID }}" >> assets/config/.env
+          echo "WEB_API_KEY=${{ secrets.WEB_API_KEY }}" >> assets/config/.env
+
+          echo "MACOS_MESSAGING_SENDER_ID=${{ secrets.MACOS_MESSAGING_SENDER_ID }}" >> assets/config/.env
+          echo "MACOS_IOS_CLIENT_ID=${{ secrets.MACOS_IOS_CLIENT_ID }}" >> assets/config/.env
+          echo "MACOS_APP_ID=${{ secrets.MACOS_APP_ID }}" >> assets/config/.env
+          echo "MACOS_API_KEY=${{ secrets.MACOS_API_KEY }}" >> assets/config/.env
+          echo "MACOS_ANDROID_CLIENT_ID=${{ secrets.MACOS_ANDROID_CLIENT_ID }}" >> assets/config/.env
+          echo "IOS_MESSAGING_SENDER_ID=${{ secrets.IOS_MESSAGING_SENDER_ID }}" >> assets/config/.env
+          echo "IOS_IOS_CLIENT_ID=${{ secrets.IOS_IOS_CLIENT_ID }}" >> assets/config/.env
+          echo "IOS_APP_ID=${{ secrets.IOS_APP_ID }}" >> assets/config/.env
+          echo "IOS_API_KEY=${{ secrets.IOS_API_KEY }}" >> assets/config/.env
+          echo "IOS_ANDROID_CLIENT_ID=${{ secrets.IOS_ANDROID_CLIENT_ID }}" >> assets/config/.env
+
+          echo "ANDROID_MESSAGING_SENDER_ID=${{ secrets.ANDROID_MESSAGING_SENDER_ID }}" >> assets/config/.env
+          echo "ANDROID_APP_ID=${{ secrets.ANDROID_APP_ID }}" >> assets/config/.env
+          echo "ANDROID_API_KEY=${{ secrets.ANDROID_API_KEY }}" >> assets/config/.env
+
+          
       # 두번째 step은 인스턴스에 Flutter SDK를 설치하는 action 입니다.
       # with 커맨드를 사용하여 SDK의 상세 버전을 설정할 수 있습니다.
       - name: Install Flutter SDK
