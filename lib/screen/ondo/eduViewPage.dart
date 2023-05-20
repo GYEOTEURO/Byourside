@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';

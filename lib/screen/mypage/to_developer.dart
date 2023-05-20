@@ -13,7 +13,6 @@ class ToDeveloper extends StatefulWidget {
 }
 
 class _ToDeveloperState extends State<ToDeveloper> {
-  final AuthService _auth = new AuthService();
   late String uid;
   late String displayName;
   User? user;

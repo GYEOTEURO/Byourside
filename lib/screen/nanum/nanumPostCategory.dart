@@ -1,9 +1,5 @@
-import 'package:byourside/screen/nanum/nanumPostPage.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class NanumPostCategory extends StatefulWidget {
   const NanumPostCategory(

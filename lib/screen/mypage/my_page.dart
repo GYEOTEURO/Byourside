@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';

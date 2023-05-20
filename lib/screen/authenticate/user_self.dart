@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
@@ -162,6 +164,7 @@ class selfState extends State<self> {
                 }
                 return '필수 입력란입니다. 방문 목적을 입력하세요';
               }
+              return null;
             },
           )));
 
@@ -230,6 +233,7 @@ class selfState extends State<self> {
                 }
                 return '필수 입력란입니다. 닉네임을 입력하세요';
               }
+              return null;
             },
           )));
 
@@ -408,6 +412,7 @@ class selfState extends State<self> {
                                       }
                                       return '숫자만 입력 가능합니다.';
                                     }
+                                    return null;
                                   },
                                 )),
                             SizedBox(height: height * 0.03),
@@ -517,7 +522,6 @@ class selfState extends State<self> {
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formKey_self.currentState!.validate() &&
-                _purpose.text != null &&
                 _purpose.text != '' &&
                 _selfAge.text.split(' ').first != '' &&
                 (_selectedDegree[0] || _selectedDegree[1]) &&

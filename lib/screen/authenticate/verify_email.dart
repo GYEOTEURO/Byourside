@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -60,12 +62,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
     try {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
-      if (user != null) {
-        if (mounted) setState(() => canResendEmail = false);
-        // print("here");
-        await Future.delayed(Duration(seconds: 120));
-        if (mounted) setState(() => canResendEmail = true);
-      }
+      if (mounted) setState(() => canResendEmail = false);
+      // print("here");
+      await Future.delayed(Duration(seconds: 120));
+      if (mounted) setState(() => canResendEmail = true);
     } catch (e) {
       if (mounted) {
         showDialog(
@@ -206,16 +206,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                     final user =
                                         FirebaseAuth.instance.currentUser!;
                                     await user.sendEmailVerification();
-                                    if (user != null) {
-                                      if (mounted)
-                                        setState(() => canResendEmail = false);
-                                      // print("ss");
-                                      await Future.delayed(
-                                          Duration(seconds: 120));
-                                      if (mounted)
-                                        setState(() => canResendEmail = true);
-                                      // sendVerificationEmail();
-                                    }
+                                    if (mounted)
+                                      setState(() => canResendEmail = false);
+                                    // print("ss");
+                                    await Future.delayed(
+                                        Duration(seconds: 120));
+                                    if (mounted)
+                                      setState(() => canResendEmail = true);
                                   })))
                           : SizedBox(
                               height: height * 0.03,

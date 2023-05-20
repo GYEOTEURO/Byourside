@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
@@ -86,6 +88,7 @@ class _Register extends State<Register> {
                 }
                 return '유효한 이메일 주소를 입력하세요.';
               }
+              return null;
             },
             decoration: InputDecoration(
               hintText: "(예: abcd@google.com)",

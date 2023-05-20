@@ -1,9 +1,6 @@
 import 'package:byourside/screen/ondo/postPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
 
 class PostCategory extends StatefulWidget {
   const PostCategory(

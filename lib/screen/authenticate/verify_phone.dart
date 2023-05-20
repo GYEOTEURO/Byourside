@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, unused_element
+
 import 'package:byourside/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   bool doesDocExist = true;
 
   bool isNumeric(String s) {
+    // ignore: unnecessary_null_comparison
     if (s == null) {
       return false;
     }
@@ -185,6 +188,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 }
                                 return '유효한 전화번호를 입력하세요. 숫자만 입력 가능합니다.';
                               }
+                              return null;
                             })),
                   )),
               // SizedBox(height: height * 0.01),

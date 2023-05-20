@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';

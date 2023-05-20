@@ -1,8 +1,7 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unused_local_variable
 
 import 'package:byourside/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class PersonalData extends StatefulWidget {
   const PersonalData({Key? key}) : super(key: key);

@@ -156,6 +156,7 @@ class _participatorState extends State<participator> {
                 }
                 return '필수 입력란입니다. 닉네임을 입력하세요';
               }
+              return null;
             },
           )));
 
@@ -327,6 +328,7 @@ class _participatorState extends State<participator> {
                                       }
                                       return '필수 입력란입니다. 개인/단체 이름을 입력하세요';
                                     }
+                                    return null;
                                   },
                                 )),
                             SizedBox(height: height * 0.05),

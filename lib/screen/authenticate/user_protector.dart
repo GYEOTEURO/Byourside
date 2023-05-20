@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
@@ -175,6 +177,7 @@ class _protectorState extends State<protector> {
                 }
                 return '필수 입력란입니다. 닉네임을 입력하세요';
               }
+              return null;
             },
           )));
 
@@ -351,6 +354,7 @@ class _protectorState extends State<protector> {
                                   }
                                   return '숫자만 입력 가능합니다.';
                                 }
+                                return null;
                               },
                             )),
                         SizedBox(height: height * 0.04),
@@ -420,6 +424,7 @@ class _protectorState extends State<protector> {
                                   }
                                   return '숫자만 입력 가능합니다.';
                                 }
+                                return null;
                               },
                             )),
                         SizedBox(height: height * 0.04),
@@ -487,6 +492,7 @@ class _protectorState extends State<protector> {
                                   }
                                   return '필수 입력란입니다. 소속을 입력하세요';
                                 }
+                                return null;
                               },
                             )),
                         SizedBox(height: height * 0.03),

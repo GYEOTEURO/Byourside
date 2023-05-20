@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
@@ -150,6 +152,7 @@ class _someoneElseState extends State<someoneElse> {
                 }
                 return '필수 입력란입니다. 방문 목적을 입력하세요';
               }
+              return null;
             },
           )));
 
@@ -211,6 +214,7 @@ class _someoneElseState extends State<someoneElse> {
                 }
                 return '필수 입력란입니다. 닉네임을 입력하세요';
               }
+              return null;
             },
           )));
 
@@ -327,7 +331,6 @@ class _someoneElseState extends State<someoneElse> {
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formKey_someoneELse.currentState!.validate() &&
-                _purpose.text != null &&
                 _purpose.text != '') {
               doesDocExist = await checkDocExist(_nickname.text);
               if (doesDocExist == false) {

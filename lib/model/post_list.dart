@@ -1,3 +1,5 @@
+// ignore_for_file: duplicate_ignore
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: empty_constructor_bodies, empty_constructor_bodies

@@ -43,7 +43,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
   void _createOverlay() {
     if (overlayController.overlayEntry == null) {
       overlayController.controlOverlay(_customDropdown());
-      Overlay.of(context)?.insert(overlayController.overlayEntry!);
+      Overlay.of(context).insert(overlayController.overlayEntry!);
     }
   }
 
