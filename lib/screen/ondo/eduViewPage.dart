@@ -72,7 +72,7 @@ class _EduViewPageState extends State<EduViewPage> {
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                 width: width * 0.4,
                 height: width * 0.4,
                 child: (post.images!.isNotEmpty)
@@ -83,7 +83,7 @@ class _EduViewPageState extends State<EduViewPage> {
                         ))
                     : Container(
                         color: Colors.grey,
-                        child: Center(
+                        child: const Center(
                             child: Text('사진 없음',
                                 semanticsLabel: '사진 없음',
                                 style: TextStyle(
@@ -93,7 +93,7 @@ class _EduViewPageState extends State<EduViewPage> {
                       )),
             Expanded(
                 child: Container(
-                    padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                     child: Text(post.title!,
                         semanticsLabel: post.title,
                         overflow: TextOverflow.fade,
@@ -106,7 +106,7 @@ class _EduViewPageState extends State<EduViewPage> {
                             fontFamily: 'NanumGothic')))),
             Expanded(
                 child: Container(
-                    padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                     child: Text(
                       post.type!.isEmpty
                           ? '${post.nickname!} | $date'
@@ -166,7 +166,7 @@ class _EduViewPageState extends State<EduViewPage> {
                       return _buildListItem(collectionName, post);
                     }
                   });
-            } else
+            } else {
               return const SelectionArea(
                   child: Center(
                       child: Text('게시물 목록을 가져오는 중...',
@@ -175,6 +175,7 @@ class _EduViewPageState extends State<EduViewPage> {
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
                           ))));
+            }
           }),
 
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼

@@ -10,7 +10,7 @@ class NanumAppBar extends StatefulWidget implements PreferredSizeWidget {
   State<NanumAppBar> createState() => _NanumAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _NanumAppBarState extends State<NanumAppBar> {
@@ -21,12 +21,12 @@ class _NanumAppBarState extends State<NanumAppBar> {
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
         centerTitle: true,
-        title: Text("마음나눔",
+        title: const Text("마음나눔",
             semanticsLabel: "마음나눔",
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         leading: IconButton(
-          icon: Icon(Icons.filter_alt,
+          icon: const Icon(Icons.filter_alt,
               semanticLabel: "장애 유형 필터링", color: Colors.white),
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
@@ -34,17 +34,17 @@ class _NanumAppBarState extends State<NanumAppBar> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => NanumPostCategory(
-                          primaryColor: Color(0xFF045558),
+                          primaryColor: const Color(0xFF045558),
                           title: "필터링",
                           preType: _type,
                         )));
-            print("타입: ${_type}");
+            print("타입: $_type");
           },
         ),
         actions: [
           IconButton(
               icon:
-                  Icon(Icons.search, semanticLabel: "검색", color: Colors.white),
+                  const Icon(Icons.search, semanticLabel: "검색", color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact();
               }),

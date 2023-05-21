@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
 class Declaration extends StatefulWidget {
-  Declaration(
+  const Declaration(
       {super.key,
       required this.decList,
       required this.collectionType,
       required this.id});
-  final Color primaryColor = Color(0xFF045558);
+  final Color primaryColor = const Color(0xFF045558);
   final List<String> decList;
   final String collectionType;
   final String id;
@@ -23,13 +23,13 @@ class _DeclarationState extends State<Declaration> {
 
   @override
   Widget build(BuildContext context) {
-    String _declaration = widget.decList[0];
+    String declaration = widget.decList[0];
 
     return OutlinedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade300),
-      child: Text('신고',
+      child: const Text('신고',
           semanticsLabel: '신고',
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
             fontSize: 14,
             fontFamily: 'NanumGothic',
@@ -44,12 +44,12 @@ class _DeclarationState extends State<Declaration> {
                       scrollable: true,
                       semanticLabel:
                           '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                      title: Text(
+                      title: const Text(
                           '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
                           semanticsLabel:
                               '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
@@ -57,7 +57,7 @@ class _DeclarationState extends State<Declaration> {
                       content: StatefulBuilder(builder: (context, setState) {
                         return Column(
                           children: widget.decList
-                              .map((e) => new RadioListTile(
+                              .map((e) => RadioListTile(
                                   title: Text(e,
                                       semanticsLabel: e,
                                       style: const TextStyle(
@@ -66,10 +66,10 @@ class _DeclarationState extends State<Declaration> {
                                         fontWeight: FontWeight.w600,
                                       )),
                                   value: e,
-                                  groupValue: _declaration,
+                                  groupValue: declaration,
                                   onChanged: (String? value) {
                                     setState(() {
-                                      _declaration = value!;
+                                      declaration = value!;
                                     });
                                   }))
                               .toList(),
@@ -86,12 +86,12 @@ class _DeclarationState extends State<Declaration> {
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
                                     DBSet.declaration(widget.collectionType,
-                                        _declaration, widget.id);
+                                        declaration, widget.id);
                                     Navigator.pop(context);
                                   },
-                                  child: Text('신고',
+                                  child: const Text('신고',
                                       semanticsLabel: '신고',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w600,
@@ -104,9 +104,9 @@ class _DeclarationState extends State<Declaration> {
                                     HapticFeedback.lightImpact(); // 약한 진동
                                     Navigator.pop(context);
                                   },
-                                  child: Text('취소',
+                                  child: const Text('취소',
                                       semanticsLabel: '취소',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w600,

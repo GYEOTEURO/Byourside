@@ -53,7 +53,7 @@ class ChatList {
       "recentMessageSender": "",
     });
 
-    FirebaseFirestore.instance.collection('groupList').doc('$groupName').set({
+    FirebaseFirestore.instance.collection('groupList').doc(groupName).set({
       "current": true,
       "groupId": groupDocumentReference.id,
     });

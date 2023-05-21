@@ -28,7 +28,7 @@ class CommentList extends StatefulWidget {
 
 class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
-  List<String> _decList = [
+  final List<String> _decList = [
     "불법 정보를 작성했습니다.",
     "음란물을 작성했습니다.",
     "스팸홍보/도배글을 작성했습니다.",
@@ -71,14 +71,14 @@ class _CommentListState extends State<CommentList> {
         child: InkWell(
             child: Container(
                 padding: const EdgeInsets.all(2),
-                margin: EdgeInsets.fromLTRB(4, 10, 10, 0),
+                margin: const EdgeInsets.fromLTRB(4, 10, 10, 0),
                 child: Column(children: [
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
                           child: SelectionArea(
                               child: Text("  ${comment.content!}",
-                                  semanticsLabel: "${comment.content!}",
+                                  semanticsLabel: comment.content!,
                                   style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -136,7 +136,7 @@ class _CommentListState extends State<CommentList> {
                               });
                               await userCollection.doc(user?.uid).update({
                                 "groups": FieldValue.arrayUnion(
-                                    ["${groupId}_${groupName}"])
+                                    ["${groupId}_$groupName"])
                               });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
@@ -155,7 +155,7 @@ class _CommentListState extends State<CommentList> {
                               });
                               await userCollection.doc(user?.uid).update({
                                 "groups": FieldValue.arrayUnion(
-                                    ["${groupId}_${groupName}"])
+                                    ["${groupId}_$groupName"])
                               });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
@@ -187,9 +187,9 @@ class _CommentListState extends State<CommentList> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey.shade300,
                             ),
-                            child: Text('삭제',
+                            child: const Text('삭제',
                                 semanticsLabel: '댓글 삭제',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
@@ -204,11 +204,11 @@ class _CommentListState extends State<CommentList> {
                                             scrollable: true,
                                             semanticLabel:
                                                 '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                            title: Text('댓글을 삭제하시겠습니까?',
+                                            title: const Text('댓글을 삭제하시겠습니까?',
                                                 semanticsLabel:
                                                     '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                                                 textAlign: TextAlign.center,
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontSize: 14,
                                                   fontFamily: 'NanumGothic',
                                                   fontWeight: FontWeight.w600,
@@ -236,11 +236,11 @@ class _CommentListState extends State<CommentList> {
                                                           Navigator.pop(
                                                               context);
                                                         },
-                                                        child: Text('삭제',
+                                                        child: const Text('삭제',
                                                             semanticsLabel:
                                                                 '삭제',
                                                             style:
-                                                                const TextStyle(
+                                                                TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
                                                                   'NanumGothic',
@@ -261,11 +261,11 @@ class _CommentListState extends State<CommentList> {
                                                           Navigator.pop(
                                                               context);
                                                         },
-                                                        child: Text('취소',
+                                                        child: const Text('취소',
                                                             semanticsLabel:
                                                                 '취소',
                                                             style:
-                                                                const TextStyle(
+                                                                TextStyle(
                                                               fontSize: 14,
                                                               fontFamily:
                                                                   'NanumGothic',
@@ -285,7 +285,7 @@ class _CommentListState extends State<CommentList> {
                                 collectionType: 'comment',
                                 id: comment.id!),
                             Container(
-                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                 child: Block(
                                     nickname: comment.nickname!,
                                     collectionType: 'comment')),
@@ -331,7 +331,7 @@ class _CommentListState extends State<CommentList> {
                     return _buildListItem(collectionName, documentID, comment);
                   }
                 });
-          } else
+          } else {
             return const SelectionArea(
                 child: Text(
               "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
@@ -341,6 +341,7 @@ class _CommentListState extends State<CommentList> {
                 fontWeight: FontWeight.w600,
               ),
             ));
+          }
         });
   }
 }

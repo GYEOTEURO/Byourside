@@ -43,12 +43,12 @@ class _Login extends State<Login> {
                     ? '유효한 이메일을 입력하세요.'
                     : null,
             decoration: InputDecoration(
-              floatingLabelStyle: TextStyle(
+              floatingLabelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 22,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
-              errorStyle: TextStyle(
+              errorStyle: const TextStyle(
                   color: Color.fromARGB(255, 255, 45, 45),
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
@@ -56,12 +56,12 @@ class _Login extends State<Login> {
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               hintText: "(예: abcd@google.com)",
               labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
@@ -99,12 +99,12 @@ class _Login extends State<Login> {
               return null;
             },
             decoration: InputDecoration(
-              floatingLabelStyle: TextStyle(
+              floatingLabelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 22,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
-              errorStyle: TextStyle(
+              errorStyle: const TextStyle(
                   color: Color.fromARGB(255, 255, 45, 45),
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
@@ -112,12 +112,12 @@ class _Login extends State<Login> {
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               hintText: "(예: 12345678)",
               labelText: "비밀번호", //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
@@ -164,7 +164,7 @@ class _Login extends State<Login> {
 
     final forgotPassword = TextButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ForgotPassword(),
+              builder: (context) => const ForgotPassword(),
             )),
         child: const Text(
           '비밀번호 찾기',
@@ -196,7 +196,7 @@ class _Login extends State<Login> {
                     return AlertDialog(
                         semanticLabel:
                             "아이디 또는 비밀번호가 일치하지 않습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                        content: Text(
+                        content: const Text(
                           "아이디 또는 비밀번호가 일치하지 않습니다.",
                           semanticsLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
                           style: TextStyle(
@@ -213,9 +213,9 @@ class _Login extends State<Login> {
                                 HapticFeedback.lightImpact(); // 약한 진동
                                 Navigator.pop(context);
                               },
-                              child: Text('확인',
+                              child: const Text('확인',
                                   semanticsLabel: '확인',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'NanumGothic',
                                     fontWeight: FontWeight.w600,
@@ -225,7 +225,7 @@ class _Login extends State<Login> {
             }
           }
         },
-        child: Text(
+        child: const Text(
           "로그인",
           semanticsLabel: "로그인",
           style: TextStyle(
@@ -259,7 +259,7 @@ class _Login extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     "이메일을 입력하세요.",
                     semanticsLabel: "이메일을 입력하세요.",
                     style: TextStyle(
@@ -268,7 +268,7 @@ class _Login extends State<Login> {
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w600),
                   ),
-                  Text(
+                  const Text(
                     "'.com'으로 끝나는 메일만 가능합니다.",
                     semanticsLabel: "'.com'으로 끝나는 메일만 가능합니다.",
                     style: TextStyle(
@@ -280,7 +280,7 @@ class _Login extends State<Login> {
                   SizedBox(height: height * 0.03),
                   emailField,
                   SizedBox(height: height * 0.04),
-                  Text(
+                  const Text(
                     "비밀번호를 입력하세요.",
                     semanticsLabel: "비밀번호를 입력하세요.",
                     style: TextStyle(
@@ -289,7 +289,7 @@ class _Login extends State<Login> {
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w600),
                   ),
-                  Text(
+                  const Text(
                     "8자리 이상이어야 합니다.",
                     semanticsLabel: "8자리 이상이어야 합니다.",
                     style: TextStyle(

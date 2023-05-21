@@ -23,7 +23,7 @@ class _CategoryPageState extends State<CategoryPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
-  List<String> _infoDetailList = [
+  final List<String> _infoDetailList = [
     "전체",
     "복지/혜택",
     "교육/세미나",
@@ -31,7 +31,7 @@ class _CategoryPageState extends State<CategoryPage>
     "법률/제도",
     "초기 증상 발견/생활 속 Tip"
   ];
-  String _selectedInfoDetail = "전체";
+  final String _selectedInfoDetail = "전체";
 
   List<String>? _type;
 
@@ -58,7 +58,7 @@ class _CategoryPageState extends State<CategoryPage>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.filter_alt,
             semanticLabel: "장애 유형 필터링",
           ),
@@ -71,16 +71,16 @@ class _CategoryPageState extends State<CategoryPage>
                 context,
                 MaterialPageRoute(
                     builder: (context) => NanumPostCategory(
-                          primaryColor: Color(0xFF045558),
+                          primaryColor: const Color(0xFF045558),
                           title: "필터링",
                           preType: _type,
                         )));
-            print("IN 온도 타입: ${_type}");
+            print("IN 온도 타입: $_type");
             controller.filtering(_type);
             setState(() {});
           },
         ),
-        title: Center(
+        title: const Center(
           child: Text("마음온도",
               semanticsLabel: "마음온도",
               style: TextStyle(
@@ -88,7 +88,7 @@ class _CategoryPageState extends State<CategoryPage>
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               semanticLabel: "검색",
             ),
@@ -100,7 +100,7 @@ class _CategoryPageState extends State<CategoryPage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => OndoSearch()));
+                    builder: (context) => const OndoSearch()));
             },
           ),
         ],
@@ -115,7 +115,7 @@ class _CategoryPageState extends State<CategoryPage>
             }
           }),
         ),
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: const Color(0xFF045558),
       ),
       body: TabBarView(
         controller: _tabController,
@@ -123,13 +123,13 @@ class _CategoryPageState extends State<CategoryPage>
           String label = tab.text!;
           if (label == '정보') {
             return Container(
-                padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                child: infoDetailCategoryPage(
+                padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                child: const infoDetailCategoryPage(
                     primaryColor: Color(0xFF045558),
                     collectionName: "ondoPost"));
           }
           return OndoPostList(
-              primaryColor: Color(0xFF045558),
+              primaryColor: const Color(0xFF045558),
               collectionName: "ondoPost",
               category: label);
         }).toList(),
@@ -150,7 +150,7 @@ class _CategoryPageState extends State<CategoryPage>
                         title: '마음온도 글쓰기',
                       )));
         },
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: const Color(0xFF045558),
         child: const Icon(Icons.add, semanticLabel: "마음온도 글쓰기"),
       ),
     );

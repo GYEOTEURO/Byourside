@@ -43,7 +43,7 @@ class _GroupTileState extends State<GroupTile> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 5),
         child: ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+            contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
             leading: CircleAvatar(
               radius: 30,
               backgroundColor: primaryColor,
@@ -83,7 +83,7 @@ class _GroupTileState extends State<GroupTile> {
                             textAlign: TextAlign.left,
                           ),
                           content: Padding(
-                              padding: EdgeInsets.all(30),
+                              padding: const EdgeInsets.all(30),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [

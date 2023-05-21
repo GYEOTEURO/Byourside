@@ -31,7 +31,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
   final User? user = FirebaseAuth.instance.currentUser;
   int _current = 0; // 현재 이미지 인덱스
 
-  List<String> _decList = [
+  final List<String> _decList = [
     "불법 정보를 포함하고 있습니다.",
     "게시판 성격에 부적절합니다.",
     "음란물입니다.",
@@ -147,7 +147,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                     await userCollection.doc(user?.uid).update({
                       "groups":
-                          FieldValue.arrayUnion(["${groupId}_${groupName}"])
+                          FieldValue.arrayUnion(["${groupId}_$groupName"])
                     });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
@@ -166,7 +166,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                     await userCollection.doc(user?.uid).update({
                       "groups":
-                          FieldValue.arrayUnion(["${groupId}_${groupName}"])
+                          FieldValue.arrayUnion(["${groupId}_$groupName"])
                     });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
@@ -184,9 +184,9 @@ class _OndoPostContentState extends State<OndoPostContent> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey.shade300,
             ),
-            child: Text('삭제',
+            child: const Text('삭제',
                 semanticsLabel: '글 삭제',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                   fontFamily: 'NanumGothic',
@@ -201,11 +201,11 @@ class _OndoPostContentState extends State<OndoPostContent> {
                             scrollable: true,
                             semanticLabel:
                                 '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                            title: Text('글을 삭제하시겠습니까?',
+                            title: const Text('글을 삭제하시겠습니까?',
                                 semanticsLabel:
                                     '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
@@ -226,9 +226,9 @@ class _OndoPostContentState extends State<OndoPostContent> {
                                           DBSet.deletePost(
                                               collectionName!, post.id!);
                                         },
-                                        child: Text('삭제',
+                                        child: const Text('삭제',
                                             semanticsLabel: '삭제',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'NanumGothic',
                                               fontWeight: FontWeight.w600,
@@ -241,9 +241,9 @@ class _OndoPostContentState extends State<OndoPostContent> {
                                           HapticFeedback.lightImpact(); // 약한 진동
                                           Navigator.pop(context);
                                         },
-                                        child: Text('취소',
+                                        child: const Text('취소',
                                             semanticsLabel: '취소',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'NanumGothic',
                                               fontWeight: FontWeight.w600,
@@ -258,18 +258,18 @@ class _OndoPostContentState extends State<OndoPostContent> {
             Declaration(
                 decList: _decList, collectionType: 'post', id: post.id!),
             Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Block(nickname: post.nickname!, collectionType: 'post')),
           ]))
       ]),
-      Divider(thickness: 1, height: 1, color: Colors.black),
+      const Divider(thickness: 1, height: 1, color: Colors.black),
       if (post.images!.isNotEmpty)
         (Column(children: [
           Container(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
               child: CarouselSlider(
                   items: List.generate(post.images!.length, (index) {
-                    return Container(
+                    return SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Semantics(
                             label: post.imgInfos![index],
@@ -299,7 +299,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
           ),
         ])),
       Container(
-          padding: EdgeInsets.fromLTRB(0, 25, 0, 20),
+          padding: const EdgeInsets.fromLTRB(0, 25, 0, 20),
           alignment: Alignment.centerLeft,
           child: SelectionArea(
               child: Text(
@@ -322,18 +322,18 @@ class _OndoPostContentState extends State<OndoPostContent> {
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(width * 0.38, height * 0.06),
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4))),
             side:
-                BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
-            foregroundColor: Color.fromARGB(255, 255, 45, 45),
+                const BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
+            foregroundColor: const Color.fromARGB(255, 255, 45, 45),
           ),
           icon: post.likesPeople!.contains(user?.uid)
               ? const Icon(Icons.favorite, semanticLabel: "좋아요 취소")
               : const Icon(Icons.favorite_outline, semanticLabel: "좋아요 추가"),
           label: Text('좋아요  ${post.likes}',
               semanticsLabel: '좋아요  ${post.likes}',
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
         ),
         OutlinedButton.icon(
@@ -345,16 +345,16 @@ class _OndoPostContentState extends State<OndoPostContent> {
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(width * 0.38, height * 0.06),
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4))),
             side:
-                BorderSide(color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
-            foregroundColor: Color.fromARGB(255, 64, 130, 75),
+                const BorderSide(color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
+            foregroundColor: const Color.fromARGB(255, 64, 130, 75),
           ),
           icon: post.scrapPeople!.contains(user?.uid)
               ? const Icon(Icons.star, semanticLabel: "스크랩 취소")
               : const Icon(Icons.star_outline, semanticLabel: "스크랩 추가"),
-          label: Text('스크랩',
+          label: const Text('스크랩',
               semanticsLabel: '스크랩',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
@@ -375,7 +375,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
           if (snapshot.hasData) {
             OndoPostModel? post = snapshot.data;
             return _buildListItem(collectionName, post);
-          } else
+          } else {
             return const SelectionArea(
                 child: Center(
                     child: Text('게시물을 찾을 수 없습니다.',
@@ -384,6 +384,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
                         ))));
+          }
         });
   }
 }

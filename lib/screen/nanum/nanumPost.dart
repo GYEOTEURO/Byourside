@@ -32,13 +32,13 @@ class _NanumPostState extends State<NanumPost> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("마음나눔",
+          title: const Text("마음나눔",
               semanticsLabel: "마음나눔",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-          backgroundColor: Color(0xFF045558),
+          backgroundColor: const Color(0xFF045558),
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
@@ -49,22 +49,22 @@ class _NanumPostState extends State<NanumPost> {
               scrollController.scrollController, //댓글 전송 누르면 맨 아래로 이동 가능하게
           child: Column(children: [
             Container(
-                margin: EdgeInsets.all(7),
-                padding: EdgeInsets.fromLTRB(8, 5, 8, 0),
+                margin: const EdgeInsets.all(7),
+                padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
                 child: NanumPostContent(
                     collectionName: collectionName,
                     documentID: documentID,
                     primaryColor: primaryColor)),
             Container(
-                margin: EdgeInsets.all(7),
-                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                margin: const EdgeInsets.all(7),
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: CreateComment(
                     collectionName: collectionName,
                     documentID: documentID,
                     primaryColor: primaryColor)),
             Container(
-              margin: EdgeInsets.all(7),
-              padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+              margin: const EdgeInsets.all(7),
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
               child: CommentList(
                   collectionName: collectionName,
                   documentID: documentID,

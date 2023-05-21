@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
 class MyDeclaration extends StatefulWidget {
-  MyDeclaration({Key? key}) : super(key: key);
-  final Color primaryColor = Color(0xFF045558);
+  const MyDeclaration({Key? key}) : super(key: key);
+  final Color primaryColor = const Color(0xFF045558);
   final String title = "사용자 신고";
 
   @override
@@ -12,7 +12,7 @@ class MyDeclaration extends StatefulWidget {
 }
 
 class _MyDeclarationState extends State<MyDeclaration> {
-  List<String> _decList = [
+  final List<String> _decList = [
     "불법 정보를 게시했습니다.",
     "음란물을 게시했습니다.",
     "스팸홍보/도배글을 게시했습니다.",
@@ -27,18 +27,18 @@ class _MyDeclarationState extends State<MyDeclaration> {
 
   @override
   Widget build(BuildContext context) {
-    String _declaration = _decList[0];
+    String declaration = _decList[0];
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(widget.title,
             semanticsLabel: widget.title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: const Color(0xFF045558),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back,
+            icon: const Icon(Icons.arrow_back,
                 semanticLabel: "뒤로 가기", color: Colors.white),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
@@ -46,7 +46,7 @@ class _MyDeclarationState extends State<MyDeclaration> {
             }),
       ),
       body: SingleChildScrollView(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Form(
               key: _formkey,
               child: Column(children: [
@@ -62,7 +62,7 @@ class _MyDeclarationState extends State<MyDeclaration> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           semanticCounterText: "신고할 닉네임 입력",
                           labelText: "신고할 닉네임을 입력해주세요.",
                           border: OutlineInputBorder(
@@ -81,13 +81,13 @@ class _MyDeclarationState extends State<MyDeclaration> {
                           labelStyle: TextStyle(color: Color(0xFF045558)),
                         ))),
                 Container(
-                    margin: EdgeInsets.fromLTRB(0, 30, 0, 10),
-                    child: Text(
+                    margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+                    child: const Text(
                         '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
                         semanticsLabel:
                             '신고 사유를 알려주세요.신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
@@ -95,7 +95,7 @@ class _MyDeclarationState extends State<MyDeclaration> {
                 StatefulBuilder(builder: (context, setState) {
                   return Column(
                       children: _decList
-                          .map((e) => new RadioListTile(
+                          .map((e) => RadioListTile(
                               title: Text(e,
                                   semanticsLabel: e,
                                   style: const TextStyle(
@@ -104,11 +104,11 @@ class _MyDeclarationState extends State<MyDeclaration> {
                                     fontWeight: FontWeight.w600,
                                   )),
                               value: e,
-                              groupValue: _declaration,
-                              activeColor: Color(0xFF045558),
+                              groupValue: declaration,
+                              activeColor: const Color(0xFF045558),
                               onChanged: (String? value) {
                                 setState(() {
-                                  _declaration = value!;
+                                  declaration = value!;
                                 });
                               }))
                           .toList());
@@ -120,16 +120,16 @@ class _MyDeclarationState extends State<MyDeclaration> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
-              DBSet.declaration('user', _declaration, _nickname.text);
+              DBSet.declaration('user', declaration, _nickname.text);
               showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
                         semanticLabel:
                             "정상적으로 신고되었습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
-                        content: Text('정상적으로 신고되었습니다.',
+                        content: const Text('정상적으로 신고되었습니다.',
                             semanticsLabel: '정상적으로 신고되었습니다.',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600,
@@ -145,9 +145,9 @@ class _MyDeclarationState extends State<MyDeclaration> {
                                 Navigator.pop(context);
                                 FocusScope.of(context).unfocus();
                               },
-                              child: Text('확인',
+                              child: const Text('확인',
                                   semanticsLabel: '확인',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'NanumGothic',
                                     fontWeight: FontWeight.w600,
@@ -156,9 +156,9 @@ class _MyDeclarationState extends State<MyDeclaration> {
                   });
             }
           },
-          child: Text('신고',
+          child: const Text('신고',
               semanticsLabel: '신고',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w600,

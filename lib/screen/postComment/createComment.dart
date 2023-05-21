@@ -45,27 +45,27 @@ class _CreateCommentState extends State<CreateComment> {
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: "댓글을 작성해주세요.",
-                  floatingLabelStyle: TextStyle(
+                  floatingLabelStyle: const TextStyle(
                     color: primaryColor,
                     fontSize: 22,
                     fontFamily: 'NanumGothic',
                     fontWeight: FontWeight.w500),
                   contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 17,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w500),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       color: primaryColor,
                       fontSize: 17,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w500),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: primaryColor),
                       borderRadius: BorderRadius.circular(20)),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: primaryColor),
                       borderRadius: BorderRadius.circular(20)),
                   border:
                       OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -81,10 +81,10 @@ class _CreateCommentState extends State<CreateComment> {
                     DBSet.addComment(collectionName, documentID, commentData);
                     scrollController.scrollController.animateTo(
                       scrollController.scrollController.position.maxScrollExtent, 
-                      duration: Duration(milliseconds: 10), 
+                      duration: const Duration(milliseconds: 10), 
                       curve: Curves.ease);
                   },
-                  icon: Icon(Icons.send, 
+                  icon: const Icon(Icons.send, 
                     semanticLabel: "작성한 댓글 저장",
                     color: primaryColor,
                   ))

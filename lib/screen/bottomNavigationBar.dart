@@ -26,32 +26,32 @@ class _BottomNavBarState extends State<BottomNavBar> {
   // static TextStyle optionStyle =
   //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    CategoryPage(),
+    const CategoryPage(),
     const NanumPostList(
         primaryColor: Color(0xFF045558), collectionName: "nanumPost"),
-    ChatListScreen(),
-    Mypage(),
+    const ChatListScreen(),
+    const Mypage(),
   ];
 
   List<Icon> bottomIcons = [
-    Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
-    Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
-    Icon(Icons.chat_outlined, semanticLabel: "채팅"),
-    Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
+    const Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
+    const Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
+    const Icon(Icons.chat_outlined, semanticLabel: "채팅"),
+    const Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
   ];
 
   List<Icon> bottomUnselectedIcons = [
-    Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
-    Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
-    Icon(Icons.chat_outlined, semanticLabel: "채팅"),
-    Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
+    const Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
+    const Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
+    const Icon(Icons.chat_outlined, semanticLabel: "채팅"),
+    const Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
   ];
 
   List<Icon> bottomSelectedIcons = [
-    Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
-    Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
-    Icon(Icons.chat, semanticLabel: "채팅"),
-    Icon(Icons.account_circle, semanticLabel: "마이페이지")
+    const Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
+    const Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
+    const Icon(Icons.chat, semanticLabel: "채팅"),
+    const Icon(Icons.account_circle, semanticLabel: "마이페이지")
   ];
 
   void _onItemTapped(int index) {
@@ -106,7 +106,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF045558),
+        selectedItemColor: const Color(0xFF045558),
         onTap: _onItemTapped,
       ),
     );

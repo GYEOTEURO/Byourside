@@ -24,25 +24,25 @@ class _PersonalDataState extends State<PersonalData> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("개인정보 처리방침",
+          title: const Text("개인정보 처리방침",
               semanticsLabel: "개인정보 처리방침",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: primaryColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
             padding: EdgeInsets.all(20),
             scrollDirection: Axis.vertical,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
+                children: <Widget>[
                   Text(
                     "곁 개인정보 처리방침",
                     semanticsLabel: "곁 개인정보 처리방침",

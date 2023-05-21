@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Mypage extends StatefulWidget {
+  const Mypage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _Mypage();
@@ -26,7 +28,7 @@ class Mypage extends StatefulWidget {
 }
 
 class _Mypage extends State<Mypage> {
-  final AuthService _auth = new AuthService();
+  final AuthService _auth = AuthService();
   late String uid;
   late String displayName;
   User? user;
@@ -47,16 +49,16 @@ class _Mypage extends State<Mypage> {
     "마음나눔 스크랩"
   ];
   final List<Icon> myIcons = <Icon>[
-    Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),
-    Icon(Icons.volunteer_activism, semanticLabel: '내가 쓴 마음나눔 글 목록 화면으로 이동'),
-    Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음온도 글 목록 화면으로 이동'),
-    Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음나눔 글 목록 화면으로 이동')
+    const Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),
+    const Icon(Icons.volunteer_activism, semanticLabel: '내가 쓴 마음나눔 글 목록 화면으로 이동'),
+    const Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음온도 글 목록 화면으로 이동'),
+    const Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음나눔 글 목록 화면으로 이동')
   ];
   final List<Widget> myConnectPage = <Widget>[
-    MyOndoPost(),
-    MyNanumPost(),
-    MyScrapOndoPost(),
-    MyScrapNanumPost()
+    const MyOndoPost(),
+    const MyNanumPost(),
+    const MyScrapOndoPost(),
+    const MyScrapNanumPost()
   ];
 
   final List<String> etcEntires = <String>[
@@ -70,13 +72,13 @@ class _Mypage extends State<Mypage> {
     // "탈퇴"
   ];
   final List<Icon> etcIcons = <Icon>[
-    Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
-    Icon(Icons.report_problem, semanticLabel: '사용자 신고 화면으로 이동'),
-    Icon(Icons.dnd_forwardslash, semanticLabel: '사용자 차단 화면으로 이동'),
-    Icon(Icons.question_answer, semanticLabel: '개발자에게 문의하기 화면으로 이동'),
-    Icon(Icons.archive, semanticLabel: '개인정보 처리방침 화면으로 이동'),
-    Icon(Icons.receipt_long_rounded, semanticLabel: '서비스 이용약관 화면으로 이동'),
-    Icon(Icons.logout, semanticLabel: '로그아웃'),
+    const Icon(Icons.help, semanticLabel: '자주 묻는 질문 목록 화면으로 이동'),
+    const Icon(Icons.report_problem, semanticLabel: '사용자 신고 화면으로 이동'),
+    const Icon(Icons.dnd_forwardslash, semanticLabel: '사용자 차단 화면으로 이동'),
+    const Icon(Icons.question_answer, semanticLabel: '개발자에게 문의하기 화면으로 이동'),
+    const Icon(Icons.archive, semanticLabel: '개인정보 처리방침 화면으로 이동'),
+    const Icon(Icons.receipt_long_rounded, semanticLabel: '서비스 이용약관 화면으로 이동'),
+    const Icon(Icons.logout, semanticLabel: '로그아웃'),
     // Icon(
     //   Icons.outbox,
     //   semanticLabel: '탈퇴',
@@ -89,7 +91,7 @@ class _Mypage extends State<Mypage> {
     setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => LoginScreen(
+      builder: (context) => const LoginScreen(
         primaryColor: primaryColor,
       ),
     ));
@@ -213,7 +215,7 @@ class _Mypage extends State<Mypage> {
     final SignOut = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xFF045558),
+      color: const Color(0xFF045558),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -224,13 +226,13 @@ class _Mypage extends State<Mypage> {
           setState(() {});
           Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => LoginScreen(
+            builder: (context) => const LoginScreen(
               primaryColor: primaryColor,
             ),
           ));
           // Navigator.pushNamed(context, '/login');
         },
-        child: Text(
+        child: const Text(
           "Log out",
           style: TextStyle(color: Color(0xFF045558)),
           textAlign: TextAlign.center,
@@ -248,7 +250,7 @@ class _Mypage extends State<Mypage> {
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: const Color(0xFF045558),
       ),
       body: Container(
         padding: const EdgeInsets.all(30),
@@ -258,42 +260,42 @@ class _Mypage extends State<Mypage> {
           children: [
             Row(
               children: [
-                RawMaterialButton(
+                const RawMaterialButton(
                   onPressed: null,
                   elevation: 2.0,
                   fillColor: Colors.grey,
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
                   child: Icon(
                     Icons.person,
                     size: 50.0,
                     semanticLabel: '사용자의 기본 프로필 사진',
                   ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 // 나만의 명함 만들기
                 Text(displayName,
                     overflow: TextOverflow.ellipsis,
-                    semanticsLabel: '사용자 닉네임: ${displayName}',
+                    semanticsLabel: '사용자 닉네임: $displayName',
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
                         fontFamily: 'NanumGothic')),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Divider(thickness: 1, height: 1, color: Colors.black26),
-            SizedBox(
+            const Divider(thickness: 1, height: 1, color: Colors.black26),
+            const SizedBox(
               height: 30,
             ),
             // 이름 입력
-            Text(
+            const Text(
               "나의 활동",
               semanticsLabel: '나의 활동',
               style: TextStyle(
@@ -302,7 +304,7 @@ class _Mypage extends State<Mypage> {
                   fontWeight: FontWeight.w700,
                   fontFamily: 'NanumGothic'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
@@ -320,7 +322,7 @@ class _Mypage extends State<Mypage> {
                         label: Text(
                           myEntires[index],
                           semanticsLabel: myEntires[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontFamily: 'NanumGothic'),
                         ),
@@ -333,11 +335,11 @@ class _Mypage extends State<Mypage> {
                         },
                       );
                     })),
-            Divider(thickness: 1, height: 1, color: Colors.black26),
-            SizedBox(
+            const Divider(thickness: 1, height: 1, color: Colors.black26),
+            const SizedBox(
               height: 15,
             ),
-            Text(
+            const Text(
               "기타",
               semanticsLabel: '기타',
               style: TextStyle(
@@ -346,7 +348,7 @@ class _Mypage extends State<Mypage> {
                   fontWeight: FontWeight.w700,
                   fontFamily: 'NanumGothic'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
@@ -364,7 +366,7 @@ class _Mypage extends State<Mypage> {
                         label: Text(
                           etcEntires[index],
                           semanticsLabel: etcEntires[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontFamily: 'NanumGothic'),
                         ),
@@ -380,13 +382,13 @@ class _Mypage extends State<Mypage> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MyDeclaration()),
+                                  builder: (context) => const MyDeclaration()),
                             );
                           } else if (index == 2) {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MyBlock()),
+                                  builder: (context) => const MyBlock()),
                             );
                           } else if (index == 3) {
                             await Navigator.push(
@@ -398,7 +400,7 @@ class _Mypage extends State<Mypage> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PersonalData()),
+                                  builder: (context) => const PersonalData()),
                             );
                           } else if (index == 5) {
                             await Navigator.push(

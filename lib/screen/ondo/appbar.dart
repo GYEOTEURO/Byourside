@@ -9,7 +9,7 @@ class OndoAppBar extends StatefulWidget implements PreferredSizeWidget {
   State<OndoAppBar> createState() => _OndoAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _OndoAppBarState extends State<OndoAppBar> {
@@ -20,21 +20,21 @@ class _OndoAppBarState extends State<OndoAppBar> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "마음온도",
           semanticsLabel: "마음온도",
         ),
         titleTextStyle:
-            TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
-        leading: IconButton(
+            const TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
+        leading: const IconButton(
             icon: Icon(Icons.filter_alt, color: Colors.white), onPressed: null),
         actions: [
           IconButton(
-              icon: Icon(Icons.search, color: Colors.white),
+              icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
                 search();
               }),
-          IconButton(
+          const IconButton(
               icon: Icon(Icons.menu, color: Colors.white), onPressed: null),
         ],
       ),
@@ -44,7 +44,7 @@ class _OndoAppBarState extends State<OndoAppBar> {
   void search() {
     Container(
         child: TextFormField(
-      decoration: InputDecoration(labelText: "검색어를 입력하세요"),
+      decoration: const InputDecoration(labelText: "검색어를 입력하세요"),
       controller: _searchWord,
     ));
   }

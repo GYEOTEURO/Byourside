@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import '../../model/db_set.dart';
 
 class MyBlock extends StatefulWidget {
-  MyBlock({Key? key}) : super(key: key);
-  final Color primaryColor = Color(0xFF045558);
+  const MyBlock({Key? key}) : super(key: key);
+  final Color primaryColor = const Color(0xFF045558);
   final String title = "사용자 차단";
 
   @override
@@ -21,17 +21,17 @@ class _MyBlockState extends State<MyBlock> {
 
   Widget _buildListItem(List<String> blockList) {
     return SingleChildScrollView(
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         child: Form(
             key: _formkey,
             child: Column(children: [
               Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
-                  child: Text('사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
+                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 30),
+                  child: const Text('사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
                       semanticsLabel:
                           '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w600,
@@ -47,7 +47,7 @@ class _MyBlockState extends State<MyBlock> {
                         }
                         return null;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "차단할 닉네임 입력",
                         labelText: "차단할 닉네임을 입력해주세요.",
                         border: OutlineInputBorder(
@@ -65,20 +65,20 @@ class _MyBlockState extends State<MyBlock> {
                         ),
                       ))),
               Container(
-                  margin: EdgeInsets.fromLTRB(0, 50, 0, 30),
-                  child: Text('차단한 사용자 목록',
+                  margin: const EdgeInsets.fromLTRB(0, 50, 0, 30),
+                  child: const Text('차단한 사용자 목록',
                       semanticsLabel: '차단한 사용자 목록',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w600,
                       ))),
               if (blockList.isEmpty)
-                (Center(
+                (const Center(
                     child: Text('없음',
                         semanticsLabel: '차단한 사용자 목록 없음',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ class _MyBlockState extends State<MyBlock> {
               else
                 (Column(
                     children: blockList
-                        .map((e) => new Row(
+                        .map((e) => Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -106,9 +106,9 @@ class _MyBlockState extends State<MyBlock> {
                                         HapticFeedback.lightImpact(); // 약한 진동
                                         DBSet.cancelBlock(user!.uid, e);
                                       },
-                                      child: Text('차단 해제',
+                                      child: const Text('차단 해제',
                                           semanticsLabel: '차단 해제',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 14,
                                             fontFamily: 'NanumGothic',
                                             fontWeight: FontWeight.w600,
@@ -125,11 +125,11 @@ class _MyBlockState extends State<MyBlock> {
         centerTitle: true,
         title: Text(widget.title,
             semanticsLabel: widget.title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: const Color(0xFF045558),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back,
+            icon: const Icon(Icons.arrow_back,
                 semanticLabel: "뒤로 가기", color: Colors.white),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
@@ -161,11 +161,11 @@ class _MyBlockState extends State<MyBlock> {
                     return AlertDialog(
                         semanticLabel:
                             "정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
-                        content: Text(
+                        content: const Text(
                             '정상적으로 차단되었습니다.\n해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
                             semanticsLabel:
                                 '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600,
@@ -181,9 +181,9 @@ class _MyBlockState extends State<MyBlock> {
                                 Navigator.pop(context);
                                 FocusScope.of(context).unfocus();
                               },
-                              child: Text('확인',
+                              child: const Text('확인',
                                   semanticsLabel: '확인',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'NanumGothic',
                                     fontWeight: FontWeight.w600,
@@ -192,9 +192,9 @@ class _MyBlockState extends State<MyBlock> {
                   });
             }
           },
-          child: Text('차단',
+          child: const Text('차단',
               semanticsLabel: '차단',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w600,

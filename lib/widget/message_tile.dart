@@ -80,7 +80,7 @@ class _MessageTileState extends State<MessageTile> {
                             fontFamily: 'NanumGothic',
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Block(nickname: widget.sender, collectionType: 'chat')

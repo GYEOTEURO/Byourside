@@ -102,7 +102,7 @@ class DBSet {
 
   // 신고
   static declaration(String classification, String reason, String id) async {
-    await FirebaseFirestore.instance.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_${reason}'])});
+    await FirebaseFirestore.instance.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_$reason'])});
   }
 
   // 차단 신청

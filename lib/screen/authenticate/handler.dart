@@ -3,6 +3,8 @@ import 'package:byourside/screen/authenticate/register.dart';
 import 'package:flutter/material.dart';
 
 class Handler extends StatefulWidget {
+  const Handler({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _Handler();

@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class NanumSearch extends StatefulWidget {
-  NanumSearch({Key? key}) : super(key: key);
-  final Color primaryColor = Color(0xFF045558);
+  const NanumSearch({Key? key}) : super(key: key);
+  final Color primaryColor = const Color(0xFF045558);
   final String title = "마음나눔 게시글 검색";
   final String collectionName = 'nanumPost';
 
@@ -37,7 +37,7 @@ class _NanumSearchState extends State<NanumSearch> {
       type = "${post.type![0]}/${post.type![1]}";
     }
 
-    return Container(
+    return SizedBox(
         height: height / 7,
         child: Card(
             elevation: 2,
@@ -50,7 +50,7 @@ class _NanumSearchState extends State<NanumSearch> {
                           builder: (context) => NanumPost(
                               collectionName: widget.collectionName,
                               documentID: post.id!,
-                              primaryColor: Color(0xFF045558))));
+                              primaryColor: const Color(0xFF045558))));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -62,7 +62,7 @@ class _NanumSearchState extends State<NanumSearch> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                               child: Text(post.title!,
                                   semanticsLabel: post.title!,
                                   overflow: TextOverflow.fade,
@@ -115,11 +115,11 @@ class _NanumSearchState extends State<NanumSearch> {
           centerTitle: true,
           title: Text(widget.title,
               semanticsLabel: widget.title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-          backgroundColor: Color(0xFF045558),
+          backgroundColor: const Color(0xFF045558),
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
@@ -127,7 +127,7 @@ class _NanumSearchState extends State<NanumSearch> {
               }),
         ),
         body: Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: Column(children: [
               Semantics(
                   label: "검색할 키워드 입력",
@@ -143,7 +143,7 @@ class _NanumSearchState extends State<NanumSearch> {
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w500),
                           contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontSize: 17,
                               fontFamily: 'NanumGothic',
@@ -185,11 +185,12 @@ class _NanumSearchState extends State<NanumSearch> {
                                   return _buildListItem(post);
                                 }
                               });
-                        } else
-                          return Text(
+                        } else {
+                          return const Text(
                             "",
                             semanticsLabel: '',
                           );
+                        }
                       }))
             ])));
   }

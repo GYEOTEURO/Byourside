@@ -16,7 +16,7 @@ class ChatListScreen extends StatefulWidget {
 }
 
 Future<String> callAsyncFetch() =>
-    Future.delayed(Duration(seconds: 2), () => "hi");
+    Future.delayed(const Duration(seconds: 2), () => "hi");
 
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -33,11 +33,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
         .doc(uid)
         .get()
         .then((value) {
-      List.from(value.data()!['blockList']).forEach((element) {
+      for (var element in List.from(value.data()!['blockList'])) {
         if (!blockList.contains(element)) {
           blockList.add(element);
         }
-      });
+      }
     });
     if (mounted) setState(() {});
   }
@@ -165,7 +165,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _isLoading == true
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator(color: primaryColor),
                         )
                       : TextField(
@@ -184,14 +184,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: primaryColor),
+                                  borderSide: const BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                       color: Color.fromARGB(255, 255, 45, 45)),
                                   borderRadius: BorderRadius.circular(20)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: primaryColor),
+                                  borderSide: const BorderSide(color: primaryColor),
                                   borderRadius: BorderRadius.circular(20))),
                         ),
                 ],
@@ -242,7 +242,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               builder: (context) {
                                 return AlertDialog(
                                     semanticLabel: "특수기호 _와 공백은 포함이 불가능합니다.",
-                                    content: Text(
+                                    content: const Text(
                                       '특수기호 _와 공백은 포함이 불가능합니다.',
                                       semanticsLabel: '특수기호 _와 공백은 포함이 불가능합니다.',
                                     ),
@@ -256,9 +256,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                 .lightImpact(); // 약한 진동
                                             Navigator.pop(context);
                                           },
-                                          child: Text('확인',
+                                          child: const Text('확인',
                                               semanticsLabel: '확인',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'NanumGothic',
                                                 fontWeight: FontWeight.w600,
@@ -274,7 +274,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                 return AlertDialog(
                                     semanticLabel:
                                         "이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                    content: Text(
+                                    content: const Text(
                                       '이미 존재하는 채팅방 이름입니다.',
                                       semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
                                     ),
@@ -288,9 +288,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                 .lightImpact(); // 약한 진동
                                             Navigator.pop(context);
                                           },
-                                          child: Text('확인',
+                                          child: const Text('확인',
                                               semanticsLabel: '확인',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'NanumGothic',
                                                 fontWeight: FontWeight.w600,
@@ -328,11 +328,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
         .doc(input[0])
         .get()
         .then((value) {
-      List.from(value.data()!['members']).forEach((element) {
+      for (var element in List.from(value.data()!['members'])) {
         if (!blockGroup.contains(element)) {
           blockGroup.add(element);
         }
-      });
+      }
     });
     print("input:  $input");
     print(blockGroup);
@@ -358,7 +358,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             if (snapshot.data['groups'] != null) {
               if (snapshot.data['groups'].length != 0) {
                 return ListView.builder(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   itemCount: snapshot.data['groups'].length,
                   itemBuilder: (context, index) {
                     bool check = true;
@@ -375,8 +375,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           recentMsg:
                               "" //getRecentMsg(snapshot.data['groups'][index])
                           );
-                    } else
+                    } else {
                       return Container();
+                    }
                   },
                 );
               } else {
@@ -408,15 +409,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
               HapticFeedback.lightImpact();
               popUpDialog(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.add_circle,
               color: Colors.black,
               semanticLabel: "추가",
               size: 75,
             ),
           ),
-          SizedBox(height: 10),
-          SingleChildScrollView(
+          const SizedBox(height: 10),
+          const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Text(
               "추가 버튼을 눌러 채팅을 시작하세요.",

@@ -18,12 +18,12 @@ class AuthService {
     return _auth.authStateChanges().map(_firebaseUser);
   }
 
-  Future signInEmailPassword(LoginUser _login) async {
+  Future signInEmailPassword(LoginUser login) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: _login.email.toString(),
-              password: _login.password.toString());
+              email: login.email.toString(),
+              password: login.password.toString());
       User? user = userCredential.user;
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
@@ -31,12 +31,12 @@ class AuthService {
     }
   }
 
-  Future registerEmailPassword(LoginUser _login) async {
+  Future registerEmailPassword(LoginUser login) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _login.email.toString(),
-        password: _login.password.toString(),
+        email: login.email.toString(),
+        password: login.password.toString(),
       );
       User? user = userCredential.user;
 

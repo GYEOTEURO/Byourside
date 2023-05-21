@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OverlayController extends GetxController {
-  OverlayEntry? overlayEntry = null;
+  OverlayEntry? overlayEntry;
 
   void controlOverlay(entry) {
     if(overlayEntry != null && entry == null){

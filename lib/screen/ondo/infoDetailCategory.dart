@@ -84,7 +84,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
                 child: CompositedTransformTarget(
                   link: _layerLink,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                     width: width * 0.79,
                     height: height * 0.07,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -122,14 +122,8 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
               ),
             ),
             Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                 child: ElevatedButton(
-                    child: Text('이동',
-                        semanticsLabel: '이동',
-                        style: TextStyle(
-                          fontFamily: 'NanumGothic',
-                          fontWeight: FontWeight.w600,
-                        )),
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(width * 0.06, height * 0.07),
                       foregroundColor: Colors.white,
@@ -140,7 +134,13 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
                       setState(() {
                         _changePage = _dropdownValue;
                       });
-                    }))
+                    },
+                    child: const Text('이동',
+                        semanticsLabel: '이동',
+                        style: TextStyle(
+                          fontFamily: 'NanumGothic',
+                          fontWeight: FontWeight.w600,
+                        ))))
           ]),
           if (_changePage == '교육/세미나' || _changePage == '복지/혜택')
             (Expanded(
@@ -154,7 +154,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
               _changePage == '초기 증상 발견/생활 속 Tip')
             (Expanded(
                 child: OndoPostList(
-                    primaryColor: Color(0xFF045558),
+                    primaryColor: const Color(0xFF045558),
                     collectionName: widget.collectionName,
                     category: _changePage)))
         ])));
