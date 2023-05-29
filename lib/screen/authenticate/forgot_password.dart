@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, unused_local_variable
-
 import 'package:byourside/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -157,7 +155,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
   }
 
   Future verifyEmail() async {
-    try {
+    try { // TODO: 이거 auth widget으로
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
       if (mounted) {

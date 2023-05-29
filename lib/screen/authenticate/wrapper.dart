@@ -16,6 +16,7 @@ class Wrapper extends StatelessWidget {
     // print(user?.uid);
     // print(user?.phoneNum);
     // print(user?.displayName);
+    // TODO: if로 다시 시작
     if (user == null) {
       return const Handler();
     } else if (user.phoneNum == null || user.phoneNum == "") {

@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/infoDetailCategory.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';

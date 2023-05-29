@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable, unused_element
-
 import 'package:byourside/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +34,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     }
     return double.tryParse(s) != null;
   }
-
+  // TODO: doc -> phone으로 명확하게 함수명 만들기
+  // 동사 - 명사 순으로
   Future<bool> checkDocExist(String name) async {
     var collection = FirebaseFirestore.instance.collection('phoneNumList');
     var doc = await collection.doc(name).get();

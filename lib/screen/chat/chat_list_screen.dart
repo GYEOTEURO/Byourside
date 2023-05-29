@@ -334,6 +334,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         }
       }
     });
+    //TODO: log로 바꾸기
     print("input:  $input");
     print(blockGroup);
     for (var i in input) {

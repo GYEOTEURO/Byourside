@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatList {
   final String? uid;
@@ -63,7 +63,7 @@ class ChatList {
       "groupId": groupDocumentReference.id,
     });
 
-    if (userName2 != "none" && id2 != "none") {
+    if (userName2 != "none" && id2 != "none") { //TODO: 이 조건 왜넣은거임
       DocumentReference userDocumentReference2 = userCollection.doc(id2);
       await userDocumentReference2.update({
         "groups":
