@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:byourside/main.dart';
 import 'package:byourside/screen/authenticate/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/user_protector.dart';
@@ -15,6 +13,7 @@ class SetupUser extends StatefulWidget {
   State<SetupUser> createState() => _SetupUserState();
 }
 
+// TODO: auth에 등록된 사용자랑 매치할 방법 없음. 정보 같이 저장해라
 class _SetupUserState extends State<SetupUser> {
   @override
   void initState() {

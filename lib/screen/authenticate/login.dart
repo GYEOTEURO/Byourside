@@ -1,11 +1,8 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:byourside/main.dart';
 import 'package:byourside/model/field_validator.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/widget/auth.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'package:byourside/main.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
