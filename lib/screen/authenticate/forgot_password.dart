@@ -157,7 +157,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
   }
 
   Future verifyEmail() async {
-    try {
+    try { // TODO: 이거 auth widget으로
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
       if (mounted) {

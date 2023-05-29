@@ -73,7 +73,7 @@ class _SetupUserState extends State<SetupUser> {
                                 child: Material(
                                     elevation: 5.0,
                                     borderRadius: BorderRadius.circular(20.0),
-                                    color: Theme.of(context).primaryColor,
+                                    color: primaryColor,
                                     child: MaterialButton(
                                       minWidth:
                                           MediaQuery.of(context).size.width *

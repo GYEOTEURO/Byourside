@@ -184,6 +184,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     SizedBox(height: height * 0.05),
                   ])),
                 ),
+                // TODO: 들여쓰기를 최대한 줄이는 방법
+                // - 함수화 시키기 (try 코드)
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Pinput(
@@ -212,13 +214,14 @@ class _OTPScreenState extends State<OTPScreen> {
                           }
                         });
                         await FirebaseAuth.instance.currentUser!.reload();
-
+                        // TODO: 비슷한 조건 else로 빼기
                         if (user?.phoneNum == null || user?.phoneNum == "") {
                           setState(() {
                             FirebaseUser(
                                 uid: user?.uid, phoneNum: widget.phone);
                           });
                         }
+                        // TODO: 함수 하나로 만들어서 조건을 말하는 이름으로 만들어주기 - 추상화 연습
                         if (FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
                                 null &&
@@ -420,7 +423,7 @@ class _OTPScreenState extends State<OTPScreen> {
     }
     if (FirebaseAuth.instance.currentUser?.phoneNumber != null) {
       timer?.cancel();
-    }
+    }// TODO: 이거 auth widget으로
     await _auth.verifyPhoneNumber(
       phoneNumber: '+82${widget.phone}',
       verificationCompleted: _onVerificationCompleted,
@@ -479,6 +482,8 @@ class _OTPScreenState extends State<OTPScreen> {
           timer?.cancel();
         }
       },
+      // TODO: define으로 빼서 해당 코드를 안봐도 알수있게 모아두기
+      // magic number, string 없애기 - 구글 참고
       timeout: const Duration(seconds: 120),
     );
   }

@@ -48,7 +48,7 @@ class _Register extends State<Register> {
     final loginPhoneButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(20.0),
-      color: Theme.of(context).primaryColor,
+      color: primaryColor,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -262,7 +262,7 @@ class _Register extends State<Register> {
     final registerButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(20.0),
-      color: Theme.of(context).primaryColor,
+      color: primaryColor,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),

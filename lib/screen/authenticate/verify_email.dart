@@ -63,6 +63,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Future sendVerificationEmail() async {
     try {
       final user = FirebaseAuth.instance.currentUser!;
+      // TODO: 이거 auth widget으로
       await user.sendEmailVerification();
       if (mounted) setState(() => canResendEmail = false);
       // print("here");

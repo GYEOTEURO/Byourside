@@ -89,6 +89,7 @@ class _Login extends State<Login> {
             obscureText: _obscureText,
             controller: _password,
             validator: (value) {
+              // TODO: 정규표현식
               if (value == null || value.trim().isEmpty) {
                 return '필수 입력란';
               }
