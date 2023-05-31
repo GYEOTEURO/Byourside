@@ -126,7 +126,7 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
       ),
       body: StreamBuilder<List<PostListModel>>(
           stream: DBGet.readScrapPost(
-              collection: widget.collectionName, uid: user!.uid),
+              collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(

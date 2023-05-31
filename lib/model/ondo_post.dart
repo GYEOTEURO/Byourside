@@ -34,7 +34,7 @@ class OndoPostModel {
 
   // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
   // 이외는 uid = doc.data()!["uid"],
-  OndoPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
+  OndoPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) //변환한다는 의미를 살린 이름 짓기
       : id = doc.id,
         uid = doc.data()!["uid"],
         title = doc.data()!["title"],
@@ -65,7 +65,7 @@ class OndoPostModel {
             ? null
             : doc.data()!["keyword"].cast<String>();
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() { // 저장의 의미
     return {
       'uid': uid,
       'title': title,
