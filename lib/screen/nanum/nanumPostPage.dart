@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -48,27 +46,26 @@ class _NanumPostPageState extends State<NanumPostPage> {
 
   Future getImage(ImageSource imageSource) async {
     // final image = await picker.pickImage(source: imageSource);
-    final List<XFile>? images = await picker.pickMultiImage();
+    final List<XFile> images = await picker.pickMultiImage();
 
-    if (images != null) {
-      setState(() {
-        _images = images; // 가져온 이미지를 _image에 저장
+    setState(() {
+      _images = images; // 가져온 이미지를 _image에 저장
 
-        // 선택한 이미지 길이 만큼 초기화
-        _imgInfos = [];
-        for (int i = 0; i < images.length; i++)
-          _imgInfos.add(TextEditingController());
-
-        indicatorLen = _images.length;
-        //_images = images.map<File>((xfile) => File(xfile.path)).toList();
-      });
-      print("이미지 세부 설명: ${_imgInfos}\n 이미지: ${_images}");
-      if (indicatorLen == 0) {
-        indicatorLen = 1;
-        _hide();
-      } else {
-        _show();
+      // 선택한 이미지 길이 만큼 초기화
+      _imgInfos = [];
+      for (int i = 0; i < images.length; i++) {
+        _imgInfos.add(TextEditingController());
       }
+
+      indicatorLen = _images.length;
+      //_images = images.map<File>((xfile) => File(xfile.path)).toList();
+    });
+    print("이미지 세부 설명: $_imgInfos\n 이미지: $_images");
+    if (indicatorLen == 0) {
+      indicatorLen = 1;
+      _hide();
+    } else {
+      _show();
     }
   }
 
@@ -104,10 +101,10 @@ class _NanumPostPageState extends State<NanumPostPage> {
             label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
             child: TextFormField(
               maxLines: 2,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "사진에 대한 간략한 설명을 적어주세요",
                 hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지",
                 enabledBorder: UnderlineInputBorder(
@@ -135,7 +132,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
         backgroundColor: widget.primaryColor,
         title: Text(widget.title,
             semanticsLabel: widget.title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
         centerTitle: true,
         leading: IconButton(
@@ -155,15 +152,15 @@ class _NanumPostPageState extends State<NanumPostPage> {
           child: Form(
               key: _formkey,
               child: SingleChildScrollView(
-                padding: EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 제목
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       '제목',
                       semanticsLabel: '제목',
                       style: TextStyle(
@@ -175,7 +172,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                         child: Semantics(
                             label: "제목을 입력하세요",
                             child: TextFormField(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600),
                               autofocus: true,
@@ -188,7 +185,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               },
                               onFieldSubmitted: (_) =>
                                   FocusScope.of(context).requestFocus(myFocus),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "제목을 입력하세요",
                                 hintText: "제목을 입력하세요",
                                 enabledBorder: UnderlineInputBorder(
@@ -207,12 +204,12 @@ class _NanumPostPageState extends State<NanumPostPage> {
                             ))),
                     // 카테고리 선택
                     Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 5),
+                        padding: const EdgeInsets.only(top: 20, bottom: 5),
                         child: Row(
                           // 위젯을 양쪽으로 딱 붙임
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               '카테고리 선택',
                               semanticsLabel: '카테고리(장애 유형) 선택',
                               style: TextStyle(
@@ -233,9 +230,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                                 title: widget.title,
                                                 preType: _type,
                                               )));
-                                  print("타입: ${_type}");
+                                  print("타입: $_type");
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.navigate_next,
                                   semanticLabel: '카테고리(장애 유형) 선택',
                                 ))
@@ -243,13 +240,13 @@ class _NanumPostPageState extends State<NanumPostPage> {
                         )),
                     // 사진 및 영상 첨부
                     Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 5),
+                        padding: const EdgeInsets.only(top: 10, bottom: 5),
                         child: Column(children: [
                           Row(
                             // 위젯을 양쪽으로 딱 붙임
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 '사진 첨부하기',
                                 semanticsLabel: '사진 첨부하기',
                                 style: TextStyle(
@@ -263,13 +260,13 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                     getImage(ImageSource.gallery);
                                     _show();
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.attach_file,
                                     semanticLabel: '사진 첨부하기',
                                   ))
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Visibility(
@@ -278,7 +275,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
                                     semanticsLabel:
                                         '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
@@ -287,7 +284,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                         fontWeight: FontWeight.w600,
                                         fontFamily: 'NanumGothic'),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   Semantics(
@@ -297,7 +294,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                         items: List.generate(_images.length,
                                             (index) {
                                           return Container(
-                                              padding: EdgeInsets.all(3),
+                                              padding: const EdgeInsets.all(3),
                                               height: maxWidth,
                                               width: MediaQuery.of(context)
                                                   .size
@@ -320,7 +317,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                               });
                                             })),
                                       )),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Semantics(
@@ -329,20 +326,20 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                       count: indicatorLen,
                                       index: _current,
                                       color: Colors.black26,
-                                      activeColor: Color(0xFF045558),
+                                      activeColor: const Color(0xFF045558),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 30,
                                   ),
                                 ],
                               ))
                         ])),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     // 가격 설정
-                    Text(
+                    const Text(
                       '가격',
                       semanticsLabel: '가격',
                       style: TextStyle(
@@ -351,13 +348,13 @@ class _NanumPostPageState extends State<NanumPostPage> {
                           fontFamily: 'NanumGothic'),
                     ),
                     Container(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: Semantics(
                             label: "가격을 입력하세요",
                             child: TextFormField(
                               focusNode: myFocus,
                               textInputAction: TextInputAction.next,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600),
                               validator: (value) {
@@ -374,7 +371,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp('[0-9]'))
                               ],
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: "가격을 입력하세요",
                                 hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)',
                                 enabledBorder: UnderlineInputBorder(
@@ -392,10 +389,10 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               controller: _price,
                             ))),
                     // 게시글 내용
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Text(
+                    const Text(
                       '마음 나눔에 올릴 게시글 내용',
                       semanticsLabel: '마음 나눔에 올릴 게시글 내용',
                       style: TextStyle(
@@ -404,11 +401,11 @@ class _NanumPostPageState extends State<NanumPostPage> {
                           fontFamily: 'NanumGothic'),
                     ),
                     Container(
-                        padding: EdgeInsets.only(top: 40, bottom: 5),
+                        padding: const EdgeInsets.only(top: 40, bottom: 5),
                         child: Semantics(
                             label: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
                             child: TextField(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600),
                               focusNode: myFocus1,

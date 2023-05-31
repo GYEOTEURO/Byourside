@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
@@ -34,7 +32,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
   final User? user = FirebaseAuth.instance.currentUser;
   int _current = 0; // 현재 이미지 인덱스
 
-  List<String> _decList = [
+  final List<String> _decList = [
     "불법 정보를 포함하고 있습니다.",
     "게시판 성격에 부적절합니다.",
     "음란물입니다.",
@@ -83,7 +81,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
       type = "${post.type![0]}/${post.type![1]}";
     }
 
-    String _declaration = _decList[0];
+    String declaration = _decList[0];
 
     return Column(children: [
       Align(
@@ -92,7 +90,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
               child: SelectionArea(
                   child: Text(
             ' ${post.title!}',
-            semanticsLabel: '${post.title!}',
+            semanticsLabel: post.title!,
             style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -106,10 +104,10 @@ class _NanumPostContentState extends State<NanumPostContent> {
               child: Text(
                   post.type!.isEmpty
                       ? "${post.nickname!} | $date $hour:$minute"
-                      : "${post.nickname!} | $date $hour:$minute | ${type}",
+                      : "${post.nickname!} | $date $hour:$minute | $type",
                   semanticsLabel: post.type!.isEmpty
                       ? "${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $hour시 $minute분"
-                      : "${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $hour시 $minute분  ${type}",
+                      : "${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $hour시 $minute분  $type",
                   style: const TextStyle(
                       color: Colors.black,
                       fontSize: 14,
@@ -154,7 +152,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                     FieldValue.arrayUnion(["${user?.uid}_${user?.displayName}"])
               });
               await userCollection.doc(user?.uid).update({
-                "groups": FieldValue.arrayUnion(["${groupId}_${groupName}"])
+                "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
               });
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
@@ -172,7 +170,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                     FieldValue.arrayUnion(["${user?.uid}_${user?.displayName}"])
               });
               await userCollection.doc(user?.uid).update({
-                "groups": FieldValue.arrayUnion(["${groupId}_${groupName}"])
+                "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
               });
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
@@ -193,17 +191,17 @@ class _NanumPostContentState extends State<NanumPostContent> {
             Declaration(
                 decList: _decList, collectionType: 'post', id: post.id!),
             Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Block(nickname: post.nickname!, collectionType: 'post')),
           ]))
       ]),
-      Divider(thickness: 1, height: 1, color: Colors.black),
+      const Divider(thickness: 1, height: 1, color: Colors.black),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         (post.price == '0')
             ? Container(
                 width: width * 0.6,
                 alignment: Alignment.center,
-                child: SelectionArea(
+                child: const SelectionArea(
                     child: Text('나눔',
                         semanticsLabel: '나눔',
                         style: TextStyle(
@@ -212,12 +210,12 @@ class _NanumPostContentState extends State<NanumPostContent> {
                             fontWeight: FontWeight.w600,
                             fontFamily: 'NanumGothic'))))
             : Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                 width: width * 0.5,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SelectionArea(
+                      const SelectionArea(
                           child: Text("가격",
                               semanticsLabel: '가격',
                               style: TextStyle(
@@ -229,7 +227,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                           child: Text(
                         "${post.price!} 원",
                         semanticsLabel: "${post.price!} 원",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 223, 113, 93),
                             fontWeight: FontWeight.w600,
@@ -239,7 +237,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
         if (user?.uid == post.uid)
           (ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 223, 113, 93),
+                backgroundColor: const Color.fromARGB(255, 223, 113, 93),
               ),
               child: Text(changeState,
                   style: const TextStyle(
@@ -255,7 +253,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
         else
           (ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 223, 113, 93),
+              backgroundColor: const Color.fromARGB(255, 223, 113, 93),
             ),
             child: Text(dealState,
                 semanticsLabel: dealState,
@@ -267,14 +265,14 @@ class _NanumPostContentState extends State<NanumPostContent> {
             onPressed: () {},
           )),
       ]),
-      Divider(thickness: 1, height: 1, color: Colors.grey),
+      const Divider(thickness: 1, height: 1, color: Colors.grey),
       if (post.images!.isNotEmpty)
         (Column(children: [
           Container(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
               child: CarouselSlider(
                   items: List.generate(post.images!.length, (index) {
-                    return Container(
+                    return SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Semantics(
                             label: post.imgInfos![index],
@@ -305,7 +303,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
         ])),
       Container(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.fromLTRB(0, 25, 0, 25),
+          padding: const EdgeInsets.fromLTRB(0, 25, 0, 25),
           child: SelectionArea(
               child: Text(
             post.content!,
@@ -326,18 +324,18 @@ class _NanumPostContentState extends State<NanumPostContent> {
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(width * 0.38, height * 0.06),
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4))),
             side:
-                BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
-            foregroundColor: Color.fromARGB(255, 255, 45, 45),
+                const BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
+            foregroundColor: const Color.fromARGB(255, 255, 45, 45),
           ),
           icon: post.likesPeople!.contains(user?.uid)
               ? const Icon(Icons.favorite, semanticLabel: "좋아요 취소")
               : const Icon(Icons.favorite_outline, semanticLabel: "좋아요 추가"),
           label: Text('좋아요  ${post.likes}',
               semanticsLabel: '좋아요  ${post.likes}개',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontFamily: 'NanumGothic',
               )),
@@ -351,16 +349,16 @@ class _NanumPostContentState extends State<NanumPostContent> {
             },
             style: ElevatedButton.styleFrom(
               fixedSize: Size(width * 0.38, height * 0.06),
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4))),
-              side: BorderSide(
+              side: const BorderSide(
                   color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
-              foregroundColor: Color.fromARGB(255, 64, 130, 75),
+              foregroundColor: const Color.fromARGB(255, 64, 130, 75),
             ),
             icon: post.scrapPeople!.contains(user?.uid)
                 ? const Icon(Icons.star, semanticLabel: "스크랩 취소")
                 : const Icon(Icons.star_outline, semanticLabel: "스크랩 추가"),
-            label: Text('스크랩',
+            label: const Text('스크랩',
                 semanticsLabel: '스크랩',
                 style: TextStyle(
                     fontWeight: FontWeight.w600, fontFamily: 'NanumGothic'))),

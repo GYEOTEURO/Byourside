@@ -43,7 +43,7 @@ class _participatorState extends State<participator> {
               return AlertDialog(
                   semanticLabel:
                       '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
-                  content: Text(
+                  content: const Text(
                     '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
                     semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
                     style: TextStyle(color: Colors.black),
@@ -57,9 +57,9 @@ class _participatorState extends State<participator> {
                           HapticFeedback.lightImpact(); // 약한 진동
                           Navigator.pop(context);
                         },
-                        child: Text('확인',
+                        child: const Text('확인',
                             semanticsLabel: '확인',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600,
@@ -73,7 +73,7 @@ class _participatorState extends State<participator> {
           builder: (context) {
             return AlertDialog(
                 semanticLabel: '사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
-                content: Text('사용가능한 닉네임입니다.',
+                content: const Text('사용가능한 닉네임입니다.',
                     semanticsLabel: '사용가능한 닉네임입니다.',
                     style: TextStyle(color: Colors.black)),
                 actions: [
@@ -85,9 +85,9 @@ class _participatorState extends State<participator> {
                         HapticFeedback.lightImpact(); // 약한 진동
                         Navigator.pop(context);
                       },
-                      child: Text('확인',
+                      child: const Text('확인',
                           semanticsLabel: '확인',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
@@ -106,12 +106,12 @@ class _participatorState extends State<participator> {
           hint: '(예: 홍길동)',
           child: TextFormField(
             decoration: InputDecoration(
-              floatingLabelStyle: TextStyle(
+              floatingLabelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 22,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
-              errorStyle: TextStyle(
+              errorStyle: const TextStyle(
                   color: Color.fromARGB(255, 255, 45, 45),
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
@@ -119,25 +119,25 @@ class _participatorState extends State<participator> {
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               labelText: "닉네임",
               hintText: "(예: 홍길동) ",
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 17,
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: primaryColor),
+                  borderSide: const BorderSide(color: primaryColor),
                   borderRadius: BorderRadius.circular(20)),
               errorBorder: OutlineInputBorder(
                   borderSide:
                       const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
                   borderRadius: BorderRadius.circular(20)),
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: primaryColor),
+                  borderSide: const BorderSide(color: primaryColor),
                   borderRadius: BorderRadius.circular(20)),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -194,13 +194,13 @@ class _participatorState extends State<participator> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("세부 정보 입력",
+          title: const Text("세부 정보 입력",
               semanticsLabel: "세부 정보 입력",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
@@ -210,7 +210,7 @@ class _participatorState extends State<participator> {
             scrollDirection: Axis.vertical,
             child: Column(children: [
               Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -234,7 +234,7 @@ class _participatorState extends State<participator> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "닉네임을 입력하세요.",
                               semanticsLabel: "닉네임을 입력하세요.",
                               style: TextStyle(
@@ -244,7 +244,7 @@ class _participatorState extends State<participator> {
                                   fontWeight: FontWeight.w600),
                             ),
                             SizedBox(height: height * 0.01),
-                            Text(
+                            const Text(
                               "특수기호 '_'는 사용이 불가합니다.",
                               semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
                               style: TextStyle(
@@ -256,7 +256,7 @@ class _participatorState extends State<participator> {
                             SizedBox(height: height * 0.04),
                             nicknameField,
                             SizedBox(height: height * 0.04),
-                            Text(
+                            const Text(
                               "개인/단체 이름을 입력하세요.",
                               semanticsLabel: "개인/단체 이름을 입력하세요.",
                               style: TextStyle(
@@ -273,12 +273,12 @@ class _participatorState extends State<participator> {
                                 hint: '(예: 00복지관)',
                                 child: TextFormField(
                                   decoration: InputDecoration(
-                                    floatingLabelStyle: TextStyle(
+                                    floatingLabelStyle: const TextStyle(
                                         color: primaryColor,
                                         fontSize: 22,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
-                                    errorStyle: TextStyle(
+                                    errorStyle: const TextStyle(
                                         color: Color.fromARGB(255, 255, 45, 45),
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
@@ -287,12 +287,12 @@ class _participatorState extends State<participator> {
                                         20.0, 15.0, 20.0, 15.0),
                                     labelText: "개인/단체 이름",
                                     hintText: "(예: 00복지관)",
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
-                                    labelStyle: TextStyle(
+                                    labelStyle: const TextStyle(
                                         color: primaryColor,
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
@@ -333,7 +333,7 @@ class _participatorState extends State<participator> {
                                 )),
                             SizedBox(height: height * 0.05),
                             Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Column(children: [
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
@@ -341,7 +341,7 @@ class _participatorState extends State<participator> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Text(
+                                        const Text(
                                           "소속",
                                           semanticsLabel: "소속",
                                           style: TextStyle(
@@ -395,7 +395,7 @@ class _participatorState extends State<participator> {
                     _nickname.text, _organizationName.text, _selectedType);
                 Navigator.pop(context);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => VerifyEmail()));
+                    MaterialPageRoute(builder: (context) => const VerifyEmail()));
               }
             }
           },

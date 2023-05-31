@@ -73,7 +73,7 @@ class _NanumPostListState extends State<NanumPostList> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(2),
-                  margin: EdgeInsets.fromLTRB(12, 10, 8, 10),
+                  margin: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -82,7 +82,7 @@ class _NanumPostListState extends State<NanumPostList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
+                              margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
                               child: Text(post.title!,
                                   semanticsLabel: post.title!,
                                   overflow: TextOverflow.fade,
@@ -135,12 +135,12 @@ class _NanumPostListState extends State<NanumPostList> {
       appBar: AppBar(
           backgroundColor: widget.primaryColor,
           centerTitle: true,
-          title: Text("마음나눔",
+          title: const Text("마음나눔",
               semanticsLabel: '마음나눔',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           leading: IconButton(
-              icon: Icon(Icons.filter_alt,
+              icon: const Icon(Icons.filter_alt,
                   semanticLabel: "장애 유형 필터링", color: Colors.white),
               onPressed: () async {
                 HapticFeedback.lightImpact(); // 약한 진동
@@ -148,36 +148,36 @@ class _NanumPostListState extends State<NanumPostList> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => NanumPostCategory(
-                              primaryColor: Color(0xFF045558),
+                              primaryColor: const Color(0xFF045558),
                               title: "필터링",
                               preType: _type,
                             )));
-                print("나눔 타입: ${_type}");
+                print("나눔 타입: $_type");
                 controller.filtering(_type);
                 setState(() {});
               }),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 semanticLabel: "검색",
               ),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NanumSearch()));
+                    MaterialPageRoute(builder: (context) => const NanumSearch()));
               },
             ),
           ],
           bottom: PreferredSize(
               preferredSize: const Size.fromHeight(48),
               child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: Row(
                     children: [
                       (completedValue == true)
                           ? (IconButton(
-                              icon: Icon(Icons.check_box_outlined,
+                              icon: const Icon(Icons.check_box_outlined,
                                   semanticLabel: "비활성화됨. 거래 완료 제외",
                                   color: Colors.white),
                               onPressed: () {
@@ -185,14 +185,14 @@ class _NanumPostListState extends State<NanumPostList> {
                                 changeCompletedValue(completedValue);
                               }))
                           : (IconButton(
-                              icon: Icon(Icons.square_rounded,
+                              icon: const Icon(Icons.square_rounded,
                                   semanticLabel: "활성화됨. 거래 완료 제외",
                                   color: Colors.white),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
                                 changeCompletedValue(completedValue);
                               })),
-                      Center(
+                      const Center(
                           child: Text(
                         "거래완료 제외",
                         semanticsLabel: "거래완료 제외",
@@ -231,7 +231,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       return _buildListItem(post);
                     }
                   });
-            } else
+            } else {
               return const SelectionArea(
                   child: Center(
                       child: Text('게시물 목록을 가져오는 중...',
@@ -240,6 +240,7 @@ class _NanumPostListState extends State<NanumPostList> {
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
                           ))));
+            }
           }),
       // 누르면 글 작성하는 PostPage로 navigate하는 버튼
       floatingActionButton: FloatingActionButton(

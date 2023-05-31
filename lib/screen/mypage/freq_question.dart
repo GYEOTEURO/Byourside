@@ -28,12 +28,12 @@ class _FreqQuestionState extends State<FreqQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("자주 묻는 질문",
+          title: const Text("자주 묻는 질문",
               semanticsLabel: '자주 묻는 질문',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
           centerTitle: true,
-          backgroundColor: Color(0xFF045558),
+          backgroundColor: const Color(0xFF045558),
           leading: IconButton(
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
@@ -47,103 +47,103 @@ class _FreqQuestionState extends State<FreqQuestion> {
           ),
         ),
         body: SingleChildScrollView(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             scrollDirection: Axis.vertical,
             child: Center(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 // 1번
                 Text(_questions[0],
                     semanticsLabel: _questions[0],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(_answers[0],
                     semanticsLabel: _answers[0],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         height: 1.3,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
-                Divider(thickness: 1, height: 1, color: Colors.black26),
-                SizedBox(height: 20),
+                const SizedBox(height: 10),
+                const Divider(thickness: 1, height: 1, color: Colors.black26),
+                const SizedBox(height: 20),
                 // 2번
                 Text(_questions[1],
                     semanticsLabel: _questions[1],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(_answers[1],
                     semanticsLabel: _answers[1],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         height: 1.3,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
-                Divider(thickness: 1, height: 1, color: Colors.black26),
-                SizedBox(height: 20),
+                const SizedBox(height: 10),
+                const Divider(thickness: 1, height: 1, color: Colors.black26),
+                const SizedBox(height: 20),
                 // 3번
                 Text(_questions[2],
                     semanticsLabel: _questions[2],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(_answers[2],
                     semanticsLabel: _answers[2],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         height: 1.3,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
-                Divider(thickness: 1, height: 1, color: Colors.black26),
-                SizedBox(height: 20),
+                const SizedBox(height: 10),
+                const Divider(thickness: 1, height: 1, color: Colors.black26),
+                const SizedBox(height: 20),
                 // 4번
                 Text(_questions[3],
                     semanticsLabel: _questions[3],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(_answers[3],
                     semanticsLabel: _answers[3],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         height: 1.3,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
-                Divider(thickness: 1, height: 1, color: Colors.black26),
-                SizedBox(height: 20),
+                const SizedBox(height: 10),
+                const Divider(thickness: 1, height: 1, color: Colors.black26),
+                const SizedBox(height: 20),
                 // 5번
                 Text(_questions[4],
                     semanticsLabel: _questions[4],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(_answers[4],
                     semanticsLabel: _answers[4],
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         height: 1.3,
                         fontFamily: 'NanumGothic')),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
               ],
             ))));
   }

@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, unused_local_variable
-
 import 'package:byourside/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +30,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         centerTitle: true,
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back,
+            icon: const Icon(Icons.arrow_back,
                 semanticLabel: "뒤로 가기", color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
@@ -62,7 +60,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                     fontWeight: FontWeight.w600),
               ),
               SizedBox(height: height * 0.02),
-              Text(
+              const Text(
                 "'.com'으로 끝나는 메일만 가능합니다.",
                 semanticsLabel: "'.com'으로 끝나는 메일만 가능합니다.",
                 style: TextStyle(
@@ -83,12 +81,12 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                     cursorColor: primaryColor,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
-                      floatingLabelStyle: TextStyle(
+                      floatingLabelStyle: const TextStyle(
                           color: primaryColor,
                           fontSize: 22,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w500),
-                      errorStyle: TextStyle(
+                      errorStyle: const TextStyle(
                           color: Color.fromARGB(255, 255, 45, 45),
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
@@ -97,12 +95,12 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                           const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       hintText: "(예: abcd@google.com)",
                       labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                           color: Colors.grey,
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w500),
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                           color: primaryColor,
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
@@ -157,7 +155,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
   }
 
   Future verifyEmail() async {
-    try {
+    try { // TODO: 이거 auth widget으로
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
       if (mounted) {
@@ -166,10 +164,10 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
             builder: (context) {
               return AlertDialog(
                   semanticLabel: "메일함을 확인하세요.",
-                  content: Text(
+                  content: const Text(
                     "메일함을 확인하세요.",
                     semanticsLabel: "메일함을 확인하세요.",
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'NanumGothic',
                         fontWeight: FontWeight.w500),
@@ -183,9 +181,9 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                           HapticFeedback.lightImpact(); // 약한 진동
                           Navigator.pop(context);
                         },
-                        child: Text('확인',
+                        child: const Text('확인',
                             semanticsLabel: '확인',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600,

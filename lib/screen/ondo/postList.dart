@@ -70,7 +70,7 @@ class _OndoPostListState extends State<OndoPostList> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(2),
-                  margin: EdgeInsets.fromLTRB(12, 10, 8, 10),
+                  margin: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -79,7 +79,7 @@ class _OndoPostListState extends State<OndoPostList> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
+                                margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
                                 child: Text(post.title!,
                                     semanticsLabel: post.title!,
                                     overflow: TextOverflow.fade,

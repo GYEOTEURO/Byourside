@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,8 @@ import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 
 class VerifyEmail extends StatefulWidget {
+  const VerifyEmail({super.key});
+
   @override
   _VerifyEmailState createState() => _VerifyEmailState();
 }
@@ -28,7 +28,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
       sendVerificationEmail();
 
       timer = Timer.periodic(
-        Duration(seconds: 3),
+        const Duration(seconds: 3),
         (_) => checkEmailVerified(),
       );
     }
@@ -44,7 +44,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Future checkEmailVerified() async {
     // call after email verification
     // print(canResendEmail);
-    if (await FirebaseAuth.instance.currentUser != null) {
+    if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
     if (mounted) {
@@ -61,10 +61,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Future sendVerificationEmail() async {
     try {
       final user = FirebaseAuth.instance.currentUser!;
+      // TODO: 이거 auth widget으로
       await user.sendEmailVerification();
       if (mounted) setState(() => canResendEmail = false);
       // print("here");
-      await Future.delayed(Duration(seconds: 120));
+      await Future.delayed(const Duration(seconds: 120));
       if (mounted) setState(() => canResendEmail = true);
     } catch (e) {
       if (mounted) {
@@ -74,7 +75,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
               return AlertDialog(
                   semanticLabel:
                       "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                  content: Text(
+                  content: const Text(
                     "메일함을 확인하세요.\n오류가 지속될 경우 문의해주세요.",
                     semanticsLabel: "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요.",
                   ),
@@ -87,9 +88,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
                           HapticFeedback.lightImpact(); // 약한 진동
                           Navigator.pop(context);
                         },
-                        child: Text('확인',
+                        child: const Text('확인',
                             semanticsLabel: '확인',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600,
@@ -106,19 +107,19 @@ class _VerifyEmailState extends State<VerifyEmail> {
     double width = MediaQuery.of(context).size.width;
 
     if (isEmailVerified) {
-      return BottomNavBar(primaryColor: primaryColor);
+      return const BottomNavBar(primaryColor: primaryColor);
     } else {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("이메일 확인",
+          title: const Text("이메일 확인",
               semanticsLabel: "이메일 확인",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
@@ -129,7 +130,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(0, 30, 50, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -147,11 +148,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SingleChildScrollView(
+                      const SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
                           '확인 이메일이 전송되었습니다.\n메일함을 확인하세요.',
@@ -165,7 +166,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                         ),
                       ),
                       SizedBox(height: height * 0.1),
-                      SingleChildScrollView(
+                      const SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
                           '(2분 후 재전송 가능합니다)',
@@ -180,11 +181,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       ),
                       SizedBox(height: height * 0.1),
                       canResendEmail
-                          ? Container(
+                          ? SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
                                   style: ElevatedButton.styleFrom(
-                                      minimumSize: Size.fromHeight(50),
+                                      minimumSize: const Size.fromHeight(50),
                                       backgroundColor: primaryColor),
                                   icon: const Icon(
                                     Icons.email,
@@ -192,7 +193,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                     color: Colors.white,
                                     semanticLabel: "메일", //semanticLabel 속성 추가하기
                                   ),
-                                  label: Text(
+                                  label: const Text(
                                     '이메일 재전송',
                                     semanticsLabel: "이메일 재전송",
                                     style: TextStyle(
@@ -206,13 +207,15 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                     final user =
                                         FirebaseAuth.instance.currentUser!;
                                     await user.sendEmailVerification();
-                                    if (mounted)
+                                    if (mounted) {
                                       setState(() => canResendEmail = false);
+                                    }
                                     // print("ss");
                                     await Future.delayed(
-                                        Duration(seconds: 120));
-                                    if (mounted)
+                                        const Duration(seconds: 120));
+                                    if (mounted) {
                                       setState(() => canResendEmail = true);
+                                    }
                                   })))
                           : SizedBox(
                               height: height * 0.03,
@@ -220,9 +223,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       SizedBox(height: height * 0.03),
                       TextButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size.fromHeight(50),
+                            minimumSize: const Size.fromHeight(50),
                           ),
-                          child: Text(
+                          child: const Text(
                             '취소',
                             semanticsLabel: '취소',
                             style: TextStyle(

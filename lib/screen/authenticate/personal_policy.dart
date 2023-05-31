@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use, unused_local_variable
-
 import 'package:byourside/main.dart';
 import 'package:flutter/material.dart';
 
@@ -24,25 +22,25 @@ class _PersonalPolicyState extends State<PersonalPolicy> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("사용자 정책",
+          title: const Text("사용자 정책",
               semanticsLabel: "사용자 정책",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: primaryColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
             padding: EdgeInsets.all(20),
             scrollDirection: Axis.vertical,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
+                children: <Widget>[
                   Text(
                     "곁 사용자 정책",
                     semanticsLabel: "곁 사용자 정책",

@@ -70,7 +70,7 @@ class _PosterPageState extends State<PosterPage> {
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                 width: width * 0.4,
                 height: width * 0.4,
                 child: (post.images!.isNotEmpty)
@@ -81,7 +81,7 @@ class _PosterPageState extends State<PosterPage> {
                         ))
                     : Container(
                         color: Colors.grey,
-                        child: Center(
+                        child: const Center(
                             child: Text('사진 없음',
                                 semanticsLabel: '사진 없음',
                                 style: TextStyle(
@@ -91,7 +91,7 @@ class _PosterPageState extends State<PosterPage> {
                       )),
             Expanded(
                 child: Container(
-                    padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                     child: Text(post.title!,
                         semanticsLabel: post.title,
                         overflow: TextOverflow.fade,
@@ -104,7 +104,7 @@ class _PosterPageState extends State<PosterPage> {
                             fontFamily: 'NanumGothic')))),
             Expanded(
                 child: Container(
-                    padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                     child: Text(
                       post.type!.isEmpty
                           ? '${post.nickname!} | $date'

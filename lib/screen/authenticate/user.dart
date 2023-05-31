@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:byourside/main.dart';
 import 'package:byourside/screen/authenticate/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/user_protector.dart';
@@ -15,6 +13,7 @@ class SetupUser extends StatefulWidget {
   State<SetupUser> createState() => _SetupUserState();
 }
 
+// TODO: auth에 등록된 사용자랑 매치할 방법 없음. 정보 같이 저장해라
 class _SetupUserState extends State<SetupUser> {
   @override
   void initState() {
@@ -29,7 +28,7 @@ class _SetupUserState extends State<SetupUser> {
         appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            title: Text("유형 선택",
+            title: const Text("유형 선택",
                 semanticsLabel: "유형 선택",
                 style: TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
@@ -48,7 +47,7 @@ class _SetupUserState extends State<SetupUser> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -73,7 +72,7 @@ class _SetupUserState extends State<SetupUser> {
                                 child: Material(
                                     elevation: 5.0,
                                     borderRadius: BorderRadius.circular(20.0),
-                                    color: Theme.of(context).primaryColor,
+                                    color: primaryColor,
                                     child: MaterialButton(
                                       minWidth:
                                           MediaQuery.of(context).size.width *
@@ -85,10 +84,10 @@ class _SetupUserState extends State<SetupUser> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  protector()),
+                                                  const protector()),
                                         );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         '장애 아동 보호자',
                                         semanticsLabel: '장애 아동 보호자',
                                         style: TextStyle(
@@ -115,10 +114,10 @@ class _SetupUserState extends State<SetupUser> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                participator()),
+                                                const participator()),
                                       );
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       '관계자',
                                       semanticsLabel: '관계자',
                                       style: TextStyle(
@@ -143,10 +142,10 @@ class _SetupUserState extends State<SetupUser> {
                                       HapticFeedback.lightImpact(); // 약한 진동
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) => self()),
+                                            builder: (context) => const self()),
                                       );
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       '장애인 당사자',
                                       semanticsLabel: '장애인 당사자',
                                       style: TextStyle(
@@ -172,10 +171,10 @@ class _SetupUserState extends State<SetupUser> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                someoneElse()),
+                                                const someoneElse()),
                                       );
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       '그 외',
                                       semanticsLabel: '그 외',
                                       style: TextStyle(

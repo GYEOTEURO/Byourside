@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable, unused_element
-
 import 'package:byourside/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +34,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     }
     return double.tryParse(s) != null;
   }
-
+  // TODO: doc -> phone으로 명확하게 함수명 만들기
+  // 동사 - 명사 순으로
   Future<bool> checkDocExist(String name) async {
     var collection = FirebaseFirestore.instance.collection('phoneNumList');
     var doc = await collection.doc(name).get();
@@ -65,13 +64,13 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text("휴대폰 인증",
+          title: const Text("휴대폰 인증",
               semanticsLabel: "휴대폰 인증",
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back,
+              icon: const Icon(Icons.arrow_back,
                   semanticLabel: "뒤로 가기", color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
@@ -79,11 +78,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -132,7 +131,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               Form(
                   key: _formKey_phone,
                   child: Container(
-                    margin: EdgeInsets.only(top: 40, right: 20, left: 20),
+                    margin: const EdgeInsets.only(top: 40, right: 20, left: 20),
                     child: Semantics(
                         container: true,
                         textField: true,
@@ -154,17 +153,17 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                   borderRadius: BorderRadius.circular(20)),
                               labelText: "휴대폰 번호를 입력하세요.",
                               hintText: '(예: 1012345678)',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 17,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w500),
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                   color: primaryColor,
                                   fontSize: 17,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w500),
-                              prefix: Padding(
+                              prefix: const Padding(
                                 padding: EdgeInsets.all(5),
                                 child: Text(
                                   '+82',
@@ -195,7 +194,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               // linkButton,
               SizedBox(height: height * 0.02),
               Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 width: double.infinity,
                 child: ElevatedButton(
                     style: ButtonStyle(
@@ -214,7 +213,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                   return AlertDialog(
                                       semanticLabel:
                                           "이미 가입된 번호입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                      content: Text(
+                                      content: const Text(
                                         '이미 가입된 번호입니다.',
                                         semanticsLabel: '이미 가입된 번호입니다.',
                                         style: TextStyle(
@@ -232,9 +231,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                                   .lightImpact(); // 약한 진동
                                               Navigator.pop(context);
                                             },
-                                            child: Text('확인',
+                                            child: const Text('확인',
                                                 semanticsLabel: '확인',
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontSize: 14,
                                                   fontFamily: 'NanumGothic',
                                                   fontWeight: FontWeight.w600,
@@ -249,7 +248,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                         }
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       '동의하고 인증',
                       semanticsLabel: '동의하고 인증',
                       style: TextStyle(

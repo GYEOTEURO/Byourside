@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:byourside/screen/ondo/postCategory.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -48,27 +46,26 @@ class _OndoPostPageState extends State<OndoPostPage> {
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
   Future getImage(ImageSource imageSource) async {
     // final image = await picker.pickImage(source: imageSource);
-    final List<XFile>? images = await picker.pickMultiImage();
+    final List<XFile> images = await picker.pickMultiImage();
 
-    if (images != null) {
-      setState(() {
-        _images = images; // 가져온 이미지를 _image에 저장
+    setState(() {
+      _images = images; // 가져온 이미지를 _image에 저장
 
-        // 선택한 이미지 길이 만큼 초기화
-        _imgInfos = [];
-        for (int i = 0; i < images.length; i++)
-          _imgInfos.add(TextEditingController());
-
-        indicatorLen = _images.length;
-        //_images = images.map<File>((xfile) => File(xfile.path)).toList();
-      });
-      print("이미지 세부 설명: ${_imgInfos}\n 이미지: ${_images}");
-      if (indicatorLen == 0) {
-        indicatorLen = 1;
-        _hide();
-      } else {
-        _show();
+      // 선택한 이미지 길이 만큼 초기화
+      _imgInfos = [];
+      for (int i = 0; i < images.length; i++) {
+        _imgInfos.add(TextEditingController());
       }
+
+      indicatorLen = _images.length;
+      //_images = images.map<File>((xfile) => File(xfile.path)).toList();
+    });
+    print("이미지 세부 설명: $_imgInfos\n 이미지: $_images");
+    if (indicatorLen == 0) {
+      indicatorLen = 1;
+      _hide();
+    } else {
+      _show();
     }
   }
 
@@ -104,10 +101,10 @@ class _OndoPostPageState extends State<OndoPostPage> {
             label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
             child: TextFormField(
               maxLines: 2,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "사진에 대한 간략한 설명을 적어주세요",
                 hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지",
                 enabledBorder: UnderlineInputBorder(
@@ -136,7 +133,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
           widget.title,
           semanticsLabel: widget.title,
           style:
-              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+              const TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -157,15 +154,15 @@ class _OndoPostPageState extends State<OndoPostPage> {
           child: Form(
             key: _formkey,
             child: SingleChildScrollView(
-                padding: EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 제목
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       '제목',
                       semanticsLabel: '제목',
                       style: TextStyle(
@@ -177,7 +174,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                         child: Semantics(
                             label: "제목을 입력하세요",
                             child: TextFormField(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600),
                               autofocus: true,
@@ -191,7 +188,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                               // style: TextStyle(fontFamily: 'NanumGothic'),
                               onFieldSubmitted: (_) =>
                                   FocusScope.of(context).requestFocus(myFocus),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   labelText: "제목을 입력하세요",
                                   hintText: "제목을 입력하세요",
                                   enabledBorder: UnderlineInputBorder(
@@ -210,12 +207,12 @@ class _OndoPostPageState extends State<OndoPostPage> {
                             ))),
                     // 카테고리 선택
                     Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 5),
+                        padding: const EdgeInsets.only(top: 20, bottom: 5),
                         child: Row(
                           // 위젯을 양쪽으로 딱 붙임
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               '카테고리 선택',
                               semanticsLabel: '카테고리(게시판 종류와 장애 유형) 선택',
                               style: TextStyle(
@@ -238,7 +235,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   print(
                                       "카테고리: ${_categories.category}, 타입: ${_categories.type}");
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.navigate_next,
                                   semanticLabel: '카테고리(게시판 종류와 장애 유형) 선택',
                                 ))
@@ -246,13 +243,13 @@ class _OndoPostPageState extends State<OndoPostPage> {
                         )),
                     // 사진 및 영상 첨부
                     Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 5),
+                        padding: const EdgeInsets.only(top: 10, bottom: 5),
                         child: Column(children: [
                           Row(
                             // 위젯을 양쪽으로 딱 붙임
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('사진 첨부하기',
+                              const Text('사진 첨부하기',
                                   semanticsLabel: '사진 첨부하기',
                                   style: TextStyle(
                                       color: Colors.black,
@@ -263,13 +260,13 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                     HapticFeedback.lightImpact(); // 약한 진동
                                     getImage(ImageSource.gallery);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.attach_file,
                                     semanticLabel: '사진 첨부하기',
                                   ))
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Visibility(
@@ -278,7 +275,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
                                     semanticsLabel:
                                         '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
@@ -287,7 +284,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                         fontWeight: FontWeight.w600,
                                         fontFamily: 'NanumGothic'),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   Semantics(
@@ -297,7 +294,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                         items: List.generate(_images.length,
                                             (index) {
                                           return Container(
-                                              padding: EdgeInsets.all(3),
+                                              padding: const EdgeInsets.all(3),
                                               height: maxWidth,
                                               width: MediaQuery.of(context)
                                                   .size
@@ -320,7 +317,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                               });
                                             })),
                                       )),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Semantics(
@@ -332,17 +329,17 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                       activeColor: widget.primaryColor,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 30,
                                   ),
                                 ],
                               ))
                         ])),
                     // 게시글 내용
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       '마음 온도에 올릴 게시글 내용',
                       semanticsLabel: '마음 온도에 올릴 게시글 내용',
                       style: TextStyle(
@@ -351,11 +348,11 @@ class _OndoPostPageState extends State<OndoPostPage> {
                           fontFamily: 'NanumGothic'),
                     ),
                     Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 5),
+                        padding: const EdgeInsets.only(top: 20, bottom: 5),
                         child: Semantics(
                             label: "마음 온도에 올릴 게시글 내용을 작성해주세요",
                             child: TextField(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600),
                               focusNode: myFocus,
@@ -399,9 +396,9 @@ class _OndoPostPageState extends State<OndoPostPage> {
                 builder: (context) {
                   return AlertDialog(
                       semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
-                      content: Text('게시판 종류를 선택해주세요',
+                      content: const Text('게시판 종류를 선택해주세요',
                           semanticsLabel: '게시판 종류를 선택해주세요',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
@@ -415,9 +412,9 @@ class _OndoPostPageState extends State<OndoPostPage> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('확인',
+                            child: const Text('확인',
                                 semanticsLabel: '확인',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
@@ -438,7 +435,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                 }
               }
 
-              print("사진 상세 정보: ${imgInfos}");
+              print("사진 상세 정보: $imgInfos");
 
               if (_categories.category == '자유게시판') _categories.category = '자유';
 

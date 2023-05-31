@@ -58,7 +58,7 @@ void main() async {
     theme: ThemeData(
         fontFamily: 'NanumGothic',
         ),
-    home: MyApp(),
+    home: const MyApp(),
     // debugShowCheckedModeBanner: false,
   ));
 }
@@ -66,6 +66,9 @@ void main() async {
 const primaryColor = Color(0xFF045558);
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
   _MyAppState createState() => _MyAppState();
 }
 
@@ -83,15 +86,15 @@ class _MyAppState extends State<MyApp> {
             title: '곁',
             initialRoute: "/login",
             routes: {
-              "/login": (context) => LoginScreen(primaryColor: primaryColor),
-              "/": (context) => BottomNavBar(primaryColor: primaryColor),
-              "/phone": (context) => VerifyPhone(),
-              "/email": (context) => VerifyEmail(),
-              "/user": (context) => SetupUser(),
-              "/user_protector": (context) => protector(),
-              "/user_participator": (context) => participator(),
-              "/user_someoneElse": (context) => someoneElse(),
-              "/chat_list": (context) => ChatListScreen(),
+              "/login": (context) => const LoginScreen(primaryColor: primaryColor),
+              "/": (context) => const BottomNavBar(primaryColor: primaryColor),
+              "/phone": (context) => const VerifyPhone(),
+              "/email": (context) => const VerifyEmail(),
+              "/user": (context) => const SetupUser(),
+              "/user_protector": (context) => const protector(),
+              "/user_participator": (context) => const participator(),
+              "/user_someoneElse": (context) => const someoneElse(),
+              "/chat_list": (context) => const ChatListScreen(),
             },
           ),
         ),

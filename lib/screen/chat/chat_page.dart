@@ -28,7 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   String admin = "";
   int count = 0;
 
-  List<String> _decList = [
+  final List<String> _decList = [
     "불법 정보를 포함하고 있습니다.",
     "음란물입니다.",
     "스팸홍보/도배 내용을 포함하고 있습니다.",
@@ -50,6 +50,7 @@ class _ChatPageState extends State<ChatPage> {
         chats = val;
       });
     });
+    // TODO: admin 확인해보기
     ChatList().getGroupAdmin(widget.groupId).then((val) {
       setState(() {
         admin = val;
@@ -59,10 +60,12 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: main에 한번만 선언하면 안되나
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    String _declaration = _decList[0];
-
+    String declaration = _decList[0];
+    
+    // TODO: 아래 채팅 가려지는거 해결해야함
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: height * 0.08,
@@ -72,11 +75,11 @@ class _ChatPageState extends State<ChatPage> {
           widget.groupName,
           semanticsLabel: widget.groupName,
           style:
-              TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+              const TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         backgroundColor: primaryColor,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back,
+            icon: const Icon(Icons.arrow_back,
                 semanticLabel: "뒤로 가기", color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
@@ -84,12 +87,12 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           OutlinedButton(
             style: ElevatedButton.styleFrom(
-              side: BorderSide(color: primaryColor, width: 1.5),
+              side: const BorderSide(color: primaryColor, width: 1.5),
               foregroundColor: primaryColor,
             ),
-            child: Text('신고',
+            child: const Text('신고',
                 semanticsLabel: '신고',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'NanumGothic',
@@ -99,6 +102,8 @@ class _ChatPageState extends State<ChatPage> {
               FocusManager.instance.primaryFocus?.unfocus();
               // await Future.delayed(Duration(seconds: 2));
 
+
+              // TODO: widget으로 빼기
               HapticFeedback.lightImpact(); // 약한 진동
               showDialog(
                   context: context,
@@ -108,12 +113,12 @@ class _ChatPageState extends State<ChatPage> {
                         child: AlertDialog(
                             semanticLabel:
                                 '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                            title: Text(
+                            title: const Text(
                                 '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
                                 semanticsLabel:
                                     '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
@@ -122,7 +127,7 @@ class _ChatPageState extends State<ChatPage> {
                                 StatefulBuilder(builder: (context, setState) {
                               return Column(
                                 children: _decList
-                                    .map((e) => new RadioListTile(
+                                    .map((e) => RadioListTile(
                                         title: Text(e,
                                             semanticsLabel: e,
                                             style: const TextStyle(
@@ -131,10 +136,10 @@ class _ChatPageState extends State<ChatPage> {
                                               fontWeight: FontWeight.w600,
                                             )),
                                         value: e,
-                                        groupValue: _declaration,
+                                        groupValue: declaration,
                                         onChanged: (String? value) {
                                           setState(() {
-                                            _declaration = value!;
+                                            declaration = value!;
                                           });
                                         }))
                                     .toList(),
@@ -152,12 +157,12 @@ class _ChatPageState extends State<ChatPage> {
                                         onPressed: () {
                                           HapticFeedback.lightImpact(); // 약한 진동
                                           DBSet.declaration('chat',
-                                              _declaration, widget.groupId);
+                                              declaration, widget.groupId);
                                           Navigator.pop(context);
                                         },
-                                        child: Text('신고',
+                                        child: const Text('신고',
                                             semanticsLabel: '신고',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'NanumGothic',
                                               fontWeight: FontWeight.w600,
@@ -170,9 +175,9 @@ class _ChatPageState extends State<ChatPage> {
                                           HapticFeedback.lightImpact(); // 약한 진동
                                           Navigator.pop(context);
                                         },
-                                        child: Text('취소',
+                                        child: const Text('취소',
                                             semanticsLabel: '취소',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: 'NanumGothic',
                                               fontWeight: FontWeight.w600,
@@ -187,7 +192,7 @@ class _ChatPageState extends State<ChatPage> {
       body: Stack(
         children: [
           Positioned(
-              child: Container(
+              child: SizedBox(
                   height: height * 0.8 -
                       MediaQuery.of(context).viewPadding.top -
                       MediaQuery.of(context).viewPadding.bottom,

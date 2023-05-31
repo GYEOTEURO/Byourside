@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import '../../model/db_get.dart';
 
 class MyScrapOndoPost extends StatefulWidget {
-  MyScrapOndoPost({Key? key}) : super(key: key);
-  final Color primaryColor = Color(0xFF045558);
+  const MyScrapOndoPost({Key? key}) : super(key: key);
+  final Color primaryColor = const Color(0xFF045558);
   final String collectionName = 'ondoPost';
   final String title = "스크랩한 마음온도글";
 
@@ -34,7 +34,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
       type = "${post.type![0]}/${post.type![1]}";
     }
 
-    return Container(
+    return SizedBox(
         height: height / 7,
         child: Card(
             //semanticContainer: true,
@@ -55,7 +55,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(2),
-                  margin: EdgeInsets.fromLTRB(12, 10, 8, 10),
+                  margin: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -64,7 +64,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              margin: EdgeInsets.fromLTRB(0, 5, 0, 12),
+                              margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
                               child: Text(post.title!,
                                   semanticsLabel: post.title!,
                                   overflow: TextOverflow.fade,
@@ -113,11 +113,11 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
         centerTitle: true,
         title: Text(widget.title,
             semanticsLabel: widget.title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFF045558),
+        backgroundColor: const Color(0xFF045558),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back,
+            icon: const Icon(Icons.arrow_back,
                 semanticLabel: "뒤로 가기", color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
@@ -135,7 +135,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                     PostListModel post = snapshot.data![index];
                     return _buildListItem(widget.collectionName, post);
                   });
-            } else
+            } else {
               return const SelectionArea(
                   child: Center(
                       child: Text('스크랩 목록을 가져오는 중...',
@@ -143,6 +143,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                           style: TextStyle(
                               fontFamily: 'NanumGothic',
                               fontWeight: FontWeight.w600))));
+            }
           }),
     );
   }

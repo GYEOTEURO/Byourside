@@ -62,10 +62,10 @@ class _CreateCommentState extends State<CreateComment> {
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w500),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: primaryColor),
                       borderRadius: BorderRadius.circular(20)),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: const BorderSide(color: primaryColor),
                       borderRadius: BorderRadius.circular(20)),
                   border:
                       OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
@@ -81,10 +81,10 @@ class _CreateCommentState extends State<CreateComment> {
                     DBSet.addComment(collectionName, documentID, commentData);
                     scrollController.scrollController.animateTo(
                       scrollController.scrollController.position.maxScrollExtent, 
-                      duration: Duration(milliseconds: 10), 
+                      duration: const Duration(milliseconds: 10), 
                       curve: Curves.ease);
                   },
-                  icon: Icon(Icons.send, 
+                  icon: const Icon(Icons.send, 
                     semanticLabel: "작성한 댓글 저장",
                     color: primaryColor,
                   ))

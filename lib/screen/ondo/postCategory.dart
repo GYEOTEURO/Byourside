@@ -31,7 +31,7 @@ class ButtonProperties {
 }
 
 class _PostCategoryState extends State<PostCategory> {
-  String? _category = null;
+  String? _category;
   List<String>? _type = [];
 
   List<ButtonProperties> categoryList = [
@@ -48,12 +48,12 @@ class _PostCategoryState extends State<PostCategory> {
     // TODO: 이전에 클릭한 사항들 남겨두기
     _category = widget.categories.category;
     _type = widget.categories.type;
-    print('init 시 게시판 종류: ${_category}, 장애 유형: ${_type}');
+    print('init 시 게시판 종류: $_category, 장애 유형: $_type');
 
     for (int i = 0; i < categoryList.length; i++) {
       if (categoryList[i].label == _category) {
         categoryList[i].selected = true;
-        categoryList[i].backgroundColor = Color(0xFF045558);
+        categoryList[i].backgroundColor = const Color(0xFF045558);
         categoryList[i].fontColor = Colors.white;
         break;
       }
@@ -64,7 +64,7 @@ class _PostCategoryState extends State<PostCategory> {
         for (int i = 0; i < 2; i++) {
           if (typeList[i].label == _type![j]) {
             typeList[i].selected = true;
-            typeList[i].backgroundColor = Color(0xFF045558);
+            typeList[i].backgroundColor = const Color(0xFF045558);
             typeList[i].fontColor = Colors.white;
           }
         }
@@ -85,7 +85,7 @@ class _PostCategoryState extends State<PostCategory> {
         // _category = categoryList[index].label;
         // widget.categories.category = _category;
         categoryList[index].selected = true;
-        categoryList[index].backgroundColor = Color(0xFF045558);
+        categoryList[index].backgroundColor = const Color(0xFF045558);
         categoryList[index].fontColor = Colors.white;
 
         // 나머지 버튼들은 비활성화
@@ -116,7 +116,7 @@ class _PostCategoryState extends State<PostCategory> {
         typeList[index].fontColor = Colors.black;
       } else {
         typeList[index].selected = true;
-        typeList[index].backgroundColor = Color(0xFF045558);
+        typeList[index].backgroundColor = const Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
       }
     });
@@ -153,9 +153,9 @@ class _PostCategoryState extends State<PostCategory> {
           builder: (BuildContext context) {
             return AlertDialog(
                 semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
-                content: Text('게시판 종류를 선택해주세요',
+                content: const Text('게시판 종류를 선택해주세요',
                     semanticsLabel: '게시판 종류를 선택해주세요',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w600,
@@ -169,9 +169,9 @@ class _PostCategoryState extends State<PostCategory> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('확인',
+                      child: const Text('확인',
                           semanticsLabel: '확인',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
@@ -198,7 +198,7 @@ class _PostCategoryState extends State<PostCategory> {
             backgroundColor: widget.primaryColor,
             title: Text(widget.title,
                 semanticsLabel: widget.title,
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
             centerTitle: true,
             leading: IconButton(
@@ -234,9 +234,9 @@ class _PostCategoryState extends State<PostCategory> {
                       builder: (context) {
                         return AlertDialog(
                             semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
-                            content: Text('게시판 종류를 선택해주세요',
+                            content: const Text('게시판 종류를 선택해주세요',
                                 semanticsLabel: '게시판 종류를 선택해주세요',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
@@ -250,9 +250,9 @@ class _PostCategoryState extends State<PostCategory> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text('확인',
+                                  child: const Text('확인',
                                       semanticsLabel: '확인',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w600,
@@ -271,7 +271,7 @@ class _PostCategoryState extends State<PostCategory> {
             ),
           ),
           body: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

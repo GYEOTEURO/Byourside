@@ -7,6 +7,8 @@ import 'handler.dart';
 import 'verify_email.dart';
 
 class Wrapper extends StatelessWidget {
+  const Wrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser?>(context);
@@ -14,14 +16,15 @@ class Wrapper extends StatelessWidget {
     // print(user?.uid);
     // print(user?.phoneNum);
     // print(user?.displayName);
+    // TODO: if로 다시 시작
     if (user == null) {
-      return Handler();
+      return const Handler();
     } else if (user.phoneNum == null || user.phoneNum == "") {
-      return VerifyPhone();
+      return const VerifyPhone();
     } else if (user.displayName == null || user.displayName == "") {
-      return SetupUser();
+      return const SetupUser();
     } else {
-      return VerifyEmail();
+      return const VerifyEmail();
     }
   }
 }

@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class OTPScreen extends StatefulWidget {
   final String phone;
 
-  OTPScreen(this.phone);
+  const OTPScreen(this.phone, {super.key});
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -43,7 +43,7 @@ class _OTPScreenState extends State<OTPScreen> {
         verifyPhone();
 
         timer = Timer.periodic(
-          Duration(seconds: 3),
+          const Duration(seconds: 3),
           (_) => checkPhoneVerified(),
         );
       }
@@ -90,7 +90,7 @@ class _OTPScreenState extends State<OTPScreen> {
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 56,
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontSize: 20,
         color: primaryColor,
         fontFamily: 'NanumGothic',
@@ -106,7 +106,7 @@ class _OTPScreenState extends State<OTPScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     if (isPhoneVerified) {
-      return SetupUser();
+      return const SetupUser();
     } else {
       String phone1 = widget.phone.substring(0, 2);
       String phone2 = widget.phone.substring(2, 6);
@@ -118,13 +118,13 @@ class _OTPScreenState extends State<OTPScreen> {
           key: _formKey,
           appBar: AppBar(
             centerTitle: true,
-            title: Text('OTP 인증',
+            title: const Text('OTP 인증',
                 semanticsLabel: 'OTP 인증',
                 style: TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
             backgroundColor: primaryColor,
             leading: IconButton(
-                icon: Icon(Icons.arrow_back,
+                icon: const Icon(Icons.arrow_back,
                     semanticLabel: "뒤로 가기", color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
@@ -132,11 +132,11 @@ class _OTPScreenState extends State<OTPScreen> {
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -154,21 +154,21 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   child: Center(
                       child: Column(children: [
                     Text(
-                      '0${phone1} ${phone2} ${phone3}로 전송된\n인증번호를 입력하세요.',
+                      '0$phone1 $phone2 $phone3로 전송된\n인증번호를 입력하세요.',
                       semanticsLabel:
-                          "0${phone1} ${phone2} ${phone3}로 전송된\n인증번호를 입력하세요.",
-                      style: TextStyle(
+                          "0$phone1 $phone2 $phone3로 전송된\n인증번호를 입력하세요.",
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                         fontFamily: 'NanumGothic',
                       ),
                     ),
                     SizedBox(height: height * 0.05),
-                    SingleChildScrollView(
+                    const SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Text(
                         '(2분 후 재전송 가능합니다)',
@@ -184,6 +184,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     SizedBox(height: height * 0.05),
                   ])),
                 ),
+                // TODO: 들여쓰기를 최대한 줄이는 방법
+                // - 함수화 시키기 (try 코드)
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Pinput(
@@ -212,14 +214,15 @@ class _OTPScreenState extends State<OTPScreen> {
                           }
                         });
                         await FirebaseAuth.instance.currentUser!.reload();
-
+                        // TODO: 비슷한 조건 else로 빼기
                         if (user?.phoneNum == null || user?.phoneNum == "") {
                           setState(() {
                             FirebaseUser(
                                 uid: user?.uid, phoneNum: widget.phone);
                           });
                         }
-                        if (await FirebaseAuth
+                        // TODO: 함수 하나로 만들어서 조건을 말하는 이름으로 만들어주기 - 추상화 연습
+                        if (FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
                                 null &&
                             !(user?.phoneNum == null || user?.phoneNum == "")) {
@@ -238,11 +241,11 @@ class _OTPScreenState extends State<OTPScreen> {
                                 return AlertDialog(
                                     semanticLabel:
                                         "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                    content: Text(
+                                    content: const Text(
                                       "인증번호가 일치하지 않습니다.\n재시도하세요.",
                                       semanticsLabel:
                                           "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'NanumGothic',
                                           fontWeight: FontWeight.w500),
@@ -257,9 +260,9 @@ class _OTPScreenState extends State<OTPScreen> {
                                                 .lightImpact(); // 약한 진동
                                             Navigator.pop(context);
                                           },
-                                          child: Text('확인',
+                                          child: const Text('확인',
                                               semanticsLabel: '확인',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 14,
                                                 fontFamily: 'NanumGothic',
                                                 fontWeight: FontWeight.w600,
@@ -274,7 +277,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ButtonStyle(
@@ -315,7 +318,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                   uid: user?.uid, phoneNum: widget.phone);
                             });
                           }
-                          if (await FirebaseAuth
+                          if (FirebaseAuth
                                       .instance.currentUser?.phoneNumber !=
                                   null &&
                               !(user?.phoneNum == null ||
@@ -335,11 +338,11 @@ class _OTPScreenState extends State<OTPScreen> {
                                   return AlertDialog(
                                       semanticLabel:
                                           "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                                      content: Text(
+                                      content: const Text(
                                         "인증번호가 일치하지 않습니다.\n재시도하세요.",
                                         semanticsLabel:
                                             "인증번호가 일치하지 않습니다.\n재시도하세요.",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Colors.black,
                                             fontFamily: 'NanumGothic',
                                             fontWeight: FontWeight.w500),
@@ -354,9 +357,9 @@ class _OTPScreenState extends State<OTPScreen> {
                                                   .lightImpact(); // 약한 진동
                                               Navigator.pop(context);
                                             },
-                                            child: Text('확인',
+                                            child: const Text('확인',
                                                 semanticsLabel: '확인',
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontSize: 14,
                                                   fontFamily: 'NanumGothic',
                                                   fontWeight: FontWeight.w600,
@@ -366,7 +369,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           }
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         "다음",
                         semanticsLabel: "다음",
                         style: TextStyle(
@@ -391,7 +394,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             color: Colors.white,
                             semanticLabel: "전화",
                           ),
-                          label: Text(
+                          label: const Text(
                             '인증번호 재전송',
                             semanticsLabel: '인증번호 재전송',
                             style: TextStyle(
@@ -415,12 +418,12 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   verifyPhone() async {
-    if (await FirebaseAuth.instance.currentUser != null) {
+    if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.currentUser!.reload();
     }
     if (FirebaseAuth.instance.currentUser?.phoneNumber != null) {
       timer?.cancel();
-    }
+    }// TODO: 이거 auth widget으로
     await _auth.verifyPhoneNumber(
       phoneNumber: '+82${widget.phone}',
       verificationCompleted: _onVerificationCompleted,
@@ -432,8 +435,8 @@ class _OTPScreenState extends State<OTPScreen> {
           _verificationId = verificationID;
           canResnedPhone = false;
         });
-        await Future.delayed(Duration(seconds: 120));
-        if (this.mounted) {
+        await Future.delayed(const Duration(seconds: 120));
+        if (mounted) {
           setState(() {
             canResnedPhone = true;
           });
@@ -448,7 +451,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   return AlertDialog(
                       semanticLabel:
                           "인증 가능한 기간이 지났습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
-                      content: Text(
+                      content: const Text(
                         '인증 가능한 기간이 지났습니다. 재시도하세요.',
                         semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',
                         style: TextStyle(
@@ -465,9 +468,9 @@ class _OTPScreenState extends State<OTPScreen> {
                               HapticFeedback.lightImpact(); // 약한 진동
                               Navigator.pop(context);
                             },
-                            child: Text('확인',
+                            child: const Text('확인',
                                 semanticsLabel: '확인',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'NanumGothic',
                                   fontWeight: FontWeight.w600,
@@ -479,6 +482,8 @@ class _OTPScreenState extends State<OTPScreen> {
           timer?.cancel();
         }
       },
+      // TODO: define으로 빼서 해당 코드를 안봐도 알수있게 모아두기
+      // magic number, string 없애기 - 구글 참고
       timeout: const Duration(seconds: 120),
     );
   }

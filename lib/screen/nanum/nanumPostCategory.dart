@@ -44,7 +44,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
         for (int i = 0; i < 2; i++) {
           if (typeList[i].label == widget.preType![j]) {
             typeList[i].selected = true;
-            typeList[i].backgroundColor = Color(0xFF045558);
+            typeList[i].backgroundColor = const Color(0xFF045558);
             typeList[i].fontColor = Colors.white;
           }
         }
@@ -63,7 +63,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
       } else {
         // _type = typeList[index].label;
         typeList[index].selected = true;
-        typeList[index].backgroundColor = Color(0xFF045558);
+        typeList[index].backgroundColor = const Color(0xFF045558);
         typeList[index].fontColor = Colors.white;
         // 나머지 버튼들은 비활성화
         // for (int i = 0; i < 2; i++) {
@@ -108,7 +108,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
             title: Text(
               widget.title,
               semanticsLabel: widget.title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
             ),
             centerTitle: true,
@@ -135,7 +135,7 @@ class _NanumPostCategoryState extends State<NanumPostCategory> {
             ),
           ),
           body: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

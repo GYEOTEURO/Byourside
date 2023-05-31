@@ -29,7 +29,7 @@ class CommentList extends StatefulWidget {
 
 class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
-  List<String> _decList = [
+  final List<String> _decList = [
     "불법 정보를 작성했습니다.",
     "음란물을 작성했습니다.",
     "스팸홍보/도배글을 작성했습니다.",
@@ -72,14 +72,14 @@ class _CommentListState extends State<CommentList> {
         child: InkWell(
             child: Container(
                 padding: const EdgeInsets.all(2),
-                margin: EdgeInsets.fromLTRB(4, 10, 10, 0),
+                margin: const EdgeInsets.fromLTRB(4, 10, 10, 0),
                 child: Column(children: [
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
                           child: SelectionArea(
                               child: Text("  ${comment.content!}",
-                                  semanticsLabel: "${comment.content!}",
+                                  semanticsLabel: comment.content!,
                                   style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -137,7 +137,7 @@ class _CommentListState extends State<CommentList> {
                               });
                               await userCollection.doc(user?.uid).update({
                                 "groups": FieldValue.arrayUnion(
-                                    ["${groupId}_${groupName}"])
+                                    ["${groupId}_$groupName"])
                               });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
@@ -156,7 +156,7 @@ class _CommentListState extends State<CommentList> {
                               });
                               await userCollection.doc(user?.uid).update({
                                 "groups": FieldValue.arrayUnion(
-                                    ["${groupId}_${groupName}"])
+                                    ["${groupId}_$groupName"])
                               });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
@@ -192,7 +192,7 @@ class _CommentListState extends State<CommentList> {
                                 collectionType: 'comment',
                                 id: comment.id!),
                             Container(
-                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                 child: Block(
                                     nickname: comment.nickname!,
                                     collectionType: 'comment')),
