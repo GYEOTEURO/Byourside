@@ -45,18 +45,18 @@ class _CreateCommentState extends State<CreateComment> {
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: "댓글을 작성해주세요.",
-                  floatingLabelStyle: TextStyle(
+                  floatingLabelStyle: const TextStyle(
                     color: primaryColor,
                     fontSize: 22,
                     fontFamily: 'NanumGothic',
                     fontWeight: FontWeight.w500),
                   contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 17,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w500),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       color: primaryColor,
                       fontSize: 17,
                       fontFamily: 'NanumGothic',

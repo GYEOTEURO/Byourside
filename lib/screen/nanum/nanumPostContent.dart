@@ -4,6 +4,7 @@ import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
+import 'package:byourside/screen/delete.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -186,80 +187,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
           },
         )),
         if (user?.uid == post.uid)
-          (OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              side: BorderSide(color: widget.primaryColor, width: 1.5),
-              foregroundColor: widget.primaryColor,
-            ),
-            child: Text('삭제',
-                semanticsLabel: '글 삭제',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600,
-                )),
-            onPressed: () {
-              HapticFeedback.lightImpact(); // 약한 진동
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                            scrollable: true,
-                            semanticLabel:
-                                '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                            title: Text('글을 삭제하시겠습니까?',
-                                semanticsLabel:
-                                    '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'NanumGothic',
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            actions: [
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: widget.primaryColor,
-                                        ),
-                                        onPressed: () {
-                                          HapticFeedback.lightImpact(); // 약한 진동
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context, '/', (_) => false);
-                                          DBSet.deletePost(
-                                              collectionName!, post.id!);
-                                        },
-                                        child: Text('삭제',
-                                            semanticsLabel: '삭제',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            ))),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: widget.primaryColor,
-                                        ),
-                                        onPressed: () {
-                                          HapticFeedback.lightImpact(); // 약한 진동
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text('취소',
-                                            semanticsLabel: '취소',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            )))
-                                  ])
-                            ]);
-                  });
-            },
-          ))
+          (Delete(collectionName: widget.collectionName, documentID: widget.documentID))
         else
           (Row(children: [
             Declaration(
@@ -447,12 +375,12 @@ class _NanumPostContentState extends State<NanumPostContent> {
 
     return StreamBuilder<NanumPostModel>(
         stream: DBGet.readNanumDocument(
-            collection: collectionName, documentID: documentID),
+            collectionName: collectionName, documentID: documentID),
         builder: (context, AsyncSnapshot<NanumPostModel> snapshot) {
           if (snapshot.hasData) {
             NanumPostModel? post = snapshot.data;
             return _buildListItem(collectionName, post);
-          } else
+          } else {
             return const SelectionArea(
                 child: Center(
                     child: Text('게시물을 찾을 수 없습니다.',
@@ -461,6 +389,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
                         ))));
+          }
         });
   }
 }

@@ -57,7 +57,7 @@ class _DeclarationState extends State<Declaration> {
                       content: StatefulBuilder(builder: (context, setState) {
                         return Column(
                           children: widget.decList
-                              .map((e) => new RadioListTile(
+                              .map((e) => RadioListTile(
                                   title: Text(e,
                                       semanticsLabel: e,
                                       style: const TextStyle(

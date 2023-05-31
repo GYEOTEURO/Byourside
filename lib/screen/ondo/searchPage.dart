@@ -164,7 +164,7 @@ class _OndoSearchState extends State<OndoSearch> {
               Expanded(
                   child: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
                       streams: StreamTuple2( 
-                        DBGet.readSearchDocs(query.text, collection: widget.collectionName),
+                        DBGet.readSearchDocs(query.text, collectionName: widget.collectionName),
                         FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
                       builder: (context, snapshots) {
                         if(snapshots.snapshot2.hasData){

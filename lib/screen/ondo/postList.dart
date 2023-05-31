@@ -136,18 +136,20 @@ class _OndoPostListState extends State<OndoPostList> {
 
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
-          streams: StreamTuple2((widget.category.contains('전체'))
+          streams: StreamTuple2(
+            (widget.category.contains('전체')) //가독성
               ? ((widget.category == '전체')
-                  ? DBGet.readAllCollection(
-                      collection: widget.collectionName, type: controller.type)
-                  : DBGet.readAllInfoCollection(
-                      collection: widget.collectionName, type: controller.type))
-              : DBGet.readCategoryCollection(
-                  collection: widget.collectionName,
+                  ? DBGet.readAllCollection( //전체
+                      collectionName: widget.collectionName, type: controller.type)
+                  : DBGet.readAllInfoCollection( //정보 전체
+                      collectionName: widget.collectionName, type: controller.type))
+              : DBGet.readCategoryCollection( //자유 또는 정보 내 세부 카테고리
+                  collectionName: widget.collectionName,
                   category: widget.category,
                   type: controller.type), 
               FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
+            //snapshot 이름 구분
             if(snapshots.snapshot2.hasData){
               blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
             }
@@ -166,7 +168,7 @@ class _OndoPostListState extends State<OndoPostList> {
                       return _buildListItem(post);
                     }
                   });
-            } else
+            } else {
               return const SelectionArea(
                   child: Center(
                       child: Text(
@@ -177,6 +179,7 @@ class _OndoPostListState extends State<OndoPostList> {
                   fontWeight: FontWeight.w600,
                 ),
               )));
+            }
           }),
     );
   }

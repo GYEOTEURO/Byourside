@@ -2,6 +2,7 @@ import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
+import 'package:byourside/screen/delete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -183,101 +184,7 @@ class _CommentListState extends State<CommentList> {
                               )),
                         )),
                         if (user?.uid == comment.uid)
-                          (OutlinedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey.shade300,
-                            ),
-                            child: Text('삭제',
-                                semanticsLabel: '댓글 삭제',
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'NanumGothic',
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            onPressed: () {
-                              HapticFeedback.lightImpact(); // 약한 진동
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                            scrollable: true,
-                                            semanticLabel:
-                                                '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                            title: Text('댓글을 삭제하시겠습니까?',
-                                                semanticsLabel:
-                                                    '댓글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily: 'NanumGothic',
-                                                  fontWeight: FontWeight.w600,
-                                                )),
-                                            actions: [
-                                              Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              widget
-                                                                  .primaryColor,
-                                                        ),
-                                                        onPressed: () {
-                                                          HapticFeedback
-                                                              .lightImpact(); // 약한 진동
-                                                          DBSet.deleteComment(
-                                                              collectionName!,
-                                                              documentID!,
-                                                              comment.id!);
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text('삭제',
-                                                            semanticsLabel:
-                                                                '삭제',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 14,
-                                                              fontFamily:
-                                                                  'NanumGothic',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ))),
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              widget
-                                                                  .primaryColor,
-                                                        ),
-                                                        onPressed: () {
-                                                          HapticFeedback
-                                                              .lightImpact(); // 약한 진동
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text('취소',
-                                                            semanticsLabel:
-                                                                '취소',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 14,
-                                                              fontFamily:
-                                                                  'NanumGothic',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            )))
-                                                  ])
-                                            ]);
-                                  });
-                            },
-                          ))
+                          (Delete(collectionName: widget.collectionName, documentID: widget.documentID, commentID: comment.id))
                         else
                           (Row(children: [
                             Declaration(
@@ -303,18 +210,15 @@ class _CommentListState extends State<CommentList> {
 
     return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
         streams: StreamTuple2(
-            DBGet.readComment(
-                collection: collectionName, documentID: documentID),
-            FirebaseFirestore.instance
-                .collection('user')
-                .doc(user!.uid)
-                .snapshots()),
+            DBGet.readComment(collectionName: collectionName, documentID: documentID),
+            FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
         builder: (context, snapshots) {
           if (snapshots.snapshot2.hasData) {
             blockList = snapshots.snapshot2.data!["blockList"] == null
                 ? []
                 : snapshots.snapshot2.data!["blockList"].cast<String>();
-          } else {
+          } 
+          else {
             blockList = [];
           }
           if (snapshots.snapshot1.hasData) {
@@ -331,7 +235,7 @@ class _CommentListState extends State<CommentList> {
                     return _buildListItem(collectionName, documentID, comment);
                   }
                 });
-          } else
+          } else {
             return const SelectionArea(
                 child: Text(
               "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
@@ -341,6 +245,7 @@ class _CommentListState extends State<CommentList> {
                 fontWeight: FontWeight.w600,
               ),
             ));
+          }
         });
   }
 }

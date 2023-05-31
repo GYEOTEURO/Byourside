@@ -5,7 +5,7 @@ import 'package:byourside/screen/ondo/infoDetailCategory.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
-import 'package:byourside/screen/ondo/search_page.dart';
+import 'package:byourside/screen/ondo/searchPage.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -124,7 +124,7 @@ class _CategoryPageState extends State<CategoryPage>
           if (label == '정보') {
             return Container(
                 padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                child: infoDetailCategoryPage(
+                child: InfoDetailCategoryPage(
                     primaryColor: Color(0xFF045558),
                     collectionName: "ondoPost"));
           }
