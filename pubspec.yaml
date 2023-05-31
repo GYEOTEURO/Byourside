@@ -82,7 +82,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
+  # 추후에 로고 바뀌면 image_path와 path_ios는 appstore, foreground는 playsotre로 설정
   image_path: "assets/icons/playstore.png"
+  image_path_ios: "assets/icons/playstore.png"
   adaptive_icon_background: "#045558"
   adaptive_icon_foreground: "assets/icons/playstore.png"
 
