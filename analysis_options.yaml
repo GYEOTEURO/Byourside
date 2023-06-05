@@ -1,5 +1,5 @@
 # This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
+# check for errors, trues, and lints.
 #
 # The issues identified by the analyzer are surfaced in the UI of Dart-enabled
 # IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
@@ -8,6 +8,45 @@
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
+
+# 줄 색깔과 의미
+# warning : 노란줄
+# error : 빨간줄
+# info : 파란줄
+# ignore : 무시 (아무것도 뜨지 않음)
+
+analyzer:
+    errors:
+      avoid_empty_else: ignore
+      avoid_print: ignore
+      camel_case_types: ignore
+      curly_braces_in_flow_control_structures: ignore
+      dead_code: info
+      file_names: ignore
+      no_logic_in_create_state: ignore
+      prefer_const_constructors: ignore
+      prefer_const_declarations: ignore
+      prefer_if_null_operators: ignore
+      prefer_is_empty: ignore
+      prefer_is_not_empty: ignore
+      prefer_single_quotes: ignore
+      prefer_typing_uninitialized_variables: ignore
+      sort_child_properties_last: ignore
+      type_init_formals: ignore
+      unnecessary_await_in_return: ignore
+      unnecessary_const: ignore
+      unnecessary_final: ignore
+      unnecessary_late: ignore
+      unnecessary_new: ignore
+      unnecessary_null_checks: ignore
+      unnecessary_parenthesis: ignore
+      unnecessary_string_escapes: ignore
+      use_colored_box: ignore
+      use_decorated_box: ignore
+      use_enums: ignore
+      use_key_in_widget_constructors: ignore
+      
+
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -22,8 +61,47 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+      avoid_empty_else: true
+      avoid_print: true
+      avoid_unnecessary_containers: true
+      curly_braces_in_flow_control_structures: true
+      camel_case_types: true # Classes and typedefs should use UpperCamelCase
+      dead_code: true # 불필요한 코드 삭제
+      file_names: true
+      no_logic_in_create_state: true
+      prefer_const_constructors: true
+      prefer_const_declarations: true
+      prefer_if_null_operators: true
+      prefer_is_empty: true
+      prefer_is_not_empty: true
+      prefer_single_quotes: true
+      prefer_typing_uninitialized_variables: true
+      sort_child_properties_last: true
+      type_init_formals: true
+      unnecessary_await_in_return: true
+      unnecessary_const: true
+      unnecessary_final: true
+      unnecessary_late: true
+      unnecessary_new: true
+      unnecessary_null_checks: true
+      unnecessary_parenthesis: true
+      unnecessary_string_escapes: true
+      use_colored_box: true
+      use_decorated_box: true
+      use_enums: true
+      use_key_in_widget_constructors: true
+
+      # 아래의 rule들이 기본적으로 내장되어 있어서 rule에 명시하지 않아도 이미 info로 되어있음
+      # 참고 : https://github.com/flutter/packages/blob/main/packages/flutter_lints/lib/flutter.yaml
+
+      # 그 중 위에 적지 않은 rule들
+      # 위에 추가해둔 rule들은 warning 혹은 error로 둘 것들을 올려둠
+      # prefer_const_constructors_in_immutables
+      # prefer_const_literals_to_create_immutables
+      # sized_box_for_whitespace
+      # use_build_context_synchronously
+      # use_full_hex_values_for_flutter_colors
+      
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
