@@ -110,6 +110,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     )),
                 onPressed: () async {
                   HapticFeedback.lightImpact(); // 약한 진동
+                  // TODO: 그냥 groupList에 추가할때 반대까지 한번에 추가해두는게..
+                  // 이렇게 저장하지말고 유저 정보에 채팅방 목록 검사해서 하도록
                   var groupName = "${user?.displayName}_${post.nickname}";
                   var groupNameReverse =
                       "${post.nickname}_${user?.displayName}";
@@ -125,11 +127,12 @@ class _OndoPostContentState extends State<OndoPostContent> {
                             groupName);
 
                     String groupId = await getGroupId(groupName);
+                    // TODO: createGroup호출했을때 한번에 되게
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
                           ["${post.uid}_${post.nickname}"])
                     });
-
+                    // TODO: delay 없애봐 & 이동하는거 다 똑같으니까 앞부분만 처리하고 한번만 하던가
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
                           context,
@@ -141,6 +144,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                   } else if (await checkGroupExist(groupName) != true) {
                     String groupId = await getGroupId(groupNameReverse);
+                    // TODO: 항상 추가해주는게 맞나
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
                           ["${user?.uid}_${user?.displayName}"])
@@ -158,7 +162,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                                   groupName: groupNameReverse,
                                   userName: user!.displayName!)));
                     });
-                  } else {
+                  } else { 
                     String groupId = await getGroupId(groupName);
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
