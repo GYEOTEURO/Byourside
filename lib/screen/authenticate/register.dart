@@ -1,4 +1,5 @@
 import 'package:byourside/main.dart';
+import 'package:byourside/model/field_validator.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/using_policy.dart';
@@ -69,15 +70,7 @@ class _Register extends State<Register> {
         child: TextFormField(
             controller: _email,
             autofocus: true,
-            validator: (value) {
-              if (value != null) {
-                if (value.contains('@') && value.endsWith('.com')) {
-                  return null;
-                }
-                return '유효한 이메일 주소를 입력하세요.';
-              }
-              return null;
-            },
+            validator: FieldValidator.validateEmail, 
             decoration: InputDecoration(
               hintText: '(예: abcd@google.com)',
               labelText: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
@@ -125,16 +118,7 @@ class _Register extends State<Register> {
         child: TextFormField(
             obscureText: _obscureText,
             controller: _password,
-            validator: (value) {
-              if (value == null || value.trim().isEmpty) {
-                return '필수 입력란';
-              }
-              if (value.trim().length < 8) {
-                return '비밀번호는 8자 이상으로 구성해야합니다.';
-              }
-              // Return null if the entered password is valid
-              return null;
-            },
+            validator: FieldValidator.validatePassword,
             decoration: InputDecoration(
               floatingLabelStyle: const TextStyle(
                   color: primaryColor,
