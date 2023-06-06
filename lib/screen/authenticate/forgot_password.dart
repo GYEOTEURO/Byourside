@@ -163,39 +163,22 @@ class ForgotPasswordPageState extends State<ForgotPassword> {
       await _auth.sendPasswordResetEmail(emailController.text.trim());
       if (mounted) {
         showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                  semanticLabel: '메일함을 확인하세요.',
-                  content: const Text(
-                    '메일함을 확인하세요.',
-                    semanticsLabel: '메일함을 확인하세요.',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'NanumGothic',
-                        fontWeight: FontWeight.w500),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                        ),
-                        onPressed: () {
-                          HapticFeedback.lightImpact(); // 약한 진동
-                          Navigator.pop(context);
-                        },
-                        child: const Text('확인',
-                            semanticsLabel: '확인',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600,
-                            )))
-                  ]);
-            });
+          context: context,
+          builder: (context) {
+            return CustomAlertDialog(
+              message: '메일함을 확인하세요.',
+              buttonText: '확인',
+              onPressed: () {
+                HapticFeedback.lightImpact(); // 약한 진동
+                Navigator.pop(context);
+                // Additional custom logic to execute on button press
+              },
+            );
+          },
+        );
       }
     } on FirebaseAuthException catch (e) {
-      log(e as String);
+      log(e.toString());
       Navigator.of(context).pop();
     }
   }
