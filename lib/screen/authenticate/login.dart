@@ -27,8 +27,7 @@ class _Login extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    final emailField = Semantics(
+    var emailField = Semantics(
         container: true,
         textField: true,
         label: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
@@ -49,8 +48,8 @@ class _Login extends State<Login> {
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              hintText: "(예: abcd@google.com)",
-              labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+              hintText: '(예: abcd@google.com)',
+              labelText: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
               hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
@@ -75,7 +74,7 @@ class _Login extends State<Login> {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
             )));
 
-    final passwordField = Semantics(
+    var passwordField = Semantics(
         container: true,
         textField: true,
         label: '비밀번호', //비밀번호를 입력하세요. (8자리 이상이어야 합니다)
@@ -96,8 +95,8 @@ class _Login extends State<Login> {
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              hintText: "(예: 12345678)",
-              labelText: "비밀번호", //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
+              hintText: '(예: 12345678)',
+              labelText: '비밀번호', //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
               hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
@@ -111,7 +110,7 @@ class _Login extends State<Login> {
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility : Icons.visibility_off,
-                  semanticLabel: _obscureText ? "활성화됨. 비밀번호 보기" : "비활성화됨. 비밀번호 보기",
+                  semanticLabel: _obscureText ? '활성화됨. 비밀번호 보기' : '비활성화됨. 비밀번호 보기',
                   color: primaryColor,
                 ),
                 onPressed: () {
@@ -134,7 +133,7 @@ class _Login extends State<Login> {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
             )));
 
-    final registerButton = TextButton(
+    var registerButton = TextButton(
         onPressed: () {
           widget.toggleView!();
         },
@@ -148,7 +147,7 @@ class _Login extends State<Login> {
               fontWeight: FontWeight.w500),
         ));
 
-    final forgotPassword = TextButton(
+    var forgotPassword = TextButton(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const ForgotPassword(),
             )),
@@ -162,7 +161,7 @@ class _Login extends State<Login> {
               fontWeight: FontWeight.w500),
         ));
 
-    final loginEmailPasswordButton = Material(
+    var loginEmailPasswordButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(20.0),
       color: Theme.of(context).primaryColor,
@@ -176,15 +175,16 @@ class _Login extends State<Login> {
                 LoginUser(email: _email.text, password: _password.text));
             if (result.uid == null) {
               //null means unsuccessfull authentication
+              if (!mounted) return;
               showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
                         semanticLabel:
-                            "아이디 또는 비밀번호가 일치하지 않습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                            '아이디 또는 비밀번호가 일치하지 않습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                         content: const Text(
-                          "아이디 또는 비밀번호가 일치하지 않습니다.",
-                          semanticsLabel: "아이디 또는 비밀번호가 일치하지 않습니다.",
+                          '아이디 또는 비밀번호가 일치하지 않습니다.',
+                          semanticsLabel: '아이디 또는 비밀번호가 일치하지 않습니다.',
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'NanumGothic',
@@ -212,8 +212,8 @@ class _Login extends State<Login> {
           }
         },
         child: const Text(
-          "로그인",
-          semanticsLabel: "로그인",
+          '로그인',
+          semanticsLabel: '로그인',
           style: TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -229,7 +229,7 @@ class _Login extends State<Login> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('로그인',
-            semanticsLabel: "로그인",
+            semanticsLabel: '로그인',
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: Theme.of(context).primaryColor,
@@ -246,8 +246,8 @@ class _Login extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text(
-                    "이메일을 입력하세요.",
-                    semanticsLabel: "이메일을 입력하세요.",
+                    '이메일을 입력하세요.',
+                    semanticsLabel: '이메일을 입력하세요.',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 22,
@@ -267,8 +267,8 @@ class _Login extends State<Login> {
                   emailField,
                   SizedBox(height: height * 0.04),
                   const Text(
-                    "비밀번호를 입력하세요.",
-                    semanticsLabel: "비밀번호를 입력하세요.",
+                    '비밀번호를 입력하세요.',
+                    semanticsLabel: '비밀번호를 입력하세요.',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 22,
@@ -276,8 +276,8 @@ class _Login extends State<Login> {
                         fontWeight: FontWeight.w600),
                   ),
                   const Text(
-                    "8자리 이상이어야 합니다.",
-                    semanticsLabel: "8자리 이상이어야 합니다.",
+                    '8자리 이상이어야 합니다.',
+                    semanticsLabel: '8자리 이상이어야 합니다.',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 17,

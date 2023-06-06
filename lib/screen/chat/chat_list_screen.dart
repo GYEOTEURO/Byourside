@@ -16,7 +16,7 @@ class ChatListScreen extends StatefulWidget {
 }
 
 Future<String> callAsyncFetch() =>
-    Future.delayed(const Duration(seconds: 2), () => "hi");
+    Future.delayed(const Duration(seconds: 2), () => 'hi');
 
 class _ChatListScreenState extends State<ChatListScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -24,7 +24,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   Stream? groups;
   bool _isLoading = false;
-  String groupName = "";
+  String groupName = '';
   List<String> blockList = [];
 
   getBlockList(String uid) async {
@@ -57,7 +57,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   }
 
   Future<String> getRecentMsg(String docId) async {
-    String recent = " ";
+    String recent = ' ';
 
     await FirebaseFirestore.instance
         .collection('groups')
@@ -69,16 +69,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   // String manipulation
   String getId(String res) {
-    return res.substring(0, res.indexOf("_"));
+    return res.substring(0, res.indexOf('_'));
   }
 
   String getName(String res) {
-    return res.substring(res.indexOf("_") + 1);
+    return res.substring(res.indexOf('_') + 1);
   }
 
   Stream<QuerySnapshot<Object?>> getGroups() {
     return FirebaseFirestore.instance
-        .collection("user")
+        .collection('user')
         .where(_auth.currentUser!.uid)
         .snapshots();
   }
@@ -115,7 +115,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               },
               icon: const Icon(
                 Icons.search,
-                semanticLabel: "검색",
+                semanticLabel: '검색',
               ))
         ],
         elevation: 0,
@@ -139,7 +139,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         child: const Icon(
           Icons.add,
           color: Colors.white,
-          semanticLabel: "추가",
+          semanticLabel: '추가',
         ),
       ),
     );
@@ -150,12 +150,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return StatefulBuilder(builder: ((context, setState) {
+          return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
               semanticLabel:
-                  "그룹 만들기입니다. 취소를 원하시면 왼쪽 취소 버튼을, 만들기를 원하시면 그룹 이름 입력 후 오른쪽 만들기 버튼을 눌러주세요.",
-              title: const Text("그룹 만들기",
-                  semanticsLabel: "그룹 만들기",
+                  '그룹 만들기입니다. 취소를 원하시면 왼쪽 취소 버튼을, 만들기를 원하시면 그룹 이름 입력 후 오른쪽 만들기 버튼을 눌러주세요.',
+              title: const Text('그룹 만들기',
+                  semanticsLabel: '그룹 만들기',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontSize: 17,
@@ -205,8 +205,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
                   child: const Text(
-                    "취소",
-                    semanticsLabel: "취소",
+                    '취소',
+                    semanticsLabel: '취소',
                     style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'NanumGothic',
@@ -216,7 +216,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     HapticFeedback.lightImpact(); // 약한 진동
-                    if (groupName != "") {
+                    if (groupName != '') {
                       bool check = true;
                       for (int i = 0; i < groupName.length; i++) {
                         if (groupName[i] == '_' || groupName[i] == ' ') {
@@ -230,8 +230,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     .toString(),
                                 FirebaseAuth.instance.currentUser!.uid
                                     .toString(),
-                                "none",
-                                "none",
+                                'none',
+                                'none',
                                 groupName)
                             .whenComplete(() => _isLoading = false);
                         Navigator.of(context).pop();
@@ -241,7 +241,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                    semanticLabel: "특수기호 _와 공백은 포함이 불가능합니다.",
+                                    semanticLabel: '특수기호 _와 공백은 포함이 불가능합니다.',
                                     content: const Text(
                                       '특수기호 _와 공백은 포함이 불가능합니다.',
                                       semanticsLabel: '특수기호 _와 공백은 포함이 불가능합니다.',
@@ -273,7 +273,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               builder: (context) {
                                 return AlertDialog(
                                     semanticLabel:
-                                        "이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                        '이미 존재하는 채팅방 이름입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                                     content: const Text(
                                       '이미 존재하는 채팅방 이름입니다.',
                                       semanticsLabel: '이미 존재하는 채팅방 이름입니다.',
@@ -304,8 +304,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   style:
                       ElevatedButton.styleFrom(backgroundColor: primaryColor),
                   child: const Text(
-                    "만들기",
-                    semanticsLabel: "만들기",
+                    '만들기',
+                    semanticsLabel: '만들기',
                     style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'NanumGothic',
@@ -314,7 +314,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 )
               ],
             );
-          }));
+          });
         });
   }
 
@@ -335,7 +335,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       }
     });
     //TODO: log로 바꾸기
-    print("input:  $input");
+    print('input:  $input');
     print(blockGroup);
     for (var i in input) {
       print('-------');
@@ -374,7 +374,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           groupName:
                               getName(snapshot.data['groups'][reverseIndex]),
                           recentMsg:
-                              "" //getRecentMsg(snapshot.data['groups'][index])
+                              '' //getRecentMsg(snapshot.data['groups'][index])
                           );
                     } else {
                       return Container();
@@ -413,7 +413,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             child: const Icon(
               Icons.add_circle,
               color: Colors.black,
-              semanticLabel: "추가",
+              semanticLabel: '추가',
               size: 75,
             ),
           ),
@@ -421,8 +421,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
           const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Text(
-              "추가 버튼을 눌러 채팅을 시작하세요.",
-              semanticsLabel: "추가 버튼을 눌러 채팅을 시작하세요.",
+              '추가 버튼을 눌러 채팅을 시작하세요.',
+              semanticsLabel: '추가 버튼을 눌러 채팅을 시작하세요.',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 17,

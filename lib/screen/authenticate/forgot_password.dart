@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:byourside/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,10 +9,10 @@ import 'package:flutter/services.dart';
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+  ForgotPasswordPageState createState() => ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPassword> {
+class ForgotPasswordPageState extends State<ForgotPassword> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
@@ -23,7 +25,6 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -31,12 +32,12 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
         elevation: 0,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
         title: const Text('비밀번호 변경',
-            semanticsLabel: "비밀번호 변경",
+            semanticsLabel: '비밀번호 변경',
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
       ),
@@ -50,7 +51,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
               const Text(
                 '비밀번호를 재설정할\n이메일을 입력하세요.',
                 semanticsLabel:
-                    "비밀번호를 재설정할 이메일을 입력하세요.", //semanticLabel 속성 추가하기
+                    '비밀번호를 재설정할 이메일을 입력하세요.', //semanticLabel 속성 추가하기
 
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -93,8 +94,8 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                           fontWeight: FontWeight.w500),
                       contentPadding:
                           const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      hintText: "(예: abcd@google.com)",
-                      labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+                      hintText: '(예: abcd@google.com)',
+                      labelText: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
                       hintStyle: const TextStyle(
                           color: Colors.grey,
                           fontSize: 17,
@@ -131,14 +132,14 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(height * 0.06),
                     backgroundColor: primaryColor),
-                icon: const Icon(Icons.email_outlined, semanticLabel: "메일"),
+                icon: const Icon(Icons.email_outlined, semanticLabel: '메일'),
                 label: const Text(
                   '비밀번호 재설정',
                   style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'NanumGothic',
                       fontWeight: FontWeight.w500),
-                  semanticsLabel: "비밀번호 재설정",
+                  semanticsLabel: '비밀번호 재설정',
                 ),
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
@@ -163,10 +164,10 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                  semanticLabel: "메일함을 확인하세요.",
+                  semanticLabel: '메일함을 확인하세요.',
                   content: const Text(
-                    "메일함을 확인하세요.",
-                    semanticsLabel: "메일함을 확인하세요.",
+                    '메일함을 확인하세요.',
+                    semanticsLabel: '메일함을 확인하세요.',
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'NanumGothic',
@@ -192,7 +193,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword> {
             });
       }
     } on FirebaseAuthException catch (e) {
-      print(e);
+      log(e as String);
       Navigator.of(context).pop();
     }
   }

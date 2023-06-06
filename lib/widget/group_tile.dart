@@ -76,10 +76,10 @@ class _GroupTileState extends State<GroupTile> {
                     builder: (context) {
                       return AlertDialog(
                           semanticLabel:
-                              "그룹을 나가시겠습니까? 취소를 원하시면 왼쪽의 취소 버튼을, 나가기를 원하시면 오른쪽의 나가기 버튼을 눌러주세요.",
+                              '그룹을 나가시겠습니까? 취소를 원하시면 왼쪽의 취소 버튼을, 나가기를 원하시면 오른쪽의 나가기 버튼을 눌러주세요.',
                           title: const Text(
-                            "그룹을 나가시겠습니까?",
-                            semanticsLabel: "그룹을 나가시겠습니까?",
+                            '그룹을 나가시겠습니까?',
+                            semanticsLabel: '그룹을 나가시겠습니까?',
                             textAlign: TextAlign.left,
                           ),
                           content: Padding(
@@ -95,8 +95,8 @@ class _GroupTileState extends State<GroupTile> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: primaryColor),
                                     child: const Text(
-                                      "취소",
-                                      semanticsLabel: "취소",
+                                      '취소',
+                                      semanticsLabel: '취소',
                                       style: TextStyle(
                                           fontSize: 17,
                                           fontFamily: 'NanumGothic',
@@ -126,8 +126,8 @@ class _GroupTileState extends State<GroupTile> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: primaryColor),
                                     child: const Text(
-                                      "나가기",
-                                      semanticsLabel: "나가기",
+                                      '나가기',
+                                      semanticsLabel: '나가기',
                                       style: TextStyle(
                                           fontSize: 17,
                                           fontFamily: 'NanumGothic',
@@ -141,7 +141,7 @@ class _GroupTileState extends State<GroupTile> {
                 },
                 icon: Icon(
                   Icons.exit_to_app,
-                  semanticLabel: "나가기",
+                  semanticLabel: '나가기',
                   size: height * 0.028,
                   color: primaryColor,
                 ))),

@@ -16,20 +16,18 @@ class _PersonalDataState extends State<PersonalData> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text("개인정보 처리방침",
-              semanticsLabel: "개인정보 처리방침",
+          title: const Text('개인정보 처리방침',
+              semanticsLabel: '개인정보 처리방침',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: primaryColor,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
@@ -42,8 +40,8 @@ class _PersonalDataState extends State<PersonalData> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "곁 개인정보 처리방침",
-                    semanticsLabel: "곁 개인정보 처리방침",
+                    '곁 개인정보 처리방침',
+                    semanticsLabel: '곁 개인정보 처리방침',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w700,

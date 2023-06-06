@@ -9,10 +9,10 @@ class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});
 
   @override
-  _VerifyEmailState createState() => _VerifyEmailState();
+  VerifyEmailState createState() => VerifyEmailState();
 }
 
-class _VerifyEmailState extends State<VerifyEmail> {
+class VerifyEmailState extends State<VerifyEmail> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
@@ -60,7 +60,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   Future sendVerificationEmail() async {
     try {
-      final user = FirebaseAuth.instance.currentUser!;
+      var user = FirebaseAuth.instance.currentUser!;
       // TODO: 이거 auth widget으로
       await user.sendEmailVerification();
       if (mounted) setState(() => canResendEmail = false);
@@ -74,10 +74,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
             builder: (context) {
               return AlertDialog(
                   semanticLabel:
-                      "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                      '메일함을 확인하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                   content: const Text(
-                    "메일함을 확인하세요.\n오류가 지속될 경우 문의해주세요.",
-                    semanticsLabel: "메일함을 확인하세요. 오류가 지속될 경우 문의해주세요.",
+                    '메일함을 확인하세요.\n오류가 지속될 경우 문의해주세요.',
+                    semanticsLabel: '메일함을 확인하세요. 오류가 지속될 경우 문의해주세요.',
                   ),
                   actions: [
                     ElevatedButton(
@@ -104,7 +104,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     if (isEmailVerified) {
       return const BottomNavBar(primaryColor: primaryColor);
@@ -113,14 +112,14 @@ class _VerifyEmailState extends State<VerifyEmail> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text("이메일 확인",
-              semanticsLabel: "이메일 확인",
+          title: const Text('이메일 확인',
+              semanticsLabel: '이메일 확인',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
@@ -136,8 +135,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "4/4 단계",
-                        semanticsLabel: "4/4 단계",
+                        '4/4 단계',
+                        semanticsLabel: '4/4 단계',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 20,
@@ -191,20 +190,20 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                     Icons.email,
                                     size: 32,
                                     color: Colors.white,
-                                    semanticLabel: "메일", //semanticLabel 속성 추가하기
+                                    semanticLabel: '메일', //semanticLabel 속성 추가하기
                                   ),
                                   label: const Text(
                                     '이메일 재전송',
-                                    semanticsLabel: "이메일 재전송",
+                                    semanticsLabel: '이메일 재전송',
                                     style: TextStyle(
                                         fontSize: 24,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  onPressed: (() async {
+                                  onPressed: () async {
                                     HapticFeedback.lightImpact(); // 약한 진동
 
-                                    final user =
+                                    var user =
                                         FirebaseAuth.instance.currentUser!;
                                     await user.sendEmailVerification();
                                     if (mounted) {
@@ -216,7 +215,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                                     if (mounted) {
                                       setState(() => canResendEmail = true);
                                     }
-                                  })))
+                                  }))
                           : SizedBox(
                               height: height * 0.03,
                             ),

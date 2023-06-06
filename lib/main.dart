@@ -1,7 +1,7 @@
 import 'package:byourside/screen/authenticate/user.dart';
 import 'package:byourside/screen/authenticate/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/user_protector.dart';
-import 'package:byourside/screen/authenticate/user_someoneElse.dart';
+import 'package:byourside/screen/authenticate/user_someone_else.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
@@ -25,8 +25,6 @@ Future<bool> getPermission() async {
     Permission.bluetooth,
     Permission.notification
   ].request();
-
-  print('per1 : $permissions');
 
   if (permissions.values.every((element) => element.isGranted)) {
     return Future.value(true);
@@ -69,10 +67,10 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -84,17 +82,17 @@ class _MyAppState extends State<MyApp> {
                 fontFamily: 'NanumGothic',
                 ),
             title: '곁',
-            initialRoute: "/login",
+            initialRoute: '/login',
             routes: {
-              "/login": (context) => const LoginScreen(primaryColor: primaryColor),
-              "/": (context) => const BottomNavBar(primaryColor: primaryColor),
-              "/phone": (context) => const VerifyPhone(),
-              "/email": (context) => const VerifyEmail(),
-              "/user": (context) => const SetupUser(),
-              "/user_protector": (context) => const protector(),
-              "/user_participator": (context) => const participator(),
-              "/user_someoneElse": (context) => const someoneElse(),
-              "/chat_list": (context) => const ChatListScreen(),
+              '/login': (context) => const LoginScreen(primaryColor: primaryColor),
+              '/': (context) => const BottomNavBar(primaryColor: primaryColor),
+              '/phone': (context) => const VerifyPhone(),
+              '/email': (context) => const VerifyEmail(),
+              '/user': (context) => const SetupUser(),
+              '/user_protector': (context) => const Protector(),
+              '/user_participator': (context) => const Participator(),
+              '/user_someoneElse': (context) => const SomeoneElse(),
+              '/chat_list': (context) => const ChatListScreen(),
             },
           ),
         ),

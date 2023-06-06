@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-GlobalKey<FormState> _formKey_self = GlobalKey<FormState>();
+GlobalKey<FormState> _formKeySelf = GlobalKey<FormState>();
 final List<bool> _selectedType = <bool>[false, false];
 final List<bool> _selectedDegree = <bool>[false, false];
 
@@ -23,14 +23,14 @@ const List<Widget> degree = <Widget>[
   Text('심하지 않은 장애', semanticsLabel: '심하지 않은 장애', style: TextStyle(fontSize: 17))
 ];
 
-class self extends StatefulWidget {
-  const self({Key? key}) : super(key: key);
+class Self extends StatefulWidget {
+  const Self({Key? key}) : super(key: key);
 
   @override
-  State<self> createState() => selfState();
+  State<Self> createState() => SelfState();
 }
 
-class selfState extends State<self> {
+class SelfState extends State<Self> {
   bool doesDocExist = true;
   final User? user = FirebaseAuth.instance.currentUser;
   bool someoneElse = false;
@@ -46,7 +46,7 @@ class selfState extends State<self> {
             builder: (context) {
               return AlertDialog(
                   semanticLabel:
-                      "이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                      '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                   content: const Text(
                     '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
                     semanticsLabel: '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.',
@@ -75,11 +75,12 @@ class selfState extends State<self> {
             });
       }
     } else {
+      if (mounted) {
       showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-                semanticLabel: "사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                semanticLabel: '사용가능한 닉네임입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                 content: const Text(
                   '사용가능한 닉네임입니다.',
                   semanticsLabel: '사용가능한 닉네임입니다.',
@@ -106,134 +107,130 @@ class selfState extends State<self> {
                           )))
                 ]);
           });
+      }
     }
     return doc.exists;
   }
 
-  final someoneElseField = Container(
-      child: Semantics(
-          container: true,
-          textField: true,
-          label: '방문 목적',
-          hint: '(예: 자녀 장애 초기증상 판별)',
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelText: "방문 목적",
-              hintText: "(예: 자녀 장애 초기증상 판별)",
-              floatingLabelStyle: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 22,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              errorStyle: const TextStyle(
-                  color: Color.fromARGB(255, 255, 45, 45),
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              labelStyle: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: primaryColor),
-                  borderRadius: BorderRadius.circular(20)),
-              errorBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
-                  borderRadius: BorderRadius.circular(20)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: primaryColor),
-                  borderRadius: BorderRadius.circular(20)),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-            ),
-            controller: _purpose,
-            validator: (value) {
-              if (value != null) {
-                if (value.split(' ').first != '' && value.isNotEmpty) {
-                  return null;
-                }
-                return '필수 입력란입니다. 방문 목적을 입력하세요';
-              }
+  final someoneElseField = Semantics(
+      container: true,
+      textField: true,
+      label: '방문 목적',
+      hint: '(예: 자녀 장애 초기증상 판별)',
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: '방문 목적',
+          hintText: '(예: 자녀 장애 초기증상 판별)',
+          floatingLabelStyle: const TextStyle(
+              color: primaryColor,
+              fontSize: 22,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          errorStyle: const TextStyle(
+              color: Color.fromARGB(255, 255, 45, 45),
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          labelStyle: const TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          errorBorder: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+              borderRadius: BorderRadius.circular(20)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        controller: _purpose,
+        validator: (value) {
+          if (value != null) {
+            if (value.split(' ').first != '' && value.isNotEmpty) {
               return null;
-            },
-          )));
+            }
+            return '필수 입력란입니다. 방문 목적을 입력하세요';
+          }
+          return null;
+        },
+      ));
 
   bool isNumeric(String s) {
-    if (s == null) {
-      return false;
-    }
     return double.tryParse(s) != null;
   }
 
-  final nicknameField = Container(
-      child: Semantics(
-          container: true,
-          textField: true,
-          label: '닉네임을 입력하세요.',
-          hint: '(예: 홍길동)',
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelText: "닉네임을 입력하세요",
-              hintText: "(예: 홍길동) ",
-              floatingLabelStyle: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 22,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              errorStyle: const TextStyle(
-                  color: Color.fromARGB(255, 255, 45, 45),
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              labelStyle: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: primaryColor),
-                  borderRadius: BorderRadius.circular(20)),
-              errorBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
-                  borderRadius: BorderRadius.circular(20)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: primaryColor),
-                  borderRadius: BorderRadius.circular(20)),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-            ),
-            autofocus: true,
-            controller: _nickname,
-            validator: (value) {
-              if (value != null) {
-                for (int i = 0; i < value.length; i++) {
-                  if (value[i] == '_') {
-                    return '특수기호 _는 포함이 불가능합니다.';
-                  }
-                }
-                if (value.split(' ').first != '' && value.isNotEmpty) {
-                  return null;
-                }
-                return '필수 입력란입니다. 닉네임을 입력하세요';
+  final nicknameField = Semantics(
+      container: true,
+      textField: true,
+      label: '닉네임을 입력하세요.',
+      hint: '(예: 홍길동)',
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: '닉네임을 입력하세요',
+          hintText: '(예: 홍길동) ',
+          floatingLabelStyle: const TextStyle(
+              color: primaryColor,
+              fontSize: 22,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          errorStyle: const TextStyle(
+              color: Color.fromARGB(255, 255, 45, 45),
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          labelStyle: const TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          errorBorder: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+              borderRadius: BorderRadius.circular(20)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        autofocus: true,
+        controller: _nickname,
+        validator: (value) {
+          if (value != null) {
+            for (int i = 0; i < value.length; i++) {
+              if (value[i] == '_') {
+                return '특수기호 _는 포함이 불가능합니다.';
               }
+            }
+            if (value.split(' ').first != '' && value.isNotEmpty) {
               return null;
-            },
-          )));
+            }
+            return '필수 입력란입니다. 닉네임을 입력하세요';
+          }
+          return null;
+        },
+      ));
 
   void storeSelfInfo(
     String? nickname,
@@ -244,14 +241,14 @@ class selfState extends State<self> {
   ) async {
     // image url 포함해 firestore에 document 저장
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
-      "nickname": nickname,
-      "purpose": purpose,
-      "age": age,
-      "type": selectedType,
-      "degree": selectedDegree,
-      "groups": [],
-      "profilePic": "",
-      "blockList": [],
+      'nickname': nickname,
+      'purpose': purpose,
+      'age': age,
+      'type': selectedType,
+      'degree': selectedDegree,
+      'groups': [],
+      'profilePic': '',
+      'blockList': [],
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
@@ -276,14 +273,14 @@ class selfState extends State<self> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text("세부 정보 입력",
-              semanticsLabel: "세부 정보 입력",
+          title: const Text('세부 정보 입력',
+              semanticsLabel: '세부 정보 입력',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
@@ -298,8 +295,8 @@ class selfState extends State<self> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "3/4 단계",
-                        semanticsLabel: "3/4 단계",
+                        '3/4 단계',
+                        semanticsLabel: '3/4 단계',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 20,
@@ -310,15 +307,15 @@ class selfState extends State<self> {
                   ),
                 ),
                 Form(
-                  key: _formKey_self,
+                  key: _formKeySelf,
                   child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const Text(
-                              "닉네임을 입력하세요.",
-                              semanticsLabel: "닉네임을 입력하세요.",
+                              '닉네임을 입력하세요.',
+                              semanticsLabel: '닉네임을 입력하세요.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 17,
@@ -328,7 +325,7 @@ class selfState extends State<self> {
                             SizedBox(height: height * 0.01),
                             const Text(
                               "특수기호 '_'는 사용이 불가합니다.",
-                              semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
+                              semanticsLabel: '특수기호 _ 는 사용이 불가합니다.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -339,8 +336,8 @@ class selfState extends State<self> {
                             nicknameField,
                             SizedBox(height: height * 0.04),
                             const Text(
-                              "나이를 입력하세요.",
-                              semanticsLabel: "나이를 입력하세요.",
+                              '나이를 입력하세요.',
+                              semanticsLabel: '나이를 입력하세요.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 17,
@@ -351,12 +348,12 @@ class selfState extends State<self> {
                             Semantics(
                                 container: true,
                                 textField: true,
-                                label: "나이",
+                                label: '나이',
                                 hint: '(예: 21)',
                                 child: TextFormField(
                                   decoration: InputDecoration(
-                                    labelText: "나이",
-                                    hintText: "(예: 21)",
+                                    labelText: '나이',
+                                    hintText: '(예: 21)',
                                     floatingLabelStyle: const TextStyle(
                                         color: primaryColor,
                                         fontSize: 22,
@@ -415,8 +412,8 @@ class selfState extends State<self> {
                                 )),
                             SizedBox(height: height * 0.03),
                             const Text(
-                              "방문 목적을 입력하세요.",
-                              semanticsLabel: "방문 목적을 입력하세요.",
+                              '방문 목적을 입력하세요.',
+                              semanticsLabel: '방문 목적을 입력하세요.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 17,
@@ -432,8 +429,8 @@ class selfState extends State<self> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    "장애 유형",
-                                    semanticsLabel: "장애 유형",
+                                    '장애 유형',
+                                    semanticsLabel: '장애 유형',
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
@@ -475,8 +472,8 @@ class selfState extends State<self> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    "장애 정도",
-                                    semanticsLabel: "장애 정도",
+                                    '장애 정도',
+                                    semanticsLabel: '장애 정도',
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontFamily: 'NanumGothic',
@@ -519,7 +516,7 @@ class selfState extends State<self> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
-            if (_formKey_self.currentState!.validate() &&
+            if (_formKeySelf.currentState!.validate() &&
                 _purpose.text != '' &&
                 _selfAge.text.split(' ').first != '' &&
                 (_selectedDegree[0] || _selectedDegree[1]) &&
@@ -528,16 +525,18 @@ class selfState extends State<self> {
               if (doesDocExist == false) {
                 storeSelfInfo(_nickname.text, _selfAge.text, _purpose.text,
                     _selectedType, _selectedDegree);
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const VerifyEmail()));
+                  if (mounted) {
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const VerifyEmail()));
+                  }
               }
             }
           },
           backgroundColor: primaryColor,
           child: const Text(
-            "완료",
-            semanticsLabel: "완료",
+            '완료',
+            semanticsLabel: '완료',
             style: TextStyle(
                 fontSize: 17,
                 fontFamily: 'NanumGothic',

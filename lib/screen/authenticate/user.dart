@@ -2,7 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/screen/authenticate/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/user_protector.dart';
 import 'package:byourside/screen/authenticate/user_self.dart';
-import 'package:byourside/screen/authenticate/user_someoneElse.dart';
+import 'package:byourside/screen/authenticate/user_someone_else.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,8 +28,8 @@ class _SetupUserState extends State<SetupUser> {
         appBar: AppBar(
             centerTitle: true,
             elevation: 0,
-            title: const Text("유형 선택",
-                semanticsLabel: "유형 선택",
+            title: const Text('유형 선택',
+                semanticsLabel: '유형 선택',
                 style: TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
             backgroundColor: primaryColor),
@@ -53,8 +53,8 @@ class _SetupUserState extends State<SetupUser> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "3/4 단계",
-                                      semanticsLabel: "3/4 단계",
+                                      '3/4 단계',
+                                      semanticsLabel: '3/4 단계',
                                       style: TextStyle(
                                           color: primaryColor,
                                           fontSize: 20,
@@ -84,7 +84,7 @@ class _SetupUserState extends State<SetupUser> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const protector()),
+                                                  const Protector()),
                                         );
                                       },
                                       child: const Text(
@@ -114,7 +114,7 @@ class _SetupUserState extends State<SetupUser> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const participator()),
+                                                const Participator()),
                                       );
                                     },
                                     child: const Text(
@@ -142,7 +142,7 @@ class _SetupUserState extends State<SetupUser> {
                                       HapticFeedback.lightImpact(); // 약한 진동
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) => const self()),
+                                            builder: (context) => const Self()),
                                       );
                                     },
                                     child: const Text(
@@ -171,7 +171,7 @@ class _SetupUserState extends State<SetupUser> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const someoneElse()),
+                                                const SomeoneElse()),
                                       );
                                     },
                                     child: const Text(

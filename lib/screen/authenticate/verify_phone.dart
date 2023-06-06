@@ -3,27 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/screen/authenticate/otp_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-GlobalKey<FormState> _formKey_phone = GlobalKey<FormState>();
-
-// change to 개인정보처리방침
-final Uri _url = Uri.parse('https://sites.google.com/view/gyeoteuro');
-
-Future<void> _launchUrl() async {
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
-}
+GlobalKey<FormState> _formKeyPhone = GlobalKey<FormState>();
 
 class VerifyPhone extends StatefulWidget {
   const VerifyPhone({super.key});
 
   @override
-  _VerifyPhoneState createState() => _VerifyPhoneState();
+  VerifyPhoneState createState() => VerifyPhoneState();
 }
 
-class _VerifyPhoneState extends State<VerifyPhone> {
+class VerifyPhoneState extends State<VerifyPhone> {
   final TextEditingController _controller = TextEditingController();
   bool doesDocExist = true;
 
@@ -45,7 +35,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     // final linkButton = ElevatedButton(
     //     style: ButtonStyle(
     //         backgroundColor: MaterialStateProperty.all(primaryColor)),
@@ -64,14 +53,14 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text("휴대폰 인증",
-              semanticsLabel: "휴대폰 인증",
+          title: const Text('휴대폰 인증',
+              semanticsLabel: '휴대폰 인증',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
@@ -88,8 +77,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "2/4 단계",
-                      semanticsLabel: "2/4 단계",
+                      '2/4 단계',
+                      semanticsLabel: '2/4 단계',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 20,
@@ -100,36 +89,32 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Container(
-                child: const Center(
-                  child: Text(
-                    '휴대폰 번호 입력',
-                    semanticsLabel: '휴대폰 번호 입력',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      fontFamily: 'NanumGothic',
-                    ),
+              const Center(
+                child: Text(
+                  '휴대폰 번호 입력',
+                  semanticsLabel: '휴대폰 번호 입력',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    fontFamily: 'NanumGothic',
                   ),
                 ),
               ),
               SizedBox(height: height * 0.01),
-              Container(
-                child: const Center(
-                  child: Text(
-                    '맨앞 0을 제외하고 10자리를 입력하세요.',
-                    semanticsLabel: '맨앞 0을 제외하고 10자리를 입력하세요.',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      fontFamily: 'NanumGothic',
-                    ),
+              const Center(
+                child: Text(
+                  '맨앞 0을 제외하고 10자리를 입력하세요.',
+                  semanticsLabel: '맨앞 0을 제외하고 10자리를 입력하세요.',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    fontFamily: 'NanumGothic',
                   ),
                 ),
               ),
               SizedBox(height: height * 0.01),
               Form(
-                  key: _formKey_phone,
+                  key: _formKeyPhone,
                   child: Container(
                     margin: const EdgeInsets.only(top: 40, right: 20, left: 20),
                     child: Semantics(
@@ -151,7 +136,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                   borderSide: BorderSide(
                                       color: Theme.of(context).primaryColor),
                                   borderRadius: BorderRadius.circular(20)),
-                              labelText: "휴대폰 번호를 입력하세요.",
+                              labelText: '휴대폰 번호를 입력하세요.',
                               hintText: '(예: 1012345678)',
                               hintStyle: const TextStyle(
                                   color: Colors.grey,
@@ -202,7 +187,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                             MaterialStateProperty.all(primaryColor)),
                     onPressed: () async {
                       HapticFeedback.lightImpact(); // 약한 진동
-                      if (_formKey_phone.currentState!.validate()) {
+                      if (_formKeyPhone.currentState!.validate()) {
                         doesDocExist = await checkDocExist(_controller.text);
 
                         if (doesDocExist == true) {
@@ -212,7 +197,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 builder: (context) {
                                   return AlertDialog(
                                       semanticLabel:
-                                          "이미 가입된 번호입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                          '이미 가입된 번호입니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                                       content: const Text(
                                         '이미 가입된 번호입니다.',
                                         semanticsLabel: '이미 가입된 번호입니다.',
@@ -242,9 +227,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 });
                           }
                         } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  OTPScreen(_controller.text)));
+                          if (mounted) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    OTPScreen(_controller.text)));
+                          }
                         }
                       }
                     },

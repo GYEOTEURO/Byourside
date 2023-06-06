@@ -16,10 +16,10 @@ class OTPScreen extends StatefulWidget {
   const OTPScreen(this.phone, {super.key});
 
   @override
-  _OTPScreenState createState() => _OTPScreenState();
+  OTPScreenState createState() => OTPScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
+class OTPScreenState extends State<OTPScreen> {
   final GlobalKey<ScaffoldState> _formKey = GlobalKey<ScaffoldState>();
   final TextEditingController otpCode = TextEditingController();
   bool isPhoneVerified = false;
@@ -58,7 +58,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   void storePhoneNum(String? num) async {
     FirebaseFirestore.instance.collection('phoneNumList').doc('$num').set({
-      "current": true,
+      'current': true,
     });
   }
 
@@ -113,7 +113,7 @@ class _OTPScreenState extends State<OTPScreen> {
       String phone3 = widget.phone.substring(
         6,
       );
-      final user = Provider.of<FirebaseUser?>(context);
+      var user = Provider.of<FirebaseUser?>(context);
       return Scaffold(
           key: _formKey,
           appBar: AppBar(
@@ -125,7 +125,7 @@ class _OTPScreenState extends State<OTPScreen> {
             backgroundColor: primaryColor,
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back,
-                    semanticLabel: "뒤로 가기", color: Colors.white),
+                    semanticLabel: '뒤로 가기', color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
@@ -142,8 +142,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "2/4 단계",
-                        semanticsLabel: "2/4 단계",
+                        '2/4 단계',
+                        semanticsLabel: '2/4 단계',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 20,
@@ -160,7 +160,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     Text(
                       '0$phone1 $phone2 $phone3로 전송된\n인증번호를 입력하세요.',
                       semanticsLabel:
-                          "0$phone1 $phone2 $phone3로 전송된\n인증번호를 입력하세요.",
+                          '0$phone1 $phone2 $phone3로 전송된\n인증번호를 입력하세요.',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
@@ -197,7 +197,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     keyboardType: TextInputType.number,
                     onSubmitted: (pin) async {
                       try {
-                        final PhoneAuthCredential credential =
+                        PhoneAuthCredential credential =
                             PhoneAuthProvider.credential(
                                 verificationId: _verificationId!, smsCode: pin);
                         await _auth.currentUser?.updatePhoneNumber(credential);
@@ -215,7 +215,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         });
                         await FirebaseAuth.instance.currentUser!.reload();
                         // TODO: 비슷한 조건 else로 빼기
-                        if (user?.phoneNum == null || user?.phoneNum == "") {
+                        if (user?.phoneNum == null || user?.phoneNum == '') {
                           setState(() {
                             FirebaseUser(
                                 uid: user?.uid, phoneNum: widget.phone);
@@ -225,13 +225,15 @@ class _OTPScreenState extends State<OTPScreen> {
                         if (FirebaseAuth
                                     .instance.currentUser?.phoneNumber !=
                                 null &&
-                            !(user?.phoneNum == null || user?.phoneNum == "")) {
+                            !(user?.phoneNum == null || user?.phoneNum == '')) {
                           timer?.cancel();
-                          Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SetupUser()));
+                          if (mounted) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SetupUser()));
+                          } 
                         }
                       } catch (e) {
                         if (mounted) {
@@ -240,11 +242,11 @@ class _OTPScreenState extends State<OTPScreen> {
                               builder: (context) {
                                 return AlertDialog(
                                     semanticLabel:
-                                        "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                        '인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                                     content: const Text(
-                                      "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                      '인증번호가 일치하지 않습니다.\n재시도하세요.',
                                       semanticsLabel:
-                                          "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                          '인증번호가 일치하지 않습니다.\n재시도하세요.',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'NanumGothic',
@@ -290,7 +292,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         try {
                           if (FirebaseAuth.instance.currentUser!.phoneNumber ==
                               null) {
-                            final PhoneAuthCredential credential =
+                            PhoneAuthCredential credential =
                                 PhoneAuthProvider.credential(
                                     verificationId: _verificationId!,
                                     smsCode: pin);
@@ -312,7 +314,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             });
                             await FirebaseAuth.instance.currentUser!.reload();
                           }
-                          if (user?.phoneNum == null || user?.phoneNum == "") {
+                          if (user?.phoneNum == null || user?.phoneNum == '') {
                             setState(() {
                               FirebaseUser(
                                   uid: user?.uid, phoneNum: widget.phone);
@@ -322,13 +324,15 @@ class _OTPScreenState extends State<OTPScreen> {
                                       .instance.currentUser?.phoneNumber !=
                                   null &&
                               !(user?.phoneNum == null ||
-                                  user?.phoneNum == "")) {
+                                  user?.phoneNum == '')) {
                             timer?.cancel();
-                            Navigator.pop(context);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SetupUser()));
+                            if (mounted){
+                              Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SetupUser()));
+                            }
                           }
                         } catch (e) {
                           if (mounted) {
@@ -337,11 +341,11 @@ class _OTPScreenState extends State<OTPScreen> {
                                 builder: (context) {
                                   return AlertDialog(
                                       semanticLabel:
-                                          "인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                          '인증번호가 일치하지 않습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                                       content: const Text(
-                                        "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                        '인증번호가 일치하지 않습니다.\n재시도하세요.',
                                         semanticsLabel:
-                                            "인증번호가 일치하지 않습니다.\n재시도하세요.",
+                                            '인증번호가 일치하지 않습니다.\n재시도하세요.',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontFamily: 'NanumGothic',
@@ -370,8 +374,8 @@ class _OTPScreenState extends State<OTPScreen> {
                         }
                       },
                       child: const Text(
-                        "다음",
-                        semanticsLabel: "다음",
+                        '다음',
+                        semanticsLabel: '다음',
                         style: TextStyle(
                             fontSize: 17,
                             fontFamily: 'NanumGothic',
@@ -392,7 +396,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             Icons.phone,
                             size: height * 0.02,
                             color: Colors.white,
-                            semanticLabel: "전화",
+                            semanticLabel: '전화',
                           ),
                           label: const Text(
                             '인증번호 재전송',
@@ -450,7 +454,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 builder: (context) {
                   return AlertDialog(
                       semanticLabel:
-                          "인증 가능한 기간이 지났습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                          '인증 가능한 기간이 지났습니다. 재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                       content: const Text(
                         '인증 가능한 기간이 지났습니다. 재시도하세요.',
                         semanticsLabel: '인증 가능한 기간이 지났습니다. 재시도하세요.',

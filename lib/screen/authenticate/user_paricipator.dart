@@ -6,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-GlobalKey<FormState> _formKey_participator = GlobalKey<FormState>();
+GlobalKey<FormState> _formKeyParticipator = GlobalKey<FormState>();
 final List<bool> _selectedType = <bool>[false, false];
 
-const List<Widget> type_p = <Widget>[
+const List<Widget> typeP = <Widget>[
   Text('홍보', semanticsLabel: '홍보', style: TextStyle(fontSize: 17)),
   Text('모집', semanticsLabel: '모집', style: TextStyle(fontSize: 17))
 ];
@@ -19,14 +19,14 @@ const List<Widget> type_p = <Widget>[
 final TextEditingController _nickname = TextEditingController();
 final TextEditingController _organizationName = TextEditingController();
 
-class participator extends StatefulWidget {
-  const participator({Key? key}) : super(key: key);
+class Participator extends StatefulWidget {
+  const Participator({Key? key}) : super(key: key);
 
   @override
-  State<participator> createState() => _participatorState();
+  State<Participator> createState() => _ParticipatorState();
 }
 
-class _participatorState extends State<participator> {
+class _ParticipatorState extends State<Participator> {
   bool doesDocExist = true;
   final User? user = FirebaseAuth.instance.currentUser;
   bool participator = false;
@@ -68,6 +68,7 @@ class _participatorState extends State<participator> {
             });
       }
     } else {
+      if (mounted) {
       showDialog(
           context: context,
           builder: (context) {
@@ -94,82 +95,82 @@ class _participatorState extends State<participator> {
                           )))
                 ]);
           });
+      }
     }
     return doc.exists;
   }
 
-  final nicknameField = Container(
-      child: Semantics(
-          container: true,
-          textField: true,
-          label: '닉네임',
-          hint: '(예: 홍길동)',
-          child: TextFormField(
-            decoration: InputDecoration(
-              floatingLabelStyle: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 22,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              errorStyle: const TextStyle(
-                  color: Color.fromARGB(255, 255, 45, 45),
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              labelText: "닉네임",
-              hintText: "(예: 홍길동) ",
-              hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              labelStyle: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: primaryColor),
-                  borderRadius: BorderRadius.circular(20)),
-              errorBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
-                  borderRadius: BorderRadius.circular(20)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: primaryColor),
-                  borderRadius: BorderRadius.circular(20)),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-            ),
-            autofocus: true,
-            controller: _nickname,
-            validator: (value) {
-              if (value != null) {
-                for (int i = 0; i < value.length; i++) {
-                  if (value[i] == '_') {
-                    return '특수기호 _는 포함이 불가능합니다.';
-                  }
-                }
-                if (value.split(' ').first != '' && value.isNotEmpty) {
-                  return null;
-                }
-                return '필수 입력란입니다. 닉네임을 입력하세요';
+  final nicknameField = Semantics(
+      container: true,
+      textField: true,
+      label: '닉네임',
+      hint: '(예: 홍길동)',
+      child: TextFormField(
+        decoration: InputDecoration(
+          floatingLabelStyle: const TextStyle(
+              color: primaryColor,
+              fontSize: 22,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          errorStyle: const TextStyle(
+              color: Color.fromARGB(255, 255, 45, 45),
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: '닉네임',
+          hintText: '(예: 홍길동) ',
+          hintStyle: const TextStyle(
+              color: Colors.grey,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          labelStyle: const TextStyle(
+              color: primaryColor,
+              fontSize: 17,
+              fontFamily: 'NanumGothic',
+              fontWeight: FontWeight.w500),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          errorBorder: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(255, 255, 45, 45)),
+              borderRadius: BorderRadius.circular(20)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: primaryColor),
+              borderRadius: BorderRadius.circular(20)),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        ),
+        autofocus: true,
+        controller: _nickname,
+        validator: (value) {
+          if (value != null) {
+            for (int i = 0; i < value.length; i++) {
+              if (value[i] == '_') {
+                return '특수기호 _는 포함이 불가능합니다.';
               }
+            }
+            if (value.split(' ').first != '' && value.isNotEmpty) {
               return null;
-            },
-          )));
+            }
+            return '필수 입력란입니다. 닉네임을 입력하세요';
+          }
+          return null;
+        },
+      ));
 
   void storeParticipatorInfo(String? nickname, String? organizationName,
       List<bool>? selectedType) async {
     // image url 포함해 firestore에 document 저장
     FirebaseFirestore.instance.collection('user').doc(user!.uid).set({
-      "nickname": nickname,
-      "organizationName": organizationName,
-      "dropdownValue": selectedType,
-      "groups": [],
-      "profilePic": "",
-      "blockList": [],
+      'nickname': nickname,
+      'organizationName': organizationName,
+      'dropdownValue': selectedType,
+      'groups': [],
+      'profilePic': '',
+      'blockList': [],
     });
     FirebaseFirestore.instance
         .collection('displayNameList')
@@ -194,14 +195,14 @@ class _participatorState extends State<participator> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text("세부 정보 입력",
-              semanticsLabel: "세부 정보 입력",
+          title: const Text('세부 정보 입력',
+              semanticsLabel: '세부 정보 입력',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),
@@ -216,8 +217,8 @@ class _participatorState extends State<participator> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "3/4 단계",
-                        semanticsLabel: "3/4 단계",
+                        '3/4 단계',
+                        semanticsLabel: '3/4 단계',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 20,
@@ -228,15 +229,15 @@ class _participatorState extends State<participator> {
                   ),
                 ),
                 Form(
-                  key: _formKey_participator,
+                  key: _formKeyParticipator,
                   child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const Text(
-                              "닉네임을 입력하세요.",
-                              semanticsLabel: "닉네임을 입력하세요.",
+                              '닉네임을 입력하세요.',
+                              semanticsLabel: '닉네임을 입력하세요.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 17,
@@ -246,7 +247,7 @@ class _participatorState extends State<participator> {
                             SizedBox(height: height * 0.01),
                             const Text(
                               "특수기호 '_'는 사용이 불가합니다.",
-                              semanticsLabel: "특수기호 _ 는 사용이 불가합니다.",
+                              semanticsLabel: '특수기호 _ 는 사용이 불가합니다.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
@@ -257,8 +258,8 @@ class _participatorState extends State<participator> {
                             nicknameField,
                             SizedBox(height: height * 0.04),
                             const Text(
-                              "개인/단체 이름을 입력하세요.",
-                              semanticsLabel: "개인/단체 이름을 입력하세요.",
+                              '개인/단체 이름을 입력하세요.',
+                              semanticsLabel: '개인/단체 이름을 입력하세요.',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 17,
@@ -285,8 +286,8 @@ class _participatorState extends State<participator> {
                                         fontWeight: FontWeight.w500),
                                     contentPadding: const EdgeInsets.fromLTRB(
                                         20.0, 15.0, 20.0, 15.0),
-                                    labelText: "개인/단체 이름",
-                                    hintText: "(예: 00복지관)",
+                                    labelText: '개인/단체 이름',
+                                    hintText: '(예: 00복지관)',
                                     hintStyle: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 17,
@@ -342,8 +343,8 @@ class _participatorState extends State<participator> {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         const Text(
-                                          "소속",
-                                          semanticsLabel: "소속",
+                                          '소속',
+                                          semanticsLabel: '소속',
                                           style: TextStyle(
                                               fontSize: 17,
                                               fontFamily: 'NanumGothic',
@@ -374,7 +375,7 @@ class _participatorState extends State<participator> {
                                             minWidth: width * 0.3,
                                           ),
                                           isSelected: _selectedType,
-                                          children: type_p,
+                                          children: typeP,
                                         )
                                       ],
                                     ),
@@ -387,22 +388,24 @@ class _participatorState extends State<participator> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
-            if (_formKey_participator.currentState!.validate() &&
+            if (_formKeyParticipator.currentState!.validate() &&
                 (_selectedType[0] || _selectedType[1])) {
               doesDocExist = await checkDocExist(_nickname.text);
               if (doesDocExist == false) {
                 storeParticipatorInfo(
                     _nickname.text, _organizationName.text, _selectedType);
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const VerifyEmail()));
-              }
+                if (mounted) {
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const VerifyEmail()));
+                }
+                }
             }
           },
           backgroundColor: primaryColor,
           child: const Text(
-            "완료",
-            semanticsLabel: "완료",
+            '완료',
+            semanticsLabel: '완료',
             style: TextStyle(
                 fontSize: 17,
                 fontFamily: 'NanumGothic',

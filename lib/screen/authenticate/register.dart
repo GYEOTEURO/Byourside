@@ -7,16 +7,6 @@ import 'package:byourside/widget/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-// change to 개인정보처리방침
-final Uri _url = Uri.parse('https://sites.google.com/view/gyeoteuro');
-
-Future<void> _launchUrl() async {
-  if (!await launchUrl(_url)) {
-    throw '$_url을 열 수 없습니다.';
-  }
-}
 
 class Register extends StatefulWidget {
   final Function? toggleView;
@@ -43,7 +33,7 @@ class _Register extends State<Register> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final loginPhoneButton = Material(
+    var loginPhoneButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(20.0),
       color: primaryColor,
@@ -59,8 +49,8 @@ class _Register extends State<Register> {
           ); //Navigator.pushNamed(context, "/phone");
         },
         child: const Text(
-          "휴대폰 인증",
-          semanticsLabel: "휴대폰 인증",
+          '휴대폰 인증',
+          semanticsLabel: '휴대폰 인증',
           style: TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -71,7 +61,7 @@ class _Register extends State<Register> {
       ),
     );
 
-    final emailField = Semantics(
+    var emailField = Semantics(
         container: true,
         textField: true,
         label: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
@@ -89,8 +79,8 @@ class _Register extends State<Register> {
               return null;
             },
             decoration: InputDecoration(
-              hintText: "(예: abcd@google.com)",
-              labelText: "이메일", //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
+              hintText: '(예: abcd@google.com)',
+              labelText: '이메일', //이메일을 입력하세요. (\".com\"으로 끝나는 메일만 가능합니다)
               floatingLabelStyle: const TextStyle(
                   color: primaryColor,
                   fontSize: 22,
@@ -127,7 +117,7 @@ class _Register extends State<Register> {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
             )));
 
-    final passwordField = Semantics(
+    var passwordField = Semantics(
         container: true,
         textField: true,
         label: '비밀번호', //비밀번호를 입력하세요. (8자리 이상이어야 합니다)
@@ -157,8 +147,8 @@ class _Register extends State<Register> {
                   fontFamily: 'NanumGothic',
                   fontWeight: FontWeight.w500),
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              hintText: "(예: 12345678)",
-              labelText: "비밀번호", //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
+              hintText: '(예: 12345678)',
+              labelText: '비밀번호', //비밀번호를 입력하세요. (8자리 이상이어야 합니다),
               hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
@@ -172,7 +162,7 @@ class _Register extends State<Register> {
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility : Icons.visibility_off,
-                  semanticLabel: "비밀번호 보기",
+                  semanticLabel: '비밀번호 보기',
                   color: primaryColor,
                 ),
                 onPressed: () {
@@ -195,7 +185,7 @@ class _Register extends State<Register> {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
             )));
 
-    final txtButton = TextButton(
+    var txtButton = TextButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
           FirebaseAuth.instance.currentUser?.delete();
@@ -203,7 +193,7 @@ class _Register extends State<Register> {
         },
         child: const Text(
           '로그인 페이지로 돌아가기',
-          semanticsLabel: "로그인 페이지로 돌아가기",
+          semanticsLabel: '로그인 페이지로 돌아가기',
           style: TextStyle(
               color: primaryColor,
               fontSize: 17,
@@ -211,7 +201,7 @@ class _Register extends State<Register> {
               fontWeight: FontWeight.w500),
         ));
 
-    final linkbuttonPersonal = ElevatedButton(
+    var linkbuttonPersonal = ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
         onPressed: () {
@@ -239,7 +229,7 @@ class _Register extends State<Register> {
           fontWeight: FontWeight.w500),
     );
 
-    final linkbuttonUsing = ElevatedButton(
+    var linkbuttonUsing = ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(primaryColor)),
         onPressed: () {
@@ -257,7 +247,7 @@ class _Register extends State<Register> {
               fontWeight: FontWeight.w500),
         ));
 
-    final registerButton = Material(
+    var registerButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(20.0),
       color: primaryColor,
@@ -274,16 +264,17 @@ class _Register extends State<Register> {
             if (result != null) {
               if (result.uid == null) {
                 //null means unsuccessfull authentication
+                if (mounted) {
                 showDialog(
                     context: context,
                     builder: (context) {
                       return AlertDialog(
                           semanticLabel:
-                              "이미 가입되었습니다. 약관 동의가 필요합니다. 휴대폰 인증을 진행하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                              '이미 가입되었습니다. 약관 동의가 필요합니다. 휴대폰 인증을 진행하세요. 오류가 지속될 경우 문의해주세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                           content: const Text(
-                            "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
+                            '이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.',
                             semanticsLabel:
-                                "이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.",
+                                '이미 가입되었습니다.\n약관 동의가 필요합니다.\n휴대폰 인증을 진행하세요.\n오류가 지속될 경우 문의해주세요.',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'NanumGothic',
@@ -307,18 +298,20 @@ class _Register extends State<Register> {
                                     )))
                           ]);
                     });
+                }
               } else {
                 _isRegister = true;
               }
             } else {
+              if (mounted) {
               showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                        semanticLabel: "재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                        semanticLabel: '재시도하세요. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                         content: const Text(
-                          "재시도 하세요.",
-                          semanticsLabel: "재시도 하세요.",
+                          '재시도 하세요.',
+                          semanticsLabel: '재시도 하세요.',
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'NanumGothic',
@@ -342,12 +335,13 @@ class _Register extends State<Register> {
                                   )))
                         ]);
                   });
+              }
             }
           }
         },
         child: const Text(
-          "동의하고 회원가입",
-          semanticsLabel: "동의하고 회원가입",
+          '동의하고 회원가입',
+          semanticsLabel: '동의하고 회원가입',
           style: TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -381,8 +375,8 @@ class _Register extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "1/4 단계",
-                      semanticsLabel: "1/4 단계",
+                      '1/4 단계',
+                      semanticsLabel: '1/4 단계',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 20,
@@ -402,8 +396,8 @@ class _Register extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       const Text(
-                        "이메일을 입력하세요.",
-                        semanticsLabel: "이메일을 입력하세요.",
+                        '이메일을 입력하세요.',
+                        semanticsLabel: '이메일을 입력하세요.',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 17,
@@ -423,8 +417,8 @@ class _Register extends State<Register> {
                       emailField,
                       SizedBox(height: height * 0.02),
                       const Text(
-                        "비밀번호를 입력하세요.",
-                        semanticsLabel: "비밀번호를 입력하세요.",
+                        '비밀번호를 입력하세요.',
+                        semanticsLabel: '비밀번호를 입력하세요.',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 17,
@@ -432,8 +426,8 @@ class _Register extends State<Register> {
                             fontWeight: FontWeight.w600),
                       ),
                       const Text(
-                        "8자리 이상이어야 합니다.",
-                        semanticsLabel: "8자리 이상이어야 합니다.",
+                        '8자리 이상이어야 합니다.',
+                        semanticsLabel: '8자리 이상이어야 합니다.',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
@@ -455,8 +449,8 @@ class _Register extends State<Register> {
                                 SizedBox(
                                   width: width * 0.05,
                                 ),
-                                const Text("동의",
-                                    semanticsLabel: "동의",
+                                const Text('동의',
+                                    semanticsLabel: '동의',
                                     style: TextStyle(
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500)),
@@ -478,8 +472,8 @@ class _Register extends State<Register> {
                                 SizedBox(
                                   width: width * 0.05,
                                 ),
-                                const Text("동의",
-                                    semanticsLabel: "동의",
+                                const Text('동의',
+                                    semanticsLabel: '동의',
                                     style: TextStyle(
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500)),
@@ -501,8 +495,8 @@ class _Register extends State<Register> {
                                 SizedBox(
                                   width: width * 0.05,
                                 ),
-                                const Text("동의",
-                                    semanticsLabel: "동의",
+                                const Text('동의',
+                                    semanticsLabel: '동의',
                                     style: TextStyle(
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500)),
@@ -524,8 +518,8 @@ class _Register extends State<Register> {
                       (_policy == false ||
                               _personal == false ||
                               _using == false)
-                          ? const Text("약관에 모두 동의하셔야 가입할 수 있습니다.",
-                              semanticsLabel: "약관에 모두 동의하셔야 가입할 수 있습니다.",
+                          ? const Text('약관에 모두 동의하셔야 가입할 수 있습니다.',
+                              semanticsLabel: '약관에 모두 동의하셔야 가입할 수 있습니다.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'NanumGothic',
@@ -536,8 +530,8 @@ class _Register extends State<Register> {
                               _policy == false ||
                               _personal == false ||
                               _using == false)
-                          ? const Text("이후 휴대전화 인증이 가능합니다.",
-                              semanticsLabel: "이후 휴대전화 인증이 가능합니다.",
+                          ? const Text('이후 휴대전화 인증이 가능합니다.',
+                              semanticsLabel: '이후 휴대전화 인증이 가능합니다.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'NanumGothic',

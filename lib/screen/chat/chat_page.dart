@@ -25,17 +25,17 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   Stream<QuerySnapshot>? chats;
   TextEditingController messageController = TextEditingController();
-  String admin = "";
+  String admin = '';
   int count = 0;
 
   final List<String> _decList = [
-    "불법 정보를 포함하고 있습니다.",
-    "음란물입니다.",
-    "스팸홍보/도배 내용을 포함하고 있습니다.",
-    "욕설/비하/혐오/차별적 표현을 포함하고 있습니다.",
-    "청소년에게 유해한 내용입니다.",
-    "사칭/사기입니다.",
-    "상업적 광고 및 판매 내용을 포함하고 있습니다."
+    '불법 정보를 포함하고 있습니다.',
+    '음란물입니다.',
+    '스팸홍보/도배 내용을 포함하고 있습니다.',
+    '욕설/비하/혐오/차별적 표현을 포함하고 있습니다.',
+    '청소년에게 유해한 내용입니다.',
+    '사칭/사기입니다.',
+    '상업적 광고 및 판매 내용을 포함하고 있습니다.'
   ];
 
   @override
@@ -80,7 +80,7 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: primaryColor,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -222,7 +222,7 @@ class _ChatPageState extends State<ChatPage> {
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600),
-                      hintText: "메시지 보내기",
+                      hintText: '메시지 보내기',
                       border: InputBorder.none,
                     ),
                   )),
@@ -246,7 +246,7 @@ class _ChatPageState extends State<ChatPage> {
                         child: Icon(
                           Icons.send,
                           color: primaryColor,
-                          semanticLabel: "전송", //semanticLabel 속성 추가하기
+                          semanticLabel: '전송', //semanticLabel 속성 추가하기
                         ),
                       ),
                     ),
@@ -285,9 +285,9 @@ class _ChatPageState extends State<ChatPage> {
   sendMessage() {
     if (messageController.text.isNotEmpty) {
       Map<String, dynamic> chatMessageMap = {
-        "message": messageController.text,
-        "sender": widget.userName,
-        "time": DateTime.now().millisecondsSinceEpoch,
+        'message': messageController.text,
+        'sender': widget.userName,
+        'time': DateTime.now().millisecondsSinceEpoch,
       };
 
       ChatList().sendMessage(widget.groupId, chatMessageMap);
