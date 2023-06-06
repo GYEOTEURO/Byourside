@@ -58,13 +58,14 @@ class AuthService {
     }
   }
 
-  // Future resetPassword(LoginUser _login) async {
-  //   try {
-  //     await _auth.sendPasswordResetEmail(email: _login.email.toString());
-  //   } on FirebaseAuthException catch (e) {
-  //     return FirebaseUser(uid: null, code: e.code);
-  //   }
-  // }
+  Future sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email.trim());
+    } on FirebaseAuthException catch (e) {
+      // Handle the exception if needed
+      return FirebaseUser(uid: null, code: e.code);
+    }
+  }
 
   // Future signInCredential(LoginUser _login) async {
   //   try {

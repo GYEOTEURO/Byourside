@@ -1,6 +1,7 @@
 import 'dart:developer';
-
+import 'package:byourside/widget/auth.dart';
 import 'package:byourside/main.dart';
+import 'package:byourside/widget/alert_dialog.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class ForgotPassword extends StatefulWidget {
 class ForgotPasswordPageState extends State<ForgotPassword> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  final AuthService _auth = AuthService();
+
 
   @override
   void dispose() {
@@ -156,9 +159,8 @@ class ForgotPasswordPageState extends State<ForgotPassword> {
   }
 
   Future verifyEmail() async {
-    try { // TODO: 이거 auth widget으로
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text.trim());
+    try {
+      await _auth.sendPasswordResetEmail(emailController.text.trim());
       if (mounted) {
         showDialog(
             context: context,
