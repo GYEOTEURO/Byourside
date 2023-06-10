@@ -48,9 +48,12 @@ class _Mypage extends State<Mypage> {
   ];
   final List<Icon> myIcons = <Icon>[
     const Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),
-    const Icon(Icons.volunteer_activism, semanticLabel: '내가 쓴 마음나눔 글 목록 화면으로 이동'),
-    const Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음온도 글 목록 화면으로 이동'),
-    const Icon(Icons.star_border_outlined, semanticLabel: '스크랩한 마음나눔 글 목록 화면으로 이동')
+    const Icon(Icons.volunteer_activism,
+        semanticLabel: '내가 쓴 마음나눔 글 목록 화면으로 이동'),
+    const Icon(Icons.star_border_outlined,
+        semanticLabel: '스크랩한 마음온도 글 목록 화면으로 이동'),
+    const Icon(Icons.star_border_outlined,
+        semanticLabel: '스크랩한 마음나눔 글 목록 화면으로 이동')
   ];
   final List<Widget> myConnectPage = <Widget>[
     const MyOndoPost(),
@@ -370,6 +373,7 @@ class _Mypage extends State<Mypage> {
                         ),
                         onPressed: () async {
                           HapticFeedback.lightImpact(); // 약한 진동
+                          // 가독성 면에서 switch 문으로 변경하기!!!!
                           if (index == 0) {
                             await Navigator.push(
                               context,

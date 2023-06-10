@@ -132,8 +132,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
         title: Text(
           widget.title,
           semanticsLabel: widget.title,
-          style:
-              const TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
+          style: const TextStyle(
+              fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -437,6 +437,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
 
               print("사진 상세 정보: $imgInfos");
 
+              // if가 한 줄이라도 중괄호를 쓰자 ! (추후에 문제가 발생할 수 있음)-> lints 규칙에 있는 거 사용 !
               if (_categories.category == '자유게시판') _categories.category = '자유';
 
               OndoPostModel postData = OndoPostModel(
