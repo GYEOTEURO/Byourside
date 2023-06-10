@@ -50,6 +50,8 @@ class _PostCategoryState extends State<PostCategory> {
     _type = widget.categories.type;
     print('init 시 게시판 종류: $_category, 장애 유형: $_type');
 
+    // for in 혹은 for each로 변경 !
+    // for 문에서 i, j를 지양 -> i라기 보다는 index 이런 식으로 변수명 의미있게 변경 !
     for (int i = 0; i < categoryList.length; i++) {
       if (categoryList[i].label == _category) {
         categoryList[i].selected = true;
@@ -59,8 +61,12 @@ class _PostCategoryState extends State<PostCategory> {
       }
     }
 
+    // 함수로서 이 파트를 설명해도 될 듯 !
+    // _typeinit 이런식으로 !
+    // _type 명도 정확히 알 수 있게 변경 !
     if (_type != null) {
       for (int j = 0; j < _type!.length; j++) {
+        // 2 :  magic number !
         for (int i = 0; i < 2; i++) {
           if (typeList[i].label == _type![j]) {
             typeList[i].selected = true;
@@ -77,6 +83,7 @@ class _PostCategoryState extends State<PostCategory> {
   void _onClickCategory(int index) {
     HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
+      // categoryList[index].selected == true 이거나 categoryList[index].selected 이거나 둘 중 하나로 통일 !
       if (categoryList[index].selected) {
         categoryList[index].selected = false;
         categoryList[index].backgroundColor = Colors.white;
@@ -89,6 +96,8 @@ class _PostCategoryState extends State<PostCategory> {
         categoryList[index].fontColor = Colors.white;
 
         // 나머지 버튼들은 비활성화
+        // 중복 코드 최소화 -> selectedFalse 이런 식으로 묶기 !
+        // 6 : magic number
         for (int i = 0; i < 6; i++) {
           if (i == index) {
             continue;
@@ -107,6 +116,7 @@ class _PostCategoryState extends State<PostCategory> {
     ButtonProperties(label: '뇌병변장애'),
   ];
 
+  // 타입 select 변경하는 거 함수로 하나로 묶기 !
   void _onClickType(int index) {
     HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
@@ -134,9 +144,11 @@ class _PostCategoryState extends State<PostCategory> {
     }
 
     // 장애 유형 selected 된 상태에 따라 type 값 지정
+
     _type = [];
     for (int i = 0; i < typeList.length; i++) {
       if (typeList[i].selected) {
+        // 추후에 에러가 발생할 가능성이 다분하다 !
         if (_type == null) {
           _type = [typeList[i].label];
         } else {
@@ -145,6 +157,8 @@ class _PostCategoryState extends State<PostCategory> {
       }
     }
     widget.categories.type = _type;
+
+    // 문맥 파악 용이를 위해 엔터를 함께 써서 단락을 구분하자 !
     if (widget.categories.category == null) {
       // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
       //     backgroundColor: Colors.white);

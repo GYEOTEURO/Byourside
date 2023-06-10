@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
@@ -14,8 +12,8 @@ import '../../main.dart';
 import '../../model/db_get.dart';
 import '../../model/post_list.dart';
 
-class EduViewPage extends StatefulWidget {
-  const EduViewPage(
+class PosterPage extends StatefulWidget {
+  const PosterPage(
       {Key? key,
       required this.primaryColor,
       required this.collectionName,
@@ -27,10 +25,10 @@ class EduViewPage extends StatefulWidget {
   final String category;
 
   @override
-  State<EduViewPage> createState() => _EduViewPageState();
+  State<PosterPage> createState() => _PosterPageState();
 }
 
-class _EduViewPageState extends State<EduViewPage> {
+class _PosterPageState extends State<PosterPage> {
   final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -140,7 +138,7 @@ class _EduViewPageState extends State<EduViewPage> {
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            DBGet.readCategoryCollection(collection: widget.collectionName, category: widget.category, type: controller.type),
+            DBGet.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
             FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
             if(snapshots.snapshot2.hasData){

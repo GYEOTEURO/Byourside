@@ -50,6 +50,7 @@ class _ChatPageState extends State<ChatPage> {
         chats = val;
       });
     });
+    // TODO: admin 확인해보기
     ChatList().getGroupAdmin(widget.groupId).then((val) {
       setState(() {
         admin = val;
@@ -59,10 +60,12 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: main에 한번만 선언하면 안되나
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     String declaration = _decList[0];
-
+    
+    // TODO: 아래 채팅 가려지는거 해결해야함
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: height * 0.08,
@@ -99,6 +102,8 @@ class _ChatPageState extends State<ChatPage> {
               FocusManager.instance.primaryFocus?.unfocus();
               // await Future.delayed(Duration(seconds: 2));
 
+
+              // TODO: widget으로 빼기
               HapticFeedback.lightImpact(); // 약한 진동
               showDialog(
                   context: context,

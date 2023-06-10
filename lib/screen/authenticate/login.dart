@@ -1,10 +1,8 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:byourside/main.dart';
+import 'package:byourside/model/field_validator.dart';
 import 'package:byourside/model/login_user.dart';
 import 'package:byourside/screen/authenticate/forgot_password.dart';
 import 'package:byourside/widget/auth.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,10 +36,7 @@ class _Login extends State<Login> {
         child: TextFormField(
             controller: _email,
             autofocus: true,
-            validator: (value) =>
-                value != null && !EmailValidator.validate(value)
-                    ? '유효한 이메일을 입력하세요.'
-                    : null,
+              validator: FieldValidator.validateEmail, // Email validation remains the same
             decoration: InputDecoration(
               floatingLabelStyle: const TextStyle(
                   color: primaryColor,
@@ -88,16 +83,7 @@ class _Login extends State<Login> {
         child: TextFormField(
             obscureText: _obscureText,
             controller: _password,
-            validator: (value) {
-              if (value == null || value.trim().isEmpty) {
-                return '필수 입력란';
-              }
-              if (value.trim().length < 8) {
-                return '비밀번호는 8자 이상으로 구성해야합니다.';
-              }
-              // Return null if the entered password is valid
-              return null;
-            },
+            validator: FieldValidator.validatePassword,
             decoration: InputDecoration(
               floatingLabelStyle: const TextStyle(
                   color: primaryColor,

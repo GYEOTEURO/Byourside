@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatList {
   final String? uid;
@@ -63,7 +63,7 @@ class ChatList {
       "groupId": groupDocumentReference.id,
     });
 
-    if (userName2 != "none" && id2 != "none") {
+    if (userName2 != "none" && id2 != "none") { //두번째 사용자가 존재하는 경우, 해당 사용자의 문서 업데이트
       DocumentReference userDocumentReference2 = userCollection.doc(id2);
       await userDocumentReference2.update({
         "groups":

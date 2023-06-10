@@ -1,4 +1,4 @@
-import 'package:byourside/screen/ondo/eduViewPage.dart';
+import 'package:byourside/screen/ondo/posterPage.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/postList.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class infoDetailCategoryPage extends StatefulWidget {
-  const infoDetailCategoryPage(
+class InfoDetailCategoryPage extends StatefulWidget {
+  const InfoDetailCategoryPage(
       {Key? key, required this.primaryColor, required this.collectionName})
       : super(key: key);
 
@@ -15,10 +15,10 @@ class infoDetailCategoryPage extends StatefulWidget {
   final String collectionName;
 
   @override
-  State<infoDetailCategoryPage> createState() => _infoDetailCategoryPageState();
+  State<InfoDetailCategoryPage> createState() => _InfoDetailCategoryPageState();
 }
 
-class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
+class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
   final overlayController = Get.put(OverlayController());
 
   // 드롭다운 리스트.
@@ -144,7 +144,7 @@ class _infoDetailCategoryPageState extends State<infoDetailCategoryPage> {
           ]),
           if (_changePage == '교육/세미나' || _changePage == '복지/혜택')
             (Expanded(
-                child: EduViewPage(
+                child: PosterPage(
                     primaryColor: widget.primaryColor,
                     collectionName: widget.collectionName,
                     category: _changePage)))

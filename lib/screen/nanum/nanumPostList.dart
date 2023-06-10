@@ -2,7 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanumPost.dart';
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
-import 'package:byourside/screen/nanum/search_page.dart';
+import 'package:byourside/screen/nanum/searchPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -208,9 +208,9 @@ class _NanumPostListState extends State<NanumPostList> {
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2((completedValue == true)
               ? DBGet.readIsCompletedCollection(
-                  collection: widget.collectionName, type: controller.type)
+                  collectionName: widget.collectionName, type: controller.type)
               : DBGet.readAllCollection(
-                  collection: widget.collectionName, type: controller.type),
+                  collectionName: widget.collectionName, type: controller.type),
               FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
             if(snapshots.snapshot2.hasData){

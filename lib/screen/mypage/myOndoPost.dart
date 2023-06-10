@@ -124,7 +124,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
       ),
       body: StreamBuilder<List<PostListModel>>(
           stream: DBGet.readCreatePost(
-              collection: widget.collectionName, uid: user!.uid),
+              collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(

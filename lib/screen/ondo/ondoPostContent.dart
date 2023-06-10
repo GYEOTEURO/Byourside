@@ -3,6 +3,7 @@ import 'package:byourside/model/ondo_post.dart';
 import 'package:byourside/screen/block.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
+import 'package:byourside/screen/delete.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -110,6 +111,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     )),
                 onPressed: () async {
                   HapticFeedback.lightImpact(); // 약한 진동
+                  // TODO: 그냥 groupList에 추가할때 반대까지 한번에 추가해두는게..
+                  // 이렇게 저장하지말고 유저 정보에 채팅방 목록 검사해서 하도록
                   var groupName = "${user?.displayName}_${post.nickname}";
                   var groupNameReverse =
                       "${post.nickname}_${user?.displayName}";
@@ -125,11 +128,12 @@ class _OndoPostContentState extends State<OndoPostContent> {
                             groupName);
 
                     String groupId = await getGroupId(groupName);
+                    // TODO: createGroup호출했을때 한번에 되게
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
                           ["${post.uid}_${post.nickname}"])
                     });
-
+                    // TODO: delay 없애봐 & 이동하는거 다 똑같으니까 앞부분만 처리하고 한번만 하던가
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
                           context,
@@ -141,6 +145,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     });
                   } else if (await checkGroupExist(groupName) != true) {
                     String groupId = await getGroupId(groupNameReverse);
+                    // TODO: 항상 추가해주는게 맞나
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
                           ["${user?.uid}_${user?.displayName}"])
@@ -158,7 +163,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                                   groupName: groupNameReverse,
                                   userName: user!.displayName!)));
                     });
-                  } else {
+                  } else { 
                     String groupId = await getGroupId(groupName);
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
@@ -180,86 +185,14 @@ class _OndoPostContentState extends State<OndoPostContent> {
                   }
                 })),
         if (user?.uid == post.uid)
-          (OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey.shade300,
-            ),
-            child: const Text('삭제',
-                semanticsLabel: '글 삭제',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w600,
-                )),
-            onPressed: () {
-              HapticFeedback.lightImpact(); // 약한 진동
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                            scrollable: true,
-                            semanticLabel:
-                                '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                            title: const Text('글을 삭제하시겠습니까?',
-                                semanticsLabel:
-                                    '글을 삭제하시겠습니까? 삭제를 원하시면 하단 왼쪽의 삭제 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'NanumGothic',
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            actions: [
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: widget.primaryColor,
-                                        ),
-                                        onPressed: () {
-                                          HapticFeedback.lightImpact(); // 약한 진동
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context, '/', (_) => false);
-                                          DBSet.deletePost(
-                                              collectionName!, post.id!);
-                                        },
-                                        child: const Text('삭제',
-                                            semanticsLabel: '삭제',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            ))),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: widget.primaryColor,
-                                        ),
-                                        onPressed: () {
-                                          HapticFeedback.lightImpact(); // 약한 진동
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('취소',
-                                            semanticsLabel: '취소',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'NanumGothic',
-                                              fontWeight: FontWeight.w600,
-                                            )))
-                                  ])
-                            ]);
-                  });
-            },
-          ))
+          (Delete(collectionName: widget.collectionName, documentID: widget.documentID)) // 공통 모듈 폴더
         else
           (Row(children: [
             Declaration(
                 decList: _decList, collectionType: 'post', id: post.id!),
             Container(
-                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Block(nickname: post.nickname!, collectionType: 'post')),
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Block(nickname: post.nickname!, collectionType: 'post')), //이름 명사로 짓기
           ]))
       ]),
       const Divider(thickness: 1, height: 1, color: Colors.black),
@@ -370,7 +303,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
 
     return StreamBuilder<OndoPostModel>(
         stream: DBGet.readOndoDocument(
-            collection: collectionName, documentID: documentID),
+            collectionName: collectionName, documentID: documentID),
         builder: (context, AsyncSnapshot<OndoPostModel> snapshot) {
           if (snapshot.hasData) {
             OndoPostModel? post = snapshot.data;

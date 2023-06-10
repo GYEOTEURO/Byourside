@@ -81,10 +81,13 @@ dev_dependencies:
   change_app_package_name:
   test: ^1.24.1
   flutter_lints: ^2.0.1
+  fake_cloud_firestore: ^2.4.1+1
 flutter_icons:
   android: true
   ios: true
+  # 추후에 로고 바뀌면 image_path와 path_ios는 appstore, foreground는 playsotre로 설정
   image_path: "assets/icons/playstore.png"
+  image_path_ios: "assets/icons/playstore.png"
   adaptive_icon_background: "#045558"
   adaptive_icon_foreground: "assets/icons/playstore.png"
 
@@ -93,7 +96,6 @@ flutter_icons:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

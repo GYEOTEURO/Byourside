@@ -81,6 +81,7 @@ jobs:
       # Github repository의 소스를 가져오는 action입니다.
       - name: Checkout source code
         uses: actions/checkout@v2
+
       # 두번째 step은 인스턴스에 Flutter SDK를 설치하는 action 입니다.
       # with 커맨드를 사용하여 SDK의 상세 버전을 설정할 수 있습니다.
       - name: Install Flutter SDK
