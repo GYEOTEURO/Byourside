@@ -1,17 +1,17 @@
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/model/ondo_post.dart';
-import 'package:byourside/screen/block.dart';
+import 'package:byourside/screen/common/block_user.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
-import 'package:byourside/screen/declaration.dart';
-import 'package:byourside/screen/delete.dart';
+import 'package:byourside/screen/common/report.dart';
+import 'package:byourside/screen/common/delete.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import '../../model/db_get.dart';
-import '../../model/db_set.dart';
+import '../../model/load_data.dart';
+import '../../model/save_data.dart';
 
 class OndoPostContent extends StatefulWidget {
   const OndoPostContent(
@@ -33,20 +33,20 @@ class _OndoPostContentState extends State<OndoPostContent> {
   int _current = 0; // 현재 이미지 인덱스
 
   final List<String> _decList = [
-    "불법 정보를 포함하고 있습니다.",
-    "게시판 성격에 부적절합니다.",
-    "음란물입니다.",
-    "스팸홍보/도배글입니다.",
-    "욕설/비하/혐오/차별적 표현을 포함하고 있습니다.",
-    "청소년에게 유해한 내용입니다.",
-    "상업적 광고 및 판매글입니다."
+    '불법 정보를 포함하고 있습니다.',
+    '게시판 성격에 부적절합니다.',
+    '음란물입니다.',
+    '스팸홍보/도배글입니다.',
+    '욕설/비하/혐오/차별적 표현을 포함하고 있습니다.',
+    '청소년에게 유해한 내용입니다.',
+    '상업적 광고 및 판매글입니다.'
   ];
 
   final CollectionReference groupCollection =
-      FirebaseFirestore.instance.collection("groups");
+      FirebaseFirestore.instance.collection('groups');
 
   final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection("user");
+      FirebaseFirestore.instance.collection('user');
 
   Future<bool> checkGroupExist(String name) async {
     var collection = FirebaseFirestore.instance.collection('groupList');
@@ -74,7 +74,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return Column(children: [
@@ -97,8 +97,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       post.type!.isEmpty
-                          ? "${post.nickname!} | $date $hour:$minute"
-                          : "${post.nickname!} | $date $hour:$minute | $type",
+                          ? '${post.nickname!} | $date $hour:$minute'
+                          : '${post.nickname!} | $date $hour:$minute | $type',
                       semanticsLabel: post.type!.isEmpty
                           ? "${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $hour시 $minute분"
                           : "${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $hour시 $minute분  $type",
@@ -111,9 +111,9 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     )),
                 onPressed: () async {
                   HapticFeedback.lightImpact(); // 약한 진동
-                  var groupName = "${user?.displayName}_${post.nickname}";
+                  var groupName = '${user?.displayName}_${post.nickname}';
                   var groupNameReverse =
-                      "${post.nickname}_${user?.displayName}";
+                      '${post.nickname}_${user?.displayName}';
                   if (await checkGroupExist(groupName) != true &&
                       await checkGroupExist(groupNameReverse) != true) {
                     await ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
@@ -127,8 +127,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
 
                     String groupId = await getGroupId(groupName);
                     await groupCollection.doc(groupId).update({
-                      "members": FieldValue.arrayUnion(
-                          ["${post.uid}_${post.nickname}"])
+                      'members': FieldValue.arrayUnion(
+                          ['${post.uid}_${post.nickname}'])
                     });
 
                     Future.delayed(const Duration(seconds: 2), () {
@@ -143,12 +143,12 @@ class _OndoPostContentState extends State<OndoPostContent> {
                   } else if (await checkGroupExist(groupName) != true) {
                     String groupId = await getGroupId(groupNameReverse);
                     await groupCollection.doc(groupId).update({
-                      "members": FieldValue.arrayUnion(
-                          ["${user?.uid}_${user?.displayName}"])
+                      'members': FieldValue.arrayUnion(
+                          ['${user?.uid}_${user?.displayName}'])
                     });
                     await userCollection.doc(user?.uid).update({
-                      "groups":
-                          FieldValue.arrayUnion(["${groupId}_$groupName"])
+                      'groups':
+                          FieldValue.arrayUnion(['${groupId}_$groupName'])
                     });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
@@ -162,12 +162,12 @@ class _OndoPostContentState extends State<OndoPostContent> {
                   } else {
                     String groupId = await getGroupId(groupName);
                     await groupCollection.doc(groupId).update({
-                      "members": FieldValue.arrayUnion(
-                          ["${user?.uid}_${user?.displayName}"])
+                      'members': FieldValue.arrayUnion(
+                          ['${user?.uid}_${user?.displayName}'])
                     });
                     await userCollection.doc(user?.uid).update({
-                      "groups":
-                          FieldValue.arrayUnion(["${groupId}_$groupName"])
+                      'groups':
+                          FieldValue.arrayUnion(['${groupId}_$groupName'])
                     });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
@@ -181,19 +181,19 @@ class _OndoPostContentState extends State<OndoPostContent> {
                   }
                 })),
         if (user?.uid == post.uid)
-          (Delete(collectionName: widget.collectionName, documentID: widget.documentID)) // 공통 모듈 폴더
+          Delete(collectionName: widget.collectionName, documentID: widget.documentID) // 공통 모듈 폴더
         else
-          (Row(children: [
-            Declaration(
+          Row(children: [
+            Report(
                 decList: _decList, collectionType: 'post', id: post.id!),
             Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Block(nickname: post.nickname!, collectionType: 'post')), //이름 명사로 짓기
-          ]))
+                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: BlockUser(nickname: post.nickname!, collectionType: 'post')), //이름 명사로 짓기
+          ])
       ]),
       const Divider(thickness: 1, height: 1, color: Colors.black),
       if (post.images!.isNotEmpty)
-        (Column(children: [
+        Column(children: [
           Container(
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
               child: CarouselSlider(
@@ -212,13 +212,13 @@ class _OndoPostContentState extends State<OndoPostContent> {
                       enableInfiniteScroll: false,
                       viewportFraction: 1,
                       aspectRatio: 2.0,
-                      onPageChanged: ((idx, reason) {
+                      onPageChanged: (idx, reason) {
                         setState(() {
                           _current = idx;
                         });
-                      })))),
+                      }))),
           Semantics(
-            label: "현재 보이는 사진 순서 표시",
+            label: '현재 보이는 사진 순서 표시',
             child: CarouselIndicator(
               count: post.images!.length,
               index: _current,
@@ -226,14 +226,14 @@ class _OndoPostContentState extends State<OndoPostContent> {
               activeColor: widget.primaryColor,
             ),
           ),
-        ])),
+        ]),
       Container(
           padding: const EdgeInsets.fromLTRB(0, 25, 0, 20),
           alignment: Alignment.centerLeft,
           child: SelectionArea(
               child: Text(
             post.content!,
-            semanticsLabel: post.content!,
+            semanticsLabel: post.content,
             style: const TextStyle(
               fontSize: 16,
               fontFamily: 'NanumGothic',
@@ -246,8 +246,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             post.likesPeople!.contains(user?.uid)
-                ? DBSet.cancelLike(collectionName!, post.id!, user!.uid)
-                : DBSet.addLike(collectionName!, post.id!, user!.uid);
+                ? SaveData.cancelLike(collectionName!, post.id!, user!.uid)
+                : SaveData.addLike(collectionName!, post.id!, user!.uid);
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(width * 0.38, height * 0.06),
@@ -258,8 +258,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
             foregroundColor: const Color.fromARGB(255, 255, 45, 45),
           ),
           icon: post.likesPeople!.contains(user?.uid)
-              ? const Icon(Icons.favorite, semanticLabel: "좋아요 취소")
-              : const Icon(Icons.favorite_outline, semanticLabel: "좋아요 추가"),
+              ? const Icon(Icons.favorite, semanticLabel: '좋아요 취소')
+              : const Icon(Icons.favorite_outline, semanticLabel: '좋아요 추가'),
           label: Text('좋아요  ${post.likes}',
               semanticsLabel: '좋아요  ${post.likes}',
               style: const TextStyle(
@@ -269,8 +269,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             post.scrapPeople!.contains(user?.uid)
-                ? DBSet.cancelScrap(collectionName!, post.id!, user!.uid)
-                : DBSet.addScrap(collectionName!, post.id!, user!.uid);
+                ? SaveData.cancelScrap(collectionName!, post.id!, user!.uid)
+                : SaveData.addScrap(collectionName!, post.id!, user!.uid);
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(width * 0.38, height * 0.06),
@@ -281,8 +281,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
             foregroundColor: const Color.fromARGB(255, 64, 130, 75),
           ),
           icon: post.scrapPeople!.contains(user?.uid)
-              ? const Icon(Icons.star, semanticLabel: "스크랩 취소")
-              : const Icon(Icons.star_outline, semanticLabel: "스크랩 추가"),
+              ? const Icon(Icons.star, semanticLabel: '스크랩 취소')
+              : const Icon(Icons.star_outline, semanticLabel: '스크랩 추가'),
           label: const Text('스크랩',
               semanticsLabel: '스크랩',
               style: TextStyle(
@@ -298,7 +298,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
     String documentID = widget.documentID;
 
     return StreamBuilder<OndoPostModel>(
-        stream: DBGet.readOndoDocument(
+        stream: LoadData.readOndoDocument(
             collectionName: collectionName, documentID: documentID),
         builder: (context, AsyncSnapshot<OndoPostModel> snapshot) {
           if (snapshot.hasData) {

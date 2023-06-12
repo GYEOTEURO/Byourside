@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../model/db_set.dart';
+import '../../model/save_data.dart';
 import '../../model/nanum_post.dart';
 
 class NanumPostPage extends StatefulWidget {
@@ -444,7 +444,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
           if (_formkey.currentState!.validate()) {
             Navigator.pop(context);
             List<String> urls =
-                _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+                _images.isEmpty ? [] : await SaveData.uploadFile(_images);
             List<String> imgInfos = [];
             for (int i = 0; i < _imgInfos.length; i++) {
               if (_imgInfos[i].text == "") {
@@ -468,7 +468,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 likesPeople: [],
                 scrapPeople: [],
                 keyword: _title.text.split(' '));
-            DBSet.addNanumPost('nanumPost', postData);
+            SaveData.addNanumPost('nanumPost', postData);
           }
         },
         backgroundColor: widget.primaryColor,

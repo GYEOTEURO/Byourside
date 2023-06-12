@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-class DBSet {
+class SaveData {
   // 마음온도 문서 생성
   static addOndoPost(String collectionName, OndoPostModel postData) async {
     FirebaseFirestore.instance.collection(collectionName).add(postData.toMap());
@@ -22,13 +22,14 @@ class DBSet {
     List<String> urls = [];
 
     for(XFile element in images){
-      final imageRef = FirebaseStorage.instance.ref().child('images/${element.name}');
+      var imageRef = FirebaseStorage.instance.ref().child('images/${element.name}');
       File file = File(element.path);
 
       try {
         await imageRef.putFile(file);
-        final String url = await imageRef.getDownloadURL();
+        String url = await imageRef.getDownloadURL();
         urls.add(url);
+      // ignore: empty_catches
       } on FirebaseException {} 
     } 
 
@@ -63,7 +64,7 @@ class DBSet {
         DocumentSnapshot snapshot = await transaction.get(document);
 
         //기존 값을 가져와 1을 더해준다.
-        int currentLikes = snapshot["likes"] + 1;
+        int currentLikes = snapshot['likes'] + 1;
 
         //직접 값을 더하지 말고 transaction을 통해서 더하자!
         transaction.update(document, {'likes': currentLikes});
@@ -81,7 +82,7 @@ class DBSet {
         DocumentSnapshot snapshot = await transaction.get(document);
 
         //기존 값을 가져와 1을 빼준다.
-        int currentLikes = snapshot["likes"] - 1;
+        int currentLikes = snapshot['likes'] - 1;
 
         //직접 값을 더하지 말고 transaction을 통해서 빼주자!
         transaction.update(document, {'likes': currentLikes});

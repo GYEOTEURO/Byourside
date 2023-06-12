@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../model/db_set.dart';
+import '../../model/save_data.dart';
 
 class Delete extends StatefulWidget {
   Delete(
@@ -66,8 +66,8 @@ class _DeleteState extends State<Delete> {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context, '/', (_) => false);
                                           widget.commentID.isNull?
-                                            DBSet.deletePost(widget.collectionName, widget.documentID):
-                                            DBSet.deleteComment(widget.collectionName, widget.documentID, widget.commentID);
+                                            SaveData.deletePost(widget.collectionName, widget.documentID):
+                                            SaveData.deleteComment(widget.collectionName, widget.documentID, widget.commentID);
                                           Navigator.pop(context);
                                         },
                                         child: const Text('삭제',

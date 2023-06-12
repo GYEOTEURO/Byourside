@@ -1,15 +1,14 @@
 import 'package:byourside/model/chat_list.dart';
-import 'package:byourside/screen/block.dart';
+import 'package:byourside/screen/common/block_user.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
-import 'package:byourside/screen/declaration.dart';
-import 'package:byourside/screen/delete.dart';
+import 'package:byourside/screen/common/report.dart';
+import 'package:byourside/screen/common/delete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import '../../model/comment.dart';
-import '../../model/db_get.dart';
-import '../../model/db_set.dart';
+import '../../model/load_data.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class CommentList extends StatefulWidget {
@@ -30,19 +29,19 @@ class CommentList extends StatefulWidget {
 class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final List<String> _decList = [
-    "불법 정보를 작성했습니다.",
-    "음란물을 작성했습니다.",
-    "스팸홍보/도배글을 작성했습니다.",
-    "욕설/비하/혐오/차별적 표현을 사용했습니다.",
-    "청소년에게 유해한 내용을 작성했습니다.",
-    "사칭/사기입니다.",
-    "상업적 광고 및 판매 댓글입니다."
+    '불법 정보를 작성했습니다.',
+    '음란물을 작성했습니다.',
+    '스팸홍보/도배글을 작성했습니다.',
+    '욕설/비하/혐오/차별적 표현을 사용했습니다.',
+    '청소년에게 유해한 내용을 작성했습니다.',
+    '사칭/사기입니다.',
+    '상업적 광고 및 판매 댓글입니다.'
   ];
 
   final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection("user");
+      FirebaseFirestore.instance.collection('user');
   final CollectionReference groupCollection =
-      FirebaseFirestore.instance.collection("groups");
+      FirebaseFirestore.instance.collection('groups');
 
   Future<bool> checkGroupExist(String name) async {
     var collection = FirebaseFirestore.instance.collection('groupList');
@@ -56,7 +55,7 @@ class _CommentListState extends State<CommentList> {
       var doc = await collection.doc(groupName).get();
       return doc.data()?.values.last;
     } catch (e) {
-      return "error..";
+      return 'error..';
     }
   }
 
@@ -76,15 +75,14 @@ class _CommentListState extends State<CommentList> {
                 child: Column(children: [
                   Align(
                       alignment: Alignment.centerLeft,
-                      child: Container(
-                          child: SelectionArea(
-                              child: Text("  ${comment.content!}",
-                                  semanticsLabel: comment.content!,
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'NanumGothic'))))),
+                      child: SelectionArea(
+                          child: Text('  ${comment.content!}',
+                              semanticsLabel: comment.content,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'NanumGothic')))),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -93,9 +91,9 @@ class _CommentListState extends State<CommentList> {
                           onPressed: () async {
                             HapticFeedback.lightImpact(); // 약한 진동
                             var groupName =
-                                "${user?.displayName}_${comment.nickname}";
+                                '${user?.displayName}_${comment.nickname}';
                             var groupNameReverse =
-                                "${comment.nickname}_${user?.displayName}";
+                                '${comment.nickname}_${user?.displayName}';
                             if (await checkGroupExist(groupName) != true &&
                                 await checkGroupExist(groupNameReverse) !=
                                     true) {
@@ -114,8 +112,8 @@ class _CommentListState extends State<CommentList> {
 
                               String groupId = await getGroupId(groupName);
                               await groupCollection.doc(groupId).update({
-                                "members": FieldValue.arrayUnion(
-                                    ["${comment.uid}_${comment.nickname}"])
+                                'members': FieldValue.arrayUnion(
+                                    ['${comment.uid}_${comment.nickname}'])
                               });
 
                               Future.delayed(const Duration(seconds: 2), () {
@@ -132,12 +130,12 @@ class _CommentListState extends State<CommentList> {
                               String groupId =
                                   await getGroupId(groupNameReverse);
                               await groupCollection.doc(groupId).update({
-                                "members": FieldValue.arrayUnion(
-                                    ["${user?.uid}_${user?.displayName}"])
+                                'members': FieldValue.arrayUnion(
+                                    ['${user?.uid}_${user?.displayName}'])
                               });
                               await userCollection.doc(user?.uid).update({
-                                "groups": FieldValue.arrayUnion(
-                                    ["${groupId}_$groupName"])
+                                'groups': FieldValue.arrayUnion(
+                                    ['${groupId}_$groupName'])
                               });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
@@ -151,12 +149,12 @@ class _CommentListState extends State<CommentList> {
                             } else {
                               String groupId = await getGroupId(groupName);
                               await groupCollection.doc(groupId).update({
-                                "members": FieldValue.arrayUnion(
-                                    ["${user?.uid}_${user?.displayName}"])
+                                'members': FieldValue.arrayUnion(
+                                    ['${user?.uid}_${user?.displayName}'])
                               });
                               await userCollection.doc(user?.uid).update({
-                                "groups": FieldValue.arrayUnion(
-                                    ["${groupId}_$groupName"])
+                                'groups': FieldValue.arrayUnion(
+                                    ['${groupId}_$groupName'])
                               });
                               Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
@@ -172,9 +170,9 @@ class _CommentListState extends State<CommentList> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "${comment.nickname} | $date $hour:$minute",
+                                '${comment.nickname} | $date $hour:$minute',
                                 semanticsLabel:
-                                    "닉네임 ${comment.nickname}, $date $hour시$minute분",
+                                    '닉네임 ${comment.nickname}, $date $hour시$minute분',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -184,19 +182,19 @@ class _CommentListState extends State<CommentList> {
                               )),
                         )),
                         if (user?.uid == comment.uid)
-                          (Delete(collectionName: widget.collectionName, documentID: widget.documentID, commentID: comment.id))
+                          Delete(collectionName: widget.collectionName, documentID: widget.documentID, commentID: comment.id)
                         else
-                          (Row(children: [
-                            Declaration(
+                          Row(children: [
+                            Report(
                                 decList: _decList,
                                 collectionType: 'comment',
                                 id: comment.id!),
                             Container(
                                 margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Block(
+                                child: BlockUser(
                                     nickname: comment.nickname!,
                                     collectionType: 'comment')),
-                          ]))
+                          ])
                       ]),
                 ]))));
   }
@@ -210,13 +208,13 @@ class _CommentListState extends State<CommentList> {
 
     return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
         streams: StreamTuple2(
-            DBGet.readComment(collectionName: collectionName, documentID: documentID),
+            LoadData.readComment(collectionName: collectionName, documentID: documentID),
             FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
         builder: (context, snapshots) {
           if (snapshots.snapshot2.hasData) {
-            blockList = snapshots.snapshot2.data!["blockList"] == null
+            blockList = snapshots.snapshot2.data!['blockList'] == null
                 ? []
-                : snapshots.snapshot2.data!["blockList"].cast<String>();
+                : snapshots.snapshot2.data!['blockList'].cast<String>();
           } 
           else {
             blockList = [];
@@ -238,8 +236,8 @@ class _CommentListState extends State<CommentList> {
           } else {
             return const SelectionArea(
                 child: Text(
-              "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
-              semanticsLabel: "댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!",
+              '댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!',
+              semanticsLabel: '댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!',
               style: TextStyle(
                 fontFamily: 'NanumGothic',
                 fontWeight: FontWeight.w600,

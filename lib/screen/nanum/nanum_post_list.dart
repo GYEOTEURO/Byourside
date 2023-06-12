@@ -1,15 +1,15 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/nanum/nanumPost.dart';
+import 'package:byourside/screen/nanum/nanum_post.dart';
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
-import 'package:byourside/screen/nanum/searchPage.dart';
+import 'package:byourside/screen/nanum/search_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
-import '../../model/db_get.dart';
+import '../../model/load_data.dart';
 import 'type_controller.dart';
 import 'nanumPostPage.dart';
 
@@ -19,7 +19,7 @@ class NanumPostList extends StatefulWidget {
       : super(key: key);
   final Color primaryColor;
   final String collectionName;
-  final String title = "마음나눔";
+  final String title = '마음나눔';
 
   @override
   State<NanumPostList> createState() => _NanumPostListState();
@@ -40,7 +40,7 @@ class _NanumPostListState extends State<NanumPostList> {
   Widget _buildListItem(PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
-    String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
+    String isCompleted = (post.isCompleted == true) ? '거래완료' : '거래중';
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -50,7 +50,7 @@ class _NanumPostListState extends State<NanumPostList> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -84,7 +84,7 @@ class _NanumPostListState extends State<NanumPostList> {
                           Container(
                               margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
                               child: Text(post.title!,
-                                  semanticsLabel: post.title!,
+                                  semanticsLabel: post.title,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
                                   softWrap: false,
@@ -113,13 +113,13 @@ class _NanumPostListState extends State<NanumPostList> {
                         ],
                       )),
                       if (post.images!.isNotEmpty)
-                        (Semantics(
+                        Semantics(
                             label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
                               height: height * 0.2,
-                            ))),
+                            )),
                     ],
                   ),
                 ))));
@@ -127,7 +127,7 @@ class _NanumPostListState extends State<NanumPostList> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(NanumTypeController());
+    var controller = Get.put(NanumTypeController());
 
     List<String> blockList;
 
@@ -135,13 +135,13 @@ class _NanumPostListState extends State<NanumPostList> {
       appBar: AppBar(
           backgroundColor: widget.primaryColor,
           centerTitle: true,
-          title: const Text("마음나눔",
+          title: const Text('마음나눔',
               semanticsLabel: '마음나눔',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           leading: IconButton(
               icon: const Icon(Icons.filter_alt,
-                  semanticLabel: "장애 유형 필터링", color: Colors.white),
+                  semanticLabel: '장애 유형 필터링', color: Colors.white),
               onPressed: () async {
                 HapticFeedback.lightImpact(); // 약한 진동
                 _type = await Navigator.push(
@@ -149,10 +149,10 @@ class _NanumPostListState extends State<NanumPostList> {
                     MaterialPageRoute(
                         builder: (context) => NanumPostCategory(
                               primaryColor: const Color(0xFF045558),
-                              title: "필터링",
+                              title: '필터링',
                               preType: _type,
                             )));
-                print("나눔 타입: $_type");
+                print('나눔 타입: $_type');
                 controller.filtering(_type);
                 setState(() {});
               }),
@@ -160,7 +160,7 @@ class _NanumPostListState extends State<NanumPostList> {
             IconButton(
               icon: const Icon(
                 Icons.search,
-                semanticLabel: "검색",
+                semanticLabel: '검색',
               ),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
@@ -178,7 +178,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       (completedValue == true)
                           ? (IconButton(
                               icon: const Icon(Icons.check_box_outlined,
-                                  semanticLabel: "비활성화됨. 거래 완료 제외",
+                                  semanticLabel: '비활성화됨. 거래 완료 제외',
                                   color: Colors.white),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
@@ -186,7 +186,7 @@ class _NanumPostListState extends State<NanumPostList> {
                               }))
                           : (IconButton(
                               icon: const Icon(Icons.square_rounded,
-                                  semanticLabel: "활성화됨. 거래 완료 제외",
+                                  semanticLabel: '활성화됨. 거래 완료 제외',
                                   color: Colors.white),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
@@ -194,8 +194,8 @@ class _NanumPostListState extends State<NanumPostList> {
                               })),
                       const Center(
                           child: Text(
-                        "거래완료 제외",
-                        semanticsLabel: "거래완료 제외",
+                        '거래완료 제외',
+                        semanticsLabel: '거래완료 제외',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'NanumGothic',
@@ -207,14 +207,14 @@ class _NanumPostListState extends State<NanumPostList> {
                   )))),
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2((completedValue == true)
-              ? DBGet.readIsCompletedCollection(
+              ? LoadData.readIsCompletedCollection(
                   collectionName: widget.collectionName, type: controller.type)
-              : DBGet.readAllCollection(
+              : LoadData.readAllCollection(
                   collectionName: widget.collectionName, type: controller.type),
               FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
             if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
+              blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
             }
             else{
               blockList = [];
@@ -256,7 +256,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       )));
         },
         backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.add, semanticLabel: "마음나눔 글쓰기"),
+        child: const Icon(Icons.add, semanticLabel: '마음나눔 글쓰기'),
       ),
     );
   }

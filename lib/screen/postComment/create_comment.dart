@@ -1,5 +1,5 @@
-import 'package:byourside/model/db_set.dart';
-import 'package:byourside/screen/postComment/scrollController.dart';
+import 'package:byourside/model/save_data.dart';
+import 'package:byourside/screen/postComment/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,7 +44,7 @@ class _CreateCommentState extends State<CreateComment> {
                 minLines: 1,
                 maxLines: 5,
                 decoration: InputDecoration(
-                  labelText: "댓글을 작성해주세요.",
+                  labelText: '댓글을 작성해주세요.',
                   floatingLabelStyle: const TextStyle(
                     color: primaryColor,
                     fontSize: 22,
@@ -78,14 +78,14 @@ class _CreateCommentState extends State<CreateComment> {
                         nickname: user!.displayName,
                         content: comment.text,
                         datetime: Timestamp.now());
-                    DBSet.addComment(collectionName, documentID, commentData);
+                    SaveData.addComment(collectionName, documentID, commentData);
                     scrollController.scrollController.animateTo(
                       scrollController.scrollController.position.maxScrollExtent, 
                       duration: const Duration(milliseconds: 10), 
                       curve: Curves.ease);
                   },
                   icon: const Icon(Icons.send, 
-                    semanticLabel: "작성한 댓글 저장",
+                    semanticLabel: '작성한 댓글 저장',
                     color: primaryColor,
                   ))
                 ))

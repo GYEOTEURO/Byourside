@@ -1,29 +1,30 @@
-import 'package:byourside/model/db_get.dart';
+import 'package:byourside/model/load_data.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/nanum/nanum_post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
-class OndoSearch extends StatefulWidget {
-  const OndoSearch({Key? key}) : super(key: key);
+class NanumSearch extends StatefulWidget {
+  const NanumSearch({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
-  final String title = "마음온도 게시글 검색";
-  final String collectionName = 'ondoPost';
+  final String title = '마음나눔 게시글 검색';
+  final String collectionName = 'nanumPost';
 
   @override
-  State<OndoSearch> createState() => _OndoSearchState();
+  State<NanumSearch> createState() => _NanumSearchState();
 }
 
-class _OndoSearchState extends State<OndoSearch> {
+class _NanumSearchState extends State<NanumSearch> {
   final TextEditingController query = TextEditingController();
   final User? user = FirebaseAuth.instance.currentUser;
 
   Widget _buildListItem(PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+    String isCompleted = (post.isCompleted == true) ? '거래완료' : '거래중';
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -33,7 +34,7 @@ class _OndoSearchState extends State<OndoSearch> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -46,7 +47,7 @@ class _OndoSearchState extends State<OndoSearch> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => NanumPost(
                               collectionName: widget.collectionName,
                               documentID: post.id!,
                               primaryColor: const Color(0xFF045558))));
@@ -63,7 +64,7 @@ class _OndoSearchState extends State<OndoSearch> {
                           Container(
                               margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                               child: Text(post.title!,
-                                  semanticsLabel: post.title!,
+                                  semanticsLabel: post.title,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
                                   softWrap: false,
@@ -74,11 +75,11 @@ class _OndoSearchState extends State<OndoSearch> {
                                       fontFamily: 'NanumGothic'))),
                           Text(
                             post.type!.isEmpty
-                                ? '${post.nickname} | $date | ${post.category!}'
-                                : '${post.nickname} | $date | ${post.category!} | $type',
+                                ? '${post.nickname} | $date | $isCompleted'
+                                : '${post.nickname} | $date | $isCompleted | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
-                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}  $type',
+                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 | $isCompleted'
+                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted  $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
@@ -119,7 +120,7 @@ class _OndoSearchState extends State<OndoSearch> {
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
                 Navigator.pop(context);
@@ -129,13 +130,13 @@ class _OndoSearchState extends State<OndoSearch> {
             margin: const EdgeInsets.all(20),
             child: Column(children: [
               Semantics(
-                  label: "검색할 키워드 입력",
+                  label: '검색할 키워드 입력',
                   child: TextFormField(
                       controller: query,
                       maxLines: 1,
                       decoration: InputDecoration(
-                          semanticCounterText: "검색할 키워드 입력",
-                          labelText: "검색할 키워드를 입력해주세요.",
+                          semanticCounterText: '검색할 키워드 입력',
+                          labelText: '검색할 키워드를 입력해주세요.',
                           floatingLabelStyle: TextStyle(
                             color: widget.primaryColor,
                             fontSize: 22,
@@ -163,12 +164,12 @@ class _OndoSearchState extends State<OndoSearch> {
                           ))),
               Expanded(
                   child: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
-                      streams: StreamTuple2( 
-                        DBGet.readSearchDocs(query.text, collectionName: widget.collectionName),
+                      streams: StreamTuple2(
+                        LoadData.readSearchDocs(query.text, collectionName: widget.collectionName),
                         FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
                       builder: (context, snapshots) {
                         if(snapshots.snapshot2.hasData){
-                          blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
+                          blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
                         }
                         else{
                           blockList = [];
@@ -186,7 +187,7 @@ class _OndoSearchState extends State<OndoSearch> {
                               });
                         } else {
                           return const Text(
-                            "",
+                            '',
                             semanticsLabel: '',
                           );
                         }

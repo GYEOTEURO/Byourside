@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:get/get.dart';
-import 'package:byourside/screen/bottomNavigationBar.dart';
+import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
 
@@ -84,17 +84,17 @@ class _MyAppState extends State<MyApp> {
                 fontFamily: 'NanumGothic',
                 ),
             title: '곁',
-            initialRoute: "/login",
+            initialRoute: '/login',
             routes: {
-              "/login": (context) => const LoginScreen(primaryColor: primaryColor),
-              "/": (context) => const BottomNavBar(primaryColor: primaryColor),
-              "/phone": (context) => const VerifyPhone(),
-              "/email": (context) => const VerifyEmail(),
-              "/user": (context) => const SetupUser(),
-              "/user_protector": (context) => const protector(),
-              "/user_participator": (context) => const participator(),
-              "/user_someoneElse": (context) => const someoneElse(),
-              "/chat_list": (context) => const ChatListScreen(),
+              '/login': (context) => const LoginScreen(primaryColor: primaryColor),
+              '/': (context) => const BottomNavBar(primaryColor: primaryColor),
+              '/phone': (context) => const VerifyPhone(),
+              '/email': (context) => const VerifyEmail(),
+              '/user': (context) => const SetupUser(),
+              '/user_protector': (context) => const protector(),
+              '/user_participator': (context) => const participator(),
+              '/user_someoneElse': (context) => const someoneElse(),
+              '/chat_list': (context) => const ChatListScreen(),
             },
           ),
         ),

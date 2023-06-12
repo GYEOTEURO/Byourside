@@ -1,7 +1,7 @@
-import 'package:byourside/screen/nanum/nanumPostContent.dart';
-import 'package:byourside/screen/postComment/commentList.dart';
-import 'package:byourside/screen/postComment/createComment.dart';
-import 'package:byourside/screen/postComment/scrollController.dart';
+import 'package:byourside/screen/nanum/nanum_post_content.dart';
+import 'package:byourside/screen/postComment/comment_list.dart';
+import 'package:byourside/screen/postComment/create_comment.dart';
+import 'package:byourside/screen/postComment/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../main.dart';
@@ -32,14 +32,14 @@ class _NanumPostState extends State<NanumPost> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("마음나눔",
-              semanticsLabel: "마음나눔",
+          title: const Text('마음나눔',
+              semanticsLabel: '마음나눔',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),

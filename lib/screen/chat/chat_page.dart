@@ -1,6 +1,6 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/chat_list.dart';
-import 'package:byourside/model/db_set.dart';
+import 'package:byourside/model/save_data.dart';
 import 'package:byourside/widget/message_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +156,7 @@ class _ChatPageState extends State<ChatPage> {
                                         ),
                                         onPressed: () {
                                           HapticFeedback.lightImpact(); // 약한 진동
-                                          DBSet.declaration('chat',
+                                          SaveData.declaration('chat',
                                               declaration, widget.groupId);
                                           Navigator.pop(context);
                                         },

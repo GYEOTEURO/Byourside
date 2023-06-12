@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../model/db_set.dart';
+import '../../model/save_data.dart';
 import '../../model/ondo_post.dart';
 
 class OndoPostPage extends StatefulWidget {
@@ -425,7 +425,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
             if (_formkey.currentState!.validate()) {
               Navigator.pop(context);
               List<String> urls =
-                  _images.isEmpty ? [] : await DBSet.uploadFile(_images);
+                  _images.isEmpty ? [] : await SaveData.uploadFile(_images);
               List<String> imgInfos = [];
               for (int i = 0; i < _imgInfos.length; i++) {
                 if (_imgInfos[i].text == "") {
@@ -453,7 +453,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                   likesPeople: [],
                   scrapPeople: [],
                   keyword: _title.text.split(' '));
-              DBSet.addOndoPost('ondoPost', postData);
+              SaveData.addOndoPost('ondoPost', postData);
             }
           }
         },

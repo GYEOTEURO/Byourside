@@ -1,34 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../model/db_set.dart';
+import '../../model/save_data.dart';
 
-class Declaration extends StatefulWidget {
-  const Declaration(
-      {super.key,
-      required this.decList,
-      required this.collectionType,
-      required this.id});
+class BlockUser extends StatefulWidget {
+  const BlockUser({super.key, required this.nickname, required this.collectionType});
   final Color primaryColor = const Color(0xFF045558);
-  final List<String> decList;
+  final String nickname;
   final String collectionType;
-  final String id;
 
   @override
-  State<Declaration> createState() => _DeclarationState();
+  State<BlockUser> createState() => _BlockUserState();
 }
 
-class _DeclarationState extends State<Declaration> {
+class _BlockUserState extends State<BlockUser> {
   final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
-    String declaration = widget.decList[0];
-
     return OutlinedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade300),
-      child: const Text('신고',
-          semanticsLabel: '신고',
+      child: const Text('차단',
+          semanticsLabel: '차단',
           style: TextStyle(
             color: Colors.black,
             fontSize: 14,
@@ -43,38 +36,17 @@ class _DeclarationState extends State<Declaration> {
               return AlertDialog(
                       scrollable: true,
                       semanticLabel:
-                          '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                          '사용자를 차단하시겠습니까? 사용자를 차단하면, 해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다. 차단 목록 확인과 관리는 마이페이지의 사용자 차단하기에서 확인하실 수 있습니다. 차단을 원하시면 하단 왼쪽의 차단 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                       title: const Text(
-                          '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                          '사용자를 차단하시겠습니까?\n사용자를 차단하면, 해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다.\n차단 목록 확인과 관리는 마이페이지의 사용자 차단하기에서 확인하실 수 있습니다.',
                           semanticsLabel:
-                              '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
+                              '사용자를 차단하시겠습니까? 사용자를 차단하면, 해당 사용자가 작성한 글/댓글/채팅이 모두 보이지 않습니다. 차단 목록 확인과 관리는 마이페이지의 사용자 차단하기에서 확인하실 수 있습니다. 차단을 원하시면 하단 왼쪽의 차단 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w600,
                           )),
-                      content: StatefulBuilder(builder: (context, setState) {
-                        return Column(
-                          children: widget.decList
-                              .map((e) => RadioListTile(
-                                  title: Text(e,
-                                      semanticsLabel: e,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'NanumGothic',
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                  value: e,
-                                  groupValue: declaration,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      declaration = value!;
-                                    });
-                                  }))
-                              .toList(),
-                        );
-                      }),
                       actions: [
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,12 +57,16 @@ class _DeclarationState extends State<Declaration> {
                                   ),
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
-                                    DBSet.declaration(widget.collectionType,
-                                        declaration, widget.id);
-                                    Navigator.pop(context);
+                                    if (widget.collectionType == 'post') {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/', (_) => false);
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                    SaveData.addBlock(user!.uid, widget.nickname);
                                   },
-                                  child: const Text('신고',
-                                      semanticsLabel: '신고',
+                                  child: const Text('차단',
+                                      semanticsLabel: '차단',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'NanumGothic',

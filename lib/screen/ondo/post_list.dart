@@ -9,7 +9,7 @@ import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
-import '../../model/db_get.dart';
+import '../../model/load_data.dart';
 
 class OndoPostList extends StatefulWidget {
   const OndoPostList(
@@ -43,7 +43,7 @@ class _OndoPostListState extends State<OndoPostList> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -81,7 +81,7 @@ class _OndoPostListState extends State<OndoPostList> {
                             Container(
                                 margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
                                 child: Text(post.title!,
-                                    semanticsLabel: post.title!,
+                                    semanticsLabel: post.title,
                                     overflow: TextOverflow.fade,
                                     maxLines: 1,
                                     softWrap: false,
@@ -130,7 +130,7 @@ class _OndoPostListState extends State<OndoPostList> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OndoTypeController());
+    var controller = Get.put(OndoTypeController());
 
     List<String> blockList;
 
@@ -139,11 +139,11 @@ class _OndoPostListState extends State<OndoPostList> {
           streams: StreamTuple2(
             (widget.category.contains('전체')) //가독성
               ? ((widget.category == '전체')
-                  ? DBGet.readAllCollection( //전체
+                  ? LoadData.readAllCollection( //전체
                       collectionName: widget.collectionName, type: controller.type)
-                  : DBGet.readAllInfoCollection( //정보 전체
+                  : LoadData.readAllInfoCollection( //정보 전체
                       collectionName: widget.collectionName, type: controller.type))
-              : DBGet.readCategoryCollection( //자유 또는 정보 내 세부 카테고리
+              : LoadData.readCategoryCollection( //자유 또는 정보 내 세부 카테고리
                   collectionName: widget.collectionName,
                   category: widget.category,
                   type: controller.type), 
@@ -151,7 +151,7 @@ class _OndoPostListState extends State<OndoPostList> {
           builder: (context, snapshots) {
             //snapshot 이름 구분
             if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
+              blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
             }
             else{
               blockList = [];

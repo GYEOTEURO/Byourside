@@ -4,7 +4,7 @@ import 'package:byourside/screen/authenticate/login_screen.dart';
 import 'package:byourside/screen/authenticate/personal_data.dart';
 import 'package:byourside/screen/authenticate/using_policy.dart';
 import 'package:byourside/screen/mypage/myBlock.dart';
-import 'package:byourside/screen/mypage/myDeclaration.dart';
+import 'package:byourside/screen/mypage/myReport.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
 import 'package:byourside/screen/mypage/myNanumPost.dart';
 import 'package:byourside/screen/mypage/myOndoPost.dart';
@@ -380,7 +380,7 @@ class _Mypage extends State<Mypage> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MyDeclaration()),
+                                  builder: (context) => const MyReport()),
                             );
                           } else if (index == 2) {
                             await Navigator.push(

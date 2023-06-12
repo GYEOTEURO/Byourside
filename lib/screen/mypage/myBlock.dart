@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../model/db_set.dart';
+import '../../model/save_data.dart';
 
 class MyBlock extends StatefulWidget {
   const MyBlock({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
-  final String title = "사용자 차단";
+  final String title = '사용자 차단';
 
   @override
   State<MyBlock> createState() => _MyBlockState();
@@ -37,19 +37,19 @@ class _MyBlockState extends State<MyBlock> {
                         fontWeight: FontWeight.w600,
                       ))),
               Semantics(
-                  label: "차단할 닉네임 입력",
+                  label: '차단할 닉네임 입력',
                   child: TextFormField(
                       controller: _nickname,
                       maxLines: 1,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "차단할 닉네임은 비어있을 수 없습니다";
+                          return '차단할 닉네임은 비어있을 수 없습니다';
                         }
                         return null;
                       },
                       decoration: const InputDecoration(
-                        hintText: "차단할 닉네임 입력",
-                        labelText: "차단할 닉네임을 입력해주세요.",
+                        hintText: '차단할 닉네임 입력',
+                        labelText: '차단할 닉네임을 입력해주세요.',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1),
@@ -75,16 +75,16 @@ class _MyBlockState extends State<MyBlock> {
                         fontWeight: FontWeight.w600,
                       ))),
               if (blockList.isEmpty)
-                (const Center(
+                const Center(
                     child: Text('없음',
                         semanticsLabel: '차단한 사용자 목록 없음',
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w600,
-                        ))))
+                        )))
               else
-                (Column(
+                Column(
                     children: blockList
                         .map((e) => Row(
                                 mainAxisAlignment:
@@ -104,7 +104,7 @@ class _MyBlockState extends State<MyBlock> {
                                       ),
                                       onPressed: () {
                                         HapticFeedback.lightImpact(); // 약한 진동
-                                        DBSet.cancelBlock(user!.uid, e);
+                                        SaveData.cancelBlock(user!.uid, e);
                                       },
                                       child: const Text('차단 해제',
                                           semanticsLabel: '차단 해제',
@@ -114,7 +114,7 @@ class _MyBlockState extends State<MyBlock> {
                                             fontWeight: FontWeight.w600,
                                           )))
                                 ]))
-                        .toList()))
+                        .toList())
             ])));
   }
 
@@ -130,7 +130,7 @@ class _MyBlockState extends State<MyBlock> {
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
               Navigator.pop(context);
@@ -154,13 +154,13 @@ class _MyBlockState extends State<MyBlock> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
-              DBSet.addBlock(user!.uid, _nickname.text);
+              SaveData.addBlock(user!.uid, _nickname.text);
               showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
                         semanticLabel:
-                            "정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
+                            '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.',
                         content: const Text(
                             '정상적으로 차단되었습니다.\n해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
                             semanticsLabel:

@@ -11,10 +11,10 @@ class CommentModel {
 
   CommentModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
-        uid = doc["uid"],
-        nickname = doc["nickname"],
-        content = doc["content"],
-        datetime = doc["datetime"];
+        uid = doc['uid'],
+        nickname = doc['nickname'],
+        content = doc['content'],
+        datetime = doc['datetime'];
 
   Map<String, dynamic> toMap() {
     return {

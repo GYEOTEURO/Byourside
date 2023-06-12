@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import '../../main.dart';
-import '../../model/db_get.dart';
+import '../../model/load_data.dart';
 import '../../model/post_list.dart';
 
 class PosterPage extends StatefulWidget {
@@ -44,7 +44,7 @@ class _PosterPageState extends State<PosterPage> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return Card(
@@ -130,7 +130,7 @@ class _PosterPageState extends State<PosterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OndoTypeController());
+    var controller = Get.put(OndoTypeController());
     String collectionName = widget.collectionName;
 
     List<String> blockList;
@@ -138,11 +138,11 @@ class _PosterPageState extends State<PosterPage> {
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            DBGet.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
+            LoadData.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
             FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
             if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
+              blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
             }
             else{
               blockList = [];
@@ -193,7 +193,7 @@ class _PosterPageState extends State<PosterPage> {
                       )));
         },
         backgroundColor: widget.primaryColor,
-        child: const Icon(Icons.add, semanticLabel: "글쓰기"),
+        child: const Icon(Icons.add, semanticLabel: '글쓰기'),
       ),
     );
   }
