@@ -4,13 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:byourside/constants.dart' as constants;
 
 class PostCategory extends StatefulWidget {
-  const PostCategory(
-      {Key? key,
-      required this.primaryColor,
-      required this.title,
-      required this.categories})
+  const PostCategory({Key? key, required this.title, required this.categories})
       : super(key: key);
-  final Color primaryColor;
   final String title;
   final Category categories;
 

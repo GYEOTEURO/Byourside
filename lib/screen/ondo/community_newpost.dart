@@ -16,8 +16,6 @@ class OndoPostPage extends StatefulWidget {
       : super(key: key);
   final Color primaryColor;
   final String title;
-  // String? category;
-  // String? type;
 
   @override
   State<OndoPostPage> createState() => _OndoPostPageState();
@@ -227,8 +225,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => PostCategory(
-                                                primaryColor:
-                                                    widget.primaryColor,
                                                 title: widget.title,
                                                 categories: _categories,
                                               )));
