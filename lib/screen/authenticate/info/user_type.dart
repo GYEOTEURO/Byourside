@@ -1,8 +1,8 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/authenticate/user_paricipator.dart';
-import 'package:byourside/screen/authenticate/user_protector.dart';
-import 'package:byourside/screen/authenticate/user_self.dart';
-import 'package:byourside/screen/authenticate/user_someone_else.dart';
+import 'package:byourside/screen/authenticate/info/user_paricipator.dart';
+import 'package:byourside/screen/authenticate/info/user_protector.dart';
+import 'package:byourside/screen/authenticate/info/user_self.dart';
+import 'package:byourside/screen/authenticate/info/user_someone_else.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

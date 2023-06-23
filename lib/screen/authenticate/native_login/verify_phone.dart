@@ -1,7 +1,7 @@
 import 'package:byourside/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/screen/authenticate/otp_screen.dart';
+import 'package:byourside/screen/authenticate/native_login/otp_screen.dart';
 import 'package:flutter/services.dart';
 
 GlobalKey<FormState> _formKeyPhone = GlobalKey<FormState>();

@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:byourside/widget/auth.dart';
+import 'package:byourside/model/auth.dart';
 import 'package:byourside/main.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:email_validator/email_validator.dart';

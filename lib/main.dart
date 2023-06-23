@@ -1,10 +1,10 @@
-import 'package:byourside/screen/authenticate/user.dart';
-import 'package:byourside/screen/authenticate/user_paricipator.dart';
-import 'package:byourside/screen/authenticate/user_protector.dart';
-import 'package:byourside/screen/authenticate/user_someone_else.dart';
-import 'package:byourside/screen/authenticate/verify_email.dart';
-import 'package:byourside/screen/authenticate/verify_phone.dart';
-import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/screen/authenticate/info/user_type.dart';
+import 'package:byourside/screen/authenticate/info/user_paricipator.dart';
+import 'package:byourside/screen/authenticate/info/user_protector.dart';
+import 'package:byourside/screen/authenticate/info/user_someone_else.dart';
+import 'package:byourside/screen/authenticate/native_login/verify_email.dart';
+import 'package:byourside/screen/authenticate/native_login/verify_phone.dart';
+import 'package:byourside/screen/authenticate/auth_home.dart';
 import 'package:byourside/screen/chat/chat_list_screen.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';

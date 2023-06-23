@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/authenticate/user.dart';
+import 'package:byourside/screen/authenticate/info/user_type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +34,7 @@ class OTPScreenState extends State<OTPScreen> {
       isPhoneVerified = FirebaseAuth.instance.currentUser!.phoneNumber !=
               null &&
           FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '';
-      // print("___________________________________________");
-      // print(
-      //     FirebaseAuth.instance.currentUser!.phoneNumber?.split(' ')[0] != '');
-      // print("hjihi: $isPhoneVerified");
-      // print("shsh");
+
       if (!isPhoneVerified) {
         verifyPhone();
 
@@ -110,9 +106,7 @@ class OTPScreenState extends State<OTPScreen> {
     } else {
       String phone1 = widget.phone.substring(0, 2);
       String phone2 = widget.phone.substring(2, 6);
-      String phone3 = widget.phone.substring(
-        6,
-      );
+      String phone3 = widget.phone.substring(6,);
       var user = Provider.of<FirebaseUser?>(context);
       return Scaffold(
           key: _formKey,

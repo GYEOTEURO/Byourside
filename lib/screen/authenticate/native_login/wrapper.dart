@@ -1,10 +1,10 @@
-import 'package:byourside/screen/authenticate/user.dart';
-import 'package:byourside/screen/authenticate/verify_phone.dart';
+import 'package:byourside/screen/authenticate/info/user_type.dart';
+import 'package:byourside/screen/authenticate/native_login/verify_phone.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../../model/firebase_user.dart';
-import 'handler.dart';
-import 'verify_email.dart';
+import 'package:byourside/model/firebase_user.dart';
+import '../handler.dart';
+import 'package:byourside/screen/authenticate/native_login/verify_email.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});

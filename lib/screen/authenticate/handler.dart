@@ -1,5 +1,5 @@
-import 'package:byourside/screen/authenticate/login.dart';
-import 'package:byourside/screen/authenticate/register.dart';
+import 'package:byourside/screen/authenticate/native_login/login.dart';
+import 'package:byourside/screen/authenticate/native_login/register.dart';
 import 'package:flutter/material.dart';
 
 class Handler extends StatefulWidget {

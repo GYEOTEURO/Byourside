@@ -1,10 +1,10 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/authenticate/wrapper.dart';
+import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:byourside/widget/auth.dart';
+import 'package:byourside/model/auth.dart';
 import '../../model/firebase_user.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -69,7 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.w500),
           ),
         ),
-        home: const Wrapper(),
+        home: SocialLogin(),
+        // home: const Wrapper(),
       ),
     );
   }
