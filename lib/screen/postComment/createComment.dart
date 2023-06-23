@@ -44,7 +44,7 @@ class _CreateCommentState extends State<CreateComment> {
                 minLines: 1,
                 maxLines: 5,
                 decoration: InputDecoration(
-                  labelText: "댓글을 작성해주세요.",
+                  labelText: '댓글을 작성해주세요.',
                   floatingLabelStyle: const TextStyle(
                     color: primaryColor,
                     fontSize: 22,
@@ -85,7 +85,7 @@ class _CreateCommentState extends State<CreateComment> {
                       curve: Curves.ease);
                   },
                   icon: const Icon(Icons.send, 
-                    semanticLabel: "작성한 댓글 저장",
+                    semanticLabel: '작성한 댓글 저장',
                     color: primaryColor,
                   ))
                 ))

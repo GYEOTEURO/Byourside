@@ -22,7 +22,7 @@ class DBSet {
     List<String> urls = [];
 
     for(XFile element in images){
-      final imageRef = FirebaseStorage.instance.ref().child('images/${element.name}');
+      var imageRef = FirebaseStorage.instance.ref().child('images/${element.name}');
       File file = File(element.path);
 
       try {
@@ -63,7 +63,7 @@ class DBSet {
         DocumentSnapshot snapshot = await transaction.get(document);
 
         //기존 값을 가져와 1을 더해준다.
-        int currentLikes = snapshot["likes"] + 1;
+        int currentLikes = snapshot['likes'] + 1;
 
         //직접 값을 더하지 말고 transaction을 통해서 더하자!
         transaction.update(document, {'likes': currentLikes});
@@ -81,7 +81,7 @@ class DBSet {
         DocumentSnapshot snapshot = await transaction.get(document);
 
         //기존 값을 가져와 1을 빼준다.
-        int currentLikes = snapshot["likes"] - 1;
+        int currentLikes = snapshot['likes'] - 1;
 
         //직접 값을 더하지 말고 transaction을 통해서 빼주자!
         transaction.update(document, {'likes': currentLikes});

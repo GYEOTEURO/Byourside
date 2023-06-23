@@ -1,8 +1,8 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/authenticate/login_screen.dart';
-import 'package:byourside/screen/authenticate/personal_data.dart';
-import 'package:byourside/screen/authenticate/using_policy.dart';
+import 'package:byourside/screen/authenticate/auth_home.dart';
+import 'package:byourside/screen/authenticate/policy/personal_data.dart';
+import 'package:byourside/screen/authenticate/policy/using_policy.dart';
 import 'package:byourside/screen/mypage/myBlock.dart';
 import 'package:byourside/screen/mypage/myDeclaration.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
@@ -11,7 +11,7 @@ import 'package:byourside/screen/mypage/myOndoPost.dart';
 import 'package:byourside/screen/mypage/myScrapNanumPost.dart';
 import 'package:byourside/screen/mypage/myScrapOndoPost.dart';
 import 'package:byourside/screen/mypage/to_developer.dart';
-import 'package:byourside/widget/auth.dart';
+import 'package:byourside/model/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,10 +41,10 @@ class _Mypage extends State<Mypage> {
   }
 
   final List<String> myEntires = <String>[
-    "내가 쓴 마음온도 글",
-    "내가 쓴 마음나눔 글",
-    "마음온도 스크랩",
-    "마음나눔 스크랩"
+    '내가 쓴 마음온도 글',
+    '내가 쓴 마음나눔 글',
+    '마음온도 스크랩',
+    '마음나눔 스크랩'
   ];
   final List<Icon> myIcons = <Icon>[
     const Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),
@@ -60,13 +60,13 @@ class _Mypage extends State<Mypage> {
   ];
 
   final List<String> etcEntires = <String>[
-    "자주 묻는 질문",
-    "사용자 신고하기",
-    "사용자 차단하기",
-    "개발자에게 문의하기",
-    "개인정보 처리방침",
-    "서비스 이용약관",
-    "로그아웃",
+    '자주 묻는 질문',
+    '사용자 신고하기',
+    '사용자 차단하기',
+    '개발자에게 문의하기',
+    '개인정보 처리방침',
+    '서비스 이용약관',
+    '로그아웃',
     // "탈퇴"
   ];
   final List<Icon> etcIcons = <Icon>[
@@ -105,7 +105,7 @@ class _Mypage extends State<Mypage> {
   @override
   Widget build(BuildContext context) {
     // final user =  Provider.of<FirebaseUser?>(context);
-    String password = "";
+    String password = '';
 
     // void popUpDialog(BuildContext context) {
     //   showDialog(
@@ -210,7 +210,7 @@ class _Mypage extends State<Mypage> {
     //       });
     // }
 
-    final SignOut = Material(
+    var SignOut = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: const Color(0xFF045558),
@@ -231,7 +231,7 @@ class _Mypage extends State<Mypage> {
           // Navigator.pushNamed(context, '/login');
         },
         child: const Text(
-          "Log out",
+          'Log out',
           style: TextStyle(color: Color(0xFF045558)),
           textAlign: TextAlign.center,
         ),
@@ -294,7 +294,7 @@ class _Mypage extends State<Mypage> {
             ),
             // 이름 입력
             const Text(
-              "나의 활동",
+              '나의 활동',
               semanticsLabel: '나의 활동',
               style: TextStyle(
                   fontSize: 18,
@@ -338,7 +338,7 @@ class _Mypage extends State<Mypage> {
               height: 15,
             ),
             const Text(
-              "기타",
+              '기타',
               semanticsLabel: '기타',
               style: TextStyle(
                   fontSize: 18,

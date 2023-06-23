@@ -10,7 +10,7 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 class OndoSearch extends StatefulWidget {
   const OndoSearch({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
-  final String title = "마음온도 게시글 검색";
+  final String title = '마음온도 게시글 검색';
   final String collectionName = 'ondoPost';
 
   @override
@@ -33,7 +33,7 @@ class _OndoSearchState extends State<OndoSearch> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -119,7 +119,7 @@ class _OndoSearchState extends State<OndoSearch> {
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
                 Navigator.pop(context);
@@ -129,13 +129,13 @@ class _OndoSearchState extends State<OndoSearch> {
             margin: const EdgeInsets.all(20),
             child: Column(children: [
               Semantics(
-                  label: "검색할 키워드 입력",
+                  label: '검색할 키워드 입력',
                   child: TextFormField(
                       controller: query,
                       maxLines: 1,
                       decoration: InputDecoration(
-                          semanticCounterText: "검색할 키워드 입력",
-                          labelText: "검색할 키워드를 입력해주세요.",
+                          semanticCounterText: '검색할 키워드 입력',
+                          labelText: '검색할 키워드를 입력해주세요.',
                           floatingLabelStyle: TextStyle(
                             color: widget.primaryColor,
                             fontSize: 22,
@@ -168,7 +168,7 @@ class _OndoSearchState extends State<OndoSearch> {
                         FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
                       builder: (context, snapshots) {
                         if(snapshots.snapshot2.hasData){
-                          blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
+                          blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
                         }
                         else{
                           blockList = [];
@@ -186,7 +186,7 @@ class _OndoSearchState extends State<OndoSearch> {
                               });
                         } else {
                           return const Text(
-                            "",
+                            '',
                             semanticsLabel: '',
                           );
                         }

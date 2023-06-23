@@ -23,12 +23,12 @@ class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
 
   // 드롭다운 리스트.
   static const List<String> _dropdownList = [
-    "전체 정보",
-    "복지/혜택",
-    "교육/세미나",
-    "병원/센터 후기",
-    "법률/제도",
-    "초기 증상 발견/생활 속 Tip"
+    '전체 정보',
+    '복지/혜택',
+    '교육/세미나',
+    '병원/센터 후기',
+    '법률/제도',
+    '초기 증상 발견/생활 속 Tip'
   ];
 
   // 선택값.
@@ -112,7 +112,7 @@ class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
                         // 아이콘.
                         const Icon(
                           Icons.arrow_downward,
-                          semanticLabel: "정보 게시판의 하위 게시판 선택",
+                          semanticLabel: '정보 게시판의 하위 게시판 선택',
                           size: 16,
                         ),
                       ],
@@ -143,20 +143,20 @@ class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
                         ))))
           ]),
           if (_changePage == '교육/세미나' || _changePage == '복지/혜택')
-            (Expanded(
+            Expanded(
                 child: PosterPage(
                     primaryColor: widget.primaryColor,
                     collectionName: widget.collectionName,
-                    category: _changePage)))
+                    category: _changePage))
           else if (_changePage == '전체 정보' ||
               _changePage == '병원/센터 후기' ||
               _changePage == '법률/제도' ||
               _changePage == '초기 증상 발견/생활 속 Tip')
-            (Expanded(
+            Expanded(
                 child: OndoPostList(
                     primaryColor: const Color(0xFF045558),
                     collectionName: widget.collectionName,
-                    category: _changePage)))
+                    category: _changePage))
         ])));
   }
 

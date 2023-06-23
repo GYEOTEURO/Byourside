@@ -28,30 +28,30 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     const CategoryPage(),
     const NanumPostList(
-        primaryColor: Color(0xFF045558), collectionName: "nanumPost"),
+        primaryColor: Color(0xFF045558), collectionName: 'nanumPost'),
     const ChatListScreen(),
     const Mypage(),
   ];
 
   List<Icon> bottomIcons = [
-    const Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
-    const Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
-    const Icon(Icons.chat_outlined, semanticLabel: "채팅"),
-    const Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
+    const Icon(Icons.groups_rounded, semanticLabel: '마음온도'),
+    const Icon(Icons.volunteer_activism_outlined, semanticLabel: '마음나눔'),
+    const Icon(Icons.chat_outlined, semanticLabel: '채팅'),
+    const Icon(Icons.account_circle_outlined, semanticLabel: '마이페이지')
   ];
 
   List<Icon> bottomUnselectedIcons = [
-    const Icon(Icons.groups_outlined, semanticLabel: "마음온도"),
-    const Icon(Icons.volunteer_activism_outlined, semanticLabel: "마음나눔"),
-    const Icon(Icons.chat_outlined, semanticLabel: "채팅"),
-    const Icon(Icons.account_circle_outlined, semanticLabel: "마이페이지")
+    const Icon(Icons.groups_outlined, semanticLabel: '마음온도'),
+    const Icon(Icons.volunteer_activism_outlined, semanticLabel: '마음나눔'),
+    const Icon(Icons.chat_outlined, semanticLabel: '채팅'),
+    const Icon(Icons.account_circle_outlined, semanticLabel: '마이페이지')
   ];
 
   List<Icon> bottomSelectedIcons = [
-    const Icon(Icons.groups_rounded, semanticLabel: "마음온도"),
-    const Icon(Icons.volunteer_activism, semanticLabel: "마음나눔"),
-    const Icon(Icons.chat, semanticLabel: "채팅"),
-    const Icon(Icons.account_circle, semanticLabel: "마이페이지")
+    const Icon(Icons.groups_rounded, semanticLabel: '마음온도'),
+    const Icon(Icons.volunteer_activism, semanticLabel: '마음나눔'),
+    const Icon(Icons.chat, semanticLabel: '채팅'),
+    const Icon(Icons.account_circle, semanticLabel: '마이페이지')
   ];
 
   void _onItemTapped(int index) {

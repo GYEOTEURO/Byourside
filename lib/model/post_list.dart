@@ -15,16 +15,16 @@ class PostListModel {
 
   PostListModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc, String collectionName)
       : id = doc.id,
-        nickname = doc["nickname"],
-        title = doc["title"],
-        datetime = doc["datetime"],
+        nickname = doc['nickname'],
+        title = doc['title'],
+        datetime = doc['datetime'],
         // ignore: prefer_null_aware_operators
-        images = doc["images"] == null
-            ? null : doc["images"].cast<String>(),
-        imgInfos = doc["imgInfos"] == null
-            ? null : doc["imgInfos"].cast<String>(),
-        category = (collectionName == 'ondoPost') ? doc["category"] : null,
-        isCompleted = (collectionName == 'nanumPost') ? doc["isCompleted"] : null,
-        type = doc["type"] == null
-            ? null : doc["type"].cast<String>();
+        images = doc['images'] == null
+            ? null : doc['images'].cast<String>(),
+        imgInfos = doc['imgInfos'] == null
+            ? null : doc['imgInfos'].cast<String>(),
+        category = (collectionName == 'ondoPost') ? doc['category'] : null,
+        isCompleted = (collectionName == 'nanumPost') ? doc['isCompleted'] : null,
+        type = doc['type'] == null
+            ? null : doc['type'].cast<String>();
 }

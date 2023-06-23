@@ -10,7 +10,7 @@ class MyScrapOndoPost extends StatefulWidget {
   const MyScrapOndoPost({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
   final String collectionName = 'ondoPost';
-  final String title = "스크랩한 마음온도글";
+  final String title = '스크랩한 마음온도글';
 
   @override
   State<MyScrapOndoPost> createState() => _MyScrapOndoPostState();
@@ -31,7 +31,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -94,13 +94,13 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                         ],
                       )),
                       if (post.images!.isNotEmpty)
-                        (Semantics(
+                        Semantics(
                             label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
                               height: height * 0.2,
-                            ))),
+                            )),
                     ],
                   ),
                 ))));
@@ -118,7 +118,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),

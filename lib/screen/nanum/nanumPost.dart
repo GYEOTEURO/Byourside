@@ -32,14 +32,14 @@ class _NanumPostState extends State<NanumPost> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("마음나눔",
-              semanticsLabel: "마음나눔",
+          title: const Text('마음나눔',
+              semanticsLabel: '마음나눔',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               }),

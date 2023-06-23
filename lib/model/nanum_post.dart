@@ -36,35 +36,35 @@ class NanumPostModel {
 
   NanumPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
       : id = doc.id,
-        uid = doc.data()!["uid"],
-        title = doc.data()!["title"],
-        nickname = doc.data()!["nickname"],
-        content = doc.data()!["content"],
-        price = doc.data()!["price"],
-        isCompleted = doc.data()!["isCompleted"],
-        datetime = doc.data()!["datetime"],
+        uid = doc.data()!['uid'],
+        title = doc.data()!['title'],
+        nickname = doc.data()!['nickname'],
+        content = doc.data()!['content'],
+        price = doc.data()!['price'],
+        isCompleted = doc.data()!['isCompleted'],
+        datetime = doc.data()!['datetime'],
         // ignore: prefer_null_aware_operators
-        images = doc.data()!["images"] == null
+        images = doc.data()!['images'] == null
             ? null
-            : doc.data()!["images"].cast<String>(),
-        imgInfos = doc.data()!["imgInfos"] == null
+            : doc.data()!['images'].cast<String>(),
+        imgInfos = doc.data()!['imgInfos'] == null
             ? null
-            : doc.data()!["imgInfos"].cast<String>(),
-        type = doc.data()!["type"] == null
+            : doc.data()!['imgInfos'].cast<String>(),
+        type = doc.data()!['type'] == null
             ? null
-            : doc.data()!["type"].cast<String>(),
-        likes = doc.data()!["likes"],
+            : doc.data()!['type'].cast<String>(),
+        likes = doc.data()!['likes'],
         // ignore: prefer_null_aware_operators
-        likesPeople = doc.data()!["likesPeople"] == null
+        likesPeople = doc.data()!['likesPeople'] == null
             ? null
-            : doc.data()!["likesPeople"].cast<String>(),
+            : doc.data()!['likesPeople'].cast<String>(),
         // ignore: prefer_null_aware_operators
-        scrapPeople = doc.data()!["scrapPeople"] == null
+        scrapPeople = doc.data()!['scrapPeople'] == null
             ? null
-            : doc.data()!["scrapPeople"].cast<String>(),
-        keyword = doc.data()!["keyword"] == null
+            : doc.data()!['scrapPeople'].cast<String>(),
+        keyword = doc.data()!['keyword'] == null
             ? null
-            : doc.data()!["keyword"].cast<String>();
+            : doc.data()!['keyword'].cast<String>();
 
   Map<String, dynamic> toMap() {
     return {

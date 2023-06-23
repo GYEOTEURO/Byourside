@@ -10,7 +10,7 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 class NanumSearch extends StatefulWidget {
   const NanumSearch({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
-  final String title = "마음나눔 게시글 검색";
+  final String title = '마음나눔 게시글 검색';
   final String collectionName = 'nanumPost';
 
   @override
@@ -24,7 +24,7 @@ class _NanumSearchState extends State<NanumSearch> {
   Widget _buildListItem(PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
-    String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
+    String isCompleted = (post.isCompleted == true) ? '거래완료' : '거래중';
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -34,7 +34,7 @@ class _NanumSearchState extends State<NanumSearch> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -120,7 +120,7 @@ class _NanumSearchState extends State<NanumSearch> {
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
-                  semanticLabel: "뒤로 가기", color: Colors.white),
+                  semanticLabel: '뒤로 가기', color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
                 Navigator.pop(context);
@@ -130,13 +130,13 @@ class _NanumSearchState extends State<NanumSearch> {
             margin: const EdgeInsets.all(20),
             child: Column(children: [
               Semantics(
-                  label: "검색할 키워드 입력",
+                  label: '검색할 키워드 입력',
                   child: TextFormField(
                       controller: query,
                       maxLines: 1,
                       decoration: InputDecoration(
-                          semanticCounterText: "검색할 키워드 입력",
-                          labelText: "검색할 키워드를 입력해주세요.",
+                          semanticCounterText: '검색할 키워드 입력',
+                          labelText: '검색할 키워드를 입력해주세요.',
                           floatingLabelStyle: TextStyle(
                             color: widget.primaryColor,
                             fontSize: 22,
@@ -169,7 +169,7 @@ class _NanumSearchState extends State<NanumSearch> {
                         FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
                       builder: (context, snapshots) {
                         if(snapshots.snapshot2.hasData){
-                          blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
+                          blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
                         }
                         else{
                           blockList = [];
@@ -187,7 +187,7 @@ class _NanumSearchState extends State<NanumSearch> {
                               });
                         } else {
                           return const Text(
-                            "",
+                            '',
                             semanticsLabel: '',
                           );
                         }

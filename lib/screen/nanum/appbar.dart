@@ -21,13 +21,13 @@ class _NanumAppBarState extends State<NanumAppBar> {
       appBar: AppBar(
         backgroundColor: widget.primaryColor,
         centerTitle: true,
-        title: const Text("마음나눔",
-            semanticsLabel: "마음나눔",
+        title: const Text('마음나눔',
+            semanticsLabel: '마음나눔',
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: const Icon(Icons.filter_alt,
-              semanticLabel: "장애 유형 필터링", color: Colors.white),
+              semanticLabel: '장애 유형 필터링', color: Colors.white),
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
             _type = await Navigator.push(
@@ -35,16 +35,16 @@ class _NanumAppBarState extends State<NanumAppBar> {
                 MaterialPageRoute(
                     builder: (context) => NanumPostCategory(
                           primaryColor: const Color(0xFF045558),
-                          title: "필터링",
+                          title: '필터링',
                           preType: _type,
                         )));
-            print("타입: $_type");
+            print('타입: $_type');
           },
         ),
         actions: [
           IconButton(
               icon:
-                  const Icon(Icons.search, semanticLabel: "검색", color: Colors.white),
+                  const Icon(Icons.search, semanticLabel: '검색', color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact();
               }),

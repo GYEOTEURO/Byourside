@@ -22,14 +22,14 @@ class _CategoryPageState extends State<CategoryPage>
   late TabController _tabController;
 
   final List<String> _infoDetailList = [
-    "전체",
-    "복지/혜택",
-    "교육/세미나",
-    "병원/센터 후기",
-    "법률/제도",
-    "초기 증상 발견/생활 속 Tip"
+    '전체',
+    '복지/혜택',
+    '교육/세미나',
+    '병원/센터 후기',
+    '법률/제도',
+    '초기 증상 발견/생활 속 Tip'
   ];
-  final String _selectedInfoDetail = "전체";
+  final String _selectedInfoDetail = '전체';
 
   List<String>? _type;
 
@@ -50,15 +50,15 @@ class _CategoryPageState extends State<CategoryPage>
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OndoTypeController());
-    final overlayController = Get.put(OverlayController());
+    var controller = Get.put(OndoTypeController());
+    var overlayController = Get.put(OverlayController());
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
             Icons.filter_alt,
-            semanticLabel: "장애 유형 필터링",
+            semanticLabel: '장애 유형 필터링',
           ),
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
@@ -70,17 +70,17 @@ class _CategoryPageState extends State<CategoryPage>
                 MaterialPageRoute(
                     builder: (context) => NanumPostCategory(
                           primaryColor: const Color(0xFF045558),
-                          title: "필터링",
+                          title: '필터링',
                           preType: _type,
                         )));
-            print("IN 온도 타입: $_type");
+            print('IN 온도 타입: $_type');
             controller.filtering(_type);
             setState(() {});
           },
         ),
         title: const Center(
-          child: Text("마음온도",
-              semanticsLabel: "마음온도",
+          child: Text('마음온도',
+              semanticsLabel: '마음온도',
               style: TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         ),
@@ -88,7 +88,7 @@ class _CategoryPageState extends State<CategoryPage>
           IconButton(
             icon: const Icon(
               Icons.search,
-              semanticLabel: "검색",
+              semanticLabel: '검색',
             ),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
@@ -107,11 +107,11 @@ class _CategoryPageState extends State<CategoryPage>
           tabs: categoryTabs,
           indicatorColor: Colors.white,
           unselectedLabelColor: Colors.grey,
-          onTap: ((value) {
+          onTap: (value) {
             if(overlayController.overlayEntry != null){
               overlayController.controlOverlay(null);
             }
-          }),
+          },
         ),
         backgroundColor: const Color(0xFF045558),
       ),
@@ -121,14 +121,14 @@ class _CategoryPageState extends State<CategoryPage>
           String label = tab.text!;
           if (label == '정보') {
             return Container(
-                padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                child: InfoDetailCategoryPage(
+                padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                child: const InfoDetailCategoryPage(
                     primaryColor: Color(0xFF045558),
-                    collectionName: "ondoPost"));
+                    collectionName: 'ondoPost'));
           }
           return OndoPostList(
               primaryColor: const Color(0xFF045558),
-              collectionName: "ondoPost",
+              collectionName: 'ondoPost',
               category: label);
         }).toList(),
       ),
@@ -149,7 +149,7 @@ class _CategoryPageState extends State<CategoryPage>
                       )));
         },
         backgroundColor: const Color(0xFF045558),
-        child: const Icon(Icons.add, semanticLabel: "마음온도 글쓰기"),
+        child: const Icon(Icons.add, semanticLabel: '마음온도 글쓰기'),
       ),
     );
   }

@@ -21,8 +21,8 @@ class _OndoAppBarState extends State<OndoAppBar> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: const Text(
-          "마음온도",
-          semanticsLabel: "마음온도",
+          '마음온도',
+          semanticsLabel: '마음온도',
         ),
         titleTextStyle:
             const TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
@@ -44,7 +44,7 @@ class _OndoAppBarState extends State<OndoAppBar> {
   void search() {
     Container(
         child: TextFormField(
-      decoration: const InputDecoration(labelText: "검색어를 입력하세요"),
+      decoration: const InputDecoration(labelText: '검색어를 입력하세요'),
       controller: _searchWord,
     ));
   }

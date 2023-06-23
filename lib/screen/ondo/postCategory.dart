@@ -152,7 +152,7 @@ class _PostCategoryState extends State<PostCategory> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-                semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
+                semanticLabel: '카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.',
                 content: const Text('게시판 종류를 선택해주세요',
                     semanticsLabel: '게시판 종류를 선택해주세요',
                     style: TextStyle(
@@ -233,7 +233,7 @@ class _PostCategoryState extends State<PostCategory> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                            semanticLabel: "카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.",
+                            semanticLabel: '카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.',
                             content: const Text('게시판 종류를 선택해주세요',
                                 semanticsLabel: '게시판 종류를 선택해주세요',
                                 style: TextStyle(

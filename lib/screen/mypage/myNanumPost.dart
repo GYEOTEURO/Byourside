@@ -10,7 +10,7 @@ class MyNanumPost extends StatefulWidget {
   const MyNanumPost({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
   final String collectionName = 'nanumPost';
-  final String title = "내가 쓴 마음나눔글";
+  final String title = '내가 쓴 마음나눔글';
 
   @override
   State<MyNanumPost> createState() => _MyNanumPostState();
@@ -22,7 +22,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
   Widget _buildListItem(String collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
-    String isCompleted = (post.isCompleted == true) ? "거래완료" : "거래중";
+    String isCompleted = (post.isCompleted == true) ? '거래완료' : '거래중';
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -32,7 +32,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
       type = post.type![0];
     } else if (post.type!.length > 1) {
       post.type!.sort();
-      type = "${post.type![0]}/${post.type![1]}";
+      type = '${post.type![0]}/${post.type![1]}';
     }
 
     return SizedBox(
@@ -95,13 +95,13 @@ class _MyNanumPostState extends State<MyNanumPost> {
                         ],
                       )),
                       if (post.images!.isNotEmpty)
-                        (Semantics(
+                        Semantics(
                             label: post.imgInfos![0],
                             child: Image.network(
                               post.images![0],
                               width: width * 0.2,
                               height: height * 0.2,
-                            ))),
+                            )),
                     ],
                   ),
                 ))));
@@ -119,7 +119,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),

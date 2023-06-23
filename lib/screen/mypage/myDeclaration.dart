@@ -5,7 +5,7 @@ import '../../model/db_set.dart';
 class MyDeclaration extends StatefulWidget {
   const MyDeclaration({Key? key}) : super(key: key);
   final Color primaryColor = const Color(0xFF045558);
-  final String title = "사용자 신고";
+  final String title = '사용자 신고';
 
   @override
   State<MyDeclaration> createState() => _MyDeclarationState();
@@ -13,13 +13,13 @@ class MyDeclaration extends StatefulWidget {
 
 class _MyDeclarationState extends State<MyDeclaration> {
   final List<String> _decList = [
-    "불법 정보를 게시했습니다.",
-    "음란물을 게시했습니다.",
-    "스팸홍보/도배글을 게시했습니다.",
-    "욕설/비하/혐오/차별적 표현을 사용했습니다.",
-    "청소년에게 유해한 내용을 게시했습니다.",
-    "사칭/사기 사용자입니다.",
-    "상업적 광고 및 판매 사용자입니다."
+    '불법 정보를 게시했습니다.',
+    '음란물을 게시했습니다.',
+    '스팸홍보/도배글을 게시했습니다.',
+    '욕설/비하/혐오/차별적 표현을 사용했습니다.',
+    '청소년에게 유해한 내용을 게시했습니다.',
+    '사칭/사기 사용자입니다.',
+    '상업적 광고 및 판매 사용자입니다.'
   ];
 
   final TextEditingController _nickname = TextEditingController();
@@ -39,7 +39,7 @@ class _MyDeclarationState extends State<MyDeclaration> {
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
               Navigator.pop(context);
@@ -51,20 +51,20 @@ class _MyDeclarationState extends State<MyDeclaration> {
               key: _formkey,
               child: Column(children: [
                 Semantics(
-                    label: "신고할 닉네임 입력",
+                    label: '신고할 닉네임 입력',
                     child: TextFormField(
                         controller: _nickname,
                         maxLines: 1,
                         textInputAction: TextInputAction.done,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "신고할 닉네임은 비어있을 수 없습니다";
+                            return '신고할 닉네임은 비어있을 수 없습니다';
                           }
                           return null;
                         },
                         decoration: const InputDecoration(
-                          semanticCounterText: "신고할 닉네임 입력",
-                          labelText: "신고할 닉네임을 입력해주세요.",
+                          semanticCounterText: '신고할 닉네임 입력',
+                          labelText: '신고할 닉네임을 입력해주세요.',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(4)),
                             borderSide: BorderSide(width: 1),
@@ -126,7 +126,7 @@ class _MyDeclarationState extends State<MyDeclaration> {
                   builder: (context) {
                     return AlertDialog(
                         semanticLabel:
-                            "정상적으로 신고되었습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.",
+                            '정상적으로 신고되었습니다. 이전 화면으로 이동하려면 확인 버튼을 누르세요.',
                         content: const Text('정상적으로 신고되었습니다.',
                             semanticsLabel: '정상적으로 신고되었습니다.',
                             style: TextStyle(

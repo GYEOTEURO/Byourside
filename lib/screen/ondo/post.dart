@@ -32,14 +32,14 @@ class _OndoPostState extends State<OndoPost> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("마음온도",
-            semanticsLabel: "마음온도",
+        title: const Text('마음온도',
+            semanticsLabel: '마음온도',
             style: TextStyle(
                 fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),

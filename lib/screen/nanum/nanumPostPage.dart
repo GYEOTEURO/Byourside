@@ -60,7 +60,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
       indicatorLen = _images.length;
       //_images = images.map<File>((xfile) => File(xfile.path)).toList();
     });
-    print("이미지 세부 설명: $_imgInfos\n 이미지: $_images");
+    print('이미지 세부 설명: $_imgInfos\n 이미지: $_images');
     if (indicatorLen == 0) {
       indicatorLen = 1;
       _hide();
@@ -90,7 +90,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Semantics(
-            label: "사용자가 선택한 사진 ${index + 1}",
+            label: '사용자가 선택한 사진 ${index + 1}',
             child: Image(
               image: FileImage(File(_images[index].path)),
               fit: BoxFit.contain,
@@ -98,15 +98,15 @@ class _NanumPostPageState extends State<NanumPostPage> {
               height: MediaQuery.of(context).size.width * 0.7, // 보고 수정
             )),
         Semantics(
-            label: "사진 ${index + 1}에 대한 간략한 설명을 적어주세요",
+            label: '사진 ${index + 1}에 대한 간략한 설명을 적어주세요',
             child: TextFormField(
               maxLines: 2,
               style: const TextStyle(
                   fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
-                labelText: "사진에 대한 간략한 설명을 적어주세요",
-                hintText: "(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지",
+                labelText: '사진에 대한 간략한 설명을 적어주세요',
+                hintText: '(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지',
                 enabledBorder: UnderlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(width: 1, color: Color(0xFF045558)),
@@ -170,7 +170,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     ),
                     Container(
                         child: Semantics(
-                            label: "제목을 입력하세요",
+                            label: '제목을 입력하세요',
                             child: TextFormField(
                               style: const TextStyle(
                                   fontFamily: 'NanumGothic',
@@ -179,15 +179,15 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               textInputAction: TextInputAction.next,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "제목은 비어있을 수 없습니다";
+                                  return '제목은 비어있을 수 없습니다';
                                 }
                                 return null;
                               },
                               onFieldSubmitted: (_) =>
                                   FocusScope.of(context).requestFocus(myFocus),
                               decoration: const InputDecoration(
-                                labelText: "제목을 입력하세요",
-                                hintText: "제목을 입력하세요",
+                                labelText: '제목을 입력하세요',
+                                hintText: '제목을 입력하세요',
                                 enabledBorder: UnderlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0)),
@@ -230,7 +230,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                                 title: widget.title,
                                                 preType: _type,
                                               )));
-                                  print("타입: $_type");
+                                  print('타입: $_type');
                                 },
                                 icon: const Icon(
                                   Icons.navigate_next,
@@ -289,7 +289,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                   ),
                                   Semantics(
                                       label:
-                                          "선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.",
+                                          '선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.',
                                       child: CarouselSlider(
                                         items: List.generate(_images.length,
                                             (index) {
@@ -311,17 +311,17 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                             enableInfiniteScroll: false,
                                             viewportFraction: 1,
                                             aspectRatio: 2.0,
-                                            onPageChanged: ((idx, reason) {
+                                            onPageChanged: (idx, reason) {
                                               setState(() {
                                                 _current = idx;
                                               });
-                                            })),
+                                            }),
                                       )),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Semantics(
-                                    label: "현재 보이는 사진 순서 표시",
+                                    label: '현재 보이는 사진 순서 표시',
                                     child: CarouselIndicator(
                                       count: indicatorLen,
                                       index: _current,
@@ -350,7 +350,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     Container(
                         padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: Semantics(
-                            label: "가격을 입력하세요",
+                            label: '가격을 입력하세요',
                             child: TextFormField(
                               focusNode: myFocus,
                               textInputAction: TextInputAction.next,
@@ -359,7 +359,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                   fontWeight: FontWeight.w600),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "가격은 비어있을 수 없습니다";
+                                  return '가격은 비어있을 수 없습니다';
                                 }
                                 return null;
                               },
@@ -372,7 +372,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                                     RegExp('[0-9]'))
                               ],
                               decoration: const InputDecoration(
-                                labelText: "가격을 입력하세요",
+                                labelText: '가격을 입력하세요',
                                 hintText: '₩(원) (참고: 0원 기입 시, 나눔이 됩니다)',
                                 enabledBorder: UnderlineInputBorder(
                                   borderRadius:
@@ -403,7 +403,7 @@ class _NanumPostPageState extends State<NanumPostPage> {
                     Container(
                         padding: const EdgeInsets.only(top: 40, bottom: 5),
                         child: Semantics(
-                            label: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                            label: '마음 나눔에 올릴 게시글 내용을 작성해주세요',
                             child: TextField(
                               style: const TextStyle(
                                   fontFamily: 'NanumGothic',
@@ -413,9 +413,9 @@ class _NanumPostPageState extends State<NanumPostPage> {
                               minLines: 8,
                               maxLines: 10,
                               decoration: const InputDecoration(
-                                labelText: "마음 나눔에 올릴 게시글 내용을 작성해주세요",
+                                labelText: '마음 나눔에 올릴 게시글 내용을 작성해주세요',
                                 hintText:
-                                    "거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요",
+                                    '거래 혹은 나눔할 물건에 대한 설명, 거래 장소와 방법 등의 내용을 작성해주세요',
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
@@ -447,8 +447,8 @@ class _NanumPostPageState extends State<NanumPostPage> {
                 _images.isEmpty ? [] : await DBSet.uploadFile(_images);
             List<String> imgInfos = [];
             for (int i = 0; i < _imgInfos.length; i++) {
-              if (_imgInfos[i].text == "") {
-                imgInfos.add("설명 정보가 없는 사진입니다");
+              if (_imgInfos[i].text == '') {
+                imgInfos.add('설명 정보가 없는 사진입니다');
               } else {
                 imgInfos.add(_imgInfos[i].text);
               }

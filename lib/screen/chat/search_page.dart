@@ -30,15 +30,15 @@ class _SearchPageState extends State<SearchPage> {
         elevation: 0,
         backgroundColor: const Color(0xFF045558),
         title: const Text(
-          "검색",
-          semanticsLabel: "검색",
+          '검색',
+          semanticsLabel: '검색',
           style:
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
-                semanticLabel: "뒤로 가기", color: Colors.white),
+                semanticLabel: '뒤로 가기', color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -74,7 +74,7 @@ class _SearchPageState extends State<SearchPage> {
                           fontSize: 17,
                           fontFamily: 'NanumGothic',
                           fontWeight: FontWeight.w500),
-                      hintText: "검색",
+                      hintText: '검색',
                     ),
                   ),
                 ),
@@ -91,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
                         borderRadius: BorderRadius.circular(20)),
                     child: const Icon(
                       Icons.search,
-                      semanticLabel: "검색", //semanticLabel 속성 추가하기
+                      semanticLabel: '검색', //semanticLabel 속성 추가하기
                       color: Colors.white,
                     ),
                   ),
@@ -226,20 +226,20 @@ class _SearchPageState extends State<SearchPage> {
                       builder: (context) {
                         return AlertDialog(
                             semanticLabel: isJoined
-                                ? "참여 완료. 돌아가려면 하단의 확인 버튼을 눌러주세요."
-                                : "참여가 취소되었습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.",
+                                ? '참여 완료. 돌아가려면 하단의 확인 버튼을 눌러주세요.'
+                                : '참여가 취소되었습니다. 돌아가려면 하단의 확인 버튼을 눌러주세요.',
                             content: isJoined
                                 ? const Text(
-                                    "참여 완료.",
-                                    semanticsLabel: "참여 완료",
+                                    '참여 완료.',
+                                    semanticsLabel: '참여 완료',
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'NanumGothic',
                                         fontWeight: FontWeight.w500),
                                   )
                                 : const Text(
-                                    "참여가 취소되었습니다.",
-                                    semanticsLabel: "참여가 취소되었습니다.",
+                                    '참여가 취소되었습니다.',
+                                    semanticsLabel: '참여가 취소되었습니다.',
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'NanumGothic',
@@ -279,8 +279,8 @@ class _SearchPageState extends State<SearchPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: const Text(
-                    "참여",
-                    semanticsLabel: "참여",
+                    '참여',
+                    semanticsLabel: '참여',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 17,
