@@ -1,4 +1,3 @@
-import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/authenticate/auth_home.dart';
 import 'package:byourside/screen/authenticate/policy/personal_data.dart';
