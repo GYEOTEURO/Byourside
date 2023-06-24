@@ -1,7 +1,6 @@
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/model/ondo_post.dart';
 import 'package:byourside/screen/block.dart';
-import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
 import 'package:byourside/screen/delete.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
@@ -134,15 +133,6 @@ class _OndoPostContentState extends State<OndoPostContent> {
                           ['${post.uid}_${post.nickname}'])
                     });
                     // TODO: delay 없애봐 & 이동하는거 다 똑같으니까 앞부분만 처리하고 한번만 하던가
-                    Future.delayed(const Duration(seconds: 2), () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChatPage(
-                                  groupId: groupId,
-                                  groupName: groupName,
-                                  userName: user!.displayName!)));
-                    });
                   } else if (await checkGroupExist(groupName) != true) {
                     String groupId = await getGroupId(groupNameReverse);
                     // TODO: 항상 추가해주는게 맞나
@@ -154,15 +144,6 @@ class _OndoPostContentState extends State<OndoPostContent> {
                       'groups':
                           FieldValue.arrayUnion(['${groupId}_$groupName'])
                     });
-                    Future.delayed(const Duration(seconds: 2), () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChatPage(
-                                  groupId: groupId,
-                                  groupName: groupNameReverse,
-                                  userName: user!.displayName!)));
-                    });
                   } else { 
                     String groupId = await getGroupId(groupName);
                     await groupCollection.doc(groupId).update({
@@ -172,15 +153,6 @@ class _OndoPostContentState extends State<OndoPostContent> {
                     await userCollection.doc(user?.uid).update({
                       'groups':
                           FieldValue.arrayUnion(['${groupId}_$groupName'])
-                    });
-                    Future.delayed(const Duration(seconds: 2), () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChatPage(
-                                  groupId: groupId,
-                                  groupName: groupName,
-                                  userName: user!.displayName!)));
                     });
                   }
                 })),

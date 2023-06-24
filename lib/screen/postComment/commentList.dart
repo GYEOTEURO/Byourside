@@ -1,6 +1,5 @@
 import 'package:byourside/model/chat_list.dart';
 import 'package:byourside/screen/block.dart';
-import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/screen/declaration.dart';
 import 'package:byourside/screen/delete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -117,15 +116,6 @@ class _CommentListState extends State<CommentList> {
                                     ['${comment.uid}_${comment.nickname}'])
                               });
 
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatPage(
-                                            groupId: groupId,
-                                            groupName: groupName,
-                                            userName: user!.displayName!)));
-                              });
                             } else if (await checkGroupExist(groupName) !=
                                 true) {
                               String groupId =
@@ -138,15 +128,6 @@ class _CommentListState extends State<CommentList> {
                                 'groups': FieldValue.arrayUnion(
                                     ['${groupId}_$groupName'])
                               });
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatPage(
-                                            groupId: groupId,
-                                            groupName: groupNameReverse,
-                                            userName: user!.displayName!)));
-                              });
                             } else {
                               String groupId = await getGroupId(groupName);
                               await groupCollection.doc(groupId).update({
@@ -157,15 +138,7 @@ class _CommentListState extends State<CommentList> {
                                 'groups': FieldValue.arrayUnion(
                                     ['${groupId}_$groupName'])
                               });
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatPage(
-                                            groupId: groupId,
-                                            groupName: groupName,
-                                            userName: user!.displayName!)));
-                              });
+                             
                             }
                           },
                           child: Align(

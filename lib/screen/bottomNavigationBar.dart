@@ -7,7 +7,6 @@ import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'chat/chat_list_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.primaryColor}) : super(key: key);
@@ -29,7 +28,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     const CategoryPage(),
     const NanumPostList(
         primaryColor: Color(0xFF045558), collectionName: 'nanumPost'),
-    const ChatListScreen(),
     const Mypage(),
   ];
 

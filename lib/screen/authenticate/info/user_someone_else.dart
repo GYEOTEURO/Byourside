@@ -1,6 +1,5 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/authenticate/native_login/verify_email.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -334,8 +333,8 @@ class _SomeoneElseState extends State<SomeoneElse> {
                 storeSomeoneElseInfo(_nickname.text, _purpose.text);
                 if (mounted){
                   Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const VerifyEmail()));
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => const VerifyEmail()));
                 }
               }
             }

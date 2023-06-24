@@ -90,7 +90,6 @@ class _Mypage extends State<Mypage> {
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const LoginScreen(
-        primaryColor: primaryColor,
       ),
     ));
     // Navigator.pushNamed(context, '/login');
@@ -225,7 +224,6 @@ class _Mypage extends State<Mypage> {
           Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const LoginScreen(
-              primaryColor: primaryColor,
             ),
           ));
           // Navigator.pushNamed(context, '/login');

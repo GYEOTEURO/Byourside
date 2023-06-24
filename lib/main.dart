@@ -2,10 +2,7 @@ import 'package:byourside/screen/authenticate/info/user_type.dart';
 import 'package:byourside/screen/authenticate/info/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/info/user_protector.dart';
 import 'package:byourside/screen/authenticate/info/user_someone_else.dart';
-import 'package:byourside/screen/authenticate/native_login/verify_email.dart';
-import 'package:byourside/screen/authenticate/native_login/verify_phone.dart';
 import 'package:byourside/screen/authenticate/auth_home.dart';
-import 'package:byourside/screen/chat/chat_list_screen.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -84,15 +81,12 @@ class MyAppState extends State<MyApp> {
             title: '곁',
             initialRoute: '/login',
             routes: {
-              '/login': (context) => const LoginScreen(primaryColor: primaryColor),
+              '/login': (context) => const LoginScreen(),
               '/': (context) => const BottomNavBar(primaryColor: primaryColor),
-              '/phone': (context) => const VerifyPhone(),
-              '/email': (context) => const VerifyEmail(),
               '/user': (context) => const SetupUser(),
               '/user_protector': (context) => const Protector(),
               '/user_participator': (context) => const Participator(),
               '/user_someoneElse': (context) => const SomeoneElse(),
-              '/chat_list': (context) => const ChatListScreen(),
             },
           ),
         ),

@@ -8,8 +8,7 @@ import 'package:byourside/model/auth.dart';
 import '../../model/firebase_user.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key, required this.primaryColor}) : super(key: key);
-  final Color primaryColor;
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() {

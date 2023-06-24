@@ -3,7 +3,6 @@ import 'package:byourside/model/chat_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../screen/chat/chat_page.dart';
 
 class GroupTile extends StatefulWidget {
   final String userName;
@@ -29,17 +28,7 @@ class _GroupTileState extends State<GroupTile> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact(); // 약한 진동
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChatPage(
-                      groupId: widget.groupId,
-                      groupName: widget.groupName,
-                      userName: widget.userName,
-                    )));
-      },
+
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 5),
         child: ListTile(
