@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/model/load_data.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanum_post.dart';
@@ -9,7 +10,7 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class NanumSearch extends StatefulWidget {
   const NanumSearch({Key? key}) : super(key: key);
-  final Color primaryColor = const Color(0xFF045558);
+  final Color primaryColor = mainColor;
   final String title = '마음나눔 게시글 검색';
   final String collectionName = 'nanumPost';
 
@@ -20,6 +21,7 @@ class NanumSearch extends StatefulWidget {
 class _NanumSearchState extends State<NanumSearch> {
   final TextEditingController query = TextEditingController();
   final User? user = FirebaseAuth.instance.currentUser;
+  final LoadData loadData = LoadData();
 
   Widget _buildListItem(PostListModel? post) {
     String date =
@@ -72,7 +74,7 @@ class _NanumSearchState extends State<NanumSearch> {
                                       color: Colors.black,
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'NanumGothic'))),
+                                      fontFamily: font))),
                           Text(
                             post.type!.isEmpty
                                 ? '${post.nickname} | $date | $isCompleted'
@@ -85,7 +87,7 @@ class _NanumSearchState extends State<NanumSearch> {
                             softWrap: false,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                             ),
@@ -116,7 +118,7 @@ class _NanumSearchState extends State<NanumSearch> {
           title: Text(widget.title,
               semanticsLabel: widget.title,
               style: const TextStyle(
-                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                  fontFamily: font, fontWeight: FontWeight.bold)),
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
@@ -140,18 +142,18 @@ class _NanumSearchState extends State<NanumSearch> {
                           floatingLabelStyle: TextStyle(
                             color: widget.primaryColor,
                             fontSize: 22,
-                            fontFamily: 'NanumGothic',
+                            fontFamily: font,
                             fontWeight: FontWeight.w500),
                           contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontSize: 17,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w500),
                           labelStyle: TextStyle(
                               color: widget.primaryColor,
                               fontSize: 17,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w500),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: widget.primaryColor),
@@ -165,7 +167,7 @@ class _NanumSearchState extends State<NanumSearch> {
               Expanded(
                   child: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
                       streams: StreamTuple2(
-                        LoadData.readSearchDocs(query.text, collectionName: widget.collectionName),
+                        loadData.readSearchDocs(query.text, collectionName: widget.collectionName),
                         FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
                       builder: (context, snapshots) {
                         if(snapshots.snapshot2.hasData){

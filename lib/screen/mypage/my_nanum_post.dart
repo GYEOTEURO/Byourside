@@ -1,27 +1,31 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/nanum/nanum_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyOndoPost extends StatefulWidget {
-  const MyOndoPost({Key? key}) : super(key: key);
-  final Color primaryColor = const Color(0xFF045558);
-  final String collectionName = 'ondoPost';
-  final String title = '내가 쓴 마음온도글';
+class MyNanumPost extends StatefulWidget {
+  const MyNanumPost({Key? key}) : super(key: key);
+  final Color primaryColor = mainColor;
+  final String collectionName = 'nanumPost';
+  final String title = '내가 쓴 마음나눔글';
 
   @override
-  State<MyOndoPost> createState() => _MyOndoPostState();
+  State<MyNanumPost> createState() => _MyNanumPostState();
 }
 
-class _MyOndoPostState extends State<MyOndoPost> {
+class _MyNanumPostState extends State<MyNanumPost> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final LoadData loadData = LoadData();
 
   Widget _buildListItem(String collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+    String isCompleted = (post.isCompleted == true) ? '거래완료' : '거래중';
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -45,11 +49,11 @@ class _MyOndoPostState extends State<MyOndoPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => NanumPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
-                                primaryColor: primaryColor,
+                                primaryColor: mainColor,
                               )));
                 },
                 child: Container(
@@ -73,20 +77,20 @@ class _MyOndoPostState extends State<MyOndoPost> {
                                       color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'NanumGothic'))),
+                                      fontFamily: font))),
                           Text(
                             post.type!.isEmpty
-                                ? '$date | ${post.category!}'
-                                : '$date | ${post.category!} | $type',
+                                ? '$date | $isCompleted'
+                                : '$date | $isCompleted | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
-                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}  $type',
+                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $isCompleted'
+                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $isCompleted $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'NanumGothic',
+                                fontFamily: font,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -113,7 +117,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                fontFamily: font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -123,7 +127,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
             }),
       ),
       body: StreamBuilder<List<PostListModel>>(
-          stream: LoadData.readCreatePost(
+          stream: loadData.readCreatePost(
               collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
@@ -140,7 +144,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                       child: Text('게시글 목록을 가져오는 중...',
                           semanticsLabel: '게시글 목록을 가져오는 중...',
                           style: TextStyle(
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w600))));
             }
           }),

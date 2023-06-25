@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanum_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,18 +7,19 @@ import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyNanumPost extends StatefulWidget {
-  const MyNanumPost({Key? key}) : super(key: key);
-  final Color primaryColor = const Color(0xFF045558);
+class MyScrapNanumPost extends StatefulWidget {
+  const MyScrapNanumPost({Key? key}) : super(key: key);
+  final Color primaryColor = mainColor;
   final String collectionName = 'nanumPost';
-  final String title = '내가 쓴 마음나눔글';
+  final String title = '스크랩한 마음나눔글';
 
   @override
-  State<MyNanumPost> createState() => _MyNanumPostState();
+  State<MyScrapNanumPost> createState() => _MyScrapNanumPostState();
 }
 
-class _MyNanumPostState extends State<MyNanumPost> {
+class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final LoadData loadData = LoadData();
 
   Widget _buildListItem(String collectionName, PostListModel? post) {
     String date =
@@ -51,7 +53,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
-                                primaryColor: primaryColor,
+                                primaryColor: mainColor,
                               )));
                 },
                 child: Container(
@@ -75,20 +77,20 @@ class _MyNanumPostState extends State<MyNanumPost> {
                                       color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'NanumGothic'))),
+                                      fontFamily: font))),
                           Text(
                             post.type!.isEmpty
-                                ? '$date | $isCompleted'
-                                : '$date | $isCompleted | $type',
+                                ? '${post.nickname} | $date | $isCompleted'
+                                : '${post.nickname} | $date | $isCompleted | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $isCompleted'
-                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $isCompleted $type',
+                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted'
+                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted  $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'NanumGothic',
+                                fontFamily: font,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -115,7 +117,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                fontFamily: font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -125,7 +127,7 @@ class _MyNanumPostState extends State<MyNanumPost> {
             }),
       ),
       body: StreamBuilder<List<PostListModel>>(
-          stream: LoadData.readCreatePost(
+          stream: loadData.readScrapPost(
               collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
@@ -139,10 +141,10 @@ class _MyNanumPostState extends State<MyNanumPost> {
             } else {
               return const SelectionArea(
                   child: Center(
-                      child: Text('게시글 목록을 가져오는 중...',
-                          semanticsLabel: '게시글 목록을 가져오는 중...',
+                      child: Text('스크랩 목록을 가져오는 중...',
+                          semanticsLabel: '스크랩 목록을 가져오는 중...',
                           style: TextStyle(
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w600))));
             }
           }),

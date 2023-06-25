@@ -1,7 +1,8 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/screen/nanum/nanum_post_content.dart';
-import 'package:byourside/screen/postComment/comment_list.dart';
-import 'package:byourside/screen/postComment/create_comment.dart';
-import 'package:byourside/screen/postComment/scroll_controller.dart';
+import 'package:byourside/screen/comment/comment_list.dart';
+import 'package:byourside/screen/comment/create_comment.dart';
+import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../main.dart';
@@ -35,7 +36,7 @@ class _NanumPostState extends State<NanumPost> {
           title: const Text('마음나눔',
               semanticsLabel: '마음나눔',
               style: TextStyle(
-                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                  fontFamily: font, fontWeight: FontWeight.bold)),
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,

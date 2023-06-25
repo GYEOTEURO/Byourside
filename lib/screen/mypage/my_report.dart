@@ -1,10 +1,11 @@
+import 'package:byourside/magic_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/save_data.dart';
 
 class MyReport extends StatefulWidget {
   const MyReport({Key? key}) : super(key: key);
-  final Color primaryColor = const Color(0xFF045558);
+  final Color primaryColor = mainColor;
   final String title = '사용자 신고';
 
   @override
@@ -12,6 +13,7 @@ class MyReport extends StatefulWidget {
 }
 
 class _MyReportState extends State<MyReport> {
+  final SaveData saveData = SaveData();
   final List<String> _decList = [
     '불법 정보를 게시했습니다.',
     '음란물을 게시했습니다.',
@@ -35,7 +37,7 @@ class _MyReportState extends State<MyReport> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                fontFamily: font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -89,7 +91,7 @@ class _MyReportState extends State<MyReport> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'NanumGothic',
+                          fontFamily: font,
                           fontWeight: FontWeight.w600,
                         ))),
                 StatefulBuilder(builder: (context, setState) {
@@ -100,7 +102,7 @@ class _MyReportState extends State<MyReport> {
                                   semanticsLabel: e,
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    fontFamily: 'NanumGothic',
+                                    fontFamily: font,
                                     fontWeight: FontWeight.w600,
                                   )),
                               value: e,
@@ -120,7 +122,7 @@ class _MyReportState extends State<MyReport> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
-              SaveData.declaration('user', declaration, _nickname.text);
+              saveData.declaration('user', declaration, _nickname.text);
               showDialog(
                   context: context,
                   builder: (context) {
@@ -131,7 +133,7 @@ class _MyReportState extends State<MyReport> {
                             semanticsLabel: '정상적으로 신고되었습니다.',
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w600,
                             )),
                         actions: [
@@ -149,7 +151,7 @@ class _MyReportState extends State<MyReport> {
                                   semanticsLabel: '확인',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontFamily: 'NanumGothic',
+                                    fontFamily: font,
                                     fontWeight: FontWeight.w600,
                                   )))
                         ]);
@@ -160,7 +162,7 @@ class _MyReportState extends State<MyReport> {
               semanticsLabel: '신고',
               style: TextStyle(
                 fontSize: 14,
-                fontFamily: 'NanumGothic',
+                fontFamily: font,
                 fontWeight: FontWeight.w600,
               ))),
     );

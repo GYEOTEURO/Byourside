@@ -1,28 +1,29 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/nanum/nanum_post.dart';
+import 'package:byourside/screen/ondo/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyScrapNanumPost extends StatefulWidget {
-  const MyScrapNanumPost({Key? key}) : super(key: key);
-  final Color primaryColor = const Color(0xFF045558);
-  final String collectionName = 'nanumPost';
-  final String title = '스크랩한 마음나눔글';
+class MyScrapOndoPost extends StatefulWidget {
+  const MyScrapOndoPost({Key? key}) : super(key: key);
+  final Color primaryColor = mainColor;
+  final String collectionName = 'ondoPost';
+  final String title = '스크랩한 마음온도글';
 
   @override
-  State<MyScrapNanumPost> createState() => _MyScrapNanumPostState();
+  State<MyScrapOndoPost> createState() => _MyScrapOndoPostState();
 }
 
-class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
+class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final LoadData loadData = LoadData();
 
   Widget _buildListItem(String collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
-    String isCompleted = (post.isCompleted == true) ? '거래완료' : '거래중';
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -47,11 +48,11 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NanumPost(
+                          builder: (context) => OndoPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
-                                primaryColor: primaryColor,
+                                primaryColor: mainColor,
                               )));
                 },
                 child: Container(
@@ -75,20 +76,20 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
                                       color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'NanumGothic'))),
+                                      fontFamily: font))),
                           Text(
                             post.type!.isEmpty
-                                ? '${post.nickname} | $date | $isCompleted'
-                                : '${post.nickname} | $date | $isCompleted | $type',
+                                ? '${post.nickname} | $date | ${post.category!}'
+                                : '${post.nickname} | $date | ${post.category!} | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted'
-                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  $isCompleted  $type',
+                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
+                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!} $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'NanumGothic',
+                                fontFamily: font,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -115,7 +116,7 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                fontFamily: font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -125,7 +126,7 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
             }),
       ),
       body: StreamBuilder<List<PostListModel>>(
-          stream: LoadData.readScrapPost(
+          stream: loadData.readScrapPost(
               collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
@@ -142,7 +143,7 @@ class _MyScrapNanumPostState extends State<MyScrapNanumPost> {
                       child: Text('스크랩 목록을 가져오는 중...',
                           semanticsLabel: '스크랩 목록을 가져오는 중...',
                           style: TextStyle(
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w600))));
             }
           }),

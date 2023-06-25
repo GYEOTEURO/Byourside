@@ -1,5 +1,5 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/common/block_user.dart';
+import 'package:byourside/widget/block_user.dart';
 import 'package:flutter/material.dart';
 
 class MessageTile extends StatefulWidget {

@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/screen/ondo/poster_page.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post_list.dart';
@@ -105,7 +106,7 @@ class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
                             fontSize: 16,
                             height: 22 / 16,
                             color: Colors.black,
-                            fontFamily: 'NanumGothic',
+                            fontFamily: font,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -138,7 +139,7 @@ class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
                     child: const Text('이동',
                         semanticsLabel: '이동',
                         style: TextStyle(
-                          fontFamily: 'NanumGothic',
+                          fontFamily: font,
                           fontWeight: FontWeight.w600,
                         ))))
           ]),
@@ -207,7 +208,7 @@ class _InfoDetailCategoryPageState extends State<InfoDetailCategoryPage> {
                           fontSize: 16,
                           height: 22 / 16,
                           color: Colors.black,
-                          fontFamily: 'NanumGothic',
+                          fontFamily: font,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

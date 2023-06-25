@@ -1,26 +1,29 @@
+import 'package:byourside/magic_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../model/save_data.dart';
+import '../model/save_data.dart';
 
-class Delete extends StatefulWidget {
-  Delete(
+class DeletePostOrComment extends StatefulWidget {
+  DeletePostOrComment(
       {super.key,
       required this.collectionName,
       required this.documentID,
       this.commentID=Null});
-  final Color primaryColor = const Color(0xFF045558);
+  final Color primaryColor = mainColor;
   final String collectionName;
   final String documentID;
   var commentID;
 
   @override
-  State<Delete> createState() => _DeleteState();
+  State<DeletePostOrComment> createState() => _DeletePostOrCommentState();
 }
 
-class _DeleteState extends State<Delete> {
+class _DeletePostOrCommentState extends State<DeletePostOrComment> {
+  final SaveData saveData = SaveData();
+  
   @override
   Widget build(BuildContext context) {
-    var type = widget.commentID.isNull?'글':'댓글';
+    var type = widget.commentID == Null?'글':'댓글';
 
     return OutlinedButton(
             style: ElevatedButton.styleFrom(
@@ -31,7 +34,7 @@ class _DeleteState extends State<Delete> {
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
-                  fontFamily: 'NanumGothic',
+                  fontFamily: font,
                   fontWeight: FontWeight.w600,
                 )),
             onPressed: () {
@@ -49,7 +52,7 @@ class _DeleteState extends State<Delete> {
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 14,
-                                  fontFamily: 'NanumGothic',
+                                  fontFamily: font,
                                   fontWeight: FontWeight.w600,
                                 )),
                             actions: [
@@ -63,18 +66,20 @@ class _DeleteState extends State<Delete> {
                                         ),
                                         onPressed: () {
                                           HapticFeedback.lightImpact(); // 약한 진동
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context, '/', (_) => false);
-                                          widget.commentID.isNull?
-                                            SaveData.deletePost(widget.collectionName, widget.documentID):
-                                            SaveData.deleteComment(widget.collectionName, widget.documentID, widget.commentID);
-                                          Navigator.pop(context);
+                                          if(widget.commentID == Null){
+                                            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                                            saveData.deletePost(widget.collectionName, widget.documentID);
+                                          }
+                                          else{
+                                            saveData.deleteComment(widget.collectionName, widget.documentID, widget.commentID);
+                                            Navigator.pop(context);
+                                          }
                                         },
                                         child: const Text('삭제',
                                             semanticsLabel: '삭제',
                                             style: TextStyle(
                                               fontSize: 14,
-                                              fontFamily: 'NanumGothic',
+                                              fontFamily: font,
                                               fontWeight: FontWeight.w600,
                                             ))),
                                     ElevatedButton(
@@ -89,7 +94,7 @@ class _DeleteState extends State<Delete> {
                                             semanticsLabel: '취소',
                                             style: TextStyle(
                                               fontSize: 14,
-                                              fontFamily: 'NanumGothic',
+                                              fontFamily: font,
                                               fontWeight: FontWeight.w600,
                                             )))
                                   ])

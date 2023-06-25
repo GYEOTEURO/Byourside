@@ -27,6 +27,7 @@ class _ChatPageState extends State<ChatPage> {
   TextEditingController messageController = TextEditingController();
   String admin = "";
   int count = 0;
+  final SaveData saveData = SaveData();
 
   final List<String> _decList = [
     "불법 정보를 포함하고 있습니다.",
@@ -156,7 +157,7 @@ class _ChatPageState extends State<ChatPage> {
                                         ),
                                         onPressed: () {
                                           HapticFeedback.lightImpact(); // 약한 진동
-                                          SaveData.declaration('chat',
+                                          saveData.declaration('chat',
                                               declaration, widget.groupId);
                                           Navigator.pop(context);
                                         },

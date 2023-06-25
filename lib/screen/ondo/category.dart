@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/info_detail_category.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
@@ -72,7 +73,7 @@ class _CategoryPageState extends State<CategoryPage>
           child: Text('마음온도',
               semanticsLabel: '마음온도',
               style: TextStyle(
-                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                  fontFamily: font, fontWeight: FontWeight.bold)),
         ),
         actions: <Widget>[
           IconButton(

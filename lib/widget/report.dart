@@ -1,7 +1,8 @@
+import 'package:byourside/magic_number.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../model/save_data.dart';
+import '../model/save_data.dart';
 
 class Report extends StatefulWidget {
   const Report(
@@ -9,7 +10,7 @@ class Report extends StatefulWidget {
       required this.decList,
       required this.collectionType,
       required this.id});
-  final Color primaryColor = const Color(0xFF045558);
+  final Color primaryColor = mainColor;
   final List<String> decList;
   final String collectionType;
   final String id;
@@ -20,6 +21,7 @@ class Report extends StatefulWidget {
 
 class _ReportState extends State<Report> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final SaveData saveData = SaveData();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class _ReportState extends State<Report> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 14,
-            fontFamily: 'NanumGothic',
+            fontFamily: font,
             fontWeight: FontWeight.w600,
           )),
       onPressed: () {
@@ -51,7 +53,7 @@ class _ReportState extends State<Report> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'NanumGothic',
+                            fontFamily: font,
                             fontWeight: FontWeight.w600,
                           )),
                       content: StatefulBuilder(builder: (context, setState) {
@@ -62,7 +64,7 @@ class _ReportState extends State<Report> {
                                       semanticsLabel: e,
                                       style: const TextStyle(
                                         fontSize: 14,
-                                        fontFamily: 'NanumGothic',
+                                        fontFamily: font,
                                         fontWeight: FontWeight.w600,
                                       )),
                                   value: e,
@@ -85,7 +87,7 @@ class _ReportState extends State<Report> {
                                   ),
                                   onPressed: () {
                                     HapticFeedback.lightImpact(); // 약한 진동
-                                    SaveData.declaration(widget.collectionType,
+                                    saveData.declaration(widget.collectionType,
                                         declaration, widget.id);
                                     Navigator.pop(context);
                                   },
@@ -93,7 +95,7 @@ class _ReportState extends State<Report> {
                                       semanticsLabel: '신고',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontFamily: 'NanumGothic',
+                                        fontFamily: font,
                                         fontWeight: FontWeight.w600,
                                       ))),
                               ElevatedButton(
@@ -108,7 +110,7 @@ class _ReportState extends State<Report> {
                                       semanticsLabel: '취소',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontFamily: 'NanumGothic',
+                                        fontFamily: font,
                                         fontWeight: FontWeight.w600,
                                       )))
                             ])

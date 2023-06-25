@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/main.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/nanum/nanum_post.dart';
@@ -36,6 +37,7 @@ class _NanumPostListState extends State<NanumPostList> {
   }
 
   final User? user = FirebaseAuth.instance.currentUser;
+  final LoadData loadData = LoadData();
 
   Widget _buildListItem(PostListModel? post) {
     String date =
@@ -92,7 +94,7 @@ class _NanumPostListState extends State<NanumPostList> {
                                       color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'NanumGothic'))),
+                                      fontFamily: font))),
                           Text(
                             post.type!.isEmpty
                                 ? '${post.nickname!} | $date | $isCompleted'
@@ -106,7 +108,7 @@ class _NanumPostListState extends State<NanumPostList> {
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -138,7 +140,7 @@ class _NanumPostListState extends State<NanumPostList> {
           title: const Text('마음나눔',
               semanticsLabel: '마음나눔',
               style: TextStyle(
-                  fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                  fontFamily: font, fontWeight: FontWeight.bold)),
           leading: IconButton(
               icon: const Icon(Icons.filter_alt,
                   semanticLabel: '장애 유형 필터링', color: Colors.white),
@@ -198,7 +200,7 @@ class _NanumPostListState extends State<NanumPostList> {
                         semanticsLabel: '거래완료 제외',
                         style: TextStyle(
                           color: Colors.white,
-                          fontFamily: 'NanumGothic',
+                          fontFamily: font,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
@@ -207,9 +209,9 @@ class _NanumPostListState extends State<NanumPostList> {
                   )))),
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2((completedValue == true)
-              ? LoadData.readIsCompletedCollection(
+              ? loadData.readIsCompletedCollection(
                   collectionName: widget.collectionName, type: controller.type)
-              : LoadData.readAllCollection(
+              : loadData.readAllCollection(
                   collectionName: widget.collectionName, type: controller.type),
               FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
@@ -237,7 +239,7 @@ class _NanumPostListState extends State<NanumPostList> {
                       child: Text('게시물 목록을 가져오는 중...',
                           semanticsLabel: '게시물 목록을 가져오는 중...',
                           style: TextStyle(
-                            fontFamily: 'NanumGothic',
+                            fontFamily: font,
                             fontWeight: FontWeight.w600,
                           ))));
             }

@@ -1,8 +1,9 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/model/chat_list.dart';
-import 'package:byourside/screen/common/block_user.dart';
+import 'package:byourside/widget/block_user.dart';
 import 'package:byourside/screen/chat/chat_page.dart';
-import 'package:byourside/screen/common/report.dart';
-import 'package:byourside/screen/common/delete.dart';
+import 'package:byourside/widget/report.dart';
+import 'package:byourside/widget/delete_post_or_comment.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,35 +32,10 @@ class NanumPostContent extends StatefulWidget {
 class _NanumPostContentState extends State<NanumPostContent> {
   final User? user = FirebaseAuth.instance.currentUser;
   int _current = 0; // 현재 이미지 인덱스
+  final SaveData saveData = SaveData();
+  final LoadData loadData = LoadData();
 
-  final List<String> _decList = [
-    '불법 정보를 포함하고 있습니다.',
-    '게시판 성격에 부적절합니다.',
-    '음란물입니다.',
-    '스팸홍보/도배글입니다.',
-    '욕설/비하/혐오/차별적 표현을 포함하고 있습니다.',
-    '청소년에게 유해한 내용입니다.',
-    '사칭/사기입니다.',
-    '상업적 광고 및 판매글입니다.'
-  ];
-
-  final CollectionReference groupCollection =
-      FirebaseFirestore.instance.collection('groups');
-
-  final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('user');
-
-  Future<bool> checkGroupExist(String name) async {
-    var collection = FirebaseFirestore.instance.collection('groupList');
-    var doc = await collection.doc(name).get();
-    return doc.exists;
-  }
-
-  Future<String> getGroupId(String groupName) async {
-    var collection = FirebaseFirestore.instance.collection('groupList');
-    var doc = await collection.doc(groupName).get();
-    return doc.data()?.values.last;
-  }
+  final List<String> _decList = postReportReasonList;
 
   Widget _buildListItem(String? collectionName, NanumPostModel? post) {
     List<String> datetime = post!.datetime!.toDate().toString().split(' ');
@@ -91,12 +67,10 @@ class _NanumPostContentState extends State<NanumPostContent> {
             style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            fontFamily: 'NanumGothic'),
+            fontFamily: font),
           ))),
       Row(children: [
-        Expanded(
-            child: TextButton(
-          child: Align(
+        Align(
               alignment: Alignment.centerLeft,
               child: Text(
                   post.type!.isEmpty
@@ -108,81 +82,10 @@ class _NanumPostContentState extends State<NanumPostContent> {
                   style: const TextStyle(
                       color: Colors.black,
                       fontSize: 14,
-                      fontFamily: 'NanumGothic',
+                      fontFamily: font,
                       fontWeight: FontWeight.w600))),
-          onPressed: () async {
-            HapticFeedback.lightImpact(); // 약한 진동
-            var groupName = '${user?.displayName}_${post.nickname}';
-            var groupNameReverse = '${post.nickname}_${user?.displayName}';
-            if (await checkGroupExist(groupName) != true &&
-                await checkGroupExist(groupNameReverse) != true) {
-              await ChatList(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .createGroup(
-                      FirebaseAuth.instance.currentUser!.displayName.toString(),
-                      FirebaseAuth.instance.currentUser!.uid.toString(),
-                      post.nickname!,
-                      post.uid!,
-                      groupName);
-
-              String groupId = await getGroupId(groupName);
-              await groupCollection.doc(groupId).update({
-                'members':
-                    FieldValue.arrayUnion(['${post.uid}_${post.nickname}'])
-              });
-              // await userCollection.doc(post.uid).update({
-              //   "groups":
-              //       FieldValue.arrayUnion(["${doc.uid}_${doc.nickname}"])
-              // })
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                            groupId: groupId,
-                            groupName: groupName,
-                            userName: user!.displayName!)));
-              });
-            } else if (await checkGroupExist(groupName) != true) {
-              String groupId = await getGroupId(groupNameReverse);
-              await groupCollection.doc(groupId).update({
-                'members':
-                    FieldValue.arrayUnion(['${user?.uid}_${user?.displayName}'])
-              });
-              await userCollection.doc(user?.uid).update({
-                'groups': FieldValue.arrayUnion(['${groupId}_$groupName'])
-              });
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                            groupId: groupId,
-                            groupName: groupNameReverse,
-                            userName: user!.displayName!)));
-              });
-            } else {
-              String groupId = await getGroupId(groupName);
-              await groupCollection.doc(groupId).update({
-                'members':
-                    FieldValue.arrayUnion(['${user?.uid}_${user?.displayName}'])
-              });
-              await userCollection.doc(user?.uid).update({
-                'groups': FieldValue.arrayUnion(['${groupId}_$groupName'])
-              });
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                            groupId: groupId,
-                            groupName: groupName,
-                            userName: user!.displayName!)));
-              });
-            }
-          },
-        )),
         if (user?.uid == post.uid)
-          Delete(collectionName: widget.collectionName, documentID: widget.documentID)
+          DeletePostOrComment(collectionName: widget.collectionName, documentID: widget.documentID)
         else
           Row(children: [
             Report(
@@ -205,7 +108,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                             fontSize: 16,
                             color: Color.fromARGB(255, 223, 113, 93),
                             fontWeight: FontWeight.w600,
-                            fontFamily: 'NanumGothic'))))
+                            fontFamily: font))))
             : Container(
                 margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                 width: width * 0.5,
@@ -219,7 +122,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                                   fontSize: 16,
                                   color: Color.fromARGB(255, 223, 113, 93),
                                   fontWeight: FontWeight.w600,
-                                  fontFamily: 'NanumGothic'))),
+                                  fontFamily: font))),
                       SelectionArea(
                           child: Text(
                         '${post.price!} 원',
@@ -228,7 +131,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                             fontSize: 16,
                             color: Color.fromARGB(255, 223, 113, 93),
                             fontWeight: FontWeight.w600,
-                            fontFamily: 'NanumGothic'),
+                            fontFamily: font),
                       )),
                     ])),
         if (user?.uid == post.uid)
@@ -240,11 +143,11 @@ class _NanumPostContentState extends State<NanumPostContent> {
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                      fontFamily: 'NanumGothic',
+                      fontFamily: font,
                       fontWeight: FontWeight.w500)),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
-                SaveData.updateIsCompleted(
+                saveData.updateIsCompleted(
                     collectionName!, post.id!, !post.isCompleted!);
               })
         else
@@ -257,7 +160,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
-                    fontFamily: 'NanumGothic',
+                    fontFamily: font,
                     fontWeight: FontWeight.w500)),
             onPressed: () {},
           ),
@@ -307,7 +210,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
             semanticsLabel: post.content,
             style: const TextStyle(
                 fontSize: 16,
-                fontFamily: 'NanumGothic',
+                fontFamily: font,
                 fontWeight: FontWeight.w600),
           ))),
       //Divider(thickness: 1, height: 1, color: Colors.black),
@@ -316,8 +219,8 @@ class _NanumPostContentState extends State<NanumPostContent> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             post.likesPeople!.contains(user?.uid)
-                ? SaveData.cancelLike(collectionName!, post.id!, user!.uid)
-                : SaveData.addLike(collectionName!, post.id!, user!.uid);
+                ? saveData.cancelLike(collectionName!, post.id!, user!.uid)
+                : saveData.addLike(collectionName!, post.id!, user!.uid);
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(width * 0.38, height * 0.06),
@@ -334,15 +237,15 @@ class _NanumPostContentState extends State<NanumPostContent> {
               semanticsLabel: '좋아요  ${post.likes}개',
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                fontFamily: 'NanumGothic',
+                fontFamily: font,
               )),
         ),
         OutlinedButton.icon(
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
               post.scrapPeople!.contains(user?.uid)
-                  ? SaveData.cancelScrap(collectionName!, post.id!, user!.uid)
-                  : SaveData.addScrap(collectionName!, post.id!, user!.uid);
+                  ? saveData.cancelScrap(collectionName!, post.id!, user!.uid)
+                  : saveData.addScrap(collectionName!, post.id!, user!.uid);
             },
             style: ElevatedButton.styleFrom(
               fixedSize: Size(width * 0.38, height * 0.06),
@@ -358,7 +261,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
             label: const Text('스크랩',
                 semanticsLabel: '스크랩',
                 style: TextStyle(
-                    fontWeight: FontWeight.w600, fontFamily: 'NanumGothic'))),
+                    fontWeight: FontWeight.w600, fontFamily: font))),
       ]),
     ]);
   }
@@ -369,7 +272,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
     String documentID = widget.documentID;
 
     return StreamBuilder<NanumPostModel>(
-        stream: LoadData.readNanumDocument(
+        stream: loadData.readNanumDocument(
             collectionName: collectionName, documentID: documentID),
         builder: (context, AsyncSnapshot<NanumPostModel> snapshot) {
           if (snapshot.hasData) {
@@ -381,7 +284,7 @@ class _NanumPostContentState extends State<NanumPostContent> {
                     child: Text('게시물을 찾을 수 없습니다.',
                         semanticsLabel: '게시물을 찾을 수 없습니다.',
                         style: TextStyle(
-                          fontFamily: 'NanumGothic',
+                          fontFamily: font,
                           fontWeight: FontWeight.w600,
                         ))));
           }

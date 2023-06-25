@@ -29,6 +29,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
   List<TextEditingController> _imgInfos = [];
 
   final User? user = FirebaseAuth.instance.currentUser;
+  final SaveData saveData = SaveData();
 
   Category _categories = Category(null, null);
 
@@ -425,7 +426,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
             if (_formkey.currentState!.validate()) {
               Navigator.pop(context);
               List<String> urls =
-                  _images.isEmpty ? [] : await SaveData.uploadFile(_images);
+                  _images.isEmpty ? [] : await saveData.uploadFile(_images);
               List<String> imgInfos = [];
               for (int i = 0; i < _imgInfos.length; i++) {
                 if (_imgInfos[i].text == "") {
@@ -453,7 +454,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                   likesPeople: [],
                   scrapPeople: [],
                   keyword: _title.text.split(' '));
-              SaveData.addOndoPost('ondoPost', postData);
+              saveData.addOndoPost('ondoPost', postData);
             }
           }
         },

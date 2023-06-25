@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import '../../model/save_data.dart';
 
 class MyBlock extends StatefulWidget {
   const MyBlock({Key? key}) : super(key: key);
-  final Color primaryColor = const Color(0xFF045558);
+  final Color primaryColor = mainColor;
   final String title = '사용자 차단';
 
   @override
@@ -18,6 +19,7 @@ class _MyBlockState extends State<MyBlock> {
   final _formkey = GlobalKey<FormState>();
 
   final User? user = FirebaseAuth.instance.currentUser;
+  final SaveData saveData = SaveData();
 
   Widget _buildListItem(List<String> blockList) {
     return SingleChildScrollView(
@@ -33,7 +35,7 @@ class _MyBlockState extends State<MyBlock> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15,
-                        fontFamily: 'NanumGothic',
+                        fontFamily: font,
                         fontWeight: FontWeight.w600,
                       ))),
               Semantics(
@@ -71,7 +73,7 @@ class _MyBlockState extends State<MyBlock> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
-                        fontFamily: 'NanumGothic',
+                        fontFamily: font,
                         fontWeight: FontWeight.w600,
                       ))),
               if (blockList.isEmpty)
@@ -80,7 +82,7 @@ class _MyBlockState extends State<MyBlock> {
                         semanticsLabel: '차단한 사용자 목록 없음',
                         style: TextStyle(
                           fontSize: 18,
-                          fontFamily: 'NanumGothic',
+                          fontFamily: font,
                           fontWeight: FontWeight.w600,
                         )))
               else
@@ -94,7 +96,7 @@ class _MyBlockState extends State<MyBlock> {
                                       semanticsLabel: e,
                                       style: const TextStyle(
                                         fontSize: 17,
-                                        fontFamily: 'NanumGothic',
+                                        fontFamily: font,
                                         fontWeight: FontWeight.w600,
                                       )),
                                   ElevatedButton(
@@ -104,13 +106,13 @@ class _MyBlockState extends State<MyBlock> {
                                       ),
                                       onPressed: () {
                                         HapticFeedback.lightImpact(); // 약한 진동
-                                        SaveData.cancelBlock(user!.uid, e);
+                                        saveData.cancelBlock(user!.uid, e);
                                       },
                                       child: const Text('차단 해제',
                                           semanticsLabel: '차단 해제',
                                           style: TextStyle(
                                             fontSize: 14,
-                                            fontFamily: 'NanumGothic',
+                                            fontFamily: font,
                                             fontWeight: FontWeight.w600,
                                           )))
                                 ]))
@@ -126,7 +128,7 @@ class _MyBlockState extends State<MyBlock> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: 'NanumGothic', fontWeight: FontWeight.bold)),
+                fontFamily: font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -154,7 +156,7 @@ class _MyBlockState extends State<MyBlock> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
-              SaveData.addBlock(user!.uid, _nickname.text);
+              saveData.addBlock(user!.uid, _nickname.text);
               showDialog(
                   context: context,
                   builder: (context) {
@@ -167,7 +169,7 @@ class _MyBlockState extends State<MyBlock> {
                                 '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: font,
                               fontWeight: FontWeight.w600,
                             )),
                         actions: [
@@ -185,7 +187,7 @@ class _MyBlockState extends State<MyBlock> {
                                   semanticsLabel: '확인',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontFamily: 'NanumGothic',
+                                    fontFamily: font,
                                     fontWeight: FontWeight.w600,
                                   )))
                         ]);
@@ -196,7 +198,7 @@ class _MyBlockState extends State<MyBlock> {
               semanticsLabel: '차단',
               style: TextStyle(
                 fontSize: 14,
-                fontFamily: 'NanumGothic',
+                fontFamily: font,
                 fontWeight: FontWeight.w600,
               ))),
     );

@@ -1,5 +1,6 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/model/save_data.dart';
-import 'package:byourside/screen/postComment/scroll_controller.dart';
+import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +28,7 @@ class _CreateCommentState extends State<CreateComment> {
   final User? user = FirebaseAuth.instance.currentUser;
   final TextEditingController comment = TextEditingController();
   final scrollController = Get.put(ScrollDownForComment());
+  final SaveData saveData = SaveData();
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +48,20 @@ class _CreateCommentState extends State<CreateComment> {
                 decoration: InputDecoration(
                   labelText: '댓글을 작성해주세요.',
                   floatingLabelStyle: const TextStyle(
-                    color: primaryColor,
+                    color: mainColor,
                     fontSize: 22,
-                    fontFamily: 'NanumGothic',
+                    fontFamily: font,
                     fontWeight: FontWeight.w500),
                   contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   hintStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 17,
-                      fontFamily: 'NanumGothic',
+                      fontFamily: font,
                       fontWeight: FontWeight.w500),
                   labelStyle: const TextStyle(
                       color: primaryColor,
                       fontSize: 17,
-                      fontFamily: 'NanumGothic',
+                      fontFamily: font,
                       fontWeight: FontWeight.w500),
                   enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: primaryColor),
@@ -78,7 +80,7 @@ class _CreateCommentState extends State<CreateComment> {
                         nickname: user!.displayName,
                         content: comment.text,
                         datetime: Timestamp.now());
-                    SaveData.addComment(collectionName, documentID, commentData);
+                    saveData.addComment(collectionName, documentID, commentData);
                     scrollController.scrollController.animateTo(
                       scrollController.scrollController.position.maxScrollExtent, 
                       duration: const Duration(milliseconds: 10), 

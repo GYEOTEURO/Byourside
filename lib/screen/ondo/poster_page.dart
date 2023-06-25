@@ -1,3 +1,4 @@
+import 'package:byourside/magic_number.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
 import 'package:byourside/screen/ondo/postPage.dart';
@@ -31,6 +32,7 @@ class PosterPage extends StatefulWidget {
 class _PosterPageState extends State<PosterPage> {
   final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
+  final LoadData loadData = LoadData();
 
   Widget _buildListItem(String? collectionName, PostListModel? post) {
     String date =
@@ -85,7 +87,7 @@ class _PosterPageState extends State<PosterPage> {
                             child: Text('사진 없음',
                                 semanticsLabel: '사진 없음',
                                 style: TextStyle(
-                                  fontFamily: 'NanumGothic',
+                                  fontFamily: font,
                                   fontWeight: FontWeight.w600,
                                 ))),
                       )),
@@ -101,7 +103,7 @@ class _PosterPageState extends State<PosterPage> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'NanumGothic')))),
+                            fontFamily: font)))),
             Expanded(
                 child: Container(
                     padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
@@ -118,7 +120,7 @@ class _PosterPageState extends State<PosterPage> {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
-                        fontFamily: 'NanumGothic',
+                        fontFamily: font,
                         fontWeight: FontWeight.w600,
                       ),
                     ))),
@@ -138,7 +140,7 @@ class _PosterPageState extends State<PosterPage> {
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            LoadData.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
+            loadData.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
             FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
             if(snapshots.snapshot2.hasData){
@@ -170,7 +172,7 @@ class _PosterPageState extends State<PosterPage> {
                       child: Text('게시물 목록을 가져오는 중...',
                           semanticsLabel: '게시물 목록을 가져오는 중...',
                           style: TextStyle(
-                            fontFamily: 'NanumGothic',
+                            fontFamily: font,
                             fontWeight: FontWeight.w600,
                           ))));
             }

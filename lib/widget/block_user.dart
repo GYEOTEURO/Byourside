@@ -1,11 +1,12 @@
+import 'package:byourside/magic_number.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../model/save_data.dart';
+import '../model/save_data.dart';
 
 class BlockUser extends StatefulWidget {
   const BlockUser({super.key, required this.nickname, required this.collectionType});
-  final Color primaryColor = const Color(0xFF045558);
+  final Color primaryColor = mainColor;
   final String nickname;
   final String collectionType;
 
@@ -15,6 +16,7 @@ class BlockUser extends StatefulWidget {
 
 class _BlockUserState extends State<BlockUser> {
   final User? user = FirebaseAuth.instance.currentUser;
+  final SaveData saveData = SaveData();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class _BlockUserState extends State<BlockUser> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 14,
-            fontFamily: 'NanumGothic',
+            fontFamily: font,
             fontWeight: FontWeight.w600,
           )),
       onPressed: () {
@@ -44,7 +46,7 @@ class _BlockUserState extends State<BlockUser> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'NanumGothic',
+                            fontFamily: font,
                             fontWeight: FontWeight.w600,
                           )),
                       actions: [
@@ -63,13 +65,13 @@ class _BlockUserState extends State<BlockUser> {
                                     } else {
                                       Navigator.pop(context);
                                     }
-                                    SaveData.addBlock(user!.uid, widget.nickname);
+                                    saveData.addBlock(user!.uid, widget.nickname);
                                   },
                                   child: const Text('차단',
                                       semanticsLabel: '차단',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontFamily: 'NanumGothic',
+                                        fontFamily: font,
                                         fontWeight: FontWeight.w600,
                                       ))),
                               ElevatedButton(
@@ -84,7 +86,7 @@ class _BlockUserState extends State<BlockUser> {
                                       semanticsLabel: '취소',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontFamily: 'NanumGothic',
+                                        fontFamily: font,
                                         fontWeight: FontWeight.w600,
                                       )))
                             ])

@@ -5,11 +5,14 @@ import 'package:byourside/model/post_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoadData{  //클래스 이름은 명사로
+  LoadData({FirebaseFirestore? firestore}) : firestore = firestore ?? FirebaseFirestore.instance;
+
+  final FirebaseFirestore firestore;
 
   // Firestore의 collection에 있는 모든 데이터 불러오기
-  static Stream<List<PostListModel>> readAllCollection({required String collectionName, List<String>? type}) {
+  Stream<List<PostListModel>> readAllCollection({required String collectionName, List<String>? type}) {
         if(type == null || type.isEmpty){
-          return FirebaseFirestore.instance
+          return firestore
             .collection(collectionName)
             .orderBy('datetime', descending: true)
             .snapshots()
@@ -17,7 +20,7 @@ class LoadData{  //클래스 이름은 명사로
             .toList());
         }
         else{
-          return FirebaseFirestore.instance
+          return firestore
             .collection(collectionName)
             .where('type', arrayContainsAny: type)
             .orderBy('datetime', descending: true)
@@ -28,9 +31,9 @@ class LoadData{  //클래스 이름은 명사로
   }
 
   // Firestore의 마음나눔 collection에 있는 거래중인 데이터 불러오기 (거래 완료 제외)
-  static Stream<List<PostListModel>> readIsCompletedCollection({required String collectionName, List<String>? type}) {
+  Stream<List<PostListModel>> readIsCompletedCollection({required String collectionName, List<String>? type}) {
     if(type == null || type.isEmpty){
-      return FirebaseFirestore.instance
+      return firestore
           .collection(collectionName)
           .where('isCompleted', isEqualTo: false)
           .orderBy('datetime', descending: true)
@@ -39,7 +42,7 @@ class LoadData{  //클래스 이름은 명사로
               .map((doc) => PostListModel.fromMap(doc, collectionName))
               .toList());
     } else {
-      return FirebaseFirestore.instance
+      return firestore
           .collection(collectionName)
           .where('type', arrayContainsAny: type)
           .where('isCompleted', isEqualTo: false)
@@ -52,9 +55,9 @@ class LoadData{  //클래스 이름은 명사로
   }
 
   // 검색을 위한 쿼리 비교
-  static Stream<List<PostListModel>> readSearchDocs(String query,
+  Stream<List<PostListModel>> readSearchDocs(String query,
           {required String collectionName}) =>
-      FirebaseFirestore.instance
+          firestore
           .collection(collectionName)
           .where('keyword', arrayContainsAny: [query])
           .orderBy('datetime', descending: true)
@@ -64,9 +67,9 @@ class LoadData{  //클래스 이름은 명사로
               .toList());
 
   // Firestore의 ondo collection에 있는 특정 카테고리 데이터 불러오기 (자유/정보의 세부 카테고리)
-  static Stream<List<PostListModel>> readCategoryCollection({required String collectionName, required String category, List<String>? type}) {
+  Stream<List<PostListModel>> readCategoryCollection({required String collectionName, required String category, List<String>? type}) {
         if(type == null || type.isEmpty){
-          return FirebaseFirestore.instance
+          return firestore
             .collection(collectionName)
             .where('category', isEqualTo: category)
             .orderBy('datetime', descending: true)
@@ -75,7 +78,7 @@ class LoadData{  //클래스 이름은 명사로
             .toList());
         }
         else{
-          return FirebaseFirestore.instance
+          return firestore
             .collection(collectionName)
             .where('category', isEqualTo: category)
             .where('type', arrayContainsAny: type)
@@ -87,10 +90,10 @@ class LoadData{  //클래스 이름은 명사로
 }
 
   // Firestore의 ondo collection에 있는 정보에 속하는 카테고리 데이터 모두 불러오기("전체 정보" 카테고리 가져오기)
-  static Stream<List<PostListModel>> readAllInfoCollection(
+  Stream<List<PostListModel>> readAllInfoCollection(
       {required String collectionName, List<String>? type}) {
     if (type == null || type.isEmpty || type.length > 1) {
-      return FirebaseFirestore.instance
+      return firestore
           .collection(collectionName)
           .where('category', whereIn: [
             '복지/혜택',
@@ -105,7 +108,7 @@ class LoadData{  //클래스 이름은 명사로
               .map((doc) => PostListModel.fromMap(doc, collectionName))
               .toList());
     } else {
-      return FirebaseFirestore.instance
+      return firestore
           .collection(collectionName)
           .where('category', whereIn: [
             '복지/혜택',
@@ -124,27 +127,27 @@ class LoadData{  //클래스 이름은 명사로
   }
 
   // Firestore의 마음온도 collection 내 특정 문서 불러오기
-  static Stream<OndoPostModel> readOndoDocument(
+  Stream<OndoPostModel> readOndoDocument(
           {required String collectionName, required String documentID}) =>
-      FirebaseFirestore.instance
+          firestore
           .collection(collectionName)
           .doc(documentID)
           .snapshots()
           .map((snapshot) => OndoPostModel.fromMap(snapshot));
 
   // Firestore의 마음나눔 collection 내 특정 문서 불러오기
-  static Stream<NanumPostModel> readNanumDocument(
+  Stream<NanumPostModel> readNanumDocument(
           {required String collectionName, required String documentID}) =>
-      FirebaseFirestore.instance
+          firestore
           .collection(collectionName)
           .doc(documentID)
           .snapshots()
           .map((snapshot) => NanumPostModel.fromMap(snapshot));
 
   // Firestore의 특정 문서에 있는 모든 댓글 불러오기
-  static Stream<List<CommentModel>> readComment(
+  Stream<List<CommentModel>> readComment(
           {required String collectionName, required String documentID}) =>
-      FirebaseFirestore.instance
+          firestore
           .collection(collectionName)
           .doc(documentID)
           .collection('comment')
@@ -154,9 +157,9 @@ class LoadData{  //클래스 이름은 명사로
               snapshot.docs.map((doc) => CommentModel.fromMap(doc)).toList());
 
   // 작성한 글 보기
-  static Stream<List<PostListModel>> readCreatePost(
+  Stream<List<PostListModel>> readCreatePost(
           {required String collectionName, required String uid}) =>
-      FirebaseFirestore.instance
+          firestore
           .collection(collectionName)
           .where('uid', isEqualTo: uid)
           .orderBy('datetime', descending: true)
@@ -166,9 +169,9 @@ class LoadData{  //클래스 이름은 명사로
               .toList());
 
   // 스크랩한 글 보기
-  static Stream<List<PostListModel>> readScrapPost(
+  Stream<List<PostListModel>> readScrapPost(
           {required String collectionName, required String uid}) =>
-      FirebaseFirestore.instance
+          firestore
           .collection(collectionName)
           .where('scrapPeople', arrayContains: uid)
           .orderBy('datetime', descending: true)
