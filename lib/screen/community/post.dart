@@ -1,6 +1,6 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/screen/comment/comment_list.dart';
-import 'package:byourside/screen/ondo/ondo_post_content.dart';
+import 'package:byourside/screen/community/ondo_post_content.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _OndoPostState extends State<OndoPost> {
         title: const Text('마음온도',
             semanticsLabel: '마음온도',
             style: TextStyle(
-                fontFamily: font, fontWeight: FontWeight.bold)),
+                fontFamily: constants.font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -55,21 +55,21 @@ class _OndoPostState extends State<OndoPost> {
                 child: OndoPostContent(
                     collectionName: collectionName,
                     documentID: documentID,
-                    primaryColor: mainColor)),
+                    primaryColor: constants.mainColor)),
             Container(
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: CreateComment(
                     collectionName: collectionName,
                     documentID: documentID,
-                    primaryColor: mainColor)),
+                    primaryColor: constants.mainColor)),
             Container(
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                 child: CommentList(
                     collectionName: collectionName,
                     documentID: documentID,
-                    primaryColor: mainColor)),
+                    primaryColor: constants.mainColor)),
           ])),
     );
   }

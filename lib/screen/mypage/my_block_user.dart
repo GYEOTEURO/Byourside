@@ -1,4 +1,4 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import '../../model/save_data.dart';
 
 class MyBlock extends StatefulWidget {
   const MyBlock({Key? key}) : super(key: key);
-  final Color primaryColor = mainColor;
+  final Color primaryColor = constants.mainColor;
   final String title = '사용자 차단';
 
   @override
@@ -29,13 +29,14 @@ class _MyBlockState extends State<MyBlock> {
             child: Column(children: [
               Container(
                   margin: const EdgeInsets.fromLTRB(0, 10, 0, 30),
-                  child: const Text('사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
+                  child: const Text(
+                      '사용자를 차단하면, 해당 사용자가 작성한 \n글/댓글/채팅이 모두 보이지 않습니다.',
                       semanticsLabel:
                           '사용자를 차단하면, 해당 사용자가 쓴 글/댓글/채팅이 모두 보이지 않습니다.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15,
-                        fontFamily: font,
+                        fontFamily: constants.font,
                         fontWeight: FontWeight.w600,
                       ))),
               Semantics(
@@ -73,7 +74,7 @@ class _MyBlockState extends State<MyBlock> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
-                        fontFamily: font,
+                        fontFamily: constants.font,
                         fontWeight: FontWeight.w600,
                       ))),
               if (blockList.isEmpty)
@@ -82,7 +83,7 @@ class _MyBlockState extends State<MyBlock> {
                         semanticsLabel: '차단한 사용자 목록 없음',
                         style: TextStyle(
                           fontSize: 18,
-                          fontFamily: font,
+                          fontFamily: constants.font,
                           fontWeight: FontWeight.w600,
                         )))
               else
@@ -96,7 +97,7 @@ class _MyBlockState extends State<MyBlock> {
                                       semanticsLabel: e,
                                       style: const TextStyle(
                                         fontSize: 17,
-                                        fontFamily: font,
+                                        fontFamily: constants.font,
                                         fontWeight: FontWeight.w600,
                                       )),
                                   ElevatedButton(
@@ -112,7 +113,7 @@ class _MyBlockState extends State<MyBlock> {
                                           semanticsLabel: '차단 해제',
                                           style: TextStyle(
                                             fontSize: 14,
-                                            fontFamily: font,
+                                            fontFamily: constants.font,
                                             fontWeight: FontWeight.w600,
                                           )))
                                 ]))
@@ -128,7 +129,7 @@ class _MyBlockState extends State<MyBlock> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: font, fontWeight: FontWeight.bold)),
+                fontFamily: constants.font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -169,7 +170,7 @@ class _MyBlockState extends State<MyBlock> {
                                 '정상적으로 차단되었습니다. 해당 사용자의 글/댓글/채팅은 보이지 않습니다.',
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: font,
+                              fontFamily: constants.font,
                               fontWeight: FontWeight.w600,
                             )),
                         actions: [
@@ -187,7 +188,7 @@ class _MyBlockState extends State<MyBlock> {
                                   semanticsLabel: '확인',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontFamily: font,
+                                    fontFamily: constants.font,
                                     fontWeight: FontWeight.w600,
                                   )))
                         ]);
@@ -198,7 +199,7 @@ class _MyBlockState extends State<MyBlock> {
               semanticsLabel: '차단',
               style: TextStyle(
                 fontSize: 14,
-                fontFamily: font,
+                fontFamily: constants.font,
                 fontWeight: FontWeight.w600,
               ))),
     );

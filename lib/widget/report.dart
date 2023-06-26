@@ -1,4 +1,4 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +10,7 @@ class Report extends StatefulWidget {
       required this.decList,
       required this.collectionType,
       required this.id});
-  final Color primaryColor = mainColor;
+  final Color primaryColor = constants.mainColor;
   final List<String> decList;
   final String collectionType;
   final String id;
@@ -34,7 +34,7 @@ class _ReportState extends State<Report> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 14,
-            fontFamily: font,
+            fontFamily: constants.font,
             fontWeight: FontWeight.w600,
           )),
       onPressed: () {
@@ -43,78 +43,78 @@ class _ReportState extends State<Report> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                      scrollable: true,
-                      semanticLabel:
-                          '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
-                      title: const Text(
-                          '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
-                          semanticsLabel:
-                              '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: font,
-                            fontWeight: FontWeight.w600,
-                          )),
-                      content: StatefulBuilder(builder: (context, setState) {
-                        return Column(
-                          children: widget.decList
-                              .map((e) => RadioListTile(
-                                  title: Text(e,
-                                      semanticsLabel: e,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: font,
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                  value: e,
-                                  groupValue: declaration,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      declaration = value!;
-                                    });
-                                  }))
-                              .toList(),
-                        );
-                      }),
-                      actions: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: widget.primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    HapticFeedback.lightImpact(); // 약한 진동
-                                    saveData.declaration(widget.collectionType,
-                                        declaration, widget.id);
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('신고',
-                                      semanticsLabel: '신고',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: font,
-                                        fontWeight: FontWeight.w600,
-                                      ))),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: widget.primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    HapticFeedback.lightImpact(); // 약한 진동
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('취소',
-                                      semanticsLabel: '취소',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: font,
-                                        fontWeight: FontWeight.w600,
-                                      )))
-                            ])
-                      ]);
+                  scrollable: true,
+                  semanticLabel:
+                      '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다. 신고 사유를 선택 후 하단 왼쪽의 신고 버튼을 눌러주세요. 취소를 원하시면 하단 오른쪽의 취소 버튼을 눌러주세요.',
+                  title: const Text(
+                      '신고 사유를 알려주세요.\n신고 사유에 맞지 않는 신고일 경우,\n해당 신고는 처리되지 않습니다.',
+                      semanticsLabel:
+                          '신고 사유를 알려주세요. 신고 사유에 맞지 않는 신고일 경우, 해당 신고는 처리되지 않습니다.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: constants.font,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  content: StatefulBuilder(builder: (context, setState) {
+                    return Column(
+                      children: widget.decList
+                          .map((e) => RadioListTile(
+                              title: Text(e,
+                                  semanticsLabel: e,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: constants.font,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                              value: e,
+                              groupValue: declaration,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  declaration = value!;
+                                });
+                              }))
+                          .toList(),
+                    );
+                  }),
+                  actions: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: widget.primaryColor,
+                              ),
+                              onPressed: () {
+                                HapticFeedback.lightImpact(); // 약한 진동
+                                saveData.declaration(widget.collectionType,
+                                    declaration, widget.id);
+                                Navigator.pop(context);
+                              },
+                              child: const Text('신고',
+                                  semanticsLabel: '신고',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: constants.font,
+                                    fontWeight: FontWeight.w600,
+                                  ))),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: widget.primaryColor,
+                              ),
+                              onPressed: () {
+                                HapticFeedback.lightImpact(); // 약한 진동
+                                Navigator.pop(context);
+                              },
+                              child: const Text('취소',
+                                  semanticsLabel: '취소',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: constants.font,
+                                    fontWeight: FontWeight.w600,
+                                  )))
+                        ])
+                  ]);
             });
       },
     );

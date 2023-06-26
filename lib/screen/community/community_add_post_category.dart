@@ -1,20 +1,16 @@
-import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:byourside/screen/community/community_add_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:byourside/constants.dart' as constants;
 
-class PostCategory extends StatefulWidget {
-  const PostCategory(
-      {Key? key,
-      required this.primaryColor,
-      required this.title,
-      required this.categories})
+class CommunityAddPostCategory extends StatefulWidget {
+  const CommunityAddPostCategory({Key? key, required this.categories})
       : super(key: key);
-  final Color primaryColor;
-  final String title;
   final Category categories;
 
   @override
-  State<PostCategory> createState() => _PostCategoryState();
+  State<CommunityAddPostCategory> createState() =>
+      _CommunityAddPostCategoryState();
 }
 
 class ButtonProperties {
@@ -30,9 +26,10 @@ class ButtonProperties {
       this.selected = false});
 }
 
-class _PostCategoryState extends State<PostCategory> {
+class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
   String? _category;
   List<String>? _type = [];
+  final String _title = constants.communityAddPostTitle;
 
   List<ButtonProperties> categoryList = [
     ButtonProperties(label: '자유게시판'),
@@ -43,81 +40,106 @@ class _PostCategoryState extends State<PostCategory> {
     ButtonProperties(label: '초기 증상 발견/생활 속 Tip'),
   ];
 
-  @override
-  void initState() {
-    // TODO: 이전에 클릭한 사항들 남겨두기
-    _category = widget.categories.category;
-    _type = widget.categories.type;
-    print('init 시 게시판 종류: $_category, 장애 유형: $_type');
+  List<ButtonProperties> typeList = [
+    ButtonProperties(label: '발달장애'),
+    ButtonProperties(label: '뇌병변장애'),
+  ];
 
+  // 게시판 카테고리 버튼 활성화
+  void setCategorySelected(int index) {
+    categoryList[index].selected = true;
+    categoryList[index].backgroundColor = constants.mainColor;
+    categoryList[index].fontColor = Colors.white;
+  }
+
+  // 게시판 카테고리 버튼 비활성화
+  void setCategoryUnselected(int index) {
+    categoryList[index].selected = false;
+    categoryList[index].backgroundColor = Colors.white;
+    categoryList[index].fontColor = Colors.black;
+  }
+
+  // 해당 index 제외한 나머지 카테고리 버튼들은 비활성화
+  void setOtherCategoryUnselected(int index) {
     for (int i = 0; i < categoryList.length; i++) {
-      if (categoryList[i].label == _category) {
-        categoryList[i].selected = true;
-        categoryList[i].backgroundColor = const Color(0xFF045558);
-        categoryList[i].fontColor = Colors.white;
-        break;
+      if (i == index) {
+        continue;
+      } else {
+        setCategoryUnselected(i);
       }
     }
+  }
+
+  // 장애 유형 버튼 활성화
+  void setTypeSelected(int index) {
+    typeList[index].selected = true;
+    typeList[index].backgroundColor = constants.mainColor;
+    typeList[index].fontColor = Colors.white;
+  }
+
+  // 장애 유형 버튼 비활성화
+  void setTypeUnselected(int index) {
+    typeList[index].selected = false;
+    typeList[index].backgroundColor = Colors.white;
+    typeList[index].fontColor = Colors.black;
+  }
+
+  void initCategory() {
+    _category = widget.categories.category;
+
+    for (int index = 0; index < categoryList.length; index++) {
+      if (categoryList[index].label == _category) {
+        setCategorySelected(index);
+        return;
+      }
+    }
+  }
+
+  void initType() {
+    _type = widget.categories.type;
 
     if (_type != null) {
-      for (int j = 0; j < _type!.length; j++) {
-        for (int i = 0; i < 2; i++) {
-          if (typeList[i].label == _type![j]) {
-            typeList[i].selected = true;
-            typeList[i].backgroundColor = const Color(0xFF045558);
-            typeList[i].fontColor = Colors.white;
+      for (String type in _type!) {
+        for (int index = 0; index < typeList.length; index++) {
+          if (typeList[index].label == type) {
+            setTypeSelected(index);
           }
         }
       }
     }
+  }
 
+  // 이전에 클릭한 사항들 반영해서 보여주기
+  void loadPreClickedButton() {
+    initCategory();
+    initType();
+  }
+
+  @override
+  void initState() {
+    loadPreClickedButton();
     super.initState();
   }
 
   void _onClickCategory(int index) {
     HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
-      if (categoryList[index].selected) {
-        categoryList[index].selected = false;
-        categoryList[index].backgroundColor = Colors.white;
-        categoryList[index].fontColor = Colors.black;
+      if (categoryList[index].selected == true) {
+        setCategoryUnselected(index);
       } else {
-        // _category = categoryList[index].label;
-        // widget.categories.category = _category;
-        categoryList[index].selected = true;
-        categoryList[index].backgroundColor = const Color(0xFF045558);
-        categoryList[index].fontColor = Colors.white;
-
-        // 나머지 버튼들은 비활성화
-        for (int i = 0; i < 6; i++) {
-          if (i == index) {
-            continue;
-          } else {
-            categoryList[i].selected = false;
-            categoryList[i].backgroundColor = Colors.white;
-            categoryList[i].fontColor = Colors.black;
-          }
-        }
+        setCategorySelected(index);
+        setOtherCategoryUnselected(index);
       }
     });
   }
 
-  List<ButtonProperties> typeList = [
-    ButtonProperties(label: '발달장애'),
-    ButtonProperties(label: '뇌병변장애'),
-  ];
-
   void _onClickType(int index) {
     HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
-      if (typeList[index].selected) {
-        typeList[index].selected = false;
-        typeList[index].backgroundColor = Colors.white;
-        typeList[index].fontColor = Colors.black;
+      if (typeList[index].selected == true) {
+        setTypeUnselected(index);
       } else {
-        typeList[index].selected = true;
-        typeList[index].backgroundColor = const Color(0xFF045558);
-        typeList[index].fontColor = Colors.white;
+        setTypeSelected(index);
       }
     });
   }
@@ -134,9 +156,11 @@ class _PostCategoryState extends State<PostCategory> {
     }
 
     // 장애 유형 selected 된 상태에 따라 type 값 지정
+
     _type = [];
     for (int i = 0; i < typeList.length; i++) {
       if (typeList[i].selected) {
+        // 추후에 에러가 발생할 가능성이 다분하다 !
         if (_type == null) {
           _type = [typeList[i].label];
         } else {
@@ -145,6 +169,8 @@ class _PostCategoryState extends State<PostCategory> {
       }
     }
     widget.categories.type = _type;
+
+    // 문맥 파악 용이를 위해 엔터를 함께 써서 단락을 구분하자 !
     if (widget.categories.category == null) {
       // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
       //     backgroundColor: Colors.white);
@@ -163,7 +189,7 @@ class _PostCategoryState extends State<PostCategory> {
                 actions: [
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: widget.primaryColor,
+                        backgroundColor: constants.mainColor,
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () {
@@ -195,9 +221,9 @@ class _PostCategoryState extends State<PostCategory> {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: widget.primaryColor,
-            title: Text(widget.title,
-                semanticsLabel: widget.title,
+            backgroundColor: constants.mainColor,
+            title: Text(_title,
+                semanticsLabel: _title,
                 style: const TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
             centerTitle: true,
@@ -244,7 +270,7 @@ class _PostCategoryState extends State<PostCategory> {
                             actions: [
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: widget.primaryColor,
+                                    backgroundColor: constants.mainColor,
                                     foregroundColor: Colors.white,
                                   ),
                                   onPressed: () {

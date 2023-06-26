@@ -1,6 +1,6 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/community/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';
@@ -9,7 +9,7 @@ import '../../model/load_data.dart';
 
 class MyOndoPost extends StatefulWidget {
   const MyOndoPost({Key? key}) : super(key: key);
-  final Color primaryColor = mainColor;
+  final Color primaryColor = constants.mainColor;
   final String collectionName = 'ondoPost';
   final String title = '내가 쓴 마음온도글';
 
@@ -51,7 +51,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
-                                primaryColor: mainColor,
+                                primaryColor: constants.mainColor,
                               )));
                 },
                 child: Container(
@@ -75,7 +75,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                                       color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: font))),
+                                      fontFamily: constants.font))),
                           Text(
                             post.type!.isEmpty
                                 ? '$date | ${post.category!}'
@@ -88,7 +88,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                             softWrap: false,
                             style: const TextStyle(
                                 color: Colors.black,
-                                fontFamily: font,
+                                fontFamily: constants.font,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -115,7 +115,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: font, fontWeight: FontWeight.bold)),
+                fontFamily: constants.font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -142,7 +142,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                       child: Text('게시글 목록을 가져오는 중...',
                           semanticsLabel: '게시글 목록을 가져오는 중...',
                           style: TextStyle(
-                              fontFamily: font,
+                              fontFamily: constants.font,
                               fontWeight: FontWeight.w600))));
             }
           }),

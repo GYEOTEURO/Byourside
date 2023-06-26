@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  adaptive_number:
+    dependency: transitive
+    description:
+      name: adaptive_number
+      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -209,6 +217,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dart_jsonwebtoken:
+    dependency: transitive
+    description:
+      name: dart_jsonwebtoken
+      sha256: f565a76800b01d3216296a049bc8f189695ab2433afa36cad0e086e46b48d70d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.0"
   dio:
     dependency: transitive
     description:
@@ -225,6 +241,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0+3"
+  ed25519_edwards:
+    dependency: transitive
+    description:
+      name: ed25519_edwards
+      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   email_validator:
     dependency: "direct main"
     description:
@@ -258,7 +282,7 @@ packages:
     source: hosted
     version: "1.3.1"
   fake_cloud_firestore:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: fake_cloud_firestore
       sha256: "48e4dc3f4ed7448c7f7f9c7697e78b835d5954029f8edb1bc1afa4bb518f5f17"
@@ -321,6 +345,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.5"
+  firebase_auth_mocks:
+    dependency: "direct main"
+    description:
+      name: firebase_auth_mocks
+      sha256: f3b7ff266416facb7dec96be76d06ad3aedd4f9fe0d2ffaba11cb3f5e48ecc12
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.0"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
@@ -401,6 +433,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.19"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -512,6 +552,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.5.1"
+  google_sign_in_mocks:
+    dependency: "direct main"
+    description:
+      name: google_sign_in_mocks
+      sha256: badfe653764195372e966ee443c6036d4656568914bdfc8f78e1279f6edc263a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
@@ -1341,6 +1389,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.7"
   vector_math:
     dependency: transitive
     description:

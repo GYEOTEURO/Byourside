@@ -1,11 +1,11 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/save_data.dart';
 
 class MyReport extends StatefulWidget {
   const MyReport({Key? key}) : super(key: key);
-  final Color primaryColor = mainColor;
+  final Color primaryColor = constants.mainColor;
   final String title = '사용자 신고';
 
   @override
@@ -37,7 +37,7 @@ class _MyReportState extends State<MyReport> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: font, fontWeight: FontWeight.bold)),
+                fontFamily: constants.font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
@@ -91,7 +91,7 @@ class _MyReportState extends State<MyReport> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
-                          fontFamily: font,
+                          fontFamily: constants.font,
                           fontWeight: FontWeight.w600,
                         ))),
                 StatefulBuilder(builder: (context, setState) {
@@ -102,7 +102,7 @@ class _MyReportState extends State<MyReport> {
                                   semanticsLabel: e,
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    fontFamily: font,
+                                    fontFamily: constants.font,
                                     fontWeight: FontWeight.w600,
                                   )),
                               value: e,
@@ -133,7 +133,7 @@ class _MyReportState extends State<MyReport> {
                             semanticsLabel: '정상적으로 신고되었습니다.',
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: font,
+                              fontFamily: constants.font,
                               fontWeight: FontWeight.w600,
                             )),
                         actions: [
@@ -151,7 +151,7 @@ class _MyReportState extends State<MyReport> {
                                   semanticsLabel: '확인',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontFamily: font,
+                                    fontFamily: constants.font,
                                     fontWeight: FontWeight.w600,
                                   )))
                         ]);
@@ -162,7 +162,7 @@ class _MyReportState extends State<MyReport> {
               semanticsLabel: '신고',
               style: TextStyle(
                 fontSize: 14,
-                fontFamily: font,
+                fontFamily: constants.font,
                 fontWeight: FontWeight.w600,
               ))),
     );

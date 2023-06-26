@@ -1,12 +1,10 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:byourside/screen/community/post.dart';
+import 'package:byourside/screen/community/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
@@ -29,7 +27,6 @@ class OndoPostList extends StatefulWidget {
 }
 
 class _OndoPostListState extends State<OndoPostList> {
-  final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
@@ -57,9 +54,6 @@ class _OndoPostListState extends State<OndoPostList> {
                 //Read Document
                 onTap: () {
                   HapticFeedback.lightImpact(); // 약한 진동
-                  if (overlayController.overlayEntry != null) {
-                    overlayController.controlOverlay(null);
-                  }
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -67,7 +61,7 @@ class _OndoPostListState extends State<OndoPostList> {
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
-                                primaryColor: mainColor,
+                                primaryColor: constants.mainColor,
                               )));
                 },
                 child: Container(
@@ -91,7 +85,7 @@ class _OndoPostListState extends State<OndoPostList> {
                                         color: Colors.black,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: font))),
+                                        fontFamily: constants.font))),
                             Text(
                               widget.category.contains('전체')
                                   ? post.type!.isEmpty
@@ -112,7 +106,7 @@ class _OndoPostListState extends State<OndoPostList> {
                               softWrap: false,
                               style: const TextStyle(
                                   color: Colors.black,
-                                  fontFamily: font,
+                                  fontFamily: constants.font,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -139,23 +133,32 @@ class _OndoPostListState extends State<OndoPostList> {
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            (widget.category.contains('전체')) //가독성
-              ? ((widget.category == '전체')
-                  ? loadData.readAllCollection( //전체
-                      collectionName: widget.collectionName, type: controller.type)
-                  : loadData.readAllInfoCollection( //정보 전체
-                      collectionName: widget.collectionName, type: controller.type))
-              : loadData.readCategoryCollection( //자유 또는 정보 내 세부 카테고리
-                  collectionName: widget.collectionName,
-                  category: widget.category,
-                  type: controller.type), 
-              FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+              (widget.category.contains('전체')) //가독성
+                  ? ((widget.category == '전체')
+                      ? loadData.readAllCollection(
+                          //전체
+                          collectionName: widget.collectionName,
+                          type: controller.type)
+                      : loadData.readAllInfoCollection(
+                          //정보 전체
+                          collectionName: widget.collectionName,
+                          type: controller.type))
+                  : loadData.readCategoryCollection(
+                      //자유 또는 정보 내 세부 카테고리
+                      collectionName: widget.collectionName,
+                      category: widget.category,
+                      type: controller.type),
+              FirebaseFirestore.instance
+                  .collection('user')
+                  .doc(user!.uid)
+                  .snapshots()),
           builder: (context, snapshots) {
             //snapshot 이름 구분
-            if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
-            }
-            else{
+            if (snapshots.snapshot2.hasData) {
+              blockList = snapshots.snapshot2.data!['blockList'] == null
+                  ? []
+                  : snapshots.snapshot2.data!['blockList'].cast<String>();
+            } else {
               blockList = [];
             }
             if (snapshots.snapshot1.hasData) {
@@ -177,7 +180,7 @@ class _OndoPostListState extends State<OndoPostList> {
                 '게시글 목록 가져오는 중...',
                 semanticsLabel: '게시글 목록 가져오는 중...',
                 style: TextStyle(
-                  fontFamily: font,
+                  fontFamily: constants.font,
                   fontWeight: FontWeight.w600,
                 ),
               )));

@@ -1,8 +1,7 @@
-import 'package:byourside/magic_number.dart';
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/screen/community/post.dart';
+import 'package:byourside/screen/community/community_add_post.dart';
+import 'package:byourside/screen/community/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,6 @@ class PosterPage extends StatefulWidget {
 }
 
 class _PosterPageState extends State<PosterPage> {
-  final overlayController = Get.put(OverlayController());
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
@@ -56,9 +54,6 @@ class _PosterPageState extends State<PosterPage> {
         //Read Document
         onTap: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          if (overlayController.overlayEntry != null) {
-            overlayController.controlOverlay(null);
-          }
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -87,7 +82,7 @@ class _PosterPageState extends State<PosterPage> {
                             child: Text('사진 없음',
                                 semanticsLabel: '사진 없음',
                                 style: TextStyle(
-                                  fontFamily: font,
+                                  fontFamily: constants.font,
                                   fontWeight: FontWeight.w600,
                                 ))),
                       )),
@@ -103,7 +98,7 @@ class _PosterPageState extends State<PosterPage> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            fontFamily: font)))),
+                            fontFamily: constants.font)))),
             Expanded(
                 child: Container(
                     padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
@@ -120,7 +115,7 @@ class _PosterPageState extends State<PosterPage> {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
-                        fontFamily: font,
+                        fontFamily: constants.font,
                         fontWeight: FontWeight.w600,
                       ),
                     ))),
@@ -136,17 +131,24 @@ class _PosterPageState extends State<PosterPage> {
     String collectionName = widget.collectionName;
 
     List<String> blockList;
-    
+
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            loadData.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
-            FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+              loadData.readCategoryCollection(
+                  collectionName: widget.collectionName,
+                  category: widget.category,
+                  type: controller.type),
+              FirebaseFirestore.instance
+                  .collection('user')
+                  .doc(user!.uid)
+                  .snapshots()),
           builder: (context, snapshots) {
-            if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
-            }
-            else{
+            if (snapshots.snapshot2.hasData) {
+              blockList = snapshots.snapshot2.data!['blockList'] == null
+                  ? []
+                  : snapshots.snapshot2.data!['blockList'].cast<String>();
+            } else {
               blockList = [];
             }
             if (snapshots.snapshot1.hasData) {
@@ -172,7 +174,7 @@ class _PosterPageState extends State<PosterPage> {
                       child: Text('게시물 목록을 가져오는 중...',
                           semanticsLabel: '게시물 목록을 가져오는 중...',
                           style: TextStyle(
-                            fontFamily: font,
+                            fontFamily: constants.font,
                             fontWeight: FontWeight.w600,
                           ))));
             }
@@ -182,17 +184,10 @@ class _PosterPageState extends State<PosterPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          if (overlayController.overlayEntry != null) {
-            overlayController.controlOverlay(null);
-          }
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const OndoPostPage(
-                        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: primaryColor,
-                        title: '마음온도 글쓰기',
-                      )));
+                  builder: (context) => const CommunityAddPost()));
         },
         backgroundColor: widget.primaryColor,
         child: const Icon(Icons.add, semanticLabel: '글쓰기'),

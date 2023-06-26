@@ -1,7 +1,7 @@
-import 'package:byourside/magic_number.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/model/load_data.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/community/post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class OndoSearch extends StatefulWidget {
   const OndoSearch({Key? key}) : super(key: key);
-  final Color primaryColor = mainColor;
+  final Color primaryColor = constants.mainColor;
   final String title = '마음온도 게시글 검색';
   final String collectionName = 'ondoPost';
 
@@ -73,7 +73,7 @@ class _OndoSearchState extends State<OndoSearch> {
                                       color: Colors.black,
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: font))),
+                                      fontFamily: constants.font))),
                           Text(
                             post.type!.isEmpty
                                 ? '${post.nickname} | $date | ${post.category!}'
@@ -86,7 +86,7 @@ class _OndoSearchState extends State<OndoSearch> {
                             softWrap: false,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontFamily: font,
+                              fontFamily: constants.font,
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
                             ),
@@ -108,7 +108,6 @@ class _OndoSearchState extends State<OndoSearch> {
 
   @override
   Widget build(BuildContext context) {
-
     List<String> blockList;
 
     return Scaffold(
@@ -117,7 +116,7 @@ class _OndoSearchState extends State<OndoSearch> {
           title: Text(widget.title,
               semanticsLabel: widget.title,
               style: const TextStyle(
-                  fontFamily: font, fontWeight: FontWeight.bold)),
+                  fontFamily: constants.font, fontWeight: FontWeight.bold)),
           backgroundColor: const Color(0xFF045558),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back,
@@ -136,50 +135,59 @@ class _OndoSearchState extends State<OndoSearch> {
                       controller: query,
                       maxLines: 1,
                       decoration: InputDecoration(
-                          semanticCounterText: '검색할 키워드 입력',
-                          labelText: '검색할 키워드를 입력해주세요.',
-                          floatingLabelStyle: TextStyle(
+                        semanticCounterText: '검색할 키워드 입력',
+                        labelText: '검색할 키워드를 입력해주세요.',
+                        floatingLabelStyle: TextStyle(
                             color: widget.primaryColor,
                             fontSize: 22,
-                            fontFamily: font,
+                            fontFamily: constants.font,
                             fontWeight: FontWeight.w500),
-                          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          hintStyle: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 17,
-                              fontFamily: font,
-                              fontWeight: FontWeight.w500),
-                          labelStyle: TextStyle(
-                              color: widget.primaryColor,
-                              fontSize: 17,
-                              fontFamily: font,
-                              fontWeight: FontWeight.w500),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: widget.primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: widget.primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          border:
-                              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                          ))),
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 17,
+                            fontFamily: constants.font,
+                            fontWeight: FontWeight.w500),
+                        labelStyle: TextStyle(
+                            color: widget.primaryColor,
+                            fontSize: 17,
+                            fontFamily: constants.font,
+                            fontWeight: FontWeight.w500),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: widget.primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: widget.primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                      ))),
               Expanded(
                   child: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
-                      streams: StreamTuple2( 
-                        loadData.readSearchDocs(query.text, collectionName: widget.collectionName),
-                        FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+                      streams: StreamTuple2(
+                          loadData.readSearchDocs(query.text,
+                              collectionName: widget.collectionName),
+                          FirebaseFirestore.instance
+                              .collection('user')
+                              .doc(user!.uid)
+                              .snapshots()),
                       builder: (context, snapshots) {
-                        if(snapshots.snapshot2.hasData){
-                          blockList = snapshots.snapshot2.data!['blockList'] == null ? [] : snapshots.snapshot2.data!['blockList'].cast<String>();
-                        }
-                        else{
+                        if (snapshots.snapshot2.hasData) {
+                          blockList =
+                              snapshots.snapshot2.data!['blockList'] == null
+                                  ? []
+                                  : snapshots.snapshot2.data!['blockList']
+                                      .cast<String>();
+                        } else {
                           blockList = [];
                         }
                         if (snapshots.snapshot1.hasData) {
                           return ListView.builder(
                               itemCount: snapshots.snapshot1.data!.length,
                               itemBuilder: (_, index) {
-                                PostListModel post = snapshots.snapshot1.data![index];
+                                PostListModel post =
+                                    snapshots.snapshot1.data![index];
                                 if (blockList.contains(post.nickname)) {
                                   return Container();
                                 } else {

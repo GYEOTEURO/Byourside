@@ -1,7 +1,5 @@
-import 'package:byourside/magic_number.dart';
-import 'package:byourside/model/chat_list.dart';
+import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/widget/block_user.dart';
-import 'package:byourside/screen/chat/chat_page.dart';
 import 'package:byourside/widget/report.dart';
 import 'package:byourside/widget/delete_post_or_comment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,8 +28,8 @@ class CommentList extends StatefulWidget {
 class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  
-  final List<String> commentReportReason = commentReportReasonList;
+
+  final List<String> commentReportReason = constants.commentReportReasonList;
 
   Widget _buildListItem(
       String? collectionName, String? documentID, CommentModel? comment) {
@@ -56,25 +54,28 @@ class _CommentListState extends State<CommentList> {
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  fontFamily: font)))),
+                                  fontFamily: constants.font)))),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '${comment.nickname} | $date $hour:$minute',
-                                semanticsLabel:
-                                    '닉네임 ${comment.nickname}, $date $hour시$minute분',
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: font,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              )),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '${comment.nickname} | $date $hour:$minute',
+                              semanticsLabel:
+                                  '닉네임 ${comment.nickname}, $date $hour시$minute분',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: constants.font,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )),
                         if (user?.uid == comment.uid)
-                          DeletePostOrComment(collectionName: widget.collectionName, documentID: widget.documentID, commentID: comment.id)
+                          DeletePostOrComment(
+                              collectionName: widget.collectionName,
+                              documentID: widget.documentID,
+                              commentID: comment.id)
                         else
                           Row(children: [
                             Report(
@@ -100,15 +101,18 @@ class _CommentListState extends State<CommentList> {
 
     return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
         streams: StreamTuple2(
-            loadData.readComment(collectionName: collectionName, documentID: documentID),
-            FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+            loadData.readComment(
+                collectionName: collectionName, documentID: documentID),
+            FirebaseFirestore.instance
+                .collection('user')
+                .doc(user!.uid)
+                .snapshots()),
         builder: (context, snapshots) {
           if (snapshots.snapshot2.hasData) {
             blockList = snapshots.snapshot2.data!['blockList'] == null
                 ? []
                 : snapshots.snapshot2.data!['blockList'].cast<String>();
-          } 
-          else {
+          } else {
             blockList = [];
           }
           if (snapshots.snapshot1.hasData) {
@@ -131,7 +135,7 @@ class _CommentListState extends State<CommentList> {
               '댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!',
               semanticsLabel: '댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!',
               style: TextStyle(
-                fontFamily: font,
+                fontFamily: constants.font,
                 fontWeight: FontWeight.w600,
               ),
             ));

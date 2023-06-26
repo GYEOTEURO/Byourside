@@ -107,7 +107,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
     double width = MediaQuery.of(context).size.width;
 
     if (isEmailVerified) {
-      return const BottomNavBar(primaryColor: primaryColor);
+      return const BottomNavBar();
     } else {
       return Scaffold(
         appBar: AppBar(
