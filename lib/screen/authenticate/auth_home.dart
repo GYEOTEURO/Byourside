@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.w500),
           ),
         ),
-        home: SocialLogin(),
+        home: const SocialLogin(),
         // home: const Wrapper(),
       ),
     );

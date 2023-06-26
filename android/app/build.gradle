@@ -72,7 +72,17 @@ android {
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
+        debug {
+            keyAlias keystoreProperties['googleKeyAlias']
+            keyPassword keystoreProperties['googleKeyPassword']
+            storeFile file(keystoreProperties['googleStoreFile'])
+            storePassword keystoreProperties['googleStorePassword']
+        }
     }
+
+    // debug {
+    //     signingConfig signingConfigs.debug
+    // }
 
     buildTypes {
         release {
