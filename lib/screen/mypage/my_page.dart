@@ -38,8 +38,8 @@ class _Mypage extends State<Mypage> {
   }
 
   final List<String> myEntires = <String>[
-    "내가 쓴 마음온도 글"
-        "마음온도 스크랩"
+    '내가 쓴 마음온도 글'
+        '마음온도 스크랩'
   ];
   final List<Icon> myIcons = <Icon>[
     const Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),

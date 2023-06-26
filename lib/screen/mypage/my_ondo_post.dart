@@ -3,7 +3,6 @@ import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 

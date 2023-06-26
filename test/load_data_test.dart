@@ -1,6 +1,5 @@
 import 'package:byourside/model/load_data.dart';
 import 'package:byourside/model/ondo_post.dart';
-import 'package:byourside/model/post_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter/foundation.dart';

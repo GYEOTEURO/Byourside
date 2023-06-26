@@ -5,7 +5,6 @@ import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../main.dart';
 
 class OndoPost extends StatefulWidget {
   const OndoPost(

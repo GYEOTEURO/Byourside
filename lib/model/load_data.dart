@@ -1,5 +1,4 @@
 import 'package:byourside/model/comment.dart';
-import 'package:byourside/model/nanum_post.dart';
 import 'package:byourside/model/ondo_post.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -135,14 +134,6 @@ class LoadData{  //클래스 이름은 명사로
           .snapshots()
           .map((snapshot) => OndoPostModel.fromMap(snapshot));
 
-  // Firestore의 마음나눔 collection 내 특정 문서 불러오기
-  Stream<NanumPostModel> readNanumDocument(
-          {required String collectionName, required String documentID}) =>
-          firestore
-          .collection(collectionName)
-          .doc(documentID)
-          .snapshots()
-          .map((snapshot) => NanumPostModel.fromMap(snapshot));
 
   // Firestore의 특정 문서에 있는 모든 댓글 불러오기
   Stream<List<CommentModel>> readComment(

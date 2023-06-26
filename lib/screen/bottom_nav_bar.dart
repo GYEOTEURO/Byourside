@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:byourside/constants.dart' as constants;
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar();
+  const BottomNavBar({super.key});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:byourside/model/comment.dart';
-import 'package:byourside/model/nanum_post.dart';
 import 'package:byourside/model/ondo_post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -16,10 +15,6 @@ class SaveData {
     firestore.collection(collectionName).add(postData.toMap());
   }
 
-  // 마음나눔 문서 생성
-  addNanumPost(String collectionName, NanumPostModel postData) async {
-    firestore.collection(collectionName).add(postData.toMap());
-  }
 
   // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드 
   Future<List<String>> uploadFile(List<XFile> images) async{
