@@ -21,8 +21,7 @@ analyzer:
       avoid_print: ignore
       camel_case_types: ignore
       curly_braces_in_flow_control_structures: ignore
-      dead_code: info
-      file_names: ignore
+      file_names: warning
       no_logic_in_create_state: ignore
       prefer_const_constructors: ignore
       prefer_const_declarations: ignore
@@ -31,7 +30,7 @@ analyzer:
       prefer_is_not_empty: ignore
       prefer_single_quotes: ignore
       prefer_typing_uninitialized_variables: ignore
-      sort_child_properties_last: ignore
+      sort_child_properties_last: error
       type_init_formals: ignore
       unnecessary_await_in_return: ignore
       unnecessary_const: ignore
@@ -66,7 +65,6 @@ linter:
       avoid_unnecessary_containers: true
       curly_braces_in_flow_control_structures: true
       camel_case_types: true # Classes and typedefs should use UpperCamelCase
-      dead_code: true # 불필요한 코드 삭제
       file_names: true
       no_logic_in_create_state: true
       prefer_const_constructors: true

@@ -6,4 +6,8 @@ constants.dart : 앱에서 사용하는 각종 상수 값을 정리한 파일
 import 'dart:ui';
 
 // 색상
-Color mainColor = Color(0xFF045558);
+const Color mainColor = Color(0xFF045558);
+
+// 제목 및 타이틀
+const String communityAddPostTitle = "커뮤니티 글쓰기";
+const String communityTitle = "커뮤니티";

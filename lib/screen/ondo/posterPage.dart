@@ -1,6 +1,6 @@
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:byourside/screen/ondo/community_add_post.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -134,17 +134,24 @@ class _PosterPageState extends State<PosterPage> {
     String collectionName = widget.collectionName;
 
     List<String> blockList;
-    
+
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            DBGet.readCategoryCollection(collectionName: widget.collectionName, category: widget.category, type: controller.type),
-            FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+              DBGet.readCategoryCollection(
+                  collectionName: widget.collectionName,
+                  category: widget.category,
+                  type: controller.type),
+              FirebaseFirestore.instance
+                  .collection('user')
+                  .doc(user!.uid)
+                  .snapshots()),
           builder: (context, snapshots) {
-            if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
-            }
-            else{
+            if (snapshots.snapshot2.hasData) {
+              blockList = snapshots.snapshot2.data!["blockList"] == null
+                  ? []
+                  : snapshots.snapshot2.data!["blockList"].cast<String>();
+            } else {
               blockList = [];
             }
             if (snapshots.snapshot1.hasData) {
@@ -186,11 +193,7 @@ class _PosterPageState extends State<PosterPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const OndoPostPage(
-                        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: primaryColor,
-                        title: '마음온도 글쓰기',
-                      )));
+                  builder: (context) => const CommunityAddPost()));
         },
         backgroundColor: widget.primaryColor,
         child: const Icon(Icons.add, semanticLabel: "글쓰기"),

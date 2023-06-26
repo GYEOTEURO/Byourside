@@ -2,7 +2,7 @@ import 'package:byourside/screen/nanum/nanumPostCategory.dart';
 import 'package:byourside/screen/ondo/infoDetailCategory.dart';
 import 'package:byourside/screen/ondo/overlay_controller.dart';
 import 'package:byourside/screen/ondo/postList.dart';
-import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:byourside/screen/ondo/community_add_post.dart';
 import 'package:byourside/screen/ondo/searchPage.dart';
 import 'package:byourside/screen/ondo/type_controller.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +62,7 @@ class _CategoryPageState extends State<CategoryPage>
           ),
           onPressed: () async {
             HapticFeedback.lightImpact(); // 약한 진동
-            if(overlayController.overlayEntry != null){
+            if (overlayController.overlayEntry != null) {
               overlayController.controlOverlay(null);
             }
             _type = await Navigator.push(
@@ -92,13 +92,11 @@ class _CategoryPageState extends State<CategoryPage>
             ),
             onPressed: () {
               HapticFeedback.lightImpact(); // 약한 진동
-              if(overlayController.overlayEntry != null){
+              if (overlayController.overlayEntry != null) {
                 overlayController.controlOverlay(null);
               }
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const OndoSearch()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const OndoSearch()));
             },
           ),
         ],
@@ -108,7 +106,7 @@ class _CategoryPageState extends State<CategoryPage>
           indicatorColor: Colors.white,
           unselectedLabelColor: Colors.grey,
           onTap: ((value) {
-            if(overlayController.overlayEntry != null){
+            if (overlayController.overlayEntry != null) {
               overlayController.controlOverlay(null);
             }
           }),
@@ -136,17 +134,13 @@ class _CategoryPageState extends State<CategoryPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           HapticFeedback.lightImpact(); // 약한 진동
-          if(overlayController.overlayEntry != null){
-              overlayController.controlOverlay(null);
+          if (overlayController.overlayEntry != null) {
+            overlayController.controlOverlay(null);
           }
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const OndoPostPage(
-                        // PostPage 위젯에 primartColor와 title명을 인자로 넘김
-                        primaryColor: Color(0xFF045558),
-                        title: '마음온도 글쓰기',
-                      )));
+                  builder: (context) => const CommunityAddPost()));
         },
         backgroundColor: const Color(0xFF045558),
         child: const Icon(Icons.add, semanticLabel: "마음온도 글쓰기"),

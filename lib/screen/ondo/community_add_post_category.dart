@@ -1,16 +1,16 @@
-import 'package:byourside/screen/ondo/postPage.dart';
+import 'package:byourside/screen/ondo/community_add_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants.dart' as constants;
 
-class PostCategory extends StatefulWidget {
-  const PostCategory({Key? key, required this.title, required this.categories})
+class CommunityAddPostCategory extends StatefulWidget {
+  const CommunityAddPostCategory({Key? key, required this.categories})
       : super(key: key);
-  final String title;
   final Category categories;
 
   @override
-  State<PostCategory> createState() => _PostCategoryState();
+  State<CommunityAddPostCategory> createState() =>
+      _CommunityAddPostCategoryState();
 }
 
 class ButtonProperties {
@@ -26,9 +26,10 @@ class ButtonProperties {
       this.selected = false});
 }
 
-class _PostCategoryState extends State<PostCategory> {
+class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
   String? _category;
   List<String>? _type = [];
+  final String _title = constants.communityAddPostTitle;
 
   List<ButtonProperties> categoryList = [
     ButtonProperties(label: '자유게시판'),
@@ -37,6 +38,11 @@ class _PostCategoryState extends State<PostCategory> {
     ButtonProperties(label: '법률/제도'),
     ButtonProperties(label: '교육/세미나'),
     ButtonProperties(label: '초기 증상 발견/생활 속 Tip'),
+  ];
+
+  List<ButtonProperties> typeList = [
+    ButtonProperties(label: '발달장애'),
+    ButtonProperties(label: '뇌병변장애'),
   ];
 
   // 게시판 카테고리 버튼 활성화
@@ -78,47 +84,46 @@ class _PostCategoryState extends State<PostCategory> {
     typeList[index].fontColor = Colors.black;
   }
 
-  @override
-  void initState() {
-    // TODO: 이전에 클릭한 사항들 남겨두기
+  void initCategory() {
     _category = widget.categories.category;
-    _type = widget.categories.type;
-    print('init 시 게시판 종류: $_category, 장애 유형: $_type');
 
-    // for in 혹은 for each로 변경 !
-    // for 문에서 i, j를 지양 -> i라기 보다는 index 이런 식으로 변수명 의미있게 변경 !
-    for (int i = 0; i < categoryList.length; i++) {
-      if (categoryList[i].label == _category) {
-        categoryList[i].selected = true;
-        categoryList[i].backgroundColor = constants.mainColor;
-        categoryList[i].fontColor = Colors.white;
-        break;
+    for (int index = 0; index < categoryList.length; index++) {
+      if (categoryList[index].label == _category) {
+        setCategorySelected(index);
+        return;
       }
     }
+  }
 
-    // 함수로서 이 파트를 설명해도 될 듯 !
-    // _typeinit 이런식으로 !
-    // _type 명도 정확히 알 수 있게 변경 !
+  void initType() {
+    _type = widget.categories.type;
+
     if (_type != null) {
-      for (int j = 0; j < _type!.length; j++) {
-        // 2 :  magic number !
-        for (int i = 0; i < 2; i++) {
-          if (typeList[i].label == _type![j]) {
-            typeList[i].selected = true;
-            typeList[i].backgroundColor = constants.mainColor;
-            typeList[i].fontColor = Colors.white;
+      for (String type in _type!) {
+        for (int index = 0; index < typeList.length; index++) {
+          if (typeList[index].label == type) {
+            setTypeSelected(index);
           }
         }
       }
     }
+  }
 
+  // 이전에 클릭한 사항들 반영해서 보여주기
+  void loadPreClickedButton() {
+    initCategory();
+    initType();
+  }
+
+  @override
+  void initState() {
+    loadPreClickedButton();
     super.initState();
   }
 
   void _onClickCategory(int index) {
     HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
-      // categoryList[index].selected == true 이거나 categoryList[index].selected 이거나 둘 중 하나로 통일 !
       if (categoryList[index].selected == true) {
         setCategoryUnselected(index);
       } else {
@@ -128,12 +133,6 @@ class _PostCategoryState extends State<PostCategory> {
     });
   }
 
-  List<ButtonProperties> typeList = [
-    ButtonProperties(label: '발달장애'),
-    ButtonProperties(label: '뇌병변장애'),
-  ];
-
-  // 타입 select 변경하는 거 함수로 하나로 묶기 !
   void _onClickType(int index) {
     HapticFeedback.lightImpact(); // 약한 진동
     setState(() {
@@ -223,8 +222,8 @@ class _PostCategoryState extends State<PostCategory> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: constants.mainColor,
-            title: Text(widget.title,
-                semanticsLabel: widget.title,
+            title: Text(_title,
+                semanticsLabel: _title,
                 style: const TextStyle(
                     fontFamily: 'NanumGothic', fontWeight: FontWeight.w600)),
             centerTitle: true,

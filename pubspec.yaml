@@ -81,7 +81,6 @@ dev_dependencies:
   change_app_package_name:
   test: ^1.24.1
   flutter_lints: ^2.0.1
-  fake_cloud_firestore: ^2.4.1+1
 flutter_icons:
   android: true
   ios: true

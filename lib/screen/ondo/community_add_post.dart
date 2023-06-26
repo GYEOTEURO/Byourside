@@ -1,4 +1,4 @@
-import 'package:byourside/screen/ondo/postCategory.dart';
+import 'package:byourside/screen/ondo/community_add_post_category.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +9,16 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/db_set.dart';
 import '../../model/ondo_post.dart';
+import 'package:byourside/constants.dart' as constants;
 
-class OndoPostPage extends StatefulWidget {
-  const OndoPostPage(
-      {Key? key, required this.primaryColor, required this.title})
-      : super(key: key);
-  final Color primaryColor;
-  final String title;
+class CommunityAddPost extends StatefulWidget {
+  const CommunityAddPost();
 
   @override
-  State<OndoPostPage> createState() => _OndoPostPageState();
+  State<CommunityAddPost> createState() => _CommunityAddPostState();
 }
 
-class _OndoPostPageState extends State<OndoPostPage> {
+class _CommunityAddPostState extends State<CommunityAddPost> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
   List<TextEditingController> _imgInfos = [];
@@ -30,7 +27,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
 
   Category _categories = Category(null, null);
 
-  File? _image; // 사진 하나 가져오기
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
   final picker = ImagePicker();
@@ -38,7 +34,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
   final _formkey = GlobalKey<FormState>();
   int _current = 0; // 현재 이미지 인덱스
   int indicatorLen = 1;
-  // List<dynamic> _imgInfos = []; // 사진 세부 정보
 
   // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
@@ -56,7 +51,6 @@ class _OndoPostPageState extends State<OndoPostPage> {
       }
 
       indicatorLen = _images.length;
-      //_images = images.map<File>((xfile) => File(xfile.path)).toList();
     });
     print("이미지 세부 설명: $_imgInfos\n 이미지: $_images");
     if (indicatorLen == 0) {
@@ -126,10 +120,10 @@ class _OndoPostPageState extends State<OndoPostPage> {
     return Scaffold(
       // 상단 앱 바
       appBar: AppBar(
-        backgroundColor: widget.primaryColor,
+        backgroundColor: constants.mainColor,
         title: Text(
-          widget.title,
-          semanticsLabel: widget.title,
+          constants.communityTitle,
+          semanticsLabel: constants.communityTitle,
           style: const TextStyle(
               fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
@@ -224,8 +218,8 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                   _categories = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => PostCategory(
-                                                title: widget.title,
+                                          builder: (context) =>
+                                              CommunityAddPostCategory(
                                                 categories: _categories,
                                               )));
                                   print(
@@ -322,7 +316,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                                       count: indicatorLen,
                                       index: _current,
                                       color: Colors.black26,
-                                      activeColor: widget.primaryColor,
+                                      activeColor: constants.mainColor,
                                     ),
                                   ),
                                   const SizedBox(
@@ -402,7 +396,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
                       actions: [
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: widget.primaryColor,
+                              backgroundColor: constants.mainColor,
                               foregroundColor: Colors.white,
                             ),
                             onPressed: () {
@@ -454,7 +448,7 @@ class _OndoPostPageState extends State<OndoPostPage> {
             }
           }
         },
-        backgroundColor: widget.primaryColor,
+        backgroundColor: constants.mainColor,
         child: const Icon(
           Icons.navigate_next,
           semanticLabel: '마음 온도 게시글 작성 완료',
