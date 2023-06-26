@@ -5,15 +5,15 @@ import 'package:byourside/screen/authenticate/user_someoneElse.dart';
 import 'package:byourside/screen/authenticate/verify_email.dart';
 import 'package:byourside/screen/authenticate/verify_phone.dart';
 import 'package:byourside/screen/authenticate/login_screen.dart';
-import 'package:byourside/screen/chat/chat_list_screen.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:get/get.dart';
-import 'package:byourside/screen/bottomNavigationBar.dart';
+import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
+import 'package:byourside/constants.dart' as constants;
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -56,8 +56,8 @@ void main() async {
   );
   runApp(GetMaterialApp(
     theme: ThemeData(
-        fontFamily: 'NanumGothic',
-        ),
+      fontFamily: constants.font,
+    ),
     home: const MyApp(),
     // debugShowCheckedModeBanner: false,
   ));
@@ -81,20 +81,20 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-                fontFamily: 'NanumGothic',
-                ),
+              fontFamily: 'NanumGothic',
+            ),
             title: '곁',
-            initialRoute: "/login",
+            initialRoute: '/login',
             routes: {
-              "/login": (context) => const LoginScreen(primaryColor: primaryColor),
-              "/": (context) => const BottomNavBar(primaryColor: primaryColor),
-              "/phone": (context) => const VerifyPhone(),
-              "/email": (context) => const VerifyEmail(),
-              "/user": (context) => const SetupUser(),
-              "/user_protector": (context) => const protector(),
-              "/user_participator": (context) => const participator(),
-              "/user_someoneElse": (context) => const someoneElse(),
-              "/chat_list": (context) => const ChatListScreen(),
+              '/login': (context) =>
+                  const LoginScreen(primaryColor: primaryColor),
+              '/': (context) => const BottomNavBar(),
+              '/phone': (context) => const VerifyPhone(),
+              '/email': (context) => const VerifyEmail(),
+              '/user': (context) => const SetupUser(),
+              '/user_protector': (context) => const protector(),
+              '/user_participator': (context) => const participator(),
+              '/user_someoneElse': (context) => const someoneElse(),
             },
           ),
         ),

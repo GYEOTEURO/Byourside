@@ -17,35 +17,40 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
     errors:
-      avoid_empty_else: ignore
-      avoid_print: ignore
-      camel_case_types: ignore
-      curly_braces_in_flow_control_structures: ignore
-      dead_code: info
-      file_names: ignore
-      no_logic_in_create_state: ignore
-      prefer_const_constructors: ignore
-      prefer_const_declarations: ignore
-      prefer_if_null_operators: ignore
-      prefer_is_empty: ignore
-      prefer_is_not_empty: ignore
-      prefer_single_quotes: ignore
-      prefer_typing_uninitialized_variables: ignore
-      sort_child_properties_last: ignore
-      type_init_formals: ignore
-      unnecessary_await_in_return: ignore
-      unnecessary_const: ignore
-      unnecessary_final: ignore
-      unnecessary_late: ignore
-      unnecessary_new: ignore
-      unnecessary_null_checks: ignore
-      unnecessary_parenthesis: ignore
-      unnecessary_string_escapes: ignore
-      use_colored_box: ignore
-      use_decorated_box: ignore
-      use_enums: ignore
-      use_key_in_widget_constructors: ignore
+      avoid_empty_else: warning # 빈 else문 피하기
+      avoid_print: ignore # print문 피하기
+      camel_case_types: warning # 타입 이름을 카멜 표기법으로 작성하기
+      curly_braces_in_flow_control_structures: warning # 흐름 제어 구조(if, for, while 등)에 중괄호 사용하기
+      file_names: ignore # 파일명에 대한 규칙 (1.소문자 2.단어는 _로 구분 ex.snake_case 3.파일 목적/내용 반영)
+      no_logic_in_create_state: warning # createState 메서드에서 로직 피하기 (조건문/반복문/계산 X -> 상태 생성 및 초기화만 포함)
+      prefer_const_constructors: warning # 상수 생성자 사용하기
+      prefer_const_declarations: warning # 상수 선언하기
+      prefer_is_empty: warning # 컬렉션 비어있음을 검사하기 위해 length 대신 isEmpty 사용하기 (collection.length == 0 -> collection.isEmpty)
+      prefer_is_not_empty: warning # 컬렉션이 비어있지 않음을 검사하기 위해 length 대신 isNotEmpty 사용하기 (collection.length != 0 -> collection.isNotEmpty)
+      prefer_single_quotes: warning # 문자열에 작은따옴표 사용하기
+      prefer_typing_uninitialized_variables: warning # 초기화되지 않은 변수에 타입 지정하기
+      sort_child_properties_last: warning # 위젯 속성 중 자식 관련 속성을 마지막에 정렬하기
+      type_init_formals: warning # 생성자 매개변수에 타입 지정하기
+      unnecessary_await_in_return: warning # return문에서 불필요한 await 제거하기
+      unnecessary_const: warning # 불필요한 const 제거하기
+      unnecessary_final: warning # 불필요한 final 제거하기
+      unnecessary_late: warning # 불필요한 late 제거하기
+      unnecessary_new: warning # 불필요한 new 제거하기
+      unnecessary_null_checks: warning # 불필요한 null check 제거하기
+      unnecessary_parenthesis: warning # 불필요한 괄호 제거하기
+      unnecessary_string_escapes: warning # 불필요한 string escape 제거하기
+      use_colored_box: warning # 색상 지정 코드에선 container 대신 colored_box 사용하기
+      use_decorated_box: warning # 디자인 지정 코드에선 container 대신 decorated_box 사용하기
+      use_enums: warning # 열거형 변수는 enum 사용하기
+      use_key_in_widget_constructors: warning # 위젯 생성자에서 key 매개변수 사용하기
+      # class MyWidget extends StatelessWidget {
+        # final String title;
+        
+        # MyWidget(this.title); key 사용 X
+        # MyWidget({Key? key, required this.title}) : super(key: key); key 사용 O
       
+
+  
 
 
 linter:
@@ -66,12 +71,10 @@ linter:
       avoid_unnecessary_containers: true
       curly_braces_in_flow_control_structures: true
       camel_case_types: true # Classes and typedefs should use UpperCamelCase
-      dead_code: true # 불필요한 코드 삭제
       file_names: true
       no_logic_in_create_state: true
       prefer_const_constructors: true
       prefer_const_declarations: true
-      prefer_if_null_operators: true
       prefer_is_empty: true
       prefer_is_not_empty: true
       prefer_single_quotes: true

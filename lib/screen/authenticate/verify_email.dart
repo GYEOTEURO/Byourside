@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/screen/bottomNavigationBar.dart';
+import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 
@@ -107,7 +107,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
     double width = MediaQuery.of(context).size.width;
 
     if (isEmailVerified) {
-      return const BottomNavBar(primaryColor: primaryColor);
+      return const BottomNavBar();
     } else {
       return Scaffold(
         appBar: AppBar(
