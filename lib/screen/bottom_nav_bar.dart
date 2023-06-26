@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:byourside/constants.dart' as constants;
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar();
+  const BottomNavBar({super.key});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -20,8 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const CommunityPostList(
-      category: '',
-      collectionName: '',
+      collectionName: 'ondoPost',
       primaryColor: constants.mainColor,
     ),
     const Mypage(),

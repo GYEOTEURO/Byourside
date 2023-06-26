@@ -39,8 +39,8 @@ class _Mypage extends State<Mypage> {
   }
 
   final List<String> myEntires = <String>[
-    "내가 쓴 커뮤니티 글"
-        "커뮤니티 스크랩"
+    "내가 쓴 커뮤니티 글",
+    "커뮤니티 스크랩"
   ];
   final List<Icon> myIcons = <Icon>[
     const Icon(Icons.groups, semanticLabel: '내가 쓴 커뮤니티 글 목록 화면으로 이동'),

@@ -1,6 +1,8 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/screen/community/search_page.dart';
 import 'package:flutter/material.dart';
+import 'package:byourside/constants.dart' as constants;
+import 'package:flutter/services.dart';
 
 class CommunityAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CommunityAppBar({Key? key, required this.primaryColor}) : super(key: key);
@@ -16,8 +18,7 @@ class CommunityAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CommunityAppBarState extends State<CommunityAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return AppBar(
         backgroundColor: primaryColor,
         centerTitle: true,
         title: const Text(
@@ -25,17 +26,20 @@ class _CommunityAppBarState extends State<CommunityAppBar> {
           semanticsLabel: '커뮤니티',
         ),
         titleTextStyle:
-            const TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.bold),
+            const TextStyle(fontFamily: constants.font, fontWeight: FontWeight.bold),
         leading: const IconButton(
             icon: Icon(Icons.filter_alt, color: Colors.white), onPressed: null),
         actions: [
           IconButton(
               icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
-                const CommunitySearch();
+                HapticFeedback.lightImpact(); // 약한 진동
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CommunitySearch()));
               }),
         ],
-      ),
     );
   }
 }

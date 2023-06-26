@@ -41,65 +41,6 @@ class LoadData{  //클래스 이름은 명사로
               .map((doc) => PostListModel.fromMap(doc, collectionName))
               .toList());
 
-  // Firestore의 community collection에 있는 특정 카테고리 데이터 불러오기 (자유/정보의 세부 카테고리)
-  Stream<List<PostListModel>> readCategoryCollection({required String collectionName, required String category, List<String>? type}) {
-        if(type == null || type.isEmpty){
-          return firestore
-            .collection(collectionName)
-            .where('category', isEqualTo: category)
-            .orderBy('datetime', descending: true)
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collectionName))
-            .toList());
-        }
-        else{
-          return firestore
-            .collection(collectionName)
-            .where('category', isEqualTo: category)
-            .where('type', arrayContainsAny: type)
-            .orderBy('datetime', descending: true)
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collectionName))
-            .toList());
-        }
-}
-
-  // Firestore의 community collection에 있는 정보에 속하는 카테고리 데이터 모두 불러오기("전체 정보" 카테고리 가져오기)
-  Stream<List<PostListModel>> readAllInfoCollection(
-      {required String collectionName, List<String>? type}) {
-    if (type == null || type.isEmpty || type.length > 1) {
-      return firestore
-          .collection(collectionName)
-          .where('category', whereIn: [
-            '복지/혜택',
-            '교육/세미나',
-            '병원/센터 후기',
-            '법률/제도',
-            '초기 증상 발견/생활 속 Tip'
-          ])
-          .orderBy('datetime', descending: true)
-          .snapshots()
-          .map((snapshot) => snapshot.docs
-              .map((doc) => PostListModel.fromMap(doc, collectionName))
-              .toList());
-    } else {
-      return firestore
-          .collection(collectionName)
-          .where('category', whereIn: [
-            '복지/혜택',
-            '교육/세미나',
-            '병원/센터 후기',
-            '법률/제도',
-            '초기 증상 발견/생활 속 Tip'
-          ])
-          .where('type', isEqualTo: type)
-          .orderBy('datetime', descending: true)
-          .snapshots()
-          .map((snapshot) => snapshot.docs
-              .map((doc) => PostListModel.fromMap(doc, collectionName))
-              .toList());
-    }
-  }
 
   // Firestore의 커뮤니티 collection 내 특정 문서 불러오기
   Stream<CommunityPostModel> readCommunityDocument(

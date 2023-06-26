@@ -1,5 +1,6 @@
 import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/model/post_list.dart';
+import 'package:byourside/screen/community/appbar.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:byourside/screen/community/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,13 +15,11 @@ class CommunityPostList extends StatefulWidget {
   const CommunityPostList(
       {Key? key,
       required this.primaryColor,
-      required this.collectionName,
-      required this.category})
+      required this.collectionName})
       : super(key: key);
 
   final Color primaryColor;
   final String collectionName;
-  final String category;
 
   @override
   State<CommunityPostList> createState() => _CommunityPostListState();
@@ -87,18 +86,10 @@ class _CommunityPostListState extends State<CommunityPostList> {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: constants.font))),
                             Text(
-                              widget.category.contains('전체')
-                                  ? post.type!.isEmpty
-                                      ? '${post.nickname!} | $date | ${post.category}'
-                                      : '${post.nickname!} | $date | ${post.category} | $type'
-                                  : post.type!.isEmpty
+                              post.type!.isEmpty
                                       ? '${post.nickname!} | $date'
                                       : '${post.nickname!} | $date | $type',
-                              semanticsLabel: widget.category.contains('전체')
-                                  ? post.type!.isEmpty
-                                      ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category}'
-                                      : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 ${post.category} $type'
-                                  : post.type!.isEmpty
+                              semanticsLabel: post.type!.isEmpty
                                       ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
                                       : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $type',
                               overflow: TextOverflow.fade,
@@ -131,27 +122,11 @@ class _CommunityPostListState extends State<CommunityPostList> {
     List<String> blockList;
 
     return Scaffold(
+      appBar: const CommunityAppBar(primaryColor: constants.mainColor),
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-              (widget.category.contains('전체')) //가독성
-                  ? ((widget.category == '전체')
-                      ? loadData.readAllCollection(
-                          //전체
-                          collectionName: widget.collectionName,
-                          type: controller.type)
-                      : loadData.readAllInfoCollection(
-                          //정보 전체
-                          collectionName: widget.collectionName,
-                          type: controller.type))
-                  : loadData.readCategoryCollection(
-                      //자유 또는 정보 내 세부 카테고리
-                      collectionName: widget.collectionName,
-                      category: widget.category,
-                      type: controller.type),
-              FirebaseFirestore.instance
-                  .collection('user')
-                  .doc(user!.uid)
-                  .snapshots()),
+              loadData.readAllCollection(collectionName: widget.collectionName, type: controller.type),
+              FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
           builder: (context, snapshots) {
             //snapshot 이름 구분
             if (snapshots.snapshot2.hasData) {
