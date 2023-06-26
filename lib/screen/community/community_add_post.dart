@@ -1,4 +1,4 @@
-import 'package:byourside/screen/ondo/community_add_post_category.dart';
+import 'package:byourside/screen/community/community_add_post_category.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';

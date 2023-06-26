@@ -1,4 +1,4 @@
-import 'package:byourside/screen/ondo/community_add_post.dart';
+import 'package:byourside/screen/community/community_add_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants.dart' as constants;

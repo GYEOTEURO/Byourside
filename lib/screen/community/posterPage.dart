@@ -1,7 +1,7 @@
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/community_add_post.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:byourside/screen/community/overlay_controller.dart';
+import 'package:byourside/screen/community/post.dart';
+import 'package:byourside/screen/community/community_add_post.dart';
+import 'package:byourside/screen/community/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

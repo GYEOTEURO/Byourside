@@ -1,10 +1,10 @@
 import 'package:byourside/screen/nanum/nanumPostCategory.dart';
-import 'package:byourside/screen/ondo/infoDetailCategory.dart';
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/postList.dart';
-import 'package:byourside/screen/ondo/community_add_post.dart';
-import 'package:byourside/screen/ondo/searchPage.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:byourside/screen/community/infoDetailCategory.dart';
+import 'package:byourside/screen/community/overlay_controller.dart';
+import 'package:byourside/screen/community/postList.dart';
+import 'package:byourside/screen/community/community_add_post.dart';
+import 'package:byourside/screen/community/searchPage.dart';
+import 'package:byourside/screen/community/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
