@@ -5,8 +5,8 @@ import 'package:byourside/screen/authenticate/policy/using_policy.dart';
 import 'package:byourside/screen/mypage/my_block_user.dart';
 import 'package:byourside/screen/mypage/my_report.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
-import 'package:byourside/screen/mypage/my_ondo_post.dart';
-import 'package:byourside/screen/mypage/my_scrap_ondo_post.dart';
+import 'package:byourside/screen/mypage/my_community_post.dart';
+import 'package:byourside/screen/mypage/my_scrap_community_post.dart';
 import 'package:byourside/screen/mypage/to_developer.dart';
 import 'package:byourside/model/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,17 +38,17 @@ class _Mypage extends State<Mypage> {
   }
 
   final List<String> myEntires = <String>[
-    '내가 쓴 마음온도 글'
-        '마음온도 스크랩'
+    "내가 쓴 커뮤니티 글",
+    "커뮤니티 스크랩"
   ];
   final List<Icon> myIcons = <Icon>[
-    const Icon(Icons.groups, semanticLabel: '내가 쓴 마음온도 글 목록 화면으로 이동'),
+    const Icon(Icons.groups, semanticLabel: '내가 쓴 커뮤니티 글 목록 화면으로 이동'),
     const Icon(Icons.star_border_outlined,
-        semanticLabel: '스크랩한 마음온도 글 목록 화면으로 이동')
+        semanticLabel: '스크랩한 커뮤니티 글 목록 화면으로 이동')
   ];
   final List<Widget> myConnectPage = <Widget>[
-    const MyOndoPost(),
-    const MyScrapOndoPost()
+    const MyCommunityPost(),
+    const MyScrapCommunityPost()
   ];
 
   final List<String> etcEntires = <String>[

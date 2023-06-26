@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyScrapOndoPost extends StatefulWidget {
-  const MyScrapOndoPost({Key? key}) : super(key: key);
+class MyScrapCommunityPost extends StatefulWidget {
+  const MyScrapCommunityPost({Key? key}) : super(key: key);
   final Color primaryColor = constants.mainColor;
-  final String collectionName = 'ondoPost';
-  final String title = '스크랩한 마음온도글';
+  final String collectionName = 'communityPost';
+  final String title = '스크랩한 커뮤니티글';
 
   @override
-  State<MyScrapOndoPost> createState() => _MyScrapOndoPostState();
+  State<MyScrapCommunityPost> createState() => _MyScrapCommunityPostState();
 }
 
-class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
+class _MyScrapCommunityPostState extends State<MyScrapCommunityPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
@@ -47,7 +47,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,

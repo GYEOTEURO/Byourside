@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
-class OndoSearch extends StatefulWidget {
-  const OndoSearch({Key? key}) : super(key: key);
+class CommunitySearch extends StatefulWidget {
+  const CommunitySearch({Key? key}) : super(key: key);
   final Color primaryColor = constants.mainColor;
-  final String title = '마음온도 게시글 검색';
-  final String collectionName = 'ondoPost';
+  final String title = '커뮤니티 게시글 검색';
+  final String collectionName = 'communityPost';
 
   @override
-  State<OndoSearch> createState() => _OndoSearchState();
+  State<CommunitySearch> createState() => _CommunitySearchState();
 }
 
-class _OndoSearchState extends State<OndoSearch> {
+class _CommunitySearchState extends State<CommunitySearch> {
   final TextEditingController query = TextEditingController();
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
@@ -48,7 +48,7 @@ class _OndoSearchState extends State<OndoSearch> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => CommunityPost(
                               collectionName: widget.collectionName,
                               documentID: post.id!,
                               primaryColor: const Color(0xFF045558))));

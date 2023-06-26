@@ -1,13 +1,13 @@
 import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/screen/comment/comment_list.dart';
-import 'package:byourside/screen/community/ondo_post_content.dart';
+import 'package:byourside/screen/community/community_post_content.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OndoPost extends StatefulWidget {
-  const OndoPost(
+class CommunityPost extends StatefulWidget {
+  const CommunityPost(
       {super.key,
       required this.collectionName,
       required this.documentID,
@@ -18,10 +18,10 @@ class OndoPost extends StatefulWidget {
   final Color primaryColor;
 
   @override
-  State<OndoPost> createState() => _OndoPostState();
+  State<CommunityPost> createState() => _CommunityPostState();
 }
 
-class _OndoPostState extends State<OndoPost> {
+class _CommunityPostState extends State<CommunityPost> {
   final scrollController = Get.put(ScrollDownForComment());
 
   @override
@@ -32,8 +32,8 @@ class _OndoPostState extends State<OndoPost> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('마음온도',
-            semanticsLabel: '마음온도',
+        title: const Text('커뮤니티',
+            semanticsLabel: '커뮤니티',
             style: TextStyle(
                 fontFamily: constants.font, fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF045558),
@@ -51,7 +51,7 @@ class _OndoPostState extends State<OndoPost> {
             Container(
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
-                child: OndoPostContent(
+                child: CommunityPostContent(
                     collectionName: collectionName,
                     documentID: documentID,
                     primaryColor: constants.mainColor)),

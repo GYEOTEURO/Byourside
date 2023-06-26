@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyOndoPost extends StatefulWidget {
-  const MyOndoPost({Key? key}) : super(key: key);
+class MyCommunityPost extends StatefulWidget {
+  const MyCommunityPost({Key? key}) : super(key: key);
   final Color primaryColor = constants.mainColor;
-  final String collectionName = 'ondoPost';
-  final String title = '내가 쓴 마음온도글';
+  final String collectionName = 'communityPost';
+  final String title = '내가 쓴 커뮤니티글';
 
   @override
-  State<MyOndoPost> createState() => _MyOndoPostState();
+  State<MyCommunityPost> createState() => _MyCommunityPostState();
 }
 
-class _MyOndoPostState extends State<MyOndoPost> {
+class _MyCommunityPostState extends State<MyCommunityPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
@@ -46,7 +46,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,

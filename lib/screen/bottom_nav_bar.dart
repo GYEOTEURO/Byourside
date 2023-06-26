@@ -13,15 +13,14 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final ondoController = Get.put(OndoTypeController());
+  final communityController = Get.put(CommunityTypeController());
 
   int _selectedIndex = 0;
   // static TextStyle optionStyle =
   //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    const OndoPostList(
-      category: '',
-      collectionName: '',
+    const CommunityPostList(
+      collectionName: 'ondoPost',
       primaryColor: constants.mainColor,
     ),
     const Mypage(),
@@ -44,7 +43,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   void _onItemTapped(int index) {
     // 다른 탭으로 넘어갈 때, 필터링 초기화
-    ondoController.filtering(null);
+    communityController.filtering(null);
 
     // 탭을 클릭했을떄 지정한 페이지로 이동
     setState(() {
@@ -72,7 +71,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: bottomIcons[0],
-            label: '마음온도',
+            label: '커뮤니티',
           ),
           BottomNavigationBarItem(
             icon: bottomIcons[1],
