@@ -70,5 +70,7 @@
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>bluetooth</string>
 
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
