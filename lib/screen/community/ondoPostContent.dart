@@ -151,8 +151,7 @@ class _OndoPostContentState extends State<OndoPostContent> {
                           ["${user?.uid}_${user?.displayName}"])
                     });
                     await userCollection.doc(user?.uid).update({
-                      "groups":
-                          FieldValue.arrayUnion(["${groupId}_$groupName"])
+                      "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
                     });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
@@ -163,15 +162,14 @@ class _OndoPostContentState extends State<OndoPostContent> {
                                   groupName: groupNameReverse,
                                   userName: user!.displayName!)));
                     });
-                  } else { 
+                  } else {
                     String groupId = await getGroupId(groupName);
                     await groupCollection.doc(groupId).update({
                       "members": FieldValue.arrayUnion(
                           ["${user?.uid}_${user?.displayName}"])
                     });
                     await userCollection.doc(user?.uid).update({
-                      "groups":
-                          FieldValue.arrayUnion(["${groupId}_$groupName"])
+                      "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
                     });
                     Future.delayed(const Duration(seconds: 2), () {
                       Navigator.push(
@@ -185,14 +183,18 @@ class _OndoPostContentState extends State<OndoPostContent> {
                   }
                 })),
         if (user?.uid == post.uid)
-          (Delete(collectionName: widget.collectionName, documentID: widget.documentID)) // 공통 모듈 폴더
+          (Delete(
+              collectionName: widget.collectionName,
+              documentID: widget.documentID)) // 공통 모듈 폴더
         else
           (Row(children: [
             Declaration(
                 decList: _decList, collectionType: 'post', id: post.id!),
             Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Block(nickname: post.nickname!, collectionType: 'post')), //이름 명사로 짓기
+                child: Block(
+                    nickname: post.nickname!,
+                    collectionType: 'post')), //이름 명사로 짓기
           ]))
       ]),
       const Divider(thickness: 1, height: 1, color: Colors.black),
@@ -257,8 +259,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
             fixedSize: Size(width * 0.38, height * 0.06),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4))),
-            side:
-                const BorderSide(color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
+            side: const BorderSide(
+                color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
             foregroundColor: const Color.fromARGB(255, 255, 45, 45),
           ),
           icon: post.likesPeople!.contains(user?.uid)
@@ -280,8 +282,8 @@ class _OndoPostContentState extends State<OndoPostContent> {
             fixedSize: Size(width * 0.38, height * 0.06),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4))),
-            side:
-                const BorderSide(color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
+            side: const BorderSide(
+                color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
             foregroundColor: const Color.fromARGB(255, 64, 130, 75),
           ),
           icon: post.scrapPeople!.contains(user?.uid)

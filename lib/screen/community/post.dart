@@ -1,5 +1,5 @@
 import 'package:byourside/screen/postComment/commentList.dart';
-import 'package:byourside/screen/ondo/ondoPostContent.dart';
+import 'package:byourside/screen/community/ondoPostContent.dart';
 import 'package:byourside/screen/postComment/createComment.dart';
 import 'package:byourside/screen/postComment/scrollController.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/community/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/main.dart';

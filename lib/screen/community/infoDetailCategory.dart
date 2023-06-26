@@ -1,6 +1,6 @@
-import 'package:byourside/screen/ondo/posterPage.dart';
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/postList.dart';
+import 'package:byourside/screen/community/posterPage.dart';
+import 'package:byourside/screen/community/overlay_controller.dart';
+import 'package:byourside/screen/community/postList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

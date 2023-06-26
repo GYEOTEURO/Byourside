@@ -1,6 +1,6 @@
 import 'package:byourside/model/db_get.dart';
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/post.dart';
+import 'package:byourside/screen/community/post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +106,6 @@ class _OndoSearchState extends State<OndoSearch> {
 
   @override
   Widget build(BuildContext context) {
-
     List<String> blockList;
 
     return Scaffold(
@@ -134,50 +133,59 @@ class _OndoSearchState extends State<OndoSearch> {
                       controller: query,
                       maxLines: 1,
                       decoration: InputDecoration(
-                          semanticCounterText: "검색할 키워드 입력",
-                          labelText: "검색할 키워드를 입력해주세요.",
-                          floatingLabelStyle: TextStyle(
+                        semanticCounterText: "검색할 키워드 입력",
+                        labelText: "검색할 키워드를 입력해주세요.",
+                        floatingLabelStyle: TextStyle(
                             color: widget.primaryColor,
                             fontSize: 22,
                             fontFamily: 'NanumGothic',
                             fontWeight: FontWeight.w500),
-                          contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          hintStyle: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                          labelStyle: TextStyle(
-                              color: widget.primaryColor,
-                              fontSize: 17,
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w500),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: widget.primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: widget.primaryColor),
-                              borderRadius: BorderRadius.circular(20)),
-                          border:
-                              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-                          ))),
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 17,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
+                        labelStyle: TextStyle(
+                            color: widget.primaryColor,
+                            fontSize: 17,
+                            fontFamily: 'NanumGothic',
+                            fontWeight: FontWeight.w500),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: widget.primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: widget.primaryColor),
+                            borderRadius: BorderRadius.circular(20)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                      ))),
               Expanded(
                   child: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
-                      streams: StreamTuple2( 
-                        DBGet.readSearchDocs(query.text, collectionName: widget.collectionName),
-                        FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+                      streams: StreamTuple2(
+                          DBGet.readSearchDocs(query.text,
+                              collectionName: widget.collectionName),
+                          FirebaseFirestore.instance
+                              .collection('user')
+                              .doc(user!.uid)
+                              .snapshots()),
                       builder: (context, snapshots) {
-                        if(snapshots.snapshot2.hasData){
-                          blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
-                        }
-                        else{
+                        if (snapshots.snapshot2.hasData) {
+                          blockList =
+                              snapshots.snapshot2.data!["blockList"] == null
+                                  ? []
+                                  : snapshots.snapshot2.data!["blockList"]
+                                      .cast<String>();
+                        } else {
                           blockList = [];
                         }
                         if (snapshots.snapshot1.hasData) {
                           return ListView.builder(
                               itemCount: snapshots.snapshot1.data!.length,
                               itemBuilder: (_, index) {
-                                PostListModel post = snapshots.snapshot1.data![index];
+                                PostListModel post =
+                                    snapshots.snapshot1.data![index];
                                 if (blockList.contains(post.nickname)) {
                                   return Container();
                                 } else {

@@ -1,7 +1,7 @@
 import 'package:byourside/model/post_list.dart';
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/post.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:byourside/screen/community/overlay_controller.dart';
+import 'package:byourside/screen/community/post.dart';
+import 'package:byourside/screen/community/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -137,23 +137,32 @@ class _OndoPostListState extends State<OndoPostList> {
     return Scaffold(
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-            (widget.category.contains('전체')) //가독성
-              ? ((widget.category == '전체')
-                  ? DBGet.readAllCollection( //전체
-                      collectionName: widget.collectionName, type: controller.type)
-                  : DBGet.readAllInfoCollection( //정보 전체
-                      collectionName: widget.collectionName, type: controller.type))
-              : DBGet.readCategoryCollection( //자유 또는 정보 내 세부 카테고리
-                  collectionName: widget.collectionName,
-                  category: widget.category,
-                  type: controller.type), 
-              FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+              (widget.category.contains('전체')) //가독성
+                  ? ((widget.category == '전체')
+                      ? DBGet.readAllCollection(
+                          //전체
+                          collectionName: widget.collectionName,
+                          type: controller.type)
+                      : DBGet.readAllInfoCollection(
+                          //정보 전체
+                          collectionName: widget.collectionName,
+                          type: controller.type))
+                  : DBGet.readCategoryCollection(
+                      //자유 또는 정보 내 세부 카테고리
+                      collectionName: widget.collectionName,
+                      category: widget.category,
+                      type: controller.type),
+              FirebaseFirestore.instance
+                  .collection('user')
+                  .doc(user!.uid)
+                  .snapshots()),
           builder: (context, snapshots) {
             //snapshot 이름 구분
-            if(snapshots.snapshot2.hasData){
-              blockList = snapshots.snapshot2.data!["blockList"] == null ? [] : snapshots.snapshot2.data!["blockList"].cast<String>();
-            }
-            else{
+            if (snapshots.snapshot2.hasData) {
+              blockList = snapshots.snapshot2.data!["blockList"] == null
+                  ? []
+                  : snapshots.snapshot2.data!["blockList"].cast<String>();
+            } else {
               blockList = [];
             }
             if (snapshots.snapshot1.hasData) {

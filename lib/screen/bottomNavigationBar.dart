@@ -1,9 +1,9 @@
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:byourside/screen/nanum/nanumPostList.dart';
 import 'package:byourside/screen/nanum/type_controller.dart';
-import 'package:byourside/screen/ondo/category.dart';
-import 'package:byourside/screen/ondo/overlay_controller.dart';
-import 'package:byourside/screen/ondo/type_controller.dart';
+import 'package:byourside/screen/community/category.dart';
+import 'package:byourside/screen/community/overlay_controller.dart';
+import 'package:byourside/screen/community/type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   void _onItemTapped(int index) {
     // 정보게시판 dropdown 열려있을때 닫아주기
-    if(overlayController.overlayEntry != null){
+    if (overlayController.overlayEntry != null) {
       overlayController.controlOverlay(null);
     }
 
