@@ -1,47 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class NanumPostModel {
+class CommunityPostModel {
   String? id;
   String? uid;
   String? title;
   String? nickname;
   String? content;
-  String? price;
-  bool? isCompleted;
   Timestamp? datetime;
   List<String>? images;
   List<String>? imgInfos;
+  String? category;
   List<String>? type;
   int? likes;
   List<String>? likesPeople;
   List<String>? scrapPeople;
   List<String>? keyword;
 
-  NanumPostModel(
+  CommunityPostModel(
       {this.id,
       this.uid,
       this.title,
       this.nickname,
       this.content,
-      this.price,
-      this.isCompleted,
       this.datetime,
       this.images,
       this.imgInfos,
+      this.category,
       this.type,
       this.likes,
       this.likesPeople,
       this.scrapPeople,
       this.keyword});
 
-  NanumPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
+  // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
+  // 이외는 uid = doc.data()!["uid"],
+  CommunityPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) //변환한다는 의미를 살린 이름 짓기
       : id = doc.id,
         uid = doc.data()!['uid'],
         title = doc.data()!['title'],
         nickname = doc.data()!['nickname'],
         content = doc.data()!['content'],
-        price = doc.data()!['price'],
-        isCompleted = doc.data()!['isCompleted'],
         datetime = doc.data()!['datetime'],
         // ignore: prefer_null_aware_operators
         images = doc.data()!['images'] == null
@@ -50,6 +48,7 @@ class NanumPostModel {
         imgInfos = doc.data()!['imgInfos'] == null
             ? null
             : doc.data()!['imgInfos'].cast<String>(),
+        category = doc.data()!['category'],
         type = doc.data()!['type'] == null
             ? null
             : doc.data()!['type'].cast<String>(),
@@ -66,17 +65,16 @@ class NanumPostModel {
             ? null
             : doc.data()!['keyword'].cast<String>();
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() { // 저장의 의미
     return {
       'uid': uid,
       'title': title,
       'nickname': nickname,
       'content': content,
-      'price': price,
-      'isCompleted': isCompleted,
       'datetime': datetime,
       'images': images,
       'imgInfos': imgInfos,
+      'category': category,
       'type': type,
       'likes': likes,
       'likesPeople': likesPeople,

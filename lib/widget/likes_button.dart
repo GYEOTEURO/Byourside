@@ -1,5 +1,5 @@
 import 'package:byourside/constants.dart' as constants;
-import 'package:byourside/model/ondo_post.dart';
+import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +12,7 @@ class LikesButton extends StatefulWidget {
       required this.uid});
 
   final String collectionName;
-  final OndoPostModel post;
+  final CommunityPostModel post;
   final String uid;
 
   @override
@@ -25,7 +25,7 @@ class _LikesButtonState extends State<LikesButton> {
     SaveData saveData = SaveData();
     String uid = widget.uid;
     String collectionName = widget.collectionName;
-    OndoPostModel post = widget.post;
+    CommunityPostModel post = widget.post;
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;

@@ -23,7 +23,7 @@ class PostListModel {
             ? null : doc['images'].cast<String>(),
         imgInfos = doc['imgInfos'] == null
             ? null : doc['imgInfos'].cast<String>(),
-        category = (collectionName == 'ondoPost') ? doc['category'] : null,
+        category = (collectionName == 'communityPost') ? doc['category'] : null,
         isCompleted = (collectionName == 'nanumPost') ? doc['isCompleted'] : null,
         type = doc['type'] == null
             ? null : doc['type'].cast<String>();

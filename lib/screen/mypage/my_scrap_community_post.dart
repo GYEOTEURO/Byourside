@@ -7,23 +7,24 @@ import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyOndoPost extends StatefulWidget {
-  const MyOndoPost({Key? key}) : super(key: key);
+class MyScrapCommunityPost extends StatefulWidget {
+  const MyScrapCommunityPost({Key? key}) : super(key: key);
   final Color primaryColor = constants.mainColor;
-  final String collectionName = 'ondoPost';
-  final String title = '내가 쓴 마음온도글';
+  final String collectionName = 'communityPost';
+  final String title = '스크랩한 커뮤니티글';
 
   @override
-  State<MyOndoPost> createState() => _MyOndoPostState();
+  State<MyScrapCommunityPost> createState() => _MyScrapCommunityPostState();
 }
 
-class _MyOndoPostState extends State<MyOndoPost> {
+class _MyScrapCommunityPostState extends State<MyScrapCommunityPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
   Widget _buildListItem(String collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -47,7 +48,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
@@ -78,11 +79,11 @@ class _MyOndoPostState extends State<MyOndoPost> {
                                       fontFamily: constants.font))),
                           Text(
                             post.type!.isEmpty
-                                ? '$date | ${post.category!}'
-                                : '$date | ${post.category!} | $type',
+                                ? '${post.nickname} | $date | ${post.category!}'
+                                : '${post.nickname} | $date | ${post.category!} | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
-                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}  $type',
+                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
+                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!} $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
@@ -125,7 +126,7 @@ class _MyOndoPostState extends State<MyOndoPost> {
             }),
       ),
       body: StreamBuilder<List<PostListModel>>(
-          stream: loadData.readCreatePost(
+          stream: loadData.readScrapPost(
               collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
@@ -139,8 +140,8 @@ class _MyOndoPostState extends State<MyOndoPost> {
             } else {
               return const SelectionArea(
                   child: Center(
-                      child: Text('게시글 목록을 가져오는 중...',
-                          semanticsLabel: '게시글 목록을 가져오는 중...',
+                      child: Text('스크랩 목록을 가져오는 중...',
+                          semanticsLabel: '스크랩 목록을 가져오는 중...',
                           style: TextStyle(
                               fontFamily: constants.font,
                               fontWeight: FontWeight.w600))));

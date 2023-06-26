@@ -1,5 +1,5 @@
 import 'package:byourside/constants.dart' as constants;
-import 'package:byourside/model/ondo_post.dart';
+import 'package:byourside/model/community_post.dart';
 import 'package:byourside/widget/block_user.dart';
 import 'package:byourside/widget/report.dart';
 import 'package:byourside/widget/delete_post_or_comment.dart';
@@ -11,8 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/load_data.dart';
 import '../../model/save_data.dart';
 
-class OndoPostContent extends StatefulWidget {
-  const OndoPostContent(
+class CommunityPostContent extends StatefulWidget {
+  const CommunityPostContent(
       {super.key,
       required this.collectionName,
       required this.documentID,
@@ -23,17 +23,17 @@ class OndoPostContent extends StatefulWidget {
   final Color primaryColor;
 
   @override
-  State<OndoPostContent> createState() => _OndoPostContentState();
+  State<CommunityPostContent> createState() => _CommunityPostContentState();
 }
 
-class _OndoPostContentState extends State<OndoPostContent> {
+class _CommunityPostContentState extends State<CommunityPostContent> {
   final User? user = FirebaseAuth.instance.currentUser;
   final SaveData saveData = SaveData();
   final LoadData loadData = LoadData();
 
   final List<String> _decList = constants.postReportReasonList;
 
-  Widget _buildListItem(String? collectionName, OndoPostModel? post) {
+  Widget _buildListItem(String? collectionName, CommunityPostModel? post) {
     List<String> datetime = post!.datetime!.toDate().toString().split(' ');
     String date = datetime[0].replaceAll('-', '/');
     String hour = datetime[1].split(':')[0];
@@ -119,12 +119,12 @@ class _OndoPostContentState extends State<OndoPostContent> {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
 
-    return StreamBuilder<OndoPostModel>(
-        stream: loadData.readOndoDocument(
+    return StreamBuilder<CommunityPostModel>(
+        stream: loadData.readCommunityDocument(
             collectionName: collectionName, documentID: documentID),
-        builder: (context, AsyncSnapshot<OndoPostModel> snapshot) {
+        builder: (context, AsyncSnapshot<CommunityPostModel> snapshot) {
           if (snapshot.hasData) {
-            OndoPostModel? post = snapshot.data;
+            CommunityPostModel? post = snapshot.data;
             return _buildListItem(collectionName, post);
           } else {
             return const SelectionArea(

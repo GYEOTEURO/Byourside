@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import '../../model/load_data.dart';
 
-class OndoPostList extends StatefulWidget {
-  const OndoPostList(
+class CommunityPostList extends StatefulWidget {
+  const CommunityPostList(
       {Key? key,
       required this.primaryColor,
       required this.collectionName,
@@ -23,10 +23,10 @@ class OndoPostList extends StatefulWidget {
   final String category;
 
   @override
-  State<OndoPostList> createState() => _OndoPostListState();
+  State<CommunityPostList> createState() => _CommunityPostListState();
 }
 
-class _OndoPostListState extends State<OndoPostList> {
+class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
@@ -57,7 +57,7 @@ class _OndoPostListState extends State<OndoPostList> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
@@ -126,7 +126,7 @@ class _OndoPostListState extends State<OndoPostList> {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(OndoTypeController());
+    var controller = Get.put(CommunityTypeController());
 
     List<String> blockList;
 

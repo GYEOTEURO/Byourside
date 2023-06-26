@@ -1,5 +1,5 @@
 import 'package:byourside/constants.dart' as constants;
-import 'package:byourside/model/ondo_post.dart';
+import 'package:byourside/model/community_post.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class ImageSlider extends StatefulWidget {
   const ImageSlider({super.key, required this.post});
 
-  final OndoPostModel post;
+  final CommunityPostModel post;
 
   @override
   State<ImageSlider> createState() => _ImageSliderState();
@@ -18,7 +18,7 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    OndoPostModel post = widget.post;
+    CommunityPostModel post = widget.post;
 
     double width = MediaQuery.of(context).size.width;
 

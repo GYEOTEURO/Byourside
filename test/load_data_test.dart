@@ -1,5 +1,5 @@
 import 'package:byourside/model/load_data.dart';
-import 'package:byourside/model/ondo_post.dart';
+import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
@@ -10,9 +10,9 @@ void main() {
   group('LoadData', () {
     FakeFirebaseFirestore? fakeFirebaseFirestore;
 
-    OndoPostModel data = OndoPostModel(
+    CommunityPostModel data = CommunityPostModel(
       uid: 'mg12345',
-      title: 'Ondo Post Upload Test',
+      title: 'Community Post Upload Test',
       nickname: 'mg',
       content: 'Hello World!',
       datetime: Timestamp.now(),
@@ -23,7 +23,7 @@ void main() {
       likes: 0,
       likesPeople: [],
       scrapPeople: [],
-      keyword: ['Ondo', 'Post', 'Upload', 'Test'],
+      keyword: ['Community', 'Post', 'Upload', 'Test'],
     );
 
     setUp(() {
@@ -34,10 +34,10 @@ void main() {
       'Collection Operations',
       () {
         test('readAllCollection adds data to given collection', () async {
-          //await fakeFirebaseFirestore!.collection('ondo').add(data.toMap());
+          //await fakeFirebaseFirestore!.collection('community').add(data.toMap());
 
           LoadData firestore = LoadData(firestore: fakeFirebaseFirestore);
-          const String collectionName = 'ondo';
+          const String collectionName = 'community';
 
           final CollectionReference<Map<String, dynamic>> collectionReference =
               fakeFirebaseFirestore!.collection(collectionName);

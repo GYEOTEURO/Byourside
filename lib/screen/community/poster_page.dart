@@ -57,7 +57,7 @@ class _PosterPageState extends State<PosterPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => OndoPost(
+                  builder: (context) => CommunityPost(
                         // Post 위젯에 documentID를 인자로 넘김
                         collectionName: widget.collectionName,
                         documentID: post.id!,
@@ -127,7 +127,7 @@ class _PosterPageState extends State<PosterPage> {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(OndoTypeController());
+    var controller = Get.put(CommunityTypeController());
     String collectionName = widget.collectionName;
 
     List<String> blockList;

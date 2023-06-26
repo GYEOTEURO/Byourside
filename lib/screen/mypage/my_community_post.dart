@@ -3,28 +3,26 @@ import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyScrapOndoPost extends StatefulWidget {
-  const MyScrapOndoPost({Key? key}) : super(key: key);
+class MyCommunityPost extends StatefulWidget {
+  const MyCommunityPost({Key? key}) : super(key: key);
   final Color primaryColor = constants.mainColor;
-  final String collectionName = 'ondoPost';
-  final String title = '스크랩한 마음온도글';
+  final String collectionName = 'communityPost';
+  final String title = '내가 쓴 커뮤니티글';
 
   @override
-  State<MyScrapOndoPost> createState() => _MyScrapOndoPostState();
+  State<MyCommunityPost> createState() => _MyCommunityPostState();
 }
 
-class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
+class _MyCommunityPostState extends State<MyCommunityPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
   Widget _buildListItem(String collectionName, PostListModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -48,7 +46,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
+                          builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
                                 documentID: post.id!,
@@ -79,11 +77,11 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
                                       fontFamily: constants.font))),
                           Text(
                             post.type!.isEmpty
-                                ? '${post.nickname} | $date | ${post.category!}'
-                                : '${post.nickname} | $date | ${post.category!} | $type',
+                                ? '$date | ${post.category!}'
+                                : '$date | ${post.category!} | $type',
                             semanticsLabel: post.type!.isEmpty
-                                ? '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
-                                : '${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!} $type',
+                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
+                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}  $type',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
@@ -126,7 +124,7 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
             }),
       ),
       body: StreamBuilder<List<PostListModel>>(
-          stream: loadData.readScrapPost(
+          stream: loadData.readCreatePost(
               collectionName: widget.collectionName, uid: user!.uid),
           builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
             if (snapshot.hasData) {
@@ -140,8 +138,8 @@ class _MyScrapOndoPostState extends State<MyScrapOndoPost> {
             } else {
               return const SelectionArea(
                   child: Center(
-                      child: Text('스크랩 목록을 가져오는 중...',
-                          semanticsLabel: '스크랩 목록을 가져오는 중...',
+                      child: Text('게시글 목록을 가져오는 중...',
+                          semanticsLabel: '게시글 목록을 가져오는 중...',
                           style: TextStyle(
                               fontFamily: constants.font,
                               fontWeight: FontWeight.w600))));
