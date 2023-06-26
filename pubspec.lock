@@ -564,10 +564,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_sign_in_mocks
-      sha256: badfe653764195372e966ee443c6036d4656568914bdfc8f78e1279f6edc263a
+      sha256: "09312785f1076b0646bb675a324355c33524bbdb760d1c6ebd5e4dcf04d9a343"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.2"
+    version: "0.3.0"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
