@@ -6,19 +6,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../main.dart';
 import '../../model/comment.dart';
 
 class CreateComment extends StatefulWidget {
   const CreateComment(
       {super.key,
       required this.collectionName,
-      required this.documentID,
-      required this.primaryColor});
+      required this.documentID});
 
   final String collectionName;
   final String documentID;
-  final Color primaryColor;
 
   @override
   State<CreateComment> createState() => _CreateCommentState();
@@ -35,13 +32,12 @@ class _CreateCommentState extends State<CreateComment> {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
 
-    return GestureDetector(
-        onTap: () => HapticFeedback.lightImpact(), //약한 진동
-        child: Semantics(
+    return Semantics(
             container: true,
             textField: true,
             label: '댓글을 작성해주세요.',
             child: TextFormField(
+                onTap: () => HapticFeedback.lightImpact(),
                 controller: comment,
                 minLines: 1,
                 maxLines: 5,
@@ -60,15 +56,15 @@ class _CreateCommentState extends State<CreateComment> {
                         fontFamily: constants.font,
                         fontWeight: FontWeight.w500),
                     labelStyle: const TextStyle(
-                        color: primaryColor,
+                        color: constants.mainColor,
                         fontSize: 17,
                         fontFamily: constants.font,
                         fontWeight: FontWeight.w500),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: primaryColor),
+                        borderSide: const BorderSide(color: constants.mainColor),
                         borderRadius: BorderRadius.circular(20)),
                     focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: primaryColor),
+                        borderSide: const BorderSide(color: constants.mainColor),
                         borderRadius: BorderRadius.circular(20)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(32.0)),
@@ -92,7 +88,7 @@ class _CreateCommentState extends State<CreateComment> {
                         icon: const Icon(
                           Icons.send,
                           semanticLabel: '작성한 댓글 저장',
-                          color: primaryColor,
-                        ))))));
+                          color: constants.mainColor,
+                        )))));
   }
 }

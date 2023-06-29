@@ -10,12 +10,10 @@ class CommunityPost extends StatefulWidget {
   const CommunityPost(
       {super.key,
       required this.collectionName,
-      required this.documentID,
-      required this.primaryColor});
+      required this.documentID});
 
   final String collectionName;
   final String documentID;
-  final Color primaryColor;
 
   @override
   State<CommunityPost> createState() => _CommunityPostState();
@@ -36,7 +34,7 @@ class _CommunityPostState extends State<CommunityPost> {
             semanticsLabel: '커뮤니티',
             style: TextStyle(
                 fontFamily: constants.font, fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF045558),
+        backgroundColor: constants.mainColor,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
                 semanticLabel: '뒤로 가기', color: Colors.white),
@@ -53,22 +51,19 @@ class _CommunityPostState extends State<CommunityPost> {
                 padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
                 child: CommunityPostContent(
                     collectionName: collectionName,
-                    documentID: documentID,
-                    primaryColor: constants.mainColor)),
+                    documentID: documentID)),
             Container(
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: CreateComment(
                     collectionName: collectionName,
-                    documentID: documentID,
-                    primaryColor: constants.mainColor)),
+                    documentID: documentID)),
             Container(
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                 child: CommentList(
                     collectionName: collectionName,
-                    documentID: documentID,
-                    primaryColor: constants.mainColor)),
+                    documentID: documentID)),
           ])),
     );
   }

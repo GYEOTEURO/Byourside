@@ -1,6 +1,7 @@
 import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/community/appbar.dart';
+import 'package:byourside/screen/community/community_add_post.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:byourside/screen/community/type_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,12 +15,11 @@ import '../../model/load_data.dart';
 class CommunityPostList extends StatefulWidget {
   const CommunityPostList(
       {Key? key,
-      required this.primaryColor,
       required this.collectionName})
       : super(key: key);
 
-  final Color primaryColor;
   final String collectionName;
+  final String title = '커뮤니티 게시판';
 
   @override
   State<CommunityPostList> createState() => _CommunityPostListState();
@@ -59,8 +59,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
                           builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
-                                documentID: post.id!,
-                                primaryColor: constants.mainColor,
+                                documentID: post.id!
                               )));
                 },
                 child: Container(
@@ -122,7 +121,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
     List<String> blockList;
 
     return Scaffold(
-      appBar: const CommunityAppBar(primaryColor: constants.mainColor),
+      appBar: CommunityAppBar(title: widget.title),
       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
           streams: StreamTuple2(
               loadData.readAllCollection(collectionName: widget.collectionName, type: controller.type),
@@ -161,6 +160,16 @@ class _CommunityPostListState extends State<CommunityPostList> {
               )));
             }
           }),
-    );
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          HapticFeedback.lightImpact(); // 약한 진동
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CommunityAddPost()));
+        },
+        backgroundColor: constants.mainColor,
+        child: const Icon(Icons.add, semanticLabel: '커뮤니티 글쓰기'),
+    ));
   }
 }

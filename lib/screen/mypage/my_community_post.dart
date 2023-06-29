@@ -8,7 +8,6 @@ import '../../model/load_data.dart';
 
 class MyCommunityPost extends StatefulWidget {
   const MyCommunityPost({Key? key}) : super(key: key);
-  final Color primaryColor = constants.mainColor;
   final String collectionName = 'communityPost';
   final String title = '내가 쓴 커뮤니티글';
 
@@ -49,8 +48,7 @@ class _MyCommunityPostState extends State<MyCommunityPost> {
                           builder: (context) => CommunityPost(
                                 // Post 위젯에 documentID를 인자로 넘김
                                 collectionName: widget.collectionName,
-                                documentID: post.id!,
-                                primaryColor: constants.mainColor,
+                                documentID: post.id!
                               )));
                 },
                 child: Container(
@@ -115,7 +113,7 @@ class _MyCommunityPostState extends State<MyCommunityPost> {
             semanticsLabel: widget.title,
             style: const TextStyle(
                 fontFamily: constants.font, fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF045558),
+        backgroundColor: constants.mainColor,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
                 semanticLabel: '뒤로 가기', color: Colors.white),

@@ -10,7 +10,6 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class CommunitySearch extends StatefulWidget {
   const CommunitySearch({Key? key}) : super(key: key);
-  final Color primaryColor = constants.mainColor;
   final String title = '커뮤니티 게시글 검색';
   final String collectionName = 'communityPost';
 
@@ -50,8 +49,7 @@ class _CommunitySearchState extends State<CommunitySearch> {
                       MaterialPageRoute(
                           builder: (context) => CommunityPost(
                               collectionName: widget.collectionName,
-                              documentID: post.id!,
-                              primaryColor: const Color(0xFF045558))));
+                              documentID: post.id!)));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -137,8 +135,8 @@ class _CommunitySearchState extends State<CommunitySearch> {
                       decoration: InputDecoration(
                         semanticCounterText: '검색할 키워드 입력',
                         labelText: '검색할 키워드를 입력해주세요.',
-                        floatingLabelStyle: TextStyle(
-                            color: widget.primaryColor,
+                        floatingLabelStyle: const TextStyle(
+                            color: constants.mainColor,
                             fontSize: 22,
                             fontFamily: constants.font,
                             fontWeight: FontWeight.w500),
@@ -149,16 +147,16 @@ class _CommunitySearchState extends State<CommunitySearch> {
                             fontSize: 17,
                             fontFamily: constants.font,
                             fontWeight: FontWeight.w500),
-                        labelStyle: TextStyle(
-                            color: widget.primaryColor,
+                        labelStyle: const TextStyle(
+                            color: constants.mainColor,
                             fontSize: 17,
                             fontFamily: constants.font,
                             fontWeight: FontWeight.w500),
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: widget.primaryColor),
+                            borderSide: const BorderSide(color: constants.mainColor),
                             borderRadius: BorderRadius.circular(20)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: widget.primaryColor),
+                            borderSide: const BorderSide(color: constants.mainColor),
                             borderRadius: BorderRadius.circular(20)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32.0)),

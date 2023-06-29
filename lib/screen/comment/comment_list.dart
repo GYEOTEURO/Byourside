@@ -14,12 +14,10 @@ class CommentList extends StatefulWidget {
   const CommentList(
       {super.key,
       required this.collectionName,
-      required this.documentID,
-      required this.primaryColor});
+      required this.documentID});
 
   final String collectionName;
   final String documentID;
-  final Color primaryColor;
 
   @override
   State<CommentList> createState() => _CommentListState();
@@ -79,7 +77,7 @@ class _CommentListState extends State<CommentList> {
                         else
                           Row(children: [
                             Report(
-                                decList: commentReportReason,
+                                reportReasonList: commentReportReason,
                                 collectionType: 'comment',
                                 id: comment.id!),
                             Container(

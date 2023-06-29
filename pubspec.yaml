@@ -73,6 +73,8 @@ dependencies:
   firebase_auth_mocks: ^0.11.0
   firebase_storage_mocks: ^0.6.1
   fake_cloud_firestore: ^2.4.1+1
+  firebase_messaging: ^14.6.4
+  flutter_local_notifications: ^14.1.1
 
 dev_dependencies:
   flutter_test:

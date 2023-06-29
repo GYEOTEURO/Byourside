@@ -20,8 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
     const CommunityPostList(
-      collectionName: 'ondoPost',
-      primaryColor: constants.mainColor,
+      collectionName: 'ondoPost'
     ),
     const Mypage(),
   ];

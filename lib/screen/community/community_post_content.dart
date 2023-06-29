@@ -15,12 +15,10 @@ class CommunityPostContent extends StatefulWidget {
   const CommunityPostContent(
       {super.key,
       required this.collectionName,
-      required this.documentID,
-      required this.primaryColor});
+      required this.documentID});
 
   final String collectionName;
   final String documentID;
-  final Color primaryColor;
 
   @override
   State<CommunityPostContent> createState() => _CommunityPostContentState();
@@ -31,7 +29,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
   final SaveData saveData = SaveData();
   final LoadData loadData = LoadData();
 
-  final List<String> _decList = constants.postReportReasonList;
+  final List<String> _reportReasonList = constants.postReportReasonList;
 
   Widget _buildListItem(String? collectionName, CommunityPostModel? post) {
     List<String> datetime = post!.datetime!.toDate().toString().split(' ');
@@ -82,7 +80,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
               documentID: widget.documentID) // 공통 모듈 폴더
         else
           Row(children: [
-            Report(decList: _decList, collectionType: 'post', id: post.id!),
+            Report(reportReasonList: _reportReasonList, collectionType: 'post', id: post.id!),
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: BlockUser(

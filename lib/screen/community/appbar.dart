@@ -1,12 +1,15 @@
-import 'package:byourside/main.dart';
 import 'package:byourside/screen/community/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants.dart' as constants;
 import 'package:flutter/services.dart';
 
 class CommunityAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CommunityAppBar({Key? key, required this.primaryColor}) : super(key: key);
-  final Color primaryColor;
+  const CommunityAppBar(
+    {Key? key, 
+    required this.title}) 
+    : super(key: key);
+
+  final String title;
 
   @override
   State<CommunityAppBar> createState() => _CommunityAppBarState();
@@ -19,11 +22,11 @@ class _CommunityAppBarState extends State<CommunityAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: constants.mainColor,
         centerTitle: true,
-        title: const Text(
-          '커뮤니티',
-          semanticsLabel: '커뮤니티',
+        title: Text(
+          widget.title,
+          semanticsLabel: widget.title,
         ),
         titleTextStyle:
             const TextStyle(fontFamily: constants.font, fontWeight: FontWeight.bold),

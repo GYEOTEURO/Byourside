@@ -7,11 +7,10 @@ import '../model/save_data.dart';
 class Report extends StatefulWidget {
   const Report(
       {super.key,
-      required this.decList,
+      required this.reportReasonList,
       required this.collectionType,
       required this.id});
-  final Color primaryColor = constants.mainColor;
-  final List<String> decList;
+  final List<String> reportReasonList;
   final String collectionType;
   final String id;
 
@@ -25,7 +24,7 @@ class _ReportState extends State<Report> {
 
   @override
   Widget build(BuildContext context) {
-    String declaration = widget.decList[0];
+    String reportReason = widget.reportReasonList[0];
 
     return OutlinedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade300),
@@ -58,7 +57,7 @@ class _ReportState extends State<Report> {
                       )),
                   content: StatefulBuilder(builder: (context, setState) {
                     return Column(
-                      children: widget.decList
+                      children: widget.reportReasonList
                           .map((e) => RadioListTile(
                               title: Text(e,
                                   semanticsLabel: e,
@@ -68,10 +67,10 @@ class _ReportState extends State<Report> {
                                     fontWeight: FontWeight.w600,
                                   )),
                               value: e,
-                              groupValue: declaration,
+                              groupValue: reportReason,
                               onChanged: (String? value) {
                                 setState(() {
-                                  declaration = value!;
+                                  reportReason = value!;
                                 });
                               }))
                           .toList(),
@@ -83,12 +82,12 @@ class _ReportState extends State<Report> {
                         children: [
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: widget.primaryColor,
+                                backgroundColor: constants.mainColor,
                               ),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
-                                saveData.declaration(widget.collectionType,
-                                    declaration, widget.id);
+                                saveData.report(widget.collectionType,
+                                    reportReason, widget.id);
                                 Navigator.pop(context);
                               },
                               child: const Text('신고',
@@ -100,7 +99,7 @@ class _ReportState extends State<Report> {
                                   ))),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: widget.primaryColor,
+                                backgroundColor: constants.mainColor,
                               ),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
