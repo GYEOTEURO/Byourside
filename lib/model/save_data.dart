@@ -6,9 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SaveData {
-  SaveData({FirebaseFirestore? firestore}) : firestore = firestore ?? FirebaseFirestore.instance;
+  SaveData({FirebaseFirestore? firestore, FirebaseStorage? storage}) 
+  : firestore = firestore ?? FirebaseFirestore.instance,
+    storage = storage ?? FirebaseStorage.instance;
 
   final FirebaseFirestore firestore;
+  final FirebaseStorage storage;
 
   // 커뮤니티 문서 생성
   addCommunityPost(String collectionName, CommunityPostModel postData) async {
@@ -20,7 +23,7 @@ class SaveData {
     List<String> urls = [];
 
     for(XFile element in images){
-      var imageRef = FirebaseStorage.instance.ref().child('images/${element.name}');
+      var imageRef = storage.ref().child('images/${element.name}');
       File file = File(element.path);
 
       try {
@@ -41,7 +44,7 @@ class SaveData {
 
   // 댓글 저장
   addComment(String collectionName, String documentID, CommentModel commentData) async {
-    await firestore.collection(collectionName).doc(documentID).collection('comment').add(commentData.toMap());
+    return firestore.collection(collectionName).doc(documentID).collection('comment').add(commentData.toMap());
   }
   
   // 댓글 삭제
@@ -95,7 +98,7 @@ class SaveData {
   }
 
   // 신고
-  declaration(String classification, String reason, String id) async {
+  report(String classification, String reason, String id) async {
     await firestore.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_$reason'])});
   }
 
