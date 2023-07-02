@@ -40,7 +40,7 @@ class DefaultFirebaseOptions {
     authDomain: 'byourside-2ea11.firebaseapp.com',
     databaseURL: 'https://byourside-2ea11-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'byourside-2ea11.appspot.com',
-    measurementId: dotenv.env['WEB_MEASUREMENT_ID']!,
+    measurementId: dotenv.env['WEB_MEASUREMENT_ID'],
   );
 
   static FirebaseOptions android = FirebaseOptions(
@@ -59,8 +59,8 @@ class DefaultFirebaseOptions {
     projectId: 'byourside-2ea11',
     databaseURL: 'https://byourside-2ea11-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'byourside-2ea11.appspot.com',
-    androidClientId: dotenv.env['IOS_ANDROID_CLIENT_ID']!,
-    iosClientId: dotenv.env['IOS_IOS_CLIENT_ID']!,
+    androidClientId: dotenv.env['IOS_ANDROID_CLIENT_ID'],
+    iosClientId: dotenv.env['IOS_IOS_CLIENT_ID'],
     iosBundleId: 'com.example.byourside',
   );
 
@@ -71,8 +71,8 @@ class DefaultFirebaseOptions {
     projectId: 'byourside-2ea11',
     databaseURL: 'https://byourside-2ea11-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'byourside-2ea11.appspot.com',
-    androidClientId: dotenv.env['MACOS_ANDROID_CLIENT_ID']!,
-    iosClientId: dotenv.env['MACOS_IOS_CLIENT_ID']!,
+    androidClientId: dotenv.env['MACOS_ANDROID_CLIENT_ID'],
+    iosClientId: dotenv.env['MACOS_IOS_CLIENT_ID'],
     iosBundleId: 'com.example.byourside',
   );
 }

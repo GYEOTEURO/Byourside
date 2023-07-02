@@ -64,6 +64,20 @@
     <key>NSRemindersUsageDescription</key>
     <string>reminders</string>
 
+	<key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <!-- facebook login -->
+        <!-- <string>fbAPP-ID</string> -->
+
+        <!-- google login -->
+        <string>dotenv.env['GOOGLE_CF_BUNDLE_URL']</string>
+      </array>
+      </dict>
+    </array>
+
     <!-- Permission options for the `bluetooth` -->
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>bluetooth</string>
