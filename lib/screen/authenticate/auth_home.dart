@@ -1,5 +1,5 @@
 import 'package:byourside/main.dart';
-import 'package:byourside/screen/authenticate/social_login/social_login.dart';
+import 'package:byourside/screen/authenticate/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.w500),
           ),
         ),
-        home: const SocialLogin(),
+        home: const Wrapper(),
         // home: const Wrapper(),
       ),
     );
