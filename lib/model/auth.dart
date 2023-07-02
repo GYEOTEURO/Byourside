@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login_user.dart';
 import 'firebase_user.dart';
 
 class AuthService {
@@ -16,55 +15,7 @@ class AuthService {
 
   Stream<FirebaseUser?> get user {
     return _auth.authStateChanges().map(_firebaseUser);
-  }
-
-  Future signInEmailPassword(LoginUser login) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: login.email.toString(),
-              password: login.password.toString());
-      User? user = userCredential.user;
-      return _firebaseUser(user);
-    } on FirebaseAuthException catch (e) {
-      return FirebaseUser(code: e.code, uid: null);
-    }
-  }
-
-  Future registerEmailPassword(LoginUser login) async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: login.email.toString(),
-        password: login.password.toString(),
-      );
-      User? user = userCredential.user;
-
-      // PhoneAuthCredential? credential = AuthProvider().phoneAuthCredential;
-      // await user!.updatePhoneNumber(credential!);
-
-      return _firebaseUser(user);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return FirebaseUser(
-            uid: null, code: 'The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        return FirebaseUser(
-            uid: null, code: 'The account already exists for that email.');
-      }
-      // return FirebaseUser(code: e.code, uid: null);
-    } catch (e) {
-      return FirebaseUser(code: e.toString(), uid: null);
-    }
-  }
-
-  Future sendPasswordResetEmail(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email.trim());
-    } on FirebaseAuthException catch (e) {
-      // Handle the exception if needed
-      return FirebaseUser(uid: null, code: e.code);
-    }
+  
   }
 
   // Future signInCredential(LoginUser _login) async {
