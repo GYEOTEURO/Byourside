@@ -83,7 +83,7 @@ class MyAppState extends State<MyApp> {
             initialRoute: '/login',
             routes: {
               '/login': (context) => const LoginScreen(),
-              '/': (context) => const BottomNavBar(),
+              '/bottom_nav': (context) => const BottomNavBar(),
               '/user': (context) => const SetupUser(),
               '/user_protector': (context) => const Protector(),
               '/user_participator': (context) => const Participator(),
