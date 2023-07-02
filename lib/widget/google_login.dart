@@ -3,6 +3,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
 import 'dart:convert' show json;
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   // Optional clientId
@@ -13,31 +15,39 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
-// Future<UserCredential> signInWithGoogle() async {
-//   // Trigger the authentication flow
-//   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-//
-//   // Obtain the auth details from the request
-//   final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-//
-//   // Create a new credential
-//   final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-//     accessToken: googleAuth.accessToken,
-//     idToken: googleAuth.idToken,
-//   );
-//
-//   // Once signed in, return the UserCredential
-//   return await FirebaseAuth.instance.signInWithCredential(credential);
-// }
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-class googleLogin extends StatefulWidget {
-  const googleLogin({Key? key}) : super(key: key);
+  if (googleUser != null) {
+      print('name = ${googleUser.displayName}');
+      print('email = ${googleUser.email}');
+      print('id = ${googleUser.id}');
 
-  @override
-  State createState() => googleLoginState();
+      // Obtain the auth details from the request
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    // Create a new credential
+    OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+  // Once signed in, return the UserCredential
+  return FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+
 }
 
-class googleLoginState extends State<googleLogin> {
+class GoogleLogin extends StatefulWidget {
+  const GoogleLogin({Key? key}) : super(key: key);
+
+  @override
+  State createState() => GoogleLoginState();
+}
+
+class GoogleLoginState extends State<GoogleLogin> {
   GoogleSignInAccount? _currentUser;
   String _contactText = '';
 
@@ -72,9 +82,9 @@ class googleLoginState extends State<googleLogin> {
       print('People API ${response.statusCode} response: ${response.body}');
       return;
     }
-    final Map<String, dynamic> data =
+    Map<String, dynamic> data =
     json.decode(response.body) as Map<String, dynamic>;
-    final String? namedContact = _pickFirstNamedContact(data);
+    String? namedContact = _pickFirstNamedContact(data);
     setState(() {
       if (namedContact != null) {
         _contactText = 'I see you know $namedContact!';
@@ -85,13 +95,13 @@ class googleLoginState extends State<googleLogin> {
   }
 
   String? _pickFirstNamedContact(Map<String, dynamic> data) {
-    final List<dynamic>? connections = data['connections'] as List<dynamic>?;
-    final Map<String, dynamic>? contact = connections?.firstWhere(
+    List<dynamic>? connections = data['connections'] as List<dynamic>?;
+    Map<String, dynamic>? contact = connections?.firstWhere(
           (dynamic contact) => contact['names'] != null,
       orElse: () => null,
     ) as Map<String, dynamic>?;
     if (contact != null) {
-      final Map<String, dynamic>? name = contact['names'].firstWhere(
+      Map<String, dynamic>? name = contact['names'].firstWhere(
             (dynamic name) => name['displayName'] != null,
         orElse: () => null,
       ) as Map<String, dynamic>?;
@@ -113,7 +123,7 @@ class googleLoginState extends State<googleLogin> {
   Future<void> _handleSignOut() => _googleSignIn.disconnect();
 
   Widget _buildBody() {
-    final GoogleSignInAccount? user = _currentUser;
+    GoogleSignInAccount? user = _currentUser;
     if (user != null) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

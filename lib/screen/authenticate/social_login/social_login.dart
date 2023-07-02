@@ -33,7 +33,7 @@ class _SocialLoginState extends State<SocialLogin> {
             SizedBox(height: large_gap), // 1. 추가
             // CustomForm(), // 2. 추가
             //SocialButtonForm("kakao"),
-            googleLogin(),
+            GoogleLogin(),
           ],
         ),
       ),
