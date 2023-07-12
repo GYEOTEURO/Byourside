@@ -1,43 +1,77 @@
+import 'package:byourside/model/google_sign_in_api.dart';
+import 'package:byourside/screen/authenticate/social_login/google_logged_in_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/size.dart';
-import 'package:byourside/widget/google_login.dart';
-// import '../widget/logo.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'dart:async';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SocialLogin extends StatefulWidget {
+class SocialLogin extends StatelessWidget {
   const SocialLogin({Key?key}) : super(key: key);
 
-  @override
-  State<SocialLogin> createState() {
-    return _SocialLoginState();
-  }
+  Future<UserCredential?> loginWithGoogle(BuildContext context) async {
+    print('lets start');
+    GoogleSignInAccount? user = await GoogleSignInApi.login();
+    print('?');
+    GoogleSignInAuthentication? googleAuth = await user!.authentication;
+    var credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken
+    );
+
+    UserCredential? userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    print('로그인 성공 === Google');
+    print(userCredential);
+
+    if (context.mounted){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => GoogleLoggedInPage(userCredential: userCredential)
+      ));
+    
+    }
+    
+
+    return userCredential;
 }
-
-class _SocialLoginState extends State<SocialLogin> {
-
-  @override
-  initState() {
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: const [
-            // SizedBox(height: xlarge_gap),
-            SizedBox(height: large_gap), // 1. 추가
-            // CustomForm(), // 2. 추가
-            //SocialButtonForm("kakao"),
-            GoogleLogin(),
+      appBar: AppBar(
+        title: const Text('SNS LOGIN'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 200,
+            ),
+            SizedBox(
+              width: 180.0,
+              height: 48.0,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black, backgroundColor: Colors.white, side: const BorderSide(
+                    width: 5.0,
+                    color: Colors.red,
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                icon: const FaIcon(
+                  FontAwesomeIcons.google,
+                  color: Colors.red,
+                ),
+                label: const Text('Google 로그인'),
+                onPressed: () async {
+                  await loginWithGoogle(context);
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
 
 }
