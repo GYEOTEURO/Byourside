@@ -69,9 +69,6 @@
       <dict>
       <key>CFBundleURLSchemes</key>
       <array>
-        <!-- facebook login -->
-        <!-- <string>fbAPP-ID</string> -->
-
         <!-- google login -->
         <string>dotenv.env['GOOGLE_CF_BUNDLE_URL']</string>
       </array>
