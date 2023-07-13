@@ -1,5 +1,5 @@
 import 'package:byourside/model/google_sign_in_api.dart';
-import 'package:byourside/screen/authenticate/social_login/google_logged_in_page.dart';
+import 'package:byourside/screen/authenticate/info/user_type.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,7 +22,7 @@ class SocialLogin extends StatelessWidget {
 
     if (context.mounted){
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => GoogleLoggedInPage(userCredential: userCredential)
+              builder: (context) => const SetupUser()//GoogleLoggedInPage(userCredential: userCredential)
       ));
     
     }

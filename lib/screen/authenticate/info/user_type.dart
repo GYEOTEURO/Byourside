@@ -47,23 +47,6 @@ class _SetupUserState extends State<SetupUser> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '3/4 단계',
-                                      semanticsLabel: '3/4 단계',
-                                      style: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 20,
-                                          fontFamily: 'NanumGothic',
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              ),
                               SizedBox(
                                 height: height * 0.04,
                                 width: width * 0.8,
