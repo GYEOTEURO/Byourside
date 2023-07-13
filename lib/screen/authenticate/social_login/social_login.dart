@@ -43,6 +43,10 @@ class SocialLogin extends StatelessWidget {
             const SizedBox(
               height: 200,
             ),
+            TextButton(
+              onPressed: () => throw Exception(),
+              child: const Text('Throw Test Exception'),
+            ),
             SizedBox(
               width: 180.0,
               height: 48.0,
