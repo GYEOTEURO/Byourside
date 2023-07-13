@@ -2,7 +2,7 @@ import 'package:byourside/screen/authenticate/info/user_type.dart';
 import 'package:byourside/screen/authenticate/info/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/info/user_protector.dart';
 import 'package:byourside/screen/authenticate/info/user_someone_else.dart';
-import 'package:byourside/screen/authenticate/auth_home.dart';
+import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -82,7 +82,7 @@ class MyAppState extends State<MyApp> {
             title: '곁',
             initialRoute: '/login',
             routes: {
-              '/login': (context) => const LoginScreen(),
+              '/login': (context) => const SocialLogin(),
               '/bottom_nav': (context) => const BottomNavBar(),
               '/user': (context) => const SetupUser(),
               '/user_protector': (context) => const Protector(),

@@ -1,7 +1,7 @@
 import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/screen/authenticate/auth_home.dart';
 import 'package:byourside/screen/authenticate/policy/personal_data.dart';
 import 'package:byourside/screen/authenticate/policy/using_policy.dart';
+import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:byourside/screen/mypage/my_block_user.dart';
 import 'package:byourside/screen/mypage/my_report.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
@@ -77,7 +77,7 @@ class _Mypage extends State<Mypage> {
     setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const LoginScreen(
+      builder: (context) => const SocialLogin(
       ),
     ));
     // Navigator.pushNamed(context, '/login');
@@ -99,7 +99,7 @@ class _Mypage extends State<Mypage> {
           setState(() {});
           Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const LoginScreen(
+            builder: (context) => const SocialLogin(
             ),
           ));
           // Navigator.pushNamed(context, '/login');
