@@ -9,9 +9,9 @@ class SocialLogin extends StatelessWidget {
   const SocialLogin({Key?key}) : super(key: key);
 
   Future<UserCredential?> loginWithGoogle(BuildContext context) async {
-    print('lets start');
+
     GoogleSignInAccount? user = await GoogleSignInApi.login();
-    print('?');
+
     GoogleSignInAuthentication? googleAuth = await user!.authentication;
     var credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -19,9 +19,6 @@ class SocialLogin extends StatelessWidget {
     );
 
     UserCredential? userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    print('로그인 성공 === Google');
-    print(userCredential);
 
     if (context.mounted){
       Navigator.of(context).pushReplacement(MaterialPageRoute(

@@ -14,7 +14,7 @@ void main() {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return CustomAlertDialog(
+                      return const CustomAlertDialog(
                         message: 'This is a test message.',
                         buttonText: 'OK',
                       );

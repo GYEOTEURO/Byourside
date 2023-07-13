@@ -31,19 +31,6 @@ class AuthService {
   //   }
   // }
 
-  // Future isVerified() async {
-  //   try {
-  //     if (verificationId != null) {
-  //       authOk = true;
-  //     }
-  //     else {
-  //       authOk = false;
-  //     }
-  //   } catch (e) {
-  //     authOk = false;
-  //   }
-  // }
-
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -51,17 +38,6 @@ class AuthService {
       return null;
     }
   }
-
-  // Future<bool> checkAccount(password) async {
-  //   try {
-  //     AuthCredential credential = await EmailAuthProvider.credential(
-  //         email: _auth.currentUser!.email!, password: password);
-  //     await _auth.currentUser!.reauthenticateWithCredential(credential);
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
 
   // // Firebase로부터 회원 탈퇴
   // Future withdrawalAccount(password) async {
