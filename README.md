@@ -38,6 +38,8 @@
 ## Architecture
 ![시스템 아키텍처](https://github.com/GYEOTEURO/Byourside/assets/66212424/6f7d65e9-cca8-4583-a286-1c6ed53d3b0d)
 
+## Flowchart
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/022bf9a5-1d00-411d-9fea-7548d9975739)
 
 
 ### Environment
