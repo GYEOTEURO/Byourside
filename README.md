@@ -23,6 +23,7 @@
             <td align='center'>안지원</td>
             <td align='center'>신민경</td>
             <td align='center'>윤하은</td>
+            <td align='center'>전효진</td>
           </tr>
         </tr>
     </tbody>
