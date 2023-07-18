@@ -1,6 +1,6 @@
 <h3 align='center'>Byourside</h3>
 
-<h1 align='center'>곁</h1>
+<h1 align='center'>Beeside</h1>
 
 <p align='center'> 발달장애와 뇌병변장애 아동의 보호자를 위한 맞춤형 정보 제공 및 커뮤니티 서비스 </p>
 
@@ -23,7 +23,6 @@
             <td align='center'>안지원</td>
             <td align='center'>신민경</td>
             <td align='center'>윤하은</td>
-            <td align='center'>전효진</td>
           </tr>
         </tr>
     </tbody>
