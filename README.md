@@ -1,5 +1,3 @@
-<h3 align='center'>Byourside</h3>
-
 <h1 align='center'>Beeside</h1>
 
 <p align='center'> 발달장애와 뇌병변장애 아동의 보호자를 위한 맞춤형 정보 제공 및 커뮤니티 서비스 </p>
