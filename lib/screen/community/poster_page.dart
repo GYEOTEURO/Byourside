@@ -32,7 +32,7 @@
 //   final User? user = FirebaseAuth.instance.currentUser;
 //   final LoadData loadData = LoadData();
 
-//   Widget _buildListItem(String? collectionName, PostListModel? post) {
+//   Widget _buildListItem(String? collectionName, CommunityPostModel? post) {
 //     String date =
 //         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
 
@@ -133,7 +133,7 @@
 //     List<String> blockList;
 
 //     return Scaffold(
-//       body: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
+//       body: StreamBuilder2<List<CommunityPostModel>, DocumentSnapshot>(
 //           streams: StreamTuple2(
 //               loadData.readCategoryCollection(
 //                   collectionName: widget.collectionName,
@@ -161,7 +161,7 @@
 //                     crossAxisSpacing: 8, //수직 Padding
 //                   ),
 //                   itemBuilder: (_, index) {
-//                     PostListModel post = snapshots.snapshot1.data![index];
+//                     CommunityPostModel post = snapshots.snapshot1.data![index];
 //                     if (blockList.contains(post.nickname)) {
 //                       return Container();
 //                     } else {

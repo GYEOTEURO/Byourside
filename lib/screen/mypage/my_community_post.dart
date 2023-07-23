@@ -1,4 +1,5 @@
 import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,7 @@ class _MyCommunityPostState extends State<MyCommunityPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
-  Widget _buildListItem(String collectionName, PostListModel? post) {
+  Widget _buildListItem(String collectionName, CommunityPostModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
     double height = MediaQuery.of(context).size.height;
@@ -45,11 +46,7 @@ class _MyCommunityPostState extends State<MyCommunityPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CommunityPost(
-                                // Post 위젯에 documentID를 인자로 넘김
-                                collectionName: widget.collectionName,
-                                documentID: post.id!
-                              )));
+                          builder: (context) => CommunityPost(post: post)));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(2),
@@ -121,16 +118,16 @@ class _MyCommunityPostState extends State<MyCommunityPost> {
               Navigator.pop(context);
             }),
       ),
-      body: StreamBuilder<List<PostListModel>>(
+      body: StreamBuilder<List<CommunityPostModel>>(
           stream: loadData.readCreatePost(
               collectionName: widget.collectionName, uid: user!.uid),
-          builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
+          builder: (context, AsyncSnapshot<List<CommunityPostModel>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                   itemCount: snapshot.data!.length,
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
-                    PostListModel post = snapshot.data![index];
+                    CommunityPostModel post = snapshot.data![index];
                     return _buildListItem(widget.collectionName, post);
                   });
             } else {

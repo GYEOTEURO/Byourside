@@ -1,4 +1,5 @@
 import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/load_data.dart';
 import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/community/post.dart';
@@ -22,7 +23,7 @@ class _CommunitySearchState extends State<CommunitySearch> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
-  Widget _buildListItem(PostListModel? post) {
+  Widget _buildListItem(CommunityPostModel? post) {
     String date =
         post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
 
@@ -47,9 +48,7 @@ class _CommunitySearchState extends State<CommunitySearch> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CommunityPost(
-                              collectionName: widget.collectionName,
-                              documentID: post.id!)));
+                          builder: (context) => CommunityPost(post: post)));
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -162,7 +161,7 @@ class _CommunitySearchState extends State<CommunitySearch> {
                             borderRadius: BorderRadius.circular(32.0)),
                       ))),
               Expanded(
-                  child: StreamBuilder2<List<PostListModel>, DocumentSnapshot>(
+                  child: StreamBuilder2<List<CommunityPostModel>, DocumentSnapshot>(
                       streams: StreamTuple2(
                           loadData.readSearchDocs(query.text,
                               collectionName: widget.collectionName),
@@ -184,7 +183,7 @@ class _CommunitySearchState extends State<CommunitySearch> {
                           return ListView.builder(
                               itemCount: snapshots.snapshot1.data!.length,
                               itemBuilder: (_, index) {
-                                PostListModel post =
+                                CommunityPostModel post =
                                     snapshots.snapshot1.data![index];
                                 if (blockList.contains(post.nickname)) {
                                   return Container();

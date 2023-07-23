@@ -14,11 +14,9 @@ import '../../model/save_data.dart';
 class CommunityPostContent extends StatefulWidget {
   const CommunityPostContent(
       {super.key,
-      required this.collectionName,
-      required this.documentID});
+      required this.post});
 
-  final String collectionName;
-  final String documentID;
+  final CommunityPostModel post;
 
   @override
   State<CommunityPostContent> createState() => _CommunityPostContentState();
@@ -76,8 +74,8 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
             )),
         if (user?.uid == post.uid)
           DeletePostOrComment(
-              collectionName: widget.collectionName,
-              documentID: widget.documentID) // 공통 모듈 폴더
+              collectionName: 'communityPost',
+              documentID: widget.post.id!) // 공통 모듈 폴더
         else
           Row(children: [
             Report(reportReasonList: _reportReasonList, collectionType: 'post', id: post.id!),
@@ -114,26 +112,8 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
 
   @override
   Widget build(BuildContext context) {
-    String collectionName = widget.collectionName;
-    String documentID = widget.documentID;
+    String collectionName = 'communityPost';
 
-    return StreamBuilder<CommunityPostModel>(
-        stream: loadData.readCommunityDocument(
-            collectionName: collectionName, documentID: documentID),
-        builder: (context, AsyncSnapshot<CommunityPostModel> snapshot) {
-          if (snapshot.hasData) {
-            CommunityPostModel? post = snapshot.data;
-            return _buildListItem(collectionName, post);
-          } else {
-            return const SelectionArea(
-                child: Center(
-                    child: Text('게시물을 찾을 수 없습니다.',
-                        semanticsLabel: '게시물을 찾을 수 없습니다.',
-                        style: TextStyle(
-                          fontFamily: constants.font,
-                          fontWeight: FontWeight.w600,
-                        ))));
-          }
-        });
+    return _buildListItem(collectionName, widget.post);}
   }
-}
+

@@ -1,6 +1,5 @@
 import 'package:byourside/model/comment.dart';
 import 'package:byourside/model/community_post.dart';
-import 'package:byourside/model/post_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoadData{  //클래스 이름은 명사로
@@ -9,13 +8,13 @@ class LoadData{  //클래스 이름은 명사로
   final FirebaseFirestore firestore;
 
   // Firestore의 collection에 있는 모든 데이터 불러오기
-  Stream<List<PostListModel>> readAllCollection({required String collectionName, List<String>? type}) {
+  Stream<List<CommunityPostModel>> readAllCollection({required String collectionName, List<String>? type}) {
         if(type == null || type.isEmpty){
           return firestore
             .collection(collectionName)
             .orderBy('datetime', descending: true)
             .snapshots()
-            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collectionName))
+            .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromMap(doc))
             .toList());
         }
         else{
@@ -24,13 +23,13 @@ class LoadData{  //클래스 이름은 명사로
             .where('type', arrayContainsAny: type)
             .orderBy('datetime', descending: true)
             .snapshots()
-            .map((snapshot) => snapshot.docs.map((doc) => PostListModel.fromMap(doc, collectionName))
+            .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromMap(doc))
             .toList());
         }
   }
 
   // 검색을 위한 쿼리 비교
-  Stream<List<PostListModel>> readSearchDocs(String query,
+  Stream<List<CommunityPostModel>> readSearchDocs(String query,
           {required String collectionName}) =>
           firestore
           .collection(collectionName)
@@ -38,7 +37,7 @@ class LoadData{  //클래스 이름은 명사로
           .orderBy('datetime', descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => PostListModel.fromMap(doc, collectionName))
+              .map((doc) => CommunityPostModel.fromMap(doc))
               .toList());
 
 
@@ -64,7 +63,7 @@ class LoadData{  //클래스 이름은 명사로
               snapshot.docs.map((doc) => CommentModel.fromMap(doc)).toList());
 
   // 작성한 글 보기
-  Stream<List<PostListModel>> readCreatePost(
+  Stream<List<CommunityPostModel>> readCreatePost(
           {required String collectionName, required String uid}) =>
           firestore
           .collection(collectionName)
@@ -72,11 +71,11 @@ class LoadData{  //클래스 이름은 명사로
           .orderBy('datetime', descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => PostListModel.fromMap(doc, collectionName))
+              .map((doc) => CommunityPostModel.fromMap(doc))
               .toList());
 
   // 스크랩한 글 보기
-  Stream<List<PostListModel>> readScrapPost(
+  Stream<List<CommunityPostModel>> readScrapPost(
           {required String collectionName, required String uid}) =>
           firestore
           .collection(collectionName)
@@ -84,7 +83,7 @@ class LoadData{  //클래스 이름은 명사로
           .orderBy('datetime', descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => PostListModel.fromMap(doc, collectionName))
+              .map((doc) => CommunityPostModel.fromMap(doc))
               .toList());
 
 }
