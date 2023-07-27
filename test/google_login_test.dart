@@ -1,32 +1,66 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:byourside/screen/authenticate/social_login/social_login.dart';
+import 'package:mockito/mockito.dart';
+import 'package:byourside/screen/authenticate/info/user_type.dart';
 
-void main() async {
-  test('Google Login Test', () async {
-    // Mock sign in with Google.
-    var googleSignIn = MockGoogleSignIn();
-    var signinAccount = await googleSignIn.signIn();
-    var googleAuth = await signinAccount!.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+class MockGoogleSignIn extends Mock implements GoogleSignIn {}
 
-    // Sign in.
-    var user = MockUser(
-      isAnonymous: false,
-      uid: 'someuid',
-      email: 'bob@somedomain.com',
-      displayName: 'Bob',
-    );
-    var auth = MockFirebaseAuth(mockUser: user);
-    var result = await auth.signInWithCredential(credential);
-    var loggedInUser = result.user;
-    print(loggedInUser?.displayName);
+class MockGoogleSignInAuthentication extends Mock
+    implements GoogleSignInAuthentication {}
 
-    // Assertion: Check if the user is successfully logged in.
-    expect(loggedInUser?.displayName, 'Bob');
+class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
+
+void main() {
+  late MockGoogleSignIn mockGoogleSignIn;
+
+  setUp(() {
+    mockGoogleSignIn = MockGoogleSignIn();
   });
+
+testWidgets('Login with Google success', (WidgetTester tester) async {
+  var fakeGoogleAuth = MockGoogleSignInAuthentication();
+  when(fakeGoogleAuth.idToken).thenReturn('fake_id_token');
+  when(fakeGoogleAuth.accessToken).thenReturn('fake_access_token');
+
+  var fakeUser = MockGoogleSignInAccount();
+  when(fakeUser.displayName).thenReturn('John Doe');
+  when(fakeUser.email).thenReturn('johndoe@example.com');
+  when(fakeUser.authentication).thenAnswer((_) => Future.value(fakeGoogleAuth));
+
+  when(mockGoogleSignIn.signIn()).thenAnswer((_) => Future.value(fakeUser));
+
+    // Build the widget and trigger the login process
+    await tester.pumpWidget(const MaterialApp(
+      home: SocialLogin(),
+    ));
+
+    // Tap the "Google 로그인" button
+    await tester.tap(find.text('Google 로그인'));
+    await tester.pumpAndSettle();
+
+    // Verify that the user is navigated to the SetupUser page
+    expect(find.byType(SetupUser), findsOneWidget);
+  });
+
+  testWidgets('Login with Google cancelled', (WidgetTester tester) async {
+    // Mock the GoogleSignIn.signIn() to return null (cancelled)
+    when(mockGoogleSignIn.signIn()).thenAnswer((_) => Future.value(null));
+
+    // Build the widget and trigger the login process
+    await tester.pumpWidget(const MaterialApp(
+      home: SocialLogin(),
+    ));
+
+    // Tap the "Google 로그인" button
+    await tester.tap(find.text('Google 로그인'));
+    await tester.pumpAndSettle();
+
+    // Verify that the user remains on the same page
+    expect(find.byType(SocialLogin), findsOneWidget);
+  });
+
+  // You can write similar tests for sign in with Apple
 }
