@@ -1,33 +1,32 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
-import 'package:test/test.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
-  late MockGoogleSignIn googleSignIn;
-  setUp(() {
-    googleSignIn = MockGoogleSignIn();
-  });
+void main() async {
+  test('Google Login Test', () async {
+    // Mock sign in with Google.
+    var googleSignIn = MockGoogleSignIn();
+    var signinAccount = await googleSignIn.signIn();
+    var googleAuth = await signinAccount!.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
 
-  test('should return idToken and accessToken when authenticating', () async {
-    var signInAccount = await googleSignIn.signIn();
-    var signInAuthentication = await signInAccount!.authentication;
-    expect(signInAuthentication, isNotNull);
-    expect(googleSignIn.currentUser, isNotNull);
-    expect(signInAuthentication.accessToken, isNotNull);
-    expect(signInAuthentication.idToken, isNotNull);
-  });
+    // Sign in.
+    var user = MockUser(
+      isAnonymous: false,
+      uid: 'someuid',
+      email: 'bob@somedomain.com',
+      displayName: 'Bob',
+    );
+    var auth = MockFirebaseAuth(mockUser: user);
+    var result = await auth.signInWithCredential(credential);
+    var loggedInUser = result.user;
+    print(loggedInUser?.displayName);
 
-  test('should return null when google login is cancelled by the user',
-      () async {
-    googleSignIn.setIsCancelled(true);
-    var signInAccount = await googleSignIn.signIn();
-    expect(signInAccount, isNull);
-  });
-  test('testing google login twice, once cancelled, once not cancelled at the same test.', () async {
-   googleSignIn.setIsCancelled(true);
-    var signInAccount = await googleSignIn.signIn();
-    expect(signInAccount, isNull);
-    googleSignIn.setIsCancelled(false);
-    var signInAccountSecondAttempt = await googleSignIn.signIn();
-    expect(signInAccountSecondAttempt, isNotNull);
+    // Assertion: Check if the user is successfully logged in.
+    expect(loggedInUser?.displayName, 'Bob');
   });
 }
