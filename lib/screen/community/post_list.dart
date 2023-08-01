@@ -1,10 +1,11 @@
 import 'package:byourside/constants.dart' as constants;
 import 'package:byourside/model/community_post.dart';
-import 'package:byourside/model/post_list.dart';
 import 'package:byourside/screen/community/appbar.dart';
+import 'package:byourside/screen/community/controller/category_controller.dart';
 import 'package:byourside/screen/community/community_add_post.dart';
 import 'package:byourside/screen/community/post.dart';
-import 'package:byourside/screen/community/type_controller.dart';
+import 'package:byourside/screen/community/controller/disability_type_controller.dart';
+import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,10 @@ import '../../model/load_data.dart';
 
 class CommunityPostList extends StatefulWidget {
   const CommunityPostList(
-      {Key? key,
-      required this.collectionName})
+      {Key? key})
       : super(key: key);
 
-  final String collectionName;
-  final String title = '커뮤니티 게시판';
+  final String title = '커뮤니티'; //appbar에서 조정하도록 수정
 
   @override
   State<CommunityPostList> createState() => _CommunityPostListState();
@@ -30,91 +29,10 @@ class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
-  Widget _buildListItem(CommunityPostModel? post) {
-    String date =
-        post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
-
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    String? type;
-    if (post.type!.length == 1) {
-      type = post.type![0];
-    } else if (post.type!.length > 1) {
-      post.type!.sort();
-      type = '${post.type![0]}/${post.type![1]}';
-    }
-
-    return SizedBox(
-        height: height / 7,
-        child: Card(
-            //semanticContainer: true,
-            elevation: 2,
-            child: InkWell(
-                //Read Document
-                onTap: () {
-                  HapticFeedback.lightImpact(); // 약한 진동
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CommunityPost(post: post)
-                          ));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.fromLTRB(12, 10, 8, 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
-                                child: Text(post.title!,
-                                    semanticsLabel: post.title,
-                                    overflow: TextOverflow.fade,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: constants.font))),
-                            Text(
-                              post.type!.isEmpty
-                                      ? '${post.nickname!} | $date'
-                                      : '${post.nickname!} | $date | $type',
-                              semanticsLabel: post.type!.isEmpty
-                                      ? '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일'
-                                      : '${post.nickname!}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $type',
-                              overflow: TextOverflow.fade,
-                              maxLines: 1,
-                              softWrap: false,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: constants.font,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        )),
-                        if (post.images!.isNotEmpty)
-                          Semantics(
-                              label: post.imgInfos![0],
-                              child: Image.network(
-                                post.images![0],
-                                width: width * 0.2,
-                                height: height * 0.2,
-                              )),
-                      ]),
-                ))));
-  }
-
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(CommunityTypeController());
+    final communityCategoryController = Get.put(CommunityCategoryController());
+    final communityDisabilityTypeController = Get.put(CommunityDisabilityTypeController());
 
     List<String> blockList;
 
@@ -122,8 +40,8 @@ class _CommunityPostListState extends State<CommunityPostList> {
       appBar: CommunityAppBar(title: widget.title),
       body: StreamBuilder2<List<CommunityPostModel>, DocumentSnapshot>(
           streams: StreamTuple2(
-              loadData.readAllCollection(collectionName: widget.collectionName, type: controller.type),
-              FirebaseFirestore.instance.collection('user').doc(user!.uid).snapshots()),
+              loadData.readCommunityPosts(category: communityCategoryController.category, disabilityType: communityDisabilityTypeController.disabilityType),
+              loadData.readUserInfo(uid: user!.uid)),
           builder: (context, snapshots) {
             //snapshot 이름 구분
             if (snapshots.snapshot2.hasData) {
@@ -142,7 +60,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
                     if (blockList.contains(post.nickname)) {
                       return Container();
                     } else {
-                      return _buildListItem(post);
+                      return communityPostListTile(context, post);
                     }
                   });
             } else {

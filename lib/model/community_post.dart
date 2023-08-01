@@ -2,84 +2,61 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CommunityPostModel {
   String? id;
-  String? uid;
-  String? title;
-  String? nickname;
-  String? content;
-  Timestamp? datetime;
+  final String uid;
+  final String nickname;
+  final String title;
+  final String content;
+  final Timestamp createdAt;
+  final String disabilityType;
   List<String>? images;
   List<String>? imgInfos;
-  String? category;
-  List<String>? type;
-  int? likes;
-  List<String>? likesPeople;
-  List<String>? scrapPeople;
-  List<String>? keyword;
-
-  CommunityPostModel(
-      {this.id,
-      this.uid,
-      this.title,
-      this.nickname,
-      this.content,
-      this.datetime,
+  final int likes;
+  
+  CommunityPostModel({
+      this.id,
+      required this.uid,
+      required this.nickname,
+      required this.title,
+      required this.content,
+      required this.createdAt,
+      required this.disabilityType,
       this.images,
       this.imgInfos,
-      this.category,
-      this.type,
-      this.likes,
-      this.likesPeople,
-      this.scrapPeople,
-      this.keyword});
+      required this.likes
+  });
 
   // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
   // 이외는 uid = doc.data()!["uid"],
-  CommunityPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) //변환한다는 의미를 살린 이름 짓기
+  //factory CommunityPostModel
+  CommunityPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc}) //변환한다는 의미를 살린 이름 짓기
       : id = doc.id,
         uid = doc.data()!['uid'],
-        title = doc.data()!['title'],
         nickname = doc.data()!['nickname'],
+        title = doc.data()!['title'],
         content = doc.data()!['content'],
-        datetime = doc.data()!['datetime'],
-        // ignore: prefer_null_aware_operators
+        createdAt = doc.data()!['createdAt'],
+        disabilityType = doc.data()!['disabilityType'],
         images = doc.data()!['images'] == null
             ? null
             : doc.data()!['images'].cast<String>(),
         imgInfos = doc.data()!['imgInfos'] == null
             ? null
             : doc.data()!['imgInfos'].cast<String>(),
-        category = doc.data()!['category'],
-        type = doc.data()!['type'] == null
-            ? null
-            : doc.data()!['type'].cast<String>(),
-        likes = doc.data()!['likes'],
-        // ignore: prefer_null_aware_operators
-        likesPeople = doc.data()!['likesPeople'] == null
-            ? null
-            : doc.data()!['likesPeople'].cast<String>(),
-        // ignore: prefer_null_aware_operators
-        scrapPeople = doc.data()!['scrapPeople'] == null
-            ? null
-            : doc.data()!['scrapPeople'].cast<String>(),
-        keyword = doc.data()!['keyword'] == null
-            ? null
-            : doc.data()!['keyword'].cast<String>();
+        likes = doc.data()!['likes'];
 
-  Map<String, dynamic> toMap() { // 저장의 의미
+  Map<String, dynamic> convertToDocument() { // 저장의 의미
     return {
       'uid': uid,
-      'title': title,
       'nickname': nickname,
+      'title': title,
       'content': content,
-      'datetime': datetime,
+      'createdAt': createdAt,
+      'disabilityType': disabilityType,
       'images': images,
       'imgInfos': imgInfos,
-      'category': category,
-      'type': type,
       'likes': likes,
-      'likesPeople': likesPeople,
-      'scrapPeople': scrapPeople,
-      'keyword': keyword,
     };
   }
 }
+
+// factory constructor : 해당 클래스를 상속하는 자식 클래스의 인스턴스도 반환할 수 있다

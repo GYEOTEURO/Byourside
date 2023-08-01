@@ -22,7 +22,7 @@ class CreateComment extends StatefulWidget {
 }
 
 class _CreateCommentState extends State<CreateComment> {
-  final User? user = FirebaseAuth.instance.currentUser;
+  final User user = FirebaseAuth.instance.currentUser!;
   final TextEditingController comment = TextEditingController();
   final scrollController = Get.put(ScrollDownForComment());
   final SaveData saveData = SaveData();
@@ -73,10 +73,10 @@ class _CreateCommentState extends State<CreateComment> {
                           HapticFeedback.lightImpact(); // 약한 진동
                           FocusScope.of(context).unfocus();
                           CommentModel commentData = CommentModel(
-                              uid: user!.uid,
-                              nickname: user!.displayName,
+                              uid: user.uid,
+                              nickname: user.displayName!,
                               content: comment.text,
-                              datetime: Timestamp.now());
+                              createdAt: Timestamp.now());
                           saveData.addComment(
                               collectionName, documentID, commentData);
                           scrollController.scrollController.animateTo(

@@ -14,8 +14,8 @@ class SaveData {
   final FirebaseStorage storage;
 
   // 커뮤니티 문서 생성
-  addCommunityPost(String collectionName, CommunityPostModel postData) async {
-    firestore.collection(collectionName).add(postData.toMap());
+  addCommunityPost(String category, CommunityPostModel post) async {
+    firestore.collection('community').doc(category).collection('posts').add(post.convertToDocument());
   }
 
   // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드 
@@ -38,13 +38,13 @@ class SaveData {
   }
 
   // 문서 삭제
-  deletePost(String collectionName, String documentID) async {
-    await firestore.collection(collectionName).doc(documentID).delete();
+  deleteCommunityPost(String category, String documentID) async {
+    await firestore.collection('community').doc(category).collection('posts').doc(documentID).delete();
   }
 
   // 댓글 저장
-  addComment(String collectionName, String documentID, CommentModel commentData) async {
-    return firestore.collection(collectionName).doc(documentID).collection('comment').add(commentData.toMap());
+  addComment(String collectionName, String documentID, CommentModel comment) async {
+    return firestore.collection(collectionName).doc(documentID).collection('comment').add(comment.convertToDocument());
   }
   
   // 댓글 삭제

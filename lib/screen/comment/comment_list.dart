@@ -31,7 +31,7 @@ class _CommentListState extends State<CommentList> {
 
   Widget _buildListItem(
       String? collectionName, String? documentID, CommentModel? comment) {
-    List<String> datetime = comment!.datetime!.toDate().toString().split(' ');
+    List<String> datetime = comment!.createdAt.toDate().toString().split(' ');
     String date = datetime[0].replaceAll('-', '/');
     String hour = datetime[1].split(':')[0];
     String minute = datetime[1].split(':')[1];
@@ -46,7 +46,7 @@ class _CommentListState extends State<CommentList> {
                   Align(
                       alignment: Alignment.centerLeft,
                       child: SelectionArea(
-                          child: Text('  ${comment.content!}',
+                          child: Text('  ${comment.content}',
                               semanticsLabel: comment.content,
                               style: const TextStyle(
                                   color: Colors.black,
@@ -83,7 +83,7 @@ class _CommentListState extends State<CommentList> {
                             Container(
                                 margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                 child: BlockUser(
-                                    nickname: comment.nickname!,
+                                    nickname: comment.nickname,
                                     collectionType: 'comment')),
                           ])
                       ]),
@@ -99,8 +99,7 @@ class _CommentListState extends State<CommentList> {
 
     return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
         streams: StreamTuple2(
-            loadData.readComment(
-                collectionName: collectionName, documentID: documentID),
+            loadData.readCommunityComments(documentID: documentID),
             FirebaseFirestore.instance
                 .collection('user')
                 .doc(user!.uid)
