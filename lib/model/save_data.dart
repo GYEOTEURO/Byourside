@@ -44,57 +44,39 @@ class SaveData {
 
   // 댓글 저장
   addComment(String collectionName, String documentID, CommentModel comment) async {
-    return firestore.collection(collectionName).doc(documentID).collection('comment').add(comment.convertToDocument());
+    return firestore.collection(collectionName).doc(documentID).collection('comments').add(comment.convertToDocument());
   }
   
   // 댓글 삭제
   deleteComment(String collectionName, String documentID, String commentID) async {
-    await firestore.collection(collectionName).doc(documentID).collection('comment').doc(commentID).delete();
+    await firestore.collection(collectionName).doc(documentID).collection('comments').doc(commentID).delete();
   }
 
-  // 좋아요 추가 (무결성 때문에 transaction 사용 필요)
-  addLike(String collectionName, String documentID, String uid) async {
-    DocumentReference document = firestore.collection(collectionName).doc(documentID);
+   // 좋아요/스크랩 추가
+  addLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
+    DocumentReference document = firestore.collection('community').doc(category).collection('posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
-
-        //기존 값을 가져와 1을 더해준다.
-        int currentLikes = snapshot['likes'] + 1;
-
-        //직접 값을 더하지 말고 transaction을 통해서 더하자!
-        transaction.update(document, {'likes': currentLikes});
+        int currentLikes = snapshot[likeOrScrap] + 1;
+        transaction.update(document, {likeOrScrap: currentLikes});
     });
 
-    document.update({'likesPeople': FieldValue.arrayUnion([uid])});
+    document.collection(likeOrScrap).doc(uid).set({'createdAt': Timestamp.now()});
   
   }
   
-  // 좋아요 취소 (무결성 때문에 transaction 사용 필요)
-  cancelLike(String collectionName, String documentID, String uid) async {
-    DocumentReference document = firestore.collection(collectionName).doc(documentID);
+  // 좋아요/스크랩 취소
+  cancelLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
+    DocumentReference document = firestore.collection('community').doc(category).collection('posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
-
-        //기존 값을 가져와 1을 빼준다.
-        int currentLikes = snapshot['likes'] - 1;
-
-        //직접 값을 더하지 말고 transaction을 통해서 빼주자!
-        transaction.update(document, {'likes': currentLikes});
+        int currentLikes = snapshot[likeOrScrap] - 1;
+        transaction.update(document, {likeOrScrap: currentLikes});
     });
 
-    document.update({'likesPeople': FieldValue.arrayRemove([uid])});
-  }
-  
-  // 스크랩 추가
-  addScrap(String collectionName, String documentID, String uid) async {
-    await firestore.collection(collectionName).doc(documentID).update({'scrapPeople': FieldValue.arrayUnion([uid])});
-  }
-  
-  // 스크랩 취소
-  cancelScrap(String collectionName, String documentID, String uid) async {
-    await firestore.collection(collectionName).doc(documentID).update({'scrapPeople': FieldValue.arrayRemove([uid])});
+    document.collection(likeOrScrap).doc(uid).delete();
   }
 
   // 신고
@@ -103,13 +85,13 @@ class SaveData {
   }
 
   // 차단 신청
-  addBlock(String uid, String nickname) async {
-    await firestore.collection('user').doc(uid).update({'blockList': FieldValue.arrayUnion([nickname])});
+  addBlock(String uid, String blockUid) async {
+    await firestore.collection('user').doc(uid).update({'blockList': FieldValue.arrayUnion([blockUid])});
   }
 
   // 차단 해제
-  cancelBlock(String uid, String nickname) async {
-    await firestore.collection('user').doc(uid).update({'blockList': FieldValue.arrayRemove([nickname])});
+  cancelBlock(String uid, String blockUid) async {
+    await firestore.collection('user').doc(uid).update({'blockList': FieldValue.arrayRemove([blockUid])});
   }
 }
 
