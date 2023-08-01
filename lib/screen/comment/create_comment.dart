@@ -23,7 +23,7 @@ class CreateComment extends StatefulWidget {
 
 class _CreateCommentState extends State<CreateComment> {
   final User user = FirebaseAuth.instance.currentUser!;
-  final TextEditingController comment = TextEditingController();
+  final TextEditingController content = TextEditingController();
   final scrollController = Get.put(ScrollDownForComment());
   final SaveData saveData = SaveData();
 
@@ -38,7 +38,7 @@ class _CreateCommentState extends State<CreateComment> {
             label: '댓글을 작성해주세요.',
             child: TextFormField(
                 onTap: () => HapticFeedback.lightImpact(),
-                controller: comment,
+                controller: content,
                 minLines: 1,
                 maxLines: 5,
                 decoration: InputDecoration(
@@ -72,13 +72,13 @@ class _CreateCommentState extends State<CreateComment> {
                         onPressed: () {
                           HapticFeedback.lightImpact(); // 약한 진동
                           FocusScope.of(context).unfocus();
-                          CommentModel commentData = CommentModel(
+                          CommentModel comment = CommentModel(
                               uid: user.uid,
                               nickname: user.displayName!,
-                              content: comment.text,
+                              content: content.text,
                               createdAt: Timestamp.now());
                           saveData.addComment(
-                              collectionName, documentID, commentData);
+                              collectionName, documentID, comment);
                           scrollController.scrollController.animateTo(
                               scrollController
                                   .scrollController.position.maxScrollExtent,

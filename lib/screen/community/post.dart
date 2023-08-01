@@ -23,7 +23,6 @@ class _CommunityPostState extends State<CommunityPost> {
 
   @override
   Widget build(BuildContext context) {
-    String collectionName = 'communityPost';
     String documentID = widget.post.id!;
 
     return Scaffold(
@@ -54,15 +53,15 @@ class _CommunityPostState extends State<CommunityPost> {
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: CreateComment(
-                    collectionName: collectionName,
+                    collectionName: 'community_comment',
                     documentID: documentID)),
             Container(
                 margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                 child: CommentList(
-                    collectionName: collectionName,
+                    collectionName: 'community_comment',
                     documentID: documentID)),
-          ])),
-    );
+           ])),
+      );
   }
 }

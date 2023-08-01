@@ -1,14 +1,14 @@
 import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/user_block_list_controller.dart';
 import 'package:byourside/widget/block_user.dart';
 import 'package:byourside/widget/report.dart';
 import 'package:byourside/widget/delete_post_or_comment.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import '../../model/comment.dart';
 import '../../model/load_data.dart';
-import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class CommentList extends StatefulWidget {
   const CommentList(
@@ -83,7 +83,7 @@ class _CommentListState extends State<CommentList> {
                             Container(
                                 margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                 child: BlockUser(
-                                    nickname: comment.nickname,
+                                    blockUid: comment.uid,
                                     collectionType: 'comment')),
                           ])
                       ]),
@@ -94,33 +94,22 @@ class _CommentListState extends State<CommentList> {
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
+    final userBlockListController = Get.put(UserBlockListController());
 
-    List<String> blockList;
+    List<String>? blockList = userBlockListController.blockList ?? [];
 
-    return StreamBuilder2<List<CommentModel>, DocumentSnapshot>(
-        streams: StreamTuple2(
-            loadData.readCommunityComments(documentID: documentID),
-            FirebaseFirestore.instance
-                .collection('user')
-                .doc(user!.uid)
-                .snapshots()),
+    return StreamBuilder<List<CommentModel>>(
+        stream: loadData.readComments(collectionName: collectionName, documentID: documentID),
         builder: (context, snapshots) {
-          if (snapshots.snapshot2.hasData) {
-            blockList = snapshots.snapshot2.data!['blockList'] == null
-                ? []
-                : snapshots.snapshot2.data!['blockList'].cast<String>();
-          } else {
-            blockList = [];
-          }
-          if (snapshots.snapshot1.hasData) {
+          if (snapshots.hasData) {
             return ListView.builder(
-                itemCount: snapshots.snapshot1.data!.length,
+                itemCount: snapshots.data!.length,
                 physics:
                     const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
                 shrinkWrap: true, //ListView in ListView를 가능하게
                 itemBuilder: (_, index) {
-                  CommentModel comment = snapshots.snapshot1.data![index];
-                  if (blockList.contains(comment.nickname)) {
+                  CommentModel comment = snapshots.data![index];
+                  if (blockList.contains(comment.uid)) {
                     return Container();
                   } else {
                     return _buildListItem(collectionName, documentID, comment);

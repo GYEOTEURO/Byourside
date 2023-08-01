@@ -37,10 +37,10 @@ class _CommunityAppBarState extends State<CommunityAppBar> {
               icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CommunitySearch()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const CommunitySearch()));
               }),
         ],
     );

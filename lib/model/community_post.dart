@@ -7,6 +7,7 @@ class CommunityPostModel {
   final String title;
   final String content;
   final Timestamp createdAt;
+  final String category;
   final String disabilityType;
   List<String>? images;
   List<String>? imgInfos;
@@ -19,6 +20,7 @@ class CommunityPostModel {
       required this.title,
       required this.content,
       required this.createdAt,
+      required this.category,
       required this.disabilityType,
       this.images,
       this.imgInfos,
@@ -35,6 +37,7 @@ class CommunityPostModel {
         title = doc.data()!['title'],
         content = doc.data()!['content'],
         createdAt = doc.data()!['createdAt'],
+        category = doc.data()!['category'],
         disabilityType = doc.data()!['disabilityType'],
         images = doc.data()!['images'] == null
             ? null
@@ -51,6 +54,7 @@ class CommunityPostModel {
       'title': title,
       'content': content,
       'createdAt': createdAt,
+      'category': category,
       'disabilityType': disabilityType,
       'images': images,
       'imgInfos': imgInfos,

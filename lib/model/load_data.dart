@@ -7,8 +7,9 @@ class LoadData{  //클래스 이름은 명사로
 
   final FirebaseFirestore firestore;
 
-  Stream<DocumentSnapshot> readUserInfo({required String uid}){
-      return firestore.collection('user').doc(uid).snapshots();
+  Future<DocumentSnapshot<Map<String, dynamic>>> readUserInfo({required String uid}) async {
+      var userDocumentSnapshot = await firestore.collection('user').doc(uid).get();
+      return userDocumentSnapshot;
   }
 
   Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String disabilityType}) {
@@ -33,10 +34,10 @@ class LoadData{  //클래스 이름은 명사로
 }
 
   // Firestore의 특정 문서에 있는 모든 댓글 불러오기
-  Stream<List<CommentModel>> readCommunityComments(
-          {required String documentID}) =>
+  Stream<List<CommentModel>> readComments(
+          {required String collectionName, required String documentID}) =>
           firestore
-          .collection('community_comment')
+          .collection(collectionName)
           .doc(documentID)
           .collection('comments')
           .orderBy('createdAt', descending: false)
@@ -56,14 +57,6 @@ class LoadData{  //클래스 이름은 명사로
   //             .map((doc) => CommunityPostModel.fromMap(doc))
   //             .toList());
 
-  // // Firestore의 커뮤니티 collection 내 특정 문서 불러오기
-  // Stream<CommunityPostModel> readCommunityDocument(
-  //         {required String collectionName, required String documentID}) =>
-  //         firestore
-  //         .collection(collectionName)
-  //         .doc(documentID)
-  //         .snapshots()
-  //         .map((snapshot) => CommunityPostModel.fromMap(snapshot));
   //
   // // 작성한 글 보기
   // Stream<List<CommunityPostModel>> readCreatePost(

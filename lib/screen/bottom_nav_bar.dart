@@ -1,6 +1,7 @@
 import 'package:byourside/screen/community/post_list.dart';
+import 'package:byourside/screen/community/save_community_data.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
-import 'package:byourside/screen/community/type_controller.dart';
+import 'package:byourside/screen/community/controller/disability_type_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:byourside/constants.dart' as constants;
@@ -13,15 +14,11 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final communityController = Get.put(CommunityTypeController());
-
   int _selectedIndex = 0;
   // static TextStyle optionStyle =
   //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    const CommunityPostList(
-      collectionName: 'ondoPost'
-    ),
+    const CommunityPostList(),
     const Mypage(),
   ];
 
@@ -41,9 +38,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
 
   void _onItemTapped(int index) {
-    // 다른 탭으로 넘어갈 때, 필터링 초기화
-    communityController.filtering(null);
-
     // 탭을 클릭했을떄 지정한 페이지로 이동
     setState(() {
       _selectedIndex = index;
