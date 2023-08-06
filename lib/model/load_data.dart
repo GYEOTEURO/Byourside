@@ -2,7 +2,7 @@ import 'package:byourside/model/comment.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class LoadData{  //클래스 이름은 명사로
+class LoadData{
   LoadData({FirebaseFirestore? firestore}) : firestore = firestore ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore firestore;

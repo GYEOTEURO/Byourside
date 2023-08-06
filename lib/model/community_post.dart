@@ -12,6 +12,9 @@ class CommunityPostModel {
   List<String>? images;
   List<String>? imgInfos;
   final int likes;
+  List<String>? likesUser;
+  final int scraps;
+  List<String>? scrapsUser;
   
   CommunityPostModel({
       this.id,
@@ -24,13 +27,15 @@ class CommunityPostModel {
       required this.disabilityType,
       this.images,
       this.imgInfos,
-      required this.likes
+      required this.likes,
+      required this.scraps,
+      required this.likesUser,
+      required this.scrapsUser,
   });
 
   // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
   // 이외는 uid = doc.data()!["uid"],
-  //factory CommunityPostModel
-  CommunityPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc}) //변환한다는 의미를 살린 이름 짓기
+  CommunityPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc})
       : id = doc.id,
         uid = doc.data()!['uid'],
         nickname = doc.data()!['nickname'],
@@ -45,9 +50,16 @@ class CommunityPostModel {
         imgInfos = doc.data()!['imgInfos'] == null
             ? null
             : doc.data()!['imgInfos'].cast<String>(),
-        likes = doc.data()!['likes'];
+        likes = doc.data()!['likes'],
+        likesUser = doc.data()!['likesUser'] == null
+            ? null
+            : doc.data()!['likesUser'].cast<String>(),
+        scraps = doc.data()!['scraps'],
+        scrapsUser = doc.data()!['scrapsUser'] == null
+            ? null
+            : doc.data()!['scrapsUser'].cast<String>();
 
-  Map<String, dynamic> convertToDocument() { // 저장의 의미
+  Map<String, dynamic> convertToDocument() {
     return {
       'uid': uid,
       'nickname': nickname,
@@ -59,8 +71,9 @@ class CommunityPostModel {
       'images': images,
       'imgInfos': imgInfos,
       'likes': likes,
+      'likesUser': likesUser,
+      'scraps': scraps,
+      'scrapsUser': scrapsUser,
     };
   }
 }
-
-// factory constructor : 해당 클래스를 상속하는 자식 클래스의 인스턴스도 반환할 수 있다

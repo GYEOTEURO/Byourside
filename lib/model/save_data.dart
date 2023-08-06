@@ -62,8 +62,7 @@ class SaveData {
         transaction.update(document, {likeOrScrap: currentLikes});
     });
 
-    document.collection(likeOrScrap).doc(uid).set({'createdAt': Timestamp.now()});
-  
+    document.update({'${likeOrScrap}User': FieldValue.arrayUnion([uid])});
   }
   
   // 좋아요/스크랩 취소
@@ -76,7 +75,7 @@ class SaveData {
         transaction.update(document, {likeOrScrap: currentLikes});
     });
 
-    document.collection(likeOrScrap).doc(uid).delete();
+    document.update({'${likeOrScrap}User': FieldValue.arrayRemove([uid])});
   }
 
   // 신고
