@@ -25,9 +25,7 @@ class SocialLogin extends StatelessWidget {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const SetupUser()//GoogleLoggedInPage(userCredential: userCredential)
       ));
-
     }
-
 
     return userCredential;
   }
@@ -51,6 +49,9 @@ class SocialLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('SNS LOGIN'),
@@ -58,13 +59,6 @@ class SocialLogin extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(
-              height: 200,
-            ),
-            TextButton(
-              onPressed: () => throw Exception(),
-              child: const Text('Throw Test Exception'),
-            ),
             SizedBox(
               width: 180.0,
               height: 48.0,
@@ -86,7 +80,7 @@ class SocialLogin extends StatelessWidget {
                 }, 
               ),
             ),
-            SizedBox(
+            isIOS ? SizedBox(
               width: 180.0,
               height: 48.0,
               child: ElevatedButton.icon(
@@ -106,7 +100,7 @@ class SocialLogin extends StatelessWidget {
                   signInWithApple;
                 }, 
               ),
-            ),
+            ) : const SizedBox(),
           ],
         ),
       ),
