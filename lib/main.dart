@@ -1,3 +1,4 @@
+import 'package:byourside/model/auth_controller.dart';
 import 'package:byourside/screen/authenticate/info/user_type.dart';
 import 'package:byourside/screen/authenticate/info/user_paricipator.dart';
 import 'package:byourside/screen/authenticate/info/user_protector.dart';
@@ -35,11 +36,14 @@ Future<bool> getPermission() async {
 
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
+
   WidgetsFlutterBinding.ensureInitialized();
   getPermission();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then((value) => Get.put(AuthController()));
+
   FlutterError.onError = (errorDetails) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
@@ -50,17 +54,12 @@ void main() async {
   };
 
   FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.instance;
-  // firebaseAppCheck.installAppCheckProviderFactory(
-  //     PlayIntegrityAppCheckProviderFactory.getInstance());
+
   await firebaseAppCheck.activate(
     webRecaptchaSiteKey: dotenv.env['WEB_RECAPTCHA_SITE_KEY'],
-    // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
-    // your preferred provider. Choose from:
-    // 1. debug provider
-    // 2. safety net provider
-    // 3. play integrity provider
     androidProvider: AndroidProvider.playIntegrity,
   );
+  
   runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: constants.font,

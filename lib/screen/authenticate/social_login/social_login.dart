@@ -1,35 +1,13 @@
-import 'package:byourside/model/google_sign_in_api.dart';
-import 'package:byourside/screen/authenticate/info/user_type.dart';
+
+import 'package:byourside/model/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SocialLogin extends StatelessWidget {
   const SocialLogin({Key?key}) : super(key: key);
 
-  Future<UserCredential?> loginWithGoogle(BuildContext context) async {
-
-    GoogleSignInAccount? user = await GoogleSignInApi.login();
-
-    GoogleSignInAuthentication? googleAuth = await user!.authentication;
-    var credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken
-    );
-
-    UserCredential? userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    if (context.mounted){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const SetupUser()//GoogleLoggedInPage(userCredential: userCredential)
-      ));
-    }
-
-    return userCredential;
-  }
-  
   Future<UserCredential> signInWithApple() async {
     var appleCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
@@ -76,7 +54,7 @@ class SocialLogin extends StatelessWidget {
                 ),
                 label: const Text('Google 로그인'),
                 onPressed: () async {
-                  await loginWithGoogle(context);
+                  await AuthController.instance.loginWithGoogle(context);
                 }, 
               ),
             ),
