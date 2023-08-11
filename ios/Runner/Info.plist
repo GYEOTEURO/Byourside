@@ -2,12 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-   <key>NSPhotoLibraryUsageDescription</key>
-    <string>GetPhotoLibraryUsage</string>
-    <key>NSCameraUsageDescription</key>
-    <string>GetCameraUsage</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>GetMicrophoneUsage</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -26,9 +22,34 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dotenv.env['GOOGLE_CF_BUNDLE_URL']</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>bluetooth</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>bluetooth</string>
+	<key>NSCameraUsageDescription</key>
+	<string>GetCameraUsage</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>GetMicrophoneUsage</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photos</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>reminders</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>speech</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -49,39 +70,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	
-    <!-- Permission options for the `speech` group -->
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>speech</string>
-
-    <!-- Permission options for the `photos` group -->
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>photos</string>
-
-    <!-- Permission options for the `reminder` group -->
-    <key>NSRemindersUsageDescription</key>
-    <string>reminders</string>
-
-	<key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <!-- google login -->
-        <string>dotenv.env['GOOGLE_CF_BUNDLE_URL']</string>
-      </array>
-      </dict>
-    </array>
-
-    <!-- Permission options for the `bluetooth` -->
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>bluetooth</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>bluetooth</string>
-
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>
