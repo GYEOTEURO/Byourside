@@ -16,6 +16,22 @@ class _SetupUserState extends State<SetupUser> {
     return selectedOption == option;
   }
 
+  bool isProtectorSelected() {
+    return selectedOption == '장애 아동 보호자';
+  }
+
+  bool isDisabilitySelected() {
+    return selectedOption == '장애인';
+  }
+
+  bool isWorkerSelected() {
+    return selectedOption == '종사자';
+  }
+
+  bool isNoOptionSelected() {
+    return selectedOption == '해당 사항이 없어요';
+  }
+
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
@@ -29,6 +45,19 @@ class _SetupUserState extends State<SetupUser> {
         ),
       ),
       backgroundColor: primaryColor,
+    );
+  }
+
+    Widget buildDescriptionText(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
@@ -101,6 +130,7 @@ class _SetupUserState extends State<SetupUser> {
 
   
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
@@ -113,6 +143,7 @@ class _SetupUserState extends State<SetupUser> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  buildDescriptionText('어떤 유형의 사용자인지 알려주세요'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -120,7 +151,7 @@ class _SetupUserState extends State<SetupUser> {
                       buildButton(context, '장애인'),
                       buildButton(context, '종사자'),
                     ],
-                  ),                  
+                  ),
                   const SizedBox(height: 20),
                   buildNoOptionButton(context),
                   const SizedBox(height: 20),
@@ -130,6 +161,23 @@ class _SetupUserState extends State<SetupUser> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  Visibility(
+                    visible: isProtectorSelected(),
+                    child: buildDescriptionText('아동의 장애 종류를 선택해주세요'),
+                  ),
+                  Visibility(
+                    visible: isDisabilitySelected(),
+                    child: buildDescriptionText('장애 종류를 선택해주세요'),
+                  ),
+                  Visibility(
+                    visible: isWorkerSelected(),
+                    child: buildDescriptionText('종사자 유형을 선택해주세요'),
+                  ),
+                  Visibility(
+                    visible: isNoOptionSelected(),
+                    child: buildDescriptionText('해당 사항이 없어요'),
                   ),
                 ],
               ),
