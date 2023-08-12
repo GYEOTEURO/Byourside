@@ -3,18 +3,15 @@ import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import 'package:byourside/model/google_sign_in_api.dart';
 import 'package:byourside/screen/authenticate/info/user_type.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
 
   late Rx<User?> _user;
-
   FirebaseAuth authentication = FirebaseAuth.instance;
 
   @override
@@ -30,81 +27,74 @@ class AuthController extends GetxController {
     print(user);
     if (user == null) {
       Get.offAll(() => const SocialLogin());
-    } 
-    else {
+    } else {
       Get.offAll(() => const BottomNavBar());
     }
   }
-  
+
   void logout() {
     authentication.signOut();
   }
 
   Future<UserCredential?> loginWithGoogle(BuildContext context) async {
     try {
-      GoogleSignInAccount? user = await GoogleSignInApi.login();
+      UserCredential? userCredential = await _signInWithCredential(() async {
+        var user = await GoogleSignInApi.login();
+        var googleAuth = await user!.authentication;
+        
+        return GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+      });
 
-      GoogleSignInAuthentication? googleAuth = await user!.authentication;
-      var credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken
-      );
-
-      UserCredential? userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-      if (context.mounted){
+      if (context.mounted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const SetupUser()//GoogleLoggedInPage(userCredential: userCredential)
+          builder: (context) => const SetupUser(),
         ));
       }
+      
       return userCredential;
-    }
-    catch (e) {
-      Get.snackbar(
-        'Error message',
-        'User message',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-        titleText: const Text('Registration is Faild', style: TextStyle(
-          color: Colors.white
-        ),),
-        messageText: Text(e.toString(), style: const TextStyle(
-          color: Colors.white
-        ),),
-      );
+    } catch (e) {
+      _handleError(e);
     }
     return null;
   }
 
   Future<UserCredential> signInWithApple() async {
     try {
-      var appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-      );
+      return await _signInWithCredential(() async {
+        var appleCredential = await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        );
 
-      var oauthCredential = OAuthProvider('apple.com').credential(
-        idToken: appleCredential.identityToken,
-        accessToken: appleCredential.authorizationCode,
-      );
-
-      // ignore: unnecessary_await_in_return
-      return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-    }
-    catch (e) {
-      Get.snackbar(
-        'Error message',
-        'User message',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-        titleText: const Text('Registration is Failed', style: TextStyle(color: Colors.white)),
-        messageText: Text(e.toString(), style: const TextStyle(color: Colors.white)),
-      );
-
-      throw Exception('Apple sign-in failed: $e'); // 오류 메시지와 함께 예외 발생
+        return OAuthProvider('apple.com').credential(
+          idToken: appleCredential.identityToken,
+          accessToken: appleCredential.authorizationCode,
+        );
+      });
+    } catch (e) {
+      _handleError(e);
+      rethrow;
     }
   }
 
+  Future<UserCredential> _signInWithCredential(Future<AuthCredential> Function() getCredential) async {
+    var credential = await getCredential();
+    return FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  void _handleError(dynamic e) {
+    Get.snackbar(
+      'Error message',
+      'User message',
+      backgroundColor: Colors.red,
+      snackPosition: SnackPosition.BOTTOM,
+      titleText: const Text('Registration is Failed', style: TextStyle(color: Colors.white)),
+      messageText: Text(e.toString(), style: const TextStyle(color: Colors.white)),
+    );
+  }
 }
