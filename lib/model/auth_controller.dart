@@ -3,9 +3,11 @@ import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:byourside/model/google_sign_in_api.dart';
 import 'package:byourside/screen/authenticate/info/user_type.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 
 class AuthController extends GetxController {
@@ -25,8 +27,9 @@ class AuthController extends GetxController {
   }
 
   _moveToPage(User? user) {
+    print(user);
     if (user == null) {
-    Get.offAll(() => const SocialLogin());
+      Get.offAll(() => const SocialLogin());
     } 
     else {
       Get.offAll(() => const BottomNavBar());
@@ -39,24 +42,22 @@ class AuthController extends GetxController {
 
   Future<UserCredential?> loginWithGoogle(BuildContext context) async {
     try {
+      GoogleSignInAccount? user = await GoogleSignInApi.login();
 
-    GoogleSignInAccount? user = await GoogleSignInApi.login();
+      GoogleSignInAuthentication? googleAuth = await user!.authentication;
+      var credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken
+      );
 
-    GoogleSignInAuthentication? googleAuth = await user!.authentication;
-    var credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken
-    );
+      UserCredential? userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
-    UserCredential? userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    if (context.mounted){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const SetupUser()//GoogleLoggedInPage(userCredential: userCredential)
-      ));
-    }
-
-    return userCredential;
+      if (context.mounted){
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const SetupUser()//GoogleLoggedInPage(userCredential: userCredential)
+        ));
+      }
+      return userCredential;
     }
     catch (e) {
       Get.snackbar(
@@ -74,4 +75,36 @@ class AuthController extends GetxController {
     }
     return null;
   }
+
+  Future<UserCredential> signInWithApple() async {
+    try {
+      var appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      var oauthCredential = OAuthProvider('apple.com').credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      // ignore: unnecessary_await_in_return
+      return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    }
+    catch (e) {
+      Get.snackbar(
+        'Error message',
+        'User message',
+        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: const Text('Registration is Failed', style: TextStyle(color: Colors.white)),
+        messageText: Text(e.toString(), style: const TextStyle(color: Colors.white)),
+      );
+
+      throw Exception('Apple sign-in failed: $e'); // 오류 메시지와 함께 예외 발생
+    }
+  }
+
 }
