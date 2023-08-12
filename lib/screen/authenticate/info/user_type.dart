@@ -12,6 +12,10 @@ class SetupUser extends StatefulWidget {
 class _SetupUserState extends State<SetupUser> {
   String selectedOption = '';
 
+  bool isOptionSelected(String option) {
+    return selectedOption == option;
+  }
+
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
@@ -31,13 +35,15 @@ class _SetupUserState extends State<SetupUser> {
   Widget buildButton(BuildContext context, String text) {
     return Expanded(
       child: Material(
-        elevation: 5.0,
+        elevation: isOptionSelected(text) ? 10.0 : 5.0,
         borderRadius: BorderRadius.circular(20.0),
-        color: Theme.of(context).primaryColor,
+        color: isOptionSelected(text)
+            ? Colors.orange // Change the color for selected state
+            : Theme.of(context).primaryColor,
         child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          padding: const EdgeInsets.all(20.0),
           onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
+            HapticFeedback.lightImpact();
             setState(() {
               selectedOption = text;
             });
@@ -47,17 +53,53 @@ class _SetupUserState extends State<SetupUser> {
             semanticsLabel: text,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 12,
               fontFamily: 'NanumGothic',
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
     );
   }
 
+  Widget buildNoOptionButton(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+        HapticFeedback.lightImpact();
+        setState(() {
+          selectedOption = '해당 사항이 없어요';
+        });
+      },
+      color: isOptionSelected('해당 사항이 없어요')
+          ? Colors.orange // Change the color for selected state
+          : Theme.of(context).primaryColor,
+      elevation: isOptionSelected('해당 사항이 없어요') ? 10.0 : 5.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      padding: const EdgeInsets.all(20.0),
+      minWidth: double.infinity,
+      child: const Text(
+        '해당 사항이 없어요',
+        semanticsLabel: '해당 사항이 없어요',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500,
+        ),
+        textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +120,9 @@ class _SetupUserState extends State<SetupUser> {
                       buildButton(context, '장애인'),
                       buildButton(context, '종사자'),
                     ],
-                  ),
+                  ),                  
+                  const SizedBox(height: 20),
+                  buildNoOptionButton(context),
                   const SizedBox(height: 20),
                   Text(
                     'Selected option: $selectedOption',
