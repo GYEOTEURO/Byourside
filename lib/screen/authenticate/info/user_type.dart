@@ -130,59 +130,54 @@ class _SetupUserState extends State<SetupUser> {
 
   
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              buildDescriptionText('어떤 유형의 사용자인지 알려주세요'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  buildDescriptionText('어떤 유형의 사용자인지 알려주세요'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildButton(context, '장애 아동 보호자'),
-                      buildButton(context, '장애인'),
-                      buildButton(context, '종사자'),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  buildNoOptionButton(context),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Selected option: $selectedOption',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Visibility(
-                    visible: isProtectorSelected(),
-                    child: buildDescriptionText('아동의 장애 종류를 선택해주세요'),
-                  ),
-                  Visibility(
-                    visible: isDisabilitySelected(),
-                    child: buildDescriptionText('장애 종류를 선택해주세요'),
-                  ),
-                  Visibility(
-                    visible: isWorkerSelected(),
-                    child: buildDescriptionText('종사자 유형을 선택해주세요'),
-                  ),
-                  Visibility(
-                    visible: isNoOptionSelected(),
-                    child: buildDescriptionText('해당 사항이 없어요'),
-                  ),
+                  buildButton(context, '장애 아동 보호자'),
+                  buildButton(context, '장애인'),
+                  buildButton(context, '종사자'),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              buildNoOptionButton(context),
+              const SizedBox(height: 20),
+              Text(
+                'Selected option: $selectedOption',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Visibility(
+                visible: isProtectorSelected(),
+                child: buildDescriptionText('아동의 장애 종류를 선택해 주세요'),
+                ),
+              Visibility(
+                visible: isDisabilitySelected(),
+                child: buildDescriptionText('장애 종류를 선택해 주세요'),
+              ),
+              Visibility(
+                visible: isWorkerSelected(),
+                child: buildDescriptionText('종사자 유형을 선택해 주세요'),
+              ),
+              Visibility(
+                visible: isNoOptionSelected(),
+                child: buildDescriptionText('해당 사항이 없어요'),
+              ),
+            ],
+          ),
         ),
       ),
     );
