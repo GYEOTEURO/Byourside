@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 
+
 Widget buildDisabilityTypeButtons(int selectedIndex, Function(int) onButtonPressed) {
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        buildTypeButton('뇌병변 장애', selectedIndex == 0, () => onButtonPressed(0)),
-        buildTypeButton('발달 장애', selectedIndex == 1, () => onButtonPressed(1)),
-        buildTypeButton('해당없음', selectedIndex == 2, () => onButtonPressed(2)),
-      ],
-    ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        '장애 종류를 선택해주세요',
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
+        ),
+      ),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildTypeButton('뇌병변 장애', selectedIndex == 0, () => onButtonPressed(0)),
+            buildTypeButton('발달 장애', selectedIndex == 1, () => onButtonPressed(1)),
+            buildTypeButton('해당없음', selectedIndex == 2, () => onButtonPressed(2)),
+          ],
+        ),
+      ),
+    ],
   );
 }
 

@@ -3,7 +3,16 @@ import 'package:flutter/services.dart';
 
 Widget buildUserTypeButtons(int selectedIndex, Function(int) onButtonPressed) {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      const Text(
+        '어떤 유형의 사용자인지 알려주세요',
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
+        ),
+      ),
+      const SizedBox(height: 10),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -18,6 +27,7 @@ Widget buildUserTypeButtons(int selectedIndex, Function(int) onButtonPressed) {
     ],
   );
 }
+
 
 
 Widget buildTypeButton(String text, bool isSelected, VoidCallback onPressed) {
