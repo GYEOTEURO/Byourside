@@ -1,8 +1,5 @@
 import 'package:byourside/model/auth_controller.dart';
-import 'package:byourside/screen/authenticate/info/user_type.dart';
-import 'package:byourside/screen/authenticate/info/user_paricipator.dart';
-import 'package:byourside/screen/authenticate/info/user_protector.dart';
-import 'package:byourside/screen/authenticate/info/user_someone_else.dart';
+import 'package:byourside/screen/authenticate/info/user_setup.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -94,10 +91,7 @@ class MyAppState extends State<MyApp> {
             routes: {
               '/login': (context) => const SocialLogin(),
               '/bottom_nav': (context) => const BottomNavBar(),
-              '/user': (context) => const SetupUser(),
-              '/user_protector': (context) => const Protector(),
-              '/user_participator': (context) => const Participator(),
-              '/user_someoneElse': (context) => const SomeoneElse(),
+              '/user': (context) => const UserSetUp(),
             },
           ),
         ),

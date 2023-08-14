@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import 'package:byourside/model/google_sign_in_api.dart';
-import 'package:byourside/screen/authenticate/info/user_type.dart';
+import 'package:byourside/screen/authenticate/info/user_setup.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -50,7 +50,7 @@ class AuthController extends GetxController {
 
       if (context.mounted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const SetupUser(),
+          builder: (context) => const UserSetUp(),
         ));
       }
       
