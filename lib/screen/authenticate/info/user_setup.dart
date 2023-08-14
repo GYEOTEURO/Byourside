@@ -30,14 +30,14 @@ class _UserSetUpState extends State<UserSetUp> {
   bool nickNameExist = false;
   bool isNicknameChecked = false;
   bool isUserDataStored = false;
-  int _slectedUserButtonIndex = 0;      
+  int _selectedUserButtonIndex = 0;      
   int _selectedDisabilityButtonIndex = 0;
   
   final User? user = FirebaseAuth.instance.currentUser;
 
   void _handleUserButtonPressed(int index) {
     setState(() {
-      _slectedUserButtonIndex = index;
+      _selectedUserButtonIndex = index;
     });
     // 여기에서 버튼을 눌렀을 때 수행할 로직 구현
   }
@@ -49,29 +49,13 @@ class _UserSetUpState extends State<UserSetUp> {
     // 여기에서 버튼을 눌렀을 때 수행할 로직 구현
   }
 
-  Future<void> checkNicknameExist(BuildContext context, String nickname) async {
-    var collection = FirebaseFirestore.instance.collection('userInfo');
-    var querySnapshot = await collection.where('nickname', isEqualTo: nickname).get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      setState(() {
-        nickNameExist = true; 
-      });
-    } else {
-      setState(() {
-        nickNameExist = false; // 닉네임이 사용 가능함을 상태 변수에 표시
-      });
-    }
-  }
-
   Widget buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       onPressed: () async {
         HapticFeedback.lightImpact(); // 약한 진동
         if (_formKeySelf.currentState!.validate() &&
             _purpose.text != '' &&
-            _selfAge.text.split(' ').first != '' &&
-            (_selectedType[0] || _selectedType[1])) {
+            _selfAge.text.split(' ').first != '' ) {
           storeSelfInfo(
             _nickname.text,
             _selfAge.text,
@@ -131,6 +115,7 @@ class _UserSetUpState extends State<UserSetUp> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,21 +125,50 @@ class _UserSetUpState extends State<UserSetUp> {
           Navigator.pop(context);
         },
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20), // 추가적인 공간 확보
-            const NicknameSection(),
-            const SizedBox(height: 20), // 추가적인 공간 확보
-            buildUserTypeButtons(_slectedUserButtonIndex, _handleUserButtonPressed),
-            const SizedBox(height: 20), // 추가적인 공간 확보
-            buildDisabilityTypeButtons(_selectedDisabilityButtonIndex, _handleDisabilityButtonPressed),
-            const SizedBox(height: 20), // 추가적인 공간 확보
-          ],
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  const NicknameSection(),
+                  const SizedBox(height: 20),
+                  buildUserTypeButtons(_selectedUserButtonIndex, _handleUserButtonPressed),
+                  const SizedBox(height: 20),
+                  buildDisabilityTypeButtons(_selectedDisabilityButtonIndex, _handleDisabilityButtonPressed),
+                  const SizedBox(height: 20),
+                  // ... 기존 body의 내용 ...
+                ],
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: ElevatedButton(
+              onPressed: () async {
+                HapticFeedback.lightImpact();
+                // ... 기존 onPressed의 내용 ...
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                textStyle: const TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'NanumGothic',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              child: const Text(
+                '완료',
+                semanticsLabel: '완료',
+              ),
+            ),
+          ),
+        ],
       ),
-    floatingActionButton: buildFloatingActionButton(context));
+    );
   }
 }
