@@ -1,9 +1,9 @@
 import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
-import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/disability_type_button.dart';
+import 'package:byourside/widget/authenticate/nickname_widgets.dart';
 import 'package:byourside/widget/authenticate/user_type_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,12 +18,6 @@ final TextEditingController _nickname = TextEditingController();
 final TextEditingController _purpose = TextEditingController();
 final TextEditingController _selfAge = TextEditingController();
 
-const List<Widget> type = <Widget>[
-  Text('뇌병변 장애', semanticsLabel: '뇌병변 장애', style: TextStyle(fontSize: 17)),
-  Text('발달 장애', semanticsLabel: '발달 장애', style: TextStyle(fontSize: 17)),
-  Text('해당없음', semanticsLabel: '해당없음', style: TextStyle(fontSize: 17))
-
-];
 
 class UserSetUp extends StatefulWidget {
   const UserSetUp({Key? key}) : super(key: key);
@@ -35,7 +29,6 @@ class UserSetUp extends StatefulWidget {
 class _UserSetUpState extends State<UserSetUp> {
   bool nickNameExist = false;
   bool isNicknameChecked = false;
-  bool someoneElse = false;
   bool isUserDataStored = false;
   int _slectedUserButtonIndex = 0;      
   int _selectedDisabilityButtonIndex = 0;
@@ -69,83 +62,6 @@ class _UserSetUpState extends State<UserSetUp> {
         nickNameExist = false; // 닉네임이 사용 가능함을 상태 변수에 표시
       });
     }
-  }
-
-  Future<void> showAlertDialog(BuildContext context, String contentText) async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return CustomAlertDialog(
-          message: contentText,
-          buttonText: '확인',
-        );
-      },
-    );
-  }
-
-  bool isNumeric(String s) {
-    return double.tryParse(s) != null;
-  }
-
-  final nicknameField = Semantics(
-      container: true,
-      textField: true,
-      label: '닉네임을 입력하세요.',
-      hint: '(예: 홍길동)',
-      child: TextFormField(
-        decoration: const InputDecoration(
-          labelText: '닉네임을 입력하세요',
-          hintText: '(예: 홍길동) ',
-        ),
-        autofocus: true,
-        controller: _nickname,
-        validator: (value) {
-          if (value != null) {
-            for (int i = 0; i < value.length; i++) {
-              if (value[i] == '_') {
-                return '특수기호 _는 포함이 불가능합니다.';
-              }
-            }
-            if (value.split(' ').first != '' && value.isNotEmpty) {
-              return null;
-            }
-            return '필수 입력란입니다. 닉네임을 입력하세요';
-          }
-          return null;
-        },
-      ));
-
-  Widget buildNicknameSection(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          nicknameField,
-          ElevatedButton(
-            onPressed: () {
-              checkNicknameExist(context, _nickname.text);
-              setState(() {
-                isNicknameChecked = true;
-              });
-            },
-            child: const Text('중복확인'),
-          ),
-          Text(
-            isNicknameChecked
-                ? nickNameExist
-                    ? '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'
-                    : '사용가능한 닉네임입니다.'
-                : '',
-            style: TextStyle(
-              color: nickNameExist ? Colors.red : Colors.green,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   Widget buildFloatingActionButton(BuildContext context) {
@@ -230,7 +146,7 @@ class _UserSetUpState extends State<UserSetUp> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20), // 추가적인 공간 확보
-            buildNicknameSection(context),
+            const NicknameSection(),
             const SizedBox(height: 20), // 추가적인 공간 확보
             buildUserTypeButtons(_slectedUserButtonIndex, _handleUserButtonPressed),
             const SizedBox(height: 20), // 추가적인 공간 확보
