@@ -1,59 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class UserTypeButton {
-  static Widget buildButton(BuildContext context, String text, bool isSelected, void Function() onPressed) {
-    return Expanded(
-      child: Material(
-        elevation: isSelected ? 10.0 : 5.0,
-        borderRadius: BorderRadius.circular(20.0),
-        color: isSelected
-            ? Colors.orange // Change the color for selected state
-            : Theme.of(context).primaryColor,
-        child: MaterialButton(
-          padding: const EdgeInsets.all(20.0),
-          onPressed: onPressed,
-          child: Text(
-            text,
-            semanticsLabel: text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontFamily: 'NanumGothic',
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
+Widget buildUserTypeButtons(int selectedIndex, Function(int) onButtonPressed) {
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          buildTypeButton('장애 아동 보호자', selectedIndex == 0, () => onButtonPressed(0)),
+          buildTypeButton('장애인', selectedIndex == 1, () => onButtonPressed(1)),
+          buildTypeButton('종사자', selectedIndex == 2, () => onButtonPressed(2)),
+        ],
       ),
-    );
-  }
+      const SizedBox(height: 20),
+      buildTypeButton('해당 없음', selectedIndex == 3, () => onButtonPressed(3)),
+      const SizedBox(height: 20),
+    ],
+  );
+}
 
-  static Widget buildNoOptionButton(BuildContext context, bool isSelected, void Function() onPressed) {
-    return MaterialButton(
-      onPressed: onPressed,
-      color: isSelected ? Colors.orange : Theme.of(context).primaryColor,
-      elevation: isSelected ? 10.0 : 5.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      minWidth: double.infinity,
-      child: const Text(
-        '해당 사항이 없어요',
-        semanticsLabel: '해당 사항이 없어요',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w500,
-        ),
-        textAlign: TextAlign.center,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
+
+Widget buildTypeButton(String text, bool isSelected, VoidCallback onPressed) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(isSelected ? Colors.blue : Colors.white),
+      foregroundColor: MaterialStateProperty.all(isSelected ? Colors.white : Colors.blue),
+      side: MaterialStateProperty.all(BorderSide(color: isSelected ? Colors.white : Colors.blue)),
+    ),
+    child: Text(text),
+  );
 }

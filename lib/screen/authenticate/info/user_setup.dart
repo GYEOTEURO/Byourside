@@ -3,6 +3,7 @@ import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
+import 'package:byourside/widget/authenticate/disability_type_button.dart';
 import 'package:byourside/widget/authenticate/user_type_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,11 +37,17 @@ class _UserSetUpState extends State<UserSetUp> {
   bool isNicknameChecked = false;
   bool someoneElse = false;
   bool isUserDataStored = false;
-  bool isUserTypeSelected = false;      
+  int _slectedUserButtonIndex = 0;      
   int _selectedDisabilityButtonIndex = 0;
   
   final User? user = FirebaseAuth.instance.currentUser;
 
+  void _handleUserButtonPressed(int index) {
+    setState(() {
+      _slectedUserButtonIndex = index;
+    });
+    // 여기에서 버튼을 눌렀을 때 수행할 로직 구현
+  }
 
   void _handleDisabilityButtonPressed(int index) {
     setState(() {
@@ -175,56 +182,6 @@ class _UserSetUpState extends State<UserSetUp> {
     );
   }
 
-  void onPressed() {
-  // 버튼이 클릭되었을 때의 로직
-  isUserTypeSelected = !isUserTypeSelected; // 버튼 상태 토글
-  // 다른 로직 추가 가능
-  }
-
-  Widget buildUserTypeButtons(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            UserTypeButton.buildButton(context, '장애 아동 보호자', isUserTypeSelected, onPressed),
-            UserTypeButton.buildButton(context, '장애인', isUserTypeSelected, onPressed),
-            UserTypeButton.buildButton(context, '종사자', isUserTypeSelected, onPressed),
-          ],
-        ),
-        const SizedBox(height: 20),
-        UserTypeButton.buildNoOptionButton(context, isUserTypeSelected, onPressed),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-
-  Widget buildTypeButton(String text, bool isSelected, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(isSelected ? Colors.blue : Colors.white),
-        foregroundColor: MaterialStateProperty.all(isSelected ? Colors.white : Colors.blue),
-        side: MaterialStateProperty.all(BorderSide(color: isSelected ? Colors.white : Colors.blue)),
-      ),
-      child: Text(text),
-    );
-  }
-
-  Widget buildDisabilityTypeButtons(int selectedIndex, Function(int) onButtonPressed) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal, // 가로 스크롤 가능하도록 변경
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildTypeButton('뇌병변 장애', selectedIndex == 0, () => onButtonPressed(0)),
-          buildTypeButton('발달 장애', selectedIndex == 1, () => onButtonPressed(1)),
-          buildTypeButton('해당없음', selectedIndex == 2, () => onButtonPressed(2)),
-        ],
-      ),
-    );
-  }
-
   void storeSelfInfo(
     String? nickname,
     String? age,
@@ -275,7 +232,7 @@ class _UserSetUpState extends State<UserSetUp> {
             const SizedBox(height: 20), // 추가적인 공간 확보
             buildNicknameSection(context),
             const SizedBox(height: 20), // 추가적인 공간 확보
-            buildUserTypeButtons(context),
+            buildUserTypeButtons(_slectedUserButtonIndex, _handleUserButtonPressed),
             const SizedBox(height: 20), // 추가적인 공간 확보
             buildDisabilityTypeButtons(_selectedDisabilityButtonIndex, _handleDisabilityButtonPressed),
             const SizedBox(height: 20), // 추가적인 공간 확보
