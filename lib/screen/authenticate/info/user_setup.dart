@@ -119,11 +119,8 @@ class _UserSetUpState extends State<UserSetUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '세부 정보 입력',
-        onBack: () {
-          Navigator.pop(context);
-        },
+      appBar: const CustomAppBar(
+        title: '프로필을 완성해주세요',
       ),
       body: Column(
         children: [
@@ -140,7 +137,7 @@ class _UserSetUpState extends State<UserSetUp> {
                   const SizedBox(height: 20),
                   buildDisabilityTypeButtons(_selectedDisabilityButtonIndex, _handleDisabilityButtonPressed),
                   const SizedBox(height: 20),
-                  // ... 기존 body의 내용 ...
+                  buildAgeInputField(),
                 ],
               ),
             ),
@@ -150,6 +147,43 @@ class _UserSetUpState extends State<UserSetUp> {
       ),
     );
   }
+}
+Widget buildAgeInputField() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        '나이를 입력해 주세요',
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
+        ),
+      ),
+      Row(
+        children: [
+          Flexible(
+            child: Semantics(
+              container: true,
+              textField: true,
+              label: '몇 년생인지 입력하세요.',
+              hint: '(예: 1990)',
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  hintText: '1990',
+                ),
+                keyboardType: TextInputType.number,
+                // ... 텍스트필드 관련 설정 및 검증 로직 ...
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text('년생'),
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
 
