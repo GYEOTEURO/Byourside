@@ -145,30 +145,35 @@ class _UserSetUpState extends State<UserSetUp> {
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: ElevatedButton(
-              onPressed: () async {
-                HapticFeedback.lightImpact();
-                // ... 기존 onPressed의 내용 ...
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                textStyle: const TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'NanumGothic',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              child: const Text(
-                '완료',
-                semanticsLabel: '완료',
-              ),
-            ),
-          ),
+          buildCompleteButton(context),
         ],
       ),
     );
   }
+}
+
+
+Widget buildCompleteButton(BuildContext context) {
+  return Container(
+    alignment: Alignment.bottomCenter,
+    padding: const EdgeInsets.symmetric(vertical: 20),
+    child: ElevatedButton(
+      onPressed: () async {
+        HapticFeedback.lightImpact();
+        // ... 기존 onPressed의 내용 ...
+      },
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+        textStyle: const TextStyle(
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      child: const Text(
+        '완료',
+        semanticsLabel: '완료',
+      ),
+    ),
+  );
 }
