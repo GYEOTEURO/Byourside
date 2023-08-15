@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppPurposeSelection extends StatefulWidget {
-  const AppPurposeSelection({super.key});
+  const AppPurposeSelection({super.key, required Null Function(dynamic purpose) onChanged});
 
   @override
   _AppPurposeSelectionState createState() => _AppPurposeSelectionState();

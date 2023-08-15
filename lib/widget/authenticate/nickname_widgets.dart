@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NicknameSection extends StatefulWidget {
-  const NicknameSection({super.key});
+  const NicknameSection({super.key, required Null Function(dynamic nickname) onChanged});
 
   @override
   _NicknameSectionState createState() => _NicknameSectionState();
