@@ -1,5 +1,6 @@
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,15 +24,46 @@ class AuthController extends GetxController {
     ever(_user, _moveToPage);
   }
 
-  _moveToPage(User? user) {
+  _moveToPage(User? user) async {
     print(user);
     if (user == null) {
       Get.offAll(() => const SocialLogin());
     } else {
-      Get.offAll(() => const BottomNavBar());
+      bool isUserSetUp = await checkIfUserSetUp(user.uid);
+
+      if (isUserSetUp) {
+        Get.offAll(() => const BottomNavBar());
+      } else {
+        Get.offAll(() => const UserSetUp());
+      }
     }
   }
 
+
+  Future<bool> checkIfUserSetUp(String userId) async {
+  try {
+    // Get a reference to the user's document in the 'userInfo' collection
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('userInfo')
+        .doc(userId)
+        .get();
+
+    // Check if the document exists
+    if (snapshot.exists) {
+      // Check if the necessary fields for user setup are filled
+      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+      if (userData != null && userData.containsKey('nickname')) {
+        return true; // User setup is complete
+      }
+    }
+    return false; // User setup is not complete
+  } catch (e) {
+    print('Error checking user setup: $e');
+    return false; // Error occurred, assume user setup is not complete
+  }
+}
+
+  
   void logout() {
     authentication.signOut();
   }
@@ -47,12 +79,6 @@ class AuthController extends GetxController {
           idToken: googleAuth.idToken,
         );
       });
-
-      if (context.mounted) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const UserSetUp(),
-        ));
-      }
       
       return userCredential;
     } catch (e) {
