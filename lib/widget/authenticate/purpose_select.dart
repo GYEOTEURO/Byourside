@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppPurposeSelection extends StatefulWidget {
-  const AppPurposeSelection({super.key, required Null Function(dynamic purpose) onChanged});
+  final void Function(String purpose) onChanged;
+
+  const AppPurposeSelection({Key? key, required this.onChanged}) : super(key: key);
 
   @override
   _AppPurposeSelectionState createState() => _AppPurposeSelectionState();
@@ -26,9 +28,13 @@ class _AppPurposeSelectionState extends State<AppPurposeSelection> {
         DropdownButton<String>(
           value: _selectedPurpose,
           onChanged: (String? newValue) {
-            setState(() {
-              _selectedPurpose = newValue!;
-            });
+            if (newValue != null) {
+              setState(() {
+                print(newValue);
+                _selectedPurpose = newValue;
+                widget.onChanged(newValue); // onChanged 콜백 호출
+              });
+            }
           },
           items: <String>['정보 습득', '활동 홍보', '소통']
               .map<DropdownMenuItem<String>>((String value) {

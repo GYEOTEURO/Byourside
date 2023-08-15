@@ -11,11 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-GlobalKey<FormState> _formKeySelf = GlobalKey<FormState>();
-final List<bool> _selectedType = <bool>[false, false];
 
 final TextEditingController _nickname = TextEditingController();
-final TextEditingController _purpose = TextEditingController();
 final TextEditingController _birthYear = TextEditingController();
 
 
@@ -87,10 +84,7 @@ class _UserSetUpState extends State<UserSetUp> {
       child: ElevatedButton(
         onPressed: () async {
           HapticFeedback.lightImpact(); // 약한 진동
-          if (_formKeySelf.currentState!.validate() &&
-              _nickname.text != '' &&
-              _selectedPurpose != '' &&
-              _birthYear.text.split(' ').first != '' ) {
+            if (_validateInputs()) { // 입력 값 유효성 검사
             storeSelfInfo(
               _birthYear.text,
               _selectedDisabilityType,
@@ -121,6 +115,49 @@ class _UserSetUpState extends State<UserSetUp> {
   }
 
 
+
+  bool _validateInputs() {
+
+  print('_nickname: ${_nickname.text}');
+  print('_selectedPurpose: $_selectedPurpose');
+  print('_birthYear: ${_birthYear.text}');
+  
+    if (_nickname.text.isEmpty) {
+      _showErrorDialog('닉네임을 입력하세요.');
+      return false;
+    }
+    if (_selectedPurpose.isEmpty) {
+      _showErrorDialog('목적을 선택하세요.');
+      return false;
+    }
+    // if (!isNumeric(_birthYear.text)) {
+    //   _showErrorDialog('올바른 나이를 입력하세요.');
+    //   return false;
+    // }
+
+    return true; 
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('오류'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -144,7 +181,6 @@ class _UserSetUpState extends State<UserSetUp> {
                   const SizedBox(height: 20),
                   NicknameSection(
                     onChanged: (nickname) {
-                      // 사용자의 닉네임 업데이트
                       _nickname.text = nickname;
                     },
                   ),

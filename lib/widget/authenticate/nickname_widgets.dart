@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NicknameSection extends StatefulWidget {
-  const NicknameSection({super.key, required Null Function(dynamic nickname) onChanged});
+  final void Function(String nickname) onChanged; // onChanged 콜백을 받을 수 있는 변수 추가
+
+  const NicknameSection({Key? key, required this.onChanged}) : super(key: key);
 
   @override
   _NicknameSectionState createState() => _NicknameSectionState();
@@ -65,6 +67,7 @@ class _NicknameSectionState extends State<NicknameSection> {
               ),
               autofocus: true,
               controller: _nickname,
+              onChanged: widget.onChanged, 
               validator: (value) {
                 // ... 닉네임 검증 로직 ...
               },
