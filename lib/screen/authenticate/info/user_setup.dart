@@ -4,6 +4,7 @@ import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/disability_type_button.dart';
 import 'package:byourside/widget/authenticate/nickname_widgets.dart';
+import 'package:byourside/widget/authenticate/purpose_select.dart';
 import 'package:byourside/widget/authenticate/user_type_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,20 +32,13 @@ class _UserSetUpState extends State<UserSetUp> {
   bool isNicknameChecked = false;
   bool isUserDataStored = false;
   int _selectedUserButtonIndex = 0;      
-  int _selectedDisabilityButtonIndex = 0;
+  String _selectedDisabilityType = '';
   
   final User? user = FirebaseAuth.instance.currentUser;
 
   void _handleUserButtonPressed(int index) {
     setState(() {
       _selectedUserButtonIndex = index;
-    });
-    // 여기에서 버튼을 눌렀을 때 수행할 로직 구현
-  }
-
-  void _handleDisabilityButtonPressed(int index) {
-    setState(() {
-      _selectedDisabilityButtonIndex = index;
     });
     // 여기에서 버튼을 눌렀을 때 수행할 로직 구현
   }
@@ -81,6 +75,19 @@ class _UserSetUpState extends State<UserSetUp> {
       ),
     );
   }
+
+
+  Widget buildDisabilityType() {
+    return DisabilityType(
+      initialType: _selectedDisabilityType,
+      onChanged: (type) {
+        setState(() {
+          _selectedDisabilityType = type; // 선택된 타입 업데이트
+        });
+      },
+    );
+  }
+
 
   void storeSelfInfo(
     String? nickname,
@@ -135,9 +142,11 @@ class _UserSetUpState extends State<UserSetUp> {
                   const SizedBox(height: 20),
                   buildUserTypeButtons(_selectedUserButtonIndex, _handleUserButtonPressed),
                   const SizedBox(height: 20),
-                  buildDisabilityTypeButtons(_selectedDisabilityButtonIndex, _handleDisabilityButtonPressed),
+                  buildDisabilityType(),
                   const SizedBox(height: 20),
                   buildAgeInputField(),
+                  const SizedBox(height: 20),
+                  const AppPurposeSelection(),
                 ],
               ),
             ),
@@ -148,6 +157,8 @@ class _UserSetUpState extends State<UserSetUp> {
     );
   }
 }
+
+
 Widget buildAgeInputField() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
