@@ -25,6 +25,7 @@ class UserSetUp extends StatefulWidget {
 
 class _UserSetUpState extends State<UserSetUp> {
   bool nickNameExist = false;
+  // TODO: 닉네임 중복확인된 경우에만 DB에 저장시켜야함
   bool isNicknameChecked = false;
   bool isUserDataStored = false;
   String _selectedUserType = '';
@@ -66,7 +67,8 @@ class _UserSetUpState extends State<UserSetUp> {
       'birthYear': birthYear,
       'blockedUsers': [],
       'disabilityType': selectedType,
-      'location': [], // location,
+      // TODO: 위치 해결 필요
+      'location': [], 
       'nickname': nickname,
       'registrationPurpose': registrationPurpose,
       'userType': userType,
@@ -115,13 +117,8 @@ class _UserSetUpState extends State<UserSetUp> {
   }
 
 
-
+  // TODO: 조건 추가 필요
   bool _validateInputs() {
-
-  print('_nickname: ${_nickname.text}');
-  print('_selectedPurpose: $_selectedPurpose');
-  print('_birthYear: ${_birthYear.text}');
-  
     if (_nickname.text.isEmpty) {
       _showErrorDialog('닉네임을 입력하세요.');
       return false;
@@ -134,7 +131,6 @@ class _UserSetUpState extends State<UserSetUp> {
     //   _showErrorDialog('올바른 나이를 입력하세요.');
     //   return false;
     // }
-
     return true; 
   }
 
