@@ -2,6 +2,7 @@ import 'package:byourside/main.dart';
 import 'package:byourside/model/firebase_user.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:byourside/widget/app_bar.dart';
+import 'package:byourside/widget/authenticate/age_input_field.dart';
 import 'package:byourside/widget/authenticate/disability_type_button.dart';
 import 'package:byourside/widget/authenticate/nickname_widgets.dart';
 import 'package:byourside/widget/authenticate/purpose_select.dart';
@@ -33,6 +34,7 @@ class _UserSetUpState extends State<UserSetUp> {
   bool isUserDataStored = false;
   int _selectedUserButtonIndex = 0;      
   String _selectedDisabilityType = '';
+  String _selectedPurpose = '';
   
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -76,15 +78,10 @@ class _UserSetUpState extends State<UserSetUp> {
     );
   }
 
-
-  Widget buildDisabilityType() {
+  Widget buildDisabilityType({required String initialType, required void Function(String type) onChanged}) {
     return DisabilityType(
-      initialType: _selectedDisabilityType,
-      onChanged: (type) {
-        setState(() {
-          _selectedDisabilityType = type; // 선택된 타입 업데이트
-        });
-      },
+      initialType: initialType,
+      onChanged: onChanged,
     );
   }
 
@@ -117,6 +114,13 @@ class _UserSetUpState extends State<UserSetUp> {
     }
   }
 
+
+  void _handleDisabilityTypeSelected(String type) {
+    setState(() {
+      _selectedDisabilityType = type;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -142,11 +146,20 @@ class _UserSetUpState extends State<UserSetUp> {
                   const SizedBox(height: 20),
                   buildUserTypeButtons(_selectedUserButtonIndex, _handleUserButtonPressed),
                   const SizedBox(height: 20),
-                  buildDisabilityType(),
+                  buildDisabilityType(
+                    initialType: _selectedDisabilityType,
+                    onChanged: _handleDisabilityTypeSelected,
+                  ),
                   const SizedBox(height: 20),
-                  buildAgeInputField(),
+                  AgeInputField(controller: _selfAge), 
                   const SizedBox(height: 20),
-                  const AppPurposeSelection(),
+                  AppPurposeSelection(
+                    onChanged: (purpose) {
+                      setState(() {
+                        _selectedPurpose = purpose; // 선택한 목적 업데이트
+                      });
+                    }
+                  ),
                 ],
               ),
             ),
@@ -156,45 +169,6 @@ class _UserSetUpState extends State<UserSetUp> {
       ),
     );
   }
-}
-
-
-Widget buildAgeInputField() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        '나이를 입력해 주세요',
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
-      ),
-      Row(
-        children: [
-          Flexible(
-            child: Semantics(
-              container: true,
-              textField: true,
-              label: '몇 년생인지 입력하세요.',
-              hint: '(예: 1990)',
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: '1990',
-                ),
-                keyboardType: TextInputType.number,
-                // ... 텍스트필드 관련 설정 및 검증 로직 ...
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text('년생'),
-          ),
-        ],
-      ),
-    ],
-  );
 }
 
 
