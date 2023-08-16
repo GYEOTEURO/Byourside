@@ -25,7 +25,7 @@ class SocialButtonForm extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(social),
-                        duration: Duration(milliseconds: 1500),
+                        duration: const Duration(milliseconds: 1500),
                       ),
                     );
                   },
@@ -71,7 +71,7 @@ class SocialButtonForm extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(social),
-                                  duration: Duration(milliseconds: 1500),
+                                  duration: const Duration(milliseconds: 1500),
                                 ),
                               );
                             },

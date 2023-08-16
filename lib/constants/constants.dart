@@ -39,7 +39,4 @@ const List<String> commentReportReasonList = [
   '상업적 광고 및 판매 댓글입니다.'
 ];
 
-//DB
-//const String communityFunction = 'community';
-//const String provideInfoFunction = 'provideInfo';
-//const String commentFunction = 'comment';
+List<String> communityCategories = ['전체', '교육', '기관', '복지', '일상', '행정', '홍보'];

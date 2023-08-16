@@ -2,84 +2,78 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CommunityPostModel {
   String? id;
-  String? uid;
-  String? title;
-  String? nickname;
-  String? content;
-  Timestamp? datetime;
-  List<String>? images;
-  List<String>? imgInfos;
-  String? category;
-  List<String>? type;
-  int? likes;
-  List<String>? likesPeople;
-  List<String>? scrapPeople;
-  List<String>? keyword;
-
-  CommunityPostModel(
-      {this.id,
-      this.uid,
-      this.title,
-      this.nickname,
-      this.content,
-      this.datetime,
-      this.images,
-      this.imgInfos,
-      this.category,
-      this.type,
-      this.likes,
-      this.likesPeople,
-      this.scrapPeople,
-      this.keyword});
+  final String uid;
+  final String nickname;
+  final String title;
+  final String content;
+  final Timestamp createdAt;
+  final String category;
+  final String disabilityType;
+  List<String> images;
+  List<String> imgInfos;
+  final int likes;
+  List<String> likesUser;
+  final int scraps;
+  List<String> scrapsUser;
+  
+  CommunityPostModel({
+      this.id,
+      required this.uid,
+      required this.nickname,
+      required this.title,
+      required this.content,
+      required this.createdAt,
+      required this.category,
+      required this.disabilityType,
+      required this.images,
+      required this.imgInfos,
+      required this.likes,
+      required this.scraps,
+      required this.likesUser,
+      required this.scrapsUser,
+  });
 
   // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
   // 이외는 uid = doc.data()!["uid"],
-  CommunityPostModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) //변환한다는 의미를 살린 이름 짓기
+  CommunityPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc})
       : id = doc.id,
         uid = doc.data()!['uid'],
-        title = doc.data()!['title'],
         nickname = doc.data()!['nickname'],
+        title = doc.data()!['title'],
         content = doc.data()!['content'],
-        datetime = doc.data()!['datetime'],
-        // ignore: prefer_null_aware_operators
+        createdAt = doc.data()!['createdAt'],
+        category = doc.data()!['category'],
+        disabilityType = doc.data()!['disabilityType'],
         images = doc.data()!['images'] == null
             ? null
             : doc.data()!['images'].cast<String>(),
         imgInfos = doc.data()!['imgInfos'] == null
             ? null
             : doc.data()!['imgInfos'].cast<String>(),
-        category = doc.data()!['category'],
-        type = doc.data()!['type'] == null
-            ? null
-            : doc.data()!['type'].cast<String>(),
         likes = doc.data()!['likes'],
-        // ignore: prefer_null_aware_operators
-        likesPeople = doc.data()!['likesPeople'] == null
+        likesUser = doc.data()!['likesUser'] == null
             ? null
-            : doc.data()!['likesPeople'].cast<String>(),
-        // ignore: prefer_null_aware_operators
-        scrapPeople = doc.data()!['scrapPeople'] == null
+            : doc.data()!['likesUser'].cast<String>(),
+        scraps = doc.data()!['scraps'],
+        scrapsUser = doc.data()!['scrapsUser'] == null
             ? null
-            : doc.data()!['scrapPeople'].cast<String>(),
-        keyword = doc.data()!['keyword'] == null
-            ? null
-            : doc.data()!['keyword'].cast<String>();
+            : doc.data()!['scrapsUser'].cast<String>();
 
-  Map<String, dynamic> toMap() { // 저장의 의미
+  Map<String, dynamic> convertToDocument() {
     return {
       'uid': uid,
-      'title': title,
       'nickname': nickname,
+      'title': title,
       'content': content,
-      'datetime': datetime,
+      'createdAt': createdAt,
+      'category': category,
+      'disabilityType': disabilityType,
       'images': images,
       'imgInfos': imgInfos,
-      'category': category,
-      'type': type,
       'likes': likes,
-      'likesPeople': likesPeople,
-      'scrapPeople': scrapPeople,
-      'keyword': keyword,
+      'likesUser': likesUser,
+      'scraps': scraps,
+      'scrapsUser': scrapsUser,
     };
   }
 }

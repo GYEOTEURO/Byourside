@@ -1,4 +1,4 @@
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +33,9 @@ class _ScrapButtonState extends State<ScrapButton> {
     return OutlinedButton.icon(
       onPressed: () {
         HapticFeedback.lightImpact(); // 약한 진동
-        post.scrapPeople!.contains(uid)
-            ? saveData.cancelScrap(collectionName, post.id!, uid)
-            : saveData.addScrap(collectionName, post.id!, uid);
+        post.scrapsUser!.contains(uid)
+            ? saveData.cancelLikeOrScrap(collectionName, post.id!, uid, 'scraps')
+            : saveData.addLikeOrScrap(collectionName, post.id!, uid, 'scraps');
       },
       style: ElevatedButton.styleFrom(
         fixedSize: Size(width * 0.38, height * 0.06),
@@ -45,7 +45,7 @@ class _ScrapButtonState extends State<ScrapButton> {
             color: Color.fromARGB(255, 64, 130, 75), width: 1.5),
         foregroundColor: const Color.fromARGB(255, 64, 130, 75),
       ),
-      icon: post.scrapPeople!.contains(uid)
+      icon: post.scrapsUser!.contains(uid)
           ? const Icon(Icons.star, semanticLabel: '스크랩 취소')
           : const Icon(Icons.star_outline, semanticLabel: '스크랩 추가'),
       label: const Text('스크랩',

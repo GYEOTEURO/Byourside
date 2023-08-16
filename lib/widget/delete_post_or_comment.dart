@@ -1,4 +1,4 @@
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../model/save_data.dart';
@@ -6,12 +6,15 @@ import '../model/save_data.dart';
 class DeletePostOrComment extends StatefulWidget {
   DeletePostOrComment(
       {super.key,
-      required this.collectionName,
+      this.collectionName = Null,
       required this.documentID,
+      this.category = Null,
       this.commentID = Null});
+
   final Color primaryColor = constants.mainColor;
-  final String collectionName;
+  var collectionName;
   final String documentID;
+  var category;
   var commentID;
 
   @override
@@ -68,8 +71,8 @@ class _DeletePostOrCommentState extends State<DeletePostOrComment> {
                                 if (widget.commentID == Null) {
                                   Navigator.pushNamedAndRemoveUntil(
                                       context, '/', (_) => false);
-                                  saveData.deletePost(
-                                      widget.collectionName, widget.documentID);
+                                  saveData.deleteCommunityPost(
+                                      widget.category, widget.documentID);
                                 } else {
                                   saveData.deleteComment(widget.collectionName,
                                       widget.documentID, widget.commentID);

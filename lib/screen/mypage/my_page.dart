@@ -47,7 +47,7 @@ class _Mypage extends State<Mypage> {
         semanticLabel: '스크랩한 커뮤니티 글 목록 화면으로 이동')
   ];
   final List<Widget> myConnectPage = <Widget>[
-    const MyCommunityPost(),
+    // const MyCommunityPost(),
     const MyScrapCommunityPost()
   ];
 

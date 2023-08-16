@@ -1,7 +1,7 @@
 import 'package:byourside/screen/community/community_add_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 
 class CommunityAddPostCategory extends StatefulWidget {
   const CommunityAddPostCategory({Key? key, required this.categories})

@@ -1,4 +1,4 @@
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +33,9 @@ class _LikesButtonState extends State<LikesButton> {
     return OutlinedButton.icon(
       onPressed: () {
         HapticFeedback.lightImpact(); // 약한 진동
-        post.likesPeople!.contains(uid)
-            ? saveData.cancelLike(collectionName, post.id!, uid)
-            : saveData.addLike(collectionName, post.id!, uid);
+        post.likesUser!.contains(uid)
+            ? saveData.cancelLikeOrScrap(collectionName, post.id!, uid, 'likes')
+            : saveData.addLikeOrScrap(collectionName, post.id!, uid, 'likes');
       },
       style: ElevatedButton.styleFrom(
         fixedSize: Size(width * 0.38, height * 0.06),
@@ -45,7 +45,7 @@ class _LikesButtonState extends State<LikesButton> {
             color: Color.fromARGB(255, 255, 45, 45), width: 1.5),
         foregroundColor: const Color.fromARGB(255, 255, 45, 45),
       ),
-      icon: post.likesPeople!.contains(uid)
+      icon: post.likesUser!.contains(uid)
           ? const Icon(Icons.favorite, semanticLabel: '좋아요 취소')
           : const Icon(Icons.favorite_outline, semanticLabel: '좋아요 추가'),
       label: Text('좋아요  ${post.likes}',

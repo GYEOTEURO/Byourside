@@ -5,7 +5,7 @@ class UserTypeButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onPressed;
 
-  const UserTypeButton({
+  const UserTypeButton({super.key, 
     required this.type,
     required this.isSelected,
     required this.onPressed,
@@ -29,7 +29,7 @@ class UserTypeSelection extends StatelessWidget {
   final String selectedType;
   final Function(String) onTypeSelected;
 
-  const UserTypeSelection({
+  const UserTypeSelection({super.key, 
     required this.selectedType,
     required this.onTypeSelected,
   });

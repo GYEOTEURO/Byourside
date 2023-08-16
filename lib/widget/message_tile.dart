@@ -83,7 +83,7 @@ class _MessageTileState extends State<MessageTile> {
                         const SizedBox(
                           width: 10,
                         ),
-                        BlockUser(nickname: widget.sender, collectionType: 'chat')
+                        BlockUser(blockUid: widget.sender, collectionType: 'chat')
                       ],
                     ),
               SizedBox(height: height * 0.01),
