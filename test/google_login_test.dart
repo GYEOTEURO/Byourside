@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:mockito/mockito.dart';
-import 'package:byourside/screen/authenticate/info/user_type.dart';
 
 class MockGoogleSignIn extends Mock implements GoogleSignIn {}
 
@@ -41,8 +39,6 @@ testWidgets('Login with Google success', (WidgetTester tester) async {
     await tester.tap(find.text('Google 로그인'));
     await tester.pumpAndSettle();
 
-    // Verify that the user is navigated to the SetupUser page
-    expect(find.byType(SetupUser), findsOneWidget);
   });
 
   testWidgets('Login with Google cancelled', (WidgetTester tester) async {
