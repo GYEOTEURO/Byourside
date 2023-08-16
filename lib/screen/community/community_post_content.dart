@@ -1,4 +1,7 @@
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/widget/block_user.dart';
 import 'package:byourside/widget/report.dart';
@@ -6,6 +9,7 @@ import 'package:byourside/widget/delete_post_or_comment.dart';
 import 'package:byourside/widget/image_slider.dart';
 import 'package:byourside/widget/likes_button.dart';
 import 'package:byourside/widget/scrap_button.dart';
+import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/load_data.dart';
@@ -23,19 +27,34 @@ class CommunityPostContent extends StatefulWidget {
 }
 
 class _CommunityPostContentState extends State<CommunityPostContent> {
-  final User? user = FirebaseAuth.instance.currentUser;
-  final SaveData saveData = SaveData();
-  final LoadData loadData = LoadData();
-
-  final List<String> _reportReasonList = constants.postReportReasonList;
-
   Widget _buildPostContent(String? collectionName, CommunityPostModel? post) {
-    List<String> datetime = post!.createdAt.toDate().toString().split(' ');
-    String date = datetime[0].replaceAll('-', '/');
-    String hour = datetime[1].split(':')[0];
-    String minute = datetime[1].split(':')[1];
-
-    return Column(children: [
+    return Column(
+      children: [
+       Align(
+          alignment: Alignment.centerLeft,
+          child: SelectionArea(
+            child: Text(
+              post!.category,
+              style: TextStyle(
+                fontFamily: fonts.font,
+                color: colors.primaryColor,
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
+              ),
+            )
+          ),
+      ),
+      Row(children: [
+        customIcons.profile,
+        Text(
+          post.nickname,
+          style: TextStyle(
+            fontFamily: fonts.font,
+            color: colors.textColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+          ))
+      ]),
       Align(
           alignment: Alignment.centerLeft,
           child: SelectionArea(
@@ -43,39 +62,11 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
             ' ${post.title}',
             semanticsLabel: ' ${post.title}',
             style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: constants.font),
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                fontFamily: fonts.font,
+                color: colors.textColor),
           ))),
-      Row(children: [
-        Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '${post.nickname} | $date $hour:$minute',
-              semanticsLabel: "${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일 $hour시 $minute분",
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-                fontFamily: constants.font,
-                fontWeight: FontWeight.w600,
-              ),
-            )),
-        if (user?.uid == post.uid)
-          DeletePostOrComment(
-              collectionName: 'communityPost',
-              documentID: widget.post.id!) // 공통 모듈 폴더
-        else
-          Row(children: [
-            Report(reportReasonList: _reportReasonList, collectionType: 'post', id: post.id!),
-            Container(
-                margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: BlockUser(
-                    nickname: post.nickname,
-                    collectionType: 'post')), //이름 명사로 짓기
-          ])
-      ]),
-      const Divider(thickness: 1, height: 1, color: Colors.black),
-      //if (post.images!.isNotEmpty) ImageSlider(post: post),
       Container(
           padding: const EdgeInsets.fromLTRB(0, 25, 0, 20),
           alignment: Alignment.centerLeft,
@@ -84,18 +75,32 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
             post.content,
             semanticsLabel: post.content,
             style: const TextStyle(
-              fontSize: 16,
-              fontFamily: constants.font,
-              fontWeight: FontWeight.w600,
+              fontSize: 13,
+              fontFamily: fonts.font,
+              fontWeight: FontWeight.w400,
             ),
           ))),
-      //Divider(thickness: 1, height: 0.5, color: Colors.black),
+       if (post.images.isNotEmpty) ImageSlider(images: post.images, imgInfos: post.imgInfos),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        // LikesButton(
-        //     collectionName: collectionName!, post: post, uid: user!.uid),
-        // ScrapButton(collectionName: collectionName, post: post, uid: user!.uid),
+       Text(
+        '좋아요'
+      ),
+      customIcons.communityPostListLikes,
+      Text(
+        '${post.likes}'
+      ),
+      Text(
+        '스크랩'
+      ),
+      customIcons.communityPostListScraps,
+      Text(
+        '${post.scraps}'
+      ),
+      TimeConvertor(createdAt: post.createdAt)
       ]),
-    ]);
+      Divider(thickness: 1, height: 0.5, color: Colors.black),
+   
+    ]);   
   }
 
   @override
