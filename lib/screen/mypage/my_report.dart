@@ -1,4 +1,4 @@
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/save_data.dart';
@@ -14,7 +14,7 @@ class MyReport extends StatefulWidget {
 
 class _MyReportState extends State<MyReport> {
   final SaveData saveData = SaveData();
-  final List<String> _decList = [
+  final List<String> _reportReasonList = [
     '불법 정보를 게시했습니다.',
     '음란물을 게시했습니다.',
     '스팸홍보/도배글을 게시했습니다.',
@@ -29,7 +29,7 @@ class _MyReportState extends State<MyReport> {
 
   @override
   Widget build(BuildContext context) {
-    String declaration = _decList[0];
+    String reportReason = _reportReasonList[0];
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +96,7 @@ class _MyReportState extends State<MyReport> {
                         ))),
                 StatefulBuilder(builder: (context, setState) {
                   return Column(
-                      children: _decList
+                      children: _reportReasonList
                           .map((e) => RadioListTile(
                               title: Text(e,
                                   semanticsLabel: e,
@@ -106,11 +106,11 @@ class _MyReportState extends State<MyReport> {
                                     fontWeight: FontWeight.w600,
                                   )),
                               value: e,
-                              groupValue: declaration,
+                              groupValue: reportReason,
                               activeColor: const Color(0xFF045558),
                               onChanged: (String? value) {
                                 setState(() {
-                                  declaration = value!;
+                                  reportReason = value!;
                                 });
                               }))
                           .toList());
@@ -122,7 +122,7 @@ class _MyReportState extends State<MyReport> {
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             if (_formkey.currentState!.validate()) {
-              saveData.declaration('user', declaration, _nickname.text);
+              saveData.report('user', reportReason, _nickname.text);
               showDialog(
                   context: context,
                   builder: (context) {

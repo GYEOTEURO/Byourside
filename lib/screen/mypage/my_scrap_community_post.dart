@@ -1,39 +1,31 @@
-import 'package:byourside/constants.dart' as constants;
-import 'package:byourside/model/post_list.dart';
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/main.dart';
 import 'package:flutter/services.dart';
 import '../../model/load_data.dart';
 
-class MyOndoPost extends StatefulWidget {
-  const MyOndoPost({Key? key}) : super(key: key);
-  final Color primaryColor = constants.mainColor;
-  final String collectionName = 'ondoPost';
-  final String title = '내가 쓴 마음온도글';
+class MyScrapCommunityPost extends StatefulWidget {
+  const MyScrapCommunityPost({Key? key}) : super(key: key);
+  final String collectionName = 'communityPost';
+  final String title = '스크랩한 커뮤니티글';
 
   @override
-  State<MyOndoPost> createState() => _MyOndoPostState();
+  State<MyScrapCommunityPost> createState() => _MyScrapCommunityPostState();
 }
 
-class _MyOndoPostState extends State<MyOndoPost> {
+class _MyScrapCommunityPostState extends State<MyScrapCommunityPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
-  Widget _buildListItem(String collectionName, PostListModel? post) {
+  Widget _buildListItem(String collectionName, CommunityPostModel? post) {
     String date =
-        post!.datetime!.toDate().toString().split(' ')[0].replaceAll('-', '/');
+        post!.createdAt.toDate().toString().split(' ')[0].replaceAll('-', '/');
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
-    String? type;
-    if (post.type!.length == 1) {
-      type = post.type![0];
-    } else if (post.type!.length > 1) {
-      post.type!.sort();
-      type = '${post.type![0]}/${post.type![1]}';
-    }
 
     return SizedBox(
         height: height / 7,
@@ -47,11 +39,8 @@ class _MyOndoPostState extends State<MyOndoPost> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OndoPost(
-                                // Post 위젯에 documentID를 인자로 넘김
-                                collectionName: widget.collectionName,
-                                documentID: post.id!,
-                                primaryColor: constants.mainColor,
+                          builder: (context) => CommunityPost(
+                                post: post,
                               )));
                 },
                 child: Container(
@@ -66,31 +55,26 @@ class _MyOndoPostState extends State<MyOndoPost> {
                         children: [
                           Container(
                               margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
-                              child: Text(post.title!,
+                              child: Text(post.title,
                                   semanticsLabel: post.title,
                                   overflow: TextOverflow.fade,
                                   maxLines: 1,
                                   softWrap: false,
                                   style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 18,
+                                      fontSize: fonts.titlePt,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: constants.font))),
+                                      fontFamily: fonts.font))),
                           Text(
-                            post.type!.isEmpty
-                                ? '$date | ${post.category!}'
-                                : '$date | ${post.category!} | $type',
-                            semanticsLabel: post.type!.isEmpty
-                                ? '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}'
-                                : '${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}  $type',
+                            '${post.nickname} | $date | ${post.category}',
+                            semanticsLabel:'${post.nickname}  ${date.split('/')[0]}년 ${date.split('/')[1]}월 ${date.split('/')[2]}일  ${post.category!}',
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: const TextStyle(
                                 color: Colors.black,
-                                fontFamily: constants.font,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
+                                fontFamily: fonts.font,
+                                fontSize: fonts.bodyPt),
                           ),
                         ],
                       )),
@@ -115,8 +99,8 @@ class _MyOndoPostState extends State<MyOndoPost> {
         title: Text(widget.title,
             semanticsLabel: widget.title,
             style: const TextStyle(
-                fontFamily: constants.font, fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF045558),
+                fontFamily: fonts.font, fontWeight: FontWeight.bold)),
+        backgroundColor: colors.bgrColor,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back,
                 semanticLabel: '뒤로 가기', color: Colors.white),
@@ -124,26 +108,26 @@ class _MyOndoPostState extends State<MyOndoPost> {
               Navigator.pop(context);
             }),
       ),
-      body: StreamBuilder<List<PostListModel>>(
-          stream: loadData.readCreatePost(
+      body: StreamBuilder<List<CommunityPostModel>>(
+          stream: loadData.readScrapPost(
               collectionName: widget.collectionName, uid: user!.uid),
-          builder: (context, AsyncSnapshot<List<PostListModel>> snapshot) {
+          builder: (context, AsyncSnapshot<List<CommunityPostModel>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                   itemCount: snapshot.data!.length,
                   shrinkWrap: true,
                   itemBuilder: (_, index) {
-                    PostListModel post = snapshot.data![index];
+                    CommunityPostModel post = snapshot.data![index];
                     return _buildListItem(widget.collectionName, post);
                   });
             } else {
               return const SelectionArea(
                   child: Center(
-                      child: Text('게시글 목록을 가져오는 중...',
-                          semanticsLabel: '게시글 목록을 가져오는 중...',
+                      child: Text('스크랩 목록을 가져오는 중...',
+                          semanticsLabel: '스크랩 목록을 가져오는 중...',
                           style: TextStyle(
-                              fontFamily: constants.font,
-                              fontWeight: FontWeight.w600))));
+                              fontFamily: fonts.font,
+                              fontWeight: FontWeight.bold))));
             }
           }),
     );

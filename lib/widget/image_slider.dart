@@ -1,13 +1,14 @@
-import 'package:byourside/constants.dart' as constants;
-import 'package:byourside/model/ondo_post.dart';
+import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/model/community_post.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class ImageSlider extends StatefulWidget {
-  const ImageSlider({super.key, required this.post});
+  ImageSlider({super.key, required this.images, required this.imgInfos});
 
-  final OndoPostModel post;
+  List<String> images;
+  List<String> imgInfos;
 
   @override
   State<ImageSlider> createState() => _ImageSliderState();
@@ -18,7 +19,6 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    OndoPostModel post = widget.post;
 
     double width = MediaQuery.of(context).size.width;
 
@@ -26,12 +26,12 @@ class _ImageSliderState extends State<ImageSlider> {
       Container(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
           child: CarouselSlider(
-              items: List.generate(post.images!.length, (index) {
+              items: List.generate(widget.images.length, (index) {
                 return SizedBox(
                     width: width * 0.7,
                     child: Semantics(
-                        label: post.imgInfos![index],
-                        child: Image.network(post.images![index])));
+                        label: widget.imgInfos[index],
+                        child: Image.network(widget.images![index])));
               }),
               options: CarouselOptions(
                   height: MediaQuery.of(context).size.height * 0.5,
@@ -49,7 +49,7 @@ class _ImageSliderState extends State<ImageSlider> {
       Semantics(
         label: '현재 보이는 사진 순서 표시',
         child: CarouselIndicator(
-          count: post.images!.length,
+          count: widget.images.length,
           index: _current,
           color: Colors.black26,
           activeColor: constants.mainColor,

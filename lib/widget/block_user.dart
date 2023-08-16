@@ -1,4 +1,4 @@
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,9 +6,9 @@ import '../model/save_data.dart';
 
 class BlockUser extends StatefulWidget {
   const BlockUser(
-      {super.key, required this.nickname, required this.collectionType});
+      {super.key, required this.blockUid, required this.collectionType});
   final Color primaryColor = constants.mainColor;
-  final String nickname;
+  final String blockUid;
   final String collectionType;
 
   @override
@@ -66,7 +66,7 @@ class _BlockUserState extends State<BlockUser> {
                                 } else {
                                   Navigator.pop(context);
                                 }
-                                saveData.addBlock(user!.uid, widget.nickname);
+                                saveData.addBlock(user!.uid, widget.blockUid);
                               },
                               child: const Text('차단',
                                   semanticsLabel: '차단',
