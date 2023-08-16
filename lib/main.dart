@@ -1,11 +1,9 @@
-import 'package:byourside/screen/authenticate/user.dart';
-import 'package:byourside/screen/authenticate/user_paricipator.dart';
-import 'package:byourside/screen/authenticate/user_protector.dart';
-import 'package:byourside/screen/authenticate/user_someoneElse.dart';
-import 'package:byourside/screen/authenticate/verify_email.dart';
-import 'package:byourside/screen/authenticate/verify_phone.dart';
-import 'package:byourside/screen/authenticate/login_screen.dart';
+import 'package:byourside/model/auth_controller.dart';
+import 'package:byourside/screen/authenticate/info/user_setup.dart';
+import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
@@ -27,8 +25,6 @@ Future<bool> getPermission() async {
     Permission.notification
   ].request();
 
-  print('per1 : $permissions');
-
   if (permissions.values.every((element) => element.isGranted)) {
     return Future.value(true);
   } else {
@@ -43,7 +39,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void initializeNotification() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -64,24 +60,30 @@ void initializeNotification() async {
 
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
+
   WidgetsFlutterBinding.ensureInitialized();
   getPermission();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+    ).then((value) => Get.put(AuthController()));
+
+  FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   initializeNotification();
   FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.instance;
-  // firebaseAppCheck.installAppCheckProviderFactory(
-  //     PlayIntegrityAppCheckProviderFactory.getInstance());
+
   await firebaseAppCheck.activate(
     webRecaptchaSiteKey: dotenv.env['WEB_RECAPTCHA_SITE_KEY'],
-    // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
-    // your preferred provider. Choose from:
-    // 1. debug provider
-    // 2. safety net provider
-    // 3. play integrity provider
     androidProvider: AndroidProvider.playIntegrity,
   );
+  
   runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: constants.font,
@@ -105,7 +107,7 @@ class _MyAppState extends State<MyApp> {
   var messageString = '';
 
   void getDeviceToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
+    var token = await FirebaseMessaging.instance.getToken();
     print('디바이스 토큰: $token');
   }
 
@@ -151,15 +153,9 @@ class _MyAppState extends State<MyApp> {
             title: '곁',
             initialRoute: '/login',
             routes: {
-              '/login': (context) =>
-                  const LoginScreen(primaryColor: primaryColor),
-              '/': (context) => const BottomNavBar(),
-              '/phone': (context) => const VerifyPhone(),
-              '/email': (context) => const VerifyEmail(),
-              '/user': (context) => const SetupUser(),
-              '/user_protector': (context) => const protector(),
-              '/user_participator': (context) => const participator(),
-              '/user_someoneElse': (context) => const someoneElse(),
+              '/login': (context) => const SocialLogin(),
+              '/bottom_nav': (context) => const BottomNavBar(),
+              '/user': (context) => const UserSetUp(),
             },
           ),
         ),

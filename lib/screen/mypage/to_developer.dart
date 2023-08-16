@@ -28,9 +28,9 @@ class _ToDeveloperState extends State<ToDeveloper> {
 
   void sendMsg2dev(String? userName, String messages) async {
     FirebaseFirestore.instance.collection('msg2dev').add({
-      "uid": userName,
-      "content": messages,
-      "datetime": Timestamp.now(),
+      'uid': userName,
+      'content': messages,
+      'datetime': Timestamp.now(),
     });
   }
 
@@ -39,7 +39,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "개발자에게 문의하기",
+          '개발자에게 문의하기',
           semanticsLabel: '개발자에게 문의하기',
           style:
               TextStyle(fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
@@ -78,7 +78,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
                               fontFamily: 'NanumGothic')),
                       const SizedBox(height: 30),
                       Semantics(
-                          label: "문의할 사항을 남겨주세요",
+                          label: '문의할 사항을 남겨주세요',
                           child: TextFormField(
                               autofocus: true,
                               controller: _message,
@@ -89,7 +89,7 @@ class _ToDeveloperState extends State<ToDeveloper> {
                               maxLines: 8,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "문의할 사항은 비어있을 수 없습니다";
+                                  return '문의할 사항은 비어있을 수 없습니다';
                                 }
                                 return null;
                               },
