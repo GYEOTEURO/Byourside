@@ -1,10 +1,10 @@
 import 'package:byourside/screen/community/post_list.dart';
-import 'package:byourside/screen/community/save_community_data.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
-import 'package:byourside/screen/community/controller/disability_type_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -14,27 +14,33 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 0;
-  // static TextStyle optionStyle =
-  //   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  int _selectedIndex = 2;
   static final List<Widget> _widgetOptions = <Widget>[
+    Container(),
     const CommunityPostList(),
-    const Mypage(),
+    Container(),
+    Container()
   ];
 
-  List<Icon> bottomIcons = [
-    const Icon(Icons.groups_rounded, semanticLabel: constants.communityTitle),
-    const Icon(Icons.account_circle_outlined, semanticLabel: '마이페이지')
+  List<SvgPicture> bottomIcons = [
+    customIcons.autoInformationBgr,
+    customIcons.communityBgr,
+    customIcons.home,
+    customIcons.myPageBgr,
   ];
 
-  List<Icon> bottomUnselectedIcons = [
-    const Icon(Icons.groups_outlined, semanticLabel: constants.communityTitle),
-    const Icon(Icons.account_circle_outlined, semanticLabel: '마이페이지')
+  List<SvgPicture> bottomUnselectedIcons = [
+    customIcons.autoInformationBgr,
+    customIcons.communityBgr,
+    customIcons.homeBgr,
+    customIcons.myPageBgr,
   ];
 
-  List<Icon> bottomSelectedIcons = [
-    const Icon(Icons.groups_rounded, semanticLabel: constants.communityTitle),
-    const Icon(Icons.account_circle, semanticLabel: '마이페이지')
+  List<SvgPicture> bottomSelectedIcons = [
+    customIcons.autoInformation,
+    customIcons.community,
+    customIcons.home,
+    customIcons.myPage,
   ];
 
   void _onItemTapped(int index) {
@@ -59,20 +65,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        unselectedItemColor: Colors.black38,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: bottomIcons[0],
-            label: '커뮤니티',
+            label: '정보',
           ),
           BottomNavigationBarItem(
             icon: bottomIcons[1],
-            label: '마이페이지',
+            label: '소통',
+          ),
+          BottomNavigationBarItem(
+            icon: bottomIcons[2],
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: bottomIcons[3],
+            label: '마이',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: constants.mainColor,
+        selectedItemColor: colors.textColor,
         onTap: _onItemTapped,
       ),
     );
