@@ -1,8 +1,6 @@
-<h3 align='center'>Byourside</h3>
+<h1 align='center'>Beeside</h1>
 
-<h1 align='center'>곁</h1>
-
-<p align='center'> 발달ㆍ뇌병변 장애 아동의 보호자를 위한 커뮤니티 어플리케이션 </p>
+<p align='center'> 발달장애와 뇌병변장애 아동의 보호자를 위한 맞춤형 정보 제공 및 커뮤니티 서비스 </p>
 
 <div align='center'>
 
@@ -27,7 +25,7 @@
         </tr>
     </tbody>
 </table>
-
+<p>이 앱은 현대오토에버와 서울사회복지공동모금회의 지원으로 제작되었습니다.</p>
 </div>
 
 &nbsp; 
@@ -36,7 +34,10 @@
 
 
 ## Architecture
+![시스템 아키텍처](https://github.com/GYEOTEURO/Byourside/assets/66212424/6f7d65e9-cca8-4583-a286-1c6ed53d3b0d)
 
+## Flowchart
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/022bf9a5-1d00-411d-9fea-7548d9975739)
 
 
 ### Environment
