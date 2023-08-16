@@ -9,7 +9,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/save_data.dart';
 import '../../model/community_post.dart';
-import 'package:byourside/constants.dart' as constants;
+import 'package:byourside/constants/constants.dart' as constants;
 
 class CommunityAddPost extends StatefulWidget {
   const CommunityAddPost();
@@ -431,21 +431,21 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
               // if가 한 줄이라도 중괄호를 쓰자 ! (추후에 문제가 발생할 수 있음)-> lints 규칙에 있는 거 사용 !
               if (_categories.category == '자유게시판') _categories.category = '자유';
 
-              CommunityPostModel postData = CommunityPostModel(
-                  uid: user!.uid,
-                  nickname: user!.displayName,
-                  title: _title.text,
-                  content: _content.text,
-                  category: _categories.category,
-                  type: _categories.type,
-                  datetime: Timestamp.now(),
-                  images: urls,
-                  imgInfos: imgInfos,
-                  likes: 0,
-                  likesPeople: [],
-                  scrapPeople: [],
-                  keyword: _title.text.split(' '));
-              saveData.addCommunityPost('communityPost', postData);
+              // CommunityPostModel postData = CommunityPostModel(
+              //     uid: user!.uid,
+              //     nickname: user!.displayName,
+              //     title: _title.text,
+              //     content: _content.text,
+              //     category: _categories.category,
+              //     type: _categories.type,
+              //     datetime: Timestamp.now(),
+              //     images: urls,
+              //     imgInfos: imgInfos,
+              //     likes: 0,
+              //     likesPeople: [],
+              //     scrapPeople: [],
+              //     keyword: _title.text.split(' '));
+              // saveData.addCommunityPost('communityPost', postData);
             }
           }
         },

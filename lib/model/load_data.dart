@@ -13,7 +13,7 @@ class LoadData{
   }
 
   Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String disabilityType}) {
-    if(category == null) {
+    if(category == '전체') {
       return firestore.collectionGroup('posts')
       .where('disabilityType', whereIn: [disabilityType, '전체'])
       .orderBy('createdAt', descending: true)
@@ -44,6 +44,8 @@ class LoadData{
           .snapshots()
           .map((snapshot) =>
               snapshot.docs.map((doc) => CommentModel.fromDocument(doc: doc)).toList());
+
+  readScrapPost({required String collectionName, required String uid}) {}
 
   // // 검색을 위한 쿼리 비교
   // Stream<List<CommunityPostModel>> readSearchDocs(String query,

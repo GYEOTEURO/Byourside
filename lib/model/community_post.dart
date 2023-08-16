@@ -9,12 +9,12 @@ class CommunityPostModel {
   final Timestamp createdAt;
   final String category;
   final String disabilityType;
-  List<String>? images;
-  List<String>? imgInfos;
+  List<String> images;
+  List<String> imgInfos;
   final int likes;
-  List<String>? likesUser;
+  List<String> likesUser;
   final int scraps;
-  List<String>? scrapsUser;
+  List<String> scrapsUser;
   
   CommunityPostModel({
       this.id,
@@ -25,8 +25,8 @@ class CommunityPostModel {
       required this.createdAt,
       required this.category,
       required this.disabilityType,
-      this.images,
-      this.imgInfos,
+      required this.images,
+      required this.imgInfos,
       required this.likes,
       required this.scraps,
       required this.likesUser,
