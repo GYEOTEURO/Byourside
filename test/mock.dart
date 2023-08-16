@@ -4,11 +4,14 @@
 
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 typedef Callback = void Function(MethodCall call);
 
-void setupFirebaseAuthMocks([Callback? customHandlers]) {
+Future<void> setupFirebaseAuthMocks([Callback? customHandlers]) async {
+  await dotenv.load(fileName: 'assets/config/.env');
+ 
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setupFirebaseCoreMocks();
