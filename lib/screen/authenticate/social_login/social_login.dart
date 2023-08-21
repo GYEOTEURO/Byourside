@@ -1,6 +1,6 @@
 
 import 'package:byourside/model/auth_controller.dart';
-import 'package:byourside/widget/social_login_button.dart';
+import 'package:byourside/widget/authenticate/social_login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

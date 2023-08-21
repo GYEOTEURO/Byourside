@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import 'package:byourside/model/google_sign_in_api.dart';
-import 'package:byourside/screen/authenticate/info/user_setup.dart';
+import 'package:byourside/screen/authenticate/info/setup_user.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();

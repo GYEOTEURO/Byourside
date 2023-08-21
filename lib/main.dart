@@ -1,5 +1,5 @@
 import 'package:byourside/model/auth_controller.dart';
-import 'package:byourside/screen/authenticate/info/user_setup.dart';
+import 'package:byourside/screen/authenticate/info/setup_user.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
