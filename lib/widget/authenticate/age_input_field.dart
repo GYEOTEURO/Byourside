@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AgeInputField extends StatefulWidget {
+class AgeSection extends StatefulWidget {
   final TextEditingController controller;
 
-  const AgeInputField({Key? key, required this.controller}) : super(key: key);
+  const AgeSection({Key? key, required this.controller}) : super(key: key);
 
   @override
-  _AgeInputFieldState createState() => _AgeInputFieldState();
+  _AgeSectionState createState() => _AgeSectionState();
 }
 
-class _AgeInputFieldState extends State<AgeInputField> {
+class _AgeSectionState extends State<AgeSection> {
   String? _errorText;
 
   @override
