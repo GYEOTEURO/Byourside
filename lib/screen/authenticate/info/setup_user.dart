@@ -1,4 +1,5 @@
 import 'package:byourside/model/authenticate/nickname_controller.dart';
+import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/age_section.dart';
@@ -7,7 +8,6 @@ import 'package:byourside/widget/authenticate/location_section.dart';
 import 'package:byourside/widget/authenticate/nickname_section.dart';
 import 'package:byourside/widget/authenticate/purpose_select.dart';
 import 'package:byourside/widget/authenticate/user_type_button.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +38,6 @@ class _SetupUserState extends State<SetupUser> {
     setState(() {
       _selectedUserType = userType;
     });
-    // 선택된 사용자 유형에 대한 로직
   }
 
   void _handleLocationSelected(String selectedArea, String selectedDistrict) {
@@ -52,75 +51,11 @@ class _SetupUserState extends State<SetupUser> {
     });
   }
 
-
-  Widget buildDisabilityType({required String initialType, required void Function(String type) onChanged}) {
-    return DisabilityType(
-      initialType: initialType,
-      onChanged: onChanged,
-    );
-  }
-
   void _handleDisabilityTypeSelected(String type) {
     setState(() {
       _selectedDisabilityType = type;
     });
   }
-
-    void storeSelfInfo(
-    String? birthYear,
-    String? selectedType,
-    List<Map>? location,
-    String? nickname,
-    String? registrationPurpose,
-    String? userType,
-  ) async {
-    FirebaseFirestore.instance.collection('userInfo').doc(user!.uid).set({
-      'birthYear': birthYear,
-      'blockedUsers': [],
-      'disabilityType': selectedType,
-      'location': location, 
-      'nickname': nickname,
-      'registrationPurpose': registrationPurpose,
-      'userType': userType,
-    });
-
-  }
-
-  Widget buildCompleteButton(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: ElevatedButton(
-        onPressed: () async {
-          HapticFeedback.lightImpact(); // 약한 진동
-            if (_validateInputs()) { // 입력 값 유효성 검사
-            storeSelfInfo(
-              _birthYear.text,
-              _selectedDisabilityType,
-              location,
-              _nicknameController.controller.text,
-              _selectedPurpose,
-              _selectedUserType,
-            );
-          }
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-          textStyle: const TextStyle(
-            fontSize: 17,
-            fontFamily: 'NanumGothic',
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        child: const Text(
-          '완료',
-          semanticsLabel: '완료',
-        ),
-      ),
-    );
-  }
-  
-  // TODO: 조건 추가 필요
 
   bool _validateInputs() {
     if (_nicknameController.controller.text.isEmpty) {
@@ -173,6 +108,48 @@ class _SetupUserState extends State<SetupUser> {
     );
   }
 
+  void _onCompleteButtonPressed() async {
+    HapticFeedback.lightImpact(); // 약한 진동
+    if (_validateInputs()) {
+      StoreUserData.storeUserInfo(
+        birthYear: _birthYear.text,
+        selectedType: _selectedDisabilityType,
+        location: location,
+        nickname: _nicknameController.controller.text,
+        registrationPurpose: _selectedPurpose,
+        userType: _selectedUserType,
+      );
+    }
+  }
+
+  Widget _buildButtonDesign() {
+    return ElevatedButton(
+      onPressed: _onCompleteButtonPressed,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+        textStyle: const TextStyle(
+          fontSize: 17,
+          fontFamily: 'NanumGothic',
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      child: const Text(
+        '완료',
+        semanticsLabel: '완료',
+      ),
+    );
+  }
+
+  Widget buildCompleteButton(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: _buildButtonDesign(),
+    );
+  }
+
+  
+
   @override
   void initState() {
     super.initState();
@@ -201,7 +178,7 @@ class _SetupUserState extends State<SetupUser> {
                     onTypeSelected: _handleUserTypeSelected,
                   ),
                   const SizedBox(height: 20),
-                  buildDisabilityType(
+                   DisabilityType(
                     initialType: _selectedDisabilityType,
                     onChanged: _handleDisabilityTypeSelected,
                   ),
