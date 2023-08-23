@@ -113,14 +113,6 @@ class _SetupUserState extends State<SetupUser> {
       ),
     );
   }
-
-  bool validateDisabilityType(String type) {
-    return type.isNotEmpty; // 장애 유형이 선택되었는지 검사
-  }
-
-  bool validatePurpose(String purpose) {
-    return purpose.isNotEmpty; // 목적이 선택되었는지 검사
-  }
   
   // TODO: 조건 추가 필요
 
@@ -136,12 +128,20 @@ class _SetupUserState extends State<SetupUser> {
       _showErrorDialog('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.');
       return false;
     }
-    if (!validateDisabilityType(_selectedDisabilityType)) {
-      _showErrorDialog('올바른 장애 유형을 선택하세요.');
+    if (_selectedUserType.isEmpty) {
+      _showErrorDialog('사용자 유형을 선택하세요.');
       return false;
     }
-    if (!validatePurpose(_selectedPurpose)) {
-      _showErrorDialog('목적을 선택하세요.');
+    if (_selectedDisabilityType.isEmpty) {
+      _showErrorDialog('장애 유형을 선택하세요.');
+      return false;
+    }
+    if (_birthYear.text.isEmpty) {
+      _showErrorDialog('나이를 입력하세요');
+      return false;
+    }
+    if (_selectedPurpose.isEmpty) {
+      _showErrorDialog('어플 사용 목적을 선택하세요.');
       return false;
     }
     return true;

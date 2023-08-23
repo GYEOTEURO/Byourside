@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AgeSection extends StatefulWidget {
   final TextEditingController controller;
@@ -11,21 +12,6 @@ class AgeSection extends StatefulWidget {
 
 class _AgeSectionState extends State<AgeSection> {
   String? _errorText;
-  
-  String? validateBirthYear(String value) {
-      if (value.isEmpty) {
-        return '나이를 입력하세요.';
-      }
-      if (!isNumeric(value)) {
-        return '숫자만 입력하세요.';
-      }
-      // 필요한 추가 유효성 검사를 여기에 추가할 수 있습니다.
-      return null; // 유효성 검사를 통과하면 null 반환
-    }
-
-  bool isNumeric(String s) {
-    return double.tryParse(s) != null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +35,13 @@ class _AgeSectionState extends State<AgeSection> {
                 hint: '(예: 1990)',
                 child: TextFormField(
                   controller: widget.controller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: '1990',
-                    errorText: _errorText,
                   ),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // 숫자만 입력 가능
+                  ],
                   keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    setState(() {
-                      _errorText = validateBirthYear(value);
-                    });
-                  },
                 ),
               ),
             ),
