@@ -1,5 +1,4 @@
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
-import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +31,10 @@ class AuthController extends GetxController {
       bool isUserSetUp = await checkIfUserSetUp(user.uid);
 
       if (isUserSetUp) {
-        Get.offAll(() => const BottomNavBar());
+        Get.offAll(() => const SetupUser());
+        // Get.offAll(() => const BottomNavBar());
       } else {
-        Get.offAll(() => const UserSetUp());
+        Get.offAll(() => const SetupUser());
       }
     }
   }
