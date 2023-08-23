@@ -1,15 +1,17 @@
 import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/model/nickname_controller.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
-import 'package:byourside/widget/authenticate/age_input_field.dart';
+import 'package:byourside/widget/authenticate/age_section.dart';
 import 'package:byourside/widget/authenticate/disability_type_button.dart';
-import 'package:byourside/widget/authenticate/nickname_widgets.dart';
+import 'package:byourside/widget/authenticate/nickname_section.dart';
 import 'package:byourside/widget/authenticate/purpose_select.dart';
 import 'package:byourside/widget/authenticate/user_type_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 
 final TextEditingController _nickname = TextEditingController();
@@ -24,9 +26,9 @@ class SetupUser extends StatefulWidget {
 }
 
 class _SetupUserState extends State<SetupUser> {
-  bool nickNameExist = false;
   // TODO: 닉네임 중복확인된 경우에만 DB에 저장시켜야함
-  bool isNicknameChecked = false;
+  final NicknameController _nicknameController = Get.find<NicknameController>();
+
   bool isUserDataStored = false;
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
@@ -121,9 +123,17 @@ class _SetupUserState extends State<SetupUser> {
   }
   
   // TODO: 조건 추가 필요
+
   bool _validateInputs() {
-    if (_nickname.text.isEmpty) {
+    if (_nicknameController.controller.text.isEmpty) {
       _showErrorDialog('닉네임을 입력하세요.');
+      return false;
+    }
+    if (!_nicknameController.isNicknameChecked.value) {
+      _showErrorDialog('닉네임 중복을 확인하세요.');
+      return false;
+    } else if (_nicknameController.nickNameExist.value) {
+      _showErrorDialog('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.');
       return false;
     }
     if (!validateDisabilityType(_selectedDisabilityType)) {
@@ -134,8 +144,7 @@ class _SetupUserState extends State<SetupUser> {
       _showErrorDialog('목적을 선택하세요.');
       return false;
     }
-    
-    return true; 
+    return true;
   }
 
   void _showErrorDialog(String message) {
@@ -175,7 +184,7 @@ class _SetupUserState extends State<SetupUser> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-                  const NicknameSection(controller: _nickname),  
+                  NicknameSection(),  
                   const SizedBox(height: 20),
                   UserTypeSelection(
                     selectedType: _selectedUserType,
