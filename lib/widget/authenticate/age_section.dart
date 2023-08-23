@@ -7,11 +7,10 @@ class AgeSection extends StatefulWidget {
   const AgeSection({Key? key, required this.controller}) : super(key: key);
 
   @override
-  _AgeSectionState createState() => _AgeSectionState();
+  AgeSectionState createState() => AgeSectionState();
 }
 
-class _AgeSectionState extends State<AgeSection> {
-  String? _errorText;
+class AgeSectionState extends State<AgeSection> {
 
   @override
   Widget build(BuildContext context) {

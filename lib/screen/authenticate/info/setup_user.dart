@@ -4,6 +4,7 @@ import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/age_section.dart';
 import 'package:byourside/widget/authenticate/disability_type_button.dart';
+import 'package:byourside/widget/authenticate/location_section.dart';
 import 'package:byourside/widget/authenticate/nickname_section.dart';
 import 'package:byourside/widget/authenticate/purpose_select.dart';
 import 'package:byourside/widget/authenticate/user_type_button.dart';
@@ -14,9 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 
-final TextEditingController _nickname = TextEditingController();
 final TextEditingController _birthYear = TextEditingController();
-
 
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);
@@ -26,9 +25,8 @@ class SetupUser extends StatefulWidget {
 }
 
 class _SetupUserState extends State<SetupUser> {
-  // TODO: 닉네임 중복확인된 경우에만 DB에 저장시켜야함
   final NicknameController _nicknameController = Get.find<NicknameController>();
-
+  List<Map> location = []; 
   bool isUserDataStored = false;
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
@@ -43,6 +41,18 @@ class _SetupUserState extends State<SetupUser> {
     });
     // 선택된 사용자 유형에 대한 로직
   }
+
+  void _handleLocationSelected(String selectedArea, String selectedDistrict) {
+    Map<String, String> locationInfo = {
+      'area': selectedArea,
+      'district': selectedDistrict,
+    };
+
+    setState(() {
+      location.add(locationInfo); // 선택한 위치 정보를 location 리스트에 추가
+    });
+  }
+
 
   Widget buildDisabilityType({required String initialType, required void Function(String type) onChanged}) {
     return DisabilityType(
@@ -60,7 +70,7 @@ class _SetupUserState extends State<SetupUser> {
     void storeSelfInfo(
     String? birthYear,
     String? selectedType,
-    // List<Map>? location,
+    List<Map>? location,
     String? nickname,
     String? registrationPurpose,
     String? userType,
@@ -69,8 +79,7 @@ class _SetupUserState extends State<SetupUser> {
       'birthYear': birthYear,
       'blockedUsers': [],
       'disabilityType': selectedType,
-      // TODO: 위치 해결 필요
-      'location': [], 
+      'location': location, 
       'nickname': nickname,
       'registrationPurpose': registrationPurpose,
       'userType': userType,
@@ -92,7 +101,8 @@ class _SetupUserState extends State<SetupUser> {
             storeSelfInfo(
               _birthYear.text,
               _selectedDisabilityType,
-              _nickname.text,
+              location,
+              _nicknameController.controller.text,
               _selectedPurpose,
               _selectedUserType,
             );
@@ -138,6 +148,10 @@ class _SetupUserState extends State<SetupUser> {
     }
     if (_birthYear.text.isEmpty) {
       _showErrorDialog('나이를 입력하세요');
+      return false;
+    }
+    if (location.isEmpty) {
+      _showErrorDialog('위치를 선택하세요');
       return false;
     }
     if (_selectedPurpose.isEmpty) {
@@ -198,6 +212,8 @@ class _SetupUserState extends State<SetupUser> {
                   const SizedBox(height: 20),
                   AgeSection(controller: _birthYear), 
                   const SizedBox(height: 20),
+                  LocationSection(onLocationSelected: _handleLocationSelected),
+                  const SizedBox(height: 20,),
                   AppPurposeSelection(
                     onChanged: (purpose) {
                       setState(() {
