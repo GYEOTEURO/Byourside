@@ -1,4 +1,3 @@
-import 'package:byourside/model/authenticate/firebase_user.dart';
 import 'package:byourside/model/authenticate/nickname_controller.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
@@ -85,9 +84,6 @@ class _SetupUserState extends State<SetupUser> {
       'userType': userType,
     });
 
-    if (user != null) {
-      FirebaseUser(uid: user?.uid, displayName: nickname);
-    }
   }
 
   Widget buildCompleteButton(BuildContext context) {

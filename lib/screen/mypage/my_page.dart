@@ -1,5 +1,4 @@
 import 'package:byourside/model/authenticate/auth_controller.dart';
-import 'package:byourside/model/authenticate/firebase_user.dart';
 import 'package:byourside/screen/authenticate/policy/personal_data.dart';
 import 'package:byourside/screen/authenticate/policy/using_policy.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
@@ -71,7 +70,6 @@ class _Mypage extends State<Mypage> {
   ];
 
   void _logout(context) async {
-    FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
    _authController.logout();
     setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
