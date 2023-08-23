@@ -55,69 +55,84 @@ class LocationSectionState extends State<LocationSection> {
     );
   }
 
-  void _showLocationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return AlertDialog(
-              title: Text('지역 선택'),
-              content: SingleChildScrollView(
+void _showLocationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return AlertDialog(
+            title: const Text('지역 선택'),
+            content: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 300), // 최대 높이 설정
                 child: Row(
                   children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: districtsByArea.keys.map((area) {
-                        return ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              selectedArea = area;
-                              selectedDistrict = '';
-                            });
-                          },
-                          child: Text(area),
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(width: 16), // 버튼 간 간격
-                    if (selectedArea.isNotEmpty)
-                      Column(
+                    SingleChildScrollView(
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: districtsByArea[selectedArea]!.map((district) {
+                        children: districtsByArea.keys.map((area) {
                           return ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                selectedDistrict = district;
+                                selectedArea = area;
+                                selectedDistrict = '';
                               });
                             },
-                            child: Text(district),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: selectedArea == area ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
+                            ),
+                            child: Text(area),
                           );
                         }).toList(),
+                      ),
+                    ),
+                    const SizedBox(width: 16), // 버튼 간 간격
+                    if (selectedArea.isNotEmpty)
+                      SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: districtsByArea[selectedArea]!.map((district) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  selectedDistrict = district;
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: selectedDistrict == district ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
+                              ),
+                              child: Text(district),
+                            );
+                          }).toList(),
+                        ),
                       ),
                   ],
                 ),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context); // 취소 버튼
-                  },
-                  child: Text('취소'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _onSelectionComplete(context);
-                  },
-                  child: Text('선택 완료'),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // 취소 버튼
+                },
+                child: const Text('취소'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _onSelectionComplete(context);
+                },
+                child: const Text('선택 완료'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
+
 
   void _onSelectionComplete(BuildContext context) {
     if (selectedArea.isNotEmpty && selectedDistrict.isNotEmpty) {

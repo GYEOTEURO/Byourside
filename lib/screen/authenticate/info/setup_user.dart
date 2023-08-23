@@ -49,7 +49,7 @@ class _SetupUserState extends State<SetupUser> {
     };
 
     setState(() {
-      location.add(locationInfo); // 선택한 위치 정보를 location 리스트에 추가
+      location= locationInfo as List<Map>; 
     });
   }
 
