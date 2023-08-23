@@ -1,14 +1,13 @@
-import 'package:byourside/model/firebase_user.dart';
+import 'package:byourside/model/authenticate/auth_controller.dart';
+import 'package:byourside/model/authenticate/firebase_user.dart';
 import 'package:byourside/screen/authenticate/policy/personal_data.dart';
 import 'package:byourside/screen/authenticate/policy/using_policy.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:byourside/screen/mypage/my_block_user.dart';
 import 'package:byourside/screen/mypage/my_report.dart';
 import 'package:byourside/screen/mypage/freq_question.dart';
-import 'package:byourside/screen/mypage/my_community_post.dart';
 import 'package:byourside/screen/mypage/my_scrap_community_post.dart';
 import 'package:byourside/screen/mypage/to_developer.dart';
-import 'package:byourside/model/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +22,7 @@ class Mypage extends StatefulWidget {
 }
 
 class _Mypage extends State<Mypage> {
-  final AuthService _auth = AuthService();
+  final AuthController _authController = AuthController.instance;
   late String uid;
   late String displayName;
   User? user;
@@ -73,7 +72,7 @@ class _Mypage extends State<Mypage> {
 
   void _logout(context) async {
     FirebaseUser(uid: null, phoneNum: null, displayName: null, code: null);
-    await _auth.signOut();
+   _authController.logout();
     setState(() {});
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(context).push(MaterialPageRoute(
@@ -85,32 +84,6 @@ class _Mypage extends State<Mypage> {
 
   @override
   Widget build(BuildContext context) {
-    final SignOut = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: const Color(0xFF045558),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () async {
-          FirebaseUser(
-              uid: null, phoneNum: null, displayName: null, code: null);
-          await _auth.signOut();
-          setState(() {});
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const SocialLogin(
-            ),
-          ));
-          // Navigator.pushNamed(context, '/login');
-        },
-        child: const Text(
-          'Log out',
-          style: TextStyle(color: Color(0xFF045558)),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
 
     return Scaffold(
       appBar: AppBar(
