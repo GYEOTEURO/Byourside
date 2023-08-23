@@ -1,5 +1,5 @@
-import 'package:byourside/model/firebase_user.dart';
-import 'package:byourside/model/nickname_controller.dart';
+import 'package:byourside/model/authenticate/firebase_user.dart';
+import 'package:byourside/model/authenticate/nickname_controller.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/age_section.dart';

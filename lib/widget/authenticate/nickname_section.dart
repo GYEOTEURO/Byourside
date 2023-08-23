@@ -1,4 +1,4 @@
-import 'package:byourside/model/nickname_controller.dart';
+import 'package:byourside/model/authenticate/nickname_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
