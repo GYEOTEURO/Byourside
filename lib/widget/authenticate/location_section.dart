@@ -1,3 +1,4 @@
+import 'package:byourside/widget/authenticate/location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/location.dart' as constants;
 
@@ -14,26 +15,36 @@ class LocationSectionState extends State<LocationSection> {
   String selectedArea = '';
   String selectedDistrict = '';
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          '사는 곳을 입력해주세요',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-        ElevatedButton(
+  List<Widget> buildAreaButtons(StateSetter setState) {
+    return constants.districtsByArea.keys.map((area) {
+      return LocationButton(
+        label: area,
+        isSelected: selectedArea == area,
+        onPressed: () {
+          setState(() {
+            selectedArea = area;
+            selectedDistrict = '';
+          });
+        },
+      );
+    }).toList();
+  }
+
+  List<Widget> buildDistrictButtons(StateSetter setState) {
+    if (selectedArea.isNotEmpty) {
+      return constants.districtsByArea[selectedArea]!.map((district) {
+        return LocationButton(
+          label: district,
+          isSelected: selectedDistrict == district,
           onPressed: () {
-            _showLocationDialog(context);
+            setState(() {
+              selectedDistrict = district;
+            });
           },
-          child: const Text('위치 선택'),
-        ),
-      ],
-    );
+        );
+      }).toList();
+    }
+    return [];
   }
 
   void _showLocationDialog(BuildContext context) {
@@ -46,46 +57,21 @@ class LocationSectionState extends State<LocationSection> {
               title: const Text('지역 선택'),
               content: SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 300), // 최대 높이 설정
+                  constraints: const BoxConstraints(maxHeight: 300),
                   child: Row(
-                    children: [
+                    children:  [
                       SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: constants.districtsByArea.keys.map((area) {
-                            return ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  selectedArea = area;
-                                  selectedDistrict = '';
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: selectedArea == area ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
-                              ),
-                              child: Text(area),
-                            );
-                          }).toList(),
+                          children: buildAreaButtons(setState),
                         ),
                       ),
-                      const SizedBox(width: 16), // 버튼 간 간격
+                      const SizedBox(width: 16),
                       if (selectedArea.isNotEmpty)
                         SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: constants.districtsByArea[selectedArea]!.map((district) {
-                              return ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    selectedDistrict = district;
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: selectedDistrict == district ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
-                                ),
-                                child: Text(district),
-                              );
-                            }).toList(),
+                            children: buildDistrictButtons(setState),
                           ),
                         ),
                     ],
@@ -111,6 +97,28 @@ class LocationSectionState extends State<LocationSection> {
           },
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          '사는 곳을 입력해주세요',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            _showLocationDialog(context);
+          },
+          child: const Text('위치 선택'),
+        ),
+      ],
     );
   }
 }
