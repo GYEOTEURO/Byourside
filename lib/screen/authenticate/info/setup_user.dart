@@ -1,6 +1,6 @@
 import 'package:byourside/model/authenticate/nickname_controller.dart';
 import 'package:byourside/model/authenticate/save_user_data.dart';
-import 'package:byourside/widget/alert_dialog.dart';
+import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/age_section.dart';
 import 'package:byourside/widget/authenticate/disability_type_button.dart';
@@ -25,7 +25,7 @@ class SetupUser extends StatefulWidget {
 
 class _SetupUserState extends State<SetupUser> {
   final NicknameController _nicknameController = Get.find<NicknameController>();
-  List<Map> location = []; 
+  late Map<String, String> location; 
   bool isUserDataStored = false;
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
@@ -47,7 +47,7 @@ class _SetupUserState extends State<SetupUser> {
     };
 
     setState(() {
-      location= locationInfo as List<Map>; 
+      location = locationInfo; 
     });
   }
 
@@ -57,61 +57,11 @@ class _SetupUserState extends State<SetupUser> {
     });
   }
 
-  bool _validateInputs() {
-    if (_nicknameController.controller.text.isEmpty) {
-      _showErrorDialog('닉네임을 입력하세요.');
-      return false;
-    }
-    if (!_nicknameController.isNicknameChecked.value) {
-      _showErrorDialog('닉네임 중복을 확인하세요.');
-      return false;
-    } else if (_nicknameController.nickNameExist.value) {
-      _showErrorDialog('이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.');
-      return false;
-    }
-    if (_selectedUserType.isEmpty) {
-      _showErrorDialog('사용자 유형을 선택하세요.');
-      return false;
-    }
-    if (_selectedDisabilityType.isEmpty) {
-      _showErrorDialog('장애 유형을 선택하세요.');
-      return false;
-    }
-    if (_birthYear.text.isEmpty) {
-      _showErrorDialog('나이를 입력하세요');
-      return false;
-    }
-    if (location.isEmpty) {
-      _showErrorDialog('위치를 선택하세요');
-      return false;
-    }
-    if (_selectedPurpose.isEmpty) {
-      _showErrorDialog('어플 사용 목적을 선택하세요.');
-      return false;
-    }
-    return true;
-  }
 
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CustomAlertDialog(
-          message: message,
-          buttonText: '확인',
-          onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
-  }
-
-  void _onCompleteButtonPressed() async {
-    HapticFeedback.lightImpact(); // 약한 진동
-    if (_validateInputs()) {
-      StoreUserData.storeUserInfo(
+  void _onCompleteButtonPressed(BuildContext context) async {
+    HapticFeedback.lightImpact(); 
+    if (ValidationUtils.validateInputs(context, _nicknameController,_selectedUserType, _selectedDisabilityType, _birthYear.text, location, _selectedPurpose)) {
+      SaveUserData.saveUserInfo(
         birthYear: _birthYear.text,
         selectedType: _selectedDisabilityType,
         location: location,
@@ -122,9 +72,9 @@ class _SetupUserState extends State<SetupUser> {
     }
   }
 
-  Widget _buildButtonDesign() {
+  Widget _buildButtonDesign(BuildContext context) {
     return ElevatedButton(
-      onPressed: _onCompleteButtonPressed,
+      onPressed: () => _onCompleteButtonPressed(context),
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
         textStyle: const TextStyle(
@@ -144,17 +94,14 @@ class _SetupUserState extends State<SetupUser> {
     return Container(
       alignment: Alignment.bottomCenter,
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: _buildButtonDesign(),
+      child: _buildButtonDesign(context),
     );
   }
-
-  
 
   @override
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

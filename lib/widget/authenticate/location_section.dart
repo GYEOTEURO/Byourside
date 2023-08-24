@@ -55,90 +55,81 @@ class LocationSectionState extends State<LocationSection> {
     );
   }
 
-void _showLocationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return AlertDialog(
-            title: const Text('지역 선택'),
-            content: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: 300), // 최대 높이 설정
-                child: Row(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: districtsByArea.keys.map((area) {
-                          return ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                selectedArea = area;
-                                selectedDistrict = '';
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: selectedArea == area ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
-                            ),
-                            child: Text(area),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    const SizedBox(width: 16), // 버튼 간 간격
-                    if (selectedArea.isNotEmpty)
+  void _showLocationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              title: const Text('지역 선택'),
+              content: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 300), // 최대 높이 설정
+                  child: Row(
+                    children: [
                       SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: districtsByArea[selectedArea]!.map((district) {
+                          children: districtsByArea.keys.map((area) {
                             return ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  selectedDistrict = district;
+                                  selectedArea = area;
+                                  selectedDistrict = '';
                                 });
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: selectedDistrict == district ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
+                                backgroundColor: selectedArea == area ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
                               ),
-                              child: Text(district),
+                              child: Text(area),
                             );
                           }).toList(),
                         ),
                       ),
-                  ],
+                      const SizedBox(width: 16), // 버튼 간 간격
+                      if (selectedArea.isNotEmpty)
+                        SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: districtsByArea[selectedArea]!.map((district) {
+                              return ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    selectedDistrict = district;
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: selectedDistrict == district ? Colors.blue : Colors.grey, // 선택된 상태일 때의 배경색
+                                ),
+                                child: Text(district),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // 취소 버튼
-                },
-                child: const Text('취소'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _onSelectionComplete(context);
-                },
-                child: const Text('선택 완료'),
-              ),
-            ],
-          );
-        },
-      );
-    },
-  );
-}
-
-
-
-  void _onSelectionComplete(BuildContext context) {
-    if (selectedArea.isNotEmpty && selectedDistrict.isNotEmpty) {
-      // 선택 정보를 외부로 전달하는 로직 추가
-      print('지역: $selectedArea, 구: $selectedDistrict');
-      Navigator.pop(context); // 팝업 닫기
-    }
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // 취소 버튼
+                  },
+                  child: const Text('취소'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    widget.onLocationSelected(selectedArea, selectedDistrict);
+                    Navigator.pop(context);
+                  },
+                  child: const Text('선택 완료'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }

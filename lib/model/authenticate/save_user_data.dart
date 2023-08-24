@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class StoreUserData {
-  static Future<void> storeUserInfo({
+class SaveUserData {
+  static Future<void> saveUserInfo({
     String? birthYear,
     String? selectedType,
-    List<Map>? location,
+    Map<String, String>? location,
     String? nickname,
     String? registrationPurpose,
     String? userType,
