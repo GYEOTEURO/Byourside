@@ -48,7 +48,7 @@ class SaveData {
   }
   
   // 댓글 삭제
-  deleteComment(String collectionName, String documentID, String commentID) async {
+  deleteComment(String collectionName, String documentID, String? commentID) async {
     await firestore.collection(collectionName).doc(documentID).collection('comments').doc(commentID).delete();
   }
 
@@ -79,18 +79,23 @@ class SaveData {
   }
 
   // 신고
-  report(String classification, String reason, String id) async {
-    await firestore.collection('report').doc('declaration').update({classification: FieldValue.arrayUnion(['${id}_$reason'])});
+  report(String collectionName, String postOrComment, String id) async {
+    await firestore.collection('report').doc(collectionName).collection(postOrComment).doc(id).set({ 'check' : false });
   }
 
   // 차단 신청
-  addBlock(String uid, String blockUid) async {
-    await firestore.collection('user').doc(uid).update({'blockList': FieldValue.arrayUnion([blockUid])});
+  addBlock(String uid, String? blockUid) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUser': FieldValue.arrayUnion([blockUid])});
   }
 
   // 차단 해제
   cancelBlock(String uid, String blockUid) async {
-    await firestore.collection('user').doc(uid).update({'blockList': FieldValue.arrayRemove([blockUid])});
+    await firestore.collection('userInfo').doc(uid).update({'blockedUser': FieldValue.arrayRemove([blockUid])});
+  }
+
+  // 개발자에게 문의하기
+  sendMsg2dev(String uid, String messages) async {
+    await firestore.collection('msg2dev').add({'uid': uid, 'content': messages, 'datetime': Timestamp.now()});
   }
 }
 

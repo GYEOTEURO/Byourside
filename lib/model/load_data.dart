@@ -8,7 +8,7 @@ class LoadData{
   final FirebaseFirestore firestore;
 
   Future<DocumentSnapshot<Map<String, dynamic>>> readUserInfo({required String uid}) async {
-      var userDocumentSnapshot = await firestore.collection('user').doc(uid).get();
+      var userDocumentSnapshot = await firestore.collection('userInfo').doc(uid).get();
       return userDocumentSnapshot;
   }
 
@@ -45,7 +45,25 @@ class LoadData{
           .map((snapshot) =>
               snapshot.docs.map((doc) => CommentModel.fromDocument(doc: doc)).toList());
 
-  readScrapPost({required String collectionName, required String uid}) {}
+
+  Stream<List<CommunityPostModel>> readCreatePost({required String uid}) {
+      return firestore.collectionGroup('posts')
+      .where('uid', isEqualTo: uid)
+      .orderBy('createdAt', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))
+      .toList());
+  }
+
+  Stream<List<CommunityPostModel>> readScrapPost({required String collectionName, required String uid}) {
+      return firestore.collectionGroup('posts')
+      .where('scrapsUser', arrayContains: uid)
+      .orderBy('createdAt', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))
+      .toList());
+  }
+
 
   // // 검색을 위한 쿼리 비교
   // Stream<List<CommunityPostModel>> readSearchDocs(String query,
@@ -53,31 +71,6 @@ class LoadData{
   //         firestore
   //         .collection(collectionName)
   //         .where('keyword', arrayContainsAny: [query])
-  //         .orderBy('datetime', descending: true)
-  //         .snapshots()
-  //         .map((snapshot) => snapshot.docs
-  //             .map((doc) => CommunityPostModel.fromMap(doc))
-  //             .toList());
-
-  //
-  // // 작성한 글 보기
-  // Stream<List<CommunityPostModel>> readCreatePost(
-  //         {required String collectionName, required String uid}) =>
-  //         firestore
-  //         .collection(collectionName)
-  //         .where('uid', isEqualTo: uid)
-  //         .orderBy('datetime', descending: true)
-  //         .snapshots()
-  //         .map((snapshot) => snapshot.docs
-  //             .map((doc) => CommunityPostModel.fromMap(doc))
-  //             .toList());
-
-  // // 스크랩한 글 보기
-  // Stream<List<CommunityPostModel>> readScrapPost(
-  //         {required String collectionName, required String uid}) =>
-  //         firestore
-  //         .collection(collectionName)
-  //         .where('scrapPeople', arrayContains: uid)
   //         .orderBy('datetime', descending: true)
   //         .snapshots()
   //         .map((snapshot) => snapshot.docs
