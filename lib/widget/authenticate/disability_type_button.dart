@@ -26,7 +26,7 @@ class _DisabilityTypeState extends State<DisabilityType> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          '장애 종류를 선택해주세요',
+          '장애 유형을 선택해주세요',
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey,

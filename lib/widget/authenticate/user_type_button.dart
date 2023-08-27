@@ -50,21 +50,12 @@ class UserTypeSelection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            UserTypeButton(
-              type: '장애 아동 보호자',
-              isSelected: selectedType == '장애 아동 보호자',
-              onPressed: () => onTypeSelected('장애 아동 보호자'),
-            ),
-            UserTypeButton(
-              type: '장애인',
-              isSelected: selectedType == '장애인',
-              onPressed: () => onTypeSelected('장애인'),
-            ),
-            UserTypeButton(
-              type: '종사자',
-              isSelected: selectedType == '종사자',
-              onPressed: () => onTypeSelected('종사자'),
-            ),
+            for (String userType in ['장애 아동 보호자', '장애인', '종사자'])
+              UserTypeButton(
+                type: userType,
+                isSelected: selectedType == userType,
+                onPressed: () => onTypeSelected(userType),
+              ),
           ],
         ),
         const SizedBox(height: 20),
