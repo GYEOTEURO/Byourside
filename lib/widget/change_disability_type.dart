@@ -1,14 +1,16 @@
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import '../screen/community/controller/disability_type_controller.dart';
 
 class ChangeDisabilityType extends StatefulWidget {
   ChangeDisabilityType(
-      {super.key});
+      {super.key,
+      required this.onDisabilityTypeSelectedFromPostList,
+      required this.onDisabilityTypeSelectedFromAppBar});
+
+  final ValueChanged<String> onDisabilityTypeSelectedFromPostList;
+  final ValueChanged<String> onDisabilityTypeSelectedFromAppBar;    
 
   @override
   State<ChangeDisabilityType> createState() => _ChangeDisabilityTypeState();
@@ -16,8 +18,14 @@ class ChangeDisabilityType extends StatefulWidget {
 
 class _ChangeDisabilityTypeState extends State<ChangeDisabilityType> {
 
-  final communityDisabilityTypeController = Get.put(CommunityDisabilityTypeController());
-  
+  String selectedType = '';
+
+  @override
+  void initState() {
+    super.initState();
+    selectedType = '발달';
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -58,7 +66,10 @@ class _ChangeDisabilityTypeState extends State<ChangeDisabilityType> {
                               )),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
-                                communityDisabilityTypeController.changeDisabilityType('발달');
+                                selectedType = '발달';
+                                widget.onDisabilityTypeSelectedFromPostList(selectedType);
+                                widget.onDisabilityTypeSelectedFromAppBar(selectedType);
+                                Navigator.pop(context);
                               },
                           ),
                           ElevatedButton(
@@ -78,7 +89,10 @@ class _ChangeDisabilityTypeState extends State<ChangeDisabilityType> {
                               )),
                               onPressed: () {
                                 HapticFeedback.lightImpact(); // 약한 진동
-                                communityDisabilityTypeController.changeDisabilityType('뇌병변');
+                                selectedType = '뇌병변';
+                                widget.onDisabilityTypeSelectedFromPostList(selectedType);
+                                widget.onDisabilityTypeSelectedFromAppBar(selectedType);
+                                Navigator.pop(context);
                               },
                           )
                         ])
