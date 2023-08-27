@@ -1,4 +1,5 @@
 import 'package:byourside/screen/community/post_list.dart';
+import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
@@ -18,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Container(),
     const CommunityPostList(),
     Container(),
-    Container()
+    Mypage(),
   ];
 
   List<SvgPicture> bottomIcons = [
