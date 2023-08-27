@@ -1,19 +1,10 @@
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:byourside/model/community_post.dart';
-import 'package:byourside/widget/block_user.dart';
-import 'package:byourside/widget/report.dart';
-import 'package:byourside/widget/delete_post_or_comment.dart';
 import 'package:byourside/widget/image_slider.dart';
-import 'package:byourside/widget/likes_button.dart';
-import 'package:byourside/widget/scrap_button.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../../model/load_data.dart';
-import '../../model/save_data.dart';
 
 class CommunityPostContent extends StatefulWidget {
   const CommunityPostContent(
@@ -35,7 +26,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
           child: SelectionArea(
             child: Text(
               post!.category,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: fonts.font,
                 color: colors.primaryColor,
                 fontSize: 15,
@@ -48,7 +39,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
         customIcons.profile,
         Text(
           post.nickname,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: fonts.font,
             color: colors.textColor,
             fontSize: 14,
@@ -82,14 +73,14 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
           ))),
        if (post.images.isNotEmpty) ImageSlider(images: post.images, imgInfos: post.imgInfos),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-       Text(
+       const Text(
         '좋아요'
       ),
       customIcons.communityPostListLikes,
       Text(
         '${post.likes}'
       ),
-      Text(
+      const Text(
         '스크랩'
       ),
       customIcons.communityPostListScraps,
@@ -98,7 +89,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
       ),
       TimeConvertor(createdAt: post.createdAt)
       ]),
-      Divider(thickness: 1, height: 0.5, color: Colors.black),
+      const Divider(thickness: 1, height: 0.5, color: Colors.black),
    
     ]);   
   }

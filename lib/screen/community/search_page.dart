@@ -70,7 +70,7 @@
 //                                       color: Colors.black,
 //                                       fontSize: 19,
 //                                       fontWeight: FontWeight.bold,
-//                                       fontFamily: constants.font))),
+//                                       fontFamily: fonts.font))),
 //                           Text(
 //                             post.type!.isEmpty
 //                                 ? '${post.nickname} | $date | ${post.category!}'
@@ -83,7 +83,7 @@
 //                             softWrap: false,
 //                             style: const TextStyle(
 //                               color: Colors.black,
-//                               fontFamily: constants.font,
+//                               fontFamily: fonts.font,
 //                               fontSize: 15,
 //                               fontWeight: FontWeight.w600,
 //                             ),
@@ -113,7 +113,7 @@
 //           title: Text(widget.title,
 //               semanticsLabel: widget.title,
 //               style: const TextStyle(
-//                   fontFamily: constants.font, fontWeight: FontWeight.bold)),
+//                   fontFamily: fonts.font, fontWeight: FontWeight.bold)),
 //           backgroundColor: const Color(0xFF045558),
 //           leading: IconButton(
 //               icon: const Icon(Icons.arrow_back,
@@ -135,27 +135,27 @@
 //                         semanticCounterText: '검색할 키워드 입력',
 //                         labelText: '검색할 키워드를 입력해주세요.',
 //                         floatingLabelStyle: const TextStyle(
-//                             color: constants.mainColor,
+//                             color: colors.primaryColor,
 //                             fontSize: 22,
-//                             fontFamily: constants.font,
+//                             fontFamily: fonts.font,
 //                             fontWeight: FontWeight.w500),
 //                         contentPadding:
 //                             const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
 //                         hintStyle: const TextStyle(
 //                             color: Colors.grey,
 //                             fontSize: 17,
-//                             fontFamily: constants.font,
+//                             fontFamily: fonts.font,
 //                             fontWeight: FontWeight.w500),
 //                         labelStyle: const TextStyle(
-//                             color: constants.mainColor,
+//                             color: colors.primaryColor,
 //                             fontSize: 17,
-//                             fontFamily: constants.font,
+//                             fontFamily: fonts.font,
 //                             fontWeight: FontWeight.w500),
 //                         enabledBorder: OutlineInputBorder(
-//                             borderSide: const BorderSide(color: constants.mainColor),
+//                             borderSide: const BorderSide(color: colors.primaryColor),
 //                             borderRadius: BorderRadius.circular(20)),
 //                         focusedBorder: OutlineInputBorder(
-//                             borderSide: const BorderSide(color: constants.mainColor),
+//                             borderSide: const BorderSide(color: colors.primaryColor),
 //                             borderRadius: BorderRadius.circular(20)),
 //                         border: OutlineInputBorder(
 //                             borderRadius: BorderRadius.circular(32.0)),

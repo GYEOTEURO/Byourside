@@ -3,29 +3,25 @@ import 'package:byourside/screen/community/post.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as customIcons;
 
-Widget _buildTopSide(String category, String title) {
+Widget _buildTopSide(BuildContext context, String category, String title) {
   return Container(
+    width: MediaQuery.of(context).size.width,
     child: Row(
-      //mainAxisSize: MainAxisSize.min,
-      //mainAxisAlignment: MainAxisAlignment.start,
-      //crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(width: 10),
         Text(
           category,
-          style: TextStyle(
+          style: const TextStyle(
             color: colors.primaryColor,
             fontSize: fonts.captionTitlePt,
             fontFamily: fonts.font,
             fontWeight: FontWeight.w800
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 20),
         Container(
           child: Text(
             title,
@@ -43,62 +39,59 @@ Widget _buildTopSide(String category, String title) {
   );
 }
 
-Widget _buildMiddleSide(String content) {
-  return Row(
+Widget _buildMiddleSide(BuildContext context, String content, List<String> image) {
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    child: Row(
           children: [
-            const SizedBox(width: 10),
-            SizedBox(
-              width: 190,
-              child: Text(
-                content,
-                style: TextStyle(
-                  color: colors.textColor,
-                  fontSize: 12,
-                  fontFamily: fonts.font,
-                  fontWeight: FontWeight.w400,
-                  height: 1.50,
+              Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Wrap(
+                children: [
+                  Text(
+                    content,
+                    style: const TextStyle(
+                      color: colors.textColor,
+                      fontSize: 12,
+                      fontFamily: fonts.font,
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
+                  ),
+              ])
+            ),
+            const SizedBox(width: 20),
+            if(image.isNotEmpty)
+            Container(
+              height: MediaQuery.of(context).size.height / 10,
+              width: MediaQuery.of(context).size.height / 10,
+              decoration: ShapeDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(image[0]),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
-            const SizedBox(width: 23),
-            _buildImage(),
           ],
-  );
-}
-
-Widget _buildImage() {
-  return Container(
-    width: 74,
-    height: 73.24,
-    decoration: ShapeDecoration(
-      image: DecorationImage(
-        image: NetworkImage("https://via.placeholder.com/74x73"),
-        fit: BoxFit.fill,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-  );
+  ));
 }
 
 Widget _buildBottomSide(Widget createdAt, String likes, String scraps) {
   return Container(
-    width: 287,
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          width: 60,
           child: createdAt
         ),
-        const SizedBox(width: 144),
         Container(
-          width: 80,
-          height: 20.07,
-          child: Stack(
+          child: Row(
             children: [
-              _buildLikesAndScraps(left: 40, count: scraps, icon: customIcons.communityPostListScraps),
-              _buildLikesAndScraps(left: 0, count: likes, icon: customIcons.communityPostListLikes),
+              _buildLikesAndScraps(count: scraps, icon: customIcons.communityPostListScraps),
+              const SizedBox(width: 6),
+              _buildLikesAndScraps(count: likes, icon: customIcons.communityPostListLikes),
       ],
     ),
   )
@@ -107,40 +100,22 @@ Widget _buildBottomSide(Widget createdAt, String likes, String scraps) {
   );
 }
 
-Widget _buildLikesAndScraps({required double left, required String count, required icon}) {
-  return Positioned(
-    left: left,
-    child: Container(
-      width: 40,
-      height: 20.07,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 3.99,
-            top: 2.53,
-            child: Container(
-              width: 32.01,
-              height: 15,
-              child: Row(
-                children: [
-                  icon,
-                  Text(
-                  count,
-                  style: TextStyle(
-                  color: colors.subColor,
-                  fontSize: 10,
-                  fontFamily: fonts.font,
-                  fontWeight: FontWeight.w400,
-                  height: 1.30,
-                ),
-              ),
-                ])
-            ),
+Widget _buildLikesAndScraps({required String count, required icon}) {
+  return Row(
+          children: [
+            icon,
+            const SizedBox(width: 3),
+            Text(
+            count,
+            style: const TextStyle(
+            color: colors.subColor,
+            fontSize: 10,
+            fontFamily: fonts.font,
+            fontWeight: FontWeight.w400,
+            height: 1.30,
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+          ]);
 }
 
 Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
@@ -149,8 +124,7 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    return SingleChildScrollView(
-      child: GestureDetector(
+    return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact(); // 약한 진동
         Navigator.push(
@@ -160,24 +134,21 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
                 ));
       },
       child: Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        height: height / 6,
+        padding: const EdgeInsets.all(10),
+        child: Column(
         children: [
-          _buildTopSide(post.category, post.title),
-          _buildMiddleSide(post.content),
+          _buildTopSide(context, post.category, post.title),
+          _buildMiddleSide(context, post.content, post.images),
           _buildBottomSide(createdAt, post.likes.toString(), post.scraps.toString()),
-          Divider(
+          const Divider(
             height: 1,
             color: colors.subColor,
             thickness: 1
           ),
-          const SizedBox(width: 10),
         ],
       ),
-    ))
-    );
+    ));
 
     // return SizedBox(
     //     height: height / 7,
@@ -212,10 +183,10 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
     //                                 maxLines: 1,
     //                                 softWrap: false,
     //                                 style: const TextStyle(
-    //                                     color: Colors.black,
+    //                                     color: colors.textColor,
     //                                     fontSize: 18,
     //                                     fontWeight: FontWeight.bold,
-    //                                     fontFamily: constants.font))),
+    //                                     fontFamily: fonts.font))),
     //                         createdAt,
     //                       ],
     //                     )),

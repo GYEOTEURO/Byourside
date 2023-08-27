@@ -1,73 +1,80 @@
 import 'package:byourside/constants/icons.dart';
-import 'package:byourside/screen/community/community_categories.dart';
+import 'package:byourside/screen/mypage/my_scrap.dart';
+import 'package:byourside/widget/category_buttons.dart';
 import 'package:byourside/screen/community/controller/disability_type_controller.dart';
 import 'package:byourside/screen/community/search_page.dart';
-import 'package:byourside/screen/mypage/my_scrap_community_post.dart';
 import 'package:byourside/widget/change_disability_type.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CommunityPostListAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CommunityPostListAppBar(
-    {Key? key}) 
+  CommunityPostListAppBar(
+    {Key? key,
+    required this.onDisabilityTypeSelected}) 
     : super(key: key);
 
-  final String title = '소통 게시판';
+  final ValueChanged<String> onDisabilityTypeSelected;
 
   @override
   State<CommunityPostListAppBar> createState() => _CommunityPostListAppBarState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(80.0);
+  Size get preferredSize => const Size.fromHeight(100.0);
 }
 
 class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
+  String selectedDisabilityTypeValue = '발달';
+
+  void _handleDisabilityTypeSelected(String value) {
+    setState(() {
+      selectedDisabilityTypeValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    final communityDisabilityTypeController = Get.put(CommunityDisabilityTypeController());
-    
     return AppBar(
-          backgroundColor: colors.communityAppBar,
+          backgroundColor: colors.appBarColor,
           elevation: 0,
           bottom: PreferredSize(
             preferredSize: Size(5,5),
-            child: Align(
+            child: 
+              Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                widget.title,
-                semanticsLabel: widget.title,
-                style: const TextStyle(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: const Text(
+                constants.communityTitle,
+                semanticsLabel: constants.communityTitle,
+                style: TextStyle(
                     color: colors.textColor, 
                     fontFamily: fonts.font, 
                     fontSize: 20, 
                     fontWeight: FontWeight.w700
                 ),
-          ))),
-          //leadingWidth: 70,
-          leading: IntrinsicWidth(
-            child: Container(
-            constraints: BoxConstraints(
-              maxHeight: 22,
-              maxWidth: 70,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            )),
+          )),
+          leading: Container(
+            width: 100,
+            height: 100 / 3,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             child: ElevatedButton(
               onPressed: () {
                 HapticFeedback.lightImpact(); // 약한 진동
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return ChangeDisabilityType();
+                      return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
               });
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: colors.primaryColor,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(13),
                     topRight: Radius.circular(13),
@@ -76,8 +83,8 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
                 ),
               ),
               child: Text(
-                communityDisabilityTypeController.disabilityType,
-                style: TextStyle(
+                selectedDisabilityTypeValue,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: fonts.captionPt,
                   fontFamily: fonts.font,
@@ -85,7 +92,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
                 ),
               ),
             )
-          )),
+          ),
           actions: [
             IconButton(
               icon: customIcons.gotoScrapPage, 
@@ -94,7 +101,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MyScrapCommunityPost()));
+                          builder: (context) => const MyScrap()));
               }),
             IconButton(
               icon: customIcons.search, 
@@ -103,7 +110,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MyScrapCommunityPost()));
+                          builder: (context) => const MyScrap()));
               }),
           ],
     );
