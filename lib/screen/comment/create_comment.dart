@@ -2,6 +2,7 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
+import 'package:byourside/widget/fully_rounded_rectangle_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -60,25 +61,8 @@ class _CreateCommentState extends State<CreateComment> {
                     )
                )
               )),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(20, 20),
-                  backgroundColor: colors.primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 8),
-                ),
-                child: const Text(
-                    '입력',
-                    style: TextStyle(
-                        color: colors.textColor,
-                        fontSize: 16,
-                        fontFamily: fonts.font,
-                        fontWeight: FontWeight.w700,
-                    ),
-                ),
-                onPressed: () {
+              fullyRoundedRectangleButton('입력', 
+              () {
                   HapticFeedback.lightImpact(); // 약한 진동
                   FocusScope.of(context).unfocus();
                   CommentModel comment = CommentModel(
@@ -93,8 +77,7 @@ class _CreateCommentState extends State<CreateComment> {
                           .scrollController.position.maxScrollExtent,
                       duration: const Duration(milliseconds: 10),
                       curve: Curves.ease);
-                },
-              )
+                })
         ]);
   }
 }

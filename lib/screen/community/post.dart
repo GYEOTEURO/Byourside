@@ -1,7 +1,7 @@
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/comment/comment_list.dart';
-import 'package:byourside/screen/community/community_post_content.dart';
+import 'package:byourside/screen/community/post_content.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:byourside/screen/community/post_appbar.dart';
@@ -24,10 +24,8 @@ class _CommunityPostState extends State<CommunityPost> {
 
   @override
   Widget build(BuildContext context) {
-    String documentID = widget.post.id!;
-
     return Scaffold(
-      appBar: CommunityPostAppBar(category: widget.post.category, documentID: documentID, likesUser: widget.post.likesUser!, scrapsUser: widget.post.scrapsUser!),
+      appBar: CommunityPostAppBar(post: widget.post),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -47,7 +45,7 @@ class _CommunityPostState extends State<CommunityPost> {
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                         child: CommentList(
                             collectionName: 'community_comment',
-                            documentID: documentID)),
+                            post: widget.post)),
               ])),
               Positioned(
                 left: 0,
@@ -55,7 +53,7 @@ class _CommunityPostState extends State<CommunityPost> {
                 bottom: 0,
                 child: Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -66,10 +64,10 @@ class _CommunityPostState extends State<CommunityPost> {
                     )
                   ]),
                 // margin: const EdgeInsets.all(7),
-                padding: EdgeInsets.fromLTRB(25, 12, 15, 12),
+                padding: const EdgeInsets.fromLTRB(25, 12, 15, 12),
                 child: CreateComment(
                     collectionName: 'community_comment',
-                    documentID: documentID)
+                    documentID: widget.post.id!)
             ))]),
            ));
       
