@@ -1,5 +1,6 @@
-import 'package:byourside/model/auth_controller.dart';
-import 'package:byourside/screen/authenticate/info/user_setup.dart';
+import 'package:byourside/model/authenticate/auth_controller.dart';
+import 'package:byourside/model/authenticate/nickname_controller.dart';
+import 'package:byourside/screen/authenticate/info/setup_user.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -64,9 +65,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   getPermission();
 
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-    ).then((value) => Get.put(AuthController()));
+  ).then((value) {
+    Get.put(AuthController());
+    Get.put(NicknameController());
+  });
 
   FlutterError.onError = (errorDetails) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -155,7 +160,7 @@ class _MyAppState extends State<MyApp> {
             routes: {
               '/login': (context) => const SocialLogin(),
               '/bottom_nav': (context) => const BottomNavBar(),
-              '/user': (context) => const UserSetUp(),
+              '/user': (context) => SetupUser(),
             },
           ),
         ),
