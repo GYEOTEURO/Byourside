@@ -2,6 +2,8 @@ import 'package:byourside/screen/community/community_add_post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:byourside/constants/colors.dart' as colors;
 
 class CommunityAddPostCategory extends StatefulWidget {
   const CommunityAddPostCategory({Key? key, required this.categories})
@@ -48,7 +50,7 @@ class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
   // 게시판 카테고리 버튼 활성화
   void setCategorySelected(int index) {
     categoryList[index].selected = true;
-    categoryList[index].backgroundColor = constants.mainColor;
+    categoryList[index].backgroundColor = colors.primaryColor;
     categoryList[index].fontColor = Colors.white;
   }
 
@@ -73,7 +75,7 @@ class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
   // 장애 유형 버튼 활성화
   void setTypeSelected(int index) {
     typeList[index].selected = true;
-    typeList[index].backgroundColor = constants.mainColor;
+    typeList[index].backgroundColor = colors.primaryColor;
     typeList[index].fontColor = Colors.white;
   }
 
@@ -189,7 +191,7 @@ class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
                 actions: [
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: constants.mainColor,
+                        backgroundColor: colors.primaryColor,
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () {
@@ -221,7 +223,7 @@ class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: constants.mainColor,
+            backgroundColor: colors.primaryColor,
             title: Text(_title,
                 semanticsLabel: _title,
                 style: const TextStyle(
@@ -270,7 +272,7 @@ class _CommunityAddPostCategoryState extends State<CommunityAddPostCategory> {
                             actions: [
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: constants.mainColor,
+                                    backgroundColor: colors.primaryColor,
                                     foregroundColor: Colors.white,
                                   ),
                                   onPressed: () {

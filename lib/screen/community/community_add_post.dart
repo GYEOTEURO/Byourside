@@ -10,6 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/save_data.dart';
 import '../../model/community_post.dart';
 import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:byourside/constants/colors.dart' as colors;
 
 class CommunityAddPost extends StatefulWidget {
   const CommunityAddPost();
@@ -121,7 +123,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
     return Scaffold(
       // 상단 앱 바
       appBar: AppBar(
-        backgroundColor: constants.mainColor,
+        backgroundColor: colors.primaryColor,
         title: Text(
           constants.communityTitle,
           semanticsLabel: constants.communityTitle,
@@ -317,7 +319,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                                       count: indicatorLen,
                                       index: _current,
                                       color: Colors.black26,
-                                      activeColor: constants.mainColor,
+                                      activeColor: colors.primaryColor,
                                     ),
                                   ),
                                   const SizedBox(
@@ -397,7 +399,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                       actions: [
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: constants.mainColor,
+                              backgroundColor: colors.primaryColor,
                               foregroundColor: Colors.white,
                             ),
                             onPressed: () {
@@ -449,7 +451,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
             }
           }
         },
-        backgroundColor: constants.mainColor,
+        backgroundColor: colors.primaryColor,
         child: const Icon(
           Icons.navigate_next,
           semanticLabel: '마음 온도 게시글 작성 완료',
