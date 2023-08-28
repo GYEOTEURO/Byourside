@@ -36,8 +36,8 @@ class SocialLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isIOS = Platform.isIOS;
 
-    final deviceWidth = MediaQuery.of(context).size.width;
-    final deviceHeight = MediaQuery.of(context).size.height;
+    var deviceWidth = MediaQuery.of(context).size.width;
+    var deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: DecoratedBox(
@@ -57,8 +57,8 @@ class SocialLogin extends StatelessWidget {
                 children: [
                   SizedBox(height: deviceHeight * 0.15),
                   Container(
-                    width: deviceWidth * 0.35, // Relative to device width
-                    height: deviceHeight * 0.25, // Relative to device height
+                    width: deviceWidth * 0.35,
+                    height: deviceHeight * 0.25,
                     decoration: const BoxDecoration(
                       color: Colors.transparent,
                     ),

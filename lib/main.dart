@@ -160,7 +160,7 @@ class _MyAppState extends State<MyApp> {
             routes: {
               '/login': (context) => const SocialLogin(),
               '/bottom_nav': (context) => const BottomNavBar(),
-              '/user': (context) => SetupUser(),
+              '/user': (context) => const SetupUser(),
             },
           ),
         ),
