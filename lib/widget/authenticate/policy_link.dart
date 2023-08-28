@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 class PolicyLink extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Widget icon; 
+  final Widget icon;
 
   const PolicyLink({super.key, 
     required this.text,
     required this.onPressed,
-    required this.icon, 
+    required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildTextLink(text, onPressed),
-        // const SizedBox(width: 5),
-        // icon,
+        icon,
       ],
     );
   }
@@ -26,7 +27,8 @@ class PolicyLink extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             text,
@@ -36,11 +38,6 @@ class PolicyLink extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          Positioned(
-          left: 0,
-          top: 15,
-          child: icon,
-        ),
         ],
       ),
     );
