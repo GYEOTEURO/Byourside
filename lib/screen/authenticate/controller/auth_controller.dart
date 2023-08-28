@@ -26,17 +26,19 @@ class AuthController extends GetxController {
 
   _moveToPage(User? user) async {
     print(user);
-    if (user == null) {
-      Get.offAll(() => const SocialLogin());
-    } else {
-      bool isUserSetUp = await checkIfUserSetUp(user.uid);
-      if (isUserSetUp) {
-        // Get.offAll(() => const SetupUser());
-        Get.offAll(() => const BottomNavBar());
-      } else {
-        Get.offAll(() => const SetupUser());
-      }
-    }
+    Get.offAll(() => const SocialLogin());
+
+    // if (user == null) {
+    //   Get.offAll(() => const SocialLogin());
+    // } else {
+    //   bool isUserSetUp = await checkIfUserSetUp(user.uid);
+    //   if (isUserSetUp) {
+    //     Get.offAll(() => const SetupUser());
+    //     // Get.offAll(() => const BottomNavBar());
+    //   } else {
+    //     Get.offAll(() => const SetupUser());
+    //   }
+    // }
   }
 
 
