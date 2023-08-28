@@ -1,44 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SocialLoginButton extends StatelessWidget {
-  final String buttonText;
-  final Color buttonColor;
-  final Color iconColor;
-  final IconData icon;
-  final void Function(BuildContext) onPressed;
+  final Color color;
+  final Widget icon;
+  final String text;
+  final VoidCallback onPressed;
 
   const SocialLoginButton({super.key, 
-    required this.buttonText,
-    required this.buttonColor,
-    required this.iconColor,
+    required this.color,
     required this.icon,
+    required this.text,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 180.0,
-      height: 48.0,
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: buttonColor,
-          side: const BorderSide(
-            width: 5.0,
-            color: Colors.black,
+    return Container(
+      width: 328,
+      height: 43.96,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        color: color,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: icon,
           ),
-          minimumSize: const Size(double.infinity, 50),
-        ),
-        icon: FaIcon(
-          icon,
-          color: iconColor,
-        ),
-        label: Text(buttonText),
-        onPressed: () async {
-          onPressed(context);
-        },
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
       ),
     );
   }
