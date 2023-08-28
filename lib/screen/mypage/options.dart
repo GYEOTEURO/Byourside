@@ -1,4 +1,6 @@
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;
@@ -30,9 +32,10 @@ Future<void> handleLogoutAction(BuildContext context) async {
   bool confirmLogout = await showLogoutConfirmationDialog(context);
 
   if (confirmLogout) {
-    authController.logout(); // 로그아웃 로직
+    authController.logout();
   }
 }
+
 
 Widget myPageOptions(BuildContext context, String optionName, List<Map<String, dynamic>> options) {
   return Column(

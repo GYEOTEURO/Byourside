@@ -1,8 +1,44 @@
+import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
+
+Future<bool> showDeleteConfirmationDialog(BuildContext context) async {
+  return await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('회원 탈퇴 하시겠습니까?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false), // User didn't confirm
+            child: const Text('아니오'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true), // User confirmed
+            child: const Text('예'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void handleDeleteAction(BuildContext context) async {
+  AuthController authController = AuthController.instance;
+  bool confirmDelete = await showDeleteConfirmationDialog(context);
+
+  if (confirmDelete) {
+    CollectionReference userInfo = FirebaseFirestore.instance.collection('userInfo');
+    User? user = FirebaseAuth.instance.currentUser;
+    userInfo.doc(user?.uid).delete();
+    authController.logout(); 
+  }
+}
 
 class Setting extends StatefulWidget {
   Setting({
@@ -30,11 +66,19 @@ class _SettingState extends State<Setting> {
                 children: [
                 OutlinedButton(
                   onPressed: () {
-                    HapticFeedback.lightImpact(); // 약한 진동
-                    Navigator.push(
+                    HapticFeedback.lightImpact(); 
+                    if (widget.options[i].containsKey('action')) {
+                      widget.options[i]['action'](context);
+                    }
+                    if (widget.options[i].containsKey('page')) {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => widget.options[i]['page']));},
+                          builder: (context) => widget.options[i]['page'],
+                        ),
+                      );
+                    }
+                  },
                   style: OutlinedButton.styleFrom(
                     minimumSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height / 15.5),
                     elevation: 0,

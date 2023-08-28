@@ -84,7 +84,7 @@ List<Map<String, dynamic>> setting = [
   },
   {
     'name' : '탈퇴하기',
-    'page' : const MyCommunityPost()
+    'action' : handleDeleteAction,
   }
 ];
 
