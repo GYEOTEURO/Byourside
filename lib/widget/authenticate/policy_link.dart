@@ -16,8 +16,8 @@ class PolicyLink extends StatelessWidget {
     return Column(
       children: [
         _buildTextLink(text, onPressed),
-        const SizedBox(width: 5),
-        icon,
+        // const SizedBox(width: 5),
+        // icon,
       ],
     );
   }
@@ -36,6 +36,11 @@ class PolicyLink extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
+          Positioned(
+          left: 0,
+          top: 15,
+          child: icon,
+        ),
         ],
       ),
     );
