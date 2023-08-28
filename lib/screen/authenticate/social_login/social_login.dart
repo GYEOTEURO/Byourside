@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:byourside/constants/colors.dart';
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/constants/auth_icons.dart';
@@ -35,6 +36,9 @@ class SocialLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isIOS = Platform.isIOS;
 
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: DecoratedBox(
         decoration: const BoxDecoration(
@@ -51,15 +55,16 @@ class SocialLogin extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: deviceHeight * 0.15),
                   Container(
-                    width: 152.72,
-                    height: 145.02,
+                    width: deviceWidth * 0.35, // Relative to device width
+                    height: deviceHeight * 0.25, // Relative to device height
                     decoration: const BoxDecoration(
                       color: Colors.transparent,
                     ),
                     child: AuthIcons.beesideLogo,
                   ),
-                  const SizedBox(height: 100),
+                  SizedBox(height: deviceHeight * 0.1),
                   SocialLoginButton(
                     color: Colors.white,
                     icon: AuthIcons.googleIcon,
@@ -68,7 +73,7 @@ class SocialLogin extends StatelessWidget {
                       await AuthController.instance.loginWithGoogle(context);
                     },
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: deviceHeight * 0.03),
                   if (isIOS)
                     SocialLoginButton(
                       color: Colors.white,
@@ -78,14 +83,13 @@ class SocialLogin extends StatelessWidget {
                         await AuthController.instance.signInWithApple();
                       },
                     ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: deviceHeight * 0.05),
                   PolicyLink(
                     text: '이용약관',
                     onPressed: () =>
                         _navigateToPage(context, const PersonalData()),
                     icon: AuthIcons.tosLine,
                   ),
-                  const SizedBox(height: 5),
                   PolicyLink(
                     text: '개인정보 처리방침',
                     onPressed: () =>
