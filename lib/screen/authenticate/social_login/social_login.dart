@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:byourside/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/auth_icons.dart';
 import 'package:byourside/widget/authenticate/policy_link.dart';
@@ -16,7 +17,6 @@ class SocialLogin extends StatelessWidget {
     );
   }
   
-
   @override
   Widget build(BuildContext context) {
     bool isIOS = Platform.isIOS;
@@ -25,7 +25,7 @@ class SocialLogin extends StatelessWidget {
       body: DecoratedBox(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFFFDF8D), Color(0xFFFFCE50), Color(0xFFFFB950)],
+            colors: gradientColors,
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
