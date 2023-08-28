@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart';
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:byourside/constants/auth_icons.dart';
 import 'package:byourside/widget/authenticate/policy_link.dart';
 import 'package:byourside/widget/authenticate/social_login_button.dart';
@@ -17,7 +17,20 @@ class SocialLogin extends StatelessWidget {
       MaterialPageRoute(builder: (context) => page),
     );
   }
-  
+
+  Widget _buildIconRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AuthIcons.beeIcon,
+        const SizedBox(width: 20),
+        AuthIcons.beeIcon,
+        const SizedBox(width: 20),
+        AuthIcons.beeIcon,
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isIOS = Platform.isIOS;
@@ -32,49 +45,56 @@ class SocialLogin extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
-              Container(
-                width: 152.72,
-                height: 145.02,
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                child: AuthIcons.beesideLogo,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 152.72,
+                    height: 145.02,
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: AuthIcons.beesideLogo,
+                  ),
+                  const SizedBox(height: 100),
+                  SocialLoginButton(
+                    color: Colors.white,
+                    icon: AuthIcons.googleIcon,
+                    text: 'Google 계정으로 로그인',
+                    onPressed: (context) async {
+                      await AuthController.instance.loginWithGoogle(context);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  if (isIOS)
+                    SocialLoginButton(
+                      color: Colors.white,
+                      icon: AuthIcons.appleIcon,
+                      text: 'Apple로 로그인',
+                      onPressed: (context) async {
+                        await AuthController.instance.signInWithApple();
+                      },
+                    ),
+                  const SizedBox(height: 30),
+                  PolicyLink(
+                    text: '이용약관',
+                    onPressed: () =>
+                        _navigateToPage(context, const PersonalData()),
+                    icon: AuthIcons.tosLine,
+                  ),
+                  const SizedBox(height: 5),
+                  PolicyLink(
+                    text: '개인정보 처리방침',
+                    onPressed: () =>
+                        _navigateToPage(context, const PersonalPolicy()),
+                    icon: AuthIcons.policyLine,
+                  ),
+                ],
               ),
-              const SizedBox(height: 100),
-              SocialLoginButton(
-                color: Colors.white,
-                icon: AuthIcons.googleIcon, // Provide the icon here
-                text: 'Google 계정으로 로그인',
-                onPressed: (context) async {
-                  await AuthController.instance.loginWithGoogle(context);
-                },
-              ),
-              const SizedBox(height: 20),
-              if (isIOS)
-                SocialLoginButton(
-                  color: Colors.white,
-                  icon: AuthIcons.appleIcon, // Provide the icon here
-                  text: 'Apple로 로그인',
-                  onPressed: (context) async {
-                    await AuthController.instance.signInWithApple();
-                  },
-                ),
-              const SizedBox(height: 30),
-              PolicyLink(
-                text: '이용약관',
-                onPressed: () => _navigateToPage(context, const PersonalData()),
-                icon: AuthIcons.tosLine,
-              ),
-              const SizedBox(height: 5),
-              PolicyLink(
-                text: '개인정보 처리방침',
-                onPressed: () =>
-                    _navigateToPage(context, const PersonalPolicy()),
-                icon: AuthIcons.policyLine,
-              ),
+              _buildIconRow(),
             ],
           ),
         ),
