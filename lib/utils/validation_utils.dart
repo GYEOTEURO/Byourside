@@ -1,4 +1,4 @@
-import 'package:byourside/model/authenticate/nickname_controller.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

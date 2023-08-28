@@ -1,4 +1,4 @@
-import 'package:byourside/model/authenticate/nickname_controller.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/app_bar.dart';

@@ -1,5 +1,5 @@
 import 'package:byourside/screen/mypage/options.dart';
-import 'package:byourside/model/authenticate/auth_controller.dart';
+import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
