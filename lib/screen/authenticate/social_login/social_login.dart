@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+import 'package:byourside/screen/authenticate/policy/personal_data.dart';
+import 'package:byourside/screen/authenticate/policy/personal_policy.dart';
 import 'package:byourside/widget/authenticate/social_login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/auth_icons.dart';
@@ -57,7 +59,10 @@ class SocialLogin extends StatelessWidget {
               _buildTextButton(
                 text: '이용약관',
                 onPressed: () {
-                  // 버튼이 클릭되었을 때 실행될 동작을 여기에 추가
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PersonalData()), // MyApp 페이지로 이동
+                  );
                 },
               ),
               AuthIcons.tosLine,
@@ -65,7 +70,10 @@ class SocialLogin extends StatelessWidget {
               _buildTextButton(
                 text: '개인정보 처리방침',
                 onPressed: () {
-                  // 버튼이 클릭되었을 때 실행될 동작을 여기에 추가
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PersonalPolicy()), // PersonalPolicy 페이지로 이동
+                  );
                 },
               ),
               AuthIcons.policyLine,
