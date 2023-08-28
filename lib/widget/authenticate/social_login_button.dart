@@ -4,14 +4,15 @@ class SocialLoginButton extends StatelessWidget {
   final Color color;
   final Widget icon;
   final String text;
-  final VoidCallback onPressed;
+  final void Function(BuildContext) onPressed;
 
-  const SocialLoginButton({super.key, 
+  const SocialLoginButton({
+    Key? key,
     required this.color,
     required this.icon,
     required this.text,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,34 +23,36 @@ class SocialLoginButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(22),
         color: color,
       ),
-      child: Stack(
-        children: [
-          Row(
+      child: TextButton(
+        onPressed: () async {
+          onPressed(context);
+        },
+        child: Center( // Wrap the Row with Center
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 22),
+                padding: const EdgeInsets.only(right: 10),
                 child: Container(
                   width: 39,
                   height: 44,
                   decoration: const BoxDecoration(
                     color: Colors.transparent,
                   ),
-                  child: icon, // Use the provided icon here
+                  child: icon,
+                ),
+              ),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
           ),
-          Center(
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
