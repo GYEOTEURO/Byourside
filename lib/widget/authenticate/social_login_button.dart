@@ -16,26 +16,36 @@ class SocialLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var deviceWidth = MediaQuery.of(context).size.width;
+    var deviceHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      width: 328,
-      height: 43.96,
+      width: deviceWidth * 0.85,
+      height: deviceHeight * 0.06,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(deviceWidth * 0.11),
         color: color,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2), // Shadow color
+            blurRadius: 6, // Spread of the shadow
+            offset: const Offset(0, 3), // Shadow offset (x, y)
+          ),
+        ],
       ),
       child: TextButton(
         onPressed: () async {
           onPressed(context);
         },
-        child: Center( // Wrap the Row with Center
+        child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: EdgeInsets.only(right: deviceWidth * 0.024),
                 child: Container(
-                  width: 39,
-                  height: 44,
+                  width: deviceWidth * 0.12,
+                  height: deviceHeight * 0.05,
                   decoration: const BoxDecoration(
                     color: Colors.transparent,
                   ),
@@ -44,9 +54,9 @@ class SocialLoginButton extends StatelessWidget {
               ),
               Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
-                  fontSize: 19,
+                  fontSize: deviceWidth * 0.048,
                   fontWeight: FontWeight.w400,
                 ),
               ),
