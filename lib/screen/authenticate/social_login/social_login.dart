@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:byourside/constants/colors.dart';
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/constants/auth_icons.dart';
-import 'package:byourside/widget/authenticate/policy_link.dart';
-import 'package:byourside/widget/authenticate/social_login_button.dart';
+import 'package:byourside/widget/authenticate/login/policy_link.dart';
+import 'package:byourside/widget/authenticate/login/social_login_button.dart';
 import 'package:byourside/screen/authenticate/policy/personal_data.dart';
 import 'package:byourside/screen/authenticate/policy/personal_policy.dart';
 
