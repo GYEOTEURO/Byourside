@@ -35,8 +35,9 @@ class _Mypage extends State<Mypage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        myPageOptions(context, '기타', constants.etc),
         myPageOptions(context, '내 활동', constants.myActivity),
+        const SizedBox(height: 15),
+        myPageOptions(context, '기타', constants.etc),
       ]
     );
   }

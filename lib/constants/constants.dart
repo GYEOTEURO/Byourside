@@ -58,10 +58,10 @@ List<Map<String, dynamic>> etc = [
     'name' : '설정',
     'page' : Setting(options: setting)
   }, 
-  {
-    'name' : '개발자에게 문의하기',
-    'page' : ToDeveloper()
-  },
+  // {
+  //   'name' : '개발자에게 문의하기',
+  //   'page' : ToDeveloper()
+  // },
   {
     'name' : '로그아웃',
     'page' : MyCommunityPost()
