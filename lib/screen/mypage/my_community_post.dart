@@ -20,7 +20,7 @@ class _MyCommunityPostState extends State<MyCommunityPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: titleOnlyAppbar(context, widget.title),
-      body: streamCommunityPost(() => loadData.readCreatePost(uid: user!.uid), [])
+      body: streamCommunityPost(() => loadData.readCreatePost(uid: user!.uid))
     );
   }
 }

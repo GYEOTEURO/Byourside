@@ -14,7 +14,7 @@ class LoadData{
 
   Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String disabilityType}) {
     if(category == '전체') {
-      return firestore.collectionGroup('posts')
+      return firestore.collectionGroup('community_posts')
       .where('disabilityType', whereIn: [disabilityType, '전체'])
       .orderBy('createdAt', descending: true)
       .snapshots()
@@ -24,7 +24,7 @@ class LoadData{
     else{
       return firestore.collection('community')
       .doc(category)
-      .collection('posts')
+      .collection('community_posts')
       .where('disabilityType', whereIn: [disabilityType, '전체'])
       .orderBy('createdAt', descending: true)
       .snapshots()
@@ -47,7 +47,7 @@ class LoadData{
 
 
   Stream<List<CommunityPostModel>> readCreatePost({required String uid}) {
-      return firestore.collectionGroup('posts')
+      return firestore.collectionGroup('community_posts')
       .where('uid', isEqualTo: uid)
       .orderBy('createdAt', descending: true)
       .snapshots()
@@ -56,7 +56,7 @@ class LoadData{
   }
 
   Stream<List<CommunityPostModel>> readScrapPost({required String collectionName, required String uid}) {
-      return firestore.collectionGroup('posts')
+      return firestore.collectionGroup('community_posts')
       .where('scrapsUser', arrayContains: uid)
       .orderBy('createdAt', descending: true)
       .snapshots()
@@ -65,16 +65,14 @@ class LoadData{
   }
 
 
-  // // 검색을 위한 쿼리 비교
-  // Stream<List<CommunityPostModel>> readSearchDocs(String query,
-  //         {required String collectionName}) =>
-  //         firestore
-  //         .collection(collectionName)
-  //         .where('keyword', arrayContainsAny: [query])
-  //         .orderBy('datetime', descending: true)
-  //         .snapshots()
-  //         .map((snapshot) => snapshot.docs
-  //             .map((doc) => CommunityPostModel.fromMap(doc))
-  //             .toList());
+  // 검색을 위한 쿼리 비교
+  Stream<List<CommunityPostModel>> searchCommunityPosts(String query) {
+          return firestore.collectionGroup('community_posts')
+          .where('keyword', arrayContainsAny: [query])
+          .orderBy('createdAt', descending: true)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))
+          .toList());
+  }
 
 }
