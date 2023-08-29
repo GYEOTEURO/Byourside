@@ -50,6 +50,7 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
                 children: [
                   Text(
                     content,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: colors.textColor,
                       fontSize: 12,
@@ -60,11 +61,11 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
                   ),
               ])
             ),
-            const SizedBox(width: 20),
+            const SizedBox(width: 10),
             if(image.isNotEmpty)
             Container(
-              height: MediaQuery.of(context).size.height / 10,
-              width: MediaQuery.of(context).size.height / 10,
+              height: MediaQuery.of(context).size.height / 10.5,
+              width: MediaQuery.of(context).size.height / 10.5,
               decoration: ShapeDecoration(
                 image: DecorationImage(
                   image: NetworkImage(image[0]),
@@ -73,7 +74,12 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-            ),
+            )
+            else 
+              Container(
+                height: MediaQuery.of(context).size.height / 10.5,
+                width: MediaQuery.of(context).size.height / 10.5,
+            )
           ],
   ));
 }
@@ -89,9 +95,9 @@ Widget _buildBottomSide(Widget createdAt, String likes, String scraps) {
         Container(
           child: Row(
             children: [
-              _buildLikesAndScraps(count: scraps, icon: customIcons.communityPostListScraps),
-              const SizedBox(width: 6),
               _buildLikesAndScraps(count: likes, icon: customIcons.communityPostListLikes),
+              const SizedBox(width: 6),
+              _buildLikesAndScraps(count: scraps, icon: customIcons.communityPostListScraps),
       ],
     ),
   )
@@ -119,7 +125,7 @@ Widget _buildLikesAndScraps({required String count, required icon}) {
 }
 
 Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
-    TimeConvertor createdAt = TimeConvertor(createdAt: post!.createdAt);
+    TimeConvertor createdAt = TimeConvertor(createdAt: post!.createdAt, fontSize: 10.0);
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -135,7 +141,7 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
       },
       child: Container(
         height: height / 6,
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
         child: Column(
         children: [
           _buildTopSide(context, post.category, post.title),
@@ -149,55 +155,4 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
         ],
       ),
     ));
-
-    // return SizedBox(
-    //     height: height / 7,
-    //     child: Card(
-    //         //semanticContainer: true,
-    //         elevation: 2,
-    //         child: InkWell(
-    //             //Read Document
-    //             onTap: () {
-    //               HapticFeedback.lightImpact(); // 약한 진동
-    //               Navigator.push(
-    //                   context,
-    //                   MaterialPageRoute(
-    //                       builder: (context) => CommunityPost(post: post)
-    //                       ));
-    //             },
-    //             child: Container(
-    //               padding: const EdgeInsets.all(2),
-    //               margin: const EdgeInsets.fromLTRB(12, 10, 8, 10),
-    //               child: Row(
-    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                   children: [
-    //                     Expanded(
-    //                         child: Column(
-    //                       crossAxisAlignment: CrossAxisAlignment.start,
-    //                       children: [
-    //                         Container(
-    //                             margin: const EdgeInsets.fromLTRB(0, 5, 0, 12),
-    //                             child: Text(post.title,
-    //                                 semanticsLabel: post.title,
-    //                                 overflow: TextOverflow.fade,
-    //                                 maxLines: 1,
-    //                                 softWrap: false,
-    //                                 style: const TextStyle(
-    //                                     color: colors.textColor,
-    //                                     fontSize: 18,
-    //                                     fontWeight: FontWeight.bold,
-    //                                     fontFamily: fonts.font))),
-    //                         createdAt,
-    //                       ],
-    //                     )),
-    //                     // if (post.images.isDefinedAndNotNull)
-    //                     //   Semantics(
-    //                     //       label: post.imgInfos![0],
-    //                     //       child: Image.network(
-    //                     //         post.images![0],
-    //                     //         width: width * 0.2,
-    //                     //         height: height * 0.2,
-    //                     //       )),
-    //                   ]),
-    //             ))));
-  }
+}

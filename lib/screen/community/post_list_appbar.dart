@@ -1,16 +1,13 @@
-import 'package:byourside/constants/icons.dart';
 import 'package:byourside/screen/mypage/my_scrap.dart';
-import 'package:byourside/widget/category_buttons.dart';
-import 'package:byourside/screen/community/controller/disability_type_controller.dart';
-import 'package:byourside/screen/community/search_page.dart';
 import 'package:byourside/widget/change_disability_type.dart';
+import 'package:byourside/widget/fully_rounded_rectangle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CommunityPostListAppBar extends StatefulWidget implements PreferredSizeWidget {
   CommunityPostListAppBar(
@@ -60,8 +57,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
             )),
           )),
           leading: Container(
-            width: 100,
-            height: 100 / 3,
+            //height: 22,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             child: ElevatedButton(
               onPressed: () {
