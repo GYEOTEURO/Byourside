@@ -22,10 +22,18 @@ class CommunityPost extends StatefulWidget {
 class _CommunityPostState extends State<CommunityPost> {
   final scrollController = Get.put(ScrollDownForComment());
 
+  int likesCount = 0;
+
+  void updateLikesCount(int newLikesCount) {
+    setState(() {
+      likesCount = newLikesCount;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommunityPostAppBar(post: widget.post),
+      appBar: CommunityPostAppBar(post: widget.post, updateLikesCount: updateLikesCount),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -39,10 +47,10 @@ class _CommunityPostState extends State<CommunityPost> {
                         margin: const EdgeInsets.all(7),
                         padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
                         child: CommunityPostContent(
-                            post : widget.post)),
+                            post : widget.post, updateLikesCount: updateLikesCount)),
                     Container(
                         margin: const EdgeInsets.all(7),
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 70),
                         child: CommentList(
                             collectionName: 'community_comment',
                             post: widget.post)),

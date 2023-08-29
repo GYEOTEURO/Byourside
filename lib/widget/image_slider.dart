@@ -20,22 +20,17 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-
-    double width = MediaQuery.of(context).size.width;
-
     return Column(children: [
-      Container(
-          padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-          child: CarouselSlider(
+      CarouselSlider(
               items: List.generate(widget.images.length, (index) {
                 return SizedBox(
-                    width: width * 0.7,
+                  width: MediaQuery.of(context).size.width * 0.87,
                     child: Semantics(
                         label: widget.imgInfos[index],
-                        child: Image.network(widget.images![index])));
+                        child: Image.network(widget.images[index])));
               }),
               options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  //height: MediaQuery.of(context).size.width * 0.87,
                   initialPage: 0,
                   autoPlay: false,
                   enlargeCenterPage: true,
@@ -46,14 +41,15 @@ class _ImageSliderState extends State<ImageSlider> {
                     setState(() {
                       _current = idx;
                     });
-                  }))),
+                  })),
+                  const SizedBox(height: 12),
       Semantics(
         label: '현재 보이는 사진 순서 표시',
         child: CarouselIndicator(
           count: widget.images.length,
           index: _current,
           color: Colors.black26,
-          activeColor: colors.primaryColor,
+          activeColor: colors.textColor,
         ),
       ),
     ]);
