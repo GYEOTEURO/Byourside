@@ -1,4 +1,3 @@
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/user_block_list_controller.dart';
@@ -16,10 +15,12 @@ class MyBlock extends StatefulWidget {
 }
 
 class _MyBlockState extends State<MyBlock> {
-  Widget _buildListItem(List<String> blockedUser) {
+  final userBlockListController = Get.put(UserBlockListController());
+
+  Widget _buildListItem() {
     return SingleChildScrollView(
         padding: const EdgeInsets.all(30),
-        child: blockedUser!.isEmpty == true ?
+        child: userBlockListController.blockedUser.isEmpty == true ?
                 const Center(
                     child: Text('없음',
                         semanticsLabel: '차단한 사용자 없음',
@@ -29,7 +30,7 @@ class _MyBlockState extends State<MyBlock> {
                           fontWeight: FontWeight.w600,
                         )))
               : Column(
-                    children: blockedUser.map((e) => 
+                    children: userBlockListController.blockedUser.map((e) => 
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -47,6 +48,7 @@ class _MyBlockState extends State<MyBlock> {
                                       ),
                                       onPressed: () {
                                         HapticFeedback.lightImpact(); // 약한 진동
+                                        userBlockListController.removeBlockedUser(e);
                                       },
                                       child: const Text('차단 해제',
                                           semanticsLabel: '차단 해제',
@@ -62,12 +64,9 @@ class _MyBlockState extends State<MyBlock> {
 
   @override
   Widget build(BuildContext context) {
-
-    final userBlockListController = Get.put(UserBlockListController());
-    
     return Scaffold(
       appBar: titleOnlyAppbar(context, widget.title),
-      body: _buildListItem(userBlockListController.blockedUser)
+      body: _buildListItem()
     );}
 
 }
