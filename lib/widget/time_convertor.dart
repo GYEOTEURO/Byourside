@@ -5,8 +5,9 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 
 class TimeConvertor extends StatelessWidget {
   final Timestamp createdAt;
+  final double fontSize;
 
-  const TimeConvertor({super.key, required this.createdAt});
+  const TimeConvertor({super.key, required this.createdAt, required this.fontSize});
 
   String formatTimeAgo(Duration difference) {
     if (difference.inMinutes < 60) {
@@ -31,9 +32,9 @@ class TimeConvertor extends StatelessWidget {
 
     return Text(
       formatTimeAgo(difference),
-      style: const TextStyle(
+      style: TextStyle(
         color: colors.subColor,
-        fontSize: fonts.createdAtPt,
+        fontSize: fontSize,
         fontFamily: fonts.font,
         fontWeight: FontWeight.w400
       )
