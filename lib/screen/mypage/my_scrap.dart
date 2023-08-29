@@ -34,16 +34,19 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
       body: Column(
         children: [
           Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: _tabBar()
           ),
-          TabBarView(
+          Expanded(
+            child: TabBarView(
               controller: tabController,
               children: [
-                streamCommunityPost(() => loadData.readScrapPost(collectionName: 'community', uid: user!.uid), []),
-                streamCommunityPost(() => loadData.readScrapPost(collectionName: 'community', uid: user!.uid), []),
+                streamCommunityPost(() => loadData.readScrapPost(collectionName: 'community', uid: user!.uid)),
+                Container()
                 //streamCommunityPost(() => loadData.readScrapPost(collectionName: 'autoInformation', uid: user!.uid), []),
               ],
             ),
+          )
       ]),
     );
   }
@@ -53,6 +56,9 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
       controller: tabController,
       labelColor: colors.textColor,
       unselectedLabelColor: colors.subColor,
+      dividerColor: colors.subColor,
+      indicatorColor: colors.textColor,
+      indicatorWeight: 1,
       labelStyle: const TextStyle(
         fontSize: 13,
         fontFamily: fonts.font,
