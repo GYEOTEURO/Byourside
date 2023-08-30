@@ -61,6 +61,7 @@ class _CreateCommentState extends State<CreateComment> {
                     )
                )
               )),
+              const SizedBox(width: 15),
               fullyRoundedRectangleButton('입력', 
               () {
                   HapticFeedback.lightImpact(); // 약한 진동

@@ -15,7 +15,7 @@ class SaveData {
 
   // 커뮤니티 문서 생성
   addCommunityPost(String category, CommunityPostModel post) async {
-    firestore.collection('community').doc(category).collection('posts').add(post.convertToDocument());
+    firestore.collection('community').doc(category).collection('community_posts').add(post.convertToDocument());
   }
 
   // image 파일 있을때, firebase storage에 업로드 후 firestore에 저장할 image url 다운로드 
@@ -39,7 +39,7 @@ class SaveData {
 
   // 문서 삭제
   deleteCommunityPost(String category, String documentID) async {
-    await firestore.collection('community').doc(category).collection('posts').doc(documentID).delete();
+    await firestore.collection('community').doc(category).collection('community_posts').doc(documentID).delete();
   }
 
   // 댓글 저장
@@ -54,7 +54,7 @@ class SaveData {
 
    // 좋아요/스크랩 추가
   addLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
-    DocumentReference document = firestore.collection('community').doc(category).collection('posts').doc(documentID);
+    DocumentReference document = firestore.collection('community').doc(category).collection('community_posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
@@ -67,7 +67,7 @@ class SaveData {
   
   // 좋아요/스크랩 취소
   cancelLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
-    DocumentReference document = firestore.collection('community').doc(category).collection('posts').doc(documentID);
+    DocumentReference document = firestore.collection('community').doc(category).collection('community_posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
@@ -83,14 +83,9 @@ class SaveData {
     await firestore.collection('report').doc(collectionName).collection(postOrComment).doc(id).set({ 'check' : false });
   }
 
-  // 차단 신청
-  addBlock(String uid, String? blockUid) async {
-    await firestore.collection('userInfo').doc(uid).update({'blockedUser': FieldValue.arrayUnion([blockUid])});
-  }
-
-  // 차단 해제
-  cancelBlock(String uid, String blockUid) async {
-    await firestore.collection('userInfo').doc(uid).update({'blockedUser': FieldValue.arrayRemove([blockUid])});
+  // 차단 목록 변경
+  changeBlock(String uid, List<String>? blockedUsers) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': blockedUsers});
   }
 
   // 개발자에게 문의하기

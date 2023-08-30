@@ -104,4 +104,3 @@ final profile = SvgPicture.asset(
   'assets/icons/profile.svg',
   semanticsLabel: '프로필사진'
 );
-

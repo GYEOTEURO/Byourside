@@ -39,30 +39,32 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
         child: Text(
           optionName,
           style: const TextStyle(
-            color: colors.textColor,
-            fontSize: 15,
-            fontFamily: fonts.font,
-            fontWeight: FontWeight.w700,
-            height: 1.53,
-          ),
+              color: colors.textColor,
+              fontSize: 15,
+              fontFamily: fonts.font,
+              fontWeight: FontWeight.w700,
+              height: 1.53,
+            ),
+          ), 
         ),
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        height: MediaQuery.of(context).size.height / 15 * options.length,
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 0.50, color: colors.bgrColor),
-            borderRadius: BorderRadius.circular(10),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height / 14.5 * options.length,
+          decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 0.50, color: colors.subColor),
+                  borderRadius: BorderRadius.circular(10),
+              ),
           ),
-        ),
-        child: Column(
-          children: [
-            for (int i = 0; i < options.length; i++)
-              OutlinedButton(
-                onPressed: () {
-                  HapticFeedback.lightImpact(); // 약한 진동
-                  if (options[i].containsKey('action')) {
+          child: Column(
+            children: [
+              for(int i = 0; i < options.length; i++)
+              Column(
+                children: [
+                OutlinedButton(
+                  onPressed: () {
+                    HapticFeedback.lightImpact(); // 약한 진동
+                    if (options[i].containsKey('action')) {
                     options[i]['action'](context);
                   }
                   if (options[i].containsKey('page')) {
@@ -74,29 +76,32 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
                     );
                   }
                 },
-                style: OutlinedButton.styleFrom(
-                  minimumSize: Size(MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).size.height / 16),
-                  elevation: 0,
-                  side: const BorderSide(color: Colors.white),
-                ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    options[i]['name'],
-                    style: const TextStyle(
-                      color: colors.textColor,
-                      fontSize: 15,
-                      fontFamily: fonts.font,
-                      fontWeight: FontWeight.w400,
-                      height: 1.20,
-                    ),
+                  style: OutlinedButton.styleFrom(
+                    maximumSize: Size(MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).size.height / 17),
+                    elevation: 0,
+                    side: const BorderSide(color: Colors.white),
                   ),
-                ),
-              ),
-            const Divider(color: colors.bgrColor, thickness: 1),
-          ],
-        ),
-      ),
-    ],
-  );
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      options[i]['name'],
+                      style: const TextStyle(
+                        color: colors.textColor,
+                        fontSize: 15,
+                        fontFamily: fonts.font,
+                        fontWeight: FontWeight.w400,
+                        height: 1.20,
+                      ),
+                    )
+                )),
+                i != (options.length -1) ?
+                Container(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: const Divider(color: colors.subColor, thickness: 1)
+                )
+                : Container()
+              ])
+          ])
+        )
+    ]);
 }

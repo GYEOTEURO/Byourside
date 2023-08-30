@@ -433,21 +433,25 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
               // if가 한 줄이라도 중괄호를 쓰자 ! (추후에 문제가 발생할 수 있음)-> lints 규칙에 있는 거 사용 !
               if (_categories.category == '자유게시판') _categories.category = '자유';
 
+              // Firestore에 Save하는 코드
+              //
               // CommunityPostModel postData = CommunityPostModel(
-              //     uid: user!.uid,
-              //     nickname: user!.displayName,
-              //     title: _title.text,
-              //     content: _content.text,
-              //     category: _categories.category,
-              //     type: _categories.type,
-              //     datetime: Timestamp.now(),
-              //     images: urls,
-              //     imgInfos: imgInfos,
-              //     likes: 0,
-              //     likesPeople: [],
-              //     scrapPeople: [],
-              //     keyword: _title.text.split(' '));
-              // saveData.addCommunityPost('communityPost', postData);
+              //   uid: user!.uid,
+              //   nickname: user!.displayName!,
+              //   title: _title.text,
+              //   content: _content.text,
+              //   category: _categories.category,
+              //   disabilityType: _categories.type,
+              //   createdAt: Timestamp.now(),
+              //   images: urls,
+              //   imgInfos: imgInfos,
+              //   likes: 0,
+              //   scraps: 0,
+              //   likesUser: [],
+              //   scrapsUser: [],
+              //   keyword: _title.text.split(' '));
+
+              // saveData.addCommunityPost(_categories.category, postData);
             }
           }
         },

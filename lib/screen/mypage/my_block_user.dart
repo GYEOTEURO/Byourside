@@ -1,4 +1,3 @@
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/user_block_list_controller.dart';
@@ -16,10 +15,12 @@ class MyBlock extends StatefulWidget {
 }
 
 class _MyBlockState extends State<MyBlock> {
-  Widget _buildListItem(List<String> blockedUser) {
+  final userBlockListController = Get.put(UserBlockListController());
+
+  Widget _buildListItem() {
     return SingleChildScrollView(
         padding: const EdgeInsets.all(30),
-        child: blockedUser!.isEmpty == true ?
+        child: userBlockListController.blockedUser.isEmpty == true ?
                 const Center(
                     child: Text('없음',
                         semanticsLabel: '차단한 사용자 없음',
@@ -29,8 +30,10 @@ class _MyBlockState extends State<MyBlock> {
                           fontWeight: FontWeight.w600,
                         )))
               : Column(
-                    children: blockedUser.map((e) => 
-                            Row(
+                    children: userBlockListController.blockedUser.map((e) => 
+                            Column(
+                              children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(e,
@@ -40,34 +43,45 @@ class _MyBlockState extends State<MyBlock> {
                                         fontFamily: fonts.font,
                                         fontWeight: FontWeight.w600,
                                       )),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: colors.primaryColor,
-                                        foregroundColor: Colors.white,
-                                      ),
-                                      onPressed: () {
-                                        HapticFeedback.lightImpact(); // 약한 진동
-                                      },
-                                      child: const Text('차단 해제',
-                                          semanticsLabel: '차단 해제',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: fonts.font,
-                                            fontWeight: FontWeight.w600,
-                                          )))
-                                ]))
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          userBlockListController.removeBlockedUser(e);
+                                        },
+                                        style: OutlinedButton.styleFrom(
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(93),
+                                          side: const BorderSide(
+                                            width: 0.50,
+                                            color: colors.subColor,
+                                          ),
+                                          )),
+                                          child: const Text(
+                                            '차단 해제',
+                                            semanticsLabel: '차단 해제',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: colors.subColor,
+                                              fontSize: 13,
+                                              fontFamily: fonts.font,
+                                              fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ),
+                                ]),
+                                const Divider(color: colors.bgrColor, thickness: 1)
+                                ]),
+                              )
                         .toList())
             );
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final userBlockListController = Get.put(UserBlockListController());
-    
     return Scaffold(
       appBar: titleOnlyAppbar(context, widget.title),
-      body: _buildListItem(userBlockListController.blockedUser)
+      body: _buildListItem()
     );}
 
 }

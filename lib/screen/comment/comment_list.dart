@@ -31,6 +31,7 @@ class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
   final SaveData saveData = SaveData();
+  final userBlockListController = Get.put(UserBlockListController());
 
   Widget _numberOfComments(int countComments){
     return Container(
@@ -49,11 +50,10 @@ class _CommentListState extends State<CommentList> {
 
 
   Widget _buildListItem(String? collectionName, String? documentID, CommentModel? comment) {
-    TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt);
-    String mentionedNickName = comment.content.split(' ')[0];
+    TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt, fontSize: 10.0);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,6 +64,7 @@ class _CommentListState extends State<CommentList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       comment.nickname,
@@ -74,32 +75,23 @@ class _CommentListState extends State<CommentList> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
+                    IconButton(
                         icon: customIcons.add_ons, 
                         onPressed: (){ 
                           customBottomSheet(context, comment.uid == user!.uid, 
-                            () { deleteComment(context, '${widget.collectionName}_comment', widget.post.id!, comment.id!); }, 
+                            () { deleteComment(context, widget.collectionName, widget.post.id!, comment.id!); }, 
                             () { reportComment(context, widget.collectionName, comment.id!); }, 
-                            () { blockComment(context, user!.uid, comment.uid); });
+                            () { blockComment(context, user!.uid, comment.nickname); });
                         }
-                      )
-                    ),
-                    const Spacer(),
-                    Container(
-                      width: 24,
-                      height: 24,
-                      decoration: const BoxDecoration(
-                        color: Color(0x00FF9C9C),
-                        shape: BoxShape.circle,
-                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  mentionedNickName,
+                comment.content.split(' ')[0].contains('@') == true ?
+                Row(
+                  children: [
+                    Text(
+                  comment.content.split(' ')[0],
                   style: const TextStyle(
                     color: colors.mentionColor,
                     fontSize: 12,
@@ -108,6 +100,15 @@ class _CommentListState extends State<CommentList> {
                   ),
                 ),
                 Text(
+                  comment.content.replaceFirst(comment.content.split(' ')[0], ''),
+                  style: const TextStyle(
+                    color: Color(0xFF1D1E1E),
+                    fontSize: 12,
+                    fontFamily: fonts.font,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )])
+                : Text(
                   comment.content,
                   style: const TextStyle(
                     color: Color(0xFF1D1E1E),
@@ -123,7 +124,7 @@ class _CommentListState extends State<CommentList> {
                     const Spacer(),
                     OutlinedButton(
                       onPressed: () {
-                        CreateComment.content.text += '@${comment.nickname} ';
+                        CreateComment.content.text = '@${comment.nickname} ';
                       },
                       style: OutlinedButton.styleFrom(
                         elevation: 0,
@@ -131,14 +132,14 @@ class _CommentListState extends State<CommentList> {
                         borderRadius: BorderRadius.circular(93),
                         side: const BorderSide(
                           width: 0.50,
-                          color: colors.bgrColor,
+                          color: colors.subColor,
                         ),
                         )),
                         child: const Text(
                               '언급하기',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: colors.bgrColor,
+                                color: colors.subColor,
                                 fontSize: 13,
                                 fontFamily: fonts.font,
                                 fontWeight: FontWeight.w400
@@ -159,7 +160,6 @@ class _CommentListState extends State<CommentList> {
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
     String documentID = widget.post.id!;
-    final userBlockListController = Get.put(UserBlockListController());
 
     List<String>? blockedUser = userBlockListController.blockedUser ?? [];
 
@@ -177,7 +177,7 @@ class _CommentListState extends State<CommentList> {
                   shrinkWrap: true, //ListView in ListView를 가능하게
                   itemBuilder: (_, index) {
                     CommentModel comment = snapshots.data![index];
-                    if (blockedUser.contains(comment.uid)) {
+                    if (blockedUser.contains(comment.nickname)) {
                       return Container();
                     } else {
                       return _buildListItem(collectionName, documentID, comment);
@@ -208,9 +208,9 @@ class _CommentListState extends State<CommentList> {
     Navigator.pop(context);
   }
 
-  blockComment(BuildContext context, String uid, String? blockUid){
+  blockComment(BuildContext context, String uid, String blockUid){
     Navigator.pop(context);
-    saveData.addBlock(uid, blockUid);
+    userBlockListController.addBlockedUser(blockUid);
   }
 
 }
