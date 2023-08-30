@@ -24,51 +24,81 @@ class AuthController extends GetxController {
     ever(_user, _moveToPage);
   }
 
-  _moveToPage(User? user) async {
-    print(user);
-    Get.offAll(() => const SocialLogin());
 
-    // if (user == null) {
-    //   Get.offAll(() => const SocialLogin());
-    // } else {
-    //   bool isUserSetUp = await checkIfUserSetUp(user.uid);
-    //   if (isUserSetUp) {
-    //     Get.offAll(() => const SetupUser());
-    //     // Get.offAll(() => const BottomNavBar());
-    //   } else {
-    //     Get.offAll(() => const SetupUser());
-    //   }
-    // }
+  _moveToPage(User? user) async {
+    if (user == null) {
+      Get.offAll(() => const SocialLogin());
+    } else {
+      print(user);
+      bool isUserSetUp = await checkIfUserSetUp(user.uid);
+      if (isUserSetUp) {
+        // Get.offAll(() => const SetupUser());
+        Get.offAll(() => const BottomNavBar());
+      } else {
+        Get.offAll(() => const SetupUser());
+      }
+    }
+  }
+
+
+  void handleUserInfoCompletion() async {
+    AuthController.instance._moveToPage(FirebaseAuth.instance.currentUser);
   }
 
 
   Future<bool> checkIfUserSetUp(String userId) async {
   try {
-    // Get a reference to the user's document in the 'userInfo' collection
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection('userInfo')
         .doc(userId)
         .get();
 
-    // Check if the document exists
     if (snapshot.exists) {
-      // Check if the necessary fields for user setup are filled
       Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
       if (userData != null && userData.containsKey('nickname')) {
-        return true; // User setup is complete
+        return true;
       }
     }
-    return false; // User setup is not complete
+    return false;
   } catch (e) {
     print('Error checking user setup: $e');
-    return false; // Error occurred, assume user setup is not complete
+    return false; 
   }
 }
-
   
   void logout() {
     authentication.signOut();
   }
+
+  
+  Future<void> deleteUser() async {
+    try {
+      var googleUser = await GoogleSignInApi.login();
+      var user = authentication.currentUser;
+
+      if (user != null && googleUser != null) {
+        OAuthCredential? credential;
+        var googleAuth = await googleUser.authentication;
+        
+         if (user.providerData.any((userInfo) => userInfo.providerId == 'google.com')) {
+          credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+        }
+        
+        if (credential != null) {
+          await user.reauthenticateWithCredential(credential);
+        }
+        
+        await user.delete();
+        
+      }
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
 
   Future<UserCredential?> loginWithGoogle(BuildContext context) async {
     try {

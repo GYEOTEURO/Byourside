@@ -35,20 +35,23 @@ void handleDeleteAction(BuildContext context) async {
   if (confirmDelete) {
     CollectionReference userInfo = FirebaseFirestore.instance.collection('userInfo');
     User? user = FirebaseAuth.instance.currentUser;
-    userInfo.doc(user?.uid).delete();
-    authController.logout(); 
+    
+    if (user != null) {
+      userInfo.doc(user.uid).delete();
+      authController.deleteUser(); 
+    }
   }
 }
 
 class Setting extends StatefulWidget {
-  Setting({
+  const Setting({
     Key? key,
     required this.options
   }) : super(key: key);
 
-  String title = '설정';
+  final String title = '설정';
 
-  List<Map<String, dynamic>> options;
+  final List<Map<String, dynamic>> options;
 
   @override
   State<Setting> createState() => _SettingState();

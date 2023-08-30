@@ -1,3 +1,4 @@
+import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
@@ -69,6 +70,7 @@ class _SetupUserState extends State<SetupUser> {
         registrationPurpose: _selectedPurpose,
         userType: _selectedUserType,
       );
+      AuthController.instance.handleUserInfoCompletion();
     }
   }
 
