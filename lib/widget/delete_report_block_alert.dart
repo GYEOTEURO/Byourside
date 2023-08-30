@@ -3,7 +3,6 @@ import 'package:byourside/widget/outlined_rounded_rectangle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
-
 class DeleteReportBlockAlert extends StatelessWidget {
   final String message;
   final String subMessage;
@@ -22,7 +21,7 @@ class DeleteReportBlockAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(30),
       ),
       semanticLabel: message + subMessage,
       content: Column(
@@ -48,10 +47,15 @@ class DeleteReportBlockAlert extends StatelessWidget {
               fontSize: 10
             ),
           ),
-      ]),
+        ],
+      ),
       actions: [
-        fullyRoundedRectangleButton('취소하기', () => Navigator.pop(context)),
-        outlinedRoundedRectangleButton(buttonText, () { onPressed(); })
+        fullyRoundedRectangleButton('취소하기', () {
+          Navigator.of(context).pop(false); // Return false when canceled
+        }),
+        outlinedRoundedRectangleButton(buttonText, () {
+          onPressed();
+        }),
       ],
     );
   }

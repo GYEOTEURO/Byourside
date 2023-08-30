@@ -1,6 +1,5 @@
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;
@@ -10,22 +9,16 @@ Future<bool> showLogoutConfirmationDialog(BuildContext context) async {
   return await showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('로그아웃 하시겠습니까?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false), // User didn't confirm
-            child: const Text('아니오'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true), // User confirmed
-            child: const Text('예'),
-          ),
-        ],
+      return DeleteReportBlockAlert(
+        message: '로그아웃 하시겠습니까?',
+        subMessage: '',
+        buttonText: '로그아웃',
+        onPressed: () => Navigator.of(context).pop(true),
       );
     },
   );
 }
+
 
 Future<void> handleLogoutAction(BuildContext context) async {
   AuthController authController = AuthController.instance;

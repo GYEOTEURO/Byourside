@@ -1,4 +1,5 @@
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,23 +11,15 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 Future<bool> showDeleteConfirmationDialog(BuildContext context) async {
   return await showDialog(
     context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('회원 탈퇴 하시겠습니까?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false), // User didn't confirm
-            child: const Text('아니오'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true), // User confirmed
-            child: const Text('예'),
-          ),
-        ],
-      );
-    },
+    builder: (context) => DeleteReportBlockAlert(
+        message: '서비스를 탈퇴 하시겠습니까?',
+        subMessage: '탈퇴 시, 계정은 삭제되며 복구되지 않습니다.',
+        buttonText: '탈퇴하기',
+        onPressed: () => Navigator.of(context).pop(true),
+    ),
   );
 }
+
 
 void handleDeleteAction(BuildContext context) async {
   AuthController authController = AuthController.instance;
