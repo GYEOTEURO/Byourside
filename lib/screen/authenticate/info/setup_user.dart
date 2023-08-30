@@ -26,7 +26,7 @@ class SetupUser extends StatefulWidget {
 
 class _SetupUserState extends State<SetupUser> {
   final NicknameController _nicknameController = Get.find<NicknameController>();
-  late Map<String, String> location; 
+  Map<String, String>? location; 
   bool isUserDataStored = false;
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
