@@ -3,17 +3,18 @@ constants.dart : 앱에서 사용하는 각종 상수 값을 정리한 파일
 - 상수명 lowerCamelCase 스타일 따름 (Dart 권장 : PREFER using lowerCamelCase for constant names)
 */
 
-import 'package:byourside/screen/authenticate/policy/policy.dart';
+import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:byourside/screen/mypage/my_block_user.dart';
 import 'package:byourside/screen/mypage/my_community_post.dart';
 import 'package:byourside/screen/mypage/my_scrap.dart';
+import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/screen/mypage/setting.dart';
 import 'package:byourside/screen/mypage/to_developer.dart';
 
 // 제목 및 타이틀
-const String communityAddPostTitle = "커뮤니티 글쓰기";
-const String communityTitle = "소통 게시판";
-const String autoInformationTitle = "정보 게시판";
+const String communityAddPostTitle = '커뮤니티 글쓰기';
+const String communityTitle = '소통 게시판';
+const String autoInformationTitle = '정보 게시판';
 
 // 소통
 List<String> communityCategories = ['전체', '교육', '기관', '복지', '일상', '행정', '홍보'];
@@ -45,11 +46,11 @@ List<String> communityCategories = ['전체', '교육', '기관', '복지', '일
 List<Map<String, dynamic>> myActivity = [
   {
     'name' : '스크랩한 게시물',
-    'page' : MyScrap()
+    'page' : const MyScrap()
   }, 
   {
     'name' : '내가 쓴 게시물',
-    'page' : MyCommunityPost()
+    'page' : const MyCommunityPost()
   }
 ];
 
@@ -64,14 +65,14 @@ List<Map<String, dynamic>> etc = [
   // },
   {
     'name' : '로그아웃',
-    'page' : MyCommunityPost()
+    'action' : handleLogoutAction,
   }
 ];
 
 List<Map<String, dynamic>> setting = [
   {
     'name' : '차단목록',
-    'page' : MyBlock()
+    'page' : const MyBlock()
   }, 
   {
     'name' : '개인정보처리방침',
@@ -83,7 +84,7 @@ List<Map<String, dynamic>> setting = [
   },
   {
     'name' : '탈퇴하기',
-    'page' : MyCommunityPost()
+    'action' : handleDeleteAction,
   }
 ];
 

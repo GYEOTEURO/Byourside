@@ -1,13 +1,14 @@
-import 'package:byourside/model/authenticate/nickname_controller.dart';
+import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/app_bar.dart';
-import 'package:byourside/widget/authenticate/age_section.dart';
-import 'package:byourside/widget/authenticate/disability_type_button.dart';
-import 'package:byourside/widget/authenticate/location_section.dart';
-import 'package:byourside/widget/authenticate/nickname_section.dart';
-import 'package:byourside/widget/authenticate/purpose_select.dart';
-import 'package:byourside/widget/authenticate/user_type_button.dart';
+import 'package:byourside/widget/authenticate/setup/age_section.dart';
+import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
+import 'package:byourside/widget/authenticate/setup/location_section.dart';
+import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
+import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
+import 'package:byourside/widget/authenticate/setup/user_type_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +26,7 @@ class SetupUser extends StatefulWidget {
 
 class _SetupUserState extends State<SetupUser> {
   final NicknameController _nicknameController = Get.find<NicknameController>();
-  late Map<String, String> location; 
+  Map<String, String>? location; 
   bool isUserDataStored = false;
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
@@ -69,6 +70,7 @@ class _SetupUserState extends State<SetupUser> {
         registrationPurpose: _selectedPurpose,
         userType: _selectedUserType,
       );
+      AuthController.instance.handleUserInfoCompletion();
     }
   }
 

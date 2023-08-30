@@ -1,7 +1,7 @@
-import 'package:byourside/model/authenticate/auth_controller.dart';
-import 'package:byourside/model/authenticate/nickname_controller.dart';
-import 'package:byourside/screen/authenticate/info/setup_user.dart';
-import 'package:byourside/screen/authenticate/social_login/social_login.dart';
+import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
+import 'package:byourside/screen/authenticate/setup_user.dart';
+import 'package:byourside/screen/authenticate/social_login.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -160,7 +160,7 @@ class _MyAppState extends State<MyApp> {
             routes: {
               '/login': (context) => const SocialLogin(),
               '/bottom_nav': (context) => const BottomNavBar(),
-              '/user': (context) => SetupUser(),
+              '/user': (context) => const SetupUser(),
             },
           ),
         ),

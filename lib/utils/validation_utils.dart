@@ -1,4 +1,4 @@
-import 'package:byourside/model/authenticate/nickname_controller.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/widget/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +26,7 @@ class ValidationUtils {
     String selectedUserType,
     String selectedDisabilityType,
     String birthYear,
-    Map<String, String> location,
+    Map<String, String>? location,
     String selectedPurpose,
   ) {
     if (nicknameController.controller.text.isEmpty) {
@@ -52,7 +52,7 @@ class ValidationUtils {
       _showErrorDialog(context, '나이를 입력하세요');
       return false;
     }
-    if (location.isEmpty) {
+    if (location == null || location.isEmpty) { 
       _showErrorDialog(context, '위치를 선택하세요');
       return false;
     }

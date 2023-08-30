@@ -18,7 +18,7 @@ class _AppPurposeSelectionState extends State<AppPurposeSelection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildHeaderText(),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         buildDropdownButton(),
       ],
     );

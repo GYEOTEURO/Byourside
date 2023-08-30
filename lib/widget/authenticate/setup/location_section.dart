@@ -1,4 +1,4 @@
-import 'package:byourside/widget/authenticate/location_button.dart';
+import 'package:byourside/widget/authenticate/setup/location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/location.dart' as constants;
 

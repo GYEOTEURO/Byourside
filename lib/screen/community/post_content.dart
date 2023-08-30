@@ -1,6 +1,6 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/widget/image_slider.dart';
 import 'package:byourside/widget/time_convertor.dart';
@@ -38,7 +38,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
       ),
       const SizedBox(height: 12),
       Row(children: [
-        customIcons.profile,
+        custom_icons.profile,
         const SizedBox(width: 8),
         Text(
           post.nickname,
@@ -65,7 +65,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
       ),
       const SizedBox(height: 12),
       Container(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           alignment: Alignment.centerLeft,
           child: Wrap(
               children: [
@@ -98,7 +98,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
           ),
         ),
         const SizedBox(width: 10),
-        customIcons.communityPostListLikes,
+        custom_icons.communityPostListLikes,
         const SizedBox(width: 5),
         Text(
           '${post.likes}'
@@ -115,7 +115,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
           ),
         ),
         const SizedBox(width: 10),
-        customIcons.communityPostListScraps,
+        custom_icons.communityPostListScraps,
         const SizedBox(width: 5),
         Text(
           '${post.scraps}'
