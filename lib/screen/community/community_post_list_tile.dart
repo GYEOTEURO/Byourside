@@ -25,7 +25,8 @@ Widget _buildTopSide(BuildContext context, String category, String title) {
         Container(
           child: Text(
             title,
-            style: TextStyle(
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
               color: colors.textColor,
               fontSize: 14,
               fontFamily: fonts.font,
@@ -39,7 +40,7 @@ Widget _buildTopSide(BuildContext context, String category, String title) {
   );
 }
 
-Widget _buildMiddleSide(BuildContext context, String content, List<String> image) {
+Widget _buildMiddleSide(BuildContext context, String content, List<String> images, List<String> imgInfos) {
   return Container(
     width: MediaQuery.of(context).size.width,
     child: Row(
@@ -62,18 +63,14 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
               ])
             ),
             const SizedBox(width: 10),
-            if(image.isNotEmpty)
+            if(images.isNotEmpty)
             Container(
               height: MediaQuery.of(context).size.height / 10.5,
               width: MediaQuery.of(context).size.height / 10.5,
-              decoration: ShapeDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(image[0]),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+              child: Semantics(
+                label: imgInfos[0],
+                child: Image.network(images[0])
+              )
             )
             else 
               Container(
@@ -145,7 +142,7 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
         child: Column(
         children: [
           _buildTopSide(context, post.category, post.title),
-          _buildMiddleSide(context, post.content, post.images),
+          _buildMiddleSide(context, post.content, post.images, post.imgInfos),
           _buildBottomSide(createdAt, post.likes.toString(), post.scraps.toString()),
           const Divider(
             height: 1,
