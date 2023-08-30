@@ -1,6 +1,6 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/text.dart' as text;
-import 'package:byourside/screen/authenticate/social_login/social_login.dart';
+import 'package:byourside/screen/authenticate/social_login.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import 'package:byourside/model/authenticate/google_sign_in_api.dart';
-import 'package:byourside/screen/authenticate/info/setup_user.dart';
+import 'package:byourside/screen/authenticate/setup_user.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
