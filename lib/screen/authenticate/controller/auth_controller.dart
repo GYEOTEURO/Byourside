@@ -1,7 +1,10 @@
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -61,7 +64,9 @@ class AuthController extends GetxController {
     }
     return false;
   } catch (e) {
-    print('Error checking user setup: $e');
+    if (kDebugMode) {
+      print('Error checking user setup: $e');
+    }
     return false; 
   }
 }
@@ -149,9 +154,9 @@ class AuthController extends GetxController {
     Get.snackbar(
       'Error message',
       'User message',
-      backgroundColor: Colors.red,
+      backgroundColor: colors.errorColor,
       snackPosition: SnackPosition.BOTTOM,
-      titleText: const Text('Registration is Failed', style: TextStyle(color: Colors.white)),
+      titleText:  const Text(text.registrationFailedText, style: TextStyle(color: Colors.white)),
       messageText: Text(e.toString(), style: const TextStyle(color: Colors.white)),
     );
   }
