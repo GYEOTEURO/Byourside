@@ -9,21 +9,16 @@ import 'package:flutter/material.dart';
 class CommunityPostContent extends StatefulWidget {
   const CommunityPostContent(
       {super.key,
-      required this.post,
-      required this.updateLikesCount,});
+      required this.post});
 
   final CommunityPostModel post;
-  final ValueChanged<int> updateLikesCount;
 
   @override
   State<CommunityPostContent> createState() => _CommunityPostContentState();
 }
 
 class _CommunityPostContentState extends State<CommunityPostContent> {
-  int scrapsCount = 0;
-  int likesCount = 0;
-
-  Widget _buildPostContent(CommunityPostModel? post, updateLikesCount) {
+  Widget _buildPostContent(CommunityPostModel? post) {
     return Column(
       children: [
       const SizedBox(height: 5),
@@ -106,7 +101,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
         customIcons.communityPostListLikes,
         const SizedBox(width: 5),
         Text(
-          '${post.likes + likesCount}'
+          '${post.likes}'
         ),
           const SizedBox(width: 20),
             const Text(
@@ -123,7 +118,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
         customIcons.communityPostListScraps,
         const SizedBox(width: 5),
         Text(
-          '${post.scraps + scrapsCount}'
+          '${post.scraps}'
         ),
           ]),
         TimeConvertor(createdAt: post.createdAt, fontSize: 13.0)
@@ -136,6 +131,6 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
   @override
   Widget build(BuildContext context) {
     
-    return _buildPostContent(widget.post, widget.updateLikesCount);}
+    return _buildPostContent(widget.post);}
   }
 

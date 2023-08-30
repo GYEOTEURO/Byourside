@@ -31,7 +31,9 @@ class _MyBlockState extends State<MyBlock> {
                         )))
               : Column(
                     children: userBlockListController.blockedUser.map((e) => 
-                            Row(
+                            Column(
+                              children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(e,
@@ -41,23 +43,36 @@ class _MyBlockState extends State<MyBlock> {
                                         fontFamily: fonts.font,
                                         fontWeight: FontWeight.w600,
                                       )),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: colors.primaryColor,
-                                        foregroundColor: Colors.white,
-                                      ),
-                                      onPressed: () {
-                                        HapticFeedback.lightImpact(); // 약한 진동
-                                        userBlockListController.removeBlockedUser(e);
-                                      },
-                                      child: const Text('차단 해제',
-                                          semanticsLabel: '차단 해제',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: fonts.font,
-                                            fontWeight: FontWeight.w600,
-                                          )))
-                                ]))
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact(); // 약한 진동
+                                          userBlockListController.removeBlockedUser(e);
+                                        },
+                                        style: OutlinedButton.styleFrom(
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(93),
+                                          side: const BorderSide(
+                                            width: 0.50,
+                                            color: colors.subColor,
+                                          ),
+                                          )),
+                                          child: const Text(
+                                            '차단 해제',
+                                            semanticsLabel: '차단 해제',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: colors.subColor,
+                                              fontSize: 13,
+                                              fontFamily: fonts.font,
+                                              fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ),
+                                ]),
+                                const Divider(color: colors.bgrColor, thickness: 1)
+                                ]),
+                              )
                         .toList())
             );
   }

@@ -84,8 +84,8 @@ class SaveData {
   }
 
   // 차단 목록 변경
-  changeBlock(String uid, List<String> blockedUser) async {
-    await firestore.collection('userInfo').doc(uid).set({'blockedUser': blockedUser});
+  changeBlock(String uid, List<String>? blockedUsers) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': blockedUsers});
   }
 
   // 개발자에게 문의하기

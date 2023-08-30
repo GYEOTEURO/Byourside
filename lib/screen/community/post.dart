@@ -33,7 +33,7 @@ class _CommunityPostState extends State<CommunityPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommunityPostAppBar(post: widget.post, updateLikesCount: updateLikesCount),
+      appBar: CommunityPostAppBar(post: widget.post),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -46,8 +46,7 @@ class _CommunityPostState extends State<CommunityPost> {
                         color: Colors.white,
                         margin: const EdgeInsets.all(7),
                         padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
-                        child: CommunityPostContent(
-                            post : widget.post, updateLikesCount: updateLikesCount)),
+                        child: CommunityPostContent(post : widget.post)),
                     Container(
                         margin: const EdgeInsets.all(7),
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 70),

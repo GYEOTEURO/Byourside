@@ -1,4 +1,4 @@
-import 'package:byourside/widget/back_to_previous_page.dart';
+import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/change_disability_type.dart';
 import 'package:byourside/widget/disability_type_button.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
                         builder: (context) {
                           return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
                   });
-                  }),
+              }),
               Row(
                 children: [
                   goToScrapPage(context),

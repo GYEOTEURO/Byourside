@@ -28,7 +28,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
   String selectedChipValue = constants.communityCategories[0];
-  final userController = Get.put(UserController());
+  //final userController = Get.put(UserController());
 
   void _handleChipSelected(String value) {
     setState(() {

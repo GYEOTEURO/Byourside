@@ -1,7 +1,9 @@
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
+import 'package:byourside/screen/bottom_nav_bar.dart';
+import 'package:byourside/screen/community/post_list.dart';
 import 'package:byourside/user_block_list_controller.dart';
-import 'package:byourside/widget/back_to_previous_page.dart';
+import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/customBottomSheet.dart';
 import 'package:byourside/widget/likes_button.dart';
 import 'package:byourside/widget/scrap_button.dart';
@@ -13,12 +15,10 @@ import 'package:get/get.dart';
 class CommunityPostAppBar extends StatefulWidget implements PreferredSizeWidget {
   CommunityPostAppBar(
     {Key? key,
-    required this.post,
-    required this.updateLikesCount}) 
+    required this.post}) 
     : super(key: key);
 
   CommunityPostModel post;
-  final ValueChanged<int> updateLikesCount;
 
   @override
   State<CommunityPostAppBar> createState() => _CommunityPostAppBarState();
@@ -62,10 +62,7 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
           //automaticallyImplyLeading: true,
           leading: backToPreviousPage(context),
           actions: [
-            likesButton(isClicked(likesUser), likesUser, widget.post.category, widget.post.id!, user!.uid, (updatedLikesUser) {
-            updateLikes(updatedLikesUser);
-            widget.updateLikesCount(updatedLikesUser.length);
-          },),
+            likesButton(isClicked(likesUser), likesUser, widget.post.category, widget.post.id!, user!.uid, updateLikes),
             scrapsButton(isClicked(scrapsUser), scrapsUser, widget.post.category, widget.post.id!, user!.uid, updateScraps),
             IconButton(
               icon: customIcons.add_ons, 
@@ -80,7 +77,8 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
   }
 
 deletePost(BuildContext context, String category, String documentID, String collectionName){
-  Navigator.pushNamedAndRemoveUntil(context, '/BottomNavBar', (_) => false);
+  //Navigator.pushNamedAndRemoveUntil(context, '/bottom_nav', (_) => false);
+  Get.offAll(() => const CommunityPostList());
   saveData.deleteCommunityPost(category, documentID);
 }
 
@@ -90,7 +88,8 @@ reportPost(BuildContext context, String collectionName, String id){
 }
 
 blockPost(BuildContext context, String uid, String blockUid){
-  Navigator.pushNamedAndRemoveUntil(context, '/BottomNavBar', (_) => false);
+  //Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+  Get.offAll(() => const BottomNavBar());
   userBlockListController.addBlockedUser(blockUid);
 }
 

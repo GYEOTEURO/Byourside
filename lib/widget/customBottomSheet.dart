@@ -16,9 +16,9 @@ Future customBottomSheet(BuildContext context, bool isPostedUser, Function delet
                         bottomSheetButton(context, 4, constants.delete, () {delete();})
                       : Column(
                         children: <Widget>[
-                          bottomSheetButton(context, 8, constants.report, (){report();}),
+                          bottomSheetButton(context, 9, constants.report, (){report();}),
                           const Divider(thickness: 1, color: colors.subColor),
-                          bottomSheetButton(context, 8, constants.block, () {block();})
+                          bottomSheetButton(context, 9, constants.block, () {block();})
                         ],
                         ), 
               );
