@@ -2,7 +2,6 @@ import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as customIcons;
-import 'package:byourside/model/authenticate/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/screen/community/post_list_appbar.dart';
@@ -46,7 +45,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
 
   @override
   Widget build(BuildContext context) {
-   final userBlockListController = Get.put(UserBlockListController());
+   var userBlockListController = Get.put(UserBlockListController());
 
     return Scaffold(
       //appBar: CommunityPostListAppBar(onDisabilityTypeSelected: _handleDisabilityTypeSelected), 

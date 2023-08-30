@@ -34,7 +34,7 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: _tabBar()
           ),
           Expanded(

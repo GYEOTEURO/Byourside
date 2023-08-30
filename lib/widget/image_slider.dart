@@ -1,15 +1,13 @@
-import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class ImageSlider extends StatefulWidget {
-  ImageSlider({super.key, required this.images, required this.imgInfos});
+  const ImageSlider({super.key, required this.images, required this.imgInfos});
 
-  List<String> images;
-  List<String> imgInfos;
+  final List<String> images;
+  final List<String> imgInfos;
 
   @override
   State<ImageSlider> createState() => _ImageSliderState();
