@@ -1,4 +1,5 @@
 import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/screen/community/search_page.dart';
 import 'package:byourside/screen/mypage/my_scrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,7 +21,7 @@ Widget goToSearchPage(BuildContext context) {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const MyScrap()));
+                builder: (context) => const CommunitySearch()));
     });
 }
 

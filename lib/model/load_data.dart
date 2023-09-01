@@ -12,7 +12,7 @@ class LoadData{
       return userDocumentSnapshot;
   }
 
-  Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String disabilityType}) {
+  Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String? disabilityType}) {
     if(category == '전체') {
       return firestore.collectionGroup('community_posts')
       .where('disabilityType', whereIn: [disabilityType, '전체'])
