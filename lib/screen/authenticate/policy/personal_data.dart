@@ -1,6 +1,6 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/widget/back_to_previous_page.dart';
+import 'package:byourside/widget/icon_buttons.dart';
 import 'package:flutter/material.dart';
 
 class PersonalData extends StatefulWidget {

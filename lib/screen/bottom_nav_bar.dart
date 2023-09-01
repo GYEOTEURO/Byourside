@@ -1,4 +1,5 @@
 import 'package:byourside/screen/community/post_list.dart';
+import 'package:byourside/screen/community/save_community_data.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
@@ -18,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     Container(),
     const CommunityPostList(),
-    Container(),
+    SaveCommunityData(),
     Mypage(),
   ];
 

@@ -2,6 +2,7 @@ import 'package:byourside/model/authenticate/auth_controller.dart';
 import 'package:byourside/model/authenticate/nickname_controller.dart';
 import 'package:byourside/screen/authenticate/info/setup_user.dart';
 import 'package:byourside/screen/authenticate/social_login/social_login.dart';
+import 'package:byourside/user_block_list_controller.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -16,6 +17,8 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'model/authenticate/user_controller.dart';
 
 Future<bool> getPermission() async {
   // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
@@ -71,6 +74,8 @@ void main() async {
   ).then((value) {
     Get.put(AuthController());
     Get.put(NicknameController());
+    //Get.put(UserController());
+    //Get.put(UserBlockListController());
   });
 
   FlutterError.onError = (errorDetails) {
