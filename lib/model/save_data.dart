@@ -83,9 +83,14 @@ class SaveData {
     await firestore.collection('report').doc(collectionName).collection(postOrComment).doc(id).set({ 'check' : false });
   }
 
-  // 차단 목록 변경
-  changeBlock(String uid, List<String>? blockedUsers) async {
-    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': blockedUsers});
+  // 차단 목록 추가
+  addBlock(String uid, String blockedUser) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': FieldValue.arrayUnion([blockedUser])});
+  }
+
+  // 차단 목록 삭제
+  cancelBlock(String uid, String blockedUser) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': FieldValue.arrayRemove([blockedUser])});
   }
 
   // 개발자에게 문의하기
