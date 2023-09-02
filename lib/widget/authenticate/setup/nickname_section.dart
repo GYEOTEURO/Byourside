@@ -105,7 +105,6 @@ class NicknameSectionState extends State<NicknameSection> {
     _nicknameController.isNicknameChecked.value = true;
 
     _nicknameController.controller.addListener(() {
-      _nicknameController.isNicknameChecked.value = false;
     });
   }
 
