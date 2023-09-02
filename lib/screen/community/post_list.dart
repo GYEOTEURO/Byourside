@@ -15,9 +15,7 @@ import 'package:get/get.dart';
 import '../../model/load_data.dart';
 
 class CommunityPostList extends StatefulWidget {
-  const CommunityPostList(
-      {Key? key})
-      : super(key: key);
+  const CommunityPostList({Key? key}) : super(key: key);
 
   @override
   State<CommunityPostList> createState() => _CommunityPostListState();
@@ -34,6 +32,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
       selectedChipValue = value;
     });
   }
+
   //String? selectedDisabilityTypeValue = userController.userModel!.selectedType;
   String selectedDisabilityTypeValue = '발달';
 
@@ -45,59 +44,61 @@ class _CommunityPostListState extends State<CommunityPostList> {
 
   @override
   Widget build(BuildContext context) {
-   var userBlockListController = Get.put(UserBlockListController());
+    var userBlockListController = Get.put(UserBlockListController());
 
     return Scaffold(
-      //appBar: CommunityPostListAppBar(onDisabilityTypeSelected: _handleDisabilityTypeSelected), 
-      body: Column(
-        children: [
-          CommunityPostListAppBar(onDisabilityTypeSelected: _handleDisabilityTypeSelected),
+        //appBar: CommunityPostListAppBar(onDisabilityTypeSelected: _handleDisabilityTypeSelected),
+        body: Column(children: [
+          CommunityPostListAppBar(
+              onDisabilityTypeSelected: _handleDisabilityTypeSelected),
           SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: CategoryButtons(category: constants.communityCategories, onChipSelected: _handleChipSelected)
-          ),
+              scrollDirection: Axis.horizontal,
+              child: CategoryButtons(
+                  category: constants.communityCategories,
+                  onChipSelected: _handleChipSelected)),
           StreamBuilder<List<CommunityPostModel>>(
-            stream: loadData.readCommunityPosts(category: selectedChipValue, disabilityType: selectedDisabilityTypeValue),
-            builder: (context, snapshots) {
-              if (snapshots.hasData) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshots.data!.length,
-                    shrinkWrap: true,
-                    itemBuilder: (_, index) {
-                      CommunityPostModel post = snapshots.data![index];
-                      if (userBlockListController.blockedUser.contains(post.nickname)) {
-                        return Container();
-                      } else {
-                        return communityPostListTile(context, post);
-                      }
-                    })
-              );
-              } else {
-                return const SelectionArea(
-                    child: Center(
-                        child: Text(
-                          '없음',
-                          semanticsLabel: '없음',
-                          style: TextStyle(
-                            fontFamily: fonts.font,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                ));
-              }
-            })
-          ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          HapticFeedback.lightImpact(); // 약한 진동
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const CommunityAddPost()));
-        },
-        backgroundColor: colors.primaryColor,
-        child: customIcons.addPost,
-    ));
+              stream: loadData.readCommunityPosts(
+                  category: selectedChipValue,
+                  disabilityType: selectedDisabilityTypeValue),
+              builder: (context, snapshots) {
+                if (snapshots.hasData) {
+                  return Expanded(
+                      child: ListView.builder(
+                          itemCount: snapshots.data!.length,
+                          shrinkWrap: true,
+                          itemBuilder: (_, index) {
+                            CommunityPostModel post = snapshots.data![index];
+                            if (userBlockListController.blockedUser
+                                .contains(post.nickname)) {
+                              return Container();
+                            } else {
+                              return communityPostListTile(context, post);
+                            }
+                          }));
+                } else {
+                  return const SelectionArea(
+                      child: Center(
+                          child: Text(
+                    '없음',
+                    semanticsLabel: '없음',
+                    style: TextStyle(
+                      fontFamily: fonts.font,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )));
+                }
+              })
+        ]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            HapticFeedback.lightImpact(); // 약한 진동
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CommunityAddPost()));
+          },
+          backgroundColor: colors.primaryColor,
+          child: customIcons.addPost,
+        ));
   }
 }
