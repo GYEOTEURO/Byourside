@@ -117,7 +117,7 @@ class _SetupUserState extends State<SetupUser> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  NicknameSection(),  
+                  const NicknameSection(),  
                   const SizedBox(height: 20),
                   UserTypeSelection(
                     selectedType: _selectedUserType,

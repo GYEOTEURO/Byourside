@@ -1,18 +1,18 @@
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class NicknameSection extends StatefulWidget {
-  NicknameSection({super.key});
+  const NicknameSection({super.key});
 
   @override
-  _NicknameSectionState createState() => _NicknameSectionState();
+  NicknameSectionState createState() => NicknameSectionState();
 }
 
-class _NicknameSectionState extends State<NicknameSection> {
+class NicknameSectionState extends State<NicknameSection> {
   final NicknameController _nicknameController = Get.put(NicknameController());
   double _deviceWidth = 0;
   double _deviceHeight = 0;
@@ -33,22 +33,30 @@ class _NicknameSectionState extends State<NicknameSection> {
     return buildNicknameContent(context);
   }
 
+  double getRelativeWidth(double value) {
+    return _deviceWidth * value;
+  }
+
+  double getRelativeHeight(double value) {
+    return _deviceHeight * value;
+  }
+
   Widget buildNicknameContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(getRelativeWidth(0.05)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
-          children: [
-            Expanded(
+            children: [
+              Expanded(
                 child: buildNicknameTextField(),
               ),
-              const SizedBox(width: 16), 
+              SizedBox(width: getRelativeWidth(0.05)),
               buildCheckNicknameButton(context),
             ],
           ),
-          const SizedBox(height: 10), 
+          SizedBox(height: getRelativeHeight(0.01)),
           buildNicknameCheckResultText(),
         ],
       ),
@@ -62,8 +70,8 @@ class _NicknameSectionState extends State<NicknameSection> {
       label: '닉네임을 입력하세요.',
       hint: '(예: 홍길동)',
       child: SizedBox(
-        width: _deviceWidth * 0.66,
-        height: _deviceHeight * 0.07,
+        width: getRelativeWidth(0.66),
+        height: getRelativeHeight(0.07),
         child: TextFormField(
           onTap: () {
             HapticFeedback.lightImpact();
@@ -75,14 +83,14 @@ class _NicknameSectionState extends State<NicknameSection> {
             fillColor: colors.bgrColor,
             filled: true,
             hintText: '(예: 홍길동) ',
-            labelStyle: const TextStyle(
+            labelStyle: TextStyle(
               color: colors.textColor,
-              fontSize: 12,
+              fontSize: getRelativeWidth(0.036),
               fontFamily: fonts.font,
               fontWeight: FontWeight.w500,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(getRelativeWidth(0.087)),
               borderSide: BorderSide.none,
             ),
           ),
@@ -92,27 +100,36 @@ class _NicknameSectionState extends State<NicknameSection> {
     );
   }
 
+  void handleNicknameCheckButtonPressed(BuildContext context) async {
+    await _nicknameController.checkNicknameExist(context);
+    _nicknameController.isNicknameChecked.value = true;
+
+    _nicknameController.controller.addListener(() {
+      _nicknameController.isNicknameChecked.value = false;
+    });
+  }
+
+
   Widget buildCheckNicknameButton(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await _nicknameController.checkNicknameExist(context);
-        _nicknameController.isNicknameChecked.value = true;
+       handleNicknameCheckButtonPressed(context);
       },
       child: Container(
-        width: _deviceWidth * 0.26,
-        height: _deviceHeight * 0.07,
+        width: getRelativeWidth(0.26),
+        height: getRelativeHeight(0.07),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(69),
+          borderRadius: BorderRadius.circular(getRelativeWidth(0.2)),
           color: const Color(0xffffc700),
         ),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               '중복확인',
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700, // 오타 수정: FontWeith -> FontWeight
+                fontSize: getRelativeWidth(0.036),
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -121,19 +138,36 @@ class _NicknameSectionState extends State<NicknameSection> {
     );
   }
 
+
   Widget buildNicknameCheckResultText() {
-    return Obx(() => Text(
-          _nicknameController.isNicknameChecked.value
-              ? _nicknameController.nickNameExist.value
-                  ? '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'
-                  : '사용 가능한 닉네임입니다.'
-              : '',
-          style: TextStyle(
-            color: _nicknameController.nickNameExist.value ? Colors.red : Colors.green,
-            fontFamily: 'NanumGothic',
-            fontSize: 13,
-            fontWeight: FontWeight.w400,
-          ),
-        ));
+    return Obx(() {
+      var isNicknameChecked = _nicknameController.isNicknameChecked.value;
+      var nickNameExist = _nicknameController.nickNameExist.value;
+      var nickname = _nicknameController.controller.text;
+
+      String message = '';
+
+      if (!isNicknameChecked) {
+        message = ''; // 아무 메시지도 표시하지 않음
+      } 
+      if (nickname.isEmpty) {
+        message = '닉네임을 입력하세요';
+      } else {
+        message = nickNameExist
+            ? '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'
+            : '사용 가능한 닉네임입니다.';
+      }
+
+      return Text(
+        message,
+        style: TextStyle(
+          color: nickname.isEmpty || nickNameExist ? Colors.red : Colors.green,
+          fontFamily: 'NanumGothic',
+          fontSize: getRelativeWidth(0.036),
+          fontWeight: FontWeight.w400,
+        ),
+      );
+    });
   }
+
 }
