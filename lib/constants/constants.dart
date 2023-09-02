@@ -34,6 +34,13 @@ List<String> communityCategories = ['전체', '교육', '기관', '복지', '일
     'alertButtonText': '차단하기',
   };
 
+// 차단 해제 메시지
+ Map<String, String> cancelBlock = {
+    'message': '님의 차단을 해제하시겠습니까?',
+    'subMessage': '',
+    'buttonText': '차단 해제',
+  };
+
 // 삭제 메시지
  Map<String, String> delete = {
     'bottomSheetText': '글 삭제',

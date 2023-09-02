@@ -35,8 +35,6 @@ class CommunityPostModel {
       required this.keyword
   });
 
-  // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
-  // 이외는 uid = doc.data()!["uid"],
   CommunityPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc})
       : id = doc.id,
         uid = doc.data()!['uid'],

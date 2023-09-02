@@ -30,7 +30,7 @@ class _SettingState extends State<Setting> {
                 children: [
                 OutlinedButton(
                   onPressed: () {
-                    HapticFeedback.lightImpact(); // 약한 진동
+                    HapticFeedback.lightImpact();
                     Navigator.push(
                         context,
                         MaterialPageRoute(

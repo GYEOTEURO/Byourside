@@ -17,7 +17,7 @@ Widget goToSearchPage(BuildContext context) {
   return IconButton(
     icon: customIcons.search, 
     onPressed: (){
-      HapticFeedback.lightImpact(); // 약한 진동
+      HapticFeedback.lightImpact();
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -29,7 +29,7 @@ Widget goToScrapPage(BuildContext context){
   return IconButton(
     icon: customIcons.gotoScrapPage, 
     onPressed: (){
-      HapticFeedback.lightImpact(); // 약한 진동
+      HapticFeedback.lightImpact();
         Navigator.push(
             context,
             MaterialPageRoute(

@@ -22,8 +22,6 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
     length: constants.scrapTabbar.length,
     vsync: this,
     initialIndex: 0,
-
-    /// 탭 변경 애니메이션 시간
     animationDuration: const Duration(milliseconds: 800),
   );
 
@@ -34,7 +32,7 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: _tabBar()
           ),
           Expanded(
