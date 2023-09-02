@@ -39,7 +39,7 @@ class UserTypeSelection extends StatelessWidget {
                     isSelected: selectedType == userType,
                     onPressed: () => onTypeSelected(userType),
                     width: deviceWidth * 0.28,
-                    height: deviceHeight * 0.2,
+                    height: deviceHeight * 0.18,
                     font: deviceWidth * 0.027
                   ),
                 ],
@@ -51,7 +51,7 @@ class UserTypeSelection extends StatelessWidget {
             onPressed: () => onTypeSelected('해당 없음'),
             width: deviceWidth * 0.9,
             height: deviceHeight * 0.08,
-            font: deviceWidth * 0.027
+            font: deviceWidth * 0.032
           ),
         ],
       ),
