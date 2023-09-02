@@ -1,3 +1,4 @@
+import 'package:byourside/model/authenticate/user_controller.dart';
 import 'package:byourside/screen/community/post_list.dart';
 import 'package:byourside/screen/community/save_community_data.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 
 class BottomNavBar extends StatefulWidget {
@@ -19,7 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     Container(),
     const CommunityPostList(),
-    SaveCommunityData(),
+    Container(),
     Mypage(),
   ];
 
@@ -60,6 +62,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserController());
+
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

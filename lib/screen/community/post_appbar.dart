@@ -1,8 +1,7 @@
+import 'package:byourside/model/authenticate/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
-import 'package:byourside/screen/community/post_list.dart';
-import 'package:byourside/user_block_list_controller.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/customBottomSheet.dart';
 import 'package:byourside/widget/likes_button.dart';
@@ -32,8 +31,6 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
   List<String> likesUser = [];
   List<String> scrapsUser = [];
   final SaveData saveData = SaveData();
-  final userBlockListController = Get.put(UserBlockListController());
-
 
   @override
   void initState() {
@@ -77,8 +74,7 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
   }
 
 deletePost(BuildContext context, String category, String documentID, String collectionName){
-  //Navigator.pushNamedAndRemoveUntil(context, '/bottom_nav', (_) => false);
-  Get.offAll(() => const CommunityPostList());
+  Get.offAll(() => const BottomNavBar());
   saveData.deleteCommunityPost(category, documentID);
 }
 
@@ -88,9 +84,8 @@ reportPost(BuildContext context, String collectionName, String id){
 }
 
 blockPost(BuildContext context, String uid, String blockUid){
-  //Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   Get.offAll(() => const BottomNavBar());
-  userBlockListController.addBlockedUser(blockUid);
+  Get.find<UserController>().addBlockedUser(blockUid);
 }
 
 

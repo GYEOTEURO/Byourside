@@ -436,12 +436,9 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
               if (_categories.category == '자유게시판') _categories.category = '자유';
 
               // Firestore에 Save하는 코드
-
-              //final userController = Get.put(UserController());
-              //
               // CommunityPostModel postData = CommunityPostModel(
               //   uid: user!.uid,
-              //   nickname: userController.userModel.nickname!,
+              //   nickname: Get.find<UserController>().userModel.nickname!,
               //   title: _title.text,
               //   content: _content.text,
               //   category: _categories.category,
