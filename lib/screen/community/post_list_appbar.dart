@@ -1,3 +1,4 @@
+import 'package:byourside/model/authenticate/user_controller.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/change_disability_type.dart';
 import 'package:byourside/widget/disability_type_button.dart';
@@ -6,6 +7,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class CommunityPostListAppBar extends StatefulWidget implements PreferredSizeWidget {
   CommunityPostListAppBar(
@@ -23,12 +25,15 @@ class CommunityPostListAppBar extends StatefulWidget implements PreferredSizeWid
 }
 
 class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
-  String selectedDisabilityTypeValue = '발달';
-
+  String? selectedDisabilityTypeValue = 
+    Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? 
+    '발달' 
+    : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+  
   void _handleDisabilityTypeSelected(String value) {
-    setState(() {
-      selectedDisabilityTypeValue = value;
-    });
+  setState(() {
+    selectedDisabilityTypeValue = value;
+  });
   }
 
   @override
@@ -41,18 +46,20 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              disabilityTypeButton(context, selectedDisabilityTypeValue, () {
-                    HapticFeedback.lightImpact(); // 약한 진동
+              GestureDetector(
+                child: disabilityTypeButton(context, selectedDisabilityTypeValue!),
+                onTap: () {
+                    HapticFeedback.lightImpact();
                     showDialog(
                         context: context,
                         builder: (context) {
                           return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
-                  });
+                    });
               }),
               Row(
                 children: [
                   goToScrapPage(context),
-                  goToSearchPage(context,)
+                  goToSearchPage(context)
                 ])
             ],
           ),
