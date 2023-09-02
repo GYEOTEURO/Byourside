@@ -7,12 +7,13 @@ import 'package:byourside/widget/authenticate/setup/disability_type_button.dart'
 import 'package:byourside/widget/authenticate/setup/location_section.dart';
 import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
 import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
-import 'package:byourside/widget/authenticate/setup/user_type_button.dart';
+import 'package:byourside/widget/authenticate/setup/user_type_selection.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'dart:ui';
 
 
 final TextEditingController _birthYear = TextEditingController();

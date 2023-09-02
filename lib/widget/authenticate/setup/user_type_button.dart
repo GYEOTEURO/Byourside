@@ -1,71 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 
 class UserTypeButton extends StatelessWidget {
-  final String type;
+  final String userType;
   final bool isSelected;
   final VoidCallback onPressed;
+  final double width;
+  final double height;
+  final double font;
 
   const UserTypeButton({super.key, 
-    required this.type,
+    required this.userType,
     required this.isSelected,
     required this.onPressed,
+    required this.width,
+    required this.height,
+    required this.font
   });
+  
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(isSelected ? Colors.blue : Colors.white),
-        foregroundColor: MaterialStateProperty.all(isSelected ? Colors.white : Colors.blue),
-        side: MaterialStateProperty.all(BorderSide(color: isSelected ? Colors.white : Colors.blue)),
-      ),
-      child: Text(type),
-    );
-  }
-}
-
-class UserTypeSelection extends StatelessWidget {
-  final String selectedType;
-  final Function(String) onTypeSelected;
-
-  const UserTypeSelection({super.key, 
-    required this.selectedType,
-    required this.onTypeSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          '어떤 유형의 사용자인지 알려주세요',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
+    return SizedBox(
+      width: width, 
+      height: height,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.all<double>(0), 
+          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFBFBF3)), // Set the default background color
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10), 
+            ),
+          ),
+          side: MaterialStateProperty.resolveWith<BorderSide?>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed) || isSelected) {
+                  
+                  return const BorderSide(color: colors.primaryColor,); // Change border color to #FFC700
+                }
+                return const BorderSide(color: colors.lightPrimaryColor,); // Default border color
+              },
+            )
+          ), 
+        child: Center(
+          child: Text(
+            userType,
+            style: TextStyle(
+              fontSize: font,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
           ),
         ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            for (String userType in ['장애 아동 보호자', '장애인', '종사자'])
-              UserTypeButton(
-                type: userType,
-                isSelected: selectedType == userType,
-                onPressed: () => onTypeSelected(userType),
-              ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        UserTypeButton(
-          type: '해당 없음',
-          isSelected: selectedType == '해당 없음',
-          onPressed: () => onTypeSelected('해당 없음'),
-        ),
-        const SizedBox(height: 20),
-      ],
+      ),
     );
   }
 }
