@@ -2,13 +2,13 @@ import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
-import 'package:byourside/widget/app_bar.dart';
 import 'package:byourside/widget/authenticate/setup/age_section.dart';
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
 import 'package:byourside/widget/authenticate/setup/location_section.dart';
 import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
 import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
 import 'package:byourside/widget/authenticate/setup/user_type_button.dart';
+import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +19,7 @@ final TextEditingController _birthYear = TextEditingController();
 
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);
-
+  final String title = '프로필을 완성해주세요';
   @override
   State<SetupUser> createState() => _SetupUserState();
 }
@@ -108,9 +108,7 @@ class _SetupUserState extends State<SetupUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '프로필을 완성해주세요',
-      ),
+      appBar: titleOnlyAppbar(context, widget.title),
       body: Column(
         children: [
           Expanded(
@@ -119,7 +117,6 @@ class _SetupUserState extends State<SetupUser> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
                   NicknameSection(),  
                   const SizedBox(height: 20),
                   UserTypeSelection(
