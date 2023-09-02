@@ -1,4 +1,3 @@
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/comment/comment_list.dart';
 import 'package:byourside/screen/community/post_content.dart';

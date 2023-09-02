@@ -8,16 +8,16 @@ import 'package:byourside/widget/likes_button.dart';
 import 'package:byourside/widget/scrap_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:get/get.dart';
 
 class CommunityPostAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CommunityPostAppBar(
+  const CommunityPostAppBar(
     {Key? key,
     required this.post}) 
     : super(key: key);
 
-  CommunityPostModel post;
+  final CommunityPostModel post;
 
   @override
   State<CommunityPostAppBar> createState() => _CommunityPostAppBarState();
@@ -62,7 +62,7 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
             likesButton(isClicked(likesUser), likesUser, widget.post.category, widget.post.id!, user!.uid, updateLikes),
             scrapsButton(isClicked(scrapsUser), scrapsUser, widget.post.category, widget.post.id!, user!.uid, updateScraps),
             IconButton(
-              icon: customIcons.add_ons, 
+              icon: custom_icons.add_ons, 
               onPressed: (){
                 customBottomSheet(context, widget.post.uid == user!.uid, 
                 () { deletePost(context, widget.post.category, widget.post.id!, 'community'); }, 

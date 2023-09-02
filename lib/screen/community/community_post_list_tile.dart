@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 
 Widget _buildTopSide(BuildContext context, String category, String title) {
-  return Container(
+  return SizedBox(
     width: MediaQuery.of(context).size.width,
     child: Row(
       children: [
@@ -22,8 +22,7 @@ Widget _buildTopSide(BuildContext context, String category, String title) {
           ),
         ),
         const SizedBox(width: 20),
-        Container(
-          child: Text(
+        Text(
             title,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -33,18 +32,17 @@ Widget _buildTopSide(BuildContext context, String category, String title) {
               fontWeight: FontWeight.w700,
             ),
           ),
-        ),
       ],
     ),
   );
 }
 
 Widget _buildMiddleSide(BuildContext context, String content, List<String> images, List<String> imgInfos) {
-  return Container(
+  return SizedBox(
     width: MediaQuery.of(context).size.width,
     child: Row(
           children: [
-              Container(
+              SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
               child: Wrap(
                 children: [
@@ -63,7 +61,7 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
             ),
             const SizedBox(width: 10),
             if(images.isNotEmpty)
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height / 10.5,
               width: MediaQuery.of(context).size.height / 10.5,
               child: Semantics(
@@ -72,7 +70,7 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
               )
             )
             else 
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 10.5,
                 width: MediaQuery.of(context).size.height / 10.5,
             )
@@ -81,24 +79,20 @@ Widget _buildMiddleSide(BuildContext context, String content, List<String> image
 }
 
 Widget _buildBottomSide(Widget createdAt, String likes, String scraps) {
-  return Container(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          child: createdAt
-        ),
-        Container(
-          child: Row(
-            children: [
-              _buildLikesAndScraps(count: likes, icon: customIcons.communityPostListLikes),
-              const SizedBox(width: 6),
-              _buildLikesAndScraps(count: scraps, icon: customIcons.communityPostListScraps),
-      ],
-    ),
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      SizedBox(
+        child: createdAt
+      ),
+      Row(
+        children: [
+          _buildLikesAndScraps(count: likes, icon: custom_icons.communityPostListLikes),
+          const SizedBox(width: 6),
+          _buildLikesAndScraps(count: scraps, icon: custom_icons.communityPostListScraps),
+    ],
   )
-      ],
-    ),
+    ],
   );
 }
 

@@ -4,12 +4,12 @@ import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:flutter/material.dart';
 
 class Policy extends StatefulWidget {
-  Policy({
+  const Policy({
     Key? key,
     required this.policy
   }) : super(key: key);
 
-  Map<String, String> policy;
+  final Map<String, String> policy;
 
   @override
   State<Policy> createState() => _PolicyState();

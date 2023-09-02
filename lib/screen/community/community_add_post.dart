@@ -3,20 +3,17 @@ import 'package:byourside/screen/community/community_add_post_category.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/save_data.dart';
-import '../../model/community_post.dart';
 import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 
 class CommunityAddPost extends StatefulWidget {
-  const CommunityAddPost();
+  const CommunityAddPost({super.key});
 
   @override
   State<CommunityAddPost> createState() => _CommunityAddPostState();
@@ -44,7 +41,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
   // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
   Future getImage(ImageSource imageSource) async {
     // final image = await picker.pickImage(source: imageSource);
-    final List<XFile> images = await picker.pickMultiImage();
+    List<XFile> images = await picker.pickMultiImage();
 
     setState(() {
       _images = images; // 가져온 이미지를 _image에 저장
@@ -126,10 +123,10 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
       // 상단 앱 바
       appBar: AppBar(
         backgroundColor: colors.primaryColor,
-        title: Text(
+        title: const Text(
           constants.communityTitle,
           semanticsLabel: constants.communityTitle,
-          style: const TextStyle(
+          style: TextStyle(
               fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -167,41 +164,40 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'NanumGothic'),
                     ),
-                    Container(
-                        child: Semantics(
-                            label: '제목을 입력하세요',
-                            child: TextFormField(
-                              style: const TextStyle(
-                                  fontFamily: 'NanumGothic',
-                                  fontWeight: FontWeight.w600),
-                              autofocus: true,
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return '제목은 비어있을 수 없습니다';
-                                }
-                                return null;
-                              },
-                              // style: TextStyle(fontFamily: 'NanumGothic'),
-                              onFieldSubmitted: (_) =>
-                                  FocusScope.of(context).requestFocus(myFocus),
-                              decoration: const InputDecoration(
-                                  labelText: '제목을 입력하세요',
-                                  hintText: '제목을 입력하세요',
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        width: 1, color: Color(0xFF045558)),
-                                  ),
-                                  labelStyle:
-                                      TextStyle(color: Color(0xFF045558)),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2.5, color: Color(0xFF045558)),
-                                  )),
-                              controller: _title,
-                            ))),
+                    Semantics(
+                        label: '제목을 입력하세요',
+                        child: TextFormField(
+                          style: const TextStyle(
+                              fontFamily: 'NanumGothic',
+                              fontWeight: FontWeight.w600),
+                          autofocus: true,
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '제목은 비어있을 수 없습니다';
+                            }
+                            return null;
+                          },
+                          // style: TextStyle(fontFamily: 'NanumGothic'),
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).requestFocus(myFocus),
+                          decoration: const InputDecoration(
+                              labelText: '제목을 입력하세요',
+                              hintText: '제목을 입력하세요',
+                              enabledBorder: UnderlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    width: 1, color: Color(0xFF045558)),
+                              ),
+                              labelStyle:
+                                  TextStyle(color: Color(0xFF045558)),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2.5, color: Color(0xFF045558)),
+                              )),
+                          controller: _title,
+                        )),
                     // 카테고리 선택
                     Container(
                         padding: const EdgeInsets.only(top: 20, bottom: 5),

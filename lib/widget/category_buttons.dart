@@ -3,13 +3,13 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
 
 class CategoryButtons extends StatefulWidget {
-  CategoryButtons({
+  const CategoryButtons({
     super.key,
     required this.category, 
     required this.onChipSelected
   });
 
-  List<String> category;
+  final List<String> category;
   final ValueChanged<String> onChipSelected;  
   
   @override

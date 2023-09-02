@@ -4,7 +4,7 @@ import 'package:byourside/screen/community/save_community_data.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -22,28 +22,28 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Container(),
     const CommunityPostList(),
     Container(),
-    Mypage(),
+    const Mypage(),
   ];
 
   List<SvgPicture> bottomIcons = [
-    customIcons.autoInformationBgr,
-    customIcons.communityBgr,
-    customIcons.home,
-    customIcons.myPageBgr,
+    custom_icons.autoInformationBgr,
+    custom_icons.communityBgr,
+    custom_icons.home,
+    custom_icons.myPageBgr,
   ];
 
   List<SvgPicture> bottomUnselectedIcons = [
-    customIcons.autoInformationBgr,
-    customIcons.communityBgr,
-    customIcons.homeBgr,
-    customIcons.myPageBgr,
+    custom_icons.autoInformationBgr,
+    custom_icons.communityBgr,
+    custom_icons.homeBgr,
+    custom_icons.myPageBgr,
   ];
 
   List<SvgPicture> bottomSelectedIcons = [
-    customIcons.autoInformation,
-    customIcons.community,
-    customIcons.home,
-    customIcons.myPage,
+    custom_icons.autoInformation,
+    custom_icons.community,
+    custom_icons.home,
+    custom_icons.myPage,
   ];
 
   void _onItemTapped(int index) {
