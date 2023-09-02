@@ -40,7 +40,7 @@ class UserModel {
         registrationPurpose = doc['registrationPurpose'],
         userType = doc['userType'],
         blockedUsers = doc.data()!['blockedUsers'] == null
-            ? null
+            ? []
             : doc.data()!['blockedUsers'].cast<String>() {
         final Map<String, dynamic>? rawLocation = doc['location'];
         location = castMapOfStringString(rawLocation);

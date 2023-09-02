@@ -16,7 +16,7 @@ class UserController extends GetxController {
   void initState() async {
     DocumentSnapshot<Map<String, dynamic>> document = await loadData.readUserInfo(uid: user!.uid);
     userModel = UserModel.fromDocument(doc: document);
-    print('*************시작: $userModel');
+    print('*************시작: ${userModel.disabilityType}');
     print('*************닉넴: ${userModel.nickname}');
     print('*************블락드유저: ${userModel.blockedUsers}');
   }
@@ -25,25 +25,18 @@ class UserController extends GetxController {
     initState();
   }
 
-  // @override
-  // void onClose() {
-  //   if(initalBlockedUser != userModel!.blockedUsers) {
-  //     saveData.changeBlock(user!.uid, userModel!.blockedUsers);
-  //     print('*************종료: ${userModel!.blockedUsers}');
-  //   }
-  //   super.onClose();
-  // }
-
   void addBlockedUser(String blockUid) {
-    userModel!.blockedUsers!.add(blockUid);
+    userModel.blockedUsers!.add(blockUid);
     saveData.addBlock(user!.uid, blockUid);
-    print('*************추가: ${userModel!.blockedUsers}');
+    print('*************추가: ${userModel.blockedUsers}');
+    update();
   }
 
   void removeBlockedUser(String blockUid) {
-    userModel!.blockedUsers!.remove(blockUid);
+    userModel.blockedUsers!.remove(blockUid);
     saveData.cancelBlock(user!.uid, blockUid);
-    print('*************삭제: ${userModel!.blockedUsers}');
+    print('*************삭제: ${userModel.blockedUsers}');
+    update();
   }
 
 }

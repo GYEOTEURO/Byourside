@@ -2,7 +2,6 @@ import 'package:byourside/model/authenticate/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/load_data.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
-import 'package:byourside/user_block_list_controller.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,6 @@ class CommunitySearch extends StatefulWidget {
 class _CommunitySearchState extends State<CommunitySearch> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  //final userBlockListController = Get.put(UserBlockListController());
-  final userController = Get.put(UserController());
   TextEditingController query = TextEditingController();
 
   @override
@@ -72,7 +69,7 @@ class _CommunitySearchState extends State<CommunitySearch> {
                                   itemCount: snapshots.data!.length,
                                   itemBuilder: (_, index) {
                                     CommunityPostModel post = snapshots.data![index];
-                                    if (userController.userModel.blockedUsers!.contains(post.nickname)) {
+                                    if (Get.find<UserController>().userModel.blockedUsers!.contains(post.nickname)) {
                                       return Container();
                                     } else {
                                       return communityPostListTile(context, post);
