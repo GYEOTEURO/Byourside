@@ -33,6 +33,7 @@ class NicknameSectionState extends State<NicknameSection> {
     return buildNicknameContent(context);
   }
 
+  //TODO: 다른 파일에서도 쓸 수 있게 해당 위젯의 deviceWidth, deviceHeight 받아서 비율 곱해서 반환하게
   double getRelativeWidth(double value) {
     return _deviceWidth * value;
   }
