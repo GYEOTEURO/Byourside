@@ -1,5 +1,5 @@
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
-import 'package:byourside/widget/alert_dialog.dart';
+import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,14 +7,15 @@ class ValidationUtils {
   static void _showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
-      builder: (context) {
-        return CustomAlertDialog(
+      builder: (BuildContext context) {
+        return DeleteReportBlockAlert(
           message: message,
+          subMessage: '',
           buttonText: '확인',
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
-            Navigator.pop(context);
-          },
+            Navigator.of(context).pop(true);
+          }, 
         );
       },
     );
@@ -29,6 +30,7 @@ class ValidationUtils {
     Map<String, String>? location,
     String selectedPurpose,
   ) {
+    print(location);
     if (nicknameController.controller.text.isEmpty) {
       _showErrorDialog(context, '닉네임을 입력하세요.');
       return false;

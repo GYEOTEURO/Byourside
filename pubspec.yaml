@@ -139,13 +139,16 @@ flutter:
     - assets/icons/scrap_page.svg
     - assets/icons/scrap.svg
     - assets/icons/search.svg
-    - assets/icons/authentication/apple_icon.svg
-    - assets/icons/authentication/google_icon.svg
-    - assets/icons/authentication/google_icon.png
-    - assets/icons/authentication/beeside_logo.svg
-    - assets/icons/authentication/bee_icon.svg
-    - assets/icons/authentication/tos_line.svg
-    - assets/icons/authentication/policy_line.svg
+    - assets/icons/authentication/login/apple_icon.svg
+    - assets/icons/authentication/login/google_icon.svg
+    - assets/icons/authentication/login/google_icon.png
+    - assets/icons/authentication/login/beeside_logo.svg
+    - assets/icons/authentication/login/bee_icon.svg
+    - assets/icons/authentication/login/tos_line.svg
+    - assets/icons/authentication/login/policy_line.svg
+    - assets/icons/authentication/setup/participator.svg
+    - assets/icons/authentication/setup/protector.svg
+    - assets/icons/authentication/setup/self.svg
     - assets/icons/hobee.svg
     - assets/icons/logo.svg
     - assets/icons/see_more.svg
