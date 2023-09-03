@@ -1,7 +1,7 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
-import 'package:byourside/model/authenticate/user_controller.dart';
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/create_comment.dart';

@@ -1,4 +1,4 @@
-import 'package:byourside/model/authenticate/user_controller.dart';
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/community/community_add_post_category.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';

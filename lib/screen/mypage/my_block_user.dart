@@ -1,7 +1,7 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/model/authenticate/user_controller.dart';
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:flutter/material.dart';
