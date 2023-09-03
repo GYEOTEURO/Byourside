@@ -39,20 +39,23 @@ class LocationSectionState extends State<LocationSection> {
   }
 
   void _showLocationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return LocationDialog(
-          onLocationSelected: (area, district) {
-            setState(() {
-              selectedArea = area;
-              selectedDistrict = district;
-            });
-          },
-        );
-      },
-    );
-  }
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return LocationDialog(
+        onLocationSelected: (area, district) {
+          setState(() {
+            selectedArea = area;
+            selectedDistrict = district;
+          });
+
+          widget.onLocationSelected(area, district);
+        },
+      );
+    },
+  );
+}
+
 
 
   @override

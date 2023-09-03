@@ -49,7 +49,7 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: colors.appBarColor,
+      color: colors.lightPrimaryColor,
       padding: const EdgeInsets.fromLTRB(20, 33, 20, 0),
       child: Column(
         children: [

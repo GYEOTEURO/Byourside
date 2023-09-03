@@ -30,6 +30,7 @@ class ValidationUtils {
     Map<String, String>? location,
     String selectedPurpose,
   ) {
+    print(location);
     if (nicknameController.controller.text.isEmpty) {
       _showErrorDialog(context, '닉네임을 입력하세요.');
       return false;

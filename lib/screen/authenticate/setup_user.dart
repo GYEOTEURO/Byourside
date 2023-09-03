@@ -42,15 +42,20 @@ class _SetupUserState extends State<SetupUser> {
     });
   }
 
+  void onLocationChanged(Map<String, String>? newLocation) {
+    setState(() {
+      location = newLocation;
+    });
+  }
+
+
   void _handleLocationSelected(String selectedArea, String selectedDistrict) {
     Map<String, String> locationInfo = {
       'area': selectedArea,
       'district': selectedDistrict,
     };
 
-    setState(() {
-      location = locationInfo; 
-    });
+    onLocationChanged(locationInfo); 
   }
 
   void _handleDisabilityTypeSelected(String type) {
