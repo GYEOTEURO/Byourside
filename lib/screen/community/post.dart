@@ -13,6 +13,7 @@ class CommunityPost extends StatefulWidget {
       required this.post});
 
   final CommunityPostModel post;
+  final String collectionName = 'community_comment';
 
   @override
   State<CommunityPost> createState() => _CommunityPostState();
@@ -50,8 +51,8 @@ class _CommunityPostState extends State<CommunityPost> {
                         margin: const EdgeInsets.all(7),
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 70),
                         child: CommentList(
-                            collectionName: 'community_comment',
-                            post: widget.post)),
+                            collectionName: widget.collectionName,
+                            documentID: widget.post.id!)),
               ])),
               Positioned(
                 left: 0,
@@ -71,7 +72,7 @@ class _CommunityPostState extends State<CommunityPost> {
                   ]),
                 padding: const EdgeInsets.fromLTRB(25, 12, 15, 12),
                 child: CreateComment(
-                    collectionName: 'community_comment',
+                    collectionName: widget.collectionName,
                     documentID: widget.post.id!)
             ))]),
            ));

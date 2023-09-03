@@ -73,17 +73,6 @@ class _CommunityPostListState extends State<CommunityPostList> {
                     child: customIcons.loading
                   )
                 );
-                // return const SelectionArea(
-                //     child: Center(
-                //         child: Text(
-                //           '없음',
-                //           semanticsLabel: '없음',
-                //           style: TextStyle(
-                //             fontFamily: fonts.font,
-                //             fontWeight: FontWeight.w600,
-                //           ),
-                //         )
-                // ));
               }
             })
           )

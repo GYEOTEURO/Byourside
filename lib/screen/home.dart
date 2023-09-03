@@ -6,6 +6,7 @@ import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/widget/app_bar_select_button.dart';
 import 'package:byourside/widget/icon_buttons.dart';
+import 'package:byourside/widget/no_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,17 +137,7 @@ class _HomeState extends State<Home> {
                         return communityPostListTile(context, post);
                       });
                 } else {
-                  return const SelectionArea(
-                      child: Center(
-                          child: Text(
-                            '없음',
-                            semanticsLabel: '없음',
-                            style: TextStyle(
-                              fontFamily: fonts.font,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                  ));
+                  return noData();
                 }
               })
     );
