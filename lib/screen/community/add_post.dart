@@ -21,6 +21,8 @@ class CommunityAddPost extends StatefulWidget {
 }
 
 class _CommunityAddPostState extends State<CommunityAddPost> {
+  String selectedChipValue = constants.communityDisabilityTypes[0];
+
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
   List<TextEditingController> _imgInfos = [];
@@ -114,6 +116,12 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
             ))
       ],
     )));
+  }
+
+  void _handleChipSelected(String value) {
+    setState(() {
+      selectedChipValue = value;
+    });
   }
 
   @override

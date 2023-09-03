@@ -25,7 +25,10 @@ class _CommunityAddPostAppBarState extends State<CommunityAddPostAppBar> {
         constants.communityAddPostTitle,
         textAlign: TextAlign.left,
         semanticsLabel: constants.communityAddPostTitle,
-        style: TextStyle(fontFamily: fonts.font, fontWeight: FontWeight.w600),
+        style: TextStyle(
+            fontFamily: fonts.font,
+            fontWeight: FontWeight.w600,
+            color: Colors.black),
       ),
       leading: IconButton(onPressed: () {}, icon: customIcons.addPost),
       actions: [
