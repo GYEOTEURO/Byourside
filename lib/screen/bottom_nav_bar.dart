@@ -1,6 +1,7 @@
-import 'package:byourside/model/authenticate/user_controller.dart';
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
+import 'package:byourside/screen/autoInformation/post_list.dart';
 import 'package:byourside/screen/community/post_list.dart';
-import 'package:byourside/screen/community/save_community_data.dart';
+import 'package:byourside/screen/home.dart';
 import 'package:byourside/screen/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
@@ -19,9 +20,9 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 2;
   static final List<Widget> _widgetOptions = <Widget>[
-    Container(),
+    const AutoInformationPostList(),
     const CommunityPostList(),
-    Container(),
+    const Home(),
     const Mypage(),
   ];
 

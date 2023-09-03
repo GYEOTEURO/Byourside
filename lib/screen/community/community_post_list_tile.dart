@@ -8,7 +8,7 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 
 Widget _buildTopSide(BuildContext context, String category, String title) {
-  return SizedBox(
+  return Container(
     width: MediaQuery.of(context).size.width,
     child: Row(
       children: [

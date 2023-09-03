@@ -6,7 +6,7 @@ class UserModel {
   String? disabilityType;
   Map<String, String>? location;
   String? area;
-  String? city;
+  String? district;
   String? nickname;
   String? registrationPurpose;
   String? userType;
@@ -21,14 +21,14 @@ class UserModel {
     required this.registrationPurpose, 
     required this.userType,
     required this.blockedUsers,
-    required DocumentSnapshot<Map<String, dynamic>> doc,
+    DocumentSnapshot<Map<String, dynamic>>? doc,
   }) {
-    // Initialize area and city based on location if location is not null
+    // Initialize area and district based on location if location is not null
     if (location != null) {
-      final Map<String, dynamic>? rawLocation = doc['location'];
+      final Map<String, dynamic>? rawLocation = doc!['location'];
       location = castMapOfStringString(rawLocation);
       area = location?['area'];
-      city = location?['city'];
+      district = location?['district'];
     }
   }
 
@@ -45,7 +45,7 @@ class UserModel {
         final Map<String, dynamic>? rawLocation = doc['location'];
         location = castMapOfStringString(rawLocation);
         area = location?['area'];
-        city = location?['city'];
+        district = location?['district'];
   }
 
   // Helper function to cast Map<String, dynamic> to Map<String, String>

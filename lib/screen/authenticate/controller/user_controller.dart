@@ -11,20 +11,21 @@ class UserController extends GetxController {
   final LoadData loadData = LoadData();
   final SaveData saveData = SaveData();
 
+  final RxBool userModelReady = false.obs;
+
   late UserModel userModel;
 
-  void initState() async {
+  @override
+  void onInit() async {
+    super.onInit();
     DocumentSnapshot<Map<String, dynamic>> document = await loadData.readUserInfo(uid: user!.uid);
     userModel = UserModel.fromDocument(doc: document);
+    userModelReady.value = true;
     print('*************장애유형: ${userModel.disabilityType}');
     print('*************닉넴: ${userModel.nickname}');
     print('*************블락드유저: ${userModel.blockedUsers}');
     print('*************area: ${userModel.area}');
-     print('*************district: ${userModel.district}');
-  }
-
-  UserController() {
-    initState();
+    print('*************district: ${userModel.district}');
   }
 
   void addBlockedUser(String blockUid) {
