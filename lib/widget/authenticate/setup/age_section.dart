@@ -25,7 +25,7 @@ class AgeSectionState extends State<AgeSection> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         var mediaQuery = MediaQuery.of(context);
         _deviceWidth = mediaQuery.size.width;
@@ -41,7 +41,7 @@ class AgeSectionState extends State<AgeSection> {
   double getRelativeHeight(double value) {
     return _deviceHeight * value;
   }
-  
+
   Widget buildAgeTextField() {
     return Semantics(
       container: true,

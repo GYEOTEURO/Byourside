@@ -3,7 +3,7 @@ import 'package:byourside/widget/authenticate/setup/user_type/user_type_button.d
 import 'package:flutter/material.dart';
 
 
-class UserTypeSelection extends StatelessWidget {
+class UserTypeSelection extends StatefulWidget {
   final String selectedType;
   final Function(String) onTypeSelected;
 
@@ -13,42 +13,70 @@ class UserTypeSelection extends StatelessWidget {
   });
 
   @override
+  UserTypeSelectionState createState() => UserTypeSelectionState();
+}
+
+class UserTypeSelectionState extends State<UserTypeSelection> {
+  double _deviceWidth = 0;
+  double _deviceHeight = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        var mediaQuery = MediaQuery.of(context);
+        _deviceWidth = mediaQuery.size.width;
+        _deviceHeight = mediaQuery.size.height;
+      });
+    });
+  }
+
+
+  double getRelativeWidth(double value) {
+    return _deviceWidth * value;
+  }
+
+  double getRelativeHeight(double value) {
+    return _deviceHeight * value;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: EdgeInsets.all(deviceWidth * 0.05),
+      padding: EdgeInsets.all(getRelativeWidth(0.05)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, 
         children: [
           ExplainText(
             text : '어떤 유형의 사용자인지 알려주세요',
-            width : deviceWidth * 0.04,
+            width : getRelativeWidth(0.04),
           ),
-          SizedBox(height: deviceHeight * 0.02),
+        SizedBox(height: getRelativeHeight(0.02)),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 for (String userType in ['장애 아동 보호자', '장애인', '종사자'])
                   UserTypeButton(
                     userType: userType,
-                    isSelected: selectedType == userType,
-                    onPressed: () => onTypeSelected(userType),
-                    width: deviceWidth * 0.28,
-                    height: deviceHeight * 0.18,
-                    font: deviceWidth * 0.027
+                    isSelected: widget.selectedType == userType,
+                    onPressed: () => widget.onTypeSelected(userType),
+                    width: getRelativeWidth(0.28),
+                    height: getRelativeHeight(0.18),
+                    font: getRelativeWidth(0.027)
                   ),
                 ],
           ),
-          SizedBox(height: deviceHeight * 0.02),
+          SizedBox(height: getRelativeHeight(0.02)),
           UserTypeButton(
             userType: '해당 없음',
-            isSelected: selectedType == '해당 없음',
-            onPressed: () => onTypeSelected('해당 없음'),
-            width: deviceWidth * 0.9,
-            height: deviceHeight * 0.08,
-            font: deviceWidth * 0.032
+            isSelected: widget.selectedType == '해당 없음',
+            onPressed: () => widget.onTypeSelected('해당 없음'),
+            width: getRelativeWidth(0.9),
+            height: getRelativeHeight(0.08),
+            font: getRelativeWidth(0.032)
           ),
         ],
       ),
