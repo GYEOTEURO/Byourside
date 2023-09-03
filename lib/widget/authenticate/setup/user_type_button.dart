@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
