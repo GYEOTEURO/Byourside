@@ -50,7 +50,7 @@ class AgeSectionState extends State<AgeSection> {
       hint: '(예: 1990)',
       child: SizedBox(
         width: getRelativeWidth(0.46),
-        height: getRelativeHeight(0.07),
+        height: getRelativeHeight(0.06),
         child: TextFormField(
           onTap: _onTextFieldTap,
           controller: widget.controller,
@@ -76,7 +76,7 @@ class AgeSectionState extends State<AgeSection> {
       fillColor: colors.bgrColor,
       hintStyle: TextStyle(
         color: colors.textColor,
-        fontSize: getRelativeWidth(0.036),
+        fontSize: getRelativeWidth(0.032),
         fontFamily: fonts.font,
         fontWeight: FontWeight.w500,
       ),

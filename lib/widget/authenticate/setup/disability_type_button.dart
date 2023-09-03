@@ -31,7 +31,7 @@ class _DisabilityTypeState extends State<DisabilityType> {
 
     return SizedBox(
       width: deviceWidth * 0.3, 
-      height: deviceHeight * 0.07, 
+      height: deviceHeight * 0.05, 
       child: ChoiceChip(
         label: Text(
           type,
