@@ -1,5 +1,5 @@
 import 'package:byourside/widget/authenticate/setup/explain_text.dart';
-import 'package:byourside/widget/authenticate/setup/user_type_button.dart';
+import 'package:byourside/widget/authenticate/setup/user_type/user_type_button.dart';
 import 'package:flutter/material.dart';
 
 

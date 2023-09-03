@@ -71,7 +71,7 @@ class _DisabilityTypeState extends State<DisabilityType> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExplainText(
-            text: '장애 유형을 선택해주세요',
+            text: '장애 유형을 선택해 주세요',
             width: deviceWidth * 0.04,
           ),
           SizedBox(height: deviceHeight * 0.02), 

@@ -4,10 +4,10 @@ import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/authenticate/setup/age_section.dart';
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
-import 'package:byourside/widget/authenticate/setup/location_section.dart';
+import 'package:byourside/widget/authenticate/setup/location/location_section.dart';
 import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
 import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
-import 'package:byourside/widget/authenticate/setup/user_type_selection.dart';
+import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -127,11 +127,11 @@ class _SetupUserState extends State<SetupUser> {
                     initialType: _selectedDisabilityType,
                     onChanged: _handleDisabilityTypeSelected,
                   ),
-                  const SizedBox(height: 20),
-                  AgeSection(controller: _birthYear), 
-                  const SizedBox(height: 20),
+                  AgeSection(
+                    selectedType: _selectedUserType,
+                    controller: _birthYear
+                  ), 
                   LocationSection(onLocationSelected: _handleLocationSelected),
-                  const SizedBox(height: 20,),
                   AppPurposeSelection(
                     onChanged: (purpose) {
                       setState(() {
