@@ -6,7 +6,7 @@ import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/screen/community/post_list_appbar.dart';
 import 'package:byourside/widget/category_buttons.dart';
-import 'package:byourside/screen/community/community_add_post.dart';
+import 'package:byourside/screen/community/add_post.dart';
 import 'package:byourside/user_block_list_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
