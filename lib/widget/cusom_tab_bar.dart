@@ -1,23 +1,23 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/widget/stream_community_post.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../model/load_data.dart';
 
-class MyScrap extends StatefulWidget {
-  const MyScrap({Key? key}) : super(key: key);
-  final String title = '스크랩한 게시글';
+class CustomTabBar extends StatefulWidget {
+  CustomTabBar({
+    Key? key,
+    required this.community,
+    required this.autoInformation
+  }) : super(key: key);
+
+  Widget community;
+  Widget autoInformation;
 
   @override
-  State<MyScrap> createState() => _MyScrapState();
+  State<CustomTabBar> createState() => _CustomTabBarState();
 }
 
-class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
-  final User? user = FirebaseAuth.instance.currentUser;
-  final LoadData loadData = LoadData();
+class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderStateMixin {
   late TabController tabController = TabController(
     length: constants.scrapTabbar.length,
     vsync: this,
@@ -27,9 +27,7 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: titleOnlyAppbar(context, widget.title),
-      body: Column(
+    return Column(
         children: [
           Container(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -39,14 +37,12 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
             child: TabBarView(
               controller: tabController,
               children: [
-                streamCommunityPost(() => loadData.readScrapPost(collectionName: 'community', uid: user!.uid)),
-                Container()
-                //streamCommunityPost(() => loadData.readScrapPost(collectionName: 'autoInformation', uid: user!.uid), []),
+                widget.community,
+                widget.autoInformation
               ],
             ),
           )
-      ]),
-    );
+      ]);
   }
 
    Widget _tabBar() {

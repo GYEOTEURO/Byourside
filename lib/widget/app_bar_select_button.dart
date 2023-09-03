@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 
-Widget disabilityTypeButton(BuildContext context, String selectedDisabilityTypeValue) {
+Widget appBarSelectButton(BuildContext context, String selectedValue) {
 return Container(
           width: MediaQuery.of(context).size.width / 5.5,
           height: MediaQuery.of(context).size.height / 36,
@@ -24,7 +24,7 @@ return Container(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                   Text(
-                      selectedDisabilityTypeValue,
+                      selectedValue,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: fonts.captionPt,

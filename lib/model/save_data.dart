@@ -53,8 +53,8 @@ class SaveData {
   }
 
    // 좋아요/스크랩 추가
-  addLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
-    DocumentReference document = firestore.collection('community').doc(category).collection('community_posts').doc(documentID);
+  addLikeOrScrap(String collectionName, String category, String documentID, String uid, String likeOrScrap) async {
+    DocumentReference document = firestore.collection(collectionName).doc(category).collection('${collectionName}_posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
@@ -66,8 +66,8 @@ class SaveData {
   }
   
   // 좋아요/스크랩 취소
-  cancelLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
-    DocumentReference document = firestore.collection('community').doc(category).collection('community_posts').doc(documentID);
+  cancelLikeOrScrap(String collectionName, String category, String documentID, String uid, String likeOrScrap) async {
+    DocumentReference document = firestore.collection(collectionName).doc(category).collection('${collectionName}_posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);

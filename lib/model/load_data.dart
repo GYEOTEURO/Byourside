@@ -1,3 +1,4 @@
+import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/comment.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +33,40 @@ class LoadData{
       .toList());
     }
 }
+
+Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? category, String? location, required String? disabilityType}) {
+    if(category == '전체') {
+      return firestore.collectionGroup('autoInformation_posts')
+      //.where('region', arrayContainsAny: [location, '전체'])
+      .where('disability_type', whereIn: [disabilityType, '전체'])
+      .orderBy('post_date', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
+      .toList());
+    }
+    else{
+      return firestore.collection('autoInformation')
+      .doc(category)
+      .collection('autoInformation_posts')
+      //.where('region', arrayContainsAny: [location, '전체'])
+      .where('disability_type', whereIn: [disabilityType, '전체'])
+      .orderBy('post_date', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
+      .toList());
+    }
+}
+
+Stream<List<CommunityPostModel>> readHotCommunityPosts({required String? disabilityType}) {
+      return firestore.collectionGroup('community_posts')
+      .where('disabilityType', whereIn: [disabilityType, '전체'])
+      //.where('likes', isGreaterThan: 10)
+      .orderBy('createdAt', descending: true)
+      .limit(2)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))
+      .toList());
+    }
 
   // Firestore의 특정 문서에 있는 모든 댓글 불러오기
   Stream<List<CommentModel>> readComments(
