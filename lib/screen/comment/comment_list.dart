@@ -18,10 +18,10 @@ class CommentList extends StatefulWidget {
   CommentList(
       {super.key,
       required this.collectionName,
-      required this.post});
+      required this.documentID});
 
   final String collectionName;
-  CommunityPostModel post;
+  final String documentID;
 
   @override
   State<CommentList> createState() => _CommentListState();
@@ -78,7 +78,7 @@ class _CommentListState extends State<CommentList> {
                         icon: customIcons.add_ons, 
                         onPressed: (){ 
                           customBottomSheet(context, comment.uid == user!.uid, 
-                            () { deleteComment(context, widget.collectionName, widget.post.id!, comment.id!); }, 
+                            () { deleteComment(context, widget.collectionName, widget.documentID, comment.id!); }, 
                             () { reportComment(context, widget.collectionName, comment.id!); }, 
                             () { blockComment(context, user!.uid, comment.nickname); });
                         }
@@ -157,11 +157,8 @@ class _CommentListState extends State<CommentList> {
 
   @override
   Widget build(BuildContext context) {
-    String collectionName = widget.collectionName;
-    String documentID = widget.post.id!;
-
     return StreamBuilder<List<CommentModel>>(
-        stream: loadData.readComments(collectionName: collectionName, documentID: documentID),
+        stream: loadData.readComments(collectionName: widget.collectionName, documentID: widget.documentID),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return Column(
@@ -176,7 +173,7 @@ class _CommentListState extends State<CommentList> {
                     if (Get.find<UserController>().userModel.blockedUsers!.contains(comment.nickname)) {
                       return Container();
                     } else {
-                      return _buildListItem(collectionName, documentID, comment);
+                      return _buildListItem(widget.collectionName, widget.documentID, comment);
                     }
                 })
               ]);

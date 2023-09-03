@@ -1,4 +1,5 @@
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
+import 'package:byourside/widget/authenticate/setup/location_section.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/change_disability_type.dart';
 import 'package:byourside/widget/app_bar_select_button.dart';
@@ -16,7 +17,7 @@ class AutoInformationPostListAppBar extends StatefulWidget implements PreferredS
     required this.onDisabilityTypeSelected}) 
     : super(key: key);
 
-  final ValueChanged<String> onLocationSelected;
+  final Function(String area, String district) onLocationSelected;
   final ValueChanged<String> onDisabilityTypeSelected;
 
   @override
@@ -31,8 +32,8 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
     Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? 
     '발달' 
     : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
-
-  String? selectedLocationValue = Get.find<UserController>().userModel.district;
+  Map<String, String>? location = {'area': Get.find<UserController>().userModel.area!, 'district': Get.find<UserController>().userModel.district!}; 
+  
   
   void _handleDisabilityTypeSelected(String value) {
     setState(() {
@@ -40,9 +41,12 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
     });
   }
 
-  void _handleLocationSelected(String value) {
+  void _handleLocationSelected(String selectedArea, String selectedDistrict) {
     setState(() {
-      selectedLocationValue = value;
+      location = {
+        'area': selectedArea,
+        'district': selectedDistrict,
+      };  
     });
   }
 
@@ -59,14 +63,10 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
               Row(
                 children: [
                 GestureDetector(
-                  child: appBarSelectButton(context, selectedLocationValue!),
+                  child: appBarSelectButton(context, location!['district']!),
                   onTap: () {
                       HapticFeedback.lightImpact();
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (context) {
-                      //       return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
-                      // });
+                      LocationSection(onLocationSelected: _handleLocationSelected);
                 }),
                 const SizedBox(width: 6),
                 GestureDetector(

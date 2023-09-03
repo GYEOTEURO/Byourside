@@ -23,8 +23,8 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
   final LoadData loadData = LoadData();
   String selectedChipValue = constants.autoInformationCategories[0];
   String? selectedDisabilityTypeValue = Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? '발달' : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
-  String? selectedLocationValue = Get.find<UserController>().userModel.district;
-
+  Map<String, String>? location = {'area': Get.find<UserController>().userModel.area!, 'district': Get.find<UserController>().userModel.district!}; 
+  
   void _handleChipSelected(String value) {
     if(value == '돌봄서비스') {
       value = '돌봄 서비스';
@@ -42,9 +42,12 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
     });
   }
 
-  void _handleLocationSelected(String value) {
+  void _handleLocationSelected(String selectedArea, String selectedDistrict) {
     setState(() {
-      selectedLocationValue = value;
+      location = {
+        'area': selectedArea,
+        'district': selectedDistrict,
+      };  
     });
   }
 
@@ -60,7 +63,7 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
           ),
           Expanded(
             child: StreamBuilder<List<AutoInformationPostModel>>(
-              stream: loadData.readAutoInformationPosts(category: selectedChipValue, disabilityType: selectedDisabilityTypeValue),
+              stream: loadData.readAutoInformationPosts(category: selectedChipValue, location: location, disabilityType: selectedDisabilityTypeValue),
               builder: (context, snapshots) {
                 if (snapshots.hasData) {
                   return ListView.builder(
@@ -68,7 +71,9 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
                       shrinkWrap: true,
                       itemBuilder: (_, index) {
                         AutoInformationPostModel post = snapshots.data![index];
+                        print('******************************${snapshots.data!.length}');
                         //return communityPostListTile(context, post);
+                        return Text(post.title);
                       });
               } else {
                 return SelectionArea(

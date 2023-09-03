@@ -1,3 +1,4 @@
+import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/load_data.dart';
@@ -21,9 +22,9 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  TextEditingController query = TextEditingController();
+  final TextEditingController query = TextEditingController();
 
-  Widget _streamCommunityHotPosts(){
+  Widget _streamCommunityPosts(){
     return StreamBuilder<List<CommunityPostModel>>(
           stream: loadData.searchCommunityPosts(query.text),
           builder: (context, snapshots) {
@@ -44,27 +45,47 @@ class _SearchState extends State<Search> {
       });
   }
 
+  Widget _streamAutoInformationPosts(){
+    return StreamBuilder<List<AutoInformationPostModel>>(
+          stream: loadData.searchAutoInformationPosts(query.text),
+          builder: (context, snapshots) {
+            if (snapshots.hasData) {
+              return ListView.builder(
+                  itemCount: snapshots.data!.length,
+                  itemBuilder: (_, index) {
+                    AutoInformationPostModel post = snapshots.data![index];
+                      return Text(post.title);
+                      //return communityPostListTile(context, post);
+                    });
+            } else {
+              return Container();
+            }
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
               children: [
-                Expanded(
-                    child: Row(
-                      children: [
+                const SizedBox(height: 20),
+                Row(
+                  children: [
                       backToPreviousPage(context),
-                      Expanded(
+                      Flexible(
                         child: Container(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                           child: Semantics(
-                          container: true,
-                          textField: true,
-                          label: '소통 게시판 내 검색',
+                          label: '검색할 키워드를 입력해주세요.',
                           child: TextFormField(
                             onTap: () { HapticFeedback.lightImpact(); },
+                            onChanged: (text) {
+                              setState(() {});
+                            },
                             controller: query,
                             maxLines: 1,
                             decoration: InputDecoration(
-                              labelText: '소통 게시판 내 검색',
+                              labelText: '검색할 키워드를 입력해주세요.',
                               fillColor: colors.bgrColor,
                               filled: true,
                               labelStyle: const TextStyle(
@@ -79,11 +100,14 @@ class _SearchState extends State<Search> {
                             )
                       ),
                     ))
-                  ])),
-                  CustomTabBar(
-                    community: _streamCommunityHotPosts(),
-                    autoInformation: Container()),
-              ])
+                  ]),
+                  const SizedBox(height: 20),
+                  Flexible(
+                    child: CustomTabBar(
+                      community: _streamCommunityPosts(),
+                      autoInformation: _streamAutoInformationPosts()),
+                  )
+          ])
         );
   }
 }
