@@ -1,6 +1,8 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/user_block_list_controller.dart';
+import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
+import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,13 +17,13 @@ class MyBlock extends StatefulWidget {
 }
 
 class _MyBlockState extends State<MyBlock> {
-  final userBlockListController = Get.put(UserBlockListController());
-
   Widget _buildListItem() {
     return SingleChildScrollView(
         padding: const EdgeInsets.all(30),
-        child: userBlockListController.blockedUser.isEmpty == true ?
-                const Center(
+        child: GetBuilder<UserController>(
+          builder: (controller){
+            return controller.userModel.blockedUsers!.isEmpty == true ?
+              const Center(
                     child: Text('없음',
                         semanticsLabel: '차단한 사용자 없음',
                         style: TextStyle(
@@ -30,7 +32,7 @@ class _MyBlockState extends State<MyBlock> {
                           fontWeight: FontWeight.w600,
                         )))
               : Column(
-                    children: userBlockListController.blockedUser.map((e) => 
+                    children: controller.userModel.blockedUsers!.map((e) => 
                             Column(
                               children: [
                               Row(
@@ -45,8 +47,20 @@ class _MyBlockState extends State<MyBlock> {
                                       )),
                                       OutlinedButton(
                                         onPressed: () {
-                                          HapticFeedback.lightImpact(); // 약한 진동
-                                          userBlockListController.removeBlockedUser(e);
+                                          HapticFeedback.lightImpact();
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return DeleteReportBlockAlert(
+                                                message: '\'$e\'${constants.cancelBlock['message']}', 
+                                                subMessage: '${constants.cancelBlock['subMessage']}', 
+                                                buttonText: '${constants.cancelBlock['buttonText']}', 
+                                                onPressed: () { 
+                                                  controller.removeBlockedUser(e);
+                                                  Navigator.pop(context);
+                                                }
+                                              );
+                                          });
                                         },
                                         style: OutlinedButton.styleFrom(
                                           elevation: 0,
@@ -73,7 +87,8 @@ class _MyBlockState extends State<MyBlock> {
                                 const Divider(color: colors.bgrColor, thickness: 1)
                                 ]),
                               )
-                        .toList())
+                        .toList());
+                  })
             );
   }
 

@@ -149,6 +149,11 @@ flutter:
     - assets/icons/authentication/setup/participator.svg
     - assets/icons/authentication/setup/protector.svg
     - assets/icons/authentication/setup/self.svg
+    - assets/icons/hobee.svg
+    - assets/icons/logo.svg
+    - assets/icons/see_more.svg
+    - assets/icons/speech_bubble.svg
+    - assets/icons/loading.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // bottomNavigationBar
@@ -103,4 +104,28 @@ final add_ons = SvgPicture.asset(
 final profile = SvgPicture.asset(
   'assets/icons/profile.svg',
   semanticsLabel: '프로필사진'
+);
+
+final hobee = SvgPicture.asset(
+  'assets/icons/hobee.svg',
+  semanticsLabel: '호비캐릭터사진'
+);
+
+final logo = SvgPicture.asset(
+  'assets/icons/logo.svg',
+  semanticsLabel: '로고사진'
+);
+
+final seeMore = SvgPicture.asset(
+  'assets/icons/see_more.svg',
+  semanticsLabel: '더보기버튼'
+);
+
+final speechBubble = SvgPicture.asset(
+  'assets/icons/speech_bubble.svg',
+  semanticsLabel: '말풍선'
+);
+
+final loading = Image.asset(
+  'assets/icons/loading.gif',
 );

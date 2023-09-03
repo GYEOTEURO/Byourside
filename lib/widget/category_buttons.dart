@@ -30,7 +30,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
   Widget build(BuildContext context) {
     return Container(
       color: colors.lightPrimaryColor,
-      padding: const EdgeInsets.fromLTRB(20, 0, 14, 23),
+      padding: const EdgeInsets.fromLTRB(20, 0, 14, 20),
       child: Row(
         children: [
         for(int i=0; i<widget.category.length; i++)

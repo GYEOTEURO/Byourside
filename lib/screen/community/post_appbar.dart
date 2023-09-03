@@ -1,8 +1,7 @@
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
-import 'package:byourside/screen/community/post_list.dart';
-import 'package:byourside/user_block_list_controller.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/customBottomSheet.dart';
 import 'package:byourside/widget/likes_button.dart';
@@ -13,11 +12,12 @@ import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:get/get.dart';
 
 class CommunityPostAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CommunityPostAppBar(
+  CommunityPostAppBar(
     {Key? key,
     required this.post}) 
     : super(key: key);
 
+  String collectionName = 'community';
   final CommunityPostModel post;
 
   @override
@@ -32,8 +32,6 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
   List<String> likesUser = [];
   List<String> scrapsUser = [];
   final SaveData saveData = SaveData();
-  final userBlockListController = Get.put(UserBlockListController());
-
 
   @override
   void initState() {
@@ -62,14 +60,14 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
           //automaticallyImplyLeading: true,
           leading: backToPreviousPage(context),
           actions: [
-            likesButton(isClicked(likesUser), likesUser, widget.post.category, widget.post.id!, user!.uid, updateLikes),
-            scrapsButton(isClicked(scrapsUser), scrapsUser, widget.post.category, widget.post.id!, user!.uid, updateScraps),
+            likesButton(widget.collectionName, isClicked(likesUser), likesUser, widget.post.category, widget.post.id!, user!.uid, updateLikes),
+            scrapsButton(widget.collectionName, isClicked(scrapsUser), scrapsUser, widget.post.category, widget.post.id!, user!.uid, updateScraps),
             IconButton(
               icon: custom_icons.add_ons, 
               onPressed: (){
                 customBottomSheet(context, widget.post.uid == user!.uid, 
-                () { deletePost(context, widget.post.category, widget.post.id!, 'community'); }, 
-                () { reportPost(context, 'community', widget.post.id!); }, 
+                () { deletePost(context, widget.post.category, widget.post.id!, widget.collectionName); }, 
+                () { reportPost(context, widget.collectionName, widget.post.id!); }, 
                 () { blockPost(context, user!.uid, widget.post.nickname); });
               }),
           ],
@@ -77,8 +75,7 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
   }
 
 deletePost(BuildContext context, String category, String documentID, String collectionName){
-  //Navigator.pushNamedAndRemoveUntil(context, '/bottom_nav', (_) => false);
-  Get.offAll(() => const CommunityPostList());
+  Get.offAll(() => const BottomNavBar());
   saveData.deleteCommunityPost(category, documentID);
 }
 
@@ -88,9 +85,8 @@ reportPost(BuildContext context, String collectionName, String id){
 }
 
 blockPost(BuildContext context, String uid, String blockUid){
-  //Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   Get.offAll(() => const BottomNavBar());
-  userBlockListController.addBlockedUser(blockUid);
+  Get.find<UserController>().addBlockedUser(blockUid);
 }
 
 

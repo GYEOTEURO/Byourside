@@ -9,53 +9,77 @@ import 'package:byourside/constants/constants.dart' as constants;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class CommunityPostListAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CommunityPostListAppBar(
+class AutoInformationPostListAppBar extends StatefulWidget implements PreferredSizeWidget {
+  AutoInformationPostListAppBar(
     {Key? key,
+    required this.onLocationSelected,
     required this.onDisabilityTypeSelected}) 
     : super(key: key);
 
+  final ValueChanged<String> onLocationSelected;
   final ValueChanged<String> onDisabilityTypeSelected;
 
   @override
-  State<CommunityPostListAppBar> createState() => _CommunityPostListAppBarState();
+  State<AutoInformationPostListAppBar> createState() => _AutoInformationPostListAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(100.0);
 }
 
-class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
+class _AutoInformationPostListAppBarState extends State<AutoInformationPostListAppBar> {
   String? selectedDisabilityTypeValue = 
     Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? 
     '발달' 
     : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+
+  String? selectedLocationValue = Get.find<UserController>().userModel.district;
   
   void _handleDisabilityTypeSelected(String value) {
-  setState(() {
-    selectedDisabilityTypeValue = value;
-  });
+    setState(() {
+      selectedDisabilityTypeValue = value;
+    });
+  }
+
+  void _handleLocationSelected(String value) {
+    setState(() {
+      selectedLocationValue = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: colors.lightPrimaryColor,
+      color: colors.appBarColor,
       padding: const EdgeInsets.fromLTRB(20, 33, 20, 0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(
-                child: appBarSelectButton(context, selectedDisabilityTypeValue!),
-                onTap: () {
-                    HapticFeedback.lightImpact();
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
-                    });
-              }),
+              Row(
+                children: [
+                GestureDetector(
+                  child: appBarSelectButton(context, selectedLocationValue!),
+                  onTap: () {
+                      HapticFeedback.lightImpact();
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (context) {
+                      //       return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
+                      // });
+                }),
+                const SizedBox(width: 6),
+                GestureDetector(
+                  child: appBarSelectButton(context, selectedDisabilityTypeValue!),
+                  onTap: () {
+                      HapticFeedback.lightImpact();
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
+                      });
+                })
+              ]),
               Row(
                 children: [
                   goToScrapPage(context),
@@ -68,7 +92,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                 child: const Text(
-                constants.communityTitle,
+                constants.autoInformationTitle,
                 semanticsLabel: constants.communityTitle,
                 style: TextStyle(
                     color: colors.textColor, 

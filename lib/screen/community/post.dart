@@ -69,7 +69,6 @@ class _CommunityPostState extends State<CommunityPost> {
                       spreadRadius: 0,
                     )
                   ]),
-                // margin: const EdgeInsets.all(7),
                 padding: const EdgeInsets.fromLTRB(25, 12, 15, 12),
                 child: CreateComment(
                     collectionName: 'community_comment',

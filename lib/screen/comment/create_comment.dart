@@ -1,5 +1,6 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:byourside/widget/fully_rounded_rectangle_button.dart';
@@ -26,8 +27,8 @@ class CreateComment extends StatefulWidget {
 
 class _CreateCommentState extends State<CreateComment> {
   final User user = FirebaseAuth.instance.currentUser!;
-  final scrollController = Get.put(ScrollDownForComment());
   final SaveData saveData = SaveData();
+  final scrollController = Get.find<ScrollDownForComment>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +65,11 @@ class _CreateCommentState extends State<CreateComment> {
               const SizedBox(width: 15),
               fullyRoundedRectangleButton('입력', 
               () {
-                  HapticFeedback.lightImpact(); // 약한 진동
+                  HapticFeedback.lightImpact();
                   FocusScope.of(context).unfocus();
                   CommentModel comment = CommentModel(
                       uid: user.uid,
-                      nickname: user.displayName!,
+                      nickname: Get.find<UserController>().userModel.nickname!,
                       content: CreateComment.content.text,
                       createdAt: Timestamp.now());
                   saveData.addComment(
@@ -78,6 +79,7 @@ class _CreateCommentState extends State<CreateComment> {
                           .scrollController.position.maxScrollExtent,
                       duration: const Duration(milliseconds: 10),
                       curve: Curves.ease);
+                  CreateComment.content.text = '';
                 })
         ]);
   }

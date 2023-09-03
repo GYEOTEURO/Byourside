@@ -51,14 +51,14 @@ class _ChangeDisabilityTypeState extends State<ChangeDisabilityType> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           fullyRoundedRectangleButton('발달장애', () {
-                            HapticFeedback.lightImpact(); // 약한 진동
+                            HapticFeedback.lightImpact();
                             selectedType = '발달';
                             widget.onDisabilityTypeSelectedFromPostList(selectedType);
                             widget.onDisabilityTypeSelectedFromAppBar(selectedType);
                             Navigator.pop(context);
                           }),
                           fullyRoundedRectangleButton('뇌병변장애', () {
-                            HapticFeedback.lightImpact(); // 약한 진동
+                            HapticFeedback.lightImpact();
                             selectedType = '뇌병변';
                             widget.onDisabilityTypeSelectedFromPostList(selectedType);
                             widget.onDisabilityTypeSelectedFromAppBar(selectedType);
