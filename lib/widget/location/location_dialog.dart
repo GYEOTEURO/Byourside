@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/location.dart' as constants;
-import 'package:byourside/widget/authenticate/setup/location/location_button.dart';
+import 'package:byourside/widget/location/location_button.dart';
 
 class LocationDialog extends StatefulWidget {
   final Function(String area, String district) onLocationSelected;
-
+  final double deviceWidth; 
+  final double deviceHeight;
+  
   const LocationDialog({super.key, 
-    required this.onLocationSelected,
+    required this.onLocationSelected, 
+    required this.deviceWidth, 
+    required this.deviceHeight,
   });
 
   @override
-  _LocationDialogState createState() => _LocationDialogState();
+  LocationDialogState createState() => LocationDialogState();
 }
 
-class _LocationDialogState extends State<LocationDialog> {
+class LocationDialogState extends State<LocationDialog> {
   String selectedArea = '';
   String selectedDistrict = '';
+  
+  double getRelativeWidth(double value) {
+    return widget.deviceWidth * value;
+  }
+
+  double getRelativeHeight(double value) {
+    return widget.deviceHeight * value;
+  }
 
   List<Widget> buildAreaButtons() {
     return constants.districtsByArea.keys.map((area) {
@@ -28,6 +40,8 @@ class _LocationDialogState extends State<LocationDialog> {
             selectedDistrict = '';
           });
         },
+        deviceHeight: getRelativeHeight(1),
+        deviceWidth: getRelativeWidth(1),
       );
     }).toList();
   }
@@ -43,6 +57,8 @@ class _LocationDialogState extends State<LocationDialog> {
               selectedDistrict = district;
             });
           },
+          deviceHeight: getRelativeHeight(1),
+          deviceWidth: getRelativeWidth(1),
         );
       }).toList();
     }
@@ -55,7 +71,7 @@ class _LocationDialogState extends State<LocationDialog> {
       title: const Text('사는 곳을 선택해 주세요'),
       content: SingleChildScrollView(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 300),
+          constraints: BoxConstraints(maxHeight: getRelativeHeight(0.5)),
           child: Row(
             children: [
               SingleChildScrollView(
@@ -64,7 +80,7 @@ class _LocationDialogState extends State<LocationDialog> {
                   children: buildAreaButtons(),
                 ),
               ),
-              const SizedBox(width: 16),
+             SizedBox(width: getRelativeWidth(0.08)),
               if (selectedArea.isNotEmpty)
                 SingleChildScrollView(
                   child: Column(

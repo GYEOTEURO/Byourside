@@ -1,6 +1,6 @@
 import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/widget/authenticate/setup/location/location_dialog.dart';
+import 'package:byourside/widget/location/location_dialog.dart';
 import 'package:flutter/material.dart';
 
 class LocationSection extends StatefulWidget {
@@ -48,9 +48,10 @@ class LocationSectionState extends State<LocationSection> {
             selectedArea = area;
             selectedDistrict = district;
           });
-
           widget.onLocationSelected(area, district);
         },
+        deviceHeight: getRelativeHeight(1),
+        deviceWidth: getRelativeWidth(1),
       );
     },
   );

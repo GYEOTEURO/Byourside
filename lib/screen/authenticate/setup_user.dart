@@ -4,7 +4,7 @@ import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/authenticate/setup/age_section.dart';
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
-import 'package:byourside/widget/authenticate/setup/location/location_section.dart';
+import 'package:byourside/widget/location/location_section.dart';
 import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
 import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
