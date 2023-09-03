@@ -1,3 +1,4 @@
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 import 'package:flutter/material.dart';
 
 class DisabilityType extends StatefulWidget {
@@ -22,25 +23,28 @@ class _DisabilityTypeState extends State<DisabilityType> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          '장애 유형을 선택해주세요',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
+    return Padding(
+      padding: EdgeInsets.all(deviceWidth * 0.05),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExplainText(
+            text: '장애 유형을 선택해주세요',
+            width: deviceWidth * 0.04,
           ),
-        ),
-        const SizedBox(height: 8), // 텍스트와 버튼 간격
-        Row(
-          children: [
-            buildDisabilityTypeChip('뇌병변 장애'),
-            buildDisabilityTypeChip('발달 장애'),
-            buildDisabilityTypeChip('해당없음'),
-          ],
-        ),
-      ],
+          SizedBox(height: deviceHeight * 0.02), // 텍스트와 버튼 간격
+          Row(
+            children: [
+              buildDisabilityTypeChip('뇌병변 장애'),
+              buildDisabilityTypeChip('발달 장애'),
+              buildDisabilityTypeChip('해당없음'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

@@ -153,8 +153,8 @@ class NicknameSectionState extends State<NicknameSection> {
         message = '닉네임을 입력하세요';
       } else {
         message = nickNameExist
-            ? '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.'
-            : '사용 가능한 닉네임입니다.';
+            ? '이미 사용하고 있는 닉네임입니다'
+            : '사용 가능한 닉네임입니다';
       }
 
       return Text(

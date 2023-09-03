@@ -1,3 +1,4 @@
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 import 'package:byourside/widget/authenticate/setup/user_type_button.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +22,9 @@ class UserTypeSelection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, 
         children: [
-          Text(
-            '어떤 유형의 사용자인지 알려주세요',
-            style: TextStyle(
-              fontSize: deviceWidth * 0.04,
-              fontWeight: FontWeight.w700,
-            ),
-            textAlign: TextAlign.left,
+          ExplainText(
+            text : '어떤 유형의 사용자인지 알려주세요',
+            width : deviceWidth * 0.04,
           ),
           SizedBox(height: deviceHeight * 0.02),
           Row(

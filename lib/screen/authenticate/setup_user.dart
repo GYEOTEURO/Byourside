@@ -119,12 +119,10 @@ class _SetupUserState extends State<SetupUser> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const NicknameSection(),  
-                  const SizedBox(height: 20),
                   UserTypeSelection(
                     selectedType: _selectedUserType,
                     onTypeSelected: _handleUserTypeSelected,
                   ),
-                  const SizedBox(height: 20),
                    DisabilityType(
                     initialType: _selectedDisabilityType,
                     onChanged: _handleDisabilityTypeSelected,
