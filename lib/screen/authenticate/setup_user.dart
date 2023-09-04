@@ -4,7 +4,8 @@ import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/authenticate/setup/age_section.dart';
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
-import 'package:byourside/widget/authenticate/setup/location/location_section.dart';
+import 'package:byourside/widget/complete_button.dart';
+import 'package:byourside/widget/location/location_section.dart';
 import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
 import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
@@ -13,7 +14,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'dart:ui';
 
 
 final TextEditingController _birthYear = TextEditingController();
@@ -80,32 +80,6 @@ class _SetupUserState extends State<SetupUser> {
     }
   }
 
-  Widget _buildButtonDesign(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => _onCompleteButtonPressed(context),
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-        textStyle: const TextStyle(
-          fontSize: 17,
-          fontFamily: 'NanumGothic',
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      child: const Text(
-        '완료',
-        semanticsLabel: '완료',
-      ),
-    );
-  }
-
-  Widget buildCompleteButton(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: _buildButtonDesign(context),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -148,7 +122,9 @@ class _SetupUserState extends State<SetupUser> {
               ),
             ),
           ),
-          buildCompleteButton(context),
+          CompleteButton(
+            onPressed: () => _onCompleteButtonPressed(context), text: '시작하기',
+          ),
         ],
       ),
     );
