@@ -52,7 +52,7 @@ class _MypageState extends State<Mypage> {
     var age = calculateAge(userController.userModel.birthYear);
 
     return Scaffold(
-      appBar: titleOnlyAppbar(context, '마이페이지'),
+      appBar: titleOnlyAppbar(context, '마이페이지', showBackButton: false),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(

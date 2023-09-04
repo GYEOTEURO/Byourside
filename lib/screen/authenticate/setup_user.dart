@@ -89,7 +89,7 @@ class _SetupUserState extends State<SetupUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: titleOnlyAppbar(context, widget.title),
+      appBar: titleOnlyAppbar(context, widget.title, showBackButton: false),
       body: Column(
         children: [
           Expanded(
