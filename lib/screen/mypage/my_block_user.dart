@@ -3,6 +3,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/widget/delete_report_block_alert.dart';
+import 'package:byourside/widget/no_data.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,14 +24,7 @@ class _MyBlockState extends State<MyBlock> {
         child: GetBuilder<UserController>(
           builder: (controller){
             return controller.userModel.blockedUsers!.isEmpty == true ?
-              const Center(
-                    child: Text('없음',
-                        semanticsLabel: '차단한 사용자 없음',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: fonts.font,
-                          fontWeight: FontWeight.w600,
-                        )))
+              noData()
               : Column(
                     children: controller.userModel.blockedUsers!.map((e) => 
                             Column(

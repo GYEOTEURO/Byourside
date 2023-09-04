@@ -2,8 +2,8 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
+import 'package:byourside/screen/comment/comment_count.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/widget/customBottomSheet.dart';
 import 'package:byourside/widget/time_convertor.dart';
@@ -18,10 +18,10 @@ class CommentList extends StatefulWidget {
   CommentList(
       {super.key,
       required this.collectionName,
-      required this.post});
+      required this.documentID});
 
   final String collectionName;
-  CommunityPostModel post;
+  final String documentID;
 
   @override
   State<CommentList> createState() => _CommentListState();
@@ -32,27 +32,11 @@ class _CommentListState extends State<CommentList> {
   final LoadData loadData = LoadData();
   final SaveData saveData = SaveData();
 
-  Widget _numberOfComments(int countComments){
-    return Container(
-      alignment: Alignment.bottomLeft, 
-      child: Text(
-          '댓글 $countComments',
-          style: const TextStyle(
-            color: colors.textColor,
-            fontSize: 13,
-            fontFamily: fonts.font,
-            fontWeight: FontWeight.w400
-          ),
-        )
-    );
-  }
-
-
   Widget _buildListItem(String? collectionName, String? documentID, CommentModel? comment) {
     TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt, fontSize: 10.0);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,7 +62,7 @@ class _CommentListState extends State<CommentList> {
                         icon: customIcons.add_ons, 
                         onPressed: (){ 
                           customBottomSheet(context, comment.uid == user!.uid, 
-                            () { deleteComment(context, widget.collectionName, widget.post.id!, comment.id!); }, 
+                            () { deleteComment(context, widget.collectionName, widget.documentID, comment.id!); }, 
                             () { reportComment(context, widget.collectionName, comment.id!); }, 
                             () { blockComment(context, user!.uid, comment.nickname); });
                         }
@@ -157,16 +141,14 @@ class _CommentListState extends State<CommentList> {
 
   @override
   Widget build(BuildContext context) {
-    String collectionName = widget.collectionName;
-    String documentID = widget.post.id!;
-
     return StreamBuilder<List<CommentModel>>(
-        stream: loadData.readComments(collectionName: collectionName, documentID: documentID),
+        stream: loadData.readComments(collectionName: widget.collectionName, documentID: widget.documentID),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-              _numberOfComments(snapshots.data!.length),
+                commentCount(context, widget.collectionName, snapshots.data!.length),
                 ListView.builder(
                   itemCount: snapshots.data!.length,
                   physics: const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
@@ -176,7 +158,7 @@ class _CommentListState extends State<CommentList> {
                     if (Get.find<UserController>().userModel.blockedUsers!.contains(comment.nickname)) {
                       return Container();
                     } else {
-                      return _buildListItem(collectionName, documentID, comment);
+                      return _buildListItem(widget.collectionName, widget.documentID, comment);
                     }
                 })
               ]);

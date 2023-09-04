@@ -1,7 +1,7 @@
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
+import 'package:byourside/widget/no_data.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/constants/fonts.dart' as fonts;
 
 Widget streamCommunityPost(Function loadData) {
     return StreamBuilder<List<CommunityPostModel>>(
@@ -16,17 +16,7 @@ Widget streamCommunityPost(Function loadData) {
                       return communityPostListTile(context, post);
                     });
               } else {
-                return const SelectionArea(
-                    child: Center(
-                        child: Text(
-                          '없음',
-                          semanticsLabel: '없음',
-                          style: TextStyle(
-                            fontFamily: fonts.font,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                ));
+                return noData();
               }
             });
 }
