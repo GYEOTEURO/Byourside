@@ -9,7 +9,6 @@ import 'package:byourside/screen/mypage/my_community_post.dart';
 import 'package:byourside/screen/common/my_scrap.dart';
 import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/screen/mypage/setting.dart';
-import 'package:byourside/screen/mypage/to_developer.dart';
 
 // 제목 및 타이틀
 const String communityAddPostTitle = '글쓰기';
