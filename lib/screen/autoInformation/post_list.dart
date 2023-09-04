@@ -63,7 +63,7 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
           ),
           Expanded(
             child: StreamBuilder<List<AutoInformationPostModel>>(
-              stream: loadData.readAutoInformationPosts(category: selectedChipValue, location: location, disabilityType: selectedDisabilityTypeValue),
+              stream: loadData.readAutoInformationPosts(category: selectedChipValue, area: location!['area'], district: location!['district'], disabilityType: selectedDisabilityTypeValue),
               builder: (context, snapshots) {
                 if (snapshots.hasData) {
                   return ListView.builder(

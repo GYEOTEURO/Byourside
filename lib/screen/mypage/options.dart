@@ -34,7 +34,7 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
   return Column(
     children: [
       Container(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.9,
         alignment: Alignment.centerLeft,
         child: Text(
           optionName,
@@ -47,9 +47,10 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
             ),
           ), 
         ),
+        SizedBox(height: MediaQuery.of(context).size.height / 40),
         Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: MediaQuery.of(context).size.height / 14.5 * options.length,
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height / 12.4 * options.length,
           decoration: ShapeDecoration(
               shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 0.50, color: colors.subColor),

@@ -55,42 +55,41 @@ class _CommunityPostListState extends State<CommunityPostList> {
                   category: constants.communityCategories,
                   onChipSelected: _handleChipSelected)),
           Expanded(
-              child: StreamBuilder<List<CommunityPostModel>>(
-                  stream: loadData.readCommunityPosts(
-                      category: selectedChipValue,
-                      disabilityType: selectedDisabilityTypeValue),
-                  builder: (context, snapshots) {
-                    if (snapshots.hasData) {
-                      return ListView.builder(
-                          itemCount: snapshots.data!.length,
-                          shrinkWrap: true,
-                          itemBuilder: (_, index) {
-                            CommunityPostModel post = snapshots.data![index];
-                            if (Get.find<UserController>()
-                                .userModel
-                                .blockedUsers!
-                                .contains(post.nickname)) {
-                              return Container();
-                            } else {
-                              return communityPostListTile(context, post);
-                            }
-                          });
-                    } else {
-                      return SelectionArea(
-                          child: Center(child: customIcons.loading));
-                    }
-                  }))
-        ]),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            HapticFeedback.lightImpact();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const CommunityAddPost()));
-          },
-          backgroundColor: colors.primaryColor,
-          child: customIcons.addPost,
-        ));
+            child: StreamBuilder<List<CommunityPostModel>>(
+              stream: loadData.readCommunityPosts(category: selectedChipValue, disabilityType: selectedDisabilityTypeValue),
+              builder: (context, snapshots) {
+                if (snapshots.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshots.data!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (_, index) {
+                        CommunityPostModel post = snapshots.data![index];
+                        if (Get.find<UserController>().userModel.blockedUsers!.contains(post.nickname)) {
+                          return Container();
+                        } else {
+                          return communityPostListTile(context, post);
+                        }
+                      });
+              } else {
+                return SelectionArea(
+                  child: Center(
+                    child: customIcons.loading
+                  )
+                );
+              }
+            })
+          )
+          ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          HapticFeedback.lightImpact();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CommunityAddPost()));
+        },
+        backgroundColor: colors.primaryColor,
+        child: customIcons.addPost,
+    ));
   }
 }

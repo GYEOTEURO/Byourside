@@ -1,17 +1,15 @@
-import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/comment/comment_list.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AutoInformationComment extends StatefulWidget {
   const AutoInformationComment(
       {super.key,
-      required this.post});
+      required this.documentID});
 
-  final AutoInformationPostModel post;
+  final String documentID;
   final String collectionName = 'autoInformation_comment';
 
   @override
@@ -24,7 +22,6 @@ class _AutoInformationCommentState extends State<AutoInformationComment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: titleOnlyAppbar(context, 'numberOfCount'),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -33,10 +30,10 @@ class _AutoInformationCommentState extends State<AutoInformationComment> {
                 controller: scrollController.scrollController, //댓글 전송 누르면 맨 아래로 이동 가능하게
                 child: Container(
                         margin: const EdgeInsets.all(7),
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 70),
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
                         child: CommentList(
                             collectionName: widget.collectionName,
-                            documentID: widget.post.id!)),
+                            documentID: widget.documentID)),
               ),
               Positioned(
                 left: 0,
@@ -57,7 +54,7 @@ class _AutoInformationCommentState extends State<AutoInformationComment> {
                 padding: const EdgeInsets.fromLTRB(25, 12, 15, 12),
                 child: CreateComment(
                     collectionName: widget.collectionName,
-                    documentID: widget.post.id!)
+                    documentID: widget.documentID)
             ))]),
            ));
       
