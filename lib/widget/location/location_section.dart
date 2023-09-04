@@ -1,7 +1,7 @@
-import 'package:byourside/widget/authenticate/setup/explain_text.dart';
+import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/widget/location/location_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 
 class LocationSection extends StatefulWidget {
   final Function(String area, String district) onLocationSelected;
@@ -39,24 +39,53 @@ class LocationSectionState extends State<LocationSection> {
   }
 
   void _showLocationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return LocationDialog(
-        onLocationSelected: (area, district) {
-          setState(() {
-            selectedArea = area;
-            selectedDistrict = district;
-          });
-          widget.onLocationSelected(area, district);
-        },
-        deviceHeight: getRelativeHeight(1),
-        deviceWidth: getRelativeWidth(1),
-      );
-    },
-  );
-}
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return LocationDialog(
+          title: '사는 곳을 선택해 주세요',
+          onLocationSelected: (area, district) {
+            setState(() {
+              selectedArea = area;
+              selectedDistrict = district;
+            });
+            widget.onLocationSelected(area, district);
+          },
+          deviceHeight: getRelativeHeight(1),
+          deviceWidth: getRelativeWidth(1),
+        );
+      },
+    );
+  }
 
+  ElevatedButton buildLocationButton(BuildContext context) {
+    var isLocationSelected = selectedArea.isNotEmpty && selectedDistrict.isNotEmpty;
+
+    return ElevatedButton(
+      onPressed: () => _showLocationDialog(context),
+      style: ElevatedButton.styleFrom(
+        elevation: 0, backgroundColor: isLocationSelected ? colors.primaryColor : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        side: const BorderSide(color: colors.primaryColor),
+      ),
+      child: SizedBox(
+        width: getRelativeWidth(0.8),
+        height: getRelativeHeight(0.07),
+        child: Center(
+          child: Text(
+            isLocationSelected ? selectedDistrict : '사는 지역 선택하기',
+            style: TextStyle(
+              fontSize: getRelativeWidth(0.038),
+              fontWeight: FontWeight.w700,
+              color: isLocationSelected ? Colors.black : colors.subColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
 
   @override
@@ -73,49 +102,7 @@ class LocationSectionState extends State<LocationSection> {
           SizedBox(height: getRelativeHeight(0.02)),
           Align(
             alignment: Alignment.centerLeft,
-            child: ElevatedButton(
-              onPressed: () {
-                _showLocationDialog(context);
-              },
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all<double>(0),
-                backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.white; // Button color when pressed
-                    }
-                    if (selectedArea.isNotEmpty && selectedDistrict.isNotEmpty) {
-                      return colors.primaryColor; // Button color when selectedArea is not empty
-                    }
-                    return Colors.white; // Default button color
-                  },
-                ),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                side: MaterialStateProperty.resolveWith<BorderSide?>(
-                  (Set<MaterialState> states) {
-                    return const BorderSide(color: colors.primaryColor); 
-                  },
-                ),
-              ),
-              child: SizedBox(
-                width: getRelativeWidth(0.8), 
-                height: getRelativeHeight(0.07), 
-                child: Center(
-                  child: Text(
-                    selectedArea.isNotEmpty && selectedDistrict.isNotEmpty ? selectedDistrict : '사는 지역 선택하기',
-                    style: TextStyle(
-                      fontSize: getRelativeWidth(0.038),
-                      fontWeight: FontWeight.w700,
-                      color: selectedArea.isNotEmpty && selectedDistrict.isNotEmpty ?Colors.black : colors.subColor, 
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            child: buildLocationButton(context),
           ),
         ],
       ),

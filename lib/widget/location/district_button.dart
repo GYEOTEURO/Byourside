@@ -29,8 +29,8 @@ class DistrictButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: getRelativeWidth(0.25),
-      height: getRelativeHeight(0.045), // You may adjust the height as needed
-      margin: EdgeInsets.symmetric(vertical: getRelativeHeight(0.007)), // Add horizontal padding
+      height: getRelativeHeight(0.045),
+      margin: EdgeInsets.symmetric(vertical: getRelativeHeight(0.007)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: isSelected ? colors.primaryColor : Colors.white,
@@ -38,15 +38,15 @@ class DistrictButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent, // Make the button background transparent
-          shadowColor: Colors.transparent, // Remove button shadow
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
         ),
         child: Text(
           label,
           style: TextStyle(
             fontSize: getRelativeWidth(0.04),
             fontWeight: FontWeight.w400,
-            color: Colors.black, // Change text color based on selection
+            color: Colors.black,
           ),
         ),
       ),

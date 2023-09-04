@@ -5,15 +5,18 @@ import 'package:byourside/constants/location.dart' as constants;
 import 'package:byourside/widget/location/district_button.dart';
 
 class LocationDialog extends StatefulWidget {
+  final String title;
   final Function(String area, String district) onLocationSelected;
-  final double deviceWidth; 
+  final double deviceWidth;
   final double deviceHeight;
-  
-  const LocationDialog({super.key, 
-    required this.onLocationSelected, 
-    required this.deviceWidth, 
+
+  const LocationDialog({
+    Key? key,
+    required this.onLocationSelected,
+    required this.deviceWidth,
     required this.deviceHeight,
-  });
+    required this.title,
+  }) : super(key: key);
 
   @override
   LocationDialogState createState() => LocationDialogState();
@@ -22,7 +25,7 @@ class LocationDialog extends StatefulWidget {
 class LocationDialogState extends State<LocationDialog> {
   String selectedArea = '';
   String selectedDistrict = '';
-  
+
   double getRelativeWidth(double value) {
     return widget.deviceWidth * value;
   }
@@ -67,54 +70,73 @@ class LocationDialogState extends State<LocationDialog> {
     return [];
   }
 
+  Widget buildDialogTitle() {
+    return Text(
+      widget.title,
+      style: TextStyle(
+        fontSize: getRelativeWidth(0.038),
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+
+  Widget buildContent() {
+    return Row(
+      children: [
+        buildAreaColumn(),
+        if (selectedArea.isNotEmpty) buildDistrictColumn(),
+      ],
+    );
+  }
+
+  Widget buildAreaColumn() {
+    return Padding(
+      padding: EdgeInsets.only(right: getRelativeWidth(0.06)),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: buildAreaButtons(),
+        ),
+      ),
+    );
+  }
+
+  Widget buildDistrictColumn() {
+    return Padding(
+      padding: EdgeInsets.only(left: getRelativeWidth(0.06)),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: buildDistrictButtons(),
+        ),
+      ),
+    );
+  }
+
+  Widget buildCompleteButton() {
+    return CompleteButton(
+      onPressed: () {
+        if (selectedArea.isNotEmpty && selectedDistrict.isNotEmpty) {
+          widget.onLocationSelected(selectedArea, selectedDistrict);
+          Navigator.pop(context);
+        }
+      },
+      text: '선택완료',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        '사는 곳을 선택해 주세요',
-        style: TextStyle(
-          fontSize: getRelativeWidth(0.038),
-          fontWeight: FontWeight.w400,
-        ),
-      ),
+      title: buildDialogTitle(),
       content: SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxHeight: getRelativeHeight(0.5)),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: getRelativeWidth(0.06)), 
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: buildAreaButtons(),
-                  ),
-                ),
-              ),
-              if (selectedArea.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(left: getRelativeWidth(0.06)), 
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: buildDistrictButtons(),
-                    ),
-                  ),
-                ),
-            ],
-          ),
+          child: buildContent(),
         ),
       ),
       actions: [
-        CompleteButton(
-          onPressed: () {
-            if (selectedArea.isNotEmpty && selectedDistrict.isNotEmpty) {
-              widget.onLocationSelected(selectedArea, selectedDistrict);
-              Navigator.pop(context);
-            }
-          },
-          text: '선택 완료',
-        ),
+        buildCompleteButton(),
       ],
       contentPadding: EdgeInsets.only(top: getRelativeHeight(0.05)),
     );
