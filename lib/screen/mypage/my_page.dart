@@ -3,6 +3,7 @@ import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:get/get.dart';
@@ -52,20 +53,61 @@ class _Mypage extends State<Mypage> {
     var age = currentYear - birthYear!;
     return age;
   }
-  
+  Widget buildInfoContainer(String labelText, String valueText) {
+    double containerHeight = getRelativeHeight(0.06); 
+    double containerWidth = getRelativeWidth(0.28); 
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          labelText,
+          style: TextStyle(
+            fontSize: getRelativeWidth(0.035),
+            fontWeight: FontWeight.w400,
+            color: colors.subColor,
+          ),
+        ),
+        SizedBox(height: getRelativeHeight(0.01)),
+        Container(
+          width: containerWidth,
+          height: containerHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: colors.primaryColor),
+          ),
+          child: Center( // Center widget to horizontally and vertically center the text
+            child: Text(
+              valueText,
+              style: TextStyle(
+                fontSize: getRelativeWidth(0.036),
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: titleOnlyAppbar(context, '마이페이지'),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(getRelativeHeight(0.02)), 
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center, 
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: getRelativeHeight(0.02)), // Add padding to the first Row
+Widget build(BuildContext context) {
+  var age = calculateAge(userController.userModel.birthYear);
+
+  return Scaffold(
+    appBar: titleOnlyAppbar(context, '마이페이지'),
+    body: SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(getRelativeHeight(0.03)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: getRelativeHeight(0.02)),
+                
                   child: Row(
                     children: [
                       custom_icons.profile,
@@ -80,39 +122,25 @@ class _Mypage extends State<Mypage> {
                     ],
                   ),
                 ),
-                // Second Row for displaying district, birthYear, and disabilityType
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, // Align the new Row horizontally
-                  children: [
-                    Text(
-                      userController.userModel.district!,
-                      style: TextStyle(
-                            fontSize: getRelativeWidth(0.045),
-                            fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(width: getRelativeWidth(0.03)),
-                    Text(
-                      calculateAge(userController.userModel.birthYear) as String,
-                      style: TextStyle(
-                            fontSize: getRelativeWidth(0.045),
-                            fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(width: getRelativeWidth(0.03)),
-                    Text(
-                      userController.userModel.disabilityType!,
-                      style: TextStyle(
-                            fontSize: getRelativeWidth(0.045),
-                            fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                // No padding for items below the Rows
-                myPageOptions(context, '내 활동', constants.myActivity),
-                SizedBox(height: getRelativeHeight(0.04)),
-                myPageOptions(context, '기타', constants.etc),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildInfoContainer('거주지', userController.userModel.district!),
+                  buildInfoContainer('나이', '$age살'),
+                  buildInfoContainer('장애 유형', userController.userModel.disabilityType!),
+                ],
+              ),
+              SizedBox(height: getRelativeHeight(0.04)),
+              Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      myPageOptions(context, '내 활동', constants.myActivity),
+                      SizedBox(height: getRelativeHeight(0.04)),
+                      myPageOptions(context, '기타', constants.etc),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
