@@ -18,11 +18,29 @@ class DisabilityType extends StatefulWidget {
 
 class _DisabilityTypeState extends State<DisabilityType> {
   late String _selectedType;
+  double _deviceWidth = 0;
+  double _deviceHeight = 0;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        var mediaQuery = MediaQuery.of(context);
+        _deviceWidth = mediaQuery.size.width;
+        _deviceHeight = mediaQuery.size.height;
+      });
+    });
     _selectedType = widget.initialType;
+  }
+
+
+  double getRelativeWidth(double value) {
+    return _deviceWidth * value;
+  }
+
+  double getRelativeHeight(double value) {
+    return _deviceHeight * value;
   }
 
 
@@ -30,8 +48,8 @@ class _DisabilityTypeState extends State<DisabilityType> {
     bool isSelected = _selectedType == type;
 
     return SizedBox(
-      width: deviceWidth * 0.3, 
-      height: deviceHeight * 0.05, 
+      width: getRelativeWidth(0.3), 
+      height: getRelativeHeight(0.05), 
       child: ChoiceChip(
         label: Text(
           type,
@@ -61,26 +79,23 @@ class _DisabilityTypeState extends State<DisabilityType> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-
 
     return Padding(
-      padding: EdgeInsets.all(deviceWidth * 0.05),
+      padding: EdgeInsets.all(getRelativeWidth(0.05)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExplainText(
             text: '장애 유형을 선택해 주세요',
-            width: deviceWidth * 0.04,
+            width: getRelativeWidth(0.04),
           ),
-          SizedBox(height: deviceHeight * 0.02), 
+          SizedBox(height: getRelativeHeight(0.02)), 
           Row(
             mainAxisAlignment: MainAxisAlignment.start, 
             children: [
-              buildDisabilityTypeChip('발달 장애', deviceWidth, deviceHeight),
-              buildDisabilityTypeChip('뇌병변 장애', deviceWidth, deviceHeight),
-              buildDisabilityTypeChip('해당없음', deviceWidth, deviceHeight),
+              buildDisabilityTypeChip('발달 장애', getRelativeWidth(1), getRelativeHeight(1)),
+              buildDisabilityTypeChip('뇌병변 장애', getRelativeWidth(1), getRelativeHeight(1)),
+              buildDisabilityTypeChip('해당없음', getRelativeWidth(1), getRelativeHeight(1)),
             ],
           ),
         ],
