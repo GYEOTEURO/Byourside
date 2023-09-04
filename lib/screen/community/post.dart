@@ -49,7 +49,7 @@ class _CommunityPostState extends State<CommunityPost> {
                         child: CommunityPostContent(post : widget.post)),
                     Container(
                         margin: const EdgeInsets.all(7),
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 70),
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
                         child: CommentList(
                             collectionName: widget.collectionName,
                             documentID: widget.post.id!)),

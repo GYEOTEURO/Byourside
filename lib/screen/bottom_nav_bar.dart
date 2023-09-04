@@ -23,7 +23,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     const AutoInformationPostList(),
     const CommunityPostList(),
     const Home(),
-    const Mypage(),
+    const Mypage()
   ];
 
   List<SvgPicture> bottomIcons = [

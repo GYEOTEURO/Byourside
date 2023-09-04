@@ -2,8 +2,8 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
+import 'package:byourside/screen/comment/comment_count.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/widget/customBottomSheet.dart';
 import 'package:byourside/widget/time_convertor.dart';
@@ -32,27 +32,11 @@ class _CommentListState extends State<CommentList> {
   final LoadData loadData = LoadData();
   final SaveData saveData = SaveData();
 
-  Widget _numberOfComments(int countComments){
-    return Container(
-      alignment: Alignment.bottomLeft, 
-      child: Text(
-          '댓글 $countComments',
-          style: const TextStyle(
-            color: colors.textColor,
-            fontSize: 13,
-            fontFamily: fonts.font,
-            fontWeight: FontWeight.w400
-          ),
-        )
-    );
-  }
-
-
   Widget _buildListItem(String? collectionName, String? documentID, CommentModel? comment) {
     TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt, fontSize: 10.0);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -162,8 +146,9 @@ class _CommentListState extends State<CommentList> {
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-              _numberOfComments(snapshots.data!.length),
+                commentCount(context, widget.collectionName, snapshots.data!.length),
                 ListView.builder(
                   itemCount: snapshots.data!.length,
                   physics: const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
