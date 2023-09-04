@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   String? id;
-  String? birthYear;
+  int? birthYear;
   String? disabilityType;
   Map<String, String>? location;
   String? area;
@@ -14,11 +14,11 @@ class UserModel {
 
   UserModel({
     this.id,
-    required this.birthYear, 
-    required this.disabilityType, 
+    required this.birthYear,
+    required this.disabilityType,
     required this.location,
-    required this.nickname, 
-    required this.registrationPurpose, 
+    required this.nickname,
+    required this.registrationPurpose,
     required this.userType,
     required this.blockedUsers,
     DocumentSnapshot<Map<String, dynamic>>? doc,
@@ -42,10 +42,10 @@ class UserModel {
         blockedUsers = doc.data()!['blockedUsers'] == null
             ? []
             : doc.data()!['blockedUsers'].cast<String>() {
-        final Map<String, dynamic>? rawLocation = doc['location'];
-        location = castMapOfStringString(rawLocation);
-        area = location?['area'];
-        district = location?['district'];
+    final Map<String, dynamic>? rawLocation = doc['location'];
+    location = castMapOfStringString(rawLocation);
+    area = location?['area'];
+    district = location?['district'];
   }
 
   // Helper function to cast Map<String, dynamic> to Map<String, String>
@@ -53,7 +53,7 @@ class UserModel {
     if (input == null) {
       return null;
     }
-    
+
     Map<String, String> result = {};
     input.forEach((key, value) {
       if (value is String) {
