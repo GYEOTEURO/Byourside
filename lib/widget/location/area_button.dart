@@ -28,8 +28,8 @@ class AreaButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: getRelativeWidth(0.25),
-      height: getRelativeHeight(0.045), // You may adjust the height as needed
+      width: getRelativeWidth(0.28),
+      height: getRelativeHeight(0.055), // You may adjust the height as needed
       margin: EdgeInsets.symmetric(vertical: getRelativeHeight(0.007)), // Add horizontal padding
       decoration: BoxDecoration(
         borderRadius: isSelected

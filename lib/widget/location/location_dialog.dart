@@ -82,8 +82,8 @@ class LocationDialogState extends State<LocationDialog> {
           constraints: BoxConstraints(maxHeight: getRelativeHeight(0.5)),
           child: Row(
             children: [
-              Container(
-                margin: EdgeInsets.only(right: getRelativeWidth(0.08)), // 여기서 왼쪽 여백을 설정
+              Padding(
+                padding: EdgeInsets.only(right: getRelativeWidth(0.06)), 
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -92,10 +92,13 @@ class LocationDialogState extends State<LocationDialog> {
                 ),
               ),
               if (selectedArea.isNotEmpty)
-                SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: buildDistrictButtons(),
+                Padding(
+                  padding: EdgeInsets.only(left: getRelativeWidth(0.06)), 
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: buildDistrictButtons(),
+                    ),
                   ),
                 ),
             ],
@@ -113,7 +116,7 @@ class LocationDialogState extends State<LocationDialog> {
           text: '선택 완료',
         ),
       ],
-        contentPadding: EdgeInsets.fromLTRB(0.0, getRelativeHeight(0.05), getRelativeWidth(0.02), 0.0), 
+      contentPadding: EdgeInsets.only(top: getRelativeHeight(0.05)),
     );
   }
 }
