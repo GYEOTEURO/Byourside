@@ -90,13 +90,11 @@ dev_dependencies:
   json_serializable: ^6.7.1
   build_runner: ^2.4.6
 flutter_icons:
-  android: true
+  android: "launcher_icon"
   ios: true
   # 추후에 로고 바뀌면 image_path와 path_ios는 appstore, foreground는 playsotre로 설정
-  image_path: "assets/icons/playstore.png"
-  image_path_ios: "assets/icons/playstore.png"
-  adaptive_icon_background: "#045558"
-  adaptive_icon_foreground: "assets/icons/playstore.png"
+  image_path: "assets/images/app_logo.png"
+  min_sdk_android: 21 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -154,6 +152,7 @@ flutter:
     - assets/icons/see_more.svg
     - assets/icons/speech_bubble.svg
     - assets/icons/loading.gif
+    - assets/icons/photo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
