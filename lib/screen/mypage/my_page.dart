@@ -1,30 +1,23 @@
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/mypage/options.dart';
+import 'package:byourside/widget/info_container.dart';
 import 'package:byourside/widget/title_only_appbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/icons.dart' as custom_icons;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
 class Mypage extends StatefulWidget {
-  const Mypage({super.key});
+  const Mypage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _Mypage();
-  }
+  _MypageState createState() => _MypageState();
 }
 
-class _Mypage extends State<Mypage> {
-  final UserController userController = Get.find<UserController>(); // Get the UserController instance
+class _MypageState extends State<Mypage> {
+  final UserController userController = Get.find<UserController>();
 
-  late String uid;
-  late String displayName;
-  User? user;
-  
   double _deviceWidth = 0;
   double _deviceHeight = 0;
 
@@ -47,67 +40,28 @@ class _Mypage extends State<Mypage> {
   double getRelativeHeight(double value) {
     return _deviceHeight * value;
   }
-  
+
   int calculateAge(int? birthYear) {
     var currentYear = DateTime.now().year;
-    var age = currentYear - birthYear!;
+    var age = currentYear - (birthYear ?? 0);
     return age;
   }
-  Widget buildInfoContainer(String labelText, String valueText) {
-    double containerHeight = getRelativeHeight(0.06); 
-    double containerWidth = getRelativeWidth(0.28); 
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          labelText,
-          style: TextStyle(
-            fontSize: getRelativeWidth(0.035),
-            fontWeight: FontWeight.w400,
-            color: colors.subColor,
-          ),
-        ),
-        SizedBox(height: getRelativeHeight(0.01)),
-        Container(
-          width: containerWidth,
-          height: containerHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: colors.primaryColor),
-          ),
-          child: Center( // Center widget to horizontally and vertically center the text
-            child: Text(
-              valueText,
-              style: TextStyle(
-                fontSize: getRelativeWidth(0.036),
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
 
   @override
-Widget build(BuildContext context) {
-  var age = calculateAge(userController.userModel.birthYear);
+  Widget build(BuildContext context) {
+    var age = calculateAge(userController.userModel.birthYear);
 
-  return Scaffold(
-    appBar: titleOnlyAppbar(context, '마이페이지'),
-    body: SingleChildScrollView(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.all(getRelativeHeight(0.03)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: getRelativeHeight(0.02)),
-                
+    return Scaffold(
+      appBar: titleOnlyAppbar(context, '마이페이지'),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(getRelativeHeight(0.03)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: getRelativeHeight(0.02)),
                   child: Row(
                     children: [
                       custom_icons.profile,
@@ -122,16 +76,16 @@ Widget build(BuildContext context) {
                     ],
                   ),
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  buildInfoContainer('거주지', userController.userModel.district!),
-                  buildInfoContainer('나이', '$age살'),
-                  buildInfoContainer('장애 유형', userController.userModel.disabilityType!),
-                ],
-              ),
-              SizedBox(height: getRelativeHeight(0.04)),
-              Center(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight),
+                    buildInfoContainer('나이', '$age살', _deviceWidth, _deviceHeight),
+                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight),
+                  ],
+                ),
+                SizedBox(height: getRelativeHeight(0.04)),
+                Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -140,7 +94,7 @@ Widget build(BuildContext context) {
                       myPageOptions(context, '기타', constants.etc),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
