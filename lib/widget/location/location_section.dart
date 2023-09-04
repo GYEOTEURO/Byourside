@@ -97,7 +97,7 @@ class LocationSectionState extends State<LocationSection> {
                 ),
                 side: MaterialStateProperty.resolveWith<BorderSide?>(
                   (Set<MaterialState> states) {
-                    return const BorderSide(color: Color(0xFFFFC700)); 
+                    return const BorderSide(color: colors.primaryColor); 
                   },
                 ),
               ),

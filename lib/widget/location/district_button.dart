@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 
-class LocationButton extends StatelessWidget {
+class DistrictButton extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onPressed;
-  final double deviceWidth; 
+  final double deviceWidth;
   final double deviceHeight;
-  
-  const LocationButton({
+
+  const DistrictButton({
     Key? key,
     required this.label,
     required this.isSelected,
-    required this.onPressed, 
-    required this.deviceWidth, 
+    required this.onPressed,
+    required this.deviceWidth,
     required this.deviceHeight,
   }) : super(key: key);
 
@@ -30,6 +30,7 @@ class LocationButton extends StatelessWidget {
     return Container(
       width: getRelativeWidth(0.25),
       height: getRelativeHeight(0.045), // You may adjust the height as needed
+      margin: EdgeInsets.symmetric(vertical: getRelativeHeight(0.007)), // Add horizontal padding
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: isSelected ? colors.primaryColor : Colors.white,
