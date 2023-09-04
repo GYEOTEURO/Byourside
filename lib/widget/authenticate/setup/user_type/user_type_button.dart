@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
@@ -29,7 +28,14 @@ Widget build(BuildContext context) {
       onPressed: onPressed,
       style: ButtonStyle(
         elevation: MaterialStateProperty.all<double>(0),
-        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFBFBF3)),
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed) || isSelected) {
+              return colors.midPrimaryColor; 
+            }
+            return colors.bgrColor; 
+          },
+        ),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -38,9 +44,9 @@ Widget build(BuildContext context) {
         side: MaterialStateProperty.resolveWith<BorderSide?>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed) || isSelected) {
-              return const BorderSide(color: colors.primaryColor,); // Change border color to #FFC700
+              return const BorderSide(color: colors.midPrimaryColor,); // Change border color to #FFC700
             }
-            return const BorderSide(color: colors.lightPrimaryColor,); // Default border color
+            return const BorderSide(color: colors.bgrColor,); // Default border color
           },
         ),
       ),

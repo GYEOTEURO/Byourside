@@ -28,13 +28,7 @@ Map<String, String> addPostText = {
 };
 
 // 정보 카테고리
-List<String> autoInformationCategories = [
-  '전체',
-  '지원금',
-  '돌봄서비스',
-  '보조기기',
-  '교육/활동'
-];
+List<String> autoInformationCategories = ['전체', '지원금', '돌봄서비스', '보조기기', '교육/활동'];
 
 // 신고 메시지
 Map<String, String> report = {

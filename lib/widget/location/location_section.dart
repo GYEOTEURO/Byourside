@@ -64,7 +64,8 @@ class LocationSectionState extends State<LocationSection> {
     return ElevatedButton(
       onPressed: () => _showLocationDialog(context),
       style: ElevatedButton.styleFrom(
-        elevation: 0, backgroundColor: isLocationSelected ? colors.primaryColor : Colors.white,
+        elevation: 0, 
+        backgroundColor: isLocationSelected ? colors.primaryColor : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

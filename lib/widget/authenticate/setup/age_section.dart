@@ -76,7 +76,7 @@ class AgeSectionState extends State<AgeSection> {
       fillColor: colors.bgrColor,
       hintStyle: TextStyle(
         color: colors.textColor,
-        fontSize: getRelativeWidth(0.032),
+        fontSize: getRelativeWidth(0.04),
         fontFamily: fonts.font,
         fontWeight: FontWeight.w500,
       ),
@@ -85,7 +85,7 @@ class AgeSectionState extends State<AgeSection> {
         borderSide: BorderSide.none,
       ),
       suffix: _buildSuffixContainer(),
-      contentPadding: EdgeInsets.all(getRelativeWidth(0.04)),
+      contentPadding: EdgeInsets.symmetric(vertical: getRelativeWidth(0.02), horizontal: getRelativeWidth(0.04)), 
     );
   }
 
@@ -93,13 +93,16 @@ class AgeSectionState extends State<AgeSection> {
     return Container(
       alignment: Alignment.centerRight,
       width: getRelativeWidth(0.1),
-      child: Text(
-        '년생',
-        style: TextStyle(
-          color: colors.textColor,
-          fontSize: getRelativeWidth(0.036),
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w500,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: getRelativeHeight(0.005)),
+        child:Text(
+          '년생',
+          style: TextStyle(
+            color: colors.textColor,
+            fontSize: getRelativeWidth(0.036),
+            fontFamily: fonts.font,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

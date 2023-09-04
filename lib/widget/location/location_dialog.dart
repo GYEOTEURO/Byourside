@@ -7,16 +7,19 @@ import 'package:byourside/widget/location/district_button.dart';
 class LocationDialog extends StatefulWidget {
   final String title;
   final Function(String area, String district) onLocationSelected;
+  Function(String area, String district)? onLocationSelectedFromPostList;
   final double deviceWidth;
   final double deviceHeight;
 
-  const LocationDialog({
+  LocationDialog({
     Key? key,
     required this.onLocationSelected,
+    this.onLocationSelectedFromPostList,
     required this.deviceWidth,
     required this.deviceHeight,
     required this.title,
   }) : super(key: key);
+
 
   @override
   LocationDialogState createState() => LocationDialogState();
@@ -118,6 +121,9 @@ class LocationDialogState extends State<LocationDialog> {
       onPressed: () {
         if (selectedArea.isNotEmpty && selectedDistrict.isNotEmpty) {
           widget.onLocationSelected(selectedArea, selectedDistrict);
+          if(widget.onLocationSelectedFromPostList != null){
+            widget.onLocationSelectedFromPostList!(selectedArea, selectedDistrict);
+          }
           Navigator.pop(context);
         }
       },
