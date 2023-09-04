@@ -8,7 +8,7 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 
 Widget _buildTopSide(BuildContext context, String category, String title) {
-  return SizedBox(
+  return Container(
     width: MediaQuery.of(context).size.width,
     child: Row(
       children: [
@@ -23,16 +23,15 @@ Widget _buildTopSide(BuildContext context, String category, String title) {
         ),
         const SizedBox(width: 20),
         Text(
-          title,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: colors.textColor,
-            fontSize: 14,
-            fontFamily: fonts.font,
-            fontWeight: FontWeight.w700,
-            height: 1.07,
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: colors.textColor,
+              fontSize: 14,
+              fontFamily: fonts.font,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
       ],
     ),
   );
@@ -109,7 +108,6 @@ Widget _buildLikesAndScraps({required String count, required icon}) {
             fontSize: 10,
             fontFamily: fonts.font,
             fontWeight: FontWeight.w400,
-            height: 1.30,
           ),
         ),
           ]);
@@ -119,11 +117,10 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
     TimeConvertor createdAt = TimeConvertor(createdAt: post!.createdAt, fontSize: 10.0);
 
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: () {
-        HapticFeedback.lightImpact(); // 약한 진동
+        HapticFeedback.lightImpact();
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -131,8 +128,8 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
                 ));
       },
       child: Container(
-        height: height / 6,
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+        height: height / 6.5,
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Column(
         children: [
           _buildTopSide(context, post.category, post.title),

@@ -6,7 +6,7 @@ constants.dart : 앱에서 사용하는 각종 상수 값을 정리한 파일
 import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:byourside/screen/mypage/my_block_user.dart';
 import 'package:byourside/screen/mypage/my_community_post.dart';
-import 'package:byourside/screen/mypage/my_scrap.dart';
+import 'package:byourside/screen/common/my_scrap.dart';
 import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/screen/mypage/setting.dart';
 import 'package:byourside/screen/mypage/to_developer.dart';
@@ -16,10 +16,18 @@ const String communityAddPostTitle = '글쓰기';
 const String communityTitle = '소통 게시판';
 const String autoInformationTitle = '정보 게시판';
 
-// 소통
+// 소통 카테고리
 List<String> communityCategories = ['전체', '교육', '기관', '복지', '일상', '행정', '홍보'];
-
 List<String> communityDisabilityTypes = ['전체', '발달장애', '뇌병변장애'];
+
+// 정보 카테고리
+List<String> autoInformationCategories = [
+  '전체',
+  '지원금',
+  '돌봄서비스',
+  '보조기기',
+  '교육/활동'
+];
 
 // 신고 메시지
 Map<String, String> report = {
@@ -35,6 +43,13 @@ Map<String, String> block = {
   'message': '사용자를 차단하시겠습니까?\n차단하면 피드에서 사용자의 글을 볼 수 없습니다.',
   'subMessage': '*마이페이지 설정에서 차단을 해제할 수 있습니다.',
   'alertButtonText': '차단하기',
+};
+
+// 차단 해제 메시지
+Map<String, String> cancelBlock = {
+  'message': '님의 차단을 해제하시겠습니까?',
+  'subMessage': '',
+  'buttonText': '차단 해제',
 };
 
 // 삭제 메시지

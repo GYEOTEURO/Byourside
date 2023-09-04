@@ -1,10 +1,10 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
-import 'package:byourside/user_block_list_controller.dart';
 import 'package:byourside/widget/customBottomSheet.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +18,10 @@ class CommentList extends StatefulWidget {
   CommentList(
       {super.key,
       required this.collectionName,
-      required this.post});
+      required this.documentID});
 
   final String collectionName;
-  CommunityPostModel post;
+  final String documentID;
 
   @override
   State<CommentList> createState() => _CommentListState();
@@ -31,7 +31,6 @@ class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
   final SaveData saveData = SaveData();
-  final userBlockListController = Get.put(UserBlockListController());
 
   Widget _numberOfComments(int countComments){
     return Container(
@@ -79,7 +78,7 @@ class _CommentListState extends State<CommentList> {
                         icon: customIcons.add_ons, 
                         onPressed: (){ 
                           customBottomSheet(context, comment.uid == user!.uid, 
-                            () { deleteComment(context, widget.collectionName, widget.post.id!, comment.id!); }, 
+                            () { deleteComment(context, widget.collectionName, widget.documentID, comment.id!); }, 
                             () { reportComment(context, widget.collectionName, comment.id!); }, 
                             () { blockComment(context, user!.uid, comment.nickname); });
                         }
@@ -158,13 +157,8 @@ class _CommentListState extends State<CommentList> {
 
   @override
   Widget build(BuildContext context) {
-    String collectionName = widget.collectionName;
-    String documentID = widget.post.id!;
-
-    List<String>? blockedUser = userBlockListController.blockedUser ?? [];
-
     return StreamBuilder<List<CommentModel>>(
-        stream: loadData.readComments(collectionName: collectionName, documentID: documentID),
+        stream: loadData.readComments(collectionName: widget.collectionName, documentID: widget.documentID),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return Column(
@@ -172,15 +166,14 @@ class _CommentListState extends State<CommentList> {
               _numberOfComments(snapshots.data!.length),
                 ListView.builder(
                   itemCount: snapshots.data!.length,
-                  physics:
-                      const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
+                  physics: const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
                   shrinkWrap: true, //ListView in ListView를 가능하게
                   itemBuilder: (_, index) {
                     CommentModel comment = snapshots.data![index];
-                    if (blockedUser.contains(comment.nickname)) {
+                    if (Get.find<UserController>().userModel.blockedUsers!.contains(comment.nickname)) {
                       return Container();
                     } else {
-                      return _buildListItem(collectionName, documentID, comment);
+                      return _buildListItem(widget.collectionName, widget.documentID, comment);
                     }
                 })
               ]);
@@ -210,7 +203,7 @@ class _CommentListState extends State<CommentList> {
 
   blockComment(BuildContext context, String uid, String blockUid){
     Navigator.pop(context);
-    userBlockListController.addBlockedUser(blockUid);
+    Get.find<UserController>().addBlockedUser(blockUid);
   }
 
 }

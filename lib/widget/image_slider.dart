@@ -28,7 +28,6 @@ class _ImageSliderState extends State<ImageSlider> {
                         child: Image.network(widget.images[index])));
               }),
               options: CarouselOptions(
-                  //height: MediaQuery.of(context).size.width * 0.87,
                   initialPage: 0,
                   autoPlay: false,
                   enlargeCenterPage: true,

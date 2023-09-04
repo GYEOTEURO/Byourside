@@ -1,3 +1,4 @@
+import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/comment.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +13,7 @@ class LoadData{
       return userDocumentSnapshot;
   }
 
-  Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String disabilityType}) {
+  Stream<List<CommunityPostModel>> readCommunityPosts({String? category, required String? disabilityType}) {
     if(category == '전체') {
       return firestore.collectionGroup('community_posts')
       .where('disabilityType', whereIn: [disabilityType, '전체'])
@@ -33,6 +34,51 @@ class LoadData{
     }
 }
 
+Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? category, Map<String, String>? location, required String? disabilityType}) {
+    if(category == '전체') {
+      return firestore.collectionGroup('autoInformation_posts')
+      .where('region', arrayContainsAny: [location!['area'], location['district'], '전체'])
+      .where('disability_type', whereIn: [disabilityType, '전체'])
+      .orderBy('post_date', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
+      .toList());
+    }
+    else{
+      return firestore.collection('autoInformation')
+      .doc(category)
+      .collection('autoInformation_posts')
+      .where('region', arrayContainsAny: [location!['area'], location!['district'], '전체'])
+      .where('disability_type', whereIn: [disabilityType, '전체'])
+      .orderBy('post_date', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
+      .toList());
+    }
+}
+
+  Stream<List<CommunityPostModel>> readHotCommunityPosts({required String? disabilityType}) {
+      return firestore.collectionGroup('community_posts')
+      .where('disabilityType', whereIn: [disabilityType, '전체'])
+      //.where('likes', isGreaterThan: 2)
+      .orderBy('createdAt', descending: true)
+      .limit(2)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))
+      .toList());
+    }
+
+  Stream<List<AutoInformationPostModel>> readNewAutoInformationPosts({required Map<String, String> location, required String? disabilityType}) {
+    return firestore.collectionGroup('autoInformation_posts')
+    .where('region', arrayContainsAny: [location['area'], location['district'], '전체'])
+    .where('disabilityType', whereIn: [disabilityType, '전체'])
+    .orderBy('post_date', descending: true)
+    .limit(2)
+    .snapshots()
+    .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
+    .toList());
+  }
+
   // Firestore의 특정 문서에 있는 모든 댓글 불러오기
   Stream<List<CommentModel>> readComments(
           {required String collectionName, required String documentID}) =>
@@ -46,7 +92,7 @@ class LoadData{
               snapshot.docs.map((doc) => CommentModel.fromDocument(doc: doc)).toList());
 
 
-  Stream<List<CommunityPostModel>> readCreatePost({required String uid}) {
+  Stream<List<CommunityPostModel>> readCreatePosts({required String uid}) {
       return firestore.collectionGroup('community_posts')
       .where('uid', isEqualTo: uid)
       .orderBy('createdAt', descending: true)
@@ -55,7 +101,7 @@ class LoadData{
       .toList());
   }
 
-  Stream<List<CommunityPostModel>> readScrapPost({required String collectionName, required String uid}) {
+  Stream<List<CommunityPostModel>> readScrapCommunityPosts({required String uid}) {
       return firestore.collectionGroup('community_posts')
       .where('scrapsUser', arrayContains: uid)
       .orderBy('createdAt', descending: true)
@@ -64,14 +110,32 @@ class LoadData{
       .toList());
   }
 
+  Stream<List<AutoInformationPostModel>> readScrapAutoInformationPosts({required String uid}) {
+      return firestore.collectionGroup('autoInformation_posts')
+      .where('scrapsUser', arrayContains: uid)
+      .orderBy('post_date', descending: true)
+      .snapshots()
+      .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
+      .toList());
+  }
+
 
   // 검색을 위한 쿼리 비교
-  Stream<List<CommunityPostModel>> searchCommunityPosts(String query) {
+  Stream<List<CommunityPostModel>> searchCommunityPosts(String? query) {
           return firestore.collectionGroup('community_posts')
           .where('keyword', arrayContainsAny: [query])
           .orderBy('createdAt', descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))
+          .toList());
+  }
+
+  Stream<List<AutoInformationPostModel>> searchAutoInformationPosts(String? query) {
+          return firestore.collectionGroup('autoInformation_posts')
+          .where('keyword', arrayContainsAny: [query])
+          .orderBy('post_date', descending: true)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
           .toList());
   }
 

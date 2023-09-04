@@ -15,6 +15,7 @@ class CommunityPostModel {
   List<String> likesUser;
   final int scraps;
   List<String> scrapsUser;
+  List<String> keyword;
   
   CommunityPostModel({
       this.id,
@@ -31,10 +32,9 @@ class CommunityPostModel {
       required this.scraps,
       required this.likesUser,
       required this.scrapsUser,
+      required this.keyword
   });
 
-  // List<> 형태면 doc.data()!["images"] == null ? null : doc.data()!["images"].cast<String>(),
-  // 이외는 uid = doc.data()!["uid"],
   CommunityPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc})
       : id = doc.id,
         uid = doc.data()!['uid'],
@@ -57,7 +57,11 @@ class CommunityPostModel {
         scraps = doc.data()!['scraps'],
         scrapsUser = doc.data()!['scrapsUser'] == null
             ? null
-            : doc.data()!['scrapsUser'].cast<String>();
+            : doc.data()!['scrapsUser'].cast<String>(),
+        keyword = doc.data()!['keyword'] == null
+            ? null
+            : doc.data()!['keyword'].cast<String>();
+        
 
   Map<String, dynamic> convertToDocument() {
     return {
@@ -74,6 +78,7 @@ class CommunityPostModel {
       'likesUser': likesUser,
       'scraps': scraps,
       'scrapsUser': scrapsUser,
+      'keyword' : keyword
     };
   }
 }

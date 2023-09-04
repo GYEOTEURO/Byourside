@@ -53,8 +53,8 @@ class SaveData {
   }
 
    // 좋아요/스크랩 추가
-  addLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
-    DocumentReference document = firestore.collection('community').doc(category).collection('community_posts').doc(documentID);
+  addLikeOrScrap(String collectionName, String category, String documentID, String uid, String likeOrScrap) async {
+    DocumentReference document = firestore.collection(collectionName).doc(category).collection('${collectionName}_posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
@@ -66,8 +66,8 @@ class SaveData {
   }
   
   // 좋아요/스크랩 취소
-  cancelLikeOrScrap(String category, String documentID, String uid, String likeOrScrap) async {
-    DocumentReference document = firestore.collection('community').doc(category).collection('community_posts').doc(documentID);
+  cancelLikeOrScrap(String collectionName, String category, String documentID, String uid, String likeOrScrap) async {
+    DocumentReference document = firestore.collection(collectionName).doc(category).collection('${collectionName}_posts').doc(documentID);
   
     await firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(document);
@@ -83,9 +83,14 @@ class SaveData {
     await firestore.collection('report').doc(collectionName).collection(postOrComment).doc(id).set({ 'check' : false });
   }
 
-  // 차단 목록 변경
-  changeBlock(String uid, List<String>? blockedUsers) async {
-    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': blockedUsers});
+  // 차단 목록 추가
+  addBlock(String uid, String blockedUser) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': FieldValue.arrayUnion([blockedUser])});
+  }
+
+  // 차단 목록 삭제
+  cancelBlock(String uid, String blockedUser) async {
+    await firestore.collection('userInfo').doc(uid).update({'blockedUsers': FieldValue.arrayRemove([blockedUser])});
   }
 
   // 개발자에게 문의하기

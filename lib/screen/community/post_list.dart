@@ -2,12 +2,12 @@ import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/screen/community/post_list_appbar.dart';
 import 'package:byourside/widget/category_buttons.dart';
 import 'package:byourside/screen/community/add_post.dart';
-import 'package:byourside/user_block_list_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,16 +25,17 @@ class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
   String selectedChipValue = constants.communityCategories[0];
-  //final userController = Get.put(UserController());
+  String? selectedDisabilityTypeValue =
+      Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
+              '해당없음'
+          ? '발달'
+          : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
 
   void _handleChipSelected(String value) {
     setState(() {
       selectedChipValue = value;
     });
   }
-
-  //String? selectedDisabilityTypeValue = userController.userModel!.selectedType;
-  String selectedDisabilityTypeValue = '발달';
 
   void _handleDisabilityTypeSelected(String value) {
     setState(() {
@@ -44,10 +45,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
 
   @override
   Widget build(BuildContext context) {
-    var userBlockListController = Get.put(UserBlockListController());
-
     return Scaffold(
-        //appBar: CommunityPostListAppBar(onDisabilityTypeSelected: _handleDisabilityTypeSelected),
         body: Column(children: [
           CommunityPostListAppBar(
               onDisabilityTypeSelected: _handleDisabilityTypeSelected),
@@ -56,42 +54,36 @@ class _CommunityPostListState extends State<CommunityPostList> {
               child: CategoryButtons(
                   category: constants.communityCategories,
                   onChipSelected: _handleChipSelected)),
-          StreamBuilder<List<CommunityPostModel>>(
-              stream: loadData.readCommunityPosts(
-                  category: selectedChipValue,
-                  disabilityType: selectedDisabilityTypeValue),
-              builder: (context, snapshots) {
-                if (snapshots.hasData) {
-                  return Expanded(
-                      child: ListView.builder(
+          Expanded(
+              child: StreamBuilder<List<CommunityPostModel>>(
+                  stream: loadData.readCommunityPosts(
+                      category: selectedChipValue,
+                      disabilityType: selectedDisabilityTypeValue),
+                  builder: (context, snapshots) {
+                    if (snapshots.hasData) {
+                      return ListView.builder(
                           itemCount: snapshots.data!.length,
                           shrinkWrap: true,
                           itemBuilder: (_, index) {
                             CommunityPostModel post = snapshots.data![index];
-                            if (userBlockListController.blockedUser
+                            if (Get.find<UserController>()
+                                .userModel
+                                .blockedUsers!
                                 .contains(post.nickname)) {
                               return Container();
                             } else {
                               return communityPostListTile(context, post);
                             }
-                          }));
-                } else {
-                  return const SelectionArea(
-                      child: Center(
-                          child: Text(
-                    '없음',
-                    semanticsLabel: '없음',
-                    style: TextStyle(
-                      fontFamily: fonts.font,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  )));
-                }
-              })
+                          });
+                    } else {
+                      return SelectionArea(
+                          child: Center(child: customIcons.loading));
+                    }
+                  }))
         ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
+            HapticFeedback.lightImpact();
             Navigator.push(
                 context,
                 MaterialPageRoute(
