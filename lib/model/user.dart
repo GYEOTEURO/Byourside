@@ -25,7 +25,7 @@ class UserModel {
   }) {
     // Initialize area and district based on location if location is not null
     if (location != null) {
-      final Map<String, dynamic>? rawLocation = doc!['location'];
+      Map<String, dynamic>? rawLocation = doc!['location'];
       location = castMapOfStringString(rawLocation);
       area = location?['area'];
       district = location?['district'];
@@ -42,7 +42,7 @@ class UserModel {
         blockedUsers = doc.data()!['blockedUsers'] == null
             ? []
             : doc.data()!['blockedUsers'].cast<String>() {
-        final Map<String, dynamic>? rawLocation = doc['location'];
+        Map<String, dynamic>? rawLocation = doc['location'];
         location = castMapOfStringString(rawLocation);
         area = location?['area'];
         district = location?['district'];
