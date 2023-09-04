@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   String? id;
-  String? birthYear;
+  int? birthYear;
   String? disabilityType;
   Map<String, String>? location;
   String? area;
