@@ -50,7 +50,7 @@ class ValidationUtils {
       _showErrorDialog(context, '장애 유형을 선택하세요.');
       return false;
     }
-    if (birthYear.isEmpty) {
+    if (birthYear.isEmpty || birthYear.length != 4 || int.tryParse(birthYear) == null) {
       _showErrorDialog(context, '나이를 입력하세요');
       return false;
     }

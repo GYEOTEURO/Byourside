@@ -67,9 +67,10 @@ class _SetupUserState extends State<SetupUser> {
 
   void _onCompleteButtonPressed(BuildContext context) async {
     HapticFeedback.lightImpact(); 
+    int age = int.parse(_birthYear.text);
     if (ValidationUtils.validateInputs(context, _nicknameController,_selectedUserType, _selectedDisabilityType, _birthYear.text, location, _selectedPurpose)) {
       SaveUserData.saveUserInfo(
-        birthYear: _birthYear.text,
+        birthYear: age,
         selectedType: _selectedDisabilityType,
         location: location,
         nickname: _nicknameController.controller.text,
