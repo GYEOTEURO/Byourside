@@ -1,8 +1,8 @@
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/widget/authenticate/setup/location_section.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/change_disability_type.dart';
 import 'package:byourside/widget/app_bar_select_button.dart';
+import 'package:byourside/widget/location/location_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
@@ -66,7 +66,11 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
                   child: appBarSelectButton(context, location!['district']!),
                   onTap: () {
                       HapticFeedback.lightImpact();
-                      LocationSection(onLocationSelected: _handleLocationSelected);
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return LocationDialog(onLocationSelected: _handleLocationSelected, onLocationSelectedFromPostList: widget.onLocationSelected, deviceHeight: MediaQuery.of(context).size.height, deviceWidth: MediaQuery.of(context).size.width, title: '',);
+                      });
                 }),
                 const SizedBox(width: 6),
                 GestureDetector(

@@ -34,10 +34,10 @@ class LoadData{
     }
 }
 
-Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? category, Map<String, String>? location, required String? disabilityType}) {
+Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? category, String? area, String? district, required String? disabilityType}) {
     if(category == '전체') {
       return firestore.collectionGroup('autoInformation_posts')
-      .where('region', arrayContainsAny: [location!['area'], location['district'], '전체'])
+      .where('region', arrayContainsAny: [area, district, '전체'])
       .where('disability_type', whereIn: [disabilityType, '전체'])
       .orderBy('post_date', descending: true)
       .snapshots()
@@ -48,7 +48,7 @@ Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? categor
       return firestore.collection('autoInformation')
       .doc(category)
       .collection('autoInformation_posts')
-      .where('region', arrayContainsAny: [location!['area'], location!['district'], '전체'])
+      .where('region', arrayContainsAny: [area, district, '전체'])
       .where('disability_type', whereIn: [disabilityType, '전체'])
       .orderBy('post_date', descending: true)
       .snapshots()
@@ -68,12 +68,12 @@ Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? categor
       .toList());
     }
 
-  Stream<List<AutoInformationPostModel>> readNewAutoInformationPosts({required Map<String, String> location, required String? disabilityType}) {
+  Stream<List<AutoInformationPostModel>> readNewAutoInformationPosts({String? area, String? district, required String? disabilityType}) {
     return firestore.collectionGroup('autoInformation_posts')
-    .where('region', arrayContainsAny: [location['area'], location['district'], '전체'])
+    .where('region', arrayContainsAny: [area, district, '전체'])
     .where('disabilityType', whereIn: [disabilityType, '전체'])
     .orderBy('post_date', descending: true)
-    .limit(2)
+    .limit(5)
     .snapshots()
     .map((snapshot) => snapshot.docs.map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
     .toList());
