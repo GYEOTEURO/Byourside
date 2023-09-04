@@ -128,7 +128,6 @@ class LocationDialogState extends State<LocationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: buildDialogTitle(),
       content: SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxHeight: getRelativeHeight(0.5)),
@@ -138,7 +137,25 @@ class LocationDialogState extends State<LocationDialog> {
       actions: [
         buildCompleteButton(),
       ],
-      contentPadding: EdgeInsets.only(top: getRelativeHeight(0.05)),
+      contentPadding: EdgeInsets.only(top: getRelativeHeight(0.02)),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.title,
+            style: TextStyle(
+              fontSize: getRelativeWidth(0.038),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close), // You can change the icon to a custom close icon if needed
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 }
