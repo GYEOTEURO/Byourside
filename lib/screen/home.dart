@@ -7,6 +7,7 @@ import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/widget/app_bar_select_button.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/no_data.dart';
+import 'package:byourside/widget/stream_community_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,34 +27,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  String? disabilityType = '';
-  String? district = '';
-
-  @override
-  void initState() {
-    super.initState();
-    UserController userController = Get.find<UserController>();
-    ever(userController.userModelReady, (bool userModelReady) {
-      if (userModelReady && mounted) {
-        setState(() {
-          _setUserInfo(userController);
-        });
-      }
-    });
-  }
-
-  void _setUserInfo(UserController controller){
-    disabilityType = controller.userModel.disabilityType!.split(' ')[0];
-    district = controller.userModel.district;
-  }
+  String? disabilityType = Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+  String? district = Get.find<UserController>().userModel.district;
 
   Widget _appbar(){
     return Container(
-              height: MediaQuery.of(context).size.height / 7.5,
+              height: MediaQuery.of(context).size.height / 6.5,
               color: colors.homeAppBarColor,
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -71,7 +54,7 @@ class _HomeState extends State<Home> {
                           goToSearchPage(context)
                         ])
                     ]),
-                    Center(child: customIcons.logo)
+                    Center(child: customIcons.logo),
               ])
             );
   } 
@@ -124,22 +107,8 @@ class _HomeState extends State<Home> {
     );
   }
   Widget _communityHotPosts(){
-    return Expanded(
-      child: StreamBuilder<List<CommunityPostModel>>(
-              stream: loadData.readHotCommunityPosts(disabilityType: disabilityType),
-              builder: (context, snapshots) {
-                if (snapshots.hasData) {
-                  return ListView.builder(
-                      itemCount: snapshots.data!.length,
-                      shrinkWrap: true,
-                      itemBuilder: (_, index) {
-                        CommunityPostModel post = snapshots.data![index];
-                        return communityPostListTile(context, post);
-                      });
-                } else {
-                  return noData();
-                }
-              })
+    return Flexible(
+      child: streamCommunityPost(() => loadData.readHotCommunityPosts(disabilityType: disabilityType))
     );
   }
 
