@@ -20,7 +20,8 @@ class _CommunityAddPostAppBarState extends State<CommunityAddPostAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: colors.appBarColor,
+      backgroundColor: colors.lightPrimaryColor,
+      elevation: 0.0,
       title: const Text(
         constants.communityAddPostTitle,
         textAlign: TextAlign.left,
@@ -28,9 +29,9 @@ class _CommunityAddPostAppBarState extends State<CommunityAddPostAppBar> {
         style: TextStyle(
             fontFamily: fonts.font,
             fontWeight: FontWeight.w600,
-            color: Colors.black),
+            color: colors.textColor),
       ),
-      leading: IconButton(onPressed: () {}, icon: customIcons.addPost),
+      leading: IconButton(onPressed: null, icon: customIcons.addPost),
       actions: [
         IconButton(
             onPressed: () {

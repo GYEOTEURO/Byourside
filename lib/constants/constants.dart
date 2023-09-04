@@ -15,9 +15,17 @@ const String communityAddPostTitle = '글쓰기';
 const String communityTitle = '소통 게시판';
 const String autoInformationTitle = '정보 게시판';
 
+// 버튼
+double buttonBorderWidth = 0.50;
+
 // 소통 카테고리
 List<String> communityCategories = ['전체', '교육', '기관', '복지', '일상', '행정', '홍보'];
 List<String> communityDisabilityTypes = ['전체', '발달장애', '뇌병변장애'];
+Map<String, String> addPostText = {
+  'disabilityType': '장애유형',
+  'category': '어떤 종류의 글을 쓰실 건가요?',
+  'photo': '사진 추가하기',
+};
 
 // 정보 카테고리
 List<String> autoInformationCategories = [
