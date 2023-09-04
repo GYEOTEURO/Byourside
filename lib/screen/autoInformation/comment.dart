@@ -1,17 +1,15 @@
-import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/comment/comment_list.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AutoInformationComment extends StatefulWidget {
   const AutoInformationComment(
-      {super.key,});
-      //required this.post});
+      {super.key,
+      required this.documentID});
 
-  //final AutoInformationPostModel post;
+  final String documentID;
   final String collectionName = 'autoInformation_comment';
 
   @override
@@ -35,8 +33,7 @@ class _AutoInformationCommentState extends State<AutoInformationComment> {
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
                         child: CommentList(
                             collectionName: widget.collectionName,
-                            //documentID: widget.post.id!)),
-                            documentID: 'DhJmVsP1BvHieCL4cklU')),
+                            documentID: widget.documentID)),
               ),
               Positioned(
                 left: 0,
@@ -57,8 +54,7 @@ class _AutoInformationCommentState extends State<AutoInformationComment> {
                 padding: const EdgeInsets.fromLTRB(25, 12, 15, 12),
                 child: CreateComment(
                     collectionName: widget.collectionName,
-                    //documentID: widget.post.id!)
-                    documentID: 'DhJmVsP1BvHieCL4cklU')
+                    documentID: widget.documentID)
             ))]),
            ));
       
