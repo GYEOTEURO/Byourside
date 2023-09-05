@@ -1,7 +1,7 @@
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/post.dart';
-import 'package:byourside/widget/community/add_post/autoInfo_image.dart';
+import 'package:byourside/widget/auto_information/autoInfo_image.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,9 +55,22 @@ Widget _buildTopSide(
                     _downloadUrls[0],
                     width: _width,
                     fit: BoxFit.cover,
-                  )))
-        else
-          SizedBox(height: _width * 0.17),
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      }
+                    },
+                  ))),
         Container(
             padding: const EdgeInsets.all(10),
             alignment: Alignment.topLeft,
