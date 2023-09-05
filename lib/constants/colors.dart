@@ -10,6 +10,16 @@ const Color homeAppBarColor = Color(0xFFFFF0BE);
 const Color mentionColor = Color(0xFF004FC6);
 const Color errorColor = Colors.red;
 const Color imgSubtitleColor = Color(0xFFE6E7E8);
+const Color devicePostColor = Color(0xFFDAFFD9);
+const Color supportFundPostColor = Color(0xFFD7FAFF);
+const Color careServicePostColor = Color(0xFFFFDDDD);
+
+Map<String, Color> autoInfoPostColors = {
+  '지원금': supportFundPostColor,
+  '돌봄서비스': careServicePostColor,
+  '보조기기': devicePostColor,
+  '교육': homeAppBarColor
+};
 
 const List<Color> gradientColors = [
   Color(0xFFFFDF8D),
