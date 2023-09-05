@@ -9,6 +9,7 @@ const Color subColor = Color(0xFF999999);
 const Color homeAppBarColor = Color(0xFFFFF0BE);
 const Color mentionColor = Color(0xFF004FC6);
 const Color errorColor = Colors.red;
+const Color imgSubtitleColor = Color(0xFFE6E7E8);
 
 const List<Color> gradientColors = [
   Color(0xFFFFDF8D),

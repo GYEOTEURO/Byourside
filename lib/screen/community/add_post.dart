@@ -1,19 +1,25 @@
+import 'package:byourside/model/community_post.dart';
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
+import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/community/add_post_appbar.dart';
 import 'package:byourside/screen/community/add_post_category.dart';
 import 'package:byourside/widget/community/add_post/category_section.dart';
+import 'package:byourside/widget/community/add_post/content_section.dart';
 import 'package:byourside/widget/community/add_post/disability_type_section.dart';
+import 'package:byourside/widget/community/add_post/image_section.dart';
+import 'package:byourside/widget/community/add_post/title_section.dart';
+import 'package:byourside/widget/community/add_post/warning_dialog.dart';
+import 'package:byourside/widget/complete_add_post_button.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as custom_icons;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/save_data.dart';
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 
 class CommunityAddPost extends StatefulWidget {
@@ -24,8 +30,6 @@ class CommunityAddPost extends StatefulWidget {
 }
 
 class _CommunityAddPostState extends State<CommunityAddPost> {
-  String selectedChipValue = constants.communityDisabilityTypes[0];
-
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
   List<TextEditingController> _imgInfos = [];
@@ -35,8 +39,6 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
 
   final User? user = FirebaseAuth.instance.currentUser;
   final SaveData saveData = SaveData();
-
-  Category _categories = Category(null, null);
 
   List<XFile> _images = []; // 사진 여러 개 가져오기
   bool _visibility = false; // 가져온 사진 보이기
@@ -97,336 +99,222 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
     });
   }
 
-  Widget _imageWidget(index) {
-    return SingleChildScrollView(
-        child: Center(
-            child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Semantics(
-            label: '사용자가 선택한 사진 ${index + 1}',
-            child: Image(
-              image: FileImage(File(_images[index].path)),
-              fit: BoxFit.contain,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width * 0.7, // 보고 수정
-            )),
-        Semantics(
-            label: '사진 ${index + 1}에 대한 간략한 설명을 적어주세요',
-            child: TextFormField(
-              maxLines: 2,
-              style: const TextStyle(
-                  fontFamily: 'NanumGothic', fontWeight: FontWeight.w600),
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: '사진에 대한 간략한 설명을 적어주세요',
-                hintText: '(예시) 곁으로장애복지관의 무료 미술 수업을 진행 관련 포스터 이미지',
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Color(0xFF045558)),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(width: 2.5, color: Color(0xFF045558)),
-                ),
-                labelStyle: TextStyle(color: Color(0xFF045558)),
-              ),
-              controller: _imgInfos[index],
-            ))
-      ],
-    )));
-  }
-
   @override
   Widget build(BuildContext context) {
     double maxWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      // 상단 앱 바
-      appBar: const CommunityAddPostAppBar(),
-      // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
-      body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Form(
-            key: _formkey,
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  color: colors.lightPrimaryColor,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(children: [
-                    DisabilityTypeSectionInAddPost(
-                      onChipSelected: _handleDisabilityTypeSelected,
-                    ),
-                    CategorySectionInAddPost(
-                        onChipSelected: _handleCategorySelected),
-                  ]),
-                ),
-                // 제목
-                Container(
-                    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                    child: Column(children: [
-                      Semantics(
-                          label: '제목을 입력하세요',
-                          child: TextFormField(
-                            style: const TextStyle(
-                                fontFamily: fonts.font,
-                                fontWeight: FontWeight.bold),
-                            autofocus: true,
-                            textInputAction: TextInputAction.next,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return '제목은 비어있을 수 없습니다';
-                              }
-                              return null;
-                            },
-                            onFieldSubmitted: (_) =>
-                                FocusScope.of(context).requestFocus(myFocus),
-                            decoration: const InputDecoration(
-                                labelText: '제목',
-                                hintText: '제목을 입력하세요',
-                                labelStyle: TextStyle(
-                                    color: colors.subColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: fonts.semiTitlePt),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 0.5, color: colors.subColor),
-                                )),
-                            controller: _title,
-                          )),
-                      // 사진 및 영상 첨부
-                      Container(
-                          padding: const EdgeInsets.only(top: 10, bottom: 5),
+        // 상단 앱 바
+        appBar: const CommunityAddPostAppBar(),
+        // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
+        body: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(children: [
+              GestureDetector(
+                  onTap: () => FocusScope.of(context).unfocus(),
+                  child: Form(
+                    key: _formkey,
+                    child: SingleChildScrollView(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          color: colors.lightPrimaryColor,
+                          padding: const EdgeInsets.all(10),
                           child: Column(children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    HapticFeedback.lightImpact(); // 약한 진동
-                                    getImage(ImageSource.gallery);
-                                  },
-                                  icon: const Icon(Icons.camera_alt_rounded),
-                                  color: colors.primaryColor,
-                                ),
-                                const Text('사진 추가하기',
-                                    semanticsLabel: '사진 추가하기',
-                                    style: TextStyle(
-                                        color: colors.textColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: fonts.font))
-                              ],
+                            DisabilityTypeSectionInAddPost(
+                              onChipSelected: _handleDisabilityTypeSelected,
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Visibility(
-                                visible: _visibility,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
-                                      semanticsLabel:
-                                          '아래 각 사진에 대한 간략한 설명을 적어주세요. \n이는 보이스오버를 위한 항목으로 게시글 작성 후 따로 보이진 않습니다.',
-                                      style: TextStyle(
-                                          color: Color(0xFF045558),
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'NanumGothic'),
+                            CategorySectionInAddPost(
+                                onChipSelected: _handleCategorySelected),
+                          ]),
+                        ),
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                            child: Column(children: [
+                              // 제목
+                              TitleSection(
+                                  titleController: _title, focus: myFocus),
+                              // 사진 및 영상 첨부
+                              Container(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, bottom: 5),
+                                  child: Column(children: [
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            HapticFeedback
+                                                .lightImpact(); // 약한 진동
+                                            getImage(ImageSource.gallery);
+                                          },
+                                          icon: const Icon(
+                                              Icons.camera_alt_rounded),
+                                          color: colors.primaryColor,
+                                        ),
+                                        const Text('사진 추가하기',
+                                            semanticsLabel: '사진 추가하기',
+                                            style: TextStyle(
+                                                color: colors.textColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: fonts.font)),
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Semantics(
-                                        label:
-                                            '선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.',
-                                        child: CarouselSlider(
-                                          items: List.generate(_images.length,
-                                              (index) {
-                                            return Container(
-                                                padding:
-                                                    const EdgeInsets.all(3),
-                                                height: maxWidth,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: _imageWidget(index));
-                                          }),
-                                          options: CarouselOptions(
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              initialPage: 0,
-                                              autoPlay: false,
-                                              enlargeCenterPage: true,
-                                              enableInfiniteScroll: false,
-                                              viewportFraction: 1,
-                                              aspectRatio: 2.0,
-                                              onPageChanged: (idx, reason) {
-                                                setState(() {
-                                                  _current = idx;
-                                                });
-                                              }),
-                                        )),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Semantics(
-                                      label: '현재 보이는 사진 순서 표시',
-                                      child: CarouselIndicator(
-                                        count: indicatorLen,
-                                        index: _current,
-                                        color: Colors.black26,
-                                        activeColor: colors.primaryColor,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                  ],
-                                ))
-                          ]))
-                    ])),
-                // 게시글 내용
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  '마음 온도에 올릴 게시글 내용',
-                  semanticsLabel: '마음 온도에 올릴 게시글 내용',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'NanumGothic'),
-                ),
-                Container(
-                    padding: const EdgeInsets.only(top: 20, bottom: 5),
-                    child: Semantics(
-                        label: '마음 온도에 올릴 게시글 내용을 작성해주세요',
-                        child: TextField(
-                          style: const TextStyle(
-                              fontFamily: 'NanumGothic',
-                              fontWeight: FontWeight.w600),
-                          focusNode: myFocus,
-                          controller: _content,
-                          minLines: 8,
-                          maxLines: 10,
-                          decoration: const InputDecoration(
-                              labelText: '마음 온도에 올릴 게시글 내용을 작성해주세요.',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                borderSide: BorderSide(width: 1),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Color(0xFF045558)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF045558)),
-                              ),
-                              labelStyle: TextStyle(color: Color(0xFF045558)),
-                              hintText:
-                                  '(참고: 복지/혜택 게시판과 교육/세미나 게시판은 사진을 첨부하지 않을 시,게시글 목록에서 회색 배경에 사진 없음으로 보입니다.)'),
-                        )))
-              ],
-            )),
-          )),
-      // 글 작성 완료 버튼
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          HapticFeedback.lightImpact(); // 약한 진동
-          if (selectedDisabilityTypeValue == null) {
-            // Get.snackbar('카테고리 선택 실패!', '게시판 종류를 선택해주세요',
-            //     backgroundColor: Colors.white);
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                      semanticLabel: '카테고리 선택을 실패했습니다. 게시판 종류를 선택해주세요.',
-                      content: const Text('게시판 종류를 선택해주세요',
-                          semanticsLabel: '게시판 종류를 선택해주세요',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'NanumGothic',
-                            fontWeight: FontWeight.w600,
-                          )),
-                      actions: [
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: colors.primaryColor,
-                              foregroundColor: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('확인',
-                                semanticsLabel: '확인',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'NanumGothic',
-                                  fontWeight: FontWeight.w600,
-                                )))
-                      ]);
-                });
-          } else {
-            if (_formkey.currentState!.validate()) {
-              Navigator.pop(context);
-              List<String> urls =
-                  _images.isEmpty ? [] : await saveData.uploadFile(_images);
-              List<String> imgInfos = [];
-              for (int i = 0; i < _imgInfos.length; i++) {
-                if (_imgInfos[i].text == '') {
-                  imgInfos.add('설명 정보가 없는 사진입니다');
-                } else {
-                  imgInfos.add(_imgInfos[i].text);
-                }
-              }
+                                    Visibility(
+                                        visible: _visibility,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Semantics(
+                                                label:
+                                                    '선택한 사진 목록 총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.',
+                                                child: CarouselSlider(
+                                                  items: List.generate(
+                                                      _images.length, (imgIdx) {
+                                                    return Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(3),
+                                                        child: imageSection(
+                                                            maxWidth,
+                                                            _images[imgIdx],
+                                                            _imgInfos[imgIdx]));
+                                                  }),
+                                                  options: CarouselOptions(
+                                                      height: maxWidth * 1.2,
+                                                      initialPage: 0,
+                                                      autoPlay: false,
+                                                      enlargeCenterPage: true,
+                                                      enableInfiniteScroll:
+                                                          false,
+                                                      viewportFraction: 1,
+                                                      aspectRatio: 2.0,
+                                                      onPageChanged:
+                                                          (idx, reason) {
+                                                        setState(() {
+                                                          _current = idx;
+                                                        });
+                                                      }),
+                                                )),
+                                            Semantics(
+                                                label: '현재 보이는 사진 순서 표시',
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 20),
+                                                  child: CarouselIndicator(
+                                                    count: indicatorLen,
+                                                    index: _current,
+                                                    color: Colors.black26,
+                                                    activeColor:
+                                                        colors.primaryColor,
+                                                  ),
+                                                ))
+                                          ],
+                                        ))
+                                  ]))
+                            ])),
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                            width: maxWidth,
+                            child: const Divider(
+                                color: colors.subColor, thickness: 1.0)),
+                        // 게시글 내용
+                        ContentSection(
+                          contentController: _content,
+                          focus: myFocus,
+                        )
+                      ],
+                    )),
+                  )),
+              Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: MediaQuery.of(context).size.width,
+                    decoration:
+                        const BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(62, 0, 0, 0),
+                        blurRadius: 4,
+                        offset: Offset(0, 0),
+                        spreadRadius: 0,
+                      )
+                    ]),
+                    child: Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: completeAddPostButton(() async {
+                          HapticFeedback.lightImpact(); // 약한 진동
+                          if (selectedCategoryValue == null) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return WarningDialog(
+                                      warningObject: 'category');
+                                });
+                            return 0;
+                          }
+                          if (selectedDisabilityTypeValue == null) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return WarningDialog(
+                                      warningObject: 'disabilityType');
+                                });
+                            return 0;
+                          }
 
-              print('사진 상세 정보: $imgInfos');
+                          List<String> imgInfos = [];
+                          for (int i = 0; i < _imgInfos.length; i++) {
+                            if (_imgInfos[i].text == '') {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return WarningDialog(
+                                        warningObject: 'image');
+                                  });
+                              return 0;
+                            } else {
+                              imgInfos.add(_imgInfos[i].text);
+                            }
+                          }
 
-              // if가 한 줄이라도 중괄호를 쓰자 ! (추후에 문제가 발생할 수 있음)-> lints 규칙에 있는 거 사용 !
-              if (_categories.category == '자유게시판') _categories.category = '자유';
+                          print('사진 상세 정보: $imgInfos');
 
-              // Firestore에 Save하는 코드
-              // CommunityPostModel postData = CommunityPostModel(
-              //   uid: user!.uid,
-              //   nickname: Get.find<UserController>().userModel.nickname!,
-              //   title: _title.text,
-              //   content: _content.text,
-              //   category: _categories.category,
-              //   disabilityType: _categories.type,
-              //   createdAt: Timestamp.now(),
-              //   images: urls,
-              //   imgInfos: imgInfos,
-              //   likes: 0,
-              //   scraps: 0,
-              //   likesUser: [],
-              //   scrapsUser: [],
-              //   keyword: _title.text.split(' '));
+                          if (_formkey.currentState!.validate()) {
+                            Navigator.pop(context);
+                            List<String> urls = _images.isEmpty
+                                ? []
+                                : await saveData.uploadFile(_images);
+                            // Firestore에 Save하는 코드
+                            CommunityPostModel postData = CommunityPostModel(
+                                uid: user!.uid,
+                                nickname: Get.find<UserController>()
+                                    .userModel
+                                    .nickname!,
+                                title: _title.text,
+                                content: _content.text,
+                                category: selectedCategoryValue!,
+                                disabilityType: selectedDisabilityTypeValue!,
+                                createdAt: Timestamp.now(),
+                                images: urls,
+                                imgInfos: imgInfos,
+                                likes: 0,
+                                scraps: 0,
+                                likesUser: [],
+                                scrapsUser: [],
+                                keyword: _title.text.split(' '));
 
-              // saveData.addCommunityPost(_categories.category, postData);
-            }
-          }
-        },
-        backgroundColor: colors.primaryColor,
-        child: const Icon(
-          Icons.navigate_next,
-          semanticLabel: '마음 온도 게시글 작성 완료',
-        ),
-      ),
-    );
+                            saveData.addCommunityPost(
+                                selectedCategoryValue!, postData);
+                          }
+                        })),
+                  ))
+            ])));
   }
-}
-
-class Category {
-  String? category;
-  List<String>? type;
-
-  Category(this.category, this.type);
 }
