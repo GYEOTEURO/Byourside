@@ -41,7 +41,9 @@ class AutoInformationPostModel {
         content = doc.data()!['summary'],
         createdAt = doc.data()!['post_date'],
         date = doc.data()!['date'],
-        category = doc.data()!['category'],
+        category = doc.data()!['category'] == '돌봄 서비스'
+            ? '돌봄서비스'
+            : doc.data()!['category'],
         disabilityType = doc.data()!['disability_type'],
         site = doc.data()!['site'],
         originalLink = doc.data()!['original_link'],

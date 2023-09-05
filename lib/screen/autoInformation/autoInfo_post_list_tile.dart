@@ -1,6 +1,7 @@
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/post.dart';
+import 'package:byourside/widget/community/add_post/autoInfo_image.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,42 +10,53 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:firebase_storage/firebase_storage.dart';
 
-Future<List<String>> downloadImage(List<String> imageUrls) async {
+List<String> _downloadUrls = [];
+
+Future<void> _downloadImage(List<String>? imageUrls) async {
   List<String> downloadUrls = [];
-  for (String imageUrl in imageUrls) {
-    Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl);
+  if (imageUrls == Null) {
+    return;
+  }
+  for (String imageUrl in imageUrls!) {
+    Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl!);
+    debugPrint('*****************$storageRef');
 
     try {
-      // 이미지 다운로드 URL 가져오기
       String downloadUrl = await storageRef.getDownloadURL();
       downloadUrls.add(downloadUrl);
     } catch (e) {
-      print('Error downloading image: $e');
+      debugPrint('****************Error downloading image: $e');
     }
   }
-  return downloadUrls;
+  _downloadUrls = downloadUrls;
 }
 
 Widget _buildTopSide(
     BuildContext context, String category, List<String> images, String title) {
+  _downloadImage(images);
+
   double _width = MediaQuery.of(context).size.width;
-  debugPrint("******************************$images[0]");
+  debugPrint("***************$images");
   return Container(
     width: _width,
     child: Stack(
       children: [
-        if (images.isNotEmpty)
+        if (_downloadUrls.isNotEmpty)
           Semantics(
               label: '$title 게시글 의 이미지',
               child: Container(
-                  height: _width * 0.23,
-                  decoration: const ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
+                  alignment: Alignment.topCenter,
+                  height: _width * 0.26,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(13),
                     topRight: Radius.circular(13),
-                  ))),
-                  child: Image.network(images[0], fit: BoxFit.fill)))
+                  )),
+                  child: Image.network(
+                    _downloadUrls[0],
+                    width: _width,
+                    fit: BoxFit.cover,
+                  )))
         else
           SizedBox(height: _width * 0.17),
         Container(
@@ -59,6 +71,7 @@ Widget _buildTopSide(
 Widget _buildCategory({required String category, required double width}) {
   return Container(
       padding: const EdgeInsets.all(2.0),
+      margin: const EdgeInsets.only(left: 3.0, right: 3.0),
       decoration: ShapeDecoration(
         color: colors.primaryColor,
         shape: RoundedRectangleBorder(
@@ -67,7 +80,6 @@ Widget _buildCategory({required String category, required double width}) {
       ),
       child: Text(
         category,
-        maxLines: 2,
         style: const TextStyle(
             fontFamily: fonts.font,
             fontSize: fonts.createdAtPt,
@@ -77,19 +89,21 @@ Widget _buildCategory({required String category, required double width}) {
 }
 
 Widget _buildMiddleSide(BuildContext context, String title) {
-  return SizedBox(
+  return Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      alignment: Alignment.centerLeft,
       child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
           child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: colors.textColor,
-              fontSize: fonts.semiBodyPt,
-              fontFamily: fonts.font,
-              fontWeight: FontWeight.bold,
-            ),
-          )));
+        title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          color: colors.textColor,
+          fontSize: fonts.semiBodyPt,
+          fontFamily: fonts.font,
+          fontWeight: FontWeight.bold,
+        ),
+      )));
 }
 
 Widget _buildBottomSide(Widget createdAt, String scraps) {
@@ -132,7 +146,6 @@ Widget autoInfoPostListTile(
         margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         width: MediaQuery.of(context).size.width * 0.85,
         height: MediaQuery.of(context).size.width * 0.45,
-        padding: const EdgeInsets.all(10),
         decoration: ShapeDecoration(
             color: colors.autoInfoPostColors[post.category],
             shape: RoundedRectangleBorder(

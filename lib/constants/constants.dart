@@ -38,10 +38,10 @@ Map<String, String> warningMessage = {
 // 정보 카테고리
 List<String> autoInformationCategories = [
   '전체',
-  '지원금',
+  '교육/활동',
   '돌봄서비스',
   '보조기기',
-  '교육/활동'
+  '지원금',
 ];
 
 // 신고 메시지
