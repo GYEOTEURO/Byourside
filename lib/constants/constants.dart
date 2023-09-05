@@ -20,7 +20,7 @@ double buttonBorderWidth = 0.50;
 
 // 소통 카테고리
 List<String> communityCategories = ['전체', '교육', '기관', '복지', '일상', '행정', '홍보'];
-List<String> communityDisabilityTypes = ['전체', '발달장애', '뇌병변장애'];
+List<String> communityDisabilityTypes = ['전체', '발달', '뇌병변'];
 Map<String, String> addPostText = {
   'disabilityType': '장애유형',
   'category': '어떤 종류의 글을 쓰실 건가요?',
