@@ -16,9 +16,7 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'screen/authenticate/controller/user_controller.dart';
-
 
 Future<bool> getPermission() async {
   // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
@@ -52,7 +50,7 @@ void initializeNotification() async {
           importance: Importance.max));
 
   await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+    android: AndroidInitializationSettings('@mipmap/android_app_logo'),
   ));
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -68,7 +66,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   getPermission();
 
-  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) {
@@ -78,9 +75,9 @@ void main() async {
   });
 
   FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -92,7 +89,7 @@ void main() async {
     webRecaptchaSiteKey: dotenv.env['WEB_RECAPTCHA_SITE_KEY'],
     androidProvider: AndroidProvider.playIntegrity,
   );
-  
+
   runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: fonts.font,
@@ -112,7 +109,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   var messageString = '';
 
   void getDeviceToken() async {
