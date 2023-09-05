@@ -36,7 +36,6 @@ Widget _buildTopSide(
   _downloadImage(images);
 
   double _width = MediaQuery.of(context).size.width;
-  debugPrint("***************$images");
   return Container(
     width: _width,
     child: Stack(
@@ -70,19 +69,19 @@ Widget _buildTopSide(
 
 Widget _buildCategory({required String category, required double width}) {
   return Container(
-      padding: const EdgeInsets.all(2.0),
-      margin: const EdgeInsets.only(left: 3.0, right: 3.0),
+      padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.only(left: 5.0, right: 5.0),
       decoration: ShapeDecoration(
         color: colors.primaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(9.33),
+          borderRadius: BorderRadius.circular(69),
         ),
       ),
       child: Text(
         category,
         style: const TextStyle(
             fontFamily: fonts.font,
-            fontSize: fonts.createdAtPt,
+            fontSize: fonts.captionTitlePt,
             color: colors.textColor,
             fontWeight: FontWeight.normal),
       ));
@@ -90,8 +89,8 @@ Widget _buildCategory({required String category, required double width}) {
 
 Widget _buildMiddleSide(BuildContext context, String title) {
   return Container(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+      alignment: Alignment.topLeft,
       child: SizedBox(
           child: Text(
         title,
@@ -112,7 +111,8 @@ Widget _buildBottomSide(Widget createdAt, String scraps) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(child: createdAt),
+          Container(
+              padding: EdgeInsets.only(left: 20, bottom: 10), child: createdAt),
           _buildScraps(
               count: scraps, icon: custom_icons.communityPostListScraps),
         ],
@@ -120,21 +120,25 @@ Widget _buildBottomSide(Widget createdAt, String scraps) {
 }
 
 Widget _buildScraps({required String count, required icon}) {
-  return Text(
-    count,
-    style: const TextStyle(
-      color: colors.subColor,
-      fontSize: fonts.createdAtPt,
-      fontFamily: fonts.font,
-      fontWeight: FontWeight.w400,
-    ),
-  );
+  return Container(
+      padding: EdgeInsets.only(bottom: 10, right: 20),
+      child: Row(children: [
+        custom_icons.communityPostListScraps,
+        Text(count,
+            style: const TextStyle(
+              color: colors.subColor,
+              fontSize: fonts.createdAtPt,
+              fontFamily: fonts.font,
+              fontWeight: FontWeight.normal,
+            )),
+      ]));
 }
 
 Widget autoInfoPostListTile(
     BuildContext context, AutoInformationPostModel? post) {
   TimeConvertor createdAt =
       TimeConvertor(createdAt: post!.createdAt, fontSize: fonts.createdAtPt);
+  debugPrint("***************${post.images}");
 
   return GestureDetector(
       onTap: () {
@@ -151,12 +155,18 @@ Widget autoInfoPostListTile(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(13),
             )),
-        child: Column(
+        child: Expanded(
+            child: Column(
           children: [
-            _buildTopSide(context, post.category, post.images, post.title),
-            _buildMiddleSide(context, post.title),
-            _buildBottomSide(createdAt, post.scraps.toString())
+            Expanded(
+                flex: 3,
+                child: _buildTopSide(
+                    context, post.category, post.images, post.title)),
+            Expanded(flex: 2, child: _buildMiddleSide(context, post.title)),
+            Expanded(
+                flex: 1,
+                child: _buildBottomSide(createdAt, post.scraps.toString()))
           ],
-        ),
+        )),
       ));
 }
