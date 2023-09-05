@@ -4,8 +4,10 @@ import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/community/add_post_appbar.dart';
 import 'package:byourside/screen/community/add_post_category.dart';
 import 'package:byourside/widget/community/add_post/category_section.dart';
+import 'package:byourside/widget/community/add_post/content_section.dart';
 import 'package:byourside/widget/community/add_post/disability_type_section.dart';
 import 'package:byourside/widget/community/add_post/image_section.dart';
+import 'package:byourside/widget/community/add_post/title_section.dart';
 import 'package:byourside/widget/community/add_post/warning_dialog.dart';
 import 'package:byourside/widget/complete_add_post_button.dart';
 import 'package:byourside/widget/fully_rounded_rectangle_button.dart';
@@ -131,41 +133,12 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                                 onChipSelected: _handleCategorySelected),
                           ]),
                         ),
-                        // 제목
                         Container(
                             padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                             child: Column(children: [
-                              Semantics(
-                                  label: '제목을 입력하세요',
-                                  child: TextFormField(
-                                    style: const TextStyle(
-                                        fontFamily: fonts.font,
-                                        fontWeight: FontWeight.normal),
-                                    autofocus: true,
-                                    textInputAction: TextInputAction.next,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return '제목은 비어있을 수 없습니다';
-                                      }
-                                      return null;
-                                    },
-                                    onFieldSubmitted: (_) =>
-                                        FocusScope.of(context)
-                                            .requestFocus(myFocus),
-                                    decoration: const InputDecoration(
-                                        labelText: '제목',
-                                        hintText: '제목을 입력하세요',
-                                        labelStyle: TextStyle(
-                                            color: colors.subColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: fonts.semiTitlePt),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 0.5,
-                                              color: colors.subColor),
-                                        )),
-                                    controller: _title,
-                                  )),
+                              // 제목
+                              TitleSection(
+                                  titleController: _title, focus: myFocus),
                               // 사진 및 영상 첨부
                               Container(
                                   padding:
@@ -201,7 +174,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                                           children: [
                                             Semantics(
                                                 label:
-                                                    '선택한 사진 목록 (총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.',
+                                                    '선택한 사진 목록 총 ${_images.length}개로, 다음 사진을 보려면 가로 방향으로 넘겨주세요.',
                                                 child: CarouselSlider(
                                                   items: List.generate(
                                                       _images.length, (imgIdx) {
@@ -254,29 +227,10 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                             child: const Divider(
                                 color: colors.subColor, thickness: 1.0)),
                         // 게시글 내용
-                        Container(
-                            padding: const EdgeInsets.only(left: 25, right: 25),
-                            child: Semantics(
-                                label: '내용을 입력해주세요',
-                                child: TextField(
-                                  style: const TextStyle(
-                                      fontFamily: fonts.font,
-                                      fontWeight: FontWeight.normal),
-                                  focusNode: myFocus,
-                                  controller: _content,
-                                  minLines: 20,
-                                  maxLines: 20,
-                                  decoration: const InputDecoration(
-                                      hintText: '내용을 입력해주세요',
-                                      hintStyle: TextStyle(
-                                          color: colors.subColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: fonts.bodyPt),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 0.5, color: colors.subColor),
-                                      )),
-                                )))
+                        ContentSection(
+                          contentController: _content,
+                          focus: myFocus,
+                        )
                       ],
                     )),
                   )),
