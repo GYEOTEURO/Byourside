@@ -182,7 +182,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(3),
-                                                        child: ImageSection(
+                                                        child: imageSection(
                                                             maxWidth,
                                                             _images[imgIdx],
                                                             _imgInfos[imgIdx]));

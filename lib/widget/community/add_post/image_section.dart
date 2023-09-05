@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-Widget ImageSection(
+Widget imageSection(
     double maxWidth, XFile image, TextEditingController imageInfo) {
   return SingleChildScrollView(
       child: Center(
@@ -29,7 +27,7 @@ Widget ImageSection(
                     // 보고 수정
                   )))),
       Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: const Text(
             '이미지 내용을 입력해주세요',
             semanticsLabel: '이미지 내용을 입력해주세요',
@@ -39,8 +37,7 @@ Widget ImageSection(
                 fontWeight: FontWeight.bold,
                 fontFamily: fonts.font),
           )),
-      Container(
-          child: const Text(
+      const Text(
         '스크린 리더를 위한 항목으로 게시글 작성 후 보이지는 않습니다',
         semanticsLabel: '스크린 리더를 위한 항목으로 게시글 작성 후 보이지는 않습니다',
         style: TextStyle(
@@ -48,11 +45,11 @@ Widget ImageSection(
             fontSize: fonts.captionPt,
             fontWeight: FontWeight.normal,
             fontFamily: fonts.font),
-      )),
+      ),
       Semantics(
           label: '이미지 내용을 입력해주세요',
           child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 minLines: 1,
                 maxLines: 2,
