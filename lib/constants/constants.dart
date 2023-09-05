@@ -27,8 +27,22 @@ Map<String, String> addPostText = {
   'photo': '사진 추가하기',
 };
 
+// 소통 글쓰기 경고 메시지
+Map<String, String> warningMessage = {
+  'category': '카테고리는 비워둘 수 없습니다. \n카테고리를 선택해주세요.',
+  'disabilityType': '장애유형은 비워둘 수 없습니다. \n장애유형을 선택해주세요.',
+  'title': '제목은 비워둘 수 없습니다. \n제목을 입력해주세요.',
+  'image': '설명이 없는 이미지가 있습니다. \n이미지 내용을 입력해주세요.'
+};
+
 // 정보 카테고리
-List<String> autoInformationCategories = ['전체', '지원금', '돌봄서비스', '보조기기', '교육/활동'];
+List<String> autoInformationCategories = [
+  '전체',
+  '지원금',
+  '돌봄서비스',
+  '보조기기',
+  '교육/활동'
+];
 
 // 신고 메시지
 Map<String, String> report = {
