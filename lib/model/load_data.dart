@@ -34,6 +34,7 @@ class LoadData{
     }
 }
 
+
 Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? category, String? area, String? district, required String? disabilityType}) {
     if(category == '전체') {
       return firestore.collectionGroup('autoInformation_posts')

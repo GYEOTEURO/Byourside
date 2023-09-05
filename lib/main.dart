@@ -68,7 +68,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   getPermission();
 
-  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) {
@@ -78,9 +77,9 @@ void main() async {
   });
 
   FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -92,7 +91,7 @@ void main() async {
     webRecaptchaSiteKey: dotenv.env['WEB_RECAPTCHA_SITE_KEY'],
     androidProvider: AndroidProvider.playIntegrity,
   );
-  
+
   runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: fonts.font,
@@ -112,7 +111,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   var messageString = '';
 
   void getDeviceToken() async {

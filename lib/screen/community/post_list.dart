@@ -7,7 +7,7 @@ import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/screen/community/post_list_appbar.dart';
 import 'package:byourside/widget/category_buttons.dart';
-import 'package:byourside/screen/community/community_add_post.dart';
+import 'package:byourside/screen/community/add_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,9 +15,7 @@ import 'package:get/get.dart';
 import '../../model/load_data.dart';
 
 class CommunityPostList extends StatefulWidget {
-  const CommunityPostList(
-      {Key? key})
-      : super(key: key);
+  const CommunityPostList({Key? key}) : super(key: key);
 
   @override
   State<CommunityPostList> createState() => _CommunityPostListState();
@@ -27,7 +25,11 @@ class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
   String selectedChipValue = constants.communityCategories[0];
-  String? selectedDisabilityTypeValue = Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? '발달' : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+  String? selectedDisabilityTypeValue =
+      Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
+              '해당없음'
+          ? '발달'
+          : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
 
   void _handleChipSelected(String value) {
     setState(() {
@@ -44,13 +46,14 @@ class _CommunityPostListState extends State<CommunityPostList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          CommunityPostListAppBar(onDisabilityTypeSelected: _handleDisabilityTypeSelected),
+        body: Column(children: [
+          CommunityPostListAppBar(
+              onDisabilityTypeSelected: _handleDisabilityTypeSelected),
           SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: CategoryButtons(category: constants.communityCategories, onChipSelected: _handleChipSelected)
-          ),
+              scrollDirection: Axis.horizontal,
+              child: CategoryButtons(
+                  category: constants.communityCategories,
+                  onChipSelected: _handleChipSelected)),
           Expanded(
             child: StreamBuilder<List<CommunityPostModel>>(
               stream: loadData.readCommunityPosts(category: selectedChipValue, disabilityType: selectedDisabilityTypeValue),
