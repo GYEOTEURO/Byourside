@@ -90,7 +90,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
   build_runner: ^2.4.6
 flutter_icons:
-  android: "launcher_icon"
+  android: "android_app_logo"
   ios: true
   # 추후에 로고 바뀌면 image_path와 path_ios는 appstore, foreground는 playsotre로 설정
   image_path: "assets/images/app_logo.png"

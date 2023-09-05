@@ -16,9 +16,7 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'screen/authenticate/controller/user_controller.dart';
-
 
 Future<bool> getPermission() async {
   // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
@@ -52,7 +50,7 @@ void initializeNotification() async {
           importance: Importance.max));
 
   await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+    android: AndroidInitializationSettings('@mipmap/android_app_logo'),
   ));
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(

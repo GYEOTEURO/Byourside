@@ -3,10 +3,11 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:flutter/services.dart';
 
-Widget fullyRoundedRectangleButton(String buttonText, Function pressedFunc) {
+Widget completeAddPostButton(Function pressedFunc) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colors.primaryColor,
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(69),
         ),
@@ -15,14 +16,14 @@ Widget fullyRoundedRectangleButton(String buttonText, Function pressedFunc) {
         HapticFeedback.lightImpact();
         pressedFunc();
       },
-      child: Text(
-        buttonText,
+      child: const Text(
+        '글쓰기 완료',
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
           color: colors.textColor,
-          fontSize: fonts.captionTitlePt,
+          fontSize: 15.0,
           fontFamily: fonts.font,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.bold,
         ),
       ));
 }
