@@ -10,6 +10,7 @@ Widget commentCount(BuildContext context, String collectionName, int countCommen
         alignment: Alignment.bottomLeft, 
         child: Text(
             '댓글 $countComments',
+            semanticsLabel: '댓글 $countComments',
             style: const TextStyle(
               color: colors.textColor,
               fontSize: 13,

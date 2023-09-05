@@ -5,7 +5,7 @@ import 'package:byourside/widget/community/add_post/disability_type_section.dart
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

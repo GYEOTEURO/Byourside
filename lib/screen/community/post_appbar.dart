@@ -9,6 +9,7 @@ import 'package:byourside/widget/scrap_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/icons.dart' as custom_icons;
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CommunityPostAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -65,6 +66,7 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
             IconButton(
               icon: custom_icons.add_ons, 
               onPressed: (){
+                HapticFeedback.lightImpact();
                 customBottomSheet(context, widget.post.uid == user!.uid, 
                 () { deletePost(context, widget.post.category, widget.post.id!, widget.collectionName); }, 
                 () { reportPost(context, widget.collectionName, widget.post.id!); }, 

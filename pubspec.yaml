@@ -152,7 +152,7 @@ flutter:
     - assets/icons/see_more.svg
     - assets/icons/speech_bubble.svg
     - assets/icons/loading.gif
-    - assets/icons/photo.svg
+    #- assets/icons/photo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

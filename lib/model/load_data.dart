@@ -61,8 +61,8 @@ Stream<List<AutoInformationPostModel>> readAutoInformationPosts({String? categor
   Stream<List<CommunityPostModel>> readHotCommunityPosts({required String? disabilityType}) {
       return firestore.collectionGroup('community_posts')
       .where('disabilityType', whereIn: [disabilityType, '전체'])
-      //.where('likes', isGreaterThan: 2)
-      .orderBy('createdAt', descending: true)
+      .where('likes', isGreaterThan: 1)
+      //.orderBy('createdAt', descending: true)
       .limit(2)
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => CommunityPostModel.fromDocument(doc: doc))

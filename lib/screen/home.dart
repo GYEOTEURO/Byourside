@@ -1,6 +1,6 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
                           goToSearchPage(context)
                         ])
                     ]),
-                    Center(child: customIcons.logo),
+                    Center(child: custom_icons.logo),
               ])
             );
   } 
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
           Stack(
             alignment: Alignment.center,
             children: [
-              customIcons.speechBubble,
+              custom_icons.speechBubble,
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
                 child: Text(
@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
             ))
             ]
           ),
-          customIcons.hobee
+          custom_icons.hobee
       ]);
   }
   Widget _autoInformationNewPosts(){
@@ -118,10 +118,10 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           _appbar(),
-          _titleSeeMore(customIcons.autoInformation, '정보 게시판 최신글', 0),
+          _titleSeeMore(custom_icons.autoInformation, '정보 게시판 최신글', 0),
           _autoInformationNewPosts(),
           _bubbleHobee(),
-          _titleSeeMore(customIcons.community, '소통 게시판 인기글', 1),
+          _titleSeeMore(custom_icons.community, '소통 게시판 인기글', 1),
           _communityHotPosts()
         ])
       ); 
