@@ -74,7 +74,7 @@ void main() async {
   ).then((value) {
     Get.put(AuthController());
     Get.put(NicknameController());
-    Get.put(UserController());
+    // Get.put(UserController());
   });
 
   FlutterError.onError = (errorDetails) {
