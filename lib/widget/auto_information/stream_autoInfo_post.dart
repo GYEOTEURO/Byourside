@@ -9,6 +9,7 @@ Widget streamAutoInfoPost(Function loadData) {
       builder: (context, snapshots) {
         if (snapshots.hasData) {
           return ListView.builder(
+              scrollDirection: Axis.horizontal,
               itemCount: snapshots.data!.length,
               shrinkWrap: true,
               itemBuilder: (_, index) {
