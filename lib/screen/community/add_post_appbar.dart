@@ -1,7 +1,7 @@
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -31,7 +31,7 @@ class _CommunityAddPostAppBarState extends State<CommunityAddPostAppBar> {
             fontWeight: FontWeight.w600,
             color: colors.textColor),
       ),
-      leading: IconButton(onPressed: null, icon: customIcons.addPost),
+      leading: IconButton(onPressed: null, icon: custom_icons.addPost),
       actions: [
         IconButton(
             onPressed: () {

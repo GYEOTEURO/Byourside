@@ -17,6 +17,7 @@ Widget outlinedRoundedRectangleButton(String buttonText, Function pressedFunc) {
   },
   child: Text(
     buttonText,
+    semanticsLabel: buttonText,
     textAlign: TextAlign.center,
     style: const TextStyle(
       color: colors.textColor,

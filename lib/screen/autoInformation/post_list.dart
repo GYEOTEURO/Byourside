@@ -1,5 +1,5 @@
 import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/autoInformation/autoInfo_post_list_tile.dart';

@@ -9,6 +9,7 @@ PreferredSizeWidget titleOnlyAppbar(BuildContext context, String title, {bool sh
     elevation: 1,
     title: Text(
       title,
+      semanticsLabel: title,
       style: const TextStyle(
         color: colors.textColor,
         fontSize: 20,
