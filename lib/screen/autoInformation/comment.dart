@@ -1,6 +1,7 @@
 import 'package:byourside/screen/comment/comment_list.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +46,7 @@ class _AutoInformationCommentState extends State<AutoInformationComment> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x3F000000),
+                      color: colors.textColor,
                       blurRadius: 4,
                       offset: Offset(0, 0),
                       spreadRadius: 0,

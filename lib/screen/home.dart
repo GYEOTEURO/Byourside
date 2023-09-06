@@ -1,20 +1,16 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
+import 'package:byourside/model/load_data.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/model/community_post.dart';
-import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/widget/app_bar_select_button.dart';
 import 'package:byourside/widget/auto_information/stream_autoInfo_post.dart';
 import 'package:byourside/widget/icon_buttons.dart';
-import 'package:byourside/widget/no_data.dart';
 import 'package:byourside/widget/stream_community_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../model/load_data.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -33,22 +29,31 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-        height: MediaQuery.of(context).size.height / 6.5,
-        color: colors.homeAppBarColor,
-        child: Column(children: [
-          const SizedBox(height: 15),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Expanded(
-                child: Row(children: [
-              const SizedBox(width: 10),
-              appBarSelectButton(context, district!),
-              const SizedBox(width: 5),
-              appBarSelectButton(context, disabilityType!)
-            ])),
-            Row(children: [goToScrapPage(context), goToSearchPage(context)])
-          ]),
-          Center(child: customIcons.logo),
-        ]));
+              height: MediaQuery.of(context).size.height / 5.5,
+              color: colors.homeAppBarColor,
+              child: Column(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height / 20.5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            appBarSelectButton(context, district!),
+                            const SizedBox(width: 5),
+                            appBarSelectButton(context, disabilityType!)
+                          ])),
+                      Row(
+                        children: [
+                          goToScrapPage(context),
+                          goToSearchPage(context)
+                        ])
+                    ]),
+                    Center(child: custom_icons.logo),
+              ])
+            );
   }
 
   Widget _titleSeeMore(SvgPicture icon, String title, int index) {
@@ -67,23 +72,29 @@ class _HomeState extends State<Home> {
     ]);
   }
 
-  Widget _bubbleHobee() {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Stack(alignment: Alignment.center, children: [
-        customIcons.speechBubble,
-        Container(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-            child: Text(
-              '$district민들의 이야기를 들어보세요',
-              style: const TextStyle(
-                  color: colors.textColor,
-                  fontSize: 13,
-                  fontFamily: fonts.font,
-                  fontWeight: FontWeight.w400),
+  Widget _bubbleHobee(){
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              custom_icons.speechBubble,
+              Container(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
+                child: Text(
+                '$district민들의 이야기를 들어보세요',
+                style: const TextStyle(
+                    color: colors.textColor,
+                    fontSize: 13,
+                    fontFamily: fonts.font,
+                    fontWeight: FontWeight.w400
+                ),
             ))
-      ]),
-      customIcons.hobee
-    ]);
+            ]
+          ),
+          custom_icons.hobee
+      ]);
   }
 
   Widget _autoInformationNewPosts() {
@@ -103,13 +114,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-      _appbar(),
-      _titleSeeMore(customIcons.autoInformation, '정보 게시판 최신글', 0),
-      _autoInformationNewPosts(),
-      _bubbleHobee(),
-      _titleSeeMore(customIcons.community, '소통 게시판 인기글', 1),
-      _communityHotPosts()
-    ]));
+      body: Column(
+        children: [
+          _appbar(),
+          _titleSeeMore(custom_icons.autoInformation, '정보 게시판 최신글', 0),
+          _autoInformationNewPosts(),
+          _bubbleHobee(),
+          _titleSeeMore(custom_icons.community, '소통 게시판 인기글', 1),
+          _communityHotPosts()
+        ])
+      );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
@@ -73,7 +72,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
               } else {
                 return SelectionArea(
                   child: Center(
-                    child: customIcons.loading
+                    child: custom_icons.loading
                   )
                 );
               }
@@ -89,7 +88,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
                   builder: (context) => const CommunityAddPost()));
         },
         backgroundColor: colors.primaryColor,
-        child: customIcons.addPost,
+        child: custom_icons.addPost,
     ));
   }
 }

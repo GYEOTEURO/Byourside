@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // 진동을 사용하기 위한 패키지 추가
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
 import 'package:byourside/constants/constants.dart' as constants;
@@ -10,6 +11,7 @@ import 'package:byourside/widget/authenticate/login/social_login_button.dart';
 
 class SocialLogin extends StatelessWidget {
   const SocialLogin({Key? key}) : super(key: key);
+  final String title = '소셜 로그인 화면';
 
   void _navigateToPage(BuildContext context, Widget page) {
     Navigator.push(
@@ -54,8 +56,10 @@ class SocialLogin extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
-                  SizedBox(height: deviceHeight * 0.15), // 기존 위치로 이동
+                  Semantics(
+                    label: title,
+                    child: SizedBox(height: deviceHeight * 0.15), // 기존 위치로 이동
+                  ),
                   Container(
                     width: deviceWidth * 0.35,
                     height: deviceHeight * 0.25,
@@ -70,6 +74,7 @@ class SocialLogin extends StatelessWidget {
                     icon: auth_icons.googleIcon,
                     text: 'Google 계정으로 로그인',
                     onPressed: (context) async {
+                      HapticFeedback.lightImpact(); // 진동 추가
                       await AuthController.instance.loginWithGoogle(context);
                     },
                   ),
@@ -80,6 +85,7 @@ class SocialLogin extends StatelessWidget {
                       icon: auth_icons.appleIcon,
                       text: 'Apple로 로그인',
                       onPressed: (context) async {
+                        HapticFeedback.lightImpact(); // 진동 추가
                         await AuthController.instance.signInWithApple();
                       },
                     ),
@@ -99,7 +105,6 @@ class SocialLogin extends StatelessWidget {
                   _buildIconRow(),
                 ],
               ),
-              
             ],
           ),
         ),

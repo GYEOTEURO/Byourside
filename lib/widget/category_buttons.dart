@@ -39,6 +39,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
             child: ChoiceChip(
                 label: Text(
                   widget.category[i],
+                  semanticsLabel: widget.category[i],
                   style: const TextStyle(
                         color: colors.textColor,
                         fontSize: fonts.bodyPt,

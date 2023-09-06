@@ -1,4 +1,4 @@
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/common/search_page.dart';
 import 'package:byourside/screen/common/my_scrap.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 
 Widget backToPreviousPage(BuildContext context){
   return IconButton(
-    icon: customIcons.back, 
+    icon: custom_icons.back, 
     onPressed: (){
+      HapticFeedback.lightImpact();
       Navigator.pop(context);
     }
   );
@@ -15,7 +16,7 @@ Widget backToPreviousPage(BuildContext context){
 
 Widget goToSearchPage(BuildContext context) {
   return IconButton(
-    icon: customIcons.search, 
+    icon: custom_icons.search, 
     onPressed: (){
       HapticFeedback.lightImpact();
         Navigator.push(
@@ -27,7 +28,7 @@ Widget goToSearchPage(BuildContext context) {
 
 Widget goToScrapPage(BuildContext context){
   return IconButton(
-    icon: customIcons.gotoScrapPage, 
+    icon: custom_icons.gotoScrapPage, 
     onPressed: (){
       HapticFeedback.lightImpact();
         Navigator.push(

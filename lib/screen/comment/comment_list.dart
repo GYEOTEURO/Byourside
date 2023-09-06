@@ -1,6 +1,6 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/icons.dart' as customIcons;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/comment_count.dart';
@@ -40,7 +40,7 @@ class _CommentListState extends State<CommentList> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          customIcons.profile,
+          custom_icons.profile,
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -51,6 +51,7 @@ class _CommentListState extends State<CommentList> {
                   children: [
                     Text(
                       comment.nickname,
+                      semanticsLabel: comment.nickname,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
@@ -59,8 +60,9 @@ class _CommentListState extends State<CommentList> {
                       ),
                     ),
                     IconButton(
-                        icon: customIcons.add_ons, 
+                        icon: custom_icons.add_ons, 
                         onPressed: (){ 
+                          HapticFeedback.lightImpact();
                           customBottomSheet(context, comment.uid == user!.uid, 
                             () { deleteComment(context, widget.collectionName, widget.documentID, comment.id!); }, 
                             () { reportComment(context, widget.collectionName, comment.id!); }, 
@@ -75,6 +77,7 @@ class _CommentListState extends State<CommentList> {
                   children: [
                     Text(
                   comment.content.split(' ')[0],
+                  semanticsLabel: comment.content.split(' ')[0],
                   style: const TextStyle(
                     color: colors.mentionColor,
                     fontSize: 12,
@@ -84,6 +87,7 @@ class _CommentListState extends State<CommentList> {
                 ),
                 Text(
                   comment.content.replaceFirst(comment.content.split(' ')[0], ''),
+                  semanticsLabel: comment.content.replaceFirst(comment.content.split(' ')[0], ''),
                   style: const TextStyle(
                     color: Color(0xFF1D1E1E),
                     fontSize: 12,
@@ -93,6 +97,7 @@ class _CommentListState extends State<CommentList> {
                 )])
                 : Text(
                   comment.content,
+                  semanticsLabel: comment.content,
                   style: const TextStyle(
                     color: Color(0xFF1D1E1E),
                     fontSize: 12,
@@ -107,6 +112,7 @@ class _CommentListState extends State<CommentList> {
                     const Spacer(),
                     OutlinedButton(
                       onPressed: () {
+                        HapticFeedback.lightImpact();
                         CreateComment.content.text = '@${comment.nickname} ';
                       },
                       style: OutlinedButton.styleFrom(
@@ -120,6 +126,7 @@ class _CommentListState extends State<CommentList> {
                         )),
                         child: const Text(
                               '언급하기',
+                              semanticsLabel: '언급하기',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: colors.subColor,

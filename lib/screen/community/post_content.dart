@@ -24,6 +24,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
         child: SelectionArea(
             child: Text(
           post!.category,
+          semanticsLabel: post.category,
           style: const TextStyle(
             fontFamily: fonts.font,
             color: colors.primaryColor,
@@ -37,6 +38,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
         custom_icons.profile,
         const SizedBox(width: 8),
         Text(post.nickname,
+            semanticsLabel: post.nickname,
             style: const TextStyle(
               fontFamily: fonts.font,
               color: colors.textColor,
@@ -76,40 +78,51 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
       if (post.images.isNotEmpty)
         ImageSlider(images: post.images, imgInfos: post.imgInfos),
       const SizedBox(height: 24),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Row(children: [
-          const Text(
-            '좋아요',
-            style: TextStyle(
-              color: colors.subColor,
-              fontSize: 13,
-              fontFamily: fonts.font,
-              fontWeight: FontWeight.w400,
-              height: 1.69,
-            ),
-          ),
-          const SizedBox(width: 10),
-          custom_icons.communityPostListLikes,
-          const SizedBox(width: 5),
-          Text('${post.likes}'),
-          const SizedBox(width: 20),
-          const Text(
-            '스크랩',
-            style: TextStyle(
-              color: colors.subColor,
-              fontSize: 13,
-              fontFamily: fonts.font,
-              fontWeight: FontWeight.w400,
-              height: 1.69,
-            ),
-          ),
-          const SizedBox(width: 10),
-          custom_icons.communityPostListScraps,
-          const SizedBox(width: 5),
-          Text('${post.scraps}'),
-        ]),
-        TimeConvertor(createdAt: post.createdAt, fontSize: 13.0)
-      ]),
+      Container(
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(children: [
+              const Text(
+                '좋아요',
+                semanticsLabel: '좋아요',
+                style: TextStyle(
+                  color: colors.subColor,
+                  fontSize: 13,
+                  fontFamily: fonts.font,
+                  fontWeight: FontWeight.w400,
+                  height: 1.69,
+                ),
+              ),
+              const SizedBox(width: 10),
+              custom_icons.communityPostListLikes,
+              const SizedBox(width: 5),
+              Text(
+                '${post.likes}',
+                semanticsLabel: '${post.likes}',
+              ),
+              const SizedBox(width: 20),
+              const Text(
+                '스크랩',
+                semanticsLabel: '스크랩',
+                style: TextStyle(
+                  color: colors.subColor,
+                  fontSize: 13,
+                  fontFamily: fonts.font,
+                  fontWeight: FontWeight.w400,
+                  height: 1.69,
+                ),
+              ),
+              const SizedBox(width: 10),
+              custom_icons.communityPostListScraps,
+              const SizedBox(width: 5),
+              Text(
+                '${post.scraps}',
+                semanticsLabel: '${post.scraps}',
+              ),
+            ]),
+            TimeConvertor(createdAt: post.createdAt, fontSize: 13.0)
+          ])),
       const SizedBox(height: 12),
       const Divider(thickness: 1, height: 0.5, color: colors.subColor),
     ]);
