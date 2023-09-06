@@ -63,9 +63,13 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              linkUrlButton(() {
-                                launchUrl(Uri.parse(widget.post.contentLink));
-                              }),
+                              Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: linkUrlButton(() {
+                                    launchUrl(
+                                        Uri.parse(widget.post.contentLink));
+                                  })),
                               Container(
                                 decoration: const ShapeDecoration(
                                   color: colors.imgSubtitleColor,
