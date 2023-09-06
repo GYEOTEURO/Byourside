@@ -15,7 +15,7 @@ List<String> _downloadUrls = [];
 
 Future<void> _downloadImage(List<String> imageUrls) async {
   List<String> downloadUrls = [];
-  if (imageUrls == Null) {
+  if (imageUrls == null) {
     return;
   }
   for (String imageUrl in imageUrls!) {
@@ -173,8 +173,7 @@ Widget autoInfoPostListTile(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(13),
             )),
-        child: Expanded(
-            child: Column(
+        child: Column(
           children: [
             Expanded(
                 flex: 3,
@@ -185,6 +184,6 @@ Widget autoInfoPostListTile(
                 flex: 1,
                 child: _buildBottomSide(createdAt, post.scraps.toString()))
           ],
-        )),
+        ),
       ));
 }
