@@ -1,5 +1,6 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/authenticate/social_login.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,7 +36,9 @@ class AuthController extends GetxController {
       print(user);
       bool isUserSetUp = await checkIfUserSetUp(user.uid);
       if (isUserSetUp) {
-        // Get.offAll(() => const SetupUser());
+        Get.put(UserController());
+        await Future.delayed(const Duration(seconds: 1));
+
         Get.offAll(() => const BottomNavBar());
       } else {
         Get.offAll(() => const SetupUser());
