@@ -1,6 +1,7 @@
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/autoInformation/post_appbar.dart';
 import 'package:byourside/screen/autoInformation/post_content.dart';
+import 'package:byourside/screen/comment/auto_comment_list.dart';
 import 'package:byourside/screen/comment/comment_list.dart';
 import 'package:byourside/screen/community/post_content.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
@@ -10,6 +11,7 @@ import 'package:byourside/widget/auto_information/link_url_button.dart';
 import 'package:byourside/widget/complete_add_post_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 
 class AutoInfoPost extends StatefulWidget {
   const AutoInfoPost({super.key, required this.post});
@@ -62,8 +64,31 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
                       )
                     ]),
                     child: Container(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: linkUrlButton(() {}))))
+                        padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              linkUrlButton(() {}),
+                              Container(
+                                decoration: const ShapeDecoration(
+                                  color: colors.imgSubtitleColor,
+                                  shape: CircleBorder(),
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.textsms_rounded),
+                                  color: colors.primaryColor,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AutoCommentListPage(
+                                                  documentID: widget.post.id!,
+                                                )));
+                                  },
+                                ),
+                              ),
+                            ]))))
           ]),
         ));
   }
