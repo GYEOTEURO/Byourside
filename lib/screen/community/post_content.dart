@@ -33,8 +33,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
               ),
             )
           ),
-        )),
-      ),
+        ),
       const SizedBox(height: 12),
       Row(children: [
         custom_icons.profile,

@@ -92,7 +92,7 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
                         });
                   } else {
                     return SelectionArea(
-                        child: Center(child: customIcons.loading));
+                        child: Center(child: custom_icons.loading));
                   }
                 }))
       ]),

@@ -37,7 +37,7 @@ class AuthController extends GetxController {
       bool isUserSetUp = await checkIfUserSetUp(user.uid);
       if (isUserSetUp) {
         Get.put(UserController());
-        await Future.delayed(const Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 2));
 
         Get.offAll(() => const BottomNavBar());
       } else {
