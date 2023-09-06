@@ -10,20 +10,16 @@ import 'package:byourside/widget/community/add_post/image_section.dart';
 import 'package:byourside/widget/community/add_post/title_section.dart';
 import 'package:byourside/widget/community/add_post/warning_dialog.dart';
 import 'package:byourside/widget/complete_add_post_button.dart';
-import 'package:byourside/widget/fully_rounded_rectangle_button.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/icons.dart' as customIcons;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/save_data.dart';
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 
 class CommunityAddPost extends StatefulWidget {

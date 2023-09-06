@@ -25,6 +25,7 @@ return Container(
               children: [
                   Text(
                       selectedValue,
+                      semanticsLabel: selectedValue,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: fonts.captionPt,

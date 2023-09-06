@@ -11,18 +11,21 @@ Widget fullyRoundedRectangleButton(String buttonText, Function pressedFunc) {
           borderRadius: BorderRadius.circular(69),
         ),
       ),
-      onPressed: () {
-        HapticFeedback.lightImpact();
-        pressedFunc();
-      },
-      child: Text(
-        buttonText,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: colors.textColor,
-          fontSize: fonts.captionTitlePt,
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w700,
-        ),
-      ));
+  onPressed: () {
+    HapticFeedback.lightImpact();
+    pressedFunc();
+  },
+  child: Text(
+    buttonText,
+    semanticsLabel: buttonText,
+    textAlign: TextAlign.center,
+    style: const TextStyle(
+      color: colors.textColor,
+      fontSize: 13,
+      fontFamily: fonts.font,
+      fontWeight: FontWeight.w700,
+    ),
+  )
+);
+
 }

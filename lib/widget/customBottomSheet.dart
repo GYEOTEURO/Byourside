@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:flutter/services.dart';
 
 
 Future customBottomSheet(BuildContext context, bool isPostedUser, Function delete, Function report, Function block) {
@@ -31,6 +32,7 @@ Widget bottomSheetButton(BuildContext context, int divideHeight, Map<String, Str
     height: MediaQuery.of(context).size.height / divideHeight,
     child: ElevatedButton(
     onPressed: () { 
+      HapticFeedback.lightImpact();
       showDialog(
         context: context, 
         builder: (context) => DeleteReportBlockAlert(
@@ -48,6 +50,7 @@ Widget bottomSheetButton(BuildContext context, int divideHeight, Map<String, Str
     child: Center(
       child: Text(
       optionType['bottomSheetText']!,
+      semanticsLabel: optionType['bottomSheetText'],
       style: const TextStyle(
         color: colors.textColor,
         fontFamily: fonts.font,
