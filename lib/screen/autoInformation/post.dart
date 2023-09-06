@@ -2,16 +2,11 @@ import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/autoInformation/post_appbar.dart';
 import 'package:byourside/screen/autoInformation/post_content.dart';
 import 'package:byourside/screen/comment/auto_comment_list.dart';
-import 'package:byourside/screen/comment/comment_list.dart';
-import 'package:byourside/screen/community/post_content.dart';
-import 'package:byourside/screen/comment/create_comment.dart';
-import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:byourside/widget/auto_information/autoInfo_image.dart';
 import 'package:byourside/widget/auto_information/link_url_button.dart';
-import 'package:byourside/widget/complete_add_post_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:byourside/constants/colors.dart' as colors;
+import 'package:url_launcher/url_launcher.dart';
 
 class AutoInfoPost extends StatefulWidget {
   const AutoInfoPost({super.key, required this.post});
@@ -68,7 +63,9 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              linkUrlButton(() {}),
+                              linkUrlButton(() {
+                                launchUrl(Uri.parse(widget.post.contentLink));
+                              }),
                               Container(
                                 decoration: const ShapeDecoration(
                                   color: colors.imgSubtitleColor,
