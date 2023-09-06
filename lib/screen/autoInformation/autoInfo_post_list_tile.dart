@@ -1,5 +1,6 @@
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/community_post.dart';
+import 'package:byourside/screen/autoInformation/post.dart';
 import 'package:byourside/screen/community/post.dart';
 import 'package:byourside/widget/auto_information/autoInfo_image.dart';
 import 'package:byourside/widget/time_convertor.dart';
@@ -91,7 +92,7 @@ Widget _buildCategory({required String category, required double width}) {
         ),
       ),
       child: Text(
-        category,
+        category == '교육' ? '교육/활동' : category,
         style: const TextStyle(
             fontFamily: fonts.font,
             fontSize: fonts.captionTitlePt,
@@ -156,8 +157,8 @@ Widget autoInfoPostListTile(
   return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => AutoInfoPost(post: post)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AutoInfoPost(post: post)));
       },
       child: Container(
         margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),

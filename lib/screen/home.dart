@@ -88,8 +88,9 @@ class _HomeState extends State<Home> {
 
   Widget _autoInformationNewPosts() {
     return Flexible(
-      child: streamAutoInfoPost(() => loadData.readNewAutoInformationPosts(
-          disabilityType: disabilityType, area: area, district: district)),
+      child: horizontalScrollStreamAutoInfoPost(() =>
+          loadData.readNewAutoInformationPosts(
+              disabilityType: disabilityType, area: area, district: district)),
     );
   }
 

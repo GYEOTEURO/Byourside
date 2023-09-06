@@ -39,7 +39,7 @@ Map<String, String> warningMessage = {
 List<String> autoInformationCategories = [
   '전체',
   '교육/활동',
-  '돌봄서비스',
+  '돌봄 서비스',
   '보조기기',
   '지원금',
 ];
