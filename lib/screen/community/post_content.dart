@@ -7,9 +7,7 @@ import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 
 class CommunityPostContent extends StatefulWidget {
-  const CommunityPostContent(
-      {super.key,
-      required this.post});
+  const CommunityPostContent({super.key, required this.post});
 
   final CommunityPostModel post;
 
@@ -19,12 +17,11 @@ class CommunityPostContent extends StatefulWidget {
 
 class _CommunityPostContentState extends State<CommunityPostContent> {
   Widget _buildPostContent(CommunityPostModel? post) {
-    return Column(
-      children: [
+    return Column(children: [
       const SizedBox(height: 5),
-       Align(
-          alignment: Alignment.centerLeft,
-          child: SelectionArea(
+      Align(
+        alignment: Alignment.centerLeft,
+        child: SelectionArea(
             child: Text(
               post!.category,
               semanticsLabel: post.category,
@@ -36,6 +33,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
               ),
             )
           ),
+        )),
       ),
       const SizedBox(height: 12),
       Row(children: [
@@ -63,26 +61,25 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
                 fontWeight: FontWeight.w700,
                 fontFamily: fonts.font,
                 color: colors.textColor),
-          ))
-      ),
+          ))),
       const SizedBox(height: 12),
       Container(
           padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           alignment: Alignment.centerLeft,
-          child: Wrap(
-              children: [
-                Text(
-                  post.content,
-                  semanticsLabel: post.content,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontFamily: fonts.font,
-                    fontWeight: FontWeight.w400,
-                  ),
-          )]
-      )),
+          child: Wrap(children: [
+            Text(
+              post.content,
+              semanticsLabel: post.content,
+              style: const TextStyle(
+                fontSize: 13,
+                fontFamily: fonts.font,
+                fontWeight: FontWeight.w400,
+              ),
+            )
+          ])),
       const SizedBox(height: 12),
-      if (post.images.isNotEmpty) ImageSlider(images: post.images, imgInfos: post.imgInfos),
+      if (post.images.isNotEmpty)
+        ImageSlider(images: post.images, imgInfos: post.imgInfos),
       const SizedBox(height: 24),
       Container(
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -133,12 +130,11 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
       ])),
       const SizedBox(height: 12),
       const Divider(thickness: 1, height: 0.5, color: colors.subColor),
-    ]);   
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    
-    return _buildPostContent(widget.post);}
+    return _buildPostContent(widget.post);
   }
-
+}

@@ -1,4 +1,5 @@
 import 'package:byourside/model/autoInformation_post.dart';
+import 'package:byourside/widget/auto_information/stream_autoInfo_post.dart';
 import 'package:byourside/widget/cusom_tab_bar.dart';
 import 'package:byourside/widget/no_data.dart';
 import 'package:byourside/widget/stream_community_post.dart';
@@ -21,30 +22,31 @@ class _MyScrapState extends State<MyScrap> with SingleTickerProviderStateMixin {
 
   Widget _streamAutoInformationPosts() {
     return StreamBuilder<List<AutoInformationPostModel>>(
-            stream: loadData.readScrapAutoInformationPosts(uid: user!.uid),
-            builder: (context, snapshots) {
-              if (snapshots.hasData) {
-                return ListView.builder(
-                    itemCount: snapshots.data!.length,
-                    shrinkWrap: true,
-                    itemBuilder: (_, index) {
-                      AutoInformationPostModel post = snapshots.data![index];
-                      //return communityPostListTile(context, post);
-                      return Text(post.title);
-                    });
-              } else {
-                return noData();
-              }
-            });
-}
+        stream: loadData.readScrapAutoInformationPosts(uid: user!.uid),
+        builder: (context, snapshots) {
+          if (snapshots.hasData) {
+            return ListView.builder(
+                itemCount: snapshots.data!.length,
+                shrinkWrap: true,
+                itemBuilder: (_, index) {
+                  AutoInformationPostModel post = snapshots.data![index];
+                  //return communityPostListTile(context, post);
+                  return Text(post.title);
+                });
+          } else {
+            return noData();
+          }
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: titleOnlyAppbar(context, widget.title),
-      body: CustomTabBar(
-        community: streamCommunityPost(() => loadData.readScrapCommunityPosts(uid: user!.uid)),
-        autoInformation: _streamAutoInformationPosts())
-    );
+        appBar: titleOnlyAppbar(context, widget.title),
+        body: CustomTabBar(
+            community: streamCommunityPost(
+                () => loadData.readScrapCommunityPosts(uid: user!.uid)),
+            autoInformation: verticalScollStreamAutoInfoPost(
+                () => loadData.readScrapAutoInformationPosts(uid: user!.uid))));
   }
 }

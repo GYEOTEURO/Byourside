@@ -4,6 +4,7 @@ import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/load_data.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/widget/app_bar_select_button.dart';
+import 'package:byourside/widget/auto_information/stream_autoInfo_post.dart';
 import 'package:byourside/widget/icon_buttons.dart';
 import 'package:byourside/widget/stream_community_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,9 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
-  const Home(
-      {Key? key})
-      : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -23,10 +22,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  String? disabilityType = Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+  String? disabilityType =
+      Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
   String? district = Get.find<UserController>().userModel.district;
+  String? area = Get.find<UserController>().userModel.area;
 
-  Widget _appbar(){
+  Widget _appbar() {
     return Container(
               height: MediaQuery.of(context).size.height / 5.5,
               color: colors.homeAppBarColor,
@@ -53,23 +54,21 @@ class _HomeState extends State<Home> {
                     Center(child: custom_icons.logo),
               ])
             );
-  } 
+  }
 
-  Widget _titleSeeMore(SvgPicture icon, String title, int index){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        icon,
-        Text(
-          title,
-          style: const TextStyle(
-              color: colors.textColor,
-              fontSize: 20,
-              fontFamily: fonts.font,
-              fontWeight: FontWeight.w700,
-              height: 1.50,
-          ),
-        )
+  Widget _titleSeeMore(SvgPicture icon, String title, int index) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      icon,
+      Text(
+        title,
+        style: const TextStyle(
+          color: colors.textColor,
+          fontSize: 20,
+          fontFamily: fonts.font,
+          fontWeight: FontWeight.w700,
+          height: 1.50,
+        ),
+      )
     ]);
   }
 
@@ -97,15 +96,19 @@ class _HomeState extends State<Home> {
           custom_icons.hobee
       ]);
   }
-  Widget _autoInformationNewPosts(){
-    return Container(
-      height: MediaQuery.of(context).size.height / 5,
+
+  Widget _autoInformationNewPosts() {
+    return Flexible(
+      child: horizontalScrollStreamAutoInfoPost(() =>
+          loadData.readNewAutoInformationPosts(
+              disabilityType: disabilityType, area: area, district: district)),
     );
   }
-  Widget _communityHotPosts(){
+
+  Widget _communityHotPosts() {
     return Flexible(
-      child: streamCommunityPost(() => loadData.readHotCommunityPosts(disabilityType: disabilityType))
-    );
+        child: streamCommunityPost(() =>
+            loadData.readHotCommunityPosts(disabilityType: disabilityType)));
   }
 
   @override
@@ -120,6 +123,6 @@ class _HomeState extends State<Home> {
           _titleSeeMore(custom_icons.community, '소통 게시판 인기글', 1),
           _communityHotPosts()
         ])
-      ); 
+      );
   }
 }
