@@ -6,6 +6,7 @@ import 'package:byourside/screen/community/post_content.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
 import 'package:byourside/widget/auto_information/autoInfo_image.dart';
+import 'package:byourside/widget/auto_information/link_url_button.dart';
 import 'package:byourside/widget/complete_add_post_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,16 +32,19 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
           child: Stack(children: [
             SingleChildScrollView(
                 //댓글 전송 누르면 맨 아래로 이동 가능하게
-                child: Column(children: [
-              Container(child: AutoInfoImage(imageUrls: widget.post.images)),
-              Container(child: AutoInfoPostContent(post: widget.post)),
-              Container(
-                  margin: const EdgeInsets.all(7),
-                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
-                  child: CommentList(
-                      collectionName: widget.collectionName,
-                      documentID: widget.post.id!)),
-            ])),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                  Container(
+                      child: AutoInfoImage(imageUrls: widget.post.images)),
+                  Container(child: AutoInfoPostContent(post: widget.post)),
+                  // Container(
+                  //     margin: const EdgeInsets.all(7),
+                  //     padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
+                  //     child: CommentList(
+                  //         collectionName: widget.collectionName,
+                  //         documentID: widget.post.id!)),
+                ])),
             Positioned(
                 left: 0,
                 right: 0,
@@ -59,7 +63,7 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
                     ]),
                     child: Container(
                         padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: completeAddPostButton(() {}))))
+                        child: linkUrlButton(() {}))))
           ]),
         ));
   }

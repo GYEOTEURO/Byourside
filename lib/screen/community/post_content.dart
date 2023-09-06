@@ -66,9 +66,9 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
               post.content,
               semanticsLabel: post.content,
               style: const TextStyle(
-                fontSize: fonts.semiBodyPt,
+                fontSize: 13,
                 fontFamily: fonts.font,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w400,
               ),
             )
           ])),

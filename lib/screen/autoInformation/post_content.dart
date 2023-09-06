@@ -17,10 +17,11 @@ class AutoInfoPostContent extends StatefulWidget {
 }
 
 class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
-  Widget _buildPostContent(AutoInformationPostModel? post) {
+  Widget _buildPostContent(AutoInformationPostModel? post, double width) {
     return Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(children: [
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Container(
             padding: EdgeInsets.only(top: 10, bottom: 10),
             alignment: Alignment.centerLeft,
@@ -86,21 +87,25 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
                 ],
               )),
           const Divider(thickness: 0.5, color: colors.subColor),
-          Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  color: colors.autoInfoContentBgrColor,
-                  borderRadius: BorderRadius.circular(9)),
-              child: Text(
-                post.content,
-                textAlign: TextAlign.start,
-                semanticsLabel: post.content,
-                style: const TextStyle(
-                  fontSize: fonts.captionPt,
-                  fontFamily: fonts.font,
-                  fontWeight: FontWeight.normal,
-                ),
-              )),
+          if (post.content != '')
+            Container(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                decoration: BoxDecoration(
+                    color: colors.autoInfoContentBgrColor,
+                    borderRadius: BorderRadius.circular(9)),
+                child: Text(
+                  post.content,
+                  textAlign: TextAlign.start,
+                  semanticsLabel: post.content,
+                  style: const TextStyle(
+                    fontSize: fonts.semiBodyPt,
+                    fontFamily: fonts.font,
+                    height: 1.5,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ))
+          else
+            Container(),
           const SizedBox(height: 12),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
@@ -108,9 +113,9 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
                 '스크랩',
                 style: TextStyle(
                   color: colors.subColor,
-                  fontSize: 13,
+                  fontSize: fonts.captionTitlePt,
                   fontFamily: fonts.font,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.bold,
                   height: 1.69,
                 ),
               ),
@@ -121,23 +126,24 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
                 '${post.scraps}',
                 style: TextStyle(
                   color: colors.subColor,
-                  fontSize: 13,
+                  fontSize: fonts.captionTitlePt,
                   fontFamily: fonts.font,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.bold,
                   height: 1.69,
                 ),
               ),
             ]),
             Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: TimeConvertor(createdAt: post.createdAt, fontSize: 13.0))
           ]),
-          const SizedBox(height: 12),
+          SizedBox(height: width * 0.22),
         ]));
   }
 
   @override
   Widget build(BuildContext context) {
-    return _buildPostContent(widget.post);
+    double _width = MediaQuery.of(context).size.width;
+    return _buildPostContent(widget.post, _width);
   }
 }

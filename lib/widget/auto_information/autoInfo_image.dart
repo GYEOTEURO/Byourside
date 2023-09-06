@@ -14,7 +14,7 @@ class AutoInfoImage extends StatefulWidget {
 }
 
 class _AutoInfoImageState extends State<AutoInfoImage> {
-  List<String>? _downloadUrls;
+  List<String> _downloadUrls = [];
   int _current = 0;
 
   @override
@@ -43,7 +43,7 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_downloadUrls != null) {
+    if (_downloadUrls!.isNotEmpty) {
       return Container(
           width: MediaQuery.of(context).size.width,
           child: Stack(children: [
@@ -84,7 +84,9 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
               ),
           ]));
     } else {
-      return const CircularProgressIndicator();
+      return const SizedBox(
+        height: 5,
+      );
     }
   }
 }

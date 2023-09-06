@@ -13,7 +13,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 List<String> _downloadUrls = [];
 
-Future<void> _downloadImage(List<String>? imageUrls) async {
+Future<void> _downloadImage(List<String> imageUrls) async {
   List<String> downloadUrls = [];
   if (imageUrls == Null) {
     return;
@@ -71,7 +71,11 @@ Widget _buildTopSide(
                         );
                       }
                     },
-                  ))),
+                  )))
+        else
+          Container(
+            height: _width * 0.1,
+          ),
         Container(
             padding: const EdgeInsets.all(10),
             alignment: Alignment.topLeft,

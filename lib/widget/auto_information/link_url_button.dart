@@ -3,7 +3,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:flutter/services.dart';
 
-Widget completeAddPostButton(Function pressedFunc) {
+Widget linkUrlButton(Function pressedFunc) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colors.primaryColor,
@@ -17,7 +17,7 @@ Widget completeAddPostButton(Function pressedFunc) {
         pressedFunc();
       },
       child: const Text(
-        '글쓰기 완료',
+        '원문보기',
         textAlign: TextAlign.center,
         style: TextStyle(
           color: colors.textColor,
