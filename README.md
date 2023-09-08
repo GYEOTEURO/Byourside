@@ -44,7 +44,7 @@ Project is created with:
 |                |NAME                          |
 |----------------|-------------------------------|
 |Language         |`Dart` `Python`            |
-|Fraemwork|`Flutter` `Firebase` `Chat GPT API` `Selenium` `Pandas` `asyncio & aiohttp` `Amazon EC2` `Crontab` `AWS Lambda` `Amazon Event Bridge` `Figma` `Adobe`|
+|Framework|`Flutter` `Firebase` `Chat GPT API` `Selenium` `Pandas` `asyncio & aiohttp` `Amazon EC2` `Crontab` `AWS Lambda` `Amazon Event Bridge` `Figma` `Adobe`|
 |IDE     |`VScode` `Android Studio` `Flutter Lints`|
 |Source Code Management     |`Git` `Github`|
 |Test     |`Flutter Test `|
