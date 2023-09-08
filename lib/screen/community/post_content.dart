@@ -31,8 +31,7 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
             fontSize: 15,
             fontWeight: FontWeight.w800,
           ),
-        )),
-      ),
+        ),
       const SizedBox(height: 12),
       Row(children: [
         custom_icons.profile,
