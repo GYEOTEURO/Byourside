@@ -15,7 +15,7 @@ List<String> _downloadUrls = [];
 
 Future<void> _downloadImage(List<String> imageUrls) async {
   List<String> downloadUrls = [];
-  if (imageUrls == null) {
+  if (imageUrls.isEmpty) {
     return;
   }
   for (String imageUrl in imageUrls!) {
@@ -71,11 +71,7 @@ Widget _buildTopSide(
                         );
                       }
                     },
-                  )))
-        else
-          Container(
-            height: _width * 0.1,
-          ),
+                  ))),
         Container(
             padding: const EdgeInsets.all(10),
             alignment: Alignment.topLeft,
