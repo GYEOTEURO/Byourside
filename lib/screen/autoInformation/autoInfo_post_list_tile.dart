@@ -15,7 +15,7 @@ List<String> _downloadUrls = [];
 
 Future<void> _downloadImage(List<String> imageUrls) async {
   List<String> downloadUrls = [];
-  if (imageUrls == Null) {
+  if (imageUrls.isEmpty) {
     return;
   }
   for (String imageUrl in imageUrls!) {
@@ -71,11 +71,7 @@ Widget _buildTopSide(
                         );
                       }
                     },
-                  )))
-        else
-          Container(
-            height: _width * 0.1,
-          ),
+                  ))),
         Container(
             padding: const EdgeInsets.all(10),
             alignment: Alignment.topLeft,
@@ -173,8 +169,7 @@ Widget autoInfoPostListTile(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(13),
             )),
-        child: Expanded(
-            child: Column(
+        child: Column(
           children: [
             Expanded(
                 flex: 3,
@@ -185,6 +180,6 @@ Widget autoInfoPostListTile(
                 flex: 1,
                 child: _buildBottomSide(createdAt, post.scraps.toString()))
           ],
-        )),
+        ),
       ));
 }
