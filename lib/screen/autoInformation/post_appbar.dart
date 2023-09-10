@@ -11,17 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:get/get.dart';
 
-class AutoInformationPostAppBar extends StatefulWidget implements PreferredSizeWidget {
-  AutoInformationPostAppBar(
-    {Key? key,
-    required this.post}) 
-    : super(key: key);
+class AutoInformationPostAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
+  AutoInformationPostAppBar({Key? key, required this.post}) : super(key: key);
 
   String collectionName = 'autoInformation';
   final AutoInformationPostModel post;
 
   @override
-  State<AutoInformationPostAppBar> createState() => _AutoInformationPostAppBarState();
+  State<AutoInformationPostAppBar> createState() =>
+      _AutoInformationPostAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -47,17 +46,18 @@ class _AutoInformationPostAppBarState extends State<AutoInformationPostAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: backToPreviousPage(context),
-          actions: [
-            scrapsButton(widget.collectionName, isClicked(scrapsUser), scrapsUser, widget.post.category, widget.post.id!, user!.uid, updateScraps),
-          ],
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: backToPreviousPage(context),
+      actions: [
+        scrapsButton(widget.collectionName, isClicked(scrapsUser), scrapsUser,
+            widget.post.category, widget.post.id!, user!.uid, updateScraps),
+      ],
     );
   }
 
   bool isClicked(List<String> likesOrScrapsUser) {
-    if(likesOrScrapsUser.contains(user!.uid)){
+    if (likesOrScrapsUser.contains(user!.uid)) {
       return true;
     }
     return false;

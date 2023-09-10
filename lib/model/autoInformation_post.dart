@@ -16,9 +16,9 @@ class AutoInformationPostModel {
   final int scraps;
   List<String> scrapsUser;
   List<String> keyword;
-  
-  AutoInformationPostModel({
-      this.id,
+
+  AutoInformationPostModel(
+      {this.id,
       required this.title,
       required this.content,
       required this.createdAt,
@@ -32,16 +32,16 @@ class AutoInformationPostModel {
       required this.images,
       required this.scraps,
       required this.scrapsUser,
-      required this.keyword
-  });
+      required this.keyword});
 
-  AutoInformationPostModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc})
+  AutoInformationPostModel.fromDocument(
+      {required DocumentSnapshot<Map<String, dynamic>> doc})
       : id = doc.id,
         title = doc.data()!['title'],
         content = doc.data()!['summary'],
         createdAt = doc.data()!['post_date'],
         date = doc.data()!['date'],
-        category = doc.data()!['category'],
+        category = doc.data()!['category'] = doc.data()!['category'],
         disabilityType = doc.data()!['disability_type'],
         site = doc.data()!['site'],
         originalLink = doc.data()!['original_link'],

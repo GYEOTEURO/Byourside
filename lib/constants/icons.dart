@@ -78,6 +78,11 @@ final loading = Image.asset(
   'assets/icons/loading.gif',
 );
 
-// final photo = Image.asset(
-//   'assets/icons/photo.svg',
-// );
+final photo = Image.asset(
+  'assets/icons/photo.svg',
+);
+
+final site = Image.asset(
+  'assets/icons/site.svg',
+  semanticLabel: '사이트',
+);

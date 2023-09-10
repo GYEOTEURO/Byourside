@@ -50,7 +50,7 @@ dependencies:
   pinput: ^2.2.31
   iamport_flutter: ^0.10.0
   email_validator: ^2.0.1
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.14
   flutter_sfsymbols:
   material_design_icons_flutter: 5.0.6996
 #  location:
@@ -152,7 +152,8 @@ flutter:
     - assets/icons/see_more.svg
     - assets/icons/speech_bubble.svg
     - assets/icons/loading.gif
-    #- assets/icons/photo.svg
+    - assets/icons/photo.svg
+    - assets/icons/site.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

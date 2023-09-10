@@ -88,46 +88,49 @@ class _SetupUserState extends State<SetupUser> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: titleOnlyAppbar(context, widget.title, showBackButton: false),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const NicknameSection(),  
-                  UserTypeSelection(
-                    selectedType: _selectedUserType,
-                    onTypeSelected: _handleUserTypeSelected,
+    return Semantics(
+      label: widget.title,
+      child: Scaffold(
+        appBar: titleOnlyAppbar(context, widget.title, showBackButton: false),
+        body: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const NicknameSection(),  
+                      UserTypeSelection(
+                        selectedType: _selectedUserType,
+                        onTypeSelected: _handleUserTypeSelected,
+                      ),
+                      DisabilityType(
+                        initialType: _selectedDisabilityType,
+                        onChanged: _handleDisabilityTypeSelected,
+                      ),
+                      AgeSection(
+                        selectedType: _selectedUserType,
+                        controller: _birthYear
+                      ), 
+                      LocationSection(onLocationSelected: _handleLocationSelected),
+                      AppPurposeSelection(
+                        onChanged: (purpose) {
+                          setState(() {
+                            _selectedPurpose = purpose; // 선택한 목적 업데이트
+                          });
+                        }
+                      ),
+                    ],
                   ),
-                   DisabilityType(
-                    initialType: _selectedDisabilityType,
-                    onChanged: _handleDisabilityTypeSelected,
-                  ),
-                  AgeSection(
-                    selectedType: _selectedUserType,
-                    controller: _birthYear
-                  ), 
-                  LocationSection(onLocationSelected: _handleLocationSelected),
-                  AppPurposeSelection(
-                    onChanged: (purpose) {
-                      setState(() {
-                        _selectedPurpose = purpose; // 선택한 목적 업데이트
-                      });
-                    }
-                  ),
-                ],
+                ),
               ),
-            ),
+              CompleteButton(
+                onPressed: () => _onCompleteButtonPressed(context), text: '시작하기',
+              ),
+            ],
           ),
-          CompleteButton(
-            onPressed: () => _onCompleteButtonPressed(context), text: '시작하기',
-          ),
-        ],
-      ),
+        ),
     );
   }
 }
