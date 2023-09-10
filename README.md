@@ -21,6 +21,7 @@
 
 시연 영상 : https://youtu.be/xS5aE5KFRs0
 
+'Beeside' 내 정보 게시판의 데이터 수집 관련 레포지토리 : https://github.com/GYEOTEURO/Auto-information
 
 > 이 앱의 이전 버전은 현대오토에버와 서울사회복지공동모금회의 지원으로 제작되었습니다.  
  
