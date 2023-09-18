@@ -22,16 +22,17 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
       Align(
         alignment: Alignment.centerLeft,
         child: SelectionArea(
-            child: Text(
-          post!.category,
-          semanticsLabel: post.category,
-          style: const TextStyle(
-            fontFamily: fonts.font,
-            color: colors.primaryColor,
-            fontSize: 15,
-            fontWeight: FontWeight.w800,
+          child: Text(
+            post!.category,
+            semanticsLabel: post.category,
+            style: const TextStyle(
+              fontFamily: fonts.font,
+              color: colors.primaryColor,
+              fontSize: 15,
+              fontWeight: FontWeight.w800,
+            ),
           ),
-        ),),
+        ),
       ),
       const SizedBox(height: 12),
       Row(children: [
