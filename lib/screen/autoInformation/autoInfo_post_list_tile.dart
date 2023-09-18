@@ -1,8 +1,5 @@
 import 'package:byourside/model/autoInformation_post.dart';
-import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/autoInformation/post.dart';
-import 'package:byourside/screen/community/post.dart';
-import 'package:byourside/widget/auto_information/autoInfo_image.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,8 +15,8 @@ Future<void> _downloadImage(List<String> imageUrls) async {
   if (imageUrls.isEmpty) {
     return;
   }
-  for (String imageUrl in imageUrls!) {
-    Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl!);
+  for (String imageUrl in imageUrls) {
+    Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl);
     debugPrint('*****************$storageRef');
 
     try {
@@ -126,7 +123,8 @@ Widget _buildBottomSide(Widget createdAt, String scraps) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              padding: EdgeInsets.only(left: 20, bottom: 10), child: createdAt),
+              padding: const EdgeInsets.only(left: 20, bottom: 10),
+              child: createdAt),
           _buildScraps(
               count: scraps, icon: custom_icons.communityPostListScraps),
         ],
@@ -135,7 +133,7 @@ Widget _buildBottomSide(Widget createdAt, String scraps) {
 
 Widget _buildScraps({required String count, required icon}) {
   return Container(
-      padding: EdgeInsets.only(bottom: 10, right: 20),
+      padding: const EdgeInsets.only(bottom: 10, right: 20),
       child: Row(children: [
         custom_icons.communityPostListScraps,
         Text(count,
@@ -152,7 +150,7 @@ Widget autoInfoPostListTile(
     BuildContext context, AutoInformationPostModel? post) {
   TimeConvertor createdAt =
       TimeConvertor(createdAt: post!.createdAt, fontSize: fonts.createdAtPt);
-  debugPrint("***************${post.images}");
+  debugPrint('***************${post.images}');
 
   return GestureDetector(
       onTap: () {
