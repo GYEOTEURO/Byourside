@@ -1,11 +1,13 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/comment_count.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
-import 'package:byourside/widget/customBottomSheet.dart';
+import 'package:byourside/widget/custom_bottom_sheet.dart';
+import 'package:byourside/widget/snapshots_has_no_data.dart';
 import 'package:byourside/widget/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,19 +34,90 @@ class _CommentListState extends State<CommentList> {
   final LoadData loadData = LoadData();
   final SaveData saveData = SaveData();
 
-  Widget _buildListItem(String? collectionName, String? documentID, CommentModel? comment) {
-    TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt, fontSize: 10.0);
+  Widget _buildContent(String content){
+    String mentionedNickname = content.split(' ')[0];
+    bool isContainedMention = mentionedNickname.contains('@');
+    String removeMentionContent = content.replaceFirst(mentionedNickname, '');
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      child: Row(
+    return isContainedMention ?
+            Align(
+              alignment: Alignment.centerLeft,
+              child: RichText(
+                  text: TextSpan(
+                    text: mentionedNickname,
+                    semanticsLabel: mentionedNickname,
+                    style: const TextStyle(
+                      color: colors.mentionColor,
+                      fontSize: 12,
+                      fontFamily: fonts.font,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  children: [
+                    TextSpan(
+                      text: removeMentionContent,
+                      semanticsLabel: removeMentionContent,
+                      style: const TextStyle(
+                        color: colors.textColor,
+                      )
+                    )
+                  ])
+                )
+            )
+            : Wrap(
+                children: [
+                  Text(
+                    content,
+                    semanticsLabel: content,
+                    style: const TextStyle(
+                      color: colors.textColor,
+                      fontSize: 12,
+                      fontFamily: fonts.font,
+                      fontWeight: FontWeight.w400,
+                    )
+                  )
+              ]
+            );
+  }
+
+  OutlinedButton _mentionButton(String nickname){
+    return OutlinedButton(
+      onPressed: () {
+        HapticFeedback.lightImpact();
+        CreateComment.content.text = '@$nickname ';
+      },
+      style: OutlinedButton.styleFrom(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(93),
+        side: const BorderSide(
+          width: 0.50,
+          color: colors.subColor,
+        ),
+        )),
+        child: const Text(
+              '언급하기',
+              semanticsLabel: '언급하기',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colors.subColor,
+                fontSize: 13,
+                fontFamily: fonts.font,
+                fontWeight: FontWeight.w400
+              ),
+        ),
+      );
+  }
+
+  Widget _buildCommentList(String? collectionName, String? documentID, CommentModel? comment) {
+    TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt, fontSize: 13.0);
+
+    return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_icons.profile,
           const SizedBox(width: 8),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,14 +126,15 @@ class _CommentListState extends State<CommentList> {
                       comment.nickname,
                       semanticsLabel: comment.nickname,
                       style: const TextStyle(
-                        color: Colors.black,
+                        color: colors.textColor,
                         fontSize: 14,
                         fontFamily: fonts.font,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     IconButton(
-                        icon: custom_icons.add_ons, 
+                        icon: custom_icons.option,
+                        color: colors.subColor, 
                         onPressed: (){ 
                           HapticFeedback.lightImpact();
                           customBottomSheet(context, comment.uid == user!.uid, 
@@ -72,78 +146,26 @@ class _CommentListState extends State<CommentList> {
                   ],
                 ),
                 const SizedBox(height: 4),
-                comment.content.split(' ')[0].contains('@') == true ?
-                Row(
-                  children: [
-                    Text(
-                  comment.content.split(' ')[0],
-                  semanticsLabel: comment.content.split(' ')[0],
-                  style: const TextStyle(
-                    color: colors.mentionColor,
-                    fontSize: 12,
-                    fontFamily: fonts.font,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                Text(
-                  comment.content.replaceFirst(comment.content.split(' ')[0], ''),
-                  semanticsLabel: comment.content.replaceFirst(comment.content.split(' ')[0], ''),
-                  style: const TextStyle(
-                    color: Color(0xFF1D1E1E),
-                    fontSize: 12,
-                    fontFamily: fonts.font,
-                    fontWeight: FontWeight.w400,
-                  ),
-                )])
-                : Text(
-                  comment.content,
-                  semanticsLabel: comment.content,
-                  style: const TextStyle(
-                    color: Color(0xFF1D1E1E),
-                    fontSize: 12,
-                    fontFamily: fonts.font,
-                    fontWeight: FontWeight.w400,
-                  ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  child: _buildContent(comment.content)
                 ),
                 const SizedBox(height: 4),
                 Row(
                   children: [
                     createdAt,
                     const Spacer(),
-                    OutlinedButton(
-                      onPressed: () {
-                        HapticFeedback.lightImpact();
-                        CreateComment.content.text = '@${comment.nickname} ';
-                      },
-                      style: OutlinedButton.styleFrom(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(93),
-                        side: const BorderSide(
-                          width: 0.50,
-                          color: colors.subColor,
-                        ),
-                        )),
-                        child: const Text(
-                              '언급하기',
-                              semanticsLabel: '언급하기',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: colors.subColor,
-                                fontSize: 13,
-                                fontFamily: fonts.font,
-                                fontWeight: FontWeight.w400
-                              ),
-                            ),
-                          ),
-                        ],
-                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      child: _mentionButton(comment.nickname)
+                    )
+                  ],
+                ),
                     const SizedBox(width: 8),
           ]),
           ),
         ],
-      ),
-    );
+      );
   }
 
   @override
@@ -153,7 +175,6 @@ class _CommentListState extends State<CommentList> {
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 commentCount(context, widget.collectionName, snapshots.data!.length),
                 ListView.builder(
@@ -165,20 +186,12 @@ class _CommentListState extends State<CommentList> {
                     if (Get.find<UserController>().userModel.blockedUsers!.contains(comment.nickname)) {
                       return Container();
                     } else {
-                      return _buildListItem(widget.collectionName, widget.documentID, comment);
+                      return _buildCommentList(widget.collectionName, widget.documentID, comment);
                     }
                 })
               ]);
           } else {
-            return const SelectionArea(
-                child: Text(
-              '댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!',
-              semanticsLabel: '댓글이 없습니다. 첫 댓글의 주인공이 되어보세요!',
-              style: TextStyle(
-                fontFamily: fonts.font,
-                fontWeight: FontWeight.w600,
-              ),
-            ));
+            return snapshotsHasNoData();
           }
         });
   }
