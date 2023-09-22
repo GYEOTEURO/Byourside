@@ -19,7 +19,7 @@ class CustomTabBar extends StatefulWidget {
 
 class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderStateMixin {
   late TabController tabController = TabController(
-    length: constants.scrapTabbar.length,
+    length: 2,
     vsync: this,
     initialIndex: 0,
     animationDuration: const Duration(milliseconds: 800),
@@ -57,17 +57,15 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
         fontSize: 13,
         fontFamily: fonts.font,
         fontWeight: FontWeight.w700,
-        height: 1.69,
       ),
       unselectedLabelStyle: const TextStyle(
         fontSize: 13,
         fontFamily: fonts.font,
         fontWeight: FontWeight.w700,
-        height: 1.69,
       ),
-      tabs: [
-        for(int i=0; i<constants.scrapTabbar.length; i++)
-        Tab(text: constants.scrapTabbar[i]),
+      tabs: const [
+        Tab(text: constants.communityTitle),
+        Tab(text: constants.autoInformationTitle),
       ],
     );
   }

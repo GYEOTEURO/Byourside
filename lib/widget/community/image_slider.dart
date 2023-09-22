@@ -1,5 +1,4 @@
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';

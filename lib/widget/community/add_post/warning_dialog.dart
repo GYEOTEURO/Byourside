@@ -1,7 +1,7 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/widget/fully_rounded_rectangle_button.dart';
+import 'package:byourside/widget/common/fully_rounded_rectangle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
