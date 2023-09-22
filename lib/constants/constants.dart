@@ -102,8 +102,6 @@ List<Map<String, dynamic>> setting = [
   }
 ];
 
-List<String> scrapTabbar = [communityTitle, autoInformationTitle];
-
 Map<String, String> usingPolicy = {
   'policyName': '서비스 이용약관',
   'policyContent':

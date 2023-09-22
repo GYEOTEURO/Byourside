@@ -62,7 +62,7 @@ final postOption =
     SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션');
 
 final commentOption =
-    SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션', colorFilter: ColorFilter.mode(colors.subColor, BlendMode.srcIn));
+    SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션', colorFilter: const ColorFilter.mode(colors.subColor, BlendMode.srcIn));
 
 final profile =
     SvgPicture.asset('assets/icons/profile.svg', semanticsLabel: '프로필사진');
