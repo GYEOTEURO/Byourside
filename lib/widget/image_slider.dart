@@ -2,6 +2,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 class ImageSlider extends StatefulWidget {
   const ImageSlider({super.key, required this.images, required this.imgInfos});
@@ -22,7 +23,8 @@ class _ImageSliderState extends State<ImageSlider> {
       CarouselSlider(
               items: List.generate(widget.images.length, (index) {
                 return SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.87,
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  //height: MediaQuery.of(context).size.width * 0.9,
                     child: Semantics(
                         label: widget.imgInfos[index],
                         child: Image.network(widget.images[index])));
@@ -41,12 +43,14 @@ class _ImageSliderState extends State<ImageSlider> {
                   })),
                   const SizedBox(height: 12),
       Semantics(
-        label: '현재 보이는 사진 순서 표시',
-        child: CarouselIndicator(
-          count: widget.images.length,
-          index: _current,
-          color: Colors.black26,
-          activeColor: colors.textColor,
+        label: '$_current번째 사진',
+        child: DotsIndicator(
+          dotsCount: widget.images.length,
+          position: _current,
+          decorator: const DotsDecorator(
+            color: colors.bgrColor,
+            activeColor: colors.textColor,
+          ),
         ),
       ),
     ]);
