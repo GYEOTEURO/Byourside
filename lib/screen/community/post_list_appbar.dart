@@ -1,7 +1,7 @@
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/widget/icon_buttons.dart';
-import 'package:byourside/widget/change_disability_type.dart';
-import 'package:byourside/widget/app_bar_select_button.dart';
+import 'package:byourside/widget/common/icon_buttons.dart';
+import 'package:byourside/widget/common/change_disability_type.dart';
+import 'package:byourside/widget/common/app_bar_select_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
