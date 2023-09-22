@@ -3,7 +3,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:flutter/services.dart';
 
-Widget fullyRoundedRectangleButton(String buttonText, Function pressedFunc) {
+ElevatedButton fullyRoundedRectangleButton(String buttonText, Function pressedFunc) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: colors.primaryColor,
