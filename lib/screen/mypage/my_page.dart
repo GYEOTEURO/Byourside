@@ -1,7 +1,7 @@
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/widget/info_container.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
+import 'package:byourside/widget/common/title_only_appbar.dart';
 import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:byourside/widget/stream_community_post.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
+import 'package:byourside/widget/community/stream_community_post.dart';
+import 'package:byourside/widget/common/title_only_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../model/load_data.dart';

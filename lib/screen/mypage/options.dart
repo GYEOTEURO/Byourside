@@ -1,5 +1,5 @@
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
-import 'package:byourside/widget/delete_report_block_alert.dart';
+import 'package:byourside/widget/common/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;
@@ -50,7 +50,7 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
         SizedBox(height: MediaQuery.of(context).size.height / 40),
         Container(
           width: MediaQuery.of(context).size.width * 0.9,
-          height: MediaQuery.of(context).size.height / 12.4 * options.length,
+          height: MediaQuery.of(context).size.height / 14.5 * options.length,
           decoration: ShapeDecoration(
               shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 0.50, color: colors.subColor),
@@ -58,6 +58,7 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
               ),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               for(int i = 0; i < options.length; i++)
               Column(
@@ -78,7 +79,7 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
                   }
                 },
                   style: OutlinedButton.styleFrom(
-                    maximumSize: Size(MediaQuery.of(context).size.width * 0.8, MediaQuery.of(context).size.height / 17),
+                    maximumSize: Size(MediaQuery.of(context).size.width * 0.9, MediaQuery.of(context).size.height / 20),
                     elevation: 0,
                     side: const BorderSide(color: Colors.white),
                   ),
