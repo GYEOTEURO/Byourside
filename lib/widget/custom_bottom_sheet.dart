@@ -14,22 +14,22 @@ Future customBottomSheet(BuildContext context, bool isPostedUser, Function delet
                 height: MediaQuery.of(context).size.height / 4,
                 color: Colors.white,
                 child: isPostedUser ?
-                        bottomSheetButton(context, 4, constants.delete, () {delete();})
+                        bottomSheetButton(context, 1, constants.delete, () {delete();})
                       : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          bottomSheetButton(context, 9, constants.report, (){report();}),
+                          bottomSheetButton(context, 2.5, constants.report, (){report();}),
                           const Divider(thickness: 1, color: colors.subColor),
-                          bottomSheetButton(context, 9, constants.block, () {block();})
+                          bottomSheetButton(context, 2.5, constants.block, () {block();})
                         ],
                         ), 
               );
             });
 }
 
-Widget bottomSheetButton(BuildContext context, int divideHeight, Map<String, String> optionType, Function pressed){
+Widget bottomSheetButton(BuildContext context, double divideHeight, Map<String, String> optionType, Function pressed){
   return Container(
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height / divideHeight,
+    height: MediaQuery.of(context).size.height / 4 / divideHeight,
     child: ElevatedButton(
     onPressed: () { 
       HapticFeedback.lightImpact();
