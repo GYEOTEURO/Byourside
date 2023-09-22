@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
 
-Widget noData(){
+Widget snapshotsHasNoData(){
   return const SelectionArea(
       child: Center(
           child: Text(
