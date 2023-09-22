@@ -3,12 +3,13 @@ import 'package:byourside/model/community_post.dart';
 import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:byourside/widget/icon_buttons.dart';
-import 'package:byourside/widget/customBottomSheet.dart';
+import 'package:byourside/widget/custom_bottom_sheet.dart';
 import 'package:byourside/widget/likes_button.dart';
 import 'package:byourside/widget/scrap_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/icons.dart' as custom_icons;
+import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -58,13 +59,12 @@ class _CommunityPostAppBarState extends State<CommunityPostAppBar> {
     return AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          //automaticallyImplyLeading: true,
           leading: backToPreviousPage(context),
           actions: [
             likesButton(widget.collectionName, isClicked(likesUser), likesUser, widget.post.category, widget.post.id!, user!.uid, updateLikes),
             scrapsButton(widget.collectionName, isClicked(scrapsUser), scrapsUser, widget.post.category, widget.post.id!, user!.uid, updateScraps),
             IconButton(
-              icon: custom_icons.add_ons, 
+              icon: custom_icons.postOption, 
               onPressed: (){
                 HapticFeedback.lightImpact();
                 customBottomSheet(context, widget.post.uid == user!.uid, 

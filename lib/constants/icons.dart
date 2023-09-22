@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 
 // bottomNavigationBar
 final autoInformation =
@@ -57,8 +58,11 @@ final communityPostScrapsFull =
 
 final back = SvgPicture.asset('assets/icons/back.svg', semanticsLabel: '뒤로가기');
 
-final add_ons =
-    SvgPicture.asset('assets/icons/add-ons.svg', semanticsLabel: '메뉴');
+final postOption =
+    SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션');
+
+final commentOption =
+    SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션', colorFilter: ColorFilter.mode(colors.subColor, BlendMode.srcIn));
 
 final profile =
     SvgPicture.asset('assets/icons/profile.svg', semanticsLabel: '프로필사진');
