@@ -2,12 +2,11 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/model/save_data.dart';
 import 'package:byourside/screen/comment/comment_count.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
-import 'package:byourside/widget/custom_bottom_sheet.dart';
-import 'package:byourside/widget/snapshots_has_no_data.dart';
-import 'package:byourside/widget/time_convertor.dart';
+import 'package:byourside/screen/comment/options.dart';
+import 'package:byourside/widget/common/no_data.dart';
+import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +31,6 @@ class CommentList extends StatefulWidget {
 class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  final SaveData saveData = SaveData();
 
   Widget _buildContent(String content){
     String mentionedNickname = content.startsWith('@') ? content.split(' ')[0] : '';
@@ -69,7 +67,8 @@ class _CommentListState extends State<CommentList> {
         shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(93),
         side: const BorderSide(
-          width: 0.50,
+          width: 1,
+          strokeAlign: BorderSide.strokeAlignCenter,
           color: colors.subColor,
         ),
         )),
@@ -111,16 +110,7 @@ class _CommentListState extends State<CommentList> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    IconButton(
-                        icon: custom_icons.commentOption,
-                        onPressed: (){ 
-                          HapticFeedback.lightImpact();
-                          customBottomSheet(context, comment.uid == user!.uid, 
-                            () { deleteComment(context, widget.collectionName, widget.documentID, comment.id!); }, 
-                            () { reportComment(context, widget.collectionName, comment.id!); }, 
-                            () { blockComment(context, user!.uid, comment.nickname); });
-                        }
-                    ),
+                    commentOptions(context, widget.collectionName, widget.documentID, comment),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -135,6 +125,7 @@ class _CommentListState extends State<CommentList> {
                     const Spacer(),
                     Container(
                       padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      height: MediaQuery.of(context).size.height / 33,
                       child: _mentionButton(comment.nickname)
                     )
                   ],
@@ -169,24 +160,8 @@ class _CommentListState extends State<CommentList> {
                 })
               ]);
           } else {
-            return snapshotsHasNoData();
+            return noData();
           }
         });
   }
-
-  deleteComment(BuildContext context, String collectionName, String documentID, String commentID){
-    saveData.deleteComment(collectionName, documentID, commentID);
-    Navigator.pop(context);
-  }
-
-  reportComment(BuildContext context, String collectionName, String id){
-    saveData.report(collectionName.split('_')[0], 'comment', id);
-    Navigator.pop(context);
-  }
-
-  blockComment(BuildContext context, String uid, String blockUid){
-    Navigator.pop(context);
-    Get.find<UserController>().addBlockedUser(blockUid);
-  }
-
 }
