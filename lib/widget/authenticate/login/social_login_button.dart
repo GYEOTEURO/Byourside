@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/fonts.dart' as fonts;
 
 class SocialLoginButton extends StatelessWidget {
   final Color color;
@@ -20,7 +22,7 @@ class SocialLoginButton extends StatelessWidget {
     var deviceHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      width: deviceWidth * 0.85,
+      width: deviceWidth * 0.91,
       height: deviceHeight * 0.06,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(deviceWidth * 0.11),
@@ -55,10 +57,11 @@ class SocialLoginButton extends StatelessWidget {
               Text(
                 text,
                 style: TextStyle(
-                  color: Colors.black,
-                  fontSize: deviceWidth * 0.048,
-                  fontWeight: FontWeight.w400,
-                ),
+                fontFamily: fonts.font,
+                fontSize: deviceWidth * 0.048,
+                color: colors.textColor,
+                fontWeight: FontWeight.w400,
+              ),
               ),
             ],
           ),

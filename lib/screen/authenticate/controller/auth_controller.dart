@@ -32,16 +32,16 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => const SocialLogin());
     } else {
-      print(user);
-      bool isUserSetUp = await checkIfUserSetUp(user.uid);
-      if (isUserSetUp) {
-        Get.put(UserController());
-        await Future.delayed(const Duration(seconds: 2));
+      Get.offAll(() => const SocialLogin());
+      // bool isUserSetUp = await checkIfUserSetUp(user.uid);
+      // if (isUserSetUp) {
+      //   Get.put(UserController());
+      //   await Future.delayed(const Duration(seconds: 2));
 
-        Get.offAll(() => const BottomNavBar());
-      } else {
-        Get.offAll(() => const SetupUser());
-      }
+      //   Get.offAll(() => const BottomNavBar());
+      // } else {
+      //   Get.offAll(() => const SetupUser());
+      // }
     }
   }
 

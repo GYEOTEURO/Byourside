@@ -16,7 +16,6 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'screen/authenticate/controller/user_controller.dart';
 
 Future<bool> getPermission() async {
   // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
@@ -71,13 +70,12 @@ void main() async {
   ).then((value) {
     Get.put(AuthController());
     Get.put(NicknameController());
-    // Get.put(UserController());
   });
 
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -99,8 +97,6 @@ void main() async {
   ));
 }
 
-const primaryColor = Color(0xFF045558);
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -118,7 +114,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    //getDeviceToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
 
@@ -152,10 +147,6 @@ class _MyAppState extends State<MyApp> {
         FirebasePhoneAuthProvider(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: 'NanumGothic',
-            ),
-            title: '곁',
             initialRoute: '/login',
             routes: {
               '/login': (context) => const SocialLogin(),
