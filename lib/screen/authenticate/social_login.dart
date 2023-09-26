@@ -1,15 +1,16 @@
 import 'dart:io';
-import 'package:byourside/screen/authenticate/policy.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; 
+import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
 import 'package:byourside/constants/constants.dart' as constants;
-import 'package:byourside/constants/text.dart' as text;
-import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:byourside/widget/authenticate/login/policy_link.dart';
 import 'package:byourside/widget/authenticate/login/social_login_button.dart';
-import 'package:get/get.dart';
+import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
+
 
 class SocialLogin extends StatelessWidget {
   const SocialLogin({Key? key}) : super(key: key);
@@ -110,7 +111,7 @@ class SocialLogin extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Semantics(
-                    label: text.title,
+                    label: text.loginTitle,
                     child: SizedBox(height: deviceHeight * 0.27),
                   ),
                   buildLogo(),
