@@ -4,6 +4,7 @@ import 'package:byourside/model/community_post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:byourside/constants/database.dart' as database;
 
 class SaveData {
   SaveData({FirebaseFirestore? firestore, FirebaseStorage? storage})
@@ -16,9 +17,9 @@ class SaveData {
   // 커뮤니티 문서 생성
   addCommunityPost(String category, CommunityPostModel post) async {
     firestore
-        .collection('community')
+        .collection(database.communityCollection)
         .doc(category)
-        .collection('community_posts')
+        .collection(database.communityPostCollectionGroup)
         .add(post.convertToDocument());
   }
 
@@ -44,9 +45,9 @@ class SaveData {
   // 문서 삭제
   deleteCommunityPost(String category, String documentID) async {
     await firestore
-        .collection('community')
+        .collection(database.communityCollection)
         .doc(category)
-        .collection('community_posts')
+        .collection(database.communityPostCollectionGroup)
         .doc(documentID)
         .delete();
   }
@@ -57,7 +58,7 @@ class SaveData {
     return firestore
         .collection(collectionName)
         .doc(documentID)
-        .collection('comments')
+        .collection(database.commentCollection)
         .add(comment.convertToDocument());
   }
 
@@ -67,7 +68,7 @@ class SaveData {
     await firestore
         .collection(collectionName)
         .doc(documentID)
-        .collection('comments')
+        .collection(database.commentCollection)
         .doc(commentID)
         .delete();
   }
@@ -124,22 +125,15 @@ class SaveData {
 
   // 차단 목록 추가
   addBlock(String uid, String blockedUser) async {
-    await firestore.collection('userInfo').doc(uid).update({
+    await firestore.collection(database.userCollection).doc(uid).update({
       'blockedUsers': FieldValue.arrayUnion([blockedUser])
     });
   }
 
   // 차단 목록 삭제
   cancelBlock(String uid, String blockedUser) async {
-    await firestore.collection('userInfo').doc(uid).update({
+    await firestore.collection(database.userCollection).doc(uid).update({
       'blockedUsers': FieldValue.arrayRemove([blockedUser])
     });
-  }
-
-  // 개발자에게 문의하기
-  sendMsg2dev(String uid, String messages) async {
-    await firestore
-        .collection('msg2dev')
-        .add({'uid': uid, 'content': messages, 'datetime': Timestamp.now()});
   }
 }

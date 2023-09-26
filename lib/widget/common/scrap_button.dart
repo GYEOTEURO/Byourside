@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 final SaveData saveData = SaveData();
 
-Widget scrapsButton(String collectionName, bool isClicked, List<String> scrapsUser, String category, String documentID, String uid, Function(List<String>) updateScraps){
+IconButton scrapsButton(String collectionName, bool isClicked, List<String> scrapsUser, String category, String documentID, String uid, Function(List<String>) updateScraps){
   return isClicked ? 
     IconButton(
       icon: custom_icons.communityPostScrapsFull, 

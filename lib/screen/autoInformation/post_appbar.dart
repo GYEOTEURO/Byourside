@@ -1,15 +1,8 @@
-import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/autoInformation_post.dart';
-import 'package:byourside/model/save_data.dart';
-import 'package:byourside/screen/bottom_nav_bar.dart';
-import 'package:byourside/widget/icon_buttons.dart';
-import 'package:byourside/widget/customBottomSheet.dart';
-import 'package:byourside/widget/likes_button.dart';
-import 'package:byourside/widget/scrap_button.dart';
+import 'package:byourside/widget/common/icon_buttons.dart';
+import 'package:byourside/widget/common/scrap_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/constants/icons.dart' as custom_icons;
-import 'package:get/get.dart';
 
 class AutoInformationPostAppBar extends StatefulWidget
     implements PreferredSizeWidget {
@@ -29,7 +22,6 @@ class AutoInformationPostAppBar extends StatefulWidget
 class _AutoInformationPostAppBarState extends State<AutoInformationPostAppBar> {
   final User? user = FirebaseAuth.instance.currentUser;
   List<String> scrapsUser = [];
-  final SaveData saveData = SaveData();
 
   @override
   void initState() {
@@ -43,6 +35,13 @@ class _AutoInformationPostAppBarState extends State<AutoInformationPostAppBar> {
     });
   }
 
+  bool isClicked(List<String> scrapsUser) {
+    if (scrapsUser.contains(user!.uid)) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -54,12 +53,5 @@ class _AutoInformationPostAppBarState extends State<AutoInformationPostAppBar> {
             widget.post.category, widget.post.id!, user!.uid, updateScraps),
       ],
     );
-  }
-
-  bool isClicked(List<String> likesOrScrapsUser) {
-    if (likesOrScrapsUser.contains(user!.uid)) {
-      return true;
-    }
-    return false;
   }
 }

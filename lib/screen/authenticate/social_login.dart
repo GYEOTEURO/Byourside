@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 진동을 사용하기 위한 패키지 추가
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/widget/authenticate/login/policy_link.dart';
 import 'package:byourside/widget/authenticate/login/social_login_button.dart';
@@ -93,13 +93,13 @@ class SocialLogin extends StatelessWidget {
                   PolicyLink(
                     text: '이용약관',
                     onPressed: () =>
-                        _navigateToPage(context, Policy(policy: constants.usingPolicy)),
+                        _navigateToPage(context, Policy(policy: texts.usingPolicy)),
                     icon: auth_icons.tosLine,
                   ),
                   PolicyLink(
                     text: '개인정보 처리방침',
                     onPressed: () =>
-                        _navigateToPage(context, Policy(policy: constants.personalData)),
+                        _navigateToPage(context, Policy(policy: texts.personalData)),
                     icon: auth_icons.policyLine,
                   ),
                   _buildIconRow(),

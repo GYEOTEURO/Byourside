@@ -3,8 +3,8 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/community_post.dart';
-import 'package:byourside/widget/image_slider.dart';
-import 'package:byourside/widget/time_convertor.dart';
+import 'package:byourside/widget/community/image_slider.dart';
+import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 
 class AutoInfoPostContent extends StatefulWidget {

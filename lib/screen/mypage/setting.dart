@@ -1,6 +1,6 @@
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
-import 'package:byourside/widget/delete_report_block_alert.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
+import 'package:byourside/widget/common/delete_report_block_alert.dart';
+import 'package:byourside/widget/common/title_only_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -88,8 +88,7 @@ class _SettingState extends State<Setting> {
                         color: colors.textColor,
                         fontSize: 15,
                         fontFamily: fonts.font,
-                        fontWeight: FontWeight.w400,
-                        height: 1.20,
+                        fontWeight: FontWeight.w400
                       ),
                     )
                 )),

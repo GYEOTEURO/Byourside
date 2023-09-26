@@ -21,15 +21,7 @@ class CommunityPost extends StatefulWidget {
 
 class _CommunityPostState extends State<CommunityPost> {
   final scrollController = Get.put(ScrollDownForComment());
-
-  int likesCount = 0;
-
-  void updateLikesCount(int newLikesCount) {
-    setState(() {
-      likesCount = newLikesCount;
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,11 +37,11 @@ class _CommunityPostState extends State<CommunityPost> {
                     Container(
                         color: Colors.white,
                         margin: const EdgeInsets.all(7),
-                        padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
+                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
                         child: CommunityPostContent(post : widget.post)),
                     Container(
                         margin: const EdgeInsets.all(7),
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
+                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
                         child: CommentList(
                             collectionName: widget.collectionName,
                             documentID: widget.post.id!)),

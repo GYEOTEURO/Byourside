@@ -9,7 +9,7 @@ import 'package:byourside/widget/location/location_section.dart';
 import 'package:byourside/widget/authenticate/setup/nickname_section.dart';
 import 'package:byourside/widget/authenticate/setup/purpose_select.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
+import 'package:byourside/widget/common/title_only_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -5,7 +5,7 @@ import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/community_post_list_tile.dart';
 import 'package:byourside/screen/community/post_list_appbar.dart';
-import 'package:byourside/widget/category_buttons.dart';
+import 'package:byourside/widget/common/category_buttons.dart';
 import 'package:byourside/screen/community/add_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,16 +23,16 @@ class CommunityPostList extends StatefulWidget {
 class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  String selectedChipValue = constants.communityCategories[0];
+  String selectedCategoryValue = constants.communityCategories[0];
   String? selectedDisabilityTypeValue =
       Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
               '해당없음'
           ? '발달'
           : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
 
-  void _handleChipSelected(String value) {
+  void _handleCategorySelected(String value) {
     setState(() {
-      selectedChipValue = value;
+      selectedCategoryValue = value;
     });
   }
 
@@ -40,6 +40,49 @@ class _CommunityPostListState extends State<CommunityPostList> {
     setState(() {
       selectedDisabilityTypeValue = value;
     });
+  }
+
+  Widget _streamCommunityPosts(){
+    return Expanded(
+      child: StreamBuilder<List<CommunityPostModel>>(
+        stream: loadData.readCommunityPosts(category: selectedCategoryValue, disabilityType: selectedDisabilityTypeValue),
+        builder: (context, snapshots) {
+          if (snapshots.hasData) {
+            return ListView.builder(
+                itemCount: snapshots.data!.length,
+                shrinkWrap: true,
+                itemBuilder: (_, index) {
+                  CommunityPostModel post = snapshots.data![index];
+                  if (Get.find<UserController>().userModel.blockedUsers!.contains(post.nickname)) {
+                    return Container();
+                  } else {
+                    return communityPostListTile(context, post);
+                  }
+                });
+        } else {
+          return SelectionArea(
+            child: Center(
+              child: custom_icons.loading
+            )
+          );
+        }
+      })
+    );
+  }
+
+
+  FloatingActionButton _goToCommunityAddPost(){
+    return FloatingActionButton(
+        onPressed: () {
+          HapticFeedback.lightImpact();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CommunityAddPost()));
+        },
+        backgroundColor: colors.primaryColor,
+        child: custom_icons.addPost,
+    );
   }
 
   @override
@@ -52,43 +95,9 @@ class _CommunityPostListState extends State<CommunityPostList> {
               scrollDirection: Axis.horizontal,
               child: CategoryButtons(
                   category: constants.communityCategories,
-                  onChipSelected: _handleChipSelected)),
-          Expanded(
-            child: StreamBuilder<List<CommunityPostModel>>(
-              stream: loadData.readCommunityPosts(category: selectedChipValue, disabilityType: selectedDisabilityTypeValue),
-              builder: (context, snapshots) {
-                if (snapshots.hasData) {
-                  return ListView.builder(
-                      itemCount: snapshots.data!.length,
-                      shrinkWrap: true,
-                      itemBuilder: (_, index) {
-                        CommunityPostModel post = snapshots.data![index];
-                        if (Get.find<UserController>().userModel.blockedUsers!.contains(post.nickname)) {
-                          return Container();
-                        } else {
-                          return communityPostListTile(context, post);
-                        }
-                      });
-              } else {
-                return SelectionArea(
-                  child: Center(
-                    child: custom_icons.loading
-                  )
-                );
-              }
-            })
-          )
+                  onCategorySelected: _handleCategorySelected)),
+          _streamCommunityPosts()
           ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          HapticFeedback.lightImpact();
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const CommunityAddPost()));
-        },
-        backgroundColor: colors.primaryColor,
-        child: custom_icons.addPost,
-    ));
+      floatingActionButton: _goToCommunityAddPost());
   }
 }

@@ -1,5 +1,5 @@
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
-import 'package:byourside/widget/delete_report_block_alert.dart';
+import 'package:byourside/widget/common/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -4,7 +4,7 @@ import 'package:byourside/screen/common/my_scrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-Widget backToPreviousPage(BuildContext context){
+IconButton backToPreviousPage(BuildContext context){
   return IconButton(
     icon: custom_icons.back, 
     onPressed: (){
@@ -14,7 +14,7 @@ Widget backToPreviousPage(BuildContext context){
   );
 }
 
-Widget goToSearchPage(BuildContext context) {
+IconButton goToSearchPage(BuildContext context) {
   return IconButton(
     icon: custom_icons.search, 
     onPressed: (){
@@ -26,7 +26,7 @@ Widget goToSearchPage(BuildContext context) {
     });
 }
 
-Widget goToScrapPage(BuildContext context){
+IconButton goToScrapPage(BuildContext context){
   return IconButton(
     icon: custom_icons.gotoScrapPage, 
     onPressed: (){

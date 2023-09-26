@@ -1,6 +1,6 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatefulWidget {
@@ -19,7 +19,7 @@ class CustomTabBar extends StatefulWidget {
 
 class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderStateMixin {
   late TabController tabController = TabController(
-    length: constants.scrapTabbar.length,
+    length: 2,
     vsync: this,
     initialIndex: 0,
     animationDuration: const Duration(milliseconds: 800),
@@ -57,17 +57,15 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
         fontSize: 13,
         fontFamily: fonts.font,
         fontWeight: FontWeight.w700,
-        height: 1.69,
       ),
       unselectedLabelStyle: const TextStyle(
         fontSize: 13,
         fontFamily: fonts.font,
         fontWeight: FontWeight.w700,
-        height: 1.69,
       ),
-      tabs: [
-        for(int i=0; i<constants.scrapTabbar.length; i++)
-        Tab(text: constants.scrapTabbar[i]),
+      tabs: const [
+        Tab(text: texts.communityTitle),
+        Tab(text: texts.autoInformationTitle),
       ],
     );
   }
