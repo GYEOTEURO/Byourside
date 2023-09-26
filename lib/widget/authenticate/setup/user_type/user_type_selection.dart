@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_button.dart';
-import 'package:flutter/material.dart';
 
 
 class UserTypeSelection extends StatefulWidget {
@@ -51,14 +52,14 @@ class UserTypeSelectionState extends State<UserTypeSelection> {
         crossAxisAlignment: CrossAxisAlignment.start, 
         children: [
           ExplainText(
-            text : '어떤 유형의 사용자인지 알려주세요',
+            text : text.askUserType,
             width : getRelativeWidth(0.04),
           ),
         SizedBox(height: getRelativeHeight(0.02)),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                for (String userType in ['장애 아동 보호자', '장애인', '종사자'])
+                for (String userType in [text.protector, text.self, text.worker])
                   UserTypeButton(
                     userType: userType,
                     isSelected: widget.selectedType == userType,
@@ -71,9 +72,9 @@ class UserTypeSelectionState extends State<UserTypeSelection> {
           ),
           SizedBox(height: getRelativeHeight(0.02)),
           UserTypeButton(
-            userType: '해당 없음',
-            isSelected: widget.selectedType == '해당 없음',
-            onPressed: () => widget.onTypeSelected('해당 없음'),
+            userType: text.noneType,
+            isSelected: widget.selectedType == text.noneType,
+            onPressed: () => widget.onTypeSelected(text.noneType),
             width: getRelativeWidth(0.9),
             height: getRelativeHeight(0.08),
             font: getRelativeWidth(0.032)

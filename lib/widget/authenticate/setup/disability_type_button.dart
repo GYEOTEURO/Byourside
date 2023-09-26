@@ -1,6 +1,8 @@
-import 'package:byourside/widget/authenticate/setup/explain_text.dart';
-import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
+import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
+
 
 class DisabilityType extends StatefulWidget {
   final String initialType;
@@ -13,10 +15,10 @@ class DisabilityType extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DisabilityTypeState createState() => _DisabilityTypeState();
+  DisabilityTypeState createState() => DisabilityTypeState();
 }
 
-class _DisabilityTypeState extends State<DisabilityType> {
+class DisabilityTypeState extends State<DisabilityType> {
   late String _selectedType;
   double _deviceWidth = 0;
   double _deviceHeight = 0;
@@ -86,16 +88,16 @@ class _DisabilityTypeState extends State<DisabilityType> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExplainText(
-            text: '장애 유형을 선택해 주세요',
+            text: text.askDisabilityType,
             width: getRelativeWidth(0.04),
           ),
           SizedBox(height: getRelativeHeight(0.02)), 
           Row(
             mainAxisAlignment: MainAxisAlignment.start, 
             children: [
-              buildDisabilityTypeChip('발달 장애', getRelativeWidth(1), getRelativeHeight(1)),
-              buildDisabilityTypeChip('뇌병변 장애', getRelativeWidth(1), getRelativeHeight(1)),
-              buildDisabilityTypeChip('해당없음', getRelativeWidth(1), getRelativeHeight(1)),
+              buildDisabilityTypeChip(text.developmentalDisability, getRelativeWidth(1), getRelativeHeight(1)),
+              buildDisabilityTypeChip(text.brainLesionDisorder, getRelativeWidth(1), getRelativeHeight(1)),
+              buildDisabilityTypeChip(text.noneTypeDisability, getRelativeWidth(1), getRelativeHeight(1)),
             ],
           ),
         ],

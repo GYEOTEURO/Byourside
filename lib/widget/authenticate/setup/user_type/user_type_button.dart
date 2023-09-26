@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
 
@@ -44,22 +45,22 @@ Widget build(BuildContext context) {
         side: MaterialStateProperty.resolveWith<BorderSide?>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed) || isSelected) {
-              return const BorderSide(color: colors.midPrimaryColor,); // Change border color to #FFC700
+              return const BorderSide(color: colors.midPrimaryColor,); 
             }
-            return const BorderSide(color: colors.bgrColor,); // Default border color
+            return const BorderSide(color: colors.bgrColor,); 
           },
         ),
       ),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center, // Center vertically
+          mainAxisAlignment: MainAxisAlignment.center, 
           children: [
             auth_icons.iconMap[userType] ?? const SizedBox(),
-            if (userType != '해당 없음') // Check if userType is not '해당 없음'
+            if (userType != text.noneType) 
               SizedBox(height: height * 0.06),
             Text(
-              userType == '해당 없음' ? '해당 사항이 없어요' : userType,
+              userType == text.noneType ? text.haveNoneType : userType,
               style: TextStyle(
                 fontSize: font,
                 fontWeight: FontWeight.w400,

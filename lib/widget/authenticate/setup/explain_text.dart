@@ -15,7 +15,7 @@ class ExplainText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: width, // You may need to pass deviceWidth as a parameter or use another appropriate value.
+        fontSize: width, 
         fontWeight: FontWeight.w700,
       ),
       textAlign: TextAlign.left,
