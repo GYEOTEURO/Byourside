@@ -1,6 +1,6 @@
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatefulWidget {
@@ -64,8 +64,8 @@ class _CustomTabBarState extends State<CustomTabBar> with SingleTickerProviderSt
         fontWeight: FontWeight.w700,
       ),
       tabs: const [
-        Tab(text: constants.communityTitle),
-        Tab(text: constants.autoInformationTitle),
+        Tab(text: texts.communityTitle),
+        Tab(text: texts.autoInformationTitle),
       ],
     );
   }

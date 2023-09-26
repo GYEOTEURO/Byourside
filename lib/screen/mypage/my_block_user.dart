@@ -1,6 +1,6 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/widget/common/delete_report_block_alert.dart';
 import 'package:byourside/widget/common/no_data.dart';
@@ -26,9 +26,9 @@ class _MyBlockState extends State<MyBlock> {
                   context: context,
                   builder: (context) {
                     return DeleteReportBlockAlert(
-                      message: '\'$nickname\'${constants.cancelBlock['message']}', 
-                      subMessage: '${constants.cancelBlock['subMessage']}', 
-                      buttonText: '${constants.cancelBlock['buttonText']}', 
+                      message: '\'$nickname\'${texts.cancelBlock['message']}', 
+                      subMessage: '${texts.cancelBlock['subMessage']}', 
+                      buttonText: '${texts.cancelBlock['buttonText']}', 
                       onPressed: () { 
                         controller.removeBlockedUser(nickname);
                         Navigator.pop(context);

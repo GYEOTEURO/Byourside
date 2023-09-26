@@ -6,7 +6,7 @@ import 'package:byourside/widget/location/location_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -98,8 +98,8 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
               child: Container(
                   padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                   child: const Text(
-                    constants.autoInformationTitle,
-                    semanticsLabel: constants.communityTitle,
+                    texts.autoInformationTitle,
+                    semanticsLabel: texts.autoInformationTitle,
                     style: TextStyle(
                         color: colors.textColor,
                         fontFamily: fonts.font,

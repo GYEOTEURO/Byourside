@@ -1,6 +1,6 @@
 import 'package:byourside/widget/common/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:flutter/services.dart';
@@ -14,13 +14,13 @@ Future customBottomSheet(BuildContext context, bool isPostedUser, Function delet
                 height: MediaQuery.of(context).size.height / 4,
                 color: Colors.white,
                 child: isPostedUser ?
-                        bottomSheetButton(context, 1, constants.delete, () {delete();})
+                        bottomSheetButton(context, 1, texts.delete, () {delete();})
                       : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          bottomSheetButton(context, 2.5, constants.report, (){report();}),
+                          bottomSheetButton(context, 2.5, texts.report, (){report();}),
                           const Divider(thickness: 1, color: colors.subColor),
-                          bottomSheetButton(context, 2.5, constants.block, () {block();})
+                          bottomSheetButton(context, 2.5, texts.block, () {block();})
                         ],
                         ), 
               );
