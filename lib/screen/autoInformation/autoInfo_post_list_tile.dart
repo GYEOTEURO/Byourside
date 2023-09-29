@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/autoInformation/post.dart';
-import 'package:byourside/widget/time_convertor.dart';
+import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/colors.dart' as colors;

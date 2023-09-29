@@ -1,4 +1,4 @@
-import 'package:byourside/widget/icon_buttons.dart';
+import 'package:byourside/widget/common/icon_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
@@ -6,7 +6,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 Widget commentCount(BuildContext context, String collectionName, int countComments){
   return collectionName.contains('community') == true ?
       Container(
-        padding: const EdgeInsets.fromLTRB(5, 0, 0, 15),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
         alignment: Alignment.bottomLeft, 
         child: Text(
             '댓글 $countComments',

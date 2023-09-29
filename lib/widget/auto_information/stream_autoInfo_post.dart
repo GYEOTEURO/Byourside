@@ -1,6 +1,6 @@
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/autoInformation/autoInfo_post_list_tile.dart';
-import 'package:byourside/widget/no_data.dart';
+import 'package:byourside/widget/common/no_data.dart';
 import 'package:flutter/material.dart';
 
 Widget horizontalScrollStreamAutoInfoPost(Function loadData) {

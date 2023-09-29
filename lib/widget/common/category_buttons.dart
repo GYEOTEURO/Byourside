@@ -6,11 +6,11 @@ class CategoryButtons extends StatefulWidget {
   const CategoryButtons({
     super.key,
     required this.category, 
-    required this.onChipSelected
+    required this.onCategorySelected
   });
 
   final List<String> category;
-  final ValueChanged<String> onChipSelected;  
+  final ValueChanged<String> onCategorySelected;  
   
   @override
   State<CategoryButtons> createState() => _CategoryButtonsState();
@@ -18,12 +18,12 @@ class CategoryButtons extends StatefulWidget {
 
 class _CategoryButtonsState extends State<CategoryButtons> {
 
-  String selectedChip = '';
+  String selectedCategory = '';
 
   @override
   void initState() {
     super.initState();
-    selectedChip = widget.category[0];
+    selectedCategory = widget.category[0];
   }
   
   @override
@@ -46,12 +46,12 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                         fontFamily: fonts.font
                   )
                 ),
-                selected: selectedChip == widget.category[i],
+                selected: selectedCategory == widget.category[i],
                 onSelected: (bool selected) {
                   setState(() {
                     if (selected) {
-                      selectedChip = widget.category[i];
-                      widget.onChipSelected(selectedChip);
+                      selectedCategory = widget.category[i];
+                      widget.onCategorySelected(selectedCategory);
                     }
                   });
                 },
