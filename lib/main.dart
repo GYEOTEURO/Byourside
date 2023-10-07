@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,7 +17,6 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'screen/authenticate/controller/user_controller.dart';
 
 Future<bool> getPermission() async {
   // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
@@ -71,7 +71,6 @@ void main() async {
   ).then((value) {
     Get.put(AuthController());
     Get.put(NicknameController());
-    // Get.put(UserController());
   });
 
   FlutterError.onError = (errorDetails) {
@@ -150,20 +149,20 @@ class _MyAppState extends State<MyApp> {
       children: <Widget>[
         Text('메시지 내용: $messageString'),
         FirebasePhoneAuthProvider(
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: 'NanumGothic',
-            ),
-            title: '곁',
-            initialRoute: '/login',
-            routes: {
-              '/login': (context) => const SocialLogin(),
-              '/bottom_nav': (context) => const BottomNavBar(),
-              '/user': (context) => const SetupUser(),
-            },
+          child: ScreenUtilInit(
+            designSize: const Size(360, 718),
+            minTextAdapt: true,
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Beeside',
+              initialRoute: '/login',
+              routes: {
+                '/login': (context) => const SocialLogin(),
+                '/bottom_nav': (context) => const BottomNavBar(),
+                '/user': (context) => const SetupUser(),
+              },
+            ))
           ),
-        ),
       ],
     );
   }

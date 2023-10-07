@@ -81,6 +81,7 @@ dependencies:
   flutter_svg: ^2.0.7
   dots_indicator:
   easy_rich_text:
+  flutter_screenutil:
 
 dev_dependencies:
   flutter_test:
