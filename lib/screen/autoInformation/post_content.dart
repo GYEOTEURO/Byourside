@@ -89,7 +89,7 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
           const Divider(thickness: 0.5, color: colors.subColor),
           if (post.content != '')
             Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                padding: const EdgeInsets.fromLTRB(20, 30, 20, 40),
                 decoration: BoxDecoration(
                     color: colors.autoInfoContentBgrColor,
                     borderRadius: BorderRadius.circular(9)),
