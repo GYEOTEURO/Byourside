@@ -1,3 +1,4 @@
+import 'package:byourside/widget/authenticate/setup/institution_name_field.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,7 @@ class SetupUser extends StatefulWidget {
 class _SetupUserState extends State<SetupUser> {
   final TextEditingController _birthYear = TextEditingController();
   final NicknameController _nicknameController = Get.find<NicknameController>();
+  final TextEditingController _institutionNameController = TextEditingController();
   Map<String, String>? location;
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
@@ -87,11 +89,14 @@ class _SetupUserState extends State<SetupUser> {
       _nicknameController,
       _selectedUserType,
       _selectedDisabilityType,
+      _institutionNameController.text,
       _birthYear.text,
       location,
       _selectedPurpose,
     );
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +121,13 @@ class _SetupUserState extends State<SetupUser> {
                       initialType: _selectedDisabilityType,
                       onChanged: _handleDisabilityTypeSelected,
                     ),
+                    if (_selectedUserType == text.worker)
+                      buildInstitutionNameTextField(
+                        controller: _institutionNameController,
+                        onTap: () {
+                          HapticFeedback.lightImpact();
+                        },
+                      ),
                     AgeSection(
                       selectedType: _selectedUserType,
                       controller: _birthYear,

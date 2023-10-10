@@ -41,3 +41,6 @@ const String askPurpose = '어플 사용 목적을 알려주세요';
 const String getInformation = '정보 습득';
 const String promotion = '활동 홍보';
 const String communication = '소통';
+
+const String institutionNameLabel = '기관 동아리 명칭을 입력해주세요';
+const String institutionNameHint = '기관 동아리 명칭을 입력해주세요';
