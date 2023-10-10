@@ -27,6 +27,10 @@ class NicknameSectionState extends State<NicknameSection> {
         _deviceWidth = MediaQuery.of(context).size.width;
         _deviceHeight = MediaQuery.of(context).size.height;
       });
+
+      _nicknameController.controller.addListener(() {
+        _nicknameController.isNicknameChecked.value = false;
+      });
     });
   }
 
@@ -59,7 +63,7 @@ class NicknameSectionState extends State<NicknameSection> {
               buildCheckNicknameButton(context),
             ],
           ),
-          SizedBox(height: getRelativeHeight(0.01)),
+          SizedBox(height: getRelativeHeight(0.01)), 
           buildNicknameCheckResultText(),
         ],
       ),
@@ -107,8 +111,6 @@ class NicknameSectionState extends State<NicknameSection> {
     await _nicknameController.checkNicknameExist(context);
     _nicknameController.isNicknameChecked.value = true;
 
-    _nicknameController.controller.addListener(() {
-    });
   }
 
 
