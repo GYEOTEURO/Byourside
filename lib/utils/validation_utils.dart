@@ -1,8 +1,10 @@
-import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
-import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/widget/delete_report_block_alert.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 
+// TODO: constant로 빼야함
 class ValidationUtils {
   static void _showErrorDialog(BuildContext context, String message) {
     showDialog(
@@ -26,6 +28,7 @@ class ValidationUtils {
     NicknameController nicknameController,
     String selectedUserType,
     String selectedDisabilityType,
+    String institutionName,
     String birthYear,
     Map<String, String>? location,
     String selectedPurpose,
@@ -48,6 +51,10 @@ class ValidationUtils {
     }
     if (selectedDisabilityType.isEmpty) {
       _showErrorDialog(context, '장애 유형을 선택하세요.');
+      return false;
+    }
+    if (selectedUserType == text.worker && institutionName.isEmpty) {
+      _showErrorDialog(context, '기관 동아리 명칭을 입력하세요.');
       return false;
     }
     if (birthYear.isEmpty || birthYear.length != 4 || int.tryParse(birthYear) == null) {
