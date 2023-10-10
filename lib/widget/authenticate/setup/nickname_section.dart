@@ -150,18 +150,19 @@ class NicknameSectionState extends State<NicknameSection> {
       var nickname = _nicknameController.controller.text;
 
       String message = text.none;
-
+      print(isNicknameChecked);
       if (!isNicknameChecked) {
         message = text.none; 
       } 
-      if (nickname.isEmpty) {
+      else if (nickname.isEmpty) {
         message = text.askNickName;
       } else {
+        print(nickNameExist);
         message = nickNameExist
             ? text.usedNickName
             : text.unusedNickName;
       }
-
+      print(message);
       return Text(
         message,
         style: TextStyle(
