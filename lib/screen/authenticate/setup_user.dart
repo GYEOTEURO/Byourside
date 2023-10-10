@@ -72,7 +72,8 @@ class _SetupUserState extends State<SetupUser> {
     if (inputsValid) {
       SaveUserData.saveUserInfo(
         birthYear: age,
-        selectedType: _selectedDisabilityType,
+        disabilityType: _selectedDisabilityType,
+        institutionName: _institutionNameController.text,
         location: location,
         nickname: _nicknameController.controller.text,
         registrationPurpose: _selectedPurpose,
