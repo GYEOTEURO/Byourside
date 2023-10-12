@@ -137,7 +137,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    //getDeviceToken();
+    getDeviceToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
 
