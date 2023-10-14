@@ -72,7 +72,6 @@ class NicknameSectionState extends State<NicknameSection> {
     _nicknameController.controller.addListener(() {
       var newNickname = _nicknameController.controller.text;
       var currentNickNameExist = _nicknameController.nickNameExist.value;
-      print(currentNickNameExist);
       if (newNickname.isNotEmpty && !currentNickNameExist) {
         _nicknameController.nickNameExist.value = true;
         _nicknameController.isNicknameChanged.value = true;
@@ -160,9 +159,6 @@ class NicknameSectionState extends State<NicknameSection> {
       var isNicknameChanged = _nicknameController.isNicknameChanged.value;
 
       String message = text.none;
-      print('---------------------------------');
-      print('nickname checked : ');
-      print(isNicknameChecked);
       if (!isNicknameChecked) {
         message = text.none; 
       } 
@@ -173,13 +169,11 @@ class NicknameSectionState extends State<NicknameSection> {
         message = text.askVerify;
       }
       else {
-        print(nickNameExist);
         message = nickNameExist
             ? text.usedNickName
             : text.unusedNickName;
       }
-      print('message : ');
-      print(message);
+      
       return Text(
         message,
         style: TextStyle(
