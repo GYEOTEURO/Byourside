@@ -1,4 +1,4 @@
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
@@ -23,7 +23,7 @@ class CommunityPostList extends StatefulWidget {
 class _CommunityPostListState extends State<CommunityPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  String selectedCategoryValue = constants.communityCategories[0];
+  String selectedCategoryValue = texts.communityCategories[0];
   String? selectedDisabilityTypeValue =
       Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
               '해당없음'
@@ -94,7 +94,7 @@ class _CommunityPostListState extends State<CommunityPostList> {
           SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: CategoryButtons(
-                  category: constants.communityCategories,
+                  category: texts.communityCategories,
                   onCategorySelected: _handleCategorySelected)),
           _streamCommunityPosts()
           ]),

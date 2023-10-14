@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -117,7 +116,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    //getDeviceToken();
+    getDeviceToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
 
@@ -149,10 +148,7 @@ class _MyAppState extends State<MyApp> {
       children: <Widget>[
         Text('메시지 내용: $messageString'),
         FirebasePhoneAuthProvider(
-          child: ScreenUtilInit(
-            designSize: const Size(360, 718),
-            minTextAdapt: true,
-            child: MaterialApp(
+          child: MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Beeside',
               initialRoute: '/login',
@@ -161,7 +157,7 @@ class _MyAppState extends State<MyApp> {
                 '/bottom_nav': (context) => const BottomNavBar(),
                 '/user': (context) => const SetupUser(),
               },
-            ))
+            )
           ),
       ],
     );

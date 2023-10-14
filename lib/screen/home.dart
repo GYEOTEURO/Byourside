@@ -9,7 +9,6 @@ import 'package:byourside/widget/common/icon_buttons.dart';
 import 'package:byourside/widget/community/stream_community_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 class Home extends StatefulWidget {
@@ -29,11 +28,10 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-              height: 100.h,
+              height: MediaQuery.of(context).size.height * 0.3,
               color: colors.homeAppBarColor,
               child: Column(
                 children: [
-                  //SizedBox(height: MediaQuery.of(context).size.height / 20.5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
