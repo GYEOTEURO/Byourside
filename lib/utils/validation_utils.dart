@@ -32,6 +32,9 @@ class ValidationUtils {
     Map<String, String>? location,
     String selectedPurpose,
   ) {
+    int currentYear = DateTime.now().year;
+    int? birthYearValue = int.tryParse(birthYear);
+
     if (nicknameController.controller.text.isEmpty) {
       _showErrorDialog(context, text.askNickName);
       return false;
@@ -55,8 +58,12 @@ class ValidationUtils {
       _showErrorDialog(context, text.enterInstitutionName);
       return false;
     }
-    if (birthYear.isEmpty || birthYear.length != 4 || int.tryParse(birthYear) == null) {
+    if (birthYear.isEmpty) {
       _showErrorDialog(context, text.enterAge);
+      return false;
+    } else if (birthYear.length != 4 || int.tryParse(birthYear) == null || birthYearValue! > currentYear || birthYearValue < currentYear - 200) {
+      print( int.tryParse(birthYear) == null );
+      _showErrorDialog(context, text.enterValidateAge);
       return false;
     }
     if (location == null || location.isEmpty) {
