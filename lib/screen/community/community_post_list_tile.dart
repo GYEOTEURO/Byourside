@@ -13,7 +13,7 @@ Text _buildCategory(String category){
     semanticsLabel: category,
     style: const TextStyle(
       color: colors.primaryColor,
-      fontSize: fonts.captionTitlePt,
+      fontSize: 13,
       fontFamily: fonts.font,
       fontWeight: FontWeight.w800
     ),

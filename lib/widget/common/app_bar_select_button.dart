@@ -28,7 +28,7 @@ return Container(
                       semanticsLabel: selectedValue,
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: fonts.captionPt,
+                        fontSize: 13,
                         fontFamily: fonts.font,
                         fontWeight: FontWeight.w400,
                       ),

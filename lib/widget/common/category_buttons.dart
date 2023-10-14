@@ -42,7 +42,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                   semanticsLabel: widget.category[i],
                   style: const TextStyle(
                         color: colors.textColor,
-                        fontSize: fonts.bodyPt,
+                        fontSize: 18,
                         fontFamily: fonts.font
                   )
                 ),
