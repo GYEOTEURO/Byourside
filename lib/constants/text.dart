@@ -17,7 +17,7 @@ const String protector = '장애 아동 보호자';
 const String self = '장애인';
 const String worker = '종사자';
 
-const String askUserAge = '몇 년생인지 입력하세요.';
+const String askUserAge = '몇 년생인지 입력해 주세요';
 const String exampleUserAge = '(예: 1990)';
 const String hintUserAge = '1990';
 const String ageUnit = '년생';
@@ -43,8 +43,8 @@ const String getInformation = '정보 습득';
 const String promotion = '활동 홍보';
 const String communication = '소통';
 
-const String institutionNameLabel = '기관 동아리 명칭을 입력해주세요';
-const String institutionNameHint = '기관 동아리 명칭을 입력해주세요';
+const String institutionNameLabel = '기관 동아리 명칭을 입력해 주세요';
+const String institutionNameHint = '기관명을 입력해 주세요';
 
 
 const String selectUserType = '사용자 유형을 선택하세요';

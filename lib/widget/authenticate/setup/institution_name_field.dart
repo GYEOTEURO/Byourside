@@ -1,3 +1,4 @@
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/fonts.dart' as fonts;
@@ -48,19 +49,11 @@ class InstitutionNameTextFieldState extends State<InstitutionNameTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            text.institutionNameLabel,
-            style: TextStyle(
-              color: colors.textColor,
-              fontSize: getRelativeWidth(0.036),
-              fontFamily: fonts.font,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          ExplainText(text: text.institutionNameLabel, width: getRelativeWidth(0.04)),
           SizedBox(height: getRelativeHeight(0.02)),
           SizedBox(
-            width: getRelativeWidth(0.46),
-            height: getRelativeHeight(0.06),
+            width: getRelativeWidth(0.9),
+            height: getRelativeHeight(0.066),
             child: TextFormField(
               controller: widget.controller,
               maxLines: 1,
@@ -79,7 +72,7 @@ class InstitutionNameTextFieldState extends State<InstitutionNameTextField> {
                   borderSide: BorderSide.none,
                 ),
               ),
-              autofocus: false,
+              autofocus: true,
             ),
           ),
         ],

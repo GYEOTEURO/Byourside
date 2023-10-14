@@ -78,7 +78,7 @@ class AgeSectionState extends State<AgeSection> {
       fillColor: colors.bgrColor,
       hintStyle: TextStyle(
         color: colors.textColor,
-        fontSize: getRelativeWidth(0.04),
+        fontSize: getRelativeWidth(0.038),
         fontFamily: fonts.font,
         fontWeight: FontWeight.w500,
       ),
@@ -128,7 +128,7 @@ class AgeSectionState extends State<AgeSection> {
             text: widget.selectedType == text.protector
                 ? text.requestChildAge
                 : text.requestAge,
-            width: getRelativeWidth(0.04),
+            width: getRelativeWidth(0.039),
           ),
           SizedBox(height: getRelativeHeight(0.02)),
           Align(
