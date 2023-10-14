@@ -23,6 +23,8 @@ const String hintUserAge = '1990';
 const String ageUnit = '년생';
 const String requestChildAge = '아동의 나이를 입력해 주세요';
 const String requestAge = '나이를 입력해 주세요';
+const String enterValidateAge = '유효한 출생 연도를 입력하세요';
+
 
 const String askDisabilityType = '장애 유형을 선택해 주세요';
 const String developmentalDisability = '발달 장애';
@@ -47,10 +49,6 @@ const String institutionNameLabel = '기관 동아리 명칭을 입력해 주세
 const String institutionNameHint = '기관명을 입력해 주세요';
 
 
-const String selectUserType = '사용자 유형을 선택하세요';
-const String selectDisabilityType = '장애 유형을 선택하세요';
-const String enterInstitutionName = '기관 동아리 명칭을 입력하세요';
-const String enterAge = '출생 연도를 입력하세요';
-const String enterValidateAge = '유효한 출생 연도를 입력하세요';
-const String selectLocation = '위치를 선택하세요';
-const String selectPurpose = '어플 사용 목적을 선택하세요';
+const String askLocation = '사는 곳을 선택해 주세요';
+const String selectLocation = '사는 지역 선택하기';
+

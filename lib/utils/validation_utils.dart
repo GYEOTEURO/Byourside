@@ -47,19 +47,19 @@ class ValidationUtils {
       return false;
     }
     if (selectedUserType.isEmpty) {
-      _showErrorDialog(context, text.selectUserType);
+      _showErrorDialog(context, text.askUserType);
       return false;
     }
     if (selectedDisabilityType.isEmpty) {
-      _showErrorDialog(context, text.selectDisabilityType);
+      _showErrorDialog(context, text.askDisabilityType);
       return false;
     }
     if (selectedUserType == text.worker && institutionName.isEmpty) {
-      _showErrorDialog(context, text.enterInstitutionName);
+      _showErrorDialog(context, text.institutionNameLabel);
       return false;
     }
     if (birthYear.isEmpty) {
-      _showErrorDialog(context, text.enterAge);
+      _showErrorDialog(context, text.askUserAge);
       return false;
     } else if (birthYear.length != 4 || int.tryParse(birthYear) == null || birthYearValue! > currentYear || birthYearValue < currentYear - 200) {
       print( int.tryParse(birthYear) == null );
@@ -71,7 +71,7 @@ class ValidationUtils {
       return false;
     }
     if (selectedPurpose.isEmpty) {
-      _showErrorDialog(context, text.selectPurpose);
+      _showErrorDialog(context, text.askPurpose);
       return false;
     }
     return true;
