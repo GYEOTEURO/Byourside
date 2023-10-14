@@ -28,9 +28,6 @@ class NicknameSectionState extends State<NicknameSection> {
         _deviceHeight = MediaQuery.of(context).size.height;
       });
 
-      _nicknameController.controller.addListener(() {
-        _nicknameController.isNicknameChecked.value = false;
-      });
     });
   }
 
@@ -70,7 +67,18 @@ class NicknameSectionState extends State<NicknameSection> {
     );
   }
 
+
   Widget buildNicknameTextField() {
+    _nicknameController.controller.addListener(() {
+      var newNickname = _nicknameController.controller.text;
+      var currentNickNameExist = _nicknameController.nickNameExist.value;
+      print(currentNickNameExist);
+      if (newNickname.isNotEmpty && !currentNickNameExist) {
+        _nicknameController.nickNameExist.value = true;
+        _nicknameController.isNicknameChanged.value = true;
+      }
+    });
+
     return Semantics(
       container: true,
       textField: true,
@@ -110,6 +118,7 @@ class NicknameSectionState extends State<NicknameSection> {
   void handleNicknameCheckButtonPressed(BuildContext context) async {
     await _nicknameController.checkNicknameExist(context);
     _nicknameController.isNicknameChecked.value = true;
+    _nicknameController.isNicknameChanged.value = false;
 
   }
 
@@ -147,26 +156,34 @@ class NicknameSectionState extends State<NicknameSection> {
     return Obx(() {
       var isNicknameChecked = _nicknameController.isNicknameChecked.value;
       var nickNameExist = _nicknameController.nickNameExist.value;
-      var nickname = _nicknameController.controller.text;
+      var nickName = _nicknameController.controller.text;
+      var isNicknameChanged = _nicknameController.isNicknameChanged.value;
 
       String message = text.none;
+      print('---------------------------------');
+      print('nickname checked : ');
       print(isNicknameChecked);
       if (!isNicknameChecked) {
         message = text.none; 
       } 
-      else if (nickname.isEmpty) {
+      else if (nickName.isEmpty) {
         message = text.askNickName;
-      } else {
+      }
+      else if (isNicknameChanged) {
+        message = text.askVerify;
+      }
+      else {
         print(nickNameExist);
         message = nickNameExist
             ? text.usedNickName
             : text.unusedNickName;
       }
+      print('message : ');
       print(message);
       return Text(
         message,
         style: TextStyle(
-          color: nickname.isEmpty || nickNameExist ? Colors.red : Colors.green,
+          color: nickName.isEmpty || nickNameExist ? Colors.red : Colors.green,
           fontFamily: fonts.font,
           fontSize: getRelativeWidth(0.036),
           fontWeight: FontWeight.w400,

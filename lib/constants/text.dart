@@ -29,11 +29,12 @@ const String developmentalDisability = '발달 장애';
 const String brainLesionDisorder = '뇌병변 장애';
 const String noneTypeDisability = '해당없음';
 
-const String askNickName = '닉네임을 입력하세요.';
+const String askNickName = '닉네임을 입력하세요';
 const String hintNickName = '(예: 홍길동)';
 const String verifyDuplicate = '중복확인';
 const String usedNickName = '이미 사용하고 있는 닉네임입니다';
 const String unusedNickName = '사용 가능한 닉네임입니다';
+const String askVerify = '닉네임 중복을 확인하세요';
 
 const String none = '';
 
