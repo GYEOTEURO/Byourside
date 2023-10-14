@@ -128,6 +128,7 @@ class _SetupUserState extends State<SetupUser> {
                         onTap: () {
                           HapticFeedback.lightImpact();
                         },
+                        context: context
                       ),
                     AgeSection(
                       selectedType: _selectedUserType,

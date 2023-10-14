@@ -151,8 +151,8 @@ class AuthController extends GetxController {
 
   void _handleError(dynamic e) {
     Get.snackbar(
-      'Error message',
-      'User message',
+      text.registrationFailedText,
+      e.toString(),
       backgroundColor: colors.errorColor,
       snackPosition: SnackPosition.BOTTOM,
       titleText: const Text(text.registrationFailedText,
