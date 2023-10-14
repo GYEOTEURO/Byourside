@@ -4,7 +4,6 @@ import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/widget/delete_report_block_alert.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 
-// TODO: constant로 빼야함
 class ValidationUtils {
   static void _showErrorDialog(BuildContext context, String message) {
     showDialog(
@@ -33,40 +32,39 @@ class ValidationUtils {
     Map<String, String>? location,
     String selectedPurpose,
   ) {
-    print(location);
     if (nicknameController.controller.text.isEmpty) {
-      _showErrorDialog(context, '닉네임을 입력하세요.');
+      _showErrorDialog(context, text.askNickName);
       return false;
     }
     if (!nicknameController.isNicknameChecked.value) {
-      _showErrorDialog(context, '닉네임 중복을 확인하세요.');
+      _showErrorDialog(context, text.askVerify);
       return false;
     } else if (nicknameController.nickNameExist.value) {
-      _showErrorDialog(context, '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.');
+      _showErrorDialog(context, text.usedNickName);
       return false;
     }
     if (selectedUserType.isEmpty) {
-      _showErrorDialog(context, '사용자 유형을 선택하세요.');
+      _showErrorDialog(context, text.selectUserType);
       return false;
     }
     if (selectedDisabilityType.isEmpty) {
-      _showErrorDialog(context, '장애 유형을 선택하세요.');
+      _showErrorDialog(context, text.selectDisabilityType);
       return false;
     }
     if (selectedUserType == text.worker && institutionName.isEmpty) {
-      _showErrorDialog(context, '기관 동아리 명칭을 입력하세요.');
+      _showErrorDialog(context, text.enterInstitutionName);
       return false;
     }
     if (birthYear.isEmpty || birthYear.length != 4 || int.tryParse(birthYear) == null) {
-      _showErrorDialog(context, '나이를 입력하세요');
+      _showErrorDialog(context, text.enterAge);
       return false;
     }
-    if (location == null || location.isEmpty) { 
-      _showErrorDialog(context, '위치를 선택하세요');
+    if (location == null || location.isEmpty) {
+      _showErrorDialog(context, text.selectLocation);
       return false;
     }
     if (selectedPurpose.isEmpty) {
-      _showErrorDialog(context, '어플 사용 목적을 선택하세요.');
+      _showErrorDialog(context, text.selectPurpose);
       return false;
     }
     return true;

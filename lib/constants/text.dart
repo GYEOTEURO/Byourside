@@ -45,3 +45,11 @@ const String communication = '소통';
 
 const String institutionNameLabel = '기관 동아리 명칭을 입력해주세요';
 const String institutionNameHint = '기관 동아리 명칭을 입력해주세요';
+
+
+const String selectUserType = '사용자 유형을 선택하세요';
+const String selectDisabilityType = '장애 유형을 선택하세요';
+const String enterInstitutionName = '기관 동아리 명칭을 입력하세요';
+const String enterAge = '나이를 입력하세요';
+const String selectLocation = '위치를 선택하세요';
+const String selectPurpose = '어플 사용 목적을 선택하세요';
