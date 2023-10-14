@@ -7,7 +7,11 @@ class InstitutionNameTextField extends StatefulWidget {
   final TextEditingController? controller;
   final Function()? onTap;
 
-  const InstitutionNameTextField({super.key, required this.controller, required this.onTap});
+  const InstitutionNameTextField({
+    Key? key,
+    required this.controller,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   InstitutionNameTextFieldState createState() => InstitutionNameTextFieldState();
@@ -29,7 +33,6 @@ class InstitutionNameTextFieldState extends State<InstitutionNameTextField> {
     });
   }
 
-
   double getRelativeWidth(double value) {
     return _deviceWidth * value;
   }
@@ -37,32 +40,49 @@ class InstitutionNameTextFieldState extends State<InstitutionNameTextField> {
   double getRelativeHeight(double value) {
     return _deviceHeight * value;
   }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: getRelativeWidth(0.66),
-      height: getRelativeHeight(0.07),
-      child: TextFormField(
-        onTap: widget.onTap,
-        controller: widget.controller,
-        maxLines: 1,
-        decoration: InputDecoration(
-          labelText: text.institutionNameLabel,
-          fillColor: colors.bgrColor,
-          filled: true,
-          hintText: text.institutionNameHint,
-          labelStyle: TextStyle(
-            color: colors.textColor,
-            fontSize: getRelativeWidth(0.036),
-            fontFamily: fonts.font,
-            fontWeight: FontWeight.w500,
+    return Padding(
+      padding: EdgeInsets.all(getRelativeWidth(0.05)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            text.institutionNameLabel,
+            style: TextStyle(
+              color: colors.textColor,
+              fontSize: getRelativeWidth(0.036),
+              fontFamily: fonts.font,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(getRelativeWidth(0.087)),
-            borderSide: BorderSide.none,
+          SizedBox(height: getRelativeHeight(0.02)),
+          SizedBox(
+            width: getRelativeWidth(0.46),
+            height: getRelativeHeight(0.06),
+            child: TextFormField(
+              controller: widget.controller,
+              maxLines: 1,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: colors.bgrColor,
+                hintText: text.institutionNameHint,
+                hintStyle: TextStyle(
+                  color: colors.textColor,
+                  fontSize: getRelativeWidth(0.04),
+                  fontFamily: fonts.font,
+                  fontWeight: FontWeight.w500,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(getRelativeWidth(0.087)),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              autofocus: false,
+            ),
           ),
-        ),
-        autofocus: false,
+        ],
       ),
     );
   }

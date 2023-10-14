@@ -122,14 +122,17 @@ class _SetupUserState extends State<SetupUser> {
                       initialType: _selectedDisabilityType,
                       onChanged: _handleDisabilityTypeSelected,
                     ),
-                    (_selectedUserType == text.worker)?
-                      InstitutionNameTextField(
-                        controller: _institutionNameController,
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                        },
-                      )
-                      : const SizedBox.shrink(),
+                    (_selectedUserType == text.worker)
+                        ? Align(
+                            alignment: Alignment.centerLeft, 
+                            child: InstitutionNameTextField(
+                              controller: _institutionNameController,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                              },
+                            ),
+                          )
+                        : const SizedBox.shrink(),
                     AgeSection(
                       selectedType: _selectedUserType,
                       controller: _birthYear,
