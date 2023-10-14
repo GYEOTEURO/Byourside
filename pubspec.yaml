@@ -30,31 +30,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http:
   image_picker: ^0.8.6
-  firebase_phone_auth_handler:
-  kakao_flutter_sdk: ^1.3.0-beta.3 # 전체 추가
-  kakao_flutter_sdk_user: ^1.3.0-beta.3 # 카카오 로그인
-  #  kakao_flutter_sdk_talk: ^1.3.0-beta.3 # 카카오톡(소셜, 메시지)
-  #  kakao_flutter_sdk_story: ^1.3.0-beta.3 # 카카오스토리
-  #  kakao_flutter_sdk_share: ^1.3.0-beta.3 # 카카오톡 공유
-  #  kakao_flutter_sdk_navi: ^1.3.0-beta.3 # 카카오내비
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
   firebase_core: ^2.14.0
   firebase_auth: ^4.7.2
   cloud_firestore: ^4.0.3
   google_sign_in: ^6.1.4
-  pinput: ^2.2.31
-  iamport_flutter: ^0.10.0
-  email_validator: ^2.0.1
   url_launcher: ^6.1.14
-  flutter_sfsymbols:
-  material_design_icons_flutter: 5.0.6996
-#  location:
-  dotted_border: ^2.0.0+3
   firebase_storage:
   logger: ^1.1.0
   permission_handler:
@@ -96,11 +77,6 @@ flutter_icons:
   image_path: "assets/images/app_logo.png"
   min_sdk_android: 21 
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -204,16 +180,3 @@ flutter:
           weight: 700
         - asset: assets/fonts/NanumGothic-ExtraBold.ttf
           weight: 900
-    # - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
