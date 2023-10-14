@@ -7,7 +7,6 @@ import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 Text _buildCategory(String category){
   return Text(
     category,
