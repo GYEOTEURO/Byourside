@@ -10,6 +10,7 @@ class SaveUserData {
     String? nickname,
     String? registrationPurpose,
     String? userType,
+    String? deviceToken
   }) async {
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -22,6 +23,7 @@ class SaveUserData {
         'nickname': nickname,
         'registrationPurpose': registrationPurpose,
         'userType': userType,
+        'deviceToken': deviceToken,
       });
     }
   }
