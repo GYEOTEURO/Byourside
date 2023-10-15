@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/widget/common/title_only_appbar.dart';
-import 'package:flutter/material.dart';
 
 class Policy extends StatefulWidget {
   const Policy({
@@ -16,8 +16,11 @@ class Policy extends StatefulWidget {
 }
 
 class _PolicyState extends State<Policy> {
+
   @override
   Widget build(BuildContext context) {
+    var deviceHeight = MediaQuery.of(context).size.height;
+    
     return Scaffold(
         appBar: titleOnlyAppbar(context, widget.policy['policyName']!),
         body: SingleChildScrollView(
@@ -28,12 +31,11 @@ class _PolicyState extends State<Policy> {
                   Text(
                     widget.policy['policyContent']!,
                     semanticsLabel: widget.policy['policyContent'],
-                    style: const TextStyle(
-                      color: colors.textColor,
-                      fontSize: 13,
+                    style: TextStyle(
                       fontFamily: fonts.font,
+                      fontSize: deviceHeight * 0.018,
+                      color: colors.textColor,
                       fontWeight: FontWeight.w400,
-                      height: 1.77,
                     )
                   )
             ])

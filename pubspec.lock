@@ -173,10 +173,10 @@ packages:
     dependency: transitive
     description:
       name: coverage
-      sha256: "2fb815080e44a09b85e0f2ca8a820b15053982b2e714b59267719e8a9ff17097"
+      sha256: "595a29b55ce82d53398e1bcc2cba525d7bd7c59faeb2d2540e9d42c390cfeeeb"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.3"
+    version: "1.6.4"
   cross_file:
     dependency: transitive
     description:
@@ -186,7 +186,7 @@ packages:
     source: hosted
     version: "0.3.3+4"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
@@ -425,14 +425,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.3"
-  firebase_phone_auth_handler:
-    dependency: "direct main"
-    description:
-      name: firebase_phone_auth_handler
-      sha256: "586e69d6a14eb1276634bbf73a1ede598e85e14e95ea887c67e6d9c62fb6e821"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.8"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -800,14 +792,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.10.2"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   node_preamble:
     dependency: transitive
     description:
@@ -904,14 +888,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      sha256: cdbe7530b12ecd9eb455bdaa2fcb8d4dad22e80b8afb4798b41479d5ce26847f
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.5"
   pub_semver:
     dependency: transitive
     description:
@@ -1217,10 +1193,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: ada49637c27973c183dad90beb6bd781eea4c9f5f955d35da172de0af7bd3440
+      sha256: c538be99af830f478718b51630ec1b6bee5e74e52c8a802d328d9e71d35d2583
       url: "https://pub.dev"
     source: hosted
-    version: "11.8.0"
+    version: "11.10.0"
   watcher:
     dependency: transitive
     description:

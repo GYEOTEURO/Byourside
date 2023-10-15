@@ -1,9 +1,11 @@
-import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
-import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/colors.dart' as colors;
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
+
 
 class NicknameSection extends StatefulWidget {
   const NicknameSection({super.key});
@@ -25,6 +27,7 @@ class NicknameSectionState extends State<NicknameSection> {
         _deviceWidth = MediaQuery.of(context).size.width;
         _deviceHeight = MediaQuery.of(context).size.height;
       });
+
     });
   }
 
@@ -57,19 +60,29 @@ class NicknameSectionState extends State<NicknameSection> {
               buildCheckNicknameButton(context),
             ],
           ),
-          SizedBox(height: getRelativeHeight(0.01)),
+          SizedBox(height: getRelativeHeight(0.01)), 
           buildNicknameCheckResultText(),
         ],
       ),
     );
   }
 
+
   Widget buildNicknameTextField() {
+    _nicknameController.controller.addListener(() {
+      var newNickname = _nicknameController.controller.text;
+      var currentNickNameExist = _nicknameController.nickNameExist.value;
+      if (newNickname.isNotEmpty && !currentNickNameExist) {
+        _nicknameController.nickNameExist.value = true;
+        _nicknameController.isNicknameChanged.value = true;
+      }
+    });
+
     return Semantics(
       container: true,
       textField: true,
-      label: '닉네임을 입력하세요.',
-      hint: '(예: 홍길동)',
+      label: text.askNickName,
+      hint: text.hintNickName,
       child: SizedBox(
         width: getRelativeWidth(0.66),
         height: getRelativeHeight(0.07),
@@ -80,10 +93,10 @@ class NicknameSectionState extends State<NicknameSection> {
           controller: _nicknameController.controller,
           maxLines: 1,
           decoration: InputDecoration(
-            labelText: '닉네임을 입력하세요',
+            labelText: text.askNickName,
             fillColor: colors.bgrColor,
             filled: true,
-            hintText: '(예: 홍길동) ',
+            hintText: text.hintNickName,
             labelStyle: TextStyle(
               color: colors.textColor,
               fontSize: getRelativeWidth(0.036),
@@ -104,9 +117,8 @@ class NicknameSectionState extends State<NicknameSection> {
   void handleNicknameCheckButtonPressed(BuildContext context) async {
     await _nicknameController.checkNicknameExist(context);
     _nicknameController.isNicknameChecked.value = true;
+    _nicknameController.isNicknameChanged.value = false;
 
-    _nicknameController.controller.addListener(() {
-    });
   }
 
 
@@ -126,7 +138,7 @@ class NicknameSectionState extends State<NicknameSection> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '중복확인',
+              text.verifyDuplicate,
               style: TextStyle(
                 fontSize: getRelativeWidth(0.036),
                 fontWeight: FontWeight.w700,
@@ -143,26 +155,30 @@ class NicknameSectionState extends State<NicknameSection> {
     return Obx(() {
       var isNicknameChecked = _nicknameController.isNicknameChecked.value;
       var nickNameExist = _nicknameController.nickNameExist.value;
-      var nickname = _nicknameController.controller.text;
+      var nickName = _nicknameController.controller.text;
+      var isNicknameChanged = _nicknameController.isNicknameChanged.value;
 
-      String message = '';
-
+      String message = text.none;
       if (!isNicknameChecked) {
-        message = ''; // 아무 메시지도 표시하지 않음
+        message = text.none; 
       } 
-      if (nickname.isEmpty) {
-        message = '닉네임을 입력하세요';
-      } else {
-        message = nickNameExist
-            ? '이미 사용하고 있는 닉네임입니다'
-            : '사용 가능한 닉네임입니다';
+      else if (nickName.isEmpty) {
+        message = text.askNickName;
       }
-
+      else if (isNicknameChanged) {
+        message = text.askVerify;
+      }
+      else {
+        message = nickNameExist
+            ? text.usedNickName
+            : text.unusedNickName;
+      }
+      
       return Text(
         message,
         style: TextStyle(
-          color: nickname.isEmpty || nickNameExist ? Colors.red : Colors.green,
-          fontFamily: 'NanumGothic',
+          color: nickName.isEmpty || nickNameExist ? Colors.red : Colors.green,
+          fontFamily: fonts.font,
           fontSize: getRelativeWidth(0.036),
           fontWeight: FontWeight.w400,
         ),

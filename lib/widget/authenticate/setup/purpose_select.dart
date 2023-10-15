@@ -1,6 +1,8 @@
-import 'package:byourside/widget/authenticate/setup/explain_text.dart';
-import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
+import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
+
 
 class AppPurposeSelection extends StatefulWidget {
   final void Function(String purpose) onChanged;
@@ -8,11 +10,11 @@ class AppPurposeSelection extends StatefulWidget {
   const AppPurposeSelection({Key? key, required this.onChanged}) : super(key: key);
 
   @override
-  _AppPurposeSelectionState createState() => _AppPurposeSelectionState();
+  AppPurposeSelectionState createState() => AppPurposeSelectionState();
 }
 
-class _AppPurposeSelectionState extends State<AppPurposeSelection> {
-  String _selectedPurpose = '정보 습득';
+class AppPurposeSelectionState extends State<AppPurposeSelection> {
+  String _selectedPurpose = text.getInformation;
   double _deviceWidth = 0;
   double _deviceHeight = 0;
 
@@ -39,7 +41,7 @@ class _AppPurposeSelectionState extends State<AppPurposeSelection> {
 
   Widget buildHeaderText() {
     return ExplainText(
-      text : '어플 사용 목적을 알려주세요',
+      text : text.askPurpose,
       width : getRelativeWidth(0.04),
     );
   }
@@ -51,7 +53,7 @@ class _AppPurposeSelectionState extends State<AppPurposeSelection> {
       child: DropdownButtonFormField<String>(
           value: _selectedPurpose,
           onChanged: handlePurposeChanged,
-          items: ['정보 습득', '활동 홍보', '소통']
+          items: [text.getInformation, text.promotion, text.communication]
             .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,

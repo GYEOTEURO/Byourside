@@ -1,8 +1,10 @@
-import 'package:byourside/widget/authenticate/setup/explain_text.dart';
-import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/constants/fonts.dart' as fonts;
+import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/widget/authenticate/setup/explain_text.dart';
+
 
 class AgeSection extends StatefulWidget {
   final String selectedType;
@@ -46,8 +48,8 @@ class AgeSectionState extends State<AgeSection> {
     return Semantics(
       container: true,
       textField: true,
-      label: '몇 년생인지 입력하세요.',
-      hint: '(예: 1990)',
+      label: text.askUserAge,
+      hint: text.exampleUserAge,
       child: SizedBox(
         width: getRelativeWidth(0.46),
         height: getRelativeHeight(0.06),
@@ -72,11 +74,11 @@ class AgeSectionState extends State<AgeSection> {
   InputDecoration _buildInputDecoration() {
     return InputDecoration(
       filled: true,
-      hintText: '1990',
+      hintText: text.hintUserAge,
       fillColor: colors.bgrColor,
       hintStyle: TextStyle(
         color: colors.textColor,
-        fontSize: getRelativeWidth(0.04),
+        fontSize: getRelativeWidth(0.038),
         fontFamily: fonts.font,
         fontWeight: FontWeight.w500,
       ),
@@ -96,7 +98,7 @@ class AgeSectionState extends State<AgeSection> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: getRelativeHeight(0.005)),
         child:Text(
-          '년생',
+          text.ageUnit,
           style: TextStyle(
             color: colors.textColor,
             fontSize: getRelativeWidth(0.036),
@@ -123,14 +125,14 @@ class AgeSectionState extends State<AgeSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExplainText(
-            text: widget.selectedType == '장애 아동 보호자'
-                ? '아동의 나이를 입력해 주세요'
-                : '나이를 입력해 주세요',
-            width: getRelativeWidth(0.04),
+            text: widget.selectedType == text.protector
+                ? text.requestChildAge
+                : text.requestAge,
+            width: getRelativeWidth(0.039),
           ),
           SizedBox(height: getRelativeHeight(0.02)),
           Align(
-            alignment: Alignment.centerLeft, // 왼쪽 정렬
+            alignment: Alignment.centerLeft,
             child: buildAgeTextField(),
           ),
         ],

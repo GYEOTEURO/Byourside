@@ -7,7 +7,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:get/get.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -40,17 +39,37 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void initializeNotification() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  AndroidNotificationChannel channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'high_importance_notification', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.max,
+  );
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(const AndroidNotificationChannel(
-          'high_importance_channel', 'high_importance_notification',
-          importance: Importance.max));
+      ?.createNotificationChannel(channel);
 
-  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings('@mipmap/android_app_logo'),
-  ));
+  AndroidInitializationSettings androidInitializationSettings =
+      const AndroidInitializationSettings('mipmap/ic_launcher');
+
+  DarwinInitializationSettings iosInitializationSettings =
+      const DarwinInitializationSettings(
+    requestAlertPermission: false,
+    requestBadgePermission: false,
+    requestSoundPermission: false,
+  );
+
+  InitializationSettings initializationSettings = InitializationSettings(
+    android: androidInitializationSettings,
+    iOS: iosInitializationSettings,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -75,7 +94,7 @@ void main() async {
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -97,16 +116,14 @@ void main() async {
   ));
 }
 
-const primaryColor = Color(0xFF045558);
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   var messageString = '';
 
 
@@ -142,8 +159,7 @@ class _MyAppState extends State<MyApp> {
     return Stack(
       children: <Widget>[
         Text('메시지 내용: $messageString'),
-        FirebasePhoneAuthProvider(
-          child: MaterialApp(
+        MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Beeside',
               initialRoute: '/login',
@@ -153,7 +169,6 @@ class _MyAppState extends State<MyApp> {
                 '/user': (context) => const SetupUser(),
               },
             )
-          ),
       ],
     );
   }
