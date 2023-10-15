@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/autoInformation/post.dart';
 import 'package:byourside/widget/common/time_convertor.dart';
@@ -8,15 +10,13 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:firebase_storage/firebase_storage.dart';
 
-List<String> _downloadUrls = [];
-
-Future<void> _downloadImage(List<String> imageUrls) async {
+Future<List<String>> _downloadImage(List<String> imageUrls) async {
   List<String> downloadUrls = [];
   if (imageUrls.isEmpty) {
-    return;
+    return downloadUrls;
   }
-  for (String imageUrl in imageUrls!) {
-    Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl!);
+  for (String imageUrl in imageUrls) {
+    Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl);
     debugPrint('*****************$storageRef');
 
     try {
@@ -26,53 +26,44 @@ Future<void> _downloadImage(List<String> imageUrls) async {
       debugPrint('****************Error downloading image: $e');
     }
   }
-  _downloadUrls = downloadUrls;
+  return downloadUrls;
+}
+
+Widget _imageWidget(
+    BuildContext context, List<String> images, String title, double width) {
+  return FutureBuilder(
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    if (snapshot.hasData) {
+      return Semantics(
+          label: '$title 게시글의 이미지',
+          child: Container(
+              alignment: Alignment.topCenter,
+              height: width * 0.26,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(13),
+                topRight: Radius.circular(13),
+              )),
+              child: Image.network(snapshot.data[0],
+                  width: width, fit: BoxFit.cover)));
+    } else {
+      return const Center(child: CircularProgressIndicator());
+    }
+  });
 }
 
 Widget _buildTopSide(
     BuildContext context, String category, List<String> images, String title) {
-  _downloadImage(images);
-
-  double _width = MediaQuery.of(context).size.width;
+  double width = MediaQuery.of(context).size.width;
   return Container(
-    width: _width,
+    width: width,
     child: Stack(
       children: [
-        if (_downloadUrls.isNotEmpty)
-          Semantics(
-              label: '$title 게시글 의 이미지',
-              child: Container(
-                  alignment: Alignment.topCenter,
-                  height: _width * 0.26,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(13),
-                    topRight: Radius.circular(13),
-                  )),
-                  child: Image.network(
-                    _downloadUrls[0],
-                    width: _width,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      }
-                    },
-                  ))),
+        _imageWidget(context, images, title, width),
         Container(
             padding: const EdgeInsets.all(10),
             alignment: Alignment.topLeft,
-            child: _buildCategory(category: category, width: _width))
+            child: _buildCategory(category: category, width: width))
       ],
     ),
   );
@@ -123,7 +114,8 @@ Widget _buildBottomSide(Widget createdAt, String scraps) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              padding: const EdgeInsets.only(left: 20, bottom: 10), child: createdAt),
+              padding: const EdgeInsets.only(left: 20, bottom: 10),
+              child: createdAt),
           _buildScraps(
               count: scraps, icon: custom_icons.communityPostListScraps),
         ],
@@ -149,7 +141,7 @@ Widget autoInfoPostListTile(
     BuildContext context, AutoInformationPostModel? post) {
   TimeConvertor createdAt =
       TimeConvertor(createdAt: post!.createdAt, fontSize: fonts.createdAtPt);
-  debugPrint("***************${post.images}");
+  debugPrint('***************${post.images}');
 
   return GestureDetector(
       onTap: () {

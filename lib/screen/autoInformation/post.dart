@@ -28,19 +28,12 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
           height: MediaQuery.of(context).size.height,
           child: Stack(children: [
             SingleChildScrollView(
-                //댓글 전송 누르면 맨 아래로 이동 가능하게
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                   Container(
                       child: AutoInfoImage(imageUrls: widget.post.images)),
                   Container(child: AutoInfoPostContent(post: widget.post)),
-                  // Container(
-                  //     margin: const EdgeInsets.all(7),
-                  //     padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
-                  //     child: CommentList(
-                  //         collectionName: widget.collectionName,
-                  //         documentID: widget.post.id!)),
                 ])),
             Positioned(
                 left: 0,

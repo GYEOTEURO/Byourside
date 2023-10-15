@@ -1,8 +1,6 @@
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/community/add_post_appbar.dart';
-import 'package:byourside/screen/community/add_post_category.dart';
 import 'package:byourside/widget/community/add_post/category_section.dart';
 import 'package:byourside/widget/community/add_post/content_section.dart';
 import 'package:byourside/widget/community/add_post/disability_type_section.dart';
@@ -254,7 +252,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return WarningDialog(
+                                  return const WarningDialog(
                                       warningObject: 'category');
                                 });
                             return 0;
@@ -263,7 +261,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return WarningDialog(
+                                  return const WarningDialog(
                                       warningObject: 'disabilityType');
                                 });
                             return 0;
@@ -275,7 +273,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return WarningDialog(
+                                    return const WarningDialog(
                                         warningObject: 'image');
                                   });
                               return 0;
