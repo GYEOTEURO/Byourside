@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 
 // bottomNavigationBar
 final autoInformation =
@@ -33,6 +34,11 @@ final gotoScrapPage = SvgPicture.asset('assets/icons/scrap_page.svg',
 final search =
     SvgPicture.asset('assets/icons/search.svg', semanticsLabel: '검색');
 
+final back = SvgPicture.asset('assets/icons/back.svg', semanticsLabel: '뒤로가기');
+
+final profile =
+    SvgPicture.asset('assets/icons/profile.svg', semanticsLabel: '프로필사진');
+
 // community
 final addPost =
     SvgPicture.asset('assets/icons/add_post.svg', semanticsLabel: '커뮤니티 글쓰기');
@@ -55,14 +61,14 @@ final communityPostScrapsEmpty =
 final communityPostScrapsFull =
     SvgPicture.asset('assets/icons/post_scrap_full.svg', semanticsLabel: '스크랩');
 
-final back = SvgPicture.asset('assets/icons/back.svg', semanticsLabel: '뒤로가기');
+final postOption =
+    SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션');
 
-final add_ons =
-    SvgPicture.asset('assets/icons/add-ons.svg', semanticsLabel: '메뉴');
+// comment
+final commentOption =
+    SvgPicture.asset('assets/icons/option.svg', semanticsLabel: '옵션', colorFilter: const ColorFilter.mode(colors.subColor, BlendMode.srcIn));
 
-final profile =
-    SvgPicture.asset('assets/icons/profile.svg', semanticsLabel: '프로필사진');
-
+// home
 final hobee =
     SvgPicture.asset('assets/icons/hobee.svg', semanticsLabel: '호비캐릭터사진');
 
@@ -74,6 +80,7 @@ final seeMore =
 final speechBubble =
     SvgPicture.asset('assets/icons/speech_bubble.svg', semanticsLabel: '말풍선');
 
+//
 final loading = Image.asset(
   'assets/icons/loading.gif',
 );

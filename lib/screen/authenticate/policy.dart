@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/widget/title_only_appbar.dart';
-
+import 'package:byourside/widget/common/title_only_appbar.dart';
+import 'package:flutter/material.dart';
 
 class Policy extends StatefulWidget {
   const Policy({

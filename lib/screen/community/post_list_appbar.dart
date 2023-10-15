@@ -1,11 +1,11 @@
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
-import 'package:byourside/widget/icon_buttons.dart';
-import 'package:byourside/widget/change_disability_type.dart';
-import 'package:byourside/widget/app_bar_select_button.dart';
+import 'package:byourside/widget/common/icon_buttons.dart';
+import 'package:byourside/widget/common/change_disability_type.dart';
+import 'package:byourside/widget/common/app_bar_select_button.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -68,8 +68,8 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                 child: const Text(
-                constants.communityTitle,
-                semanticsLabel: constants.communityTitle,
+                texts.communityTitle,
+                semanticsLabel: texts.communityTitle,
                 style: TextStyle(
                     color: colors.textColor, 
                     fontFamily: fonts.font, 

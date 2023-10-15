@@ -3,12 +3,12 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/community_post.dart';
 import 'package:byourside/screen/community/post.dart';
-import 'package:byourside/widget/time_convertor.dart';
+import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
-Widget _buildCategory(String category){
+Text _buildCategory(String category){
   return Text(
     category,
     semanticsLabel: category,
@@ -21,7 +21,7 @@ Widget _buildCategory(String category){
   );
 }
 
-Widget _buildTitle(String title){
+Text _buildTitle(String title){
   return Text(
     title,
     semanticsLabel: title,
@@ -37,7 +37,7 @@ Widget _buildTitle(String title){
   );
 }
 
-Widget _buildContent(String content){
+Text _buildContent(String content){
   return Text(
     content,
     semanticsLabel: content,
@@ -50,7 +50,6 @@ Widget _buildContent(String content){
       fontSize: 12,
       fontFamily: fonts.font,
       fontWeight: FontWeight.w400,
-      height: 1.50,
     ),
   );
 }
@@ -121,7 +120,7 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                             width: width * 0.5,
                             child: _buildContent(post.content),
                           ),

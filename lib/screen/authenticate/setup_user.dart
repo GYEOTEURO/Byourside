@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/utils/validation_utils.dart';
 import 'package:byourside/widget/complete_button.dart';
-import 'package:byourside/widget/title_only_appbar.dart';
+import 'package:byourside/widget/common/title_only_appbar.dart';
 import 'package:byourside/widget/location/location_section.dart';
 import 'package:byourside/model/authenticate/save_user_data.dart';
 import 'package:byourside/widget/authenticate/setup/age_section.dart';
@@ -16,7 +16,6 @@ import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
-
 
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);

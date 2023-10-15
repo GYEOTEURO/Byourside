@@ -66,13 +66,13 @@ class SocialLogin extends StatelessWidget {
         children: [
           PolicyLink(
             text: text.termsOfService,
-            onPressed: () => Get.to(() => Policy(policy: constants.usingPolicy)),
+            onPressed: () => Get.to(() => Policy(policy: text.usingPolicy)),
             icon: auth_icons.tosLine,
           ),
           PolicyLink(
             text: text.privacyPolicy,
             onPressed: () =>
-                Get.to(() => Policy(policy: constants.personalData)),
+                Get.to(() => Policy(policy: text.personalData)),
             icon: auth_icons.policyLine,
           ),
         ],
@@ -119,8 +119,7 @@ class SocialLogin extends StatelessWidget {
                   buildButtons(context),
                   SizedBox(height: deviceHeight * 0.07),
                   buildPolicyLinks(),
-                  SizedBox(height: deviceHeight * 0.1),
-                ],
+                  SizedBox(height: deviceHeight * 0.1),                ],
               ),
             ],
           ),

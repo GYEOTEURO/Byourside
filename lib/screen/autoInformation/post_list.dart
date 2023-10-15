@@ -4,7 +4,7 @@ import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/autoInformation/autoInfo_post_list_tile.dart';
 import 'package:byourside/screen/autoInformation/post_list_appbar.dart';
-import 'package:byourside/widget/category_buttons.dart';
+import 'package:byourside/widget/common/category_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,7 @@ class AutoInformationPostList extends StatefulWidget {
 class _AutoInformationPostListState extends State<AutoInformationPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  String selectedChipValue = constants.autoInformationCategories[0];
+  String selectedCategoryValue = constants.autoInformationCategories[0];
   String? selectedDisabilityTypeValue =
       Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
               '해당없음'
@@ -32,14 +32,14 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
     'district': Get.find<UserController>().userModel.district!
   };
 
-  void _handleChipSelected(String value) {
+  void _handleCategorySelected(String value) {
     if (value == '돌봄서비스') {
       value = '돌봄 서비스';
     } else if (value == '교육/활동') {
       value = '교육';
     }
     setState(() {
-      selectedChipValue = value;
+      selectedCategoryValue = value;
     });
   }
 
@@ -69,11 +69,11 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
             scrollDirection: Axis.horizontal,
             child: CategoryButtons(
                 category: constants.autoInformationCategories,
-                onChipSelected: _handleChipSelected)),
+                onCategorySelected: _handleCategorySelected)),
         Expanded(
             child: StreamBuilder<List<AutoInformationPostModel>>(
                 stream: loadData.readAutoInformationPosts(
-                    category: selectedChipValue,
+                    category: selectedCategoryValue,
                     area: location!['area'],
                     district: location!['district'],
                     disabilityType: selectedDisabilityTypeValue),
@@ -83,11 +83,7 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
                         itemCount: snapshots.data!.length,
                         shrinkWrap: true,
                         itemBuilder: (_, index) {
-                          AutoInformationPostModel post =
-                              snapshots.data![index];
-                          print(
-                              '******************************${snapshots.data!.length}');
-                          //return communityPostListTile(context, post);
+                          AutoInformationPostModel post = snapshots.data![index];
                           return autoInfoPostListTile(context, post);
                         });
                   } else {

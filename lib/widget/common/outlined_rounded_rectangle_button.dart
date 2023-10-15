@@ -3,7 +3,7 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:flutter/services.dart';
 
-Widget outlinedRoundedRectangleButton(String buttonText, Function pressedFunc) {
+OutlinedButton outlinedRoundedRectangleButton(String buttonText, Function pressedFunc) {
   return OutlinedButton(
     style: OutlinedButton.styleFrom(
       shape: RoundedRectangleBorder(

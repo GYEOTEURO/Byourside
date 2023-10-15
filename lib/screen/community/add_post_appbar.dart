@@ -1,4 +1,4 @@
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/icons.dart' as custom_icons;
@@ -23,9 +23,9 @@ class _CommunityAddPostAppBarState extends State<CommunityAddPostAppBar> {
       backgroundColor: colors.lightPrimaryColor,
       elevation: 0.0,
       title: const Text(
-        constants.communityAddPostTitle,
+        texts.communityAddPostTitle,
         textAlign: TextAlign.left,
-        semanticsLabel: constants.communityAddPostTitle,
+        semanticsLabel: texts.communityAddPostTitle,
         style: TextStyle(
             fontFamily: fonts.font,
             fontWeight: FontWeight.w600,
