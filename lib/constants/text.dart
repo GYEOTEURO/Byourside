@@ -21,8 +21,8 @@ const String askUserAge = '몇 년생인지 입력해 주세요';
 const String exampleUserAge = '(예: 1990)';
 const String hintUserAge = '1990';
 const String ageUnit = '년생';
-const String requestChildAge = '아동의 나이를 입력해 주세요';
-const String requestAge = '나이를 입력해 주세요';
+const String requestChildAge = '아동의 출생 연도를 입력해 주세요';
+const String requestAge = '출생 연도를 입력해 주세요';
 const String enterValidateAge = '유효한 출생 연도를 입력하세요';
 
 
