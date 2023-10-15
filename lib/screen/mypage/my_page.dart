@@ -2,7 +2,7 @@ import 'package:byourside/screen/authenticate/controller/user_controller.dart';
 import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/widget/info_container.dart';
 import 'package:byourside/widget/common/title_only_appbar.dart';
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/pages.dart' as pages;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 진동을 사용하기 위한 패키지 추가
@@ -103,9 +103,9 @@ class _MypageState extends State<Mypage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      myPageOptions(context, '내 활동', constants.myActivity),
+                      myPageOptions(context, '내 활동', pages.myActivity),
                       SizedBox(height: getRelativeHeight(0.04)),
-                      myPageOptions(context, '기타', constants.etc),
+                      myPageOptions(context, '기타', pages.etc),
                     ],
                   ),
                 ),

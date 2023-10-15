@@ -7,14 +7,13 @@ import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 Text _buildCategory(String category){
   return Text(
     category,
     semanticsLabel: category,
     style: const TextStyle(
       color: colors.primaryColor,
-      fontSize: fonts.captionTitlePt,
+      fontSize: 13,
       fontFamily: fonts.font,
       fontWeight: FontWeight.w800
     ),

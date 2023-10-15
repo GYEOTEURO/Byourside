@@ -1,4 +1,4 @@
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as texts;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
@@ -21,7 +21,7 @@ class AutoInformationPostList extends StatefulWidget {
 class _AutoInformationPostListState extends State<AutoInformationPostList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
-  String selectedCategoryValue = constants.autoInformationCategories[0];
+  String selectedCategoryValue = texts.autoInformationCategories[0];
   String? selectedDisabilityTypeValue =
       Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
               '해당없음'
@@ -68,7 +68,7 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: CategoryButtons(
-                category: constants.autoInformationCategories,
+                category: texts.autoInformationCategories,
                 onCategorySelected: _handleCategorySelected)),
         Expanded(
             child: StreamBuilder<List<AutoInformationPostModel>>(

@@ -90,7 +90,6 @@ void main() async {
   ).then((value) {
     Get.put(AuthController());
     Get.put(NicknameController());
-    // Get.put(UserController());
   });
 
   FlutterError.onError = (errorDetails) {
@@ -170,19 +169,16 @@ class _MyAppState extends State<MyApp> {
         Text('메시지 내용: $messageString'),
         FirebasePhoneAuthProvider(
           child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: 'NanumGothic',
-            ),
-            title: '곁',
-            initialRoute: '/login',
-            routes: {
-              '/login': (context) => const SocialLogin(),
-              '/bottom_nav': (context) => const BottomNavBar(),
-              '/user': (context) => const SetupUser(),
-            },
+              debugShowCheckedModeBanner: false,
+              title: 'Beeside',
+              initialRoute: '/login',
+              routes: {
+                '/login': (context) => const SocialLogin(),
+                '/bottom_nav': (context) => const BottomNavBar(),
+                '/user': (context) => const SetupUser(),
+              },
+            )
           ),
-        ),
       ],
     );
   }
