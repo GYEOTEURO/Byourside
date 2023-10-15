@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
+import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/widget/location/location_dialog.dart';
 import 'package:byourside/widget/authenticate/setup/explain_text.dart';
 
@@ -43,7 +44,7 @@ class LocationSectionState extends State<LocationSection> {
       context: context,
       builder: (BuildContext context) {
         return LocationDialog(
-          title: '사는 곳을 선택해 주세요',
+          title: text.askLocation,
           onLocationSelected: (area, district) {
             setState(() {
               selectedArea = area;
@@ -76,7 +77,7 @@ class LocationSectionState extends State<LocationSection> {
         height: getRelativeHeight(0.07),
         child: Center(
           child: Text(
-            isLocationSelected ? selectedDistrict : '사는 지역 선택하기',
+            isLocationSelected ? selectedDistrict : text.selectLocation,
             style: TextStyle(
               fontSize: getRelativeWidth(0.038),
               fontWeight: FontWeight.w700,
@@ -97,7 +98,7 @@ class LocationSectionState extends State<LocationSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExplainText(
-            text : '사는 곳을 입력해주세요',
+            text : text.askLocation,
             width : getRelativeWidth(0.04),
           ),
           SizedBox(height: getRelativeHeight(0.02)),

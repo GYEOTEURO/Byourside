@@ -2,8 +2,6 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/autoInformation_post.dart';
-import 'package:byourside/model/community_post.dart';
-import 'package:byourside/widget/community/image_slider.dart';
 import 'package:byourside/widget/common/time_convertor.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +21,7 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
             alignment: Alignment.centerLeft,
             child: Text(
               post!.category,
@@ -36,7 +34,7 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
             ),
           ),
           Container(
-              padding: EdgeInsets.only(top: 10, bottom: 20),
+              padding: const EdgeInsets.only(top: 10, bottom: 20),
               alignment: Alignment.centerLeft,
               child: SelectionArea(
                   child: Text(
@@ -49,20 +47,20 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
                     color: colors.textColor),
               ))),
           Container(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: 20),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.account_balance,
                     color: colors.primaryColor,
                     size: 30,
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             '사이트',
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -72,11 +70,11 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
                                 color: colors.textColor),
                           ),
                           Container(
-                              padding: EdgeInsets.only(top: 2),
+                              padding: const EdgeInsets.only(top: 2),
                               child: Text(
                                 post.site,
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: fonts.captionTitlePt,
                                     fontWeight: FontWeight.normal,
                                     fontFamily: fonts.font,
@@ -124,7 +122,7 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
               const SizedBox(width: 5),
               Text(
                 '${post.scraps}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: colors.subColor,
                   fontSize: fonts.captionTitlePt,
                   fontFamily: fonts.font,

@@ -7,7 +7,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:get/get.dart';
 import 'package:byourside/screen/bottom_nav_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -95,7 +94,7 @@ void main() async {
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -117,16 +116,14 @@ void main() async {
   ));
 }
 
-const primaryColor = Color(0xFF045558);
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   var messageString = '';
 
   void getDeviceToken() async {
@@ -167,8 +164,7 @@ class _MyAppState extends State<MyApp> {
     return Stack(
       children: <Widget>[
         Text('메시지 내용: $messageString'),
-        FirebasePhoneAuthProvider(
-          child: MaterialApp(
+        MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Beeside',
               initialRoute: '/login',
@@ -178,7 +174,6 @@ class _MyAppState extends State<MyApp> {
                 '/user': (context) => const SetupUser(),
               },
             )
-          ),
       ],
     );
   }

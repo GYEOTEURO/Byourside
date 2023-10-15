@@ -88,7 +88,7 @@ class LoadData {
       required String? district,
       required String? disabilityType}) {
     String? handledDisabilityType =
-        (disabilityType == '해당없음') ? "전체" : disabilityType;
+        (disabilityType == '해당없음') ? '전체' : disabilityType;
     return firestore
         .collectionGroup(database.autoInformationPostCollectionGroup)
         .where('region', arrayContainsAny: [area, district, '전체'])

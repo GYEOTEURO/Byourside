@@ -1,7 +1,8 @@
-import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
-import 'package:byourside/widget/common/delete_report_block_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:byourside/constants/text.dart' as text;
+import 'package:byourside/widget/common/delete_report_block_alert.dart';
+import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 
 class ValidationUtils {
   static void _showErrorDialog(BuildContext context, String message) {
@@ -26,40 +27,51 @@ class ValidationUtils {
     NicknameController nicknameController,
     String selectedUserType,
     String selectedDisabilityType,
+    String institutionName,
     String birthYear,
     Map<String, String>? location,
     String selectedPurpose,
   ) {
-    print(location);
+    int currentYear = DateTime.now().year;
+    int? birthYearValue = int.tryParse(birthYear);
+
     if (nicknameController.controller.text.isEmpty) {
-      _showErrorDialog(context, '닉네임을 입력하세요.');
+      _showErrorDialog(context, text.askNickName);
       return false;
     }
     if (!nicknameController.isNicknameChecked.value) {
-      _showErrorDialog(context, '닉네임 중복을 확인하세요.');
+      _showErrorDialog(context, text.askVerify);
       return false;
     } else if (nicknameController.nickNameExist.value) {
-      _showErrorDialog(context, '이미 존재하는 닉네임입니다. 다른 닉네임을 사용하세요.');
+      _showErrorDialog(context, text.usedNickName);
       return false;
     }
     if (selectedUserType.isEmpty) {
-      _showErrorDialog(context, '사용자 유형을 선택하세요.');
+      _showErrorDialog(context, text.askUserType);
       return false;
     }
     if (selectedDisabilityType.isEmpty) {
-      _showErrorDialog(context, '장애 유형을 선택하세요.');
+      _showErrorDialog(context, text.askDisabilityType);
       return false;
     }
-    if (birthYear.isEmpty || birthYear.length != 4 || int.tryParse(birthYear) == null) {
-      _showErrorDialog(context, '나이를 입력하세요');
+    if (selectedUserType == text.worker && institutionName.isEmpty) {
+      _showErrorDialog(context, text.institutionNameLabel);
       return false;
     }
-    if (location == null || location.isEmpty) { 
-      _showErrorDialog(context, '위치를 선택하세요');
+    if (birthYear.isEmpty) {
+      _showErrorDialog(context, text.askUserAge);
+      return false;
+    } else if (birthYear.length != 4 || int.tryParse(birthYear) == null || birthYearValue! > currentYear || birthYearValue < currentYear - 200) {
+      print( int.tryParse(birthYear) == null );
+      _showErrorDialog(context, text.enterValidateAge);
+      return false;
+    }
+    if (location == null || location.isEmpty) {
+      _showErrorDialog(context, text.selectLocation);
       return false;
     }
     if (selectedPurpose.isEmpty) {
-      _showErrorDialog(context, '어플 사용 목적을 선택하세요.');
+      _showErrorDialog(context, text.askPurpose);
       return false;
     }
     return true;
