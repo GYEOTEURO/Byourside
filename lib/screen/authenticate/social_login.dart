@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
-import 'package:byourside/constants/constants.dart' as constants;
 import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:byourside/widget/authenticate/login/policy_link.dart';
 import 'package:byourside/widget/authenticate/login/social_login_button.dart';

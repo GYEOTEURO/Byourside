@@ -79,7 +79,10 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
                   }
                 },
                   style: OutlinedButton.styleFrom(
-                    maximumSize: Size(MediaQuery.of(context).size.width * 0.9, MediaQuery.of(context).size.height / 20),
+                    // maximumSize: Size(
+                    //   MediaQuery.of(context).size.width * 0.9,
+                    //   MediaQuery.of(context).size.height / 40, // 변경된 높이
+                    // ),
                     elevation: 0,
                     side: const BorderSide(color: Colors.white),
                   ),
