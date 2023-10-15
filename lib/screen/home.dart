@@ -11,7 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -29,11 +28,10 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-              height: MediaQuery.of(context).size.height / 5.5,
+              height: MediaQuery.of(context).size.height * 0.3,
               color: colors.homeAppBarColor,
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height / 20.5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
