@@ -50,26 +50,10 @@ void initializeNotification() async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
+    android: AndroidInitializationSettings('@mipmap/android_app_logo'),
+  ));
 
-  AndroidInitializationSettings androidInitializationSettings =
-      const AndroidInitializationSettings('mipmap/ic_launcher');
-
-  DarwinInitializationSettings iosInitializationSettings =
-      const DarwinInitializationSettings(
-    requestAlertPermission: false,
-    requestBadgePermission: false,
-    requestSoundPermission: false,
-  );
-
-  InitializationSettings initializationSettings = InitializationSettings(
-    android: androidInitializationSettings,
-    iOS: iosInitializationSettings,
-  );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
