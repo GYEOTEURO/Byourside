@@ -44,7 +44,8 @@ class _CommunityPostState extends State<CommunityPost> {
                         padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
                         child: CommentList(
                             collectionName: widget.collectionName,
-                            documentID: widget.post.id!)),
+                            documentID: widget.post.id!,
+                            postNickname: widget.post.nickname)),
               ])),
               Positioned(
                 left: 0,

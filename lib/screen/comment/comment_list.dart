@@ -19,10 +19,12 @@ class CommentList extends StatefulWidget {
   CommentList(
       {super.key,
       required this.collectionName,
-      required this.documentID});
+      required this.documentID,
+      this.postNickname});
 
   final String collectionName;
   final String documentID;
+  String? postNickname;
 
   @override
   State<CommentList> createState() => _CommentListState();
@@ -110,7 +112,7 @@ class _CommentListState extends State<CommentList> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    commentOptions(context, widget.collectionName, widget.documentID, comment),
+                    commentOptions(context, widget.collectionName, widget.documentID, widget.postNickname, comment),
                   ],
                 ),
                 const SizedBox(height: 4),
