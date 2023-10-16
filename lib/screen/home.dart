@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height / 6,
               color: colors.homeAppBarColor,
               child: Column(
                 children: [
