@@ -110,9 +110,14 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   var messageString = '';
 
+  void getDeviceToken() async {
+    var token = await FirebaseMessaging.instance.getToken();
+    print('디바이스 토큰: $token');
+  }
 
   @override
   void initState() {
+    getDeviceToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
 
