@@ -24,9 +24,11 @@ class UserController extends GetxController {
   }
 
   void addBlockedUser(String blockUid) {
-    userModel.blockedUsers!.add(blockUid);
-    saveData.addBlock(user!.uid, blockUid);
-    update();
+    if(!userModel.blockedUsers!.contains(blockUid)){
+      userModel.blockedUsers!.add(blockUid);
+      saveData.addBlock(user!.uid, blockUid);
+      update();
+    }
   }
 
   void removeBlockedUser(String blockUid) {

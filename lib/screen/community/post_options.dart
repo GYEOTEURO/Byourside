@@ -32,6 +32,7 @@ deletePost(BuildContext context, String category, String documentID){
 reportPost(BuildContext context, String collectionName, String id){
   saveData.report(collectionName, 'post', id);
   Navigator.pop(context);
+  Navigator.pop(context);
 }
 
 blockPost(BuildContext context, String blockUid){
