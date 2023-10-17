@@ -114,7 +114,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Container(
+        padding: const EdgeInsets.fromLTRB(0, 33, 0, 0),
+        child: Column(
         children: [
           _appbar(),
           _title(custom_icons.autoInformation, '정보 게시판 최신글'),
@@ -123,6 +125,7 @@ class _HomeState extends State<Home> {
           _title(custom_icons.community, '소통 게시판 인기글'),
           _communityHotPosts()
         ])
-      );
+      )
+    );
   }
 }
