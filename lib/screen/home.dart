@@ -32,6 +32,7 @@ class _HomeState extends State<Home> {
               color: colors.homeAppBarColor,
               child: Column(
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height / 20.5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
