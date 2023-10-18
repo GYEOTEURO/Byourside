@@ -7,6 +7,7 @@ const Color textColor = Color(0xFF000000);
 const Color bgrColor = Color(0xFFE6E7E8);
 const Color subColor = Color(0xFF999999);
 const Color homeAppBarColor = Color(0xFFFFF0BE);
+const Color postListAppBarColor = Color(0xEDFFF5D2);
 const Color mentionColor = Color(0xFF004FC6);
 const Color errorColor = Colors.red;
 const Color imgSubtitleColor = Color(0xFFE6E7E8);
