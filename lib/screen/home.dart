@@ -28,11 +28,11 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-              height: MediaQuery.of(context).size.height / 6,
+              padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
+              height: MediaQuery.of(context).size.height / 5.5,
               color: colors.homeAppBarColor,
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height / 20.5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -114,9 +114,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.fromLTRB(0, 33, 0, 0),
-        child: Column(
+      body: Column(
         children: [
           _appbar(),
           _title(custom_icons.autoInformation, '정보 게시판 최신글'),
@@ -125,7 +123,6 @@ class _HomeState extends State<Home> {
           _title(custom_icons.community, '소통 게시판 인기글'),
           _communityHotPosts()
         ])
-      )
-    );
+      );
   }
 }
