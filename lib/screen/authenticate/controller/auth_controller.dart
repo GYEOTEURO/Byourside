@@ -31,7 +31,6 @@ class AuthController extends GetxController {
     AuthController.instance._moveToPage(FirebaseAuth.instance.currentUser);
   }
 
-
   _moveToPage(User? user) async {
     if (user == null) {
       Get.offAll(() => const SocialLogin());
@@ -39,7 +38,6 @@ class AuthController extends GetxController {
       bool isUserSetUp = await checkIfUserSetUp(user.uid);
 
       if (isUserSetUp) {
-        Get.put(UserController(), permanent: true);
         Get.put(UserController(), permanent: true);
         await Future.delayed(const Duration(seconds: 2));
         Get.offAll(() => const BottomNavBar());
@@ -162,5 +160,4 @@ class AuthController extends GetxController {
           Text(e.toString(), style: const TextStyle(color: Colors.white)),
     );
   }
-
 }
