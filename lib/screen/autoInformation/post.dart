@@ -32,7 +32,8 @@ class _AutoInfoPostState extends State<AutoInfoPost> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                   Container(
-                      child: AutoInfoImage(imageUrls: widget.post.images)),
+                    child: AutoInfoImage(imageUrls: widget.post.images),
+                  ),
                   Container(child: AutoInfoPostContent(post: widget.post)),
                 ])),
             Positioned(
