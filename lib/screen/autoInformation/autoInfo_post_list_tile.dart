@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/autoInformation/post.dart';
 import 'package:byourside/widget/common/time_convertor.dart';
@@ -31,25 +29,34 @@ Future<List<String>> _downloadImage(List<String> imageUrls) async {
 
 Widget _imageWidget(
     BuildContext context, List<String> images, String title, double width) {
-  return FutureBuilder(
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    if (snapshot.hasData) {
-      return Semantics(
-          label: '$title 게시글의 이미지',
-          child: Container(
+  if (images.isEmpty) {
+    return Container();
+  } else {
+    return FutureBuilder<List<String>>(
+      future: _downloadImage(images),
+      builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+        if (snapshot.hasData) {
+          return Semantics(
+            label: '$title 게시글의 이미지',
+            child: Container(
               alignment: Alignment.topCenter,
               height: width * 0.26,
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(13),
-                topRight: Radius.circular(13),
-              )),
-              child: Image.network(snapshot.data[0],
-                  width: width, fit: BoxFit.cover)));
-    } else {
-      return const Center(child: CircularProgressIndicator());
-    }
-  });
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(13),
+                  topRight: Radius.circular(13),
+                ),
+              ),
+              child: Image.network(snapshot.data![0],
+                  width: width, fit: BoxFit.cover),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
 }
 
 Widget _buildTopSide(
