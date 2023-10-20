@@ -41,22 +41,27 @@ Widget _imageWidget(
           return Semantics(
             label: '$title 게시글의 이미지',
             child: Container(
-              alignment: Alignment.topCenter,
-              height: width * 0.26,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(13),
-                  topRight: Radius.circular(13),
+                alignment: Alignment.topCenter,
+                height: width * 0.26,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(13),
+                    topRight: Radius.circular(13),
+                  ),
                 ),
-              ),
-              child: Image.network(
-                snapshot.data![0],
-                width: width,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox(height: 5),
-              ),
-            ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(13),
+                    topRight: Radius.circular(13),
+                  ),
+                  child: Image.network(
+                    snapshot.data![0],
+                    width: width,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const SizedBox(height: 5),
+                  ),
+                )),
           );
         } else {
           return const Center(child: CircularProgressIndicator());
