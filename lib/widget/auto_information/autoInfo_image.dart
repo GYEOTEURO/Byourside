@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/icons.dart' as custom_icons;
 
 class AutoInfoImage extends StatefulWidget {
   const AutoInfoImage({super.key, required this.imageUrls});
@@ -43,50 +42,51 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_downloadUrls!.isNotEmpty) {
-      return Container(
-          width: MediaQuery.of(context).size.width,
-          child: Stack(children: [
-            CarouselSlider(
-                items: List.generate(_downloadUrls!.length, (index) {
-                  return Container(
-                      child: Semantics(
-                          label: widget.imageUrls[index],
-                          child: Image.network(
-                            _downloadUrls![0],
-                            fit: BoxFit.cover,
-                            height: MediaQuery.of(context).size.width,
-                          )));
-                }),
-                options: CarouselOptions(
-                    initialPage: 0,
-                    autoPlay: false,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: false,
-                    viewportFraction: 1,
-                    aspectRatio: 2.0,
-                    onPageChanged: (idx, reason) {
-                      setState(() {
-                        _current = idx;
-                      });
-                    })),
-            if (_downloadUrls!.isNotEmpty)
-              Semantics(
-                label: '현재 보이는 사진 순서 표시',
-                child: Container(
-                    alignment: Alignment.bottomCenter,
-                    child: CarouselIndicator(
-                      count: _downloadUrls!.length,
-                      index: _current,
-                      color: Colors.white30,
-                      activeColor: colors.primaryColor,
-                    )),
-              ),
-          ]));
-    } else {
+    if (_downloadUrls.isEmpty) {
       return const SizedBox(
         height: 5,
       );
+    } else {
+      return Container(
+          child: Stack(children: [
+        CarouselSlider(
+            items: List.generate(_downloadUrls.length, (index) {
+              return Container(
+                  child: Semantics(
+                      label: widget.imageUrls[index],
+                      child: Image.network(
+                        _downloadUrls[index],
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const SizedBox(height: 5),
+                      )));
+            }),
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width,
+                initialPage: 0,
+                autoPlay: false,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: false,
+                viewportFraction: 1,
+                aspectRatio: 2.0,
+                onPageChanged: (idx, reason) {
+                  setState(() {
+                    _current = idx;
+                  });
+                })),
+        Semantics(
+          label: '현재 보이는 사진 순서 표시',
+          child: Container(
+              height: MediaQuery.of(context).size.width,
+              alignment: Alignment.bottomCenter,
+              child: CarouselIndicator(
+                count: _downloadUrls.length,
+                index: _current,
+                color: Colors.grey,
+                activeColor: colors.primaryColor,
+              )),
+        ),
+      ]));
     }
   }
 }

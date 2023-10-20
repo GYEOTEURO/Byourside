@@ -51,10 +51,27 @@ void initializeNotification() async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings('@mipmap/android_app_logo'),
-  ));
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
 
+  AndroidInitializationSettings androidInitializationSettings =
+      const AndroidInitializationSettings('@mipmap/android_app_logo');
+
+  DarwinInitializationSettings iosInitializationSettings =
+      const DarwinInitializationSettings(
+    requestAlertPermission: false,
+    requestBadgePermission: false,
+    requestSoundPermission: false,
+  );
+
+  InitializationSettings initializationSettings = InitializationSettings(
+    android: androidInitializationSettings,
+    iOS: iosInitializationSettings,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -154,7 +171,6 @@ class MyAppState extends State<MyApp> {
               title: 'Beeside',
               initialRoute: '/login',
               routes: {
-                //'/login': (context) => const SocialLogin(),
                 '/login': (context) => const OnBoardingPage(),
                 '/bottom_nav': (context) => const BottomNavBar(),
                 '/user': (context) => const SetupUser(),
