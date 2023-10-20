@@ -30,7 +30,9 @@ Future<List<String>> _downloadImage(List<String> imageUrls) async {
 Widget _imageWidget(
     BuildContext context, List<String> images, String title, double width) {
   if (images.isEmpty) {
-    return Container();
+    return const SizedBox(
+      height: 5,
+    );
   } else {
     return FutureBuilder<List<String>>(
       future: _downloadImage(images),

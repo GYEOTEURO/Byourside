@@ -54,8 +54,14 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
               return Container(
                   child: Semantics(
                       label: widget.imageUrls[index],
-                      child: Image.network(_downloadUrls[index],
-                          fit: BoxFit.cover)));
+                      child: Image.network(
+                        _downloadUrls[index],
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const SizedBox(
+                          height: 5,
+                        ),
+                      )));
             }),
             options: CarouselOptions(
                 height: MediaQuery.of(context).size.width,
