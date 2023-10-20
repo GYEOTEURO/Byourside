@@ -49,8 +49,13 @@ Widget _imageWidget(
                   topRight: Radius.circular(13),
                 ),
               ),
-              child: Image.network(snapshot.data![0],
-                  width: width, fit: BoxFit.cover),
+              child: Image.network(
+                snapshot.data![0],
+                width: width,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox(height: 5),
+              ),
             ),
           );
         } else {
