@@ -29,7 +29,8 @@ class _CategoryButtonsState extends State<CategoryButtons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: colors.AppBarColor,
+      width: MediaQuery.of(context).size.width,
+      color: colors.appBarColor,
       padding: const EdgeInsets.fromLTRB(20, 0, 14, 20),
       child: Row(
         children: [
