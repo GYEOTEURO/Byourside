@@ -31,7 +31,6 @@ class AuthController extends GetxController {
     AuthController.instance._moveToPage(FirebaseAuth.instance.currentUser);
   }
 
-
   _moveToPage(User? user) async {
     if (user == null) {
       Get.offAll(() => const SocialLogin());
@@ -161,5 +160,4 @@ class AuthController extends GetxController {
           Text(e.toString(), style: const TextStyle(color: Colors.white)),
     );
   }
-
 }

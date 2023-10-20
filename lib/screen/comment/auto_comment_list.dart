@@ -1,4 +1,3 @@
-import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/comment/comment_list.dart';
 import 'package:byourside/screen/comment/create_comment.dart';
 import 'package:byourside/screen/comment/scroll_controller.dart';
