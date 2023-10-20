@@ -58,9 +58,7 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
                         _downloadUrls[index],
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                            const SizedBox(
-                          height: 5,
-                        ),
+                            const SizedBox(height: 5),
                       )));
             }),
             options: CarouselOptions(
