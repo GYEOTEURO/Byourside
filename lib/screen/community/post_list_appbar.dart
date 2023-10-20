@@ -39,7 +39,7 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: colors.postListAppBarColor,
+      color: colors.AppBarColor,
       padding: const EdgeInsets.fromLTRB(20, 45, 20, 0),
       child: Column(
         children: [

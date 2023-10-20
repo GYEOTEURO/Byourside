@@ -29,7 +29,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: colors.postListAppBarColor,
+      color: colors.AppBarColor,
       padding: const EdgeInsets.fromLTRB(20, 0, 14, 20),
       child: Row(
         children: [
