@@ -70,12 +70,14 @@ class NicknameSectionState extends State<NicknameSection> {
 
   Widget buildNicknameTextField() {
     _nicknameController.controller.addListener(() {
-      var newNickname = _nicknameController.controller.text;
-      var currentNickNameExist = _nicknameController.nickNameExist.value;
-      if (newNickname.isNotEmpty && !currentNickNameExist) {
-        _nicknameController.nickNameExist.value = true;
-        _nicknameController.isNicknameChanged.value = true;
+      // var newNickname = _nicknameController.controller.text;
+      // var currentNickNameExist = _nicknameController.nickNameExist.value;
+      // if (newNickname.isNotEmpty && !currentNickNameExist) {
+      if(_nicknameController.isNicknameChecked.value == true) {
+        _nicknameController.checkNicknameExist(context);
       }
+        // _nicknameController.isNicknameChanged.value = true;
+      // }
     });
 
     return Semantics(
@@ -117,7 +119,7 @@ class NicknameSectionState extends State<NicknameSection> {
   void handleNicknameCheckButtonPressed(BuildContext context) async {
     await _nicknameController.checkNicknameExist(context);
     _nicknameController.isNicknameChecked.value = true;
-    _nicknameController.isNicknameChanged.value = false;
+    // _nicknameController.isNicknameChanged.value = false;
 
   }
 
@@ -156,18 +158,19 @@ class NicknameSectionState extends State<NicknameSection> {
       var isNicknameChecked = _nicknameController.isNicknameChecked.value;
       var nickNameExist = _nicknameController.nickNameExist.value;
       var nickName = _nicknameController.controller.text;
-      var isNicknameChanged = _nicknameController.isNicknameChanged.value;
-
+      // var isNicknameChanged = _nicknameController.isNicknameChanged.value;
+        print(nickName);
       String message = text.none;
       if (!isNicknameChecked) {
         message = text.none; 
       } 
       else if (nickName.isEmpty) {
+
         message = text.askNickName;
       }
-      else if (isNicknameChanged) {
-        message = text.askVerify;
-      }
+      // else if (isNicknameChanged) {
+      //   message = text.askVerify;
+      // }
       else {
         message = nickNameExist
             ? text.usedNickName

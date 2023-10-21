@@ -7,7 +7,7 @@ class NicknameController extends GetxController {
 
   final TextEditingController controller = TextEditingController();
   final RxBool isNicknameChecked = false.obs;
-  final RxBool isNicknameChanged = false.obs;
+  // final RxBool isNicknameChanged = false.obs;
 
   RxBool nickNameExist = false.obs;
 
