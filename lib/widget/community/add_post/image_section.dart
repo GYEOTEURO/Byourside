@@ -22,7 +22,7 @@ Widget imageSection(
                     borderRadius: BorderRadius.circular(15.08),
                   ),
                   image: DecorationImage(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     image: FileImage(File(image.path)),
                     // 보고 수정
                   )))),

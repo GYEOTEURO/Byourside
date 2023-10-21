@@ -34,133 +34,139 @@ class _CommentListState extends State<CommentList> {
   final User? user = FirebaseAuth.instance.currentUser;
   final LoadData loadData = LoadData();
 
-  Widget _buildContent(String content){
-    String mentionedNickname = content.startsWith('@') ? content.split(' ')[0] : '';
+  Widget _buildContent(String content) {
+    String mentionedNickname =
+        content.startsWith('@') ? content.split(' ')[0] : '';
 
     return Align(
-      alignment: Alignment.centerLeft, 
-      child: EasyRichText(
-        content,
-        semanticsLabel: content,
-        defaultStyle: const TextStyle(
-          color: colors.textColor,
-          fontSize: 12,
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w400,
-        ),
-        patternList: [
-          EasyRichTextPattern(
-            targetString: mentionedNickname,
-            style: const TextStyle(color: colors.mentionColor),
-          )
-        ],
-      )
-    );
+        alignment: Alignment.centerLeft,
+        child: EasyRichText(
+          content,
+          semanticsLabel: content,
+          defaultStyle: const TextStyle(
+            color: colors.textColor,
+            fontSize: 12,
+            fontFamily: fonts.font,
+            fontWeight: FontWeight.w400,
+          ),
+          patternList: [
+            EasyRichTextPattern(
+              targetString: mentionedNickname,
+              style: const TextStyle(color: colors.mentionColor),
+            )
+          ],
+        ));
   }
 
-  OutlinedButton _mentionButton(String nickname){
+  OutlinedButton _mentionButton(String nickname) {
     return OutlinedButton(
       onPressed: () {
         HapticFeedback.lightImpact();
         CreateComment.content.text = '@$nickname ';
       },
       style: OutlinedButton.styleFrom(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(93),
-        side: const BorderSide(
-          width: 1,
-          strokeAlign: BorderSide.strokeAlignCenter,
-          color: colors.subColor,
-        ),
-        )),
-        child: const Text(
-              '언급하기',
-              semanticsLabel: '언급하기',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: colors.subColor,
-                fontSize: 13,
-                fontFamily: fonts.font,
-                fontWeight: FontWeight.w400
-              ),
-        ),
-      );
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(93),
+            side: const BorderSide(
+              width: 1,
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: colors.subColor,
+            ),
+          )),
+      child: const Text(
+        '언급하기',
+        semanticsLabel: '언급하기',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: colors.subColor,
+            fontSize: 13,
+            fontFamily: fonts.font,
+            fontWeight: FontWeight.w400),
+      ),
+    );
   }
 
-  Widget _buildCommentList(String? collectionName, String? documentID, CommentModel? comment) {
-    TimeConvertor createdAt = TimeConvertor(createdAt: comment!.createdAt, fontSize: 13.0);
+  Widget _buildCommentList(
+      String? collectionName, String? documentID, CommentModel? comment) {
+    TimeConvertor createdAt =
+        TimeConvertor(createdAt: comment!.createdAt, fontSize: 13.0);
 
     return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          custom_icons.profile,
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        custom_icons.profile,
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      comment.nickname,
-                      semanticsLabel: comment.nickname,
-                      style: const TextStyle(
-                        color: colors.textColor,
-                        fontSize: 14,
-                        fontFamily: fonts.font,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    commentOptions(context, widget.collectionName, widget.documentID, widget.postNickname, comment),
-                  ],
+                Text(
+                  comment.nickname,
+                  semanticsLabel: comment.nickname,
+                  style: const TextStyle(
+                    color: colors.textColor,
+                    fontSize: 14,
+                    fontFamily: fonts.font,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                const SizedBox(height: 4),
+                commentOptions(context, widget.collectionName,
+                    widget.documentID, widget.postNickname, comment),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Container(
+                padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: _buildContent(comment.content)),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                createdAt,
+                const Spacer(),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                  child: _buildContent(comment.content)
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    createdAt,
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                      height: MediaQuery.of(context).size.height / 33,
-                      child: _mentionButton(comment.nickname)
-                    )
-                  ],
-                ),
-                    const SizedBox(width: 8),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    height: MediaQuery.of(context).size.height / 33,
+                    child: _mentionButton(comment.nickname))
+              ],
+            ),
+            const SizedBox(width: 8),
           ]),
-          ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<CommentModel>>(
-        stream: loadData.readComments(collectionName: widget.collectionName, documentID: widget.documentID),
+        stream: loadData.readComments(
+            collectionName: widget.collectionName,
+            documentID: widget.documentID),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
-            return Column(
-              children: [
-                commentCount(context, widget.collectionName, snapshots.data!.length),
-                ListView.builder(
+            return Column(children: [
+              commentCount(
+                  context, widget.collectionName, snapshots.data!.length),
+              ListView.builder(
                   itemCount: snapshots.data!.length,
-                  physics: const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
+                  physics:
+                      const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
                   shrinkWrap: true, //ListView in ListView를 가능하게
                   itemBuilder: (_, index) {
                     CommentModel comment = snapshots.data![index];
-                    if (Get.find<UserController>().userModel.blockedUsers!.contains(comment.nickname)) {
+                    if (Get.find<UserController>()
+                        .userModel
+                        .blockedUsers!
+                        .contains(comment.nickname)) {
                       return Container();
                     } else {
-                      return _buildCommentList(widget.collectionName, widget.documentID, comment);
+                      return _buildCommentList(
+                          widget.collectionName, widget.documentID, comment);
                     }
-                })
-              ]);
+                  })
+            ]);
           } else {
             return noData();
           }
