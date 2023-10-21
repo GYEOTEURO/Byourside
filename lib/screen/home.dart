@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
     return Container(
               padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
               height: MediaQuery.of(context).size.height / 5.5,
-              color: colors.homeAppBarColor,
+              color: colors.AppBarColor,
               child: Column(
                 children: [
                   Row(

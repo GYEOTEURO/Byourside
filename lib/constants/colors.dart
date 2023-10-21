@@ -6,8 +6,7 @@ const Color lightPrimaryColor = Color(0xFFFBFBF3);
 const Color textColor = Color(0xFF000000);
 const Color bgrColor = Color(0xFFE6E7E8);
 const Color subColor = Color(0xFF999999);
-const Color homeAppBarColor = Color(0xFFFFF0BE);
-const Color postListAppBarColor = Color(0xEDFFF5D2);
+const Color AppBarColor = Color(0xFFFFF0BE);
 const Color mentionColor = Color(0xFF004FC6);
 const Color errorColor = Colors.red;
 const Color imgSubtitleColor = Color(0xFFE6E7E8);
@@ -20,7 +19,7 @@ Map<String, Color> autoInfoPostColors = {
   '지원금': supportFundPostColor,
   '돌봄 서비스': careServicePostColor,
   '보조기기': devicePostColor,
-  '교육': homeAppBarColor
+  '교육': AppBarColor
 };
 
 const List<Color> gradientColors = [
