@@ -36,6 +36,7 @@ dependencies:
   dots_indicator: ^3.0.0
   easy_rich_text: ^2.0.0
   crypto: ^3.0.3
+  onboarding: ^3.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -100,6 +101,9 @@ flutter:
     - assets/icons/loading.gif
     - assets/icons/photo.svg
     - assets/icons/site.svg
+    - assets/icons/onboarding_hobee.svg
+    - assets/icons/onboarding_autoInformation.svg
+    - assets/icons/onboarding_community.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

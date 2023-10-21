@@ -28,8 +28,9 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-              height: MediaQuery.of(context).size.height / 6,
-              color: colors.homeAppBarColor,
+              padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
+              height: MediaQuery.of(context).size.height / 5.5,
+              color: colors.AppBarColor,
               child: Column(
                 children: [
                   Row(

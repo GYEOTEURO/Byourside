@@ -29,13 +29,16 @@ class _CreateCommentState extends State<CreateComment> {
   final User user = FirebaseAuth.instance.currentUser!;
   final SaveData saveData = SaveData();
   final scrollController = Get.find<ScrollDownForComment>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     String collectionName = widget.collectionName;
     String documentID = widget.documentID;
 
-    return Row(
+    return Form(
+      key: _formKey,
+      child: Row(
         children: [
         Expanded(
           child: Semantics(
@@ -43,11 +46,17 @@ class _CreateCommentState extends State<CreateComment> {
             textField: true,
             label: '댓글을 작성해주세요.',
             child: TextFormField(
-             onTap: () { HapticFeedback.lightImpact(); },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '내용이 비어있습니다.';
+                }
+                return null;
+              },
+              onTap: () { HapticFeedback.lightImpact(); },
               controller: CreateComment.content,
-                minLines: 1,
-                maxLines: 5,
-                decoration: InputDecoration(
+              minLines: 1,
+              maxLines: 5,
+              decoration: InputDecoration(
                     labelText: '댓글을 작성해주세요.',
                     fillColor: colors.bgrColor,
                     filled: true,
@@ -68,22 +77,25 @@ class _CreateCommentState extends State<CreateComment> {
                 child: fullyRoundedRectangleButton('입력', 
                 () {
                     HapticFeedback.lightImpact();
-                    FocusScope.of(context).unfocus();
-                    CommentModel comment = CommentModel(
-                        uid: user.uid,
-                        nickname: Get.find<UserController>().userModel.nickname!,
-                        content: CreateComment.content.text,
-                        createdAt: Timestamp.now());
-                    saveData.addComment(
-                        collectionName, documentID, comment);
-                    scrollController.scrollController.animateTo(
-                        scrollController
-                            .scrollController.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 10),
-                        curve: Curves.ease);
-                    CreateComment.content.text = '';
-                  })
+                    if (_formKey.currentState!.validate()) {
+                      FocusScope.of(context).unfocus();
+                      CommentModel comment = CommentModel(
+                          uid: user.uid,
+                          nickname: Get.find<UserController>().userModel.nickname!,
+                          content: CreateComment.content.text,
+                          createdAt: Timestamp.now());
+                      saveData.addComment(
+                          collectionName, documentID, comment);
+                      scrollController.scrollController.animateTo(
+                          scrollController
+                              .scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 10),
+                          curve: Curves.ease);
+                      CreateComment.content.text = '';
+                    }
+                })
               )
-        ]);
+        ])
+    );
   }
 }

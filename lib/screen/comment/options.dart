@@ -38,12 +38,6 @@ reportComment(BuildContext context, String collectionName, String id){
 }
 
 blockComment(BuildContext context, String? postNickname, String blockUid){
-  if(postNickname == blockUid){
-    Get.offAll(() => const BottomNavBar());
-  }
-  else{
-    Navigator.pop(context);
-    Navigator.pop(context);
-  }
+  Get.offAll(() => const BottomNavBar());
   Get.find<UserController>().addBlockedUser(blockUid);
 }
