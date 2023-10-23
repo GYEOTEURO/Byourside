@@ -10,10 +10,8 @@ class NicknameController extends GetxController {
   RxString lastCheckedNickname = ''.obs; 
 
   void checkNicknameExist() {
-    if (controller.text.isNotEmpty && controller.text != lastCheckedNickname) {
-      lastCheckedNickname.value = controller.text;
-      _checkNicknameExist();
-    }
+    lastCheckedNickname.value = controller.text;
+    _checkNicknameExist();
   }
   
   Future<void> _checkNicknameExist() async {

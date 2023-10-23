@@ -107,7 +107,7 @@ class NicknameSectionState extends State<NicknameSection> {
   }
 
   void handleNicknameCheckButtonPressed(BuildContext context) async {
-    if (_nicknameController.controller.text != _nicknameController.lastCheckedNickname) {
+    if (_nicknameController.controller.text != _nicknameController.lastCheckedNickname.value) {
       _nicknameController.checkNicknameExist();
     }
 
@@ -149,15 +149,12 @@ class NicknameSectionState extends State<NicknameSection> {
       var isNicknameChecked = _nicknameController.isNicknameChecked.value;
       var nickNameExist = _nicknameController.nickNameExist.value;
       var nickName = _nicknameController.controller.text;
-      print(_nicknameController.lastCheckedNickname);
       String message;
-
-      if (!isNicknameChecked) {
-        message = text.none;
-      }
       if (nickName.isEmpty) {
         message = text.askNickName;
-      } else if (nickName != _nicknameController.lastCheckedNickname) {
+      } else if (!isNicknameChecked) {
+        message = text.none;
+      } else if (nickName != _nicknameController.lastCheckedNickname.value) {
         message = text.askVerify;
       } else {
         message = nickNameExist ? text.usedNickName : text.unusedNickName;
@@ -166,7 +163,7 @@ class NicknameSectionState extends State<NicknameSection> {
       return Text(
         message,
         style: TextStyle(
-          color: nickName.isEmpty || nickNameExist ||  nickName != _nicknameController.lastCheckedNickname ? Colors.red : Colors.green,
+          color: nickName.isEmpty || nickNameExist ||  nickName != _nicknameController.lastCheckedNickname.value ? Colors.red : Colors.green,
           fontFamily: fonts.font,
           fontSize: getRelativeWidth(0.036),
           fontWeight: FontWeight.w400,

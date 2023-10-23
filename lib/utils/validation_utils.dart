@@ -45,6 +45,9 @@ class ValidationUtils {
     } else if (nicknameController.nickNameExist.value) {
       _showErrorDialog(context, text.usedNickName);
       return false;
+    } else if (nicknameController.controller.text != nicknameController.lastCheckedNickname.value) {
+        _showErrorDialog(context, text.askVerify);
+        return false;
     }
     if (selectedUserType.isEmpty) {
       _showErrorDialog(context, text.askUserType);
