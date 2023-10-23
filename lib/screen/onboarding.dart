@@ -1,5 +1,5 @@
 import 'package:byourside/screen/authenticate/social_login.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,85 +9,94 @@ import 'package:byourside/constants/pages.dart' as pages;
 import 'package:byourside/constants/colors.dart' as colors;
 
 class OnBoardingPage extends StatelessWidget {
-  const OnBoardingPage({Key? key}) : super(key: key);
+  OnBoardingPage({Key? key}) : super(key: key);
+  final _introKey = GlobalKey<IntroductionScreenState>();
+
+  Container _nextOrStartButton(BuildContext context, String buttonText, Function pressedFunc){
+    return Container(
+      margin: EdgeInsets.all(MediaQuery.of(context).size.width * (0.04)),
+      width: MediaQuery.of(context).size.width * (0.8),
+      height: MediaQuery.of(context).size.height * (0.07),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: ElevatedButton(
+        onPressed: (){ 
+          HapticFeedback.lightImpact();
+          pressedFunc(); 
+        },
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.all<double>(0),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(60), 
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(colors.primaryColor),
+        ),
+        child: Text(
+          buttonText,
+          semanticsLabel: buttonText,
+          style: const TextStyle(
+            fontFamily: fonts.font,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: colors.textColor
+          ),
+        ),
+      )
+    );
+  }
+
+  DotsIndicator _dotsIndicator(double pageIndex){
+    return DotsIndicator(
+        dotsCount: pages.onboardingIconDescription.length,
+        position: pageIndex,
+        decorator: const DotsDecorator(
+          size: Size(10.0, 10.0),
+          color: colors.bgrColor,
+          activeColor: colors.primaryColor,
+          shape: OvalBorder(),
+      ));
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
-      pages: 
-        pages.onboardingIconDescription.map((page) =>
+      key: _introKey,
+      pages: [ 
+        for(int index = 0; index < pages.onboardingIconDescription.length; index++)
           PageViewModel(
-            //title: 'Beeside',
-            //body: page['description'],
-            titleWidget: const Text('Beeside',
-              semanticsLabel: 'Beeside', 
-              style: TextStyle(
-                color: colors.textColor,
-                fontFamily: fonts.font,
-                fontWeight: FontWeight.w600
-            )),
-            bodyWidget: Text(page['description'],
-              semanticsLabel: page['description'],
+            image: pages.onboardingIconDescription[index]['icon'],
+            titleWidget: Text(pages.onboardingIconDescription[index]['description'],
+              textAlign: TextAlign.center,
+              semanticsLabel: pages.onboardingIconDescription[index]['description'],
               style: const TextStyle(
                 color: colors.textColor,
                 fontFamily: fonts.font,
-                fontSize: 14,
-                fontWeight: FontWeight.w600
+                fontSize: 16,
+                fontWeight: FontWeight.w400
             )),
-            image: page['icon'],
+            bodyWidget: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * (0.05)),
+                _dotsIndicator(index.toDouble()),
+                index == (pages.onboardingIconDescription.length - 1) ?
+                _nextOrStartButton(context, '시작하기', () => Get.offAll(() => const SocialLogin()) )
+                : _nextOrStartButton(context, '다음', () => _introKey.currentState?.next() )
+            ]),
             decoration: const PageDecoration(
               pageColor: colors.lightPrimaryColor,
-              titleTextStyle: TextStyle(
-                color: colors.textColor,
-                fontFamily: fonts.font,
-                fontWeight: FontWeight.w600
-              ),
             ),
           ),
-        ).toList()
-      ,
-      done: const Text('시작하기',
-        semanticsLabel: '시작하기', 
-        style: TextStyle(
-          color: colors.textColor,
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w600
-      )),
-      onDone: () { Get.offAll(() => const SocialLogin()); },
-      baseBtnStyle: TextButton.styleFrom(
-        backgroundColor: colors.primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(60),
-        ),
-      ),  
-      showSkipButton: true,
-      skip: const Text('로그인',
-        semanticsLabel: '로그인', 
-        style: TextStyle(
-          color: colors.textColor,
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w600
-      )),
-      onSkip: () { Get.offAll(() => const SocialLogin()); },
+      ],
+      hideBottomOnKeyboard: true,
+      showSkipButton: false,  
+      showDoneButton: false,
       showBackButton: false,
-      next: const Text('다음',
-        semanticsLabel: '다음',
-        style: TextStyle(
-          color: colors.textColor,
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w600
-      )),
-      // curve: Curves.fastLinearToSlowEaseIn,
-      // controlsMargin: const EdgeInsets.all(16),
-      // controlsPadding: kIsWeb
-      //     ? const EdgeInsets.all(12.0)
-      //     : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: colors.bgrColor,
-        activeColor: colors.primaryColor,
-        shape: OvalBorder(),
-      ),
+      showNextButton: false,
+      customProgress: Container(color: colors.lightPrimaryColor),
     );
   }
 }

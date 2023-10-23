@@ -94,9 +94,10 @@ final site = Image.asset(
   semanticLabel: '사이트',
 );
 
-final onboardingHobee = SvgPicture.asset(
-  'assets/icons/onboarding_hobee.svg',
-  semanticsLabel: '온보딩 호비 아이콘',
+
+final onboardingHobee = Image.asset(
+  'assets/icons/onboarding_hobee.png',
+  semanticLabel: '온보딩 호비 아이콘',
 );
 
 final onboardingAutoInformation = SvgPicture.asset(

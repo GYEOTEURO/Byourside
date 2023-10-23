@@ -100,7 +100,7 @@ flutter:
     - assets/icons/loading.gif
     - assets/icons/photo.svg
     - assets/icons/site.svg
-    - assets/icons/onboarding_hobee.svg
+    - assets/icons/onboarding_hobee.png
     - assets/icons/onboarding_autoInformation.svg
     - assets/icons/onboarding_community.svg
 
