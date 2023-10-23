@@ -9,31 +9,32 @@ import 'package:byourside/constants/text.dart' as texts;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class CommunityPostListAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CommunityPostListAppBar(
-    {Key? key,
-    required this.onDisabilityTypeSelected}) 
-    : super(key: key);
+class CommunityPostListAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
+  CommunityPostListAppBar({Key? key, required this.onDisabilityTypeSelected})
+      : super(key: key);
 
   final ValueChanged<String> onDisabilityTypeSelected;
 
   @override
-  State<CommunityPostListAppBar> createState() => _CommunityPostListAppBarState();
+  State<CommunityPostListAppBar> createState() =>
+      _CommunityPostListAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(100.0);
 }
 
 class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
-  String? selectedDisabilityTypeValue = 
-    Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? 
-    '발달' 
-    : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
-  
+  String? selectedDisabilityTypeValue =
+      Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
+              '해당없음'
+          ? '발달'
+          : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+
   void _handleDisabilityTypeSelected(String value) {
-  setState(() {
-    selectedDisabilityTypeValue = value;
-  });
+    setState(() {
+      selectedDisabilityTypeValue = value;
+    });
   }
 
   @override
@@ -66,20 +67,18 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
           Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: const Text(
-                texts.communityTitle,
-                semanticsLabel: texts.communityTitle,
-                style: TextStyle(
-                    color: colors.textColor, 
-                    fontFamily: fonts.font, 
-                    fontSize: 20, 
-                    fontWeight: FontWeight.w700
-                ),
-            )),
-          )
-        ],
-      )
-    );
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: const Text(
+                    texts.communityTitle,
+                    semanticsLabel: texts.communityTitle,
+                    style: TextStyle(
+                        color: colors.textColor,
+                        fontFamily: fonts.font,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700),
+                  )),
+            )
+          ],
+        ));
   }
 }

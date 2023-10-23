@@ -29,14 +29,18 @@ class AutoInformationPostListAppBar extends StatefulWidget
   Size get preferredSize => const Size.fromHeight(100.0);
 }
 
+class _AutoInformationPostListAppBarState
+    extends State<AutoInformationPostListAppBar> {
+  String? selectedDisabilityTypeValue =
+      Get.find<UserController>().userModel.disabilityType!.split(' ')[0] ==
+              '해당없음'
+          ? '발달'
+          : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
+  Map<String, String>? location = {
+    'area': Get.find<UserController>().userModel.area!,
+    'district': Get.find<UserController>().userModel.district!
+  };
 
-class _AutoInformationPostListAppBarState extends State<AutoInformationPostListAppBar> {
-  String? selectedDisabilityTypeValue = 
-    Get.find<UserController>().userModel.disabilityType!.split(' ')[0] == '해당없음' ? 
-    '발달' 
-    : Get.find<UserController>().userModel.disabilityType!.split(' ')[0];
-  Map<String, String>? location = {'area': Get.find<UserController>().userModel.area!, 'district': Get.find<UserController>().userModel.district!}; 
-  
   void _handleDisabilityTypeSelected(String value) {
     setState(() {
       selectedDisabilityTypeValue = value;
@@ -48,7 +52,7 @@ class _AutoInformationPostListAppBarState extends State<AutoInformationPostListA
       location = {
         'area': selectedArea,
         'district': selectedDistrict,
-      };  
+      };
     });
   }
 

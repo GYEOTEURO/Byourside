@@ -3,21 +3,17 @@ import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
 
 class CategoryButtons extends StatefulWidget {
-  const CategoryButtons({
-    super.key,
-    required this.category, 
-    required this.onCategorySelected
-  });
+  const CategoryButtons(
+      {super.key, required this.category, required this.onCategorySelected});
 
   final List<String> category;
-  final ValueChanged<String> onCategorySelected;  
-  
+  final ValueChanged<String> onCategorySelected;
+
   @override
   State<CategoryButtons> createState() => _CategoryButtonsState();
 }
 
 class _CategoryButtonsState extends State<CategoryButtons> {
-
   String selectedCategory = '';
 
   @override
@@ -25,7 +21,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
     super.initState();
     selectedCategory = widget.category[0];
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,6 +63,5 @@ class _CategoryButtonsState extends State<CategoryButtons> {
             )
           )
         ]));
-    
   }
 }
