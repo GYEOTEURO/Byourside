@@ -40,32 +40,31 @@ class _CommunityPostListAppBarState extends State<CommunityPostListAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: colors.appBarColor,
-        padding: const EdgeInsets.fromLTRB(20, 45, 20, 0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                    child: appBarSelectButton(
-                        context, selectedDisabilityTypeValue!),
-                    onTap: () {
-                      HapticFeedback.lightImpact();
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ChangeDisabilityType(
-                                onDisabilityTypeSelectedFromAppBar:
-                                    _handleDisabilityTypeSelected,
-                                onDisabilityTypeSelectedFromPostList:
-                                    widget.onDisabilityTypeSelected);
-                          });
-                    }),
-                Row(children: [goToScrapPage(context), goToSearchPage(context)])
-              ],
-            ),
-            Align(
+      color: colors.appBarColor,
+      padding: const EdgeInsets.fromLTRB(20, 45, 20, 0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                child: appBarSelectButton(context, selectedDisabilityTypeValue!),
+                onTap: () {
+                    HapticFeedback.lightImpact();
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ChangeDisabilityType(onDisabilityTypeSelectedFromAppBar: _handleDisabilityTypeSelected, onDisabilityTypeSelectedFromPostList: widget.onDisabilityTypeSelected);
+                    });
+              }),
+              Row(
+                children: [
+                  goToScrapPage(context),
+                  goToSearchPage(context)
+                ])
+            ],
+          ),
+          Align(
               alignment: Alignment.centerLeft,
               child: Container(
                   padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
