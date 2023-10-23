@@ -16,6 +16,7 @@ class NicknameSection extends StatefulWidget {
 
 class NicknameSectionState extends State<NicknameSection> {
   final NicknameController _nicknameController = Get.put(NicknameController());
+  
   double _deviceWidth = 0;
   double _deviceHeight = 0;
 
@@ -69,17 +70,6 @@ class NicknameSectionState extends State<NicknameSection> {
 
 
   Widget buildNicknameTextField() {
-    _nicknameController.controller.addListener(() {
-      // var newNickname = _nicknameController.controller.text;
-      // var currentNickNameExist = _nicknameController.nickNameExist.value;
-      // if (newNickname.isNotEmpty && !currentNickNameExist) {
-      if(_nicknameController.isNicknameChecked.value == true) {
-        _nicknameController.checkNicknameExist(context);
-      }
-        // _nicknameController.isNicknameChanged.value = true;
-      // }
-    });
-
     return Semantics(
       container: true,
       textField: true,
@@ -117,10 +107,12 @@ class NicknameSectionState extends State<NicknameSection> {
   }
 
   void handleNicknameCheckButtonPressed(BuildContext context) async {
-    await _nicknameController.checkNicknameExist(context);
-    _nicknameController.isNicknameChecked.value = true;
-    // _nicknameController.isNicknameChanged.value = false;
+    if (_nicknameController.controller.text != _nicknameController.lastCheckedNickname) {
+      _nicknameController.checkNicknameExist();
+    }
 
+    _nicknameController.isNicknameChecked.value = true;
+    _nicknameController.lastCheckedNickname = _nicknameController.controller.text.obs;
   }
 
 
@@ -152,35 +144,29 @@ class NicknameSectionState extends State<NicknameSection> {
     );
   }
 
-
   Widget buildNicknameCheckResultText() {
     return Obx(() {
       var isNicknameChecked = _nicknameController.isNicknameChecked.value;
       var nickNameExist = _nicknameController.nickNameExist.value;
       var nickName = _nicknameController.controller.text;
-      // var isNicknameChanged = _nicknameController.isNicknameChanged.value;
-        print(nickName);
-      String message = text.none;
-      if (!isNicknameChecked) {
-        message = text.none; 
-      } 
-      else if (nickName.isEmpty) {
+      print(_nicknameController.lastCheckedNickname);
+      String message;
 
+      if (!isNicknameChecked) {
+        message = text.none;
+      }
+      if (nickName.isEmpty) {
         message = text.askNickName;
+      } else if (nickName != _nicknameController.lastCheckedNickname) {
+        message = text.askVerify;
+      } else {
+        message = nickNameExist ? text.usedNickName : text.unusedNickName;
       }
-      // else if (isNicknameChanged) {
-      //   message = text.askVerify;
-      // }
-      else {
-        message = nickNameExist
-            ? text.usedNickName
-            : text.unusedNickName;
-      }
-      
+
       return Text(
         message,
         style: TextStyle(
-          color: nickName.isEmpty || nickNameExist ? Colors.red : Colors.green,
+          color: nickName.isEmpty || nickNameExist ||  nickName != _nicknameController.lastCheckedNickname ? Colors.red : Colors.green,
           fontFamily: fonts.font,
           fontSize: getRelativeWidth(0.036),
           fontWeight: FontWeight.w400,
