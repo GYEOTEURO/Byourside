@@ -48,7 +48,7 @@ class NicknameSectionState extends State<NicknameSection> {
 
   Widget buildNicknameContent(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(getRelativeWidth(0.05)),
+      padding: EdgeInsets.all(getRelativeWidth(0.04)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -61,7 +61,7 @@ class NicknameSectionState extends State<NicknameSection> {
               buildCheckNicknameButton(context),
             ],
           ),
-          SizedBox(height: getRelativeHeight(0.01)), 
+          SizedBox(height: getRelativeHeight(0.02)), 
           buildNicknameCheckResultText(),
         ],
       ),
@@ -77,7 +77,7 @@ class NicknameSectionState extends State<NicknameSection> {
       hint: text.hintNickName,
       child: SizedBox(
         width: getRelativeWidth(0.66),
-        height: getRelativeHeight(0.07),
+        height: getRelativeHeight(0.06),
         child: TextFormField(
           onTap: () {
             HapticFeedback.lightImpact();
@@ -90,8 +90,8 @@ class NicknameSectionState extends State<NicknameSection> {
             filled: true,
             hintText: text.hintNickName,
             labelStyle: TextStyle(
-              color: colors.textColor,
-              fontSize: getRelativeWidth(0.036),
+              color: colors.subColor,
+              fontSize: getRelativeHeight(0.02),
               fontFamily: fonts.font,
               fontWeight: FontWeight.w500,
             ),
@@ -99,6 +99,7 @@ class NicknameSectionState extends State<NicknameSection> {
               borderRadius: BorderRadius.circular(getRelativeWidth(0.087)),
               borderSide: BorderSide.none,
             ),
+            contentPadding: EdgeInsets.only(left: getRelativeWidth(0.05)),
           ),
           autofocus: true,
         ),
@@ -123,7 +124,7 @@ class NicknameSectionState extends State<NicknameSection> {
       },
       child: Container(
         width: getRelativeWidth(0.26),
-        height: getRelativeHeight(0.07),
+        height: getRelativeHeight(0.06),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(getRelativeWidth(0.2)),
           color: const Color(0xffffc700),
@@ -165,7 +166,7 @@ class NicknameSectionState extends State<NicknameSection> {
         style: TextStyle(
           color: nickName.isEmpty || nickNameExist ||  nickName != _nicknameController.lastCheckedNickname.value ? Colors.red : Colors.green,
           fontFamily: fonts.font,
-          fontSize: getRelativeWidth(0.036),
+          fontSize: getRelativeHeight(0.02),
           fontWeight: FontWeight.w400,
         ),
       );

@@ -62,8 +62,8 @@ class InstitutionNameTextFieldState extends State<InstitutionNameTextField> {
                 fillColor: colors.bgrColor,
                 hintText: text.institutionNameHint,
                 hintStyle: TextStyle(
-                  color: colors.textColor,
-                  fontSize: getRelativeWidth(0.04),
+                  color: colors.subColor,
+                  fontSize: getRelativeHeight(0.02),
                   fontFamily: fonts.font,
                   fontWeight: FontWeight.w500,
                 ),
@@ -71,6 +71,7 @@ class InstitutionNameTextFieldState extends State<InstitutionNameTextField> {
                   borderRadius: BorderRadius.circular(getRelativeWidth(0.087)),
                   borderSide: BorderSide.none,
                 ),
+                contentPadding: EdgeInsets.only(left: getRelativeWidth(0.05)),
               ),
               autofocus: true,
             ),
