@@ -20,58 +20,57 @@ class UserTypeButton extends StatelessWidget {
     required this.font
   });
   
-@override
-Widget build(BuildContext context) {
-  return SizedBox(
-    width: width,
-    height: height,
-    child: ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all<double>(0),
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.pressed) || isSelected) {
-              return colors.midPrimaryColor; 
-            }
-            return colors.bgrColor; 
-          },
-        ),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.all<double>(0),
+          backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed) || isSelected) {
+                return colors.midPrimaryColor; 
+              }
+              return colors.bgrColor; 
+            },
+          ),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          side: MaterialStateProperty.resolveWith<BorderSide?>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed) || isSelected) {
+                return const BorderSide(color: colors.midPrimaryColor,); 
+              }
+              return const BorderSide(color: colors.bgrColor,); 
+            },
           ),
         ),
-        side: MaterialStateProperty.resolveWith<BorderSide?>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.pressed) || isSelected) {
-              return const BorderSide(color: colors.midPrimaryColor,); 
-            }
-            return const BorderSide(color: colors.bgrColor,); 
-          },
-        ),
-      ),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center, 
-          children: [
-            auth_icons.iconMap[userType] ?? const SizedBox(),
-            if (userType != text.noneType) 
-              SizedBox(height: height * 0.06),
-            Text(
-              userType == text.noneType ? text.haveNoneType : userType,
-              style: TextStyle(
-                fontSize: font,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, 
+            children: [
+              auth_icons.iconMap[userType] ?? const SizedBox(),
+              if (userType != text.noneType) 
+                SizedBox(height: height * 0.06),
+              Text(
+                userType == text.noneType ? text.haveNoneType : userType,
+                style: TextStyle(
+                  fontSize: font,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

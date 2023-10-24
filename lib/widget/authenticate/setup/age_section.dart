@@ -77,7 +77,7 @@ class AgeSectionState extends State<AgeSection> {
       hintText: text.hintUserAge,
       fillColor: colors.bgrColor,
       hintStyle: TextStyle(
-        color: colors.textColor,
+        color: colors.subColor,
         fontSize: getRelativeWidth(0.038),
         fontFamily: fonts.font,
         fontWeight: FontWeight.w500,
