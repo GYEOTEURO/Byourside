@@ -97,6 +97,7 @@ class _SetupUserState extends State<SetupUser> {
   }
 
   bool _validateInputs() {
+    
     return ValidationUtils.validateInputs(
       context,
       _nicknameController,
