@@ -73,7 +73,7 @@ class ValidationUtils {
       _showErrorDialog(context, text.selectLocation);
       return false;
     }
-    if (selectedPurpose.isEmpty) {
+    if (selectedPurpose.isEmpty || selectedPurpose == text.askPurpose) {
       _showErrorDialog(context, text.askPurpose);
       return false;
     }
