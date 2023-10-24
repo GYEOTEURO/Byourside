@@ -14,7 +14,7 @@ class AppPurposeSelection extends StatefulWidget {
 }
 
 class AppPurposeSelectionState extends State<AppPurposeSelection> {
-  String _selectedPurpose = text.askPurpose;
+  String _selectedPurpose = text.getInformation;
   double _deviceWidth = 0;
   double _deviceHeight = 0;
 
@@ -45,60 +45,54 @@ class AppPurposeSelectionState extends State<AppPurposeSelection> {
       width : getRelativeWidth(0.04),
     );
   }
-Widget buildDropdownButton() {
-  return SizedBox(
-    width: getRelativeWidth(0.89),
-    height: getRelativeHeight(0.08),
-    child: DropdownButtonFormField<String>(
-      value: _selectedPurpose,
-      onChanged: handlePurposeChanged,
-      items: [
-        text.askPurpose,
-        text.getInformation,
-        text.promotion,
-        text.communication,
-      ].map<DropdownMenuItem<String>>((String value) {
-        final isDisabled = value == text.askPurpose;
-
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getRelativeWidth(0.06)),
-            child: Text(
-              value,
-              style: TextStyle(
-                fontSize: getRelativeHeight(0.02),
-                color: isDisabled ? Colors.grey : Colors.black,
-                fontWeight: FontWeight.w700,
+  
+  Widget buildDropdownButton() {
+    return SizedBox(
+      width: getRelativeWidth(0.89),
+      height: getRelativeHeight(0.08),
+      child: DropdownButtonFormField<String>(
+          value: _selectedPurpose,
+          onChanged: handlePurposeChanged,
+          items: [text.getInformation, text.promotion, text.communication]
+            .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: getRelativeWidth(0.06)), // 원하는 패딩 값을 지정합니다.
+              child: Text(
+                value,
+                style: TextStyle(
+                  fontSize: getRelativeHeight(0.02),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+                ),
+              );
+            }).toList(),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(
+                color: colors.primaryColor,
+                width: getRelativeWidth(0.003), 
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(
+                color: colors.primaryColor, 
+                width: getRelativeWidth(0.003),
               ),
             ),
           ),
-        );
-      }).toList(),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: BorderSide(
-            color: colors.primaryColor,
-            width: getRelativeWidth(0.003),
-          ),
+          isExpanded: true,
+          focusColor: colors.bgrColor,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: BorderSide(
-            color: colors.primaryColor,
-            width: getRelativeWidth(0.003),
-          ),
-        ),
-      ),
-      isExpanded: true,
-      focusColor: colors.bgrColor,
-    ),
-  );
-}
-
+      );
+    }
 
   void handlePurposeChanged(String? newValue) {
     if (newValue != null) {
