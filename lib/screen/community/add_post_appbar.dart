@@ -20,7 +20,7 @@ class _CommunityAddPostAppBarState extends State<CommunityAddPostAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: colors.lightPrimaryColor,
+      backgroundColor: colors.appBarColor,
       elevation: 0.0,
       title: const Text(
         texts.communityAddPostTitle,

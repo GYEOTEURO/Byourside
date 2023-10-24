@@ -117,7 +117,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          color: colors.lightPrimaryColor,
+                          color: colors.appBarColor,
                           padding: const EdgeInsets.all(10),
                           child: Column(children: [
                             DisabilityTypeSectionInAddPost(

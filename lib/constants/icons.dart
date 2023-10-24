@@ -93,3 +93,18 @@ final site = Image.asset(
   'assets/icons/site.svg',
   semanticLabel: '사이트',
 );
+
+final onboardingHobee = SvgPicture.asset(
+  'assets/icons/onboarding_hobee.svg',
+  semanticsLabel: '온보딩 호비 아이콘',
+);
+
+final onboardingAutoInformation = SvgPicture.asset(
+  'assets/icons/onboarding_autoInformation.svg',
+  semanticsLabel: '온보딩 정보제공 아이콘',
+);
+
+final onboardingCommunity = SvgPicture.asset(
+  'assets/icons/onboarding_community.svg',
+  semanticsLabel: '온보딩 소통 아이콘',
+);
