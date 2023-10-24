@@ -5,7 +5,7 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 
 PreferredSizeWidget titleOnlyAppbar(BuildContext context, String title, {bool showBackButton = true}) {
   return AppBar(
-    backgroundColor: Colors.white,
+    backgroundColor: colors.appBarColor,
     elevation: 0,
     title: Text(
       title,
