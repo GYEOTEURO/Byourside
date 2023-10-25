@@ -24,10 +24,8 @@ class _CategoryButtonsState extends State<CategoryButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: colors.appBarColor,
-      padding: const EdgeInsets.fromLTRB(20, 0, 14, 20),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       child: Row(
         children: [
         for(int i=0; i<widget.category.length; i++)

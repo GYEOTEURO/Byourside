@@ -29,8 +29,7 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-              padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
-              height: MediaQuery.of(context).size.height / 5.5,
+              padding: const EdgeInsets.fromLTRB(0, 45, 0, 15),
               color: colors.appBarColor,
               child: Column(
                 children: [
@@ -51,7 +50,7 @@ class _HomeState extends State<Home> {
                           goToSearchPage(context)
                         ])
                     ]),
-                    Center(child: custom_icons.logo),
+                    Center(child: custom_icons.logo)
               ])
             );
   }
