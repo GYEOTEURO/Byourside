@@ -1,5 +1,5 @@
 # This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
+# check for errors, trues, and lints.
 #
 # The issues identified by the analyzer are surfaced in the UI of Dart-enabled
 # IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
@@ -8,6 +8,50 @@
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
+
+# 줄 색깔과 의미
+# warning : 노란줄
+# error : 빨간줄
+# info : 파란줄
+# ignore : 무시 (아무것도 뜨지 않음)
+
+analyzer:
+    errors:
+      avoid_empty_else: warning # 빈 else문 피하기
+      avoid_print: ignore # print문 피하기
+      camel_case_types: warning # 타입 이름을 카멜 표기법으로 작성하기
+      curly_braces_in_flow_control_structures: warning # 흐름 제어 구조(if, for, while 등)에 중괄호 사용하기
+      file_names: ignore # 파일명에 대한 규칙 (1.소문자 2.단어는 _로 구분 ex.snake_case 3.파일 목적/내용 반영)
+      no_logic_in_create_state: warning # createState 메서드에서 로직 피하기 (조건문/반복문/계산 X -> 상태 생성 및 초기화만 포함)
+      prefer_const_constructors: warning # 상수 생성자 사용하기
+      prefer_const_declarations: warning # 상수 선언하기
+      prefer_is_empty: warning # 컬렉션 비어있음을 검사하기 위해 length 대신 isEmpty 사용하기 (collection.length == 0 -> collection.isEmpty)
+      prefer_is_not_empty: warning # 컬렉션이 비어있지 않음을 검사하기 위해 length 대신 isNotEmpty 사용하기 (collection.length != 0 -> collection.isNotEmpty)
+      prefer_single_quotes: warning # 문자열에 작은따옴표 사용하기
+      prefer_typing_uninitialized_variables: warning # 초기화되지 않은 변수에 타입 지정하기
+      sort_child_properties_last: warning # 위젯 속성 중 자식 관련 속성을 마지막에 정렬하기
+      type_init_formals: warning # 생성자 매개변수에 타입 지정하기
+      unnecessary_await_in_return: warning # return문에서 불필요한 await 제거하기
+      unnecessary_const: warning # 불필요한 const 제거하기
+      unnecessary_final: warning # 불필요한 final 제거하기
+      unnecessary_late: warning # 불필요한 late 제거하기
+      unnecessary_new: warning # 불필요한 new 제거하기
+      unnecessary_null_checks: warning # 불필요한 null check 제거하기
+      unnecessary_parenthesis: warning # 불필요한 괄호 제거하기
+      unnecessary_string_escapes: warning # 불필요한 string escape 제거하기
+      use_colored_box: warning # 색상 지정 코드에선 container 대신 colored_box 사용하기
+      use_decorated_box: warning # 디자인 지정 코드에선 container 대신 decorated_box 사용하기
+      use_enums: warning # 열거형 변수는 enum 사용하기
+      use_key_in_widget_constructors: warning # 위젯 생성자에서 key 매개변수 사용하기
+      # class MyWidget extends StatelessWidget {
+        # final String title;
+        
+        # MyWidget(this.title); key 사용 X
+        # MyWidget({Key? key, required this.title}) : super(key: key); key 사용 O
+      
+
+  
+
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -22,8 +66,45 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+      avoid_empty_else: true
+      avoid_print: true
+      avoid_unnecessary_containers: true
+      curly_braces_in_flow_control_structures: true
+      camel_case_types: true # Classes and typedefs should use UpperCamelCase
+      file_names: true
+      no_logic_in_create_state: true
+      prefer_const_constructors: true
+      prefer_const_declarations: true
+      prefer_is_empty: true
+      prefer_is_not_empty: true
+      prefer_single_quotes: true
+      prefer_typing_uninitialized_variables: true
+      sort_child_properties_last: true
+      type_init_formals: true
+      unnecessary_await_in_return: true
+      unnecessary_const: true
+      unnecessary_final: true
+      unnecessary_late: true
+      unnecessary_new: true
+      unnecessary_null_checks: true
+      unnecessary_parenthesis: true
+      unnecessary_string_escapes: true
+      use_colored_box: true
+      use_decorated_box: true
+      use_enums: true
+      use_key_in_widget_constructors: true
+
+      # 아래의 rule들이 기본적으로 내장되어 있어서 rule에 명시하지 않아도 이미 info로 되어있음
+      # 참고 : https://github.com/flutter/packages/blob/main/packages/flutter_lints/lib/flutter.yaml
+
+      # 그 중 위에 적지 않은 rule들
+      # 위에 추가해둔 rule들은 warning 혹은 error로 둘 것들을 올려둠
+      # prefer_const_constructors_in_immutables
+      # prefer_const_literals_to_create_immutables
+      # sized_box_for_whitespace
+      # use_build_context_synchronously
+      # use_full_hex_values_for_flutter_colors
+      
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

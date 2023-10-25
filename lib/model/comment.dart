@@ -2,26 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CommentModel {
   String? id;
-  String? uid;
-  String? nickname;
-  String? content;
-  Timestamp? datetime;
+  final String uid;
+  final String nickname;
+  final String content;
+  final Timestamp createdAt;
 
-  CommentModel({this.id, this.uid, this.nickname, this.content, this.datetime});
+  CommentModel({
+    this.id, 
+    required this.uid, 
+    required this.nickname, 
+    required this.content, 
+    required this.createdAt
+  });
 
-  CommentModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc)
+  CommentModel.fromDocument({required DocumentSnapshot<Map<String, dynamic>> doc})
       : id = doc.id,
-        uid = doc["uid"],
-        nickname = doc["nickname"],
-        content = doc["content"],
-        datetime = doc["datetime"];
+        uid = doc['uid'],
+        nickname = doc['nickname'],
+        content = doc['content'],
+        createdAt = doc['createdAt'];
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> convertToDocument() {
     return {
       'uid': uid,
       'nickname': nickname,
       'content': content,
-      'datetime': datetime,
+      'createdAt': createdAt,
     };
   }
 }

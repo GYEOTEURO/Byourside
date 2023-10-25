@@ -1,81 +1,104 @@
-# Byourside
-2022 배리어 프리 앱 개발 콘테스트 팀 곁으로
 
-----
-## Git Commit Message Convention
+# Beeside
+ 
 
-```python
-Type(유형): Subject(제목) (#이슈번호 - 생략가능)
-# blank line
-Body(본문 - 생략 가능)
-# blank line
-Footer(꼬릿말 - 생략 가능)
-```
+발달장애와 뇌병변장애 아동의 보호자를 위한 맞춤형 정보 제공 및 커뮤니티 서비스  
+  
+*This app provides customized information and community services for parents of children with Developmental disability and Encephalopathy.*
 
 
-### *Header*
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/c51e956e-5fad-4942-a4cf-5d51546d3a4c)
+  
+<br/><br/>
 
-> 1. 커밋 유형과 제목의 첫 글자는 대문자로 표기한다.
-> 2. 제목은 50자를 넘기지 않고, 마침표(`.`)를 표기하지 않는다.
-> 3. 타입의 끝에는 콜론(`:`)을 작성하고 한 칸 공백을 두어 제목과 구분한다.
-> 4. 제목과 본문, 본문과 꼬릿말은 한 줄 띄워 분리한다.
-> 5. 제목은 명령문을 지향하며, 과거형은 적지 않는다.
-> 6. 이슈 번호가 있다면 제목의 끝에 (`(#이슈 번호)`-괄호포함)을 작성한다.
 
-<details>
-<summary><b>Type</b></summary>
-<div markdown="1">       
+## General Intro
 
-|Type|Explanation|
-|:---|:---|
-|Feat|새로운 기능을 추가
-|Fix|	버그를 고친 경우
-|Chore|	간단한 수정 혹은 빌드 업데이트
-|Design|	사용자 UI 디자인 변경
-|!BREAKING CHANGE|	커다란 API 변경
-|!HOTFIX|	급하게 치명적인 버그를 고쳐야하는 경우
-|Style|	코드에 변화가 없는 수정 (코드 포맷 변경, 세미 콜론 누락, 들여쓰기 등)
-|Refactor|	프로덕션 코드 리팩토링 (결과의 변경 없이 코드의 구조를 재조정 / 가독성을 높여 유지보수를 하는 경우)
-|Comment|	필요한 주석 추가 및 변경
-|Docs|	문서를 수정한 경우
-|Test|	테스트 코드 (테스트 추가/ 테스트 코드 리팩토링) - 프로덕션 코드 변경 없음
-|Build|	빌드 테스트 업데이트, 패키지 매니저 설정 - 프로덕션 코드 변경 없음
-|Rename|	파일 혹은 폴더명을 수정하는 경우
-|Remove|	파일을 삭제하는 경우
-|Move|	코드나 파일을 이동하는 경우
 
+프로젝트 지속기간 : 2022.04 ~
+
+배포 링크 : https://play.google.com/store/apps/details?id=com.byourside.android
+
+시연 영상 : https://youtu.be/xS5aE5KFRs0
+
+'Beeside' 내 정보 게시판의 데이터 수집 관련 레포지토리 : https://github.com/GYEOTEURO/Auto-information
+
+> 이 앱의 이전 버전은 현대오토에버와 서울사회복지공동모금회의 지원으로 제작되었습니다.  
+ 
+<br/><br/>
+
+
+
+## Technologies
+Project is created with:  
+
+|                |NAME                          |
+|----------------|-------------------------------|
+|Language         |`Dart` `Python`            |
+|Framework|`Flutter` `Firebase` `Chat GPT API` `Selenium` `Pandas` `asyncio & aiohttp` `Amazon EC2` `Crontab` `AWS Lambda` `Amazon Event Bridge` `Figma` `Adobe`|
+|IDE     |`VScode` `Android Studio` `Flutter Lints`|
+|Source Code Management     |`Git` `Github`|
+|Test     |`Flutter Test `|
+|CI/CD Pipeline     |`Github Actions` `Fastlane`|
+|Project Document Management     |`Jira` `Confluence` `Wakatime`|
+|Collaboration Tools |`Zoom` `Google Meet`|
+
+<br/><br/>
+
+## Feature
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/30e668f5-1b63-4b5d-956c-ef5bf1436396)  
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/bf0ca3a8-ef28-470c-b750-cc60630747ff)  
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/ea5f3648-a6a1-42ce-bff8-6aa4587e567b)
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/db027dbb-2508-4db4-bfc1-6da54b2b672c)
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/a817d10f-37e7-4f46-916c-cc25ce65e980)
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/21e26b70-53bb-4257-b709-c5a5e06f5186)  
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/488f9c01-26d8-4118-adbd-d36ffdf12094)  
+
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/70333aac-1621-4cca-9dc8-bbfdc97fafa2)
+
+
+<br/><br/>
+
+## Architecture
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/c786e129-2ba9-4f24-b41f-225d9f8f5aae)
+
+<br/><br/>
+
+## Flowchart
+![image](https://github.com/GYEOTEURO/Byourside/assets/66212424/d6dfa0dc-f8b3-42aa-846b-de842d048bc7)
+
+<br/><br/>
+
+## Developers
+<div align='center'>
+<table>
+    <thead>
+        <tr>
+            <th colspan="5">GYEOTEURO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <tr>
+            <td align='center'><a href="https://github.com/anjiwon319"><img src="https://avatars.githubusercontent.com/u/66212424?v=4" width="100" height="100"></td>
+            <td align='center'><a href="https://github.com/Shin-MG"><img src="https://avatars.githubusercontent.com/u/66138381?v=4" width="100" height="100"></td>
+            <td align='center'><a href="https://github.com/YunHaaaa"><img src="https://avatars.githubusercontent.com/u/63325450?v=4" width="100" height="100"></td>
+          </tr>
+          <tr>
+            <td align='center'>안지원</td>
+            <td align='center'>신민경</td>
+            <td align='center'>윤하은</td>
+          </tr>
+        </tr>
+    </tbody>
+</table>
 </div>
-</details>
 
-
-### *Body*
-
-*생략 가능*
-
-1. 생략이 불가능할 경우 자세한 내용을 적어 본문을 구성한다.
-2. 어떻게(How)보다 무엇(What)을, 왜(Why)에 초점을 맞춰 작성한다.
-
-
-### *Footer*
-
-*생략 가능*
-
-형식: `Type: #issue_number`
-
-1. 이슈 트랙킹을 위해 사용한다. (이슈 트래커 ID를 작성)
-2. 여러 개의 이슈는 쉼표로 구분한다.
-
-<details>
-<summary><b>Type</b></summary>
-<div markdown="1">       
-
-|Type|Explanation|
-|:---|:---|
-|Resolves|이슈 해결
-|Fixes|이슈 수정중
-|Ref|참고할 이슈가 있음
-
-
-</div>
-</details>
+&nbsp; 
 
