@@ -58,7 +58,6 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
                       child: Semantics(
                           label: widget.imageUrls[index],
                           child: Image.network(
-                            width: MediaQuery.of(context).size.width,
                             _downloadUrls[index],
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
