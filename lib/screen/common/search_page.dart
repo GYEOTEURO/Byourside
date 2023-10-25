@@ -70,7 +70,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(children: [
-      const SizedBox(height: 20),
+      const SizedBox(height: 45),
       Row(children: [
         backToPreviousPage(context),
         Flexible(
