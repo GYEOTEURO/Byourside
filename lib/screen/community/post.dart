@@ -35,17 +35,13 @@ class _CommunityPostState extends State<CommunityPost> {
                 child: Column(
                   children: [
                     Container(
-                        color: Colors.white,
                         margin: const EdgeInsets.all(7),
                         padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
                         child: CommunityPostContent(post : widget.post)),
-                    Container(
-                        margin: const EdgeInsets.all(7),
-                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-                        child: CommentList(
+                    CommentList(
                             collectionName: widget.collectionName,
                             documentID: widget.post.id!,
-                            postNickname: widget.post.nickname)),
+                            postNickname: widget.post.nickname),
               ])),
               Positioned(
                 left: 0,

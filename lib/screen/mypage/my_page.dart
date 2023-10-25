@@ -4,6 +4,7 @@ import 'package:byourside/widget/info_container.dart';
 import 'package:byourside/widget/common/title_only_appbar.dart';
 import 'package:byourside/constants/pages.dart' as pages;
 import 'package:byourside/constants/icons.dart' as custom_icons;
+import 'package:byourside/constants/colors.dart' as colors;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 진동을 사용하기 위한 패키지 추가
 import 'package:get/get.dart';
@@ -57,7 +58,7 @@ class _MypageState extends State<Mypage> {
     var age = calculateAge(userController.userModel.birthYear);
 
     return Scaffold(
-      appBar: titleOnlyAppbar(context, widget.title, showBackButton: false), // '마이페이지'를 widget.title로 변경
+      appBar: titleOnlyAppbar(context, widget.title, showBackButton: false, backgroundColor: colors.appBarColor), // '마이페이지'를 widget.title로 변경
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
