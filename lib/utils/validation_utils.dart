@@ -1,7 +1,7 @@
+import 'package:byourside/widget/common/report_only_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:byourside/constants/text.dart' as text;
-import 'package:byourside/widget/common/delete_report_block_alert.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 
 class ValidationUtils {
@@ -9,10 +9,8 @@ class ValidationUtils {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return DeleteReportBlockAlert(
+        return ReportOnlyAlert(
           message: message,
-          subMessage: '',
-          buttonText: '확인',
           onPressed: () {
             HapticFeedback.lightImpact(); // 약한 진동
             Navigator.of(context).pop(true);
