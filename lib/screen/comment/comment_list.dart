@@ -149,7 +149,10 @@ class _CommentListState extends State<CommentList> {
             return Column(children: [
               commentCount(
                   context, widget.collectionName, snapshots.data!.length),
-              ListView.builder(
+              Container(
+                margin: const EdgeInsets.all(5),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
+                child: ListView.builder(
                   itemCount: snapshots.data!.length,
                   physics:
                       const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
@@ -165,7 +168,7 @@ class _CommentListState extends State<CommentList> {
                       return _buildCommentList(
                           widget.collectionName, widget.documentID, comment);
                     }
-                  })
+                  }))
             ]);
           } else {
             return noData();

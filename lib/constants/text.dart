@@ -1,5 +1,7 @@
 const String registrationFailedText = 'Registration is Failed';
 
+const String check = '확인';
+
 const String loginTitle = '소셜 로그인 화면';
 const String googleLoginText = 'Google 계정으로 로그인';
 const String appleLoginText = 'Apple로 로그인';

@@ -51,29 +51,33 @@ class _CommunityPostContentState extends State<CommunityPostContent> {
     return Align(
         alignment: Alignment.centerLeft,
         child: SelectionArea(
-            child: Text(
-          title,
-          semanticsLabel: title,
-          style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              fontFamily: fonts.font,
-              color: colors.textColor),
-        )));
+          child: Text(
+            title,
+            semanticsLabel: title,
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                fontFamily: fonts.font,
+                color: colors.textColor),
+          )
+    ));
   }
 
   Widget _buildContent(String content) {
-    return Wrap(children: [
-      Text(
-        content,
-        semanticsLabel: content,
-        style: const TextStyle(
-          fontSize: 13,
-          fontFamily: fonts.font,
-          fontWeight: FontWeight.w400,
-        ),
-      )
-    ]);
+    return Align(
+        alignment: Alignment.centerLeft,
+        child: SelectionArea(
+          child: Text(
+            content,
+            semanticsLabel: content,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontSize: 13,
+              fontFamily: fonts.font,
+              fontWeight: FontWeight.w400,
+            ),
+          )
+    ));
   }
 
   Widget _buildLikesAndScraps(
