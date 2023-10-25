@@ -43,70 +43,46 @@ Widget myPageOptions(BuildContext context, String optionName, List<Map<String, d
               fontSize: 15,
               fontFamily: fonts.font,
               fontWeight: FontWeight.w700,
-              height: 1.53,
             ),
           ), 
         ),
-        SizedBox(height: MediaQuery.of(context).size.height / 40),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          height: MediaQuery.of(context).size.height / 14.5 * options.length,
-          decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 0.50, color: colors.subColor),
-                  borderRadius: BorderRadius.circular(10),
-              ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for(int i = 0; i < options.length; i++)
-              Column(
-                children: [
-                OutlinedButton(
-                  onPressed: () {
-                    HapticFeedback.lightImpact(); // 약한 진동
-                    if (options[i].containsKey('action')) {
-                    options[i]['action'](context);
-                  }
-                  if (options[i].containsKey('page')) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => options[i]['page'],
-                      ),
-                    );
-                  }
-                },
-                  style: OutlinedButton.styleFrom(
-                    // maximumSize: Size(
-                    //   MediaQuery.of(context).size.width * 0.9,
-                    //   MediaQuery.of(context).size.height / 40, // 변경된 높이
-                    // ),
-                    elevation: 0,
-                    side: const BorderSide(color: Colors.white),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+        for(int i = 0; i < options.length; i++)
+          OutlinedButton(
+              onPressed: () {
+                HapticFeedback.lightImpact(); // 약한 진동
+                if (options[i].containsKey('action')) {
+                options[i]['action'](context);
+              }
+              if (options[i].containsKey('page')) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => options[i]['page'],
                   ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      options[i]['name'],
-                      style: const TextStyle(
-                        color: colors.textColor,
-                        fontSize: 15,
-                        fontFamily: fonts.font,
-                        fontWeight: FontWeight.w400,
-                        height: 1.20,
-                      ),
-                    )
-                )),
-                i != (options.length -1) ?
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: const Divider(color: colors.subColor, thickness: 1)
-                )
-                : Container()
-              ])
-          ])
-        )
-    ]);
+                );
+              }
+            },
+            style: OutlinedButton.styleFrom(
+              elevation: 0,
+              minimumSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.07),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(width: 0.50, color: colors.subColor),
+                borderRadius: BorderRadius.circular(10),
+              )
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                options[i]['name'],
+                style: const TextStyle(
+                  color: colors.textColor,
+                  fontSize: 15,
+                  fontFamily: fonts.font,
+                  fontWeight: FontWeight.w400,
+                ),
+              )
+          ))
+        ]);
 }
