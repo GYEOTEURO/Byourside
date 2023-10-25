@@ -35,9 +35,11 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
         debugPrint('****************Error downloading image: $e');
       }
     }
-    setState(() {
-      _downloadUrls = downloadUrls;
-    });
+    if (mounted) {
+      setState(() {
+        _downloadUrls = downloadUrls;
+      });
+    }
   }
 
   @override
