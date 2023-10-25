@@ -2,6 +2,7 @@ name: byourside
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
+build_number: 1.0.0
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -9,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   image_picker: ^0.8.6
   firebase_core: ^2.14.0
   firebase_auth: ^4.7.2
@@ -31,10 +33,10 @@ dependencies:
   firebase_messaging: ^14.6.4
   flutter_local_notifications: ^14.1.1
   flutter_svg: ^2.0.7
-  dots_indicator: ^3.0.0
+  dots_indicator: ^2.1.2
   easy_rich_text: ^2.0.0
   crypto: ^3.0.3
-  onboarding: ^3.1.0
+  introduction_screen: ^3.1.12
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,7 +55,6 @@ flutter_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -100,7 +101,7 @@ flutter:
     - assets/icons/loading.gif
     - assets/icons/photo.svg
     - assets/icons/site.svg
-    - assets/icons/onboarding_hobee.svg
+    - assets/icons/onboarding_hobee.png
     - assets/icons/onboarding_autoInformation.svg
     - assets/icons/onboarding_community.svg
 

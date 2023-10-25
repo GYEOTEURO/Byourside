@@ -29,22 +29,30 @@ class _HomeState extends State<Home> {
 
   Widget _appbar() {
     return Container(
-        padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
-        height: MediaQuery.of(context).size.height / 5.5,
-        color: colors.appBarColor,
-        child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Expanded(
-                child: Row(children: [
-              const SizedBox(width: 10),
-              appBarSelectButton(context, district!),
-              const SizedBox(width: 5),
-              appBarSelectButton(context, disabilityType!)
-            ])),
-            Row(children: [goToScrapPage(context), goToSearchPage(context)])
-          ]),
-          Center(child: custom_icons.logo),
-        ]));
+              padding: const EdgeInsets.fromLTRB(0, 45, 0, 15),
+              color: colors.appBarColor,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            appBarSelectButton(context, district!),
+                            const SizedBox(width: 5),
+                            appBarSelectButton(context, disabilityType!)
+                          ])),
+                      Row(
+                        children: [
+                          goToScrapPage(context),
+                          goToSearchPage(context)
+                        ])
+                    ]),
+                    Center(child: custom_icons.logo)
+              ])
+            );
   }
 
   Widget _title(SvgPicture icon, String title) {

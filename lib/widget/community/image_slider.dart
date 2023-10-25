@@ -45,7 +45,7 @@ class _ImageSliderState extends State<ImageSlider> {
         label: '$_current번째 사진',
         child: DotsIndicator(
           dotsCount: widget.images.length,
-          position: _current,
+          position: _current.toDouble(),
           decorator: const DotsDecorator(
             color: colors.bgrColor,
             activeColor: colors.textColor,

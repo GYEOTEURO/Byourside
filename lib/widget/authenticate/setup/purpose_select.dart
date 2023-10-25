@@ -45,7 +45,7 @@ class AppPurposeSelectionState extends State<AppPurposeSelection> {
       width : getRelativeWidth(0.04),
     );
   }
-
+  
   Widget buildDropdownButton() {
     return SizedBox(
       width: getRelativeWidth(0.89),

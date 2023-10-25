@@ -166,15 +166,15 @@ class MyAppState extends State<MyApp> {
       children: <Widget>[
         Text('메시지 내용: $messageString'),
         MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Beeside',
-          initialRoute: '/login',
-          routes: {
-            '/login': (context) => const SocialLogin(),
-            '/bottom_nav': (context) => const BottomNavBar(),
-            '/user': (context) => const SetupUser(),
-          },
-        )
+              debugShowCheckedModeBanner: false,
+              title: 'Beeside',
+              initialRoute: '/login',
+              routes: {
+                '/login': (context) => const SocialLogin(),
+                '/bottom_nav': (context) => const BottomNavBar(),
+                '/user': (context) => const SetupUser(),
+              },
+            )
       ],
     );
   }
