@@ -108,12 +108,11 @@ class NicknameSectionState extends State<NicknameSection> {
   }
 
   void handleNicknameCheckButtonPressed(BuildContext context) async {
-    if (_nicknameController.controller.text != _nicknameController.lastCheckedNickname.value) {
-      _nicknameController.checkNicknameExist();
-    }
+
+    _nicknameController.checkNicknameExist();
 
     _nicknameController.isNicknameChecked.value = true;
-    _nicknameController.lastCheckedNickname = _nicknameController.controller.text.obs;
+    _nicknameController.lastCheckedNickname.value = _nicknameController.controller.text;
   }
 
 
@@ -151,6 +150,7 @@ class NicknameSectionState extends State<NicknameSection> {
       var nickNameExist = _nicknameController.nickNameExist.value;
       var nickName = _nicknameController.controller.text;
       String message;
+
       if (nickName.isEmpty) {
         message = text.askNickName;
       } else if (!isNicknameChecked) {
