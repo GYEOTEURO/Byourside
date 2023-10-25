@@ -26,13 +26,13 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
     List<String> downloadUrls = [];
     for (String imageUrl in imageUrls) {
       Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl);
-      debugPrint('*****************$storageRef');
+      debugPrint('======$storageRef');
 
       try {
         String downloadUrl = await storageRef.getDownloadURL();
         downloadUrls.add(downloadUrl);
       } catch (e) {
-        debugPrint('****************Error downloading image: $e');
+        debugPrint('=====Error downloading image: $e');
       }
     }
     if (mounted) {
@@ -50,47 +50,48 @@ class _AutoInfoImageState extends State<AutoInfoImage> {
       );
     } else {
       return SizedBox(
-          height: MediaQuery.of(context).size.width,
           child: Stack(children: [
-            CarouselSlider(
-                items: List.generate(_downloadUrls.length, (index) {
-                  return Container(
-                      child: Semantics(
-                          label: widget.imageUrls[index],
-                          child: Image.network(
-                            _downloadUrls[index],
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                const SizedBox(height: 5),
-                          )));
-                }),
-                options: CarouselOptions(
-                    height: MediaQuery.of(context).size.width,
-                    initialPage: 0,
-                    autoPlay: false,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: false,
-                    viewportFraction: 1,
-                    aspectRatio: 2.0,
-                    onPageChanged: (idx, reason) {
-                      setState(() {
-                        _current = idx;
-                      });
-                    })),
-            if (_downloadUrls.length != 1)
-              Semantics(
-                label: '현재 보이는 사진 순서 표시',
-                child: Container(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    alignment: Alignment.bottomCenter,
-                    child: CarouselIndicator(
-                      count: _downloadUrls.length,
-                      index: _current,
-                      color: Colors.grey,
-                      activeColor: colors.primaryColor,
-                    )),
-              ),
-          ]));
+        CarouselSlider(
+            items: List.generate(_downloadUrls.length, (index) {
+              return Container(
+                  child: Semantics(
+                      label: widget.imageUrls[index],
+                      child:
+                          Image.network(_downloadUrls[index], fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                        return const SizedBox(
+                          height: 5,
+                        );
+                      })));
+            }),
+            options: CarouselOptions(
+                height: MediaQuery.of(context).size.width,
+                initialPage: 0,
+                autoPlay: false,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: false,
+                viewportFraction: 1,
+                aspectRatio: 2.0,
+                onPageChanged: (idx, reason) {
+                  setState(() {
+                    _current = idx;
+                  });
+                })),
+        if (_downloadUrls.length != 1)
+          Semantics(
+            label: '현재 보이는 사진 순서 표시',
+            child: Container(
+                padding: const EdgeInsets.only(bottom: 20),
+                alignment: Alignment.bottomCenter,
+                child: CarouselIndicator(
+                  count: _downloadUrls.length,
+                  index: _current,
+                  color: Colors.grey,
+                  activeColor: colors.primaryColor,
+                )),
+          ),
+      ]));
     }
   }
 }
