@@ -15,13 +15,13 @@ Future<List<String>> _downloadImage(List<String> imageUrls) async {
   }
   for (String imageUrl in imageUrls) {
     Reference storageRef = FirebaseStorage.instance.refFromURL(imageUrl);
-    debugPrint('*****************$storageRef');
+    debugPrint('=====$storageRef');
 
     try {
       String downloadUrl = await storageRef.getDownloadURL();
       downloadUrls.add(downloadUrl);
     } catch (e) {
-      debugPrint('****************Error downloading image: $e');
+      debugPrint('=====Error downloading image: $e');
     }
   }
   return downloadUrls;
@@ -158,7 +158,7 @@ Widget autoInfoPostListTile(
     BuildContext context, AutoInformationPostModel? post) {
   TimeConvertor createdAt =
       TimeConvertor(createdAt: post!.createdAt, fontSize: fonts.createdAtPt);
-  debugPrint('***************${post.images}');
+  debugPrint('=====${post.images}');
 
   return GestureDetector(
       onTap: () {
