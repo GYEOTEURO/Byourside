@@ -11,12 +11,12 @@ import 'package:byourside/constants/colors.dart' as colors;
 class OnBoardingPage extends StatelessWidget {
   OnBoardingPage({Key? key}) : super(key: key);
   final _introKey = GlobalKey<IntroductionScreenState>();
-
-  Container _nextOrStartButton(BuildContext context, String buttonText, Function pressedFunc){
+  
+  Container _nextOrStartButton(double width, double height, String buttonText, Function pressedFunc){
     return Container(
-      margin: EdgeInsets.all(MediaQuery.of(context).size.width * (0.04)),
-      width: MediaQuery.of(context).size.width * (0.8),
-      height: MediaQuery.of(context).size.height * (0.07),
+      margin: EdgeInsets.all(width * (0.04)),
+      width: width * (0.8),
+      height: height * (0.07),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
       ),
@@ -63,12 +63,18 @@ class OnBoardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+    
     return IntroductionScreen(
       key: _introKey,
       pages: [ 
         for(int index = 0; index < pages.onboardingIconDescription.length; index++)
           PageViewModel(
-            image: pages.onboardingIconDescription[index]['icon'],
+            image: Align(
+              alignment: Alignment.bottomCenter,
+              child: pages.onboardingIconDescription[index]['icon']
+            ),
             titleWidget: Text(pages.onboardingIconDescription[index]['description'],
               textAlign: TextAlign.center,
               semanticsLabel: pages.onboardingIconDescription[index]['description'],
@@ -79,15 +85,16 @@ class OnBoardingPage extends StatelessWidget {
                 fontWeight: FontWeight.w400
             )),
             bodyWidget: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * (0.05)),
-                _dotsIndicator(index.toDouble()),
-                index == (pages.onboardingIconDescription.length - 1) ?
-                _nextOrStartButton(context, '시작하기', () => Get.offAll(() => const SocialLogin()) )
-                : _nextOrStartButton(context, '다음', () => _introKey.currentState?.next() )
+                  children: [
+                    _dotsIndicator(index.toDouble()),
+                    index == (pages.onboardingIconDescription.length - 1) ?
+                    _nextOrStartButton(deviceWidth, deviceHeight, '시작하기', () => Get.offAll(() => const SocialLogin()) )
+                    : _nextOrStartButton(deviceWidth, deviceHeight, '다음', () => _introKey.currentState?.next() )
             ]),
-            decoration: const PageDecoration(
+            decoration: PageDecoration(
               pageColor: colors.lightPrimaryColor,
+              contentMargin : EdgeInsets.only(bottom: deviceHeight * 0.01),
+              pageMargin : EdgeInsets.only(top: deviceHeight * 0.1),
             ),
           ),
       ],
