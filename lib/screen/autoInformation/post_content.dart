@@ -101,9 +101,7 @@ class _AutoInfoPostContentState extends State<AutoInfoPostContent> {
                     height: 1.5,
                     fontWeight: FontWeight.normal,
                   ),
-                ))
-          else
-            Container(),
+                )),
           const SizedBox(height: 12),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [

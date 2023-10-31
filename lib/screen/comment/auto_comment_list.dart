@@ -26,12 +26,9 @@ class _AutoCommentListPageState extends State<AutoCommentListPage> {
               SingleChildScrollView(
                   controller: scrollController
                       .scrollController, //댓글 전송 누르면 맨 아래로 이동 가능하게
-                  child: Container(
-                      margin: const EdgeInsets.all(7),
-                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 100),
-                      child: CommentList(
+                  child: CommentList(
                           collectionName: widget.collectionName,
-                          documentID: widget.documentID))),
+                          documentID: widget.documentID)),
               Positioned(
                   left: 0,
                   right: 0,
