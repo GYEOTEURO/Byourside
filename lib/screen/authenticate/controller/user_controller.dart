@@ -21,21 +21,21 @@ class UserController extends GetxController {
     super.onInit();
     DocumentSnapshot<Map<String, dynamic>> document = await loadData.readUserInfo(uid: user!.uid);
     userModel = UserModel.fromDocument(doc: document);
-    _checkPushMessageInfo(userModel.pushMessage?['deviceToken'], userModel.pushMessage?['tokenCreatedAt']);
+    _checkTokenValidate(userModel.pushMessage?['deviceToken'], userModel.pushMessage?['tokenCreatedAt']);
     userModelReady.value = true;
   }
 
-  void _checkPushMessageInfo(String deviceToken, Timestamp tokenCreatedAt) {
+  void _checkTokenValidate(String deviceToken, Timestamp tokenCreatedAt) {
     DateTime tokenCreatedAtDate = tokenCreatedAt.toDate();
     DateTime currentDate = DateTime.now();
     bool isMoreThan60Days = currentDate.difference(tokenCreatedAtDate).inDays > 60;
 
     if(isMoreThan60Days){
-      _updateNewToken();
+      _updateToken();
     }
   }
 
-  void _updateNewToken() async {
+  void _updateToken() async {
     String? newDeviceToken = await FirebaseMessaging.instance.getToken();
     Timestamp newCreatedAt = Timestamp.now();
 
