@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
 
-PreferredSizeWidget titleOnlyAppbar(BuildContext context, String title, {bool showBackButton = true}) {
+PreferredSizeWidget titleOnlyAppbar(BuildContext context, String title, {bool showBackButton = true, Color backgroundColor = Colors.white}) {
   return AppBar(
-    backgroundColor: colors.appBarColor,
+    backgroundColor: backgroundColor,
     elevation: 0,
     title: Text(
       title,

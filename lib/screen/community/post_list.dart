@@ -91,9 +91,11 @@ class _CommunityPostListState extends State<CommunityPostList> {
         body: Column(children: [
           CommunityPostListAppBar(
               onDisabilityTypeSelected: _handleDisabilityTypeSelected),
-          SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: CategoryButtons(
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: colors.appBarColor,
+            padding: const EdgeInsets.fromLTRB(20, 0, 14, 20),
+            child: CategoryButtons(
                   category: texts.communityCategories,
                   onCategorySelected: _handleCategorySelected)),
           _streamCommunityPosts()

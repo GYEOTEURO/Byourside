@@ -1,5 +1,7 @@
 const String registrationFailedText = 'Registration is Failed';
 
+const String check = '확인';
+
 const String loginTitle = '소셜 로그인 화면';
 const String googleLoginText = 'Google 계정으로 로그인';
 const String appleLoginText = 'Apple로 로그인';
@@ -127,5 +129,5 @@ Map<String, String> personalData = {
 };
 
 const String onboardingBeeside = 'Beeside(비사이드)는 발달장애와\n뇌병변장애 아동 보호자를 위한\n맞춤형 정보 제공 및\n커뮤니티 서비스입니다.';
-const String onboardingAutoInformation = '정보게시판에서 비사이드가 모아둔\n다양한 장애 관련 정보를\n볼 수 있습니다.';
-const String onboardingCommunity = '소통게시판에서 장애 관련 이야기를\n나누면서 정보를 공유해보세요.';
+const String onboardingAutoInformation = '정보게시판에서 비사이드가 모아둔\n다양한 장애 관련 정보를\n볼 수 있습니다.\n';
+const String onboardingCommunity = '소통게시판에서 장애 관련 이야기를\n나누면서 정보를 공유해보세요.\n\n';

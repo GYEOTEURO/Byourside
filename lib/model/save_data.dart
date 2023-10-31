@@ -50,6 +50,8 @@ class SaveData {
         .collection(database.communityPostCollectionGroup)
         .doc(documentID)
         .delete();
+
+    //await firestore.collection(database.communityCommentCollection).doc(documentID).delete();
   }
 
   // 댓글 저장
@@ -105,6 +107,7 @@ class SaveData {
     await firestore.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(document);
       int currentLikes = snapshot[likeOrScrap] - 1;
+      if(currentLikes < 0) currentLikes = 0;
       transaction.update(document, {likeOrScrap: currentLikes});
     });
 

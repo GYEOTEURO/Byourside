@@ -1,4 +1,5 @@
 import 'package:byourside/constants/text.dart' as texts;
+import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/screen/authenticate/controller/user_controller.dart';
@@ -65,8 +66,10 @@ class _AutoInformationPostListState extends State<AutoInformationPostList> {
         AutoInformationPostListAppBar(
             onLocationSelected: _handleLocationSelected,
             onDisabilityTypeSelected: _handleDisabilityTypeSelected),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+        Container(
+            width: MediaQuery.of(context).size.width,
+            color: colors.appBarColor,
+            padding: const EdgeInsets.fromLTRB(20, 0, 14, 20),
             child: CategoryButtons(
                 category: texts.autoInformationCategories,
                 onCategorySelected: _handleCategorySelected)),

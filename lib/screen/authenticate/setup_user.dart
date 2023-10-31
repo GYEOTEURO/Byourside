@@ -18,6 +18,7 @@ import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
+import 'package:byourside/constants/colors.dart' as colors;
 
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);
@@ -117,7 +118,7 @@ class _SetupUserState extends State<SetupUser> {
     return Semantics(
       label: text.setupTitle,
       child: Scaffold(
-        appBar: titleOnlyAppbar(context, text.setupTitle, showBackButton: false),
+        appBar: titleOnlyAppbar(context, text.setupTitle, showBackButton: false, backgroundColor: colors.appBarColor),
         body: Column(
           children: [
             Expanded(

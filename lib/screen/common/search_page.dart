@@ -69,37 +69,38 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-      const SizedBox(height: 20),
-      Row(children: [
-        backToPreviousPage(context),
-        Flexible(
-            child: Container(
-          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: Semantics(
-              label: '검색할 키워드를 입력해주세요.',
-              child: TextFormField(
-                  onTap: () {
-                    HapticFeedback.lightImpact();
-                  },
-                  onChanged: (text) {
-                    setState(() {});
-                  },
-                  controller: query,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    labelText: '검색할 키워드를 입력해주세요.',
-                    fillColor: colors.bgrColor,
-                    filled: true,
-                    labelStyle: const TextStyle(
-                        color: colors.textColor,
-                        fontSize: 12,
-                        fontFamily: fonts.font,
-                        fontWeight: FontWeight.w500),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(28),
-                        borderSide: BorderSide.none),
-                  ))),
+        body: Column(
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+            Row(children: [
+              backToPreviousPage(context),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                  child: Semantics(
+                    label: '검색할 키워드를 입력해주세요.',
+                    child: TextFormField(
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                    },
+                    onChanged: (text) {
+                      setState(() {});
+                    },
+                    controller: query,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      labelText: '검색할 키워드를 입력해주세요.',
+                      fillColor: colors.bgrColor,
+                      filled: true,
+                      labelStyle: const TextStyle(
+                          color: colors.textColor,
+                          fontSize: 12,
+                          fontFamily: fonts.font,
+                          fontWeight: FontWeight.w500),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(28),
+                          borderSide: BorderSide.none),
+                    ))),
         ))
       ]),
       const SizedBox(height: 20),

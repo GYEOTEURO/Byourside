@@ -6,7 +6,8 @@ import 'package:byourside/constants/colors.dart' as colors;
 Widget commentCount(BuildContext context, String collectionName, int countComments){
   return collectionName.contains('community') == true ?
       Container(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+        margin: const EdgeInsets.all(7),
+        padding: const EdgeInsets.fromLTRB(15, 0, 0, 15),
         alignment: Alignment.bottomLeft, 
         child: Text(
             '댓글 $countComments',
