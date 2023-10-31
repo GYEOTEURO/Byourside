@@ -117,7 +117,7 @@ Widget _buildMiddleSide(BuildContext context, String title) {
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           color: colors.textColor,
-          fontSize: fonts.captionTitlePt,
+          fontSize: fonts.semiBodyPt,
           fontFamily: fonts.font,
           fontWeight: FontWeight.bold,
         ),
