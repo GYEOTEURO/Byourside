@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
@@ -9,7 +9,6 @@ import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:byourside/widget/authenticate/login/policy_link.dart';
 import 'package:byourside/widget/authenticate/login/social_login_button.dart';
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
-
 
 class SocialLogin extends StatelessWidget {
   const SocialLogin({Key? key}) : super(key: key);
@@ -70,8 +69,7 @@ class SocialLogin extends StatelessWidget {
           ),
           PolicyLink(
             text: text.privacyPolicy,
-            onPressed: () =>
-                Get.to(() => Policy(policy: text.personalData)),
+            onPressed: () => Get.to(() => Policy(policy: text.personalData)),
             icon: auth_icons.policyLine,
           ),
         ],
@@ -118,13 +116,15 @@ class SocialLogin extends StatelessWidget {
                   buildButtons(context),
                   SizedBox(height: deviceHeight * 0.07),
                   buildPolicyLinks(),
-                  SizedBox(height: deviceHeight * 0.1),                ],
+                  SizedBox(height: deviceHeight * 0.05),
+                ],
               ),
             ],
           ),
         ),
       );
     }
+
     return buildScaffoldBody(context);
   }
 }
