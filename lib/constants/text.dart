@@ -42,7 +42,7 @@ const String askVerify = '닉네임 중복을 확인하세요';
 
 const String none = '';
 
-const String askPurpose = '어플 사용 목적을 알려주세요';
+const String askPurpose = '어플 사용 목적을 선택해 주세요';
 const String getInformation = '정보 습득';
 const String promotion = '활동 홍보';
 const String communication = '소통';
@@ -51,7 +51,7 @@ const String institutionNameLabel = '기관 동아리 명칭을 입력해 주세
 const String institutionNameHint = '기관명을 입력해 주세요';
 
 
-const String askLocation = '사는 곳을 선택해 주세요';
+const String askLocation = '사는 지역을 선택해 주세요';
 const String selectLocation = '사는 지역 선택하기';
 
 // 제목 및 타이틀
@@ -129,5 +129,5 @@ Map<String, String> personalData = {
 };
 
 const String onboardingBeeside = 'Beeside(비사이드)는 발달장애와\n뇌병변장애 아동 보호자를 위한\n맞춤형 정보 제공 및\n커뮤니티 서비스입니다.';
-const String onboardingAutoInformation = '정보게시판에서 비사이드가 모아둔\n다양한 장애 관련 정보를\n볼 수 있습니다.';
-const String onboardingCommunity = '소통게시판에서 장애 관련 이야기를\n나누면서 정보를 공유해보세요.';
+const String onboardingAutoInformation = '정보게시판에서 비사이드가 모아둔\n다양한 장애 관련 정보를\n볼 수 있습니다.\n';
+const String onboardingCommunity = '소통게시판에서 장애 관련 이야기를\n나누면서 정보를 공유해보세요.\n\n';

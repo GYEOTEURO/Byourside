@@ -1,4 +1,5 @@
 import 'package:byourside/screen/authenticate/social_login.dart';
+import 'package:byourside/screen/onboarding.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -33,7 +34,7 @@ class AuthController extends GetxController {
 
   _moveToPage(User? user) async {
     if (user == null) {
-      Get.offAll(() => const SocialLogin());
+      Get.offAll(() => OnBoardingPage());
     } else {
       bool isUserSetUp = await checkIfUserSetUp(user.uid);
 
