@@ -1,5 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/linux,macos,android,androidstudio,flutter,dart,firebase
-# Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,android,androidstudio,flutter,dart,firebase
 *.pyc
 .atom/
 .buildlog/
