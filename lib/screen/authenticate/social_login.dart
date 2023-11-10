@@ -115,8 +115,7 @@ class SocialLogin extends StatelessWidget {
                   SizedBox(height: deviceHeight * 0.13),
                   buildButtons(context),
                   SizedBox(height: deviceHeight * 0.07),
-                  buildPolicyLinks(),
-                  SizedBox(height: deviceHeight * 0.05),
+                  buildPolicyLinks()
                 ],
               ),
             ],

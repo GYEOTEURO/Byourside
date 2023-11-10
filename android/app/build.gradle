@@ -61,8 +61,8 @@ android {
         targetSdkVersion 33 //flutter.targetSdkVersion
         compileSdkVersion 33
         multiDexEnabled true
-        versionCode 18
-        versionName "1.0.15"
+        versionCode 19
+        versionName "2.0.0"
     }
 
     signingConfigs {
