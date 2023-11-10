@@ -92,50 +92,57 @@ class _CommentListState extends State<CommentList> {
     TimeConvertor createdAt =
         TimeConvertor(createdAt: comment!.createdAt, fontSize: 13.0);
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        custom_icons.profile,
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(children: [
+    return Container(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  custom_icons.profile,
+                  const SizedBox(width: 8),
+                  Column(
+                    children: [
+                      Text(
+                        comment.nickname,
+                        semanticsLabel: comment.nickname,
+                        style: const TextStyle(
+                          color: colors.textColor,
+                          fontSize: 14,
+                          fontFamily: fonts.font,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              commentOptions(context, widget.collectionName, widget.documentID,
+                  widget.postNickname, comment),
+            ],
+          ),
+          Column(children: [
+            Container(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.12, bottom: 8),
+                child: _buildContent(comment.content)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  comment.nickname,
-                  semanticsLabel: comment.nickname,
-                  style: const TextStyle(
-                    color: colors.textColor,
-                    fontSize: 14,
-                    fontFamily: fonts.font,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                commentOptions(context, widget.collectionName,
-                    widget.documentID, widget.postNickname, comment),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                child: _buildContent(comment.content)),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                createdAt,
-                const Spacer(),
+                Container(
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.12),
+                    child: createdAt),
                 Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                     height: MediaQuery.of(context).size.height / 33,
                     child: _mentionButton(comment.nickname))
               ],
             ),
-            const SizedBox(width: 8),
-          ]),
-        ),
-      ],
-    );
+          ])
+        ]));
   }
 
   @override
@@ -150,25 +157,25 @@ class _CommentListState extends State<CommentList> {
               commentCount(
                   context, widget.collectionName, snapshots.data!.length),
               Container(
-                margin: const EdgeInsets.all(5),
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-                child: ListView.builder(
-                  itemCount: snapshots.data!.length,
-                  physics:
-                      const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
-                  shrinkWrap: true, //ListView in ListView를 가능하게
-                  itemBuilder: (_, index) {
-                    CommentModel comment = snapshots.data![index];
-                    if (Get.find<UserController>()
-                        .userModel
-                        .blockedUsers!
-                        .contains(comment.nickname)) {
-                      return Container();
-                    } else {
-                      return _buildCommentList(
-                          widget.collectionName, widget.documentID, comment);
-                    }
-                  }))
+                  margin: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
+                  child: ListView.builder(
+                      itemCount: snapshots.data!.length,
+                      physics:
+                          const NeverScrollableScrollPhysics(), //하위 ListView 스크롤 허용
+                      shrinkWrap: true, //ListView in ListView를 가능하게
+                      itemBuilder: (_, index) {
+                        CommentModel comment = snapshots.data![index];
+                        if (Get.find<UserController>()
+                            .userModel
+                            .blockedUsers!
+                            .contains(comment.nickname)) {
+                          return Container();
+                        } else {
+                          return _buildCommentList(widget.collectionName,
+                              widget.documentID, comment);
+                        }
+                      }))
             ]);
           } else {
             return noData();
