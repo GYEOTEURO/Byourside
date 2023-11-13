@@ -95,48 +95,52 @@ class _CommentListState extends State<CommentList> {
     return Container(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                custom_icons.profile,
-                const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      comment.nickname,
-                      semanticsLabel: comment.nickname,
-                      style: const TextStyle(
-                        color: colors.textColor,
-                        fontSize: 14,
-                        fontFamily: fonts.font,
-                        fontWeight: FontWeight.w700,
-                      ),
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  custom_icons.profile,
+                  const SizedBox(width: 8),
+                  Text(
+                    comment.nickname,
+                    semanticsLabel: comment.nickname,
+                    style: const TextStyle(
+                      color: colors.textColor,
+                      fontSize: 14,
+                      fontFamily: fonts.font,
+                      fontWeight: FontWeight.w700,
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 8, bottom: 8),
-                        child: _buildContent(comment.content)),
-                    createdAt
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+                  )
+                ],
+              ),
+              commentOptions(context, widget.collectionName, widget.documentID,
+                  widget.postNickname, comment),
+            ],
+          ),
+          Column(children: [
+            Container(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.1,
+                    right: MediaQuery.of(context).size.width * 0.1,
+                    bottom: 8),
+                child: _buildContent(comment.content)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                    child: commentOptions(context, widget.collectionName,
-                        widget.documentID, widget.postNickname, comment)),
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.1),
+                    child: createdAt),
                 Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                     height: MediaQuery.of(context).size.height / 33,
                     child: _mentionButton(comment.nickname))
               ],
-            )
-          ],
-        ));
+            ),
+          ])
+        ]));
   }
 
   @override
