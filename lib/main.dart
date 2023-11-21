@@ -23,11 +23,8 @@ import 'package:permission_handler/permission_handler.dart';
 Future<bool> getPermission() async {
   Map<Permission, PermissionStatus> permissions;
   if (Platform.isIOS) {
-    permissions = await [
-      Permission.accessNotificationPolicy,
-      Permission.photos,
-      Permission.reminders
-    ].request();
+    permissions = await [Permission.accessNotificationPolicy, Permission.photos]
+        .request();
   } else {
     permissions = await [
       Permission.storage,
