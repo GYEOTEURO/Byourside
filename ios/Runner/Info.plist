@@ -44,18 +44,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>bluetooth</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>bluetooth</string>
 	<key>NSCameraUsageDescription</key>
 	<string>GetCameraUsage</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>GetMicrophoneUsage</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>photos</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>speech</string>
+	<string>Our App requires access to the photo library for uploading post with your photos.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
