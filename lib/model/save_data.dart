@@ -139,4 +139,11 @@ class SaveData {
       'blockedUsers': FieldValue.arrayRemove([blockedUser])
     });
   }
+
+  // 디바이스 토큰 업데이트
+  updatePushMessageInfo(String uid, Map<String, dynamic>? pushMessage) async {
+    await firestore.collection(database.userCollection).doc(uid).update({
+      'pushMessage': pushMessage
+    });
+  }
 }

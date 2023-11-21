@@ -1,4 +1,6 @@
 import 'package:byourside/widget/authenticate/setup/institution_name_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,8 +35,18 @@ class _SetupUserState extends State<SetupUser> {
   String _selectedUserType = '';
   String _selectedDisabilityType = '';
   String _selectedPurpose = '';
+  Map<String, dynamic>? pushMessage;
 
   final User? user = FirebaseAuth.instance.currentUser;
+
+  Future<Map<String, dynamic>> _getPushMessageInfo() async {
+    Map<String, dynamic>? pushMessageInfo = {
+      'deviceToken': await FirebaseMessaging.instance.getToken(),
+      'tokenCreatedAt': Timestamp.now(),
+    };
+
+    return pushMessageInfo;
+  }
 
   void _handleUserTypeSelected(String userType) {
     setState(() {
@@ -47,7 +59,6 @@ class _SetupUserState extends State<SetupUser> {
       location = newLocation;
     });
   }
-
 
   void _handleLocationSelected(String selectedArea, String selectedDistrict) {
     Map<String, String> locationInfo = {
@@ -68,6 +79,7 @@ class _SetupUserState extends State<SetupUser> {
     HapticFeedback.lightImpact();
     var age = int.tryParse(_birthYear.text) ?? 0;
     var inputsValid = _validateInputs();
+    pushMessage = await _getPushMessageInfo();
 
     if (inputsValid) {
       SaveUserData.saveUserInfo(
@@ -78,6 +90,7 @@ class _SetupUserState extends State<SetupUser> {
         nickname: _nicknameController.controller.text,
         registrationPurpose: _selectedPurpose,
         userType: _selectedUserType,
+        pushMessage: pushMessage,
       );
 
       AuthController.instance.handleUserInfoCompletion();
