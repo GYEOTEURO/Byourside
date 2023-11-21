@@ -1,7 +1,6 @@
 import 'package:byourside/model/autoInformation_post.dart';
 import 'package:byourside/model/comment.dart';
 import 'package:byourside/model/community_post.dart';
-import 'package:byourside/model/notice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:byourside/constants/database.dart' as database;
 
@@ -171,16 +170,6 @@ class LoadData {
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => AutoInformationPostModel.fromDocument(doc: doc))
-            .toList());
-  }
-
-  Stream<List<NoticeModel>> readNotice() {
-    return firestore
-        .collection(database.noticeCollection)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => NoticeModel.fromDocument(doc: doc))
             .toList());
   }
 }

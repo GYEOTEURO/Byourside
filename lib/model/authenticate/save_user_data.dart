@@ -11,7 +11,6 @@ class SaveUserData {
     String? nickname,
     String? registrationPurpose,
     String? userType,
-    Map<String, dynamic>? pushMessage,
   }) async {
     User? user = FirebaseAuth.instance.currentUser;
     
@@ -25,7 +24,6 @@ class SaveUserData {
         'nickname': nickname,
         'registrationPurpose': registrationPurpose,
         'userType': userType,
-        'pushMessage': pushMessage,
       });
     }
   }

@@ -11,9 +11,6 @@ class UserModel {
   String? registrationPurpose;
   String? userType;
   List<String>? blockedUsers;
-  Map<String, dynamic>? pushMessage;
-  String? deviceToken;
-  Timestamp? tokenCreatedAt;
 
   UserModel({
     this.id,
@@ -24,7 +21,6 @@ class UserModel {
     required this.registrationPurpose,
     required this.userType,
     required this.blockedUsers,
-    required this.pushMessage,
     DocumentSnapshot<Map<String, dynamic>>? doc,
   }) {
     // Initialize area and district based on location if location is not null
@@ -33,12 +29,6 @@ class UserModel {
       location = castMapOfStringString(rawLocation);
       area = location?['area'];
       district = location?['district'];
-    }
-
-    if (pushMessage != null) {
-      Map<String, dynamic>? pushMessage = doc!['pushMessage'];
-      deviceToken = pushMessage?['deviceToken'].toString();
-      tokenCreatedAt = pushMessage?['tokenCreatedAt'];
     }
   }
 
@@ -56,11 +46,6 @@ class UserModel {
     location = castMapOfStringString(rawLocation);
     area = location?['area'];
     district = location?['district'];
-
-    pushMessage = doc['pushMessage'];
-    deviceToken = pushMessage?['deviceToken'].toString();
-    tokenCreatedAt = pushMessage?['tokenCreatedAt'];
-
   }
 
   // Helper function to cast Map<String, dynamic> to Map<String, String>
