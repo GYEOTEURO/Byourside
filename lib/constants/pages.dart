@@ -3,9 +3,9 @@ import 'package:byourside/screen/authenticate/policy.dart';
 import 'package:byourside/screen/common/my_scrap.dart';
 import 'package:byourside/screen/mypage/my_block_user.dart';
 import 'package:byourside/screen/mypage/my_community_post.dart';
-import 'package:byourside/screen/mypage/notice_list.dart';
 import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/screen/mypage/setting.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/constants/text.dart' as texts;
 
@@ -24,7 +24,6 @@ List<Map<String, dynamic>> etc = [
 
 List<Map<String, dynamic>> setting = [
   {'name': '차단목록', 'page': const MyBlock()},
-  {'name': '공지사항', 'page': NoticeListPage()},
   {'name': '개인정보처리방침', 'page': Policy(policy: personalData)},
   {'name': '서비스 이용약관', 'page': Policy(policy: usingPolicy)},
   {

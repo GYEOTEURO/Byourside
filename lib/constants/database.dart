@@ -7,4 +7,3 @@ const String autoInformationCollection = 'autoInformation';
 const String autoInformationPostCollectionGroup = 'autoInformation_posts';
 const String autoInformationCommentCollection = 'autoInformation_comment';
 const String userCollection = 'userInfo';
-const String noticeCollection = 'notice';
