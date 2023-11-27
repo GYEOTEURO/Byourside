@@ -12,69 +12,72 @@ class ValidationUtils {
         return ReportOnlyAlert(
           message: message,
           onPressed: () {
-            HapticFeedback.lightImpact(); // 약한 진동
+            HapticFeedback.lightImpact(); 
             Navigator.of(context).pop(true);
-          }, 
+          },
         );
       },
     );
   }
-  
-  static bool validateInputs(
-    BuildContext context,
-    NicknameController nicknameController,
-    String selectedUserType,
-    String selectedDisabilityType,
-    String institutionName,
-    String birthYear,
-    Map<String, String>? location,
-    String selectedPurpose,
-  ) {
+
+  static bool validateInputs({
+    required BuildContext context,
+    required NicknameController nicknameController,
+    required String selectedUserType,
+    required String selectedDisabilityType,
+    required String institutionName,
+    required String birthYear,
+    required Map<String, String>? location,
+    required String selectedPurpose,
+  }) {
     int currentYear = DateTime.now().year;
     int? birthYearValue = int.tryParse(birthYear);
 
+    bool showErrorAndReturn(String errorMessage) {
+      _showErrorDialog(context, errorMessage);
+      return false;
+    }
+
     if (nicknameController.controller.text.isEmpty) {
-      _showErrorDialog(context, text.askNickName);
-      return false;
+      return showErrorAndReturn(text.askNickName);
     }
-    if (!nicknameController.isNicknameChecked.value) {
-      _showErrorDialog(context, text.askVerify);
-      return false;
-    } else if (nicknameController.nickNameExist.value) {
-      _showErrorDialog(context, text.usedNickName);
-      return false;
-    } else if (nicknameController.controller.text != nicknameController.lastCheckedNickname.value) {
-        _showErrorDialog(context, text.askVerify);
-        return false;
+
+    if (!nicknameController.isNicknameChecked.value || nicknameController.nickNameExist.value) {
+      return showErrorAndReturn(text.askVerify);
     }
+
+    if (nicknameController.controller.text != nicknameController.lastCheckedNickname.value) {
+      return showErrorAndReturn(text.askVerify);
+    }
+
     if (selectedUserType.isEmpty) {
-      _showErrorDialog(context, text.askUserType);
-      return false;
+      return showErrorAndReturn(text.askUserType);
     }
+
     if (selectedDisabilityType.isEmpty) {
-      _showErrorDialog(context, text.askDisabilityType);
-      return false;
+      return showErrorAndReturn(text.askDisabilityType);
     }
+
     if (selectedUserType == text.worker && institutionName.isEmpty) {
-      _showErrorDialog(context, text.institutionNameLabel);
-      return false;
+      return showErrorAndReturn(text.institutionNameLabel);
     }
-    if (birthYear.isEmpty) {
-      _showErrorDialog(context, text.askUserAge);
-      return false;
-    } else if (birthYear.length != 4 || int.tryParse(birthYear) == null || birthYearValue! > currentYear || birthYearValue < currentYear - 200) {
-      print( int.tryParse(birthYear) == null );
-      _showErrorDialog(context, text.enterValidateAge);
-      return false;
+
+    if (birthYear.isEmpty ||
+        birthYear.length != 4 ||
+        int.tryParse(birthYear) == null ||
+        birthYearValue! > currentYear ||
+        birthYearValue < currentYear - 200) {
+      return showErrorAndReturn(text.enterValidateAge);
     }
+
     if (location == null || location.isEmpty) {
-      _showErrorDialog(context, text.selectLocation);
-      return false;
+      return showErrorAndReturn(text.selectLocation);
     }
+
     if (selectedPurpose.isEmpty || selectedPurpose == text.askPurpose) {
-      _showErrorDialog(context, text.askPurpose);
-      return false;
+      return showErrorAndReturn(text.askPurpose);
     }
+
     return true;
   }
 }
