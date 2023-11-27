@@ -1,13 +1,12 @@
+import 'package:byourside/constants/text.dart' as texts;
+import 'package:byourside/constants/icons.dart' as custom_icons;
 import 'package:byourside/constants/text.dart';
-import 'package:byourside/screen/authenticate/policy.dart';
-import 'package:byourside/screen/common/my_scrap.dart';
-import 'package:byourside/screen/mypage/my_block_user.dart';
-import 'package:byourside/screen/mypage/my_community_post.dart';
 import 'package:byourside/screen/mypage/options.dart';
 import 'package:byourside/screen/mypage/setting.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:byourside/constants/icons.dart' as custom_icons;
-import 'package:byourside/constants/text.dart' as texts;
+import 'package:byourside/screen/common/my_scrap.dart';
+import 'package:byourside/screen/authenticate/policy.dart';
+import 'package:byourside/screen/mypage/my_block_user.dart';
+import 'package:byourside/screen/mypage/my_community_post.dart';
 
 List<Map<String, dynamic>> myActivity = [
   {'name': '스크랩한 게시물', 'page': const MyScrap()},

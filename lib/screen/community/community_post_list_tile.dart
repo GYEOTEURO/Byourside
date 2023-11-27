@@ -89,71 +89,72 @@ Widget communityPostListTile(BuildContext context, CommunityPostModel? post) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CommunityPost(post: post)
-                ));
-      },
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
-            child:
-              Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildCategory(post.category),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
+    return Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CommunityPost(post: post)
+                          ));
+                },
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
+                  child:
+                    Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildTitle(post.title),
-                      const SizedBox(height: 4),
-                      post.images.isNotEmpty == true ?
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                            width: width * 0.5,
-                            child: _buildContent(post.content),
-                          ),
-                          _buildImage(width, height, post.images, post.imgInfos)
-                      ])
-                      : Container(
-                            alignment: Alignment.centerLeft,
-                            width: width,
-                            height: height / 11,
-                            child: _buildContent(post.content),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          createdAt,
-                          const Spacer(),
-                          Row(
-                            children: [
-                              _buildLikesAndScraps(count: post.likes.toString(), icon: custom_icons.communityPostListLikes),
-                              const SizedBox(width: 6),
-                              _buildLikesAndScraps(count: post.scraps.toString(), icon: custom_icons.communityPostListScraps),
-                          ])   
-                      ]),
-                      const SizedBox(width: 8),
-                      ]),
-                      ),
-                    ])),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-                      child: const Divider(
-                        height: 1,
-                        color: colors.bgrColor,
-                        thickness: 1
-                    ))
-                ])
-    ); 
+                      _buildCategory(post.category),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildTitle(post.title),
+                            const SizedBox(height: 4),
+                            post.images.isNotEmpty == true ?
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                  width: width * 0.5,
+                                  child: _buildContent(post.content),
+                                ),
+                                _buildImage(width, height, post.images, post.imgInfos)
+                            ])
+                            : Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: width,
+                                  height: height / 11,
+                                  child: _buildContent(post.content),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                createdAt,
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    _buildLikesAndScraps(count: post.likes.toString(), icon: custom_icons.communityPostListLikes),
+                                    const SizedBox(width: 6),
+                                    _buildLikesAndScraps(count: post.scraps.toString(), icon: custom_icons.communityPostListScraps),
+                                ])   
+                            ]),
+                            const SizedBox(width: 8),
+                            ]),
+                            ),
+                          ])
+                  )
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                child: const Divider(
+                  height: 1,
+                  color: colors.bgrColor,
+                  thickness: 1
+              ))
+        ]);
   }
