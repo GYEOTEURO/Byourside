@@ -85,14 +85,14 @@ class _SetupUserState extends State<SetupUser> {
 
   bool validateInputs() {
     return ValidationUtils.validateInputs(
-      context,
-      nicknameController,
-      selectedUserType,
-      selectedDisabilityType,
-      institutionNameController.text,
-      birthYearController.text,
-      location,
-      selectedPurpose,
+      context: context,
+      nicknameController: nicknameController,
+      selectedUserType: selectedUserType,
+      selectedDisabilityType: selectedDisabilityType,
+      institutionName: institutionNameController.text,
+      birthYear: birthYearController.text,
+      location: location,
+      selectedPurpose: selectedPurpose,
     );
   }
 
