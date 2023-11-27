@@ -30,7 +30,6 @@ class SocialLogin extends StatelessWidget {
       );
     }
 
-  // 함수는 하나의 일만 하도록? 음... 그러면 추상화 수준이 달라지지않나.....
     Widget buildButtons(BuildContext context) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +89,6 @@ class SocialLogin extends StatelessWidget {
       );
     }
 
-    // TODO: const도 없애자
     Widget buildScaffoldBody(BuildContext context) {
       return DecoratedBox(
         decoration: const BoxDecoration(
