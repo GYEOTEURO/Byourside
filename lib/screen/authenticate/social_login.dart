@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; 
 import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
-import 'package:byourside/screen/authenticate/policy.dart';
+import 'package:byourside/utils/device_size_utils.dart';
 import 'package:byourside/widget/authenticate/login/policy_link.dart';
 import 'package:byourside/widget/authenticate/login/social_login_button.dart';
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
-
 
 class SocialLogin extends StatelessWidget {
   const SocialLogin({Key? key}) : super(key: key);
@@ -18,8 +16,8 @@ class SocialLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isIOS = Platform.isIOS;
 
-    var deviceWidth = MediaQuery.of(context).size.width;
-    var deviceHeight = MediaQuery.of(context).size.height;
+    var deviceWidth = getDeviceWidth(context);
+    var deviceHeight = getDeviceHeight(context);
 
     Widget buildLogo() {
       return Container(
@@ -32,6 +30,7 @@ class SocialLogin extends StatelessWidget {
       );
     }
 
+  // 함수는 하나의 일만 하도록? 음... 그러면 추상화 수준이 달라지지않나.....
     Widget buildButtons(BuildContext context) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -65,13 +64,12 @@ class SocialLogin extends StatelessWidget {
         children: [
           PolicyLink(
             text: text.termsOfService,
-            onPressed: () => Get.to(() => Policy(policy: text.usingPolicy)),
+            policyPath: text.usingPolicy,
             icon: auth_icons.tosLine,
           ),
           PolicyLink(
             text: text.privacyPolicy,
-            onPressed: () =>
-                Get.to(() => Policy(policy: text.personalData)),
+            policyPath: text.personalData,
             icon: auth_icons.policyLine,
           ),
         ],
@@ -92,6 +90,7 @@ class SocialLogin extends StatelessWidget {
       );
     }
 
+    // TODO: const도 없애자
     Widget buildScaffoldBody(BuildContext context) {
       return DecoratedBox(
         decoration: const BoxDecoration(
@@ -125,6 +124,7 @@ class SocialLogin extends StatelessWidget {
         ),
       );
     }
+
     return buildScaffoldBody(context);
   }
 }
