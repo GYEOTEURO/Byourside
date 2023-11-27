@@ -17,6 +17,7 @@ import 'package:byourside/widget/authenticate/setup/institution_name_field.dart'
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
+
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);
 
@@ -108,12 +109,16 @@ class _SetupUserState extends State<SetupUser> {
     setState(update);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildScaffoldBody(BuildContext context) {
     return Semantics(
       label: text.setupTitle,
       child: Scaffold(
-        appBar: titleOnlyAppbar(context, text.setupTitle, showBackButton: false, backgroundColor: colors.appBarColor),
+        appBar: titleOnlyAppbar(
+          context,
+          text.setupTitle,
+          showBackButton: false,
+          backgroundColor: colors.appBarColor,
+        ),
         body: Column(
           children: [
             Expanded(
@@ -165,5 +170,10 @@ class _SetupUserState extends State<SetupUser> {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return buildScaffoldBody(context);
   }
 }
