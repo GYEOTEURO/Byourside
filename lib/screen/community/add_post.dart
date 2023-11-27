@@ -128,25 +128,22 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                                   padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
                                   child: Column(children: [
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            HapticFeedback.lightImpact();
-                                            getImage(ImageSource.gallery);
-                                          },
-                                          icon: const Icon(
-                                              Icons.camera_alt_rounded),
-                                          color: colors.primaryColor,
-                                        ),
-                                        const Text('사진 추가하기',
+                                    TextButton.icon(
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact();
+                                          getImage(ImageSource.gallery);
+                                        },
+                                        icon: const Icon(
+                                            Icons.camera_alt_rounded),
+                                        style: TextButton.styleFrom(
+                                            foregroundColor:
+                                                colors.primaryColor),
+                                        label: const Text('사진 추가하기',
                                             semanticsLabel: '사진 추가하기',
                                             style: TextStyle(
                                                 color: colors.textColor,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: fonts.font)),
-                                      ],
-                                    ),
+                                                fontFamily: fonts.font))),
                                     Visibility(
                                         visible: _visibility,
                                         child: Column(
