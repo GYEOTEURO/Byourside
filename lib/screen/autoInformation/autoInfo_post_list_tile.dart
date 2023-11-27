@@ -76,7 +76,7 @@ Widget _buildTopSide(
     width: width,
     child: Stack(
       children: [
-        _imageWidget(context, images, title, width),
+        // _imageWidget(context, images, title, width),
         Container(
             padding: const EdgeInsets.all(10),
             alignment: Alignment.topLeft,

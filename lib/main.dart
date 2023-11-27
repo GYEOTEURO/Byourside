@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/screen/authenticate/setup_user.dart';
@@ -16,15 +18,20 @@ import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<bool> getPermission() async {
-  // Request multiple permissions at once. -> 카메라나 위치는 또 물어보는데 스토리지 빼고는 자동으로 수락해줘서 안물어봄
-  Map<Permission, PermissionStatus> permissions = await [
-    Permission.storage,
-    Permission.speech,
-    Permission.bluetooth,
-    Permission.notification
-  ].request();
+  Map<Permission, PermissionStatus> permissions;
+  if (Platform.isIOS) {
+    permissions = await [Permission.accessNotificationPolicy, Permission.photos]
+        .request();
+  } else {
+    permissions = await [
+      Permission.storage,
+      Permission.reminders,
+      Permission.notification
+    ].request();
+  }
 
   if (permissions.values.every((element) => element.isGranted)) {
     return Future.value(true);
@@ -167,15 +174,15 @@ class MyAppState extends State<MyApp> {
       children: <Widget>[
         Text('메시지 내용: $messageString'),
         MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Beeside',
-              initialRoute: '/login',
-              routes: {
-                '/login': (context) => OnBoardingPage(),
-                '/bottom_nav': (context) => const BottomNavBar(),
-                '/user': (context) => const SetupUser(),
-              },
-            )
+          debugShowCheckedModeBanner: false,
+          title: 'Beeside',
+          initialRoute: '/login',
+          routes: {
+            '/login': (context) => OnBoardingPage(),
+            '/bottom_nav': (context) => const BottomNavBar(),
+            '/user': (context) => const SetupUser(),
+          },
+        )
       ],
     );
   }

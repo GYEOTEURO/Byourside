@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/auth_icons.dart' as auth_icons;
@@ -114,8 +114,8 @@ class SocialLogin extends StatelessWidget {
                   SizedBox(height: deviceHeight * 0.13),
                   buildButtons(context),
                   SizedBox(height: deviceHeight * 0.07),
-                  buildPolicyLinks(),
-                  SizedBox(height: deviceHeight * 0.1),                ],
+                  buildPolicyLinks()
+                ],
               ),
             ],
           ),

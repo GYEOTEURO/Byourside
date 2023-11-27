@@ -38,24 +38,19 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
   final User? user = FirebaseAuth.instance.currentUser;
   final SaveData saveData = SaveData();
 
-  List<XFile> _images = []; // 사진 여러 개 가져오기
-  bool _visibility = false; // 가져온 사진 보이기
+  List<XFile> _images = [];
+  bool _visibility = false;
   final picker = ImagePicker();
-  final myFocus = FocusNode(); // 초점 이동
+  final myFocus = FocusNode();
   final _formkey = GlobalKey<FormState>();
-  int _current = 0; // 현재 이미지 인덱스
+  int _current = 0;
   int indicatorLen = 1;
 
-  // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
-  // 여러 이미지 가져오기 pickImage() 말고 pickMultiImage()
   Future getImage(ImageSource imageSource) async {
-    // final image = await picker.pickImage(source: imageSource);
     List<XFile> images = await picker.pickMultiImage();
 
     setState(() {
-      _images = images; // 가져온 이미지를 _image에 저장
-
-      // 선택한 이미지 길이 만큼 초기화
+      _images = images;
       _imgInfos = [];
       for (int i = 0; i < images.length; i++) {
         _imgInfos.add(TextEditingController());
@@ -72,7 +67,6 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
     }
   }
 
-  // 가져온 사진 visible 상태 변경
   void _hide() {
     setState(() {
       _visibility = false;
@@ -102,9 +96,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
     double maxWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        // 상단 앱 바
         appBar: const CommunityAddPostAppBar(),
-        // TextFiled Column과 같이 썼을 때 문제 해결 -> SingleChildScrollView
         body: Container(
             height: MediaQuery.of(context).size.height,
             child: Stack(children: [
@@ -130,34 +122,30 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                         Container(
                             padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                             child: Column(children: [
-                              // 제목
                               TitleSection(
                                   titleController: _title, focus: myFocus),
-                              // 사진 및 영상 첨부
                               Container(
                                   padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
                                   child: Column(children: [
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            HapticFeedback
-                                                .lightImpact(); // 약한 진동
-                                            getImage(ImageSource.gallery);
-                                          },
-                                          icon: const Icon(
-                                              Icons.camera_alt_rounded),
-                                          color: colors.primaryColor,
-                                        ),
-                                        const Text('사진 추가하기',
-                                            semanticsLabel: '사진 추가하기',
-                                            style: TextStyle(
-                                                color: colors.textColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: fonts.font)),
-                                      ],
-                                    ),
+                                    Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TextButton.icon(
+                                            onPressed: () {
+                                              HapticFeedback.lightImpact();
+                                              getImage(ImageSource.gallery);
+                                            },
+                                            icon: const Icon(
+                                                Icons.camera_alt_rounded),
+                                            style: TextButton.styleFrom(
+                                                foregroundColor:
+                                                    colors.primaryColor),
+                                            label: const Text('사진 추가하기',
+                                                semanticsLabel: '사진 추가하기',
+                                                style: TextStyle(
+                                                    color: colors.textColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: fonts.font)))),
                                     Visibility(
                                         visible: _visibility,
                                         child: Column(
@@ -220,7 +208,6 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                             width: maxWidth,
                             child: const Divider(
                                 color: colors.subColor, thickness: 1.0)),
-                        // 게시글 내용
                         ContentSection(
                           contentController: _content,
                           focus: myFocus,
@@ -247,7 +234,7 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                     child: Container(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: completeAddPostButton(() async {
-                          HapticFeedback.lightImpact(); // 약한 진동
+                          HapticFeedback.lightImpact();
                           if (selectedCategoryValue == null) {
                             showDialog(
                                 context: context,
@@ -289,7 +276,6 @@ class _CommunityAddPostState extends State<CommunityAddPost> {
                             List<String> urls = _images.isEmpty
                                 ? []
                                 : await saveData.uploadFile(_images);
-                            // Firestore에 Save하는 코드
                             CommunityPostModel postData = CommunityPostModel(
                                 uid: user!.uid,
                                 nickname: Get.find<UserController>()
