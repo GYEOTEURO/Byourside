@@ -1,4 +1,3 @@
-import 'package:byourside/screen/authenticate/social_login.dart';
 import 'package:byourside/screen/onboarding.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
