@@ -17,8 +17,6 @@ import 'package:byourside/widget/authenticate/setup/institution_name_field.dart'
 import 'package:byourside/widget/authenticate/setup/disability_type_button.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/widget/authenticate/setup/user_type/user_type_selection.dart';
-
-
 class SetupUser extends StatefulWidget {
   const SetupUser({Key? key}) : super(key: key);
 
@@ -26,9 +24,7 @@ class SetupUser extends StatefulWidget {
   State<SetupUser> createState() => _SetupUserState();
 }
 
-
 class _SetupUserState extends State<SetupUser> {
-
   final TextEditingController birthYearController = TextEditingController();
   final TextEditingController institutionNameController = TextEditingController();
   final NicknameController nicknameController = Get.find<NicknameController>();
@@ -41,29 +37,27 @@ class _SetupUserState extends State<SetupUser> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
+  @override
+  void dispose() {
+    birthYearController.dispose();
+    institutionNameController.dispose();
+    super.dispose();
+  }
+
   void handleUserTypeSelected(String userType) {
-    setState(() {
+    _updateState(() {
       selectedUserType = userType;
     });
   }
 
   void onLocationChanged(Map<String, String>? newLocation) {
-    setState(() {
+    _updateState(() {
       location = newLocation;
     });
   }
 
-  void handleLocationSelected(String selectedArea, String selectedDistrict) {
-    Map<String, String> locationInfo = {
-      'area': selectedArea,
-      'district': selectedDistrict,
-    };
-
-    onLocationChanged(locationInfo);
-  }
-
   void handleDisabilityTypeSelected(String type) {
-    setState(() {
+    _updateState(() {
       selectedDisabilityType = type;
     });
   }
@@ -101,7 +95,18 @@ class _SetupUserState extends State<SetupUser> {
     );
   }
 
-  
+  void handleLocationSelected(String selectedArea, String selectedDistrict) {
+    Map<String, String> locationInfo = {
+      'area': selectedArea,
+      'district': selectedDistrict,
+    };
+
+    onLocationChanged(locationInfo);
+  }
+
+  void _updateState(void Function() update) {
+    setState(update);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,17 +131,16 @@ class _SetupUserState extends State<SetupUser> {
                       initialType: selectedDisabilityType,
                       onChanged: handleDisabilityTypeSelected,
                     ),
-                    (selectedUserType == text.worker)
-                        ? Align(
-                            alignment: Alignment.centerLeft, 
-                            child: InstitutionNameTextField(
-                              controller: institutionNameController,
-                              onTap: () {
-                                HapticFeedback.lightImpact();
-                              },
-                            ),
-                          )
-                        : const SizedBox.shrink(),
+                    if (selectedUserType == text.worker)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InstitutionNameTextField(
+                          controller: institutionNameController,
+                          onTap: () {
+                            HapticFeedback.lightImpact();
+                          },
+                        ),
+                      ),
                     AgeSection(
                       selectedType: selectedUserType,
                       controller: birthYearController,
@@ -144,7 +148,7 @@ class _SetupUserState extends State<SetupUser> {
                     LocationSection(onLocationSelected: handleLocationSelected),
                     AppPurposeSelection(
                       onChanged: (purpose) {
-                        setState(() {
+                        _updateState(() {
                           selectedPurpose = purpose;
                         });
                       },
