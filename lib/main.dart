@@ -1,7 +1,6 @@
 import 'package:byourside/screen/authenticate/controller/auth_controller.dart';
 import 'package:byourside/screen/authenticate/controller/nickname_controller.dart';
 import 'package:byourside/screen/authenticate/setup_user.dart';
-import 'package:byourside/screen/authenticate/social_login.dart';
 import 'package:byourside/screen/onboarding.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
