@@ -95,13 +95,21 @@ class _MypageState extends State<Mypage> {
                     ],
                   ),
                 ),
+                if (age == 0) 
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight),
-                    SizedBox(width: getRelativeWidth(0.02)),
-                    if (age != 0) buildInfoContainer('나이', '$age살', _deviceWidth, _deviceHeight),
-                    SizedBox(width: getRelativeWidth(0.02)),
-                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight),
+                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight, 0.43),
+                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight, 0.43),
+                  ],
+                ),
+                if (age != 0) 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight, 0.28),
+                    buildInfoContainer('나이', '$age살', _deviceWidth, _deviceHeight, 0.28),
+                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight, 0.28),
                   ],
                 ),
                 SizedBox(height: getRelativeHeight(0.04)),

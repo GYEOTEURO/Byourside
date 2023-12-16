@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 
-Widget buildInfoContainer(String labelText, String valueText, double deviceWidth, double deviceHeight) {
+Widget buildInfoContainer(String labelText, String valueText, double deviceWidth, double deviceHeight, double ratio) {
   double containerHeight = deviceHeight * 0.06;
-  double containerWidth = deviceWidth * 0.28;
+  double containerWidth = deviceWidth * ratio;
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
