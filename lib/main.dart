@@ -40,7 +40,9 @@ Future<bool> getPermission() async {
   }
 }
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
   print('백그라운드 메시지 처리.. ${message.notification!.body!}');
 }
 
@@ -85,6 +87,16 @@ void initializeNotification() async {
     badge: true,
     sound: true,
   );
+
+  await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
 }
 
 void main() async {
@@ -115,6 +127,8 @@ void main() async {
     webRecaptchaSiteKey: dotenv.env['WEB_RECAPTCHA_SITE_KEY'],
     androidProvider: AndroidProvider.playIntegrity,
   );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(GetMaterialApp(
     theme: ThemeData(
