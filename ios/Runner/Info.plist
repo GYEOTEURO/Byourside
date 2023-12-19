@@ -29,7 +29,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>dotenv.env[&apos;GOOGLE_CF_BUNDLE_URL&apos;]</string>
+				<string>dotenv.env['GOOGLE_CF_BUNDLE_URL']</string>
 			</array>
 		</dict>
 	</array>
