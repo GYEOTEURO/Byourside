@@ -44,8 +44,11 @@ class _MypageState extends State<Mypage> {
   }
 
   int calculateAge(int? birthYear) {
+    if (birthYear == null || birthYear == 0) {
+      return 0; 
+    }
     var currentYear = DateTime.now().year;
-    var age = currentYear - (birthYear ?? 0);
+    var age = currentYear - birthYear;
     return age;
   }
 
@@ -58,7 +61,7 @@ class _MypageState extends State<Mypage> {
     var age = calculateAge(userController.userModel.birthYear);
 
     return Scaffold(
-      appBar: titleOnlyAppbar(context, widget.title, showBackButton: false, backgroundColor: colors.appBarColor), // '마이페이지'를 widget.title로 변경
+      appBar: titleOnlyAppbar(context, widget.title, showBackButton: false, backgroundColor: colors.appBarColor),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -71,32 +74,42 @@ class _MypageState extends State<Mypage> {
                   child: Row(
                     children: [
                       Semantics(
-                        label: '프로필 아이콘', 
+                        label: '프로필 아이콘',
                         child: GestureDetector(
                           onTap: () => _handleIconPressed(context),
-                          child: custom_icons.profile, 
+                          child: custom_icons.profile,
                         ),
                       ),
                       SizedBox(width: getRelativeWidth(0.03)),
-                      Semantics(
-                        label: '닉네임: ${userController.userModel.nickname}',
-                        child: Text(
-                          userController.userModel.nickname!,
-                          style: TextStyle(
-                            fontSize: getRelativeWidth(0.05),
-                            fontWeight: FontWeight.w700,
+                      if (userController.userModel.birthYear != null) 
+                        Semantics(
+                          label: '닉네임: ${userController.userModel.nickname}',
+                          child: Text(
+                            userController.userModel.nickname!,
+                            style: TextStyle(
+                              fontSize: getRelativeWidth(0.05),
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
+                if (age == 0) 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight),
-                    buildInfoContainer('나이', '$age살', _deviceWidth, _deviceHeight),
-                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight),
+                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight, 0.43),
+                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight, 0.43),
+                  ],
+                ),
+                if (age != 0) 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buildInfoContainer('거주지', userController.userModel.district!, _deviceWidth, _deviceHeight, 0.28),
+                    buildInfoContainer('나이', '$age살', _deviceWidth, _deviceHeight, 0.28),
+                    buildInfoContainer('장애 유형', userController.userModel.disabilityType!, _deviceWidth, _deviceHeight, 0.28),
                   ],
                 ),
                 SizedBox(height: getRelativeHeight(0.04)),

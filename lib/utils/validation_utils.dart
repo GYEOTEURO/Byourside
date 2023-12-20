@@ -62,14 +62,15 @@ class ValidationUtils {
       return showErrorAndReturn(text.institutionNameLabel);
     }
 
-    if (birthYear.isEmpty ||
-        birthYear.length != 4 ||
-        int.tryParse(birthYear) == null ||
-        birthYearValue! > currentYear ||
-        birthYearValue < currentYear - 200) {
-      return showErrorAndReturn(text.enterValidateAge);
+    if (birthYear.isNotEmpty) {
+      if (birthYear.length != 4 ||
+          int.tryParse(birthYear) == null ||
+          birthYearValue! > currentYear ||
+          birthYearValue < currentYear - 200) {
+        return showErrorAndReturn(text.enterValidateAge);
+      }
     }
-
+    
     if (location == null || location.isEmpty) {
       return showErrorAndReturn(text.selectLocation);
     }
