@@ -1,7 +1,7 @@
+import 'package:byourside/constants/text.dart' as text;
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/constants.dart' as constants;
 
 class CategorySectionInAddPost extends StatefulWidget {
   const CategorySectionInAddPost({Key? key, required this.onChipSelected})
@@ -28,10 +28,10 @@ class _CategorySectionInAddPostState extends State<CategorySectionInAddPost> {
     return Container(
         padding: const EdgeInsets.fromLTRB(5, 15, 5, 5),
         child: Column(children: [
-          const Text(
-            '어떤 종류의 글을 쓰실 건가요?',
-            semanticsLabel: '어떤 종류의 글을 쓰실 건가요?',
-            style: TextStyle(
+          Text(
+            text.addPostQuestions['category']!,
+            semanticsLabel: text.addPostQuestions['cateogry'],
+            style: const TextStyle(
                 color: colors.textColor,
                 fontWeight: FontWeight.bold,
                 fontSize: fonts.bodyPt,
@@ -46,18 +46,17 @@ class _CategorySectionInAddPostState extends State<CategorySectionInAddPost> {
                     Container(
                         padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                         child: ChoiceChip(
-                          label: Text(constants.communityCategories[i],
+                          label: Text(text.communityCategories[i],
                               style: const TextStyle(
                                   color: colors.textColor,
                                   fontSize: fonts.captionTitlePt,
                                   fontFamily: fonts.font)),
-                          selected: _selectedCategory ==
-                              constants.communityCategories[i],
+                          selected:
+                              _selectedCategory == text.communityCategories[i],
                           onSelected: (bool selected) {
                             setState(() {
                               if (selected) {
-                                _selectedCategory =
-                                    constants.communityCategories[i];
+                                _selectedCategory = text.communityCategories[i];
                                 widget.onChipSelected(_selectedCategory);
                               }
                             });
@@ -74,22 +73,21 @@ class _CategorySectionInAddPostState extends State<CategorySectionInAddPost> {
                         ))
                 ]),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  for (int i = 4; i < constants.communityCategories.length; i++)
+                  for (int i = 4; i < text.communityCategories.length; i++)
                     Container(
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                         child: ChoiceChip(
-                          label: Text(constants.communityCategories[i],
+                          label: Text(text.communityCategories[i],
                               style: const TextStyle(
                                   color: colors.textColor,
                                   fontSize: fonts.captionTitlePt,
                                   fontFamily: fonts.font)),
-                          selected: _selectedCategory ==
-                              constants.communityCategories[i],
+                          selected:
+                              _selectedCategory == text.communityCategories[i],
                           onSelected: (bool selected) {
                             setState(() {
                               if (selected) {
-                                _selectedCategory =
-                                    constants.communityCategories[i];
+                                _selectedCategory = text.communityCategories[i];
                                 widget.onChipSelected(_selectedCategory);
                               }
                             });

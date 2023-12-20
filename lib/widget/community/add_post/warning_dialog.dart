@@ -1,6 +1,6 @@
 import 'package:byourside/constants/fonts.dart' as fonts;
 import 'package:byourside/constants/colors.dart' as colors;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as text;
 import 'package:byourside/widget/common/fully_rounded_rectangle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,10 +16,10 @@ class WarningDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        semanticLabel: constants.warningMessage[warningObject],
+        semanticLabel: text.warningMessage[warningObject],
         title: Text(
-          constants.warningMessage[warningObject]!,
-          semanticsLabel: constants.warningMessage[warningObject],
+          text.warningMessage[warningObject]!,
+          semanticsLabel: text.warningMessage[warningObject],
           style: const TextStyle(
               color: colors.textColor,
               fontSize: fonts.captionTitlePt,
