@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:byourside/constants/colors.dart' as colors;
 import 'package:byourside/constants/fonts.dart' as fonts;
-import 'package:byourside/constants/constants.dart' as constants;
+import 'package:byourside/constants/text.dart' as text;
 
 class DisabilityTypeSectionInAddPost extends StatefulWidget {
   const DisabilityTypeSectionInAddPost({Key? key, required this.onChipSelected})
@@ -43,8 +43,7 @@ class _DisabilityTypeSectionInAddPostState
               alignment: Alignment.center,
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                for (String disabilityType
-                    in constants.communityDisabilityTypes)
+                for (String disabilityType in text.communityDisabilityTypes)
                   Container(
                       padding: const EdgeInsets.all(5.0),
                       child: ChoiceChip(
