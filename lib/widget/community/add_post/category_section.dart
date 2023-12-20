@@ -41,68 +41,41 @@ class _CategorySectionInAddPostState extends State<CategorySectionInAddPost> {
               padding: const EdgeInsets.all(5.0),
               alignment: Alignment.center,
               child: Column(children: [
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  for (int i = 1; i < 4; i++)
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                        child: ChoiceChip(
-                          label: Text(text.communityCategories[i],
-                              style: const TextStyle(
-                                  color: colors.textColor,
-                                  fontSize: fonts.captionTitlePt,
-                                  fontFamily: fonts.font)),
-                          selected:
-                              _selectedCategory == text.communityCategories[i],
-                          onSelected: (bool selected) {
-                            setState(() {
-                              if (selected) {
-                                _selectedCategory = text.communityCategories[i];
-                                widget.onChipSelected(_selectedCategory);
-                              }
-                            });
-                          },
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 0.50, color: colors.primaryColor),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          selectedColor: colors.primaryColor,
-                          backgroundColor: Colors.white,
-                          disabledColor: Colors.white,
-                        ))
-                ]),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  for (int i = 4; i < text.communityCategories.length; i++)
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: ChoiceChip(
-                          label: Text(text.communityCategories[i],
-                              style: const TextStyle(
-                                  color: colors.textColor,
-                                  fontSize: fonts.captionTitlePt,
-                                  fontFamily: fonts.font)),
-                          selected:
-                              _selectedCategory == text.communityCategories[i],
-                          onSelected: (bool selected) {
-                            setState(() {
-                              if (selected) {
-                                _selectedCategory = text.communityCategories[i];
-                                widget.onChipSelected(_selectedCategory);
-                              }
-                            });
-                          },
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 0.50, color: colors.primaryColor),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          selectedColor: colors.primaryColor,
-                          backgroundColor: Colors.white,
-                          disabledColor: Colors.white,
-                        ))
-                ])
+                for (int paragraph = 0; paragraph < 2; paragraph++)
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    for (int index = 3 * paragraph + 1;
+                        index < 3 * paragraph + 4;
+                        index++)
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          child: ChoiceChip(
+                            label: Text(text.communityCategories[index],
+                                style: const TextStyle(
+                                    color: colors.textColor,
+                                    fontSize: fonts.captionTitlePt,
+                                    fontFamily: fonts.font)),
+                            selected: _selectedCategory ==
+                                text.communityCategories[index],
+                            onSelected: (bool selected) {
+                              setState(() {
+                                if (selected) {
+                                  _selectedCategory =
+                                      text.communityCategories[index];
+                                  widget.onChipSelected(_selectedCategory);
+                                }
+                              });
+                            },
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  width: 0.50, color: colors.primaryColor),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            selectedColor: colors.primaryColor,
+                            backgroundColor: Colors.white,
+                            disabledColor: Colors.white,
+                          ))
+                  ])
               ]))
         ]));
   }
