@@ -27,7 +27,6 @@ const String requestChildAge = '아동의 출생 연도를 입력해 주세요';
 const String requestAge = '출생 연도를 입력해 주세요';
 const String enterValidateAge = '유효한 출생 연도를 입력하세요';
 
-
 const String askDisabilityType = '장애 유형을 선택해 주세요*';
 const String developmentalDisability = '발달 장애';
 const String brainLesionDisorder = '뇌병변 장애';
@@ -47,10 +46,8 @@ const String getInformation = '정보 습득';
 const String promotion = '활동 홍보';
 const String communication = '소통';
 
-const String institutionNameLabel = '기관 동아리 명칭을 입력해 주세요';
+const String institutionNameLabel = '기관 동아리 명칭을 입력해 주세요*';
 const String institutionNameHint = '기관명을 입력해 주세요';
-
-
 
 const String askLocation = '사는 지역을 선택해 주세요*';
 const String selectLocation = '사는 지역 선택하기';
